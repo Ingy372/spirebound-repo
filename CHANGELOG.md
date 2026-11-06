@@ -14,6 +14,12 @@
 - Added docs/21_MONETIZATION.md (cosmetic Wardrobe, floor drops, Supporter) and phase 10.
 - Added OWNER_INPUT.md and GitHub structure (CLAUDE.md, CI table check, issue templates, phase-issue script).
 
+## 2026-10-05 — v2.2 (owner questionnaire)
+- Applied OWNER_INPUT.md: PvP zone tiers, apex spawns, party formula, quest guidance + perks, functional houses, aggro-bounce boss, recruitment/LFG, world events, EN/PT-BR/ES, Miami hosting, solo-owner ops.
+
+## 2026-10-05 — v2.3 (final logic pass)
+- Docs 22 and 23, Starter Fields and onboarding, Mentor sharing, Reward Chest and crash policy, population modes and tower weakening, secret trigger crowd rule, patches P11–P13, Keen NPC floor price.
+
 ## 2026-10-05 — Phase 0 started (branch phase-0-toolchain)
 - Imported TFS v1.4.2 (31d6e85) into server/; patch P1 routes every engine item id through server/src/spire_ids.h and removes CipSoft item special cases.
 - New tools: build_assets (dat/spr/otb/items.xml + round-trip test), procedural_tiles, placeholder_art, compile_map (ASCII -> OTBM with validation), render_map, check_names (whole-word + near-miss), scripted 10.98 login client, dev_account, package_client, gate_phase0.sh.
