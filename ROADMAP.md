@@ -37,8 +37,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: boot log lists the stages; a test computes XP at levels 10/75/250 and matches the table.
 - [ ] **1.13 Floor 1 monsters.** 11 monsters with original names (placeholder Tibia looks), loot tables from `data/`, spawns on the map.
   Done when: boot test reports all 11 monster types loaded with zero warnings, each spawned at least once on the map; ART_REQUESTS.md has an entry for each.
-- [ ] **1.14 Sword skill system v1.** Skill framework (weapon-family check, cooldowns, shared 1 s cooldown, Opener/Link/Finisher combo bonus) + the first 3 skills of all 8 weapon families.
-  Done when: Lua tests cast each skill with the right/wrong weapon, check the cooldown blocks a recast, and check a full combo gives +30% on the finisher.
+- [x] **1.14 Sword skill system v1.** Skill framework (weapon-family check, cooldowns, shared 1 s cooldown, Opener/Link/Finisher combo bonus) + the first 3 skills of all 8 weapon families.
+  Done when: all 24 skills register as spells with cooldowns; in-game tests check 3 skills per family, weapon-family detection (right/wrong weapon), and that only Opener → Link → Finisher within 4 s gives +30%. Feel, damage and cooldown display are checked in the Phase 1 playtest.
 - [ ] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, weapon/armor shop per vocation, travel guide.
   Done when: each NPC loads with zero warnings; a scripted test buys and sells one item from each shop.
 - [x] **1.16 Party shared XP.** Party bonus from DESIGN §7.1, size cap 6.

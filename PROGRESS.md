@@ -27,3 +27,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 — Tasks 1.16, 1.17: party bonus and the tower's memory
 - Parties: each member gets (XP × (1 + 30% per extra member + 10% per extra vocation)) ÷ members; parties cap at 6; level range 1.5× (Canary's setting already matched).
 - World floor records: field boss / floor boss / first-clear credit / last hit are saved for the whole server and survive restarts (checked across two boots). Credit keeps the top 20; boss enrage = 60 min solo, 16 min for 4, 8 min for 8 or more. GM test command `/floor` shows, opens, clears or resets floors. Boot test: online, 0 errors, 9 in-game tests pass.
+
+### 2026-11-08 — Task 1.14: sword skills v1
+- 24 sword skills live (3 for each of the 8 weapon families: sword, axe, club, bow, crossbow, spear, wand, rod). Each needs the right weapon in hand, has its own cooldown plus a 1-second shared cooldown, and is tagged Opener / Link / Finisher.
+- Combo: Opener → Link → Finisher within 4 seconds each = Finisher hits 30% harder and shouts "COMBO!". For now cast by typing the skill's name (e.g. `arc slash`); the hotbar comes with the client work (task 1.20). Boot test: online, 0 errors, 13 in-game tests pass.
