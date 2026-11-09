@@ -71,6 +71,9 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [ ] **2.12 Cavebot penalty (server side).** Client reports cavebot on/off; while on and for 10 min after: XP ×0.45, loot ×0.5, no visible marker, no secrets/rare chests/Twin Fang trial, boss rooms refuse entry; auto-targeting alone has no penalty; suspicion logging. Done when: in-game tests for each rule.
 - [ ] **2.12b Cavebot and auto-targeting in the client.** Adapt OTClient Redemption's built-in bot module: route recorder, walker, auto-target, auto-heal, auto-eat, looter; reports its state to the server; everything else from that module removed. Done when: the module loads with no errors and a headless check shows it sends the on/off message.
 - [ ] **2.14 Hardcore extras:** skill loss ×1.5, blessings can only remove half the penalty, item-drop chance ×2 (DESIGN §5.4). Done when: in-game tests for each.
+- [ ] **2.15 Autoloot + loot highlight + loot channel.** Done when: in-game test: an item on the autoloot list goes to the backpack; rare drops print in the loot channel.
+- [ ] **2.16 Hunting tasks** from each floor's Quartermaster (kill counts, gold + task points). Done when: in-game test completes a task and pays out.
+- [ ] **2.17 Catch-up rules:** no death XP loss on Normal below level 50; faster skills below level 50. Done when: in-game tests for both.
 - [ ] **2.13 🧑 Phase 2 playtest** with WEEKLY_REPORT.md. Done when: Jay signs off in PLAYTEST.md.
 
 ## Phase 3 — Houses and gambling
@@ -96,6 +99,10 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
   Done when (each): scripted speed run clears the floor; for 5.3 the 4th Twin Fang attempt is refused; for 5.5 all 3 Azhrakkar phases trigger in a scripted fight.
 - [ ] **5.6 Underkeep Wings 4–6.**
 - [ ] **5.7 World events scheduler** (Frenzy, Incursion, Fishing Frenzy, Wandering Champion). Done when: test forces each event and checks its announcement and end.
+- [ ] **5.7b Weekend rotating bonus** (double XP / rapid respawn / double loot / double fishing / double skill). Done when: test forces each bonus and checks it ends.
+- [ ] **5.7c Equal-footing PvP arena events** (Last Man Standing, Team Rush, Capture the Banner; same level/gear for all). Done when: scripted event with test players starts, scores and ends.
+- [ ] **5.7d Spire Siege** (weekly guild castle, level-scaled). Done when: scripted siege with two test guilds picks a holder.
+- [ ] **5.7e Offline training statues + livestream (cast) switched on.** Done when: boot test shows both enabled with zero errors.
 - [ ] **5.8 🧑 Phase 5 playtest.**
 
 ## Phase 6 — Client polish and languages
@@ -104,11 +111,14 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **6.3 Portuguese and Spanish text** for UI, NPCs, quests, server messages.
 - [ ] **6.4 Custom asset pipeline for 15.x** (our own appearances + sprite sheets from Jay's PNGs). Done when: a test sprite made from a PNG shows up in the client in place of a placeholder.
 - [ ] **6.5 Swap in all art Jay has delivered so far.**
+- [ ] **6.5b Android client build** (OTClient Redemption's Android target). Done when: an APK builds in CI.
+- [ ] **6.5c Season Path** (free track: daily/weekly goals → cosmetics, titles, house items). Done when: in-game test completes a goal and grants a reward.
 - [ ] **6.6 🧑 Phase 6 playtest.**
 
 ## Phase 7 — Accounts, website, donation shop
 - [ ] **7.1 Website** (account creation, character pages, floor monument, secret list, Hall of Fame, rules). Free software only (MyAAC or similar).
 - [ ] **7.2 Donation shop** (cosmetics, housing, convenience; never power), off until launch. Done when: test confirms no shop item has combat stats and shop items can't be gambled.
+- [ ] **7.2b Website wiki pages** generated from our data files; boss cooldowns and event countdowns on the website; Discord announcements.
 - [ ] **7.3 🧑 Jay picks shop prices and payment setup** (QUESTIONS.md).
 
 ## Phase 8 — Seasons

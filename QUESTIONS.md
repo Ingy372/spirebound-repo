@@ -21,6 +21,11 @@ Without it, someone can bot the boring parts, switch it off just before a boss o
 - **Recommendation:** keep the 10 minutes. If you'd rather have full XP the moment it's off, write "no linger".
 - Jay's answer:
 
+### Q12. Features from the top-server research (DESIGN.md §15)
+Top servers all have: autoloot, scheduled events, weekend bonuses, guild castle wars, offline training, livestream, tasks/boss timers, and an Android client. I added all of these to the plan, plus a free "Season Path" (play goals → cosmetics) and catch-up rules for new players (no death XP loss on Normal below level 50).
+- **Recommendation:** keep the whole list. Two things to look at: (a) **hunting tasks** come back (you turned off Canary's version; ours is simpler, from NPCs, paying gold and cosmetic points); (b) **no character bazaar** (selling characters for shop coins), because it feeds real-money trading.
+- Jay's answer:
+
 ### Q5. Your new brief changes several decisions from the October design pack (FYI)
 The new brief wins, and DESIGN.md follows it: Canary instead of TFS, 4 vocations instead of 5 paths, 10 launch floors instead of 5, Tibia gold instead of "col", standard Tibia death penalty on Normal, a donation shop that includes convenience items, dual wielding, fishing, difficulty modes. The old TFS server setup moves to a `legacy/` folder (task 1.2); the reusable tools and many design details (Floor 1 layout, bosses, PvP zones, Underkeep) are kept.
 - **Recommendation:** nothing to do. Tell Claude if you want anything from the old pack back.

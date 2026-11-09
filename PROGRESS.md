@@ -49,3 +49,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 — More of Jay's answers applied
 - Cavebot: 45% XP (was 30%), no visible marker, other rules confirmed. The 10-minute linger is explained and waiting on Jay (QUESTIONS Q11).
 - Spells now unlock automatically by level, no gold. Ammo can't be conjured: Ranger's 3 conjure spells became Keen Sight, Tracker's Mark and Disengage. Ammo + potions are the gold burn.
+
+### 2026-11-08 — Research: what top servers share
+- Looked at RubinOT, Aurera Global, Cyleria, Baiak-Ilusion, Gunzodus (otservlist snapshot, 2026-11-08). Report: `docs/RESEARCH_TOP_SERVERS_2026-11.md`.
+- Added DESIGN.md §15 with what we adopt (autoloot, weekend bonuses, guild castle "Spire Siege", equal-footing arena events, offline training, livestream, hunting tasks, Season Path, catch-up rules, Android client, website wiki) and our answer to the top reasons players quit. New roadmap tasks 2.15–2.17, 5.7b–e, 6.5b–c, 7.2b. Summary question Q12.

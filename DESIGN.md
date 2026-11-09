@@ -512,3 +512,34 @@ Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp 
 - Every needed real map → `MAP_REQUESTS.md`.
 - Local Windows first; rented server only after Jay and friends finish testing.
 - Nothing bought, no paid software, no deploys anywhere but Jay's PC.
+
+## 15. Features players expect (from the top-server research)
+
+Jay asked (2026-11-08) not to reinvent the wheel: look at what top servers share and what players expect. Research: `docs/RESEARCH_TOP_SERVERS_2026-11.md` (RubinOT, Aurera Global, Cyleria, Baiak-Ilusion, Gunzodus). Everything below is **(Claude's call, Jay can veto)** unless already decided elsewhere.
+
+| Feature | Top servers with it | Spirebound plan |
+|---|---|---|
+| Own client, PC + Android | all 5 | OTClient Redemption already builds for Android: offer an Android client after the PC client is stable (phase 6) |
+| Autoloot + loot highlight | RubinOT, Baiak, Cyleria | Server-side autoloot list (Canary has quick-loot built in) + rare-drop highlight and a loot channel |
+| Built-in bot/cavebot | Cyleria, Aurera | Already decided (DESIGN 12): built in, 45% XP |
+| Scheduled automatic events | all 5 | World events every 3 h (DESIGN 3.6) + automatic PvP events (below) + holiday events |
+| Weekend rotating bonus | Cyleria, Gunzodus, RubinOT | Every weekend one bonus rotates: double XP, rapid respawn, double loot, double fishing, double skill |
+| Guild territory war | RubinOT, Gunzodus, Cyleria, Baiak | **Spire Siege**: weekly castle on a floor plateau, held by a guild for a week (small XP/loot buff for the holders + a cosmetic banner). Level-scaled like Cyleria's Tower Siege so it isn't just "highest level wins" |
+| Equal-footing PvP events | Cyleria, Gunzodus | Automated arena events (Last Man Standing, Team Rush, Capture the Banner) where everyone gets the same level, gear and skills for the event. Cosmetic rewards. Great for the anti-bullying goal |
+| Offline / static training | Baiak, Gunzodus | Offline training statues in towns (Canary has offline training built in), slower than active training |
+| Cast / livestream | Gunzodus, Baiak, RubinOT | Canary's built-in livestream ("cast") so people can watch others play; later a Twitch-linked cosmetic reward |
+| Tasks, bestiary, bosstiary, boss timers | RubinOT, Gunzodus, Cyleria | **Hunting tasks** from each floor's Quartermaster (kill X, earn gold + task points for cosmetics/titles); bestiary/bosstiary tracker on; boss cooldowns shown in the client and on the website |
+| Daily rewards / season pass | Cyleria (daily points), RubinOT (battle pass) | **Season Path**: a free track every player earns by playing (daily/weekly goals) with cosmetics, titles and house items. No paid track at launch; if one is ever added it is cosmetic only (DESIGN 11) |
+| Market, gold pouch, analyzers | expected on 15.x | Canary market, gold pouch, XP/loot/damage analyzers in the client (already part of 15.x) |
+| Catch-up for new players | Gunzodus (0% loss to lvl 100) | Normal-mode characters lose no XP on death below level 50; newcomers get faster skill training until level 50; mid-season XP boost for characters far below the server's median level |
+| Wiki + Discord | Cyleria, RubinOT | Auto-generated wiki pages from our data files (monsters, items, spells) on the website; Discord announcements for floor clears and events |
+
+**Lessons from why players quit, and our answer:**
+- Pay-to-win → never (DESIGN 11).
+- Short life / fear of resets → seasons are announced months ahead, account-wide rewards carry over (DESIGN 4).
+- Bad first 2 hours → the guided Arrival Yard, no-loss deaths below 50, test the first 2 hours in every playtest.
+- Early XP too strong, then nothing to do → stages taper and floors unlock content over the season.
+- Real-money traders, launch rushers → no character bazaar; RMT bans in the rules.
+- Level gaps → seasons + catch-up + level-range PvP protection.
+- Account theft, shop bugs → two-factor login on the website, automated tests on everything that touches the shop.
+- Multi-client inflation → 2 clients per computer, published rule.
