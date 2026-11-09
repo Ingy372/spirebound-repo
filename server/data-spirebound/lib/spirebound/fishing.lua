@@ -29,18 +29,23 @@ function SpireFishing.biteChance(skill)
 end
 
 -- Pure: pick a catch. r = random number in [0,1). Night-only entries are skipped by day.
-function SpireFishing.roll(floor, isNight, r)
+-- luck (default 1) multiplies the weight of rare catches (weight 5 or less): Fishing Frenzy, weekend bonus.
+function SpireFishing.roll(floor, isNight, r, luck)
+	luck = luck or 1
 	local list = SpireFishing.tables[floor] or SpireFishing.tables[1]
+	local function w(f)
+		return f.weight <= 5 and not f.junk and f.weight * luck or f.weight
+	end
 	local total = 0
 	for _, f in ipairs(list) do
 		if isNight or not f.night then
-			total = total + f.weight
+			total = total + w(f)
 		end
 	end
 	local x = r * total
 	for _, f in ipairs(list) do
 		if isNight or not f.night then
-			x = x - f.weight
+			x = x - w(f)
 			if x < 0 then
 				return f
 			end

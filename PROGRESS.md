@@ -129,3 +129,9 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Tasks 4.6, 4.6b: the rest of the sword skills and spells
 - 24 more sword skills (now 6 per weapon family; the new ones unlock at levels 60, 100 and 150), e.g. Blade Tempest, Worldsplitter, Titan's Fall, Heartseeker, Ballista Shot, Skyfall Lance, Cataclysm Rite, Lifebloom Rite.
 - 14 more spells: Bulwark Aura, Recovery, Iron Will, Eagle Eye, Sanctified Ground, Arcane Empower, plus the Lost Arts (Last Bastion, Unbroken Line, Hawk's Path, Volley of Dawn, Meteor Rain, Mirror Image, Wellspring, Winter's Breath), which only work after finishing every story quest on Floor 5 (first) and Floor 8 (second). Every vocation now has 19–22 spells. DESIGN.md says 2 Lost Arts per vocation (the table always listed 2). Boot test: 47 in-game tests pass.
+
+### 2026-11-08 (overnight) — Tasks 5.7, 5.7b, 5.7e: world events, weekend bonuses, Derby, offline training, livestream
+- **World events** every 3 hours on an open floor, announced 10 minutes ahead: Frenzy (extra apex monsters, +25% loot), Incursion (elite packs in the camps), Fishing Frenzy (rare fish ×3), Wandering Champion (a 6×-health elite roams). GM test command: `/event frenzy 1`.
+- **Weekend bonus** every Saturday and Sunday, rotating weekly: double XP, double loot, double skill training, double fishing luck (announced at login).
+- **Weekly Fishing Derby** Saturdays 20:00–21:00 server time: biggest single catch wins 50,000 gold and the "Derby Champion" title, with live leader announcements.
+- **Offline training statues** (sword, axe, club, distance, magic) in every town temple; **livestream** ("!livestream on") stays on, with no XP bonus for streaming. Boot test: 50 in-game tests pass.

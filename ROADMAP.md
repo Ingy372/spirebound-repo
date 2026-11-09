@@ -100,11 +100,11 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [x] **5.1 Floor 6** · [x] **5.2 Floor 7** · [ ] **5.3 Floor 8 (+ Twin Fang trial)** (floor done, trial open) · [x] **5.4 Floor 9** · [x] **5.5 Floor 10 + Azhrakkar** (placeholder versions; Azhrakkar's 3 phases are in the pattern library, a scripted 3-phase test is still open)
   Done when (each): scripted speed run clears the floor; for 5.3 the 4th Twin Fang attempt is refused; for 5.5 all 3 Azhrakkar phases trigger in a scripted fight.
 - [ ] **5.6 Underkeep Wings 4–6.**
-- [ ] **5.7 World events scheduler** (Frenzy, Incursion, Fishing Frenzy, Wandering Champion). Done when: test forces each event and checks its announcement and end.
-- [ ] **5.7b Weekend rotating bonus** (double XP / rapid respawn / double loot / double fishing / double skill). Done when: test forces each bonus and checks it ends.
+- [x] **5.7 World events scheduler** (Frenzy, Incursion, Fishing Frenzy, Wandering Champion). Done when: test forces each event and checks its announcement and end.
+- [x] **5.7b Weekend rotating bonus** (double XP / rapid respawn / double loot / double fishing / double skill). Done when: test forces each bonus and checks it ends.
 - [ ] **5.7c Equal-footing PvP arena events** (Last Man Standing, Team Rush, Capture the Banner; same level/gear for all). Done when: scripted event with test players starts, scores and ends.
 - [ ] **5.7d Spire Siege** (weekly guild castle, level-scaled). Done when: scripted siege with two test guilds picks a holder.
-- [ ] **5.7e Offline training statues + livestream (cast) switched on.** Done when: boot test shows both enabled with zero errors.
+- [x] **5.7e Offline training statues + livestream (cast) switched on.** Done when: boot test shows both enabled with zero errors.
 - [ ] **5.8 🧑 Phase 5 playtest.**
 
 ## Phase 6 — Client polish and languages

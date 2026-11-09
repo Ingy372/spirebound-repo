@@ -13,7 +13,7 @@ local function land(player, pos)
 	end
 	local floor = math.max(1, Floors.at(pos))
 	local night = SpireSecrets.isNight(tonumber(os.date("%H")))
-	local f = SpireFishing.roll(floor, night, math.random())
+	local f = SpireFishing.roll(floor, night, math.random(), SpireEvents and SpireEvents.fishingLuck(floor) or 1)
 	player:addItem(f.item, f.count or 1)
 	player:addSkillTries(SKILL_FISHING, 2, true)
 	pos:sendMagicEffect(CONST_ME_WATERSPLASH)
@@ -31,6 +31,9 @@ local function land(player, pos)
 	end
 	log:set(f.id, entry)
 	player:sendTextMessage(MESSAGE_LOOT, string.format("You caught a %s (%.2f kg)!%s", f.name, kg, firstTime and " New in your fishing log." or ""))
+	if SpireEvents and SpireEvents.derbyCatch then
+		SpireEvents.derbyCatch(player, f.name, kg)
+	end
 	if f.legendary then
 		Game.broadcastMessage(string.format("%s has landed %s, the legendary fish of Floor %d (%.1f kg)!", player:getName(), f.name, floor, kg), MESSAGE_EVENT_ADVANCE)
 	end

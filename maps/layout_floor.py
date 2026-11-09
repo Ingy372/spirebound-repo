@@ -42,6 +42,8 @@ def build(m, n):
     m.building(tpx, tpy, 20, 12, Z, floor="marble", door_side="s")
     temple = (tpx + 10, tpy + 6, Z)
     m.put(tpx + 10, tpy + 2, Z, 3515)
+    for i, sid in enumerate(range(16198, 16203)):
+        m.put(tpx + 2 + i * 3, tpy + 1, Z, sid)
     m.towns.append((town_id, spec["town"], temple))
     m.points[P + "temple"] = temple
     m.points[f"floor{n}_landing"] = (temple[0], temple[1] + 2, Z)

@@ -39,6 +39,10 @@ def build(m):
     m.npcs.append(("Registrar Maelis", (tpx + 6, tpy + 5, Z)))
     m.npcs.append(("Priest Odran", (tpx + 14, tpy + 5, Z)))
     m.sign(tpx + 9, tpy + 12, Z, "Hearthgate Temple. New climbers: speak to Registrar Maelis (say hi).")
+    # offline training statues (sword, axe, club, distance, magic): use one to log out and train slowly
+    for i, sid in enumerate(range(16198, 16203)):
+        m.put(tpx + 3 + i * 3, tpy + 1, Z, sid)
+    m.sign(tpx + 17, tpy + 1, Z, "Offline training: use a statue to log out and train that skill slowly while you're away.")
 
     # depot
     dx, dy = tx + 8, ty + 8

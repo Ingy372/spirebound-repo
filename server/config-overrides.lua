@@ -56,3 +56,6 @@ housePriceEachSQM = 1000
 houseBuyLevel = 20
 houseRentPeriod = "weekly"
 houseOwnedByAccount = false
+
+-- Livestream ("cast", DESIGN.md 15): on, but no experience bonus for streaming (fairness)
+livestreamExperienceMultiplier = 1.0
