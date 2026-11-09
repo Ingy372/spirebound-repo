@@ -156,3 +156,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 
 ### 2026-11-08 (overnight) — Task 6.2: the Memorial and leaderboards
 - **!memorial** lists every Death Game climber who fell this season (level, vocation, what killed them, date). **!top** shows the 20 highest climbers, marking Hardcore, Death Game and fallen characters; **!top normal / hardcore / deathgame** shows each mode's own board. The Monument sign in Hearthgate tells players about both. Boot test: 57 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 6.5c: the Season Path
+- A free reward track (say **!path**). Daily goals (300 monsters, 25 sword-skill combos, 5 fish: +10 each) and weekly goals (3,000 monsters, 3 bosses, 2 hunting tasks, 1 secret: +40 each). Every 100 points is a tier: 30 tiers of house furniture kits, tapestries, trophies and 6 titles. Cosmetic only, resets each season, and kills while the built-in cavebot is on don't count. About 8 weeks of steady play fills it (my call on the numbers). Boot test: 58 in-game tests pass.

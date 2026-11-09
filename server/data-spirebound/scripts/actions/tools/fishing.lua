@@ -22,6 +22,7 @@ local function land(player, pos)
 		return
 	end
 	local kg = f.kg[1] + math.random() * (f.kg[2] - f.kg[1])
+	SpirePath.progress(player, "fish", 1)
 	local log = SpireFishing.log(player)
 	local entry = log:get(f.id) or { count = 0, best = 0 }
 	local firstTime = entry.count == 0

@@ -74,6 +74,7 @@ local function trigger(player, secret)
 	local first = not SpireSecrets.hasFound(player, secret.id)
 	if first then
 		local count = SpireSecrets.record(player, secret)
+		SpirePath.progress(player, "secret", 1)
 		local by = SpireSecrets.publicBy(secret.id)
 		local msg = "You discovered a secret: " .. secret.name .. "!"
 		if by then

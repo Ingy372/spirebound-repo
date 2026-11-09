@@ -89,6 +89,7 @@ for i, def in ipairs(SwordSkills.list) do
 		if mult > 1 then
 			local kvs = player:kv():scoped("spirebound-twinfang")
 			kvs:set("combos", (kvs:get("combos") or 0) + 1)
+			SpirePath.progress(player, "combo", 1)
 			player:say("COMBO!", TALKTYPE_MONSTER_SAY)
 			player:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)
 		end

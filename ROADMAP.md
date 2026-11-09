@@ -114,7 +114,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **6.4 Custom asset pipeline for 15.x** (our own appearances + sprite sheets from Jay's PNGs). Done when: a test sprite made from a PNG shows up in the client in place of a placeholder.
 - [ ] **6.5 Swap in all art Jay has delivered so far.**
 - [ ] **6.5b Android client build** (OTClient Redemption's Android target). Done when: an APK builds in CI.
-- [ ] **6.5c Season Path** (free track: daily/weekly goals → cosmetics, titles, house items). Done when: in-game test completes a goal and grants a reward.
+- [x] **6.5c Season Path** (free track: daily/weekly goals → cosmetics, titles, house items). Done when: in-game test completes a goal and grants a reward. *(Done: `!path`; 7 goals, 30 tiers of furniture, tapestries and titles. The test completes goals and checks every reward is a real takeable item; Jay's playtest should confirm a reward lands in the store inbox.)*
 - [ ] **6.6 🧑 Phase 6 playtest.**
 
 ## Phase 7 — Accounts, website, donation shop

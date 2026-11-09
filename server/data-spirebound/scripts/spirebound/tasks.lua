@@ -14,6 +14,7 @@ function kill.onKill(player, target)
 		local n = (s:get("kills") or 0) + 1
 		s:set("kills", n)
 		if n == t.count then
+			SpirePath.progress(player, "task", 1)
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Task complete: " .. t.count .. " " .. t.monster .. "s. Report to Taskmaster Ren in Hearthgate.")
 		elseif n < t.count and n % 10 == 0 then
 			player:sendTextMessage(MESSAGE_STATUS, string.format("Task: %d of %d %ss.", n, t.count, t.monster))
