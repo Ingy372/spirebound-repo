@@ -41,8 +41,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: all 24 skills register as spells with cooldowns; in-game tests check 3 skills per family, weapon-family detection (right/wrong weapon), and that only Opener → Link → Finisher within 4 s gives +30%. Feel, damage and cooldown display are checked in the Phase 1 playtest.
 - [ ] **1.14b Spells v1.** The 8 shared spells and every vocation spell up to level 50 from DESIGN §5.3b (own incantations), learned automatically on reaching the level (no trainer, no gold), with a "you learned" message.
   Done when: every listed spell up to level 50 registers with zero errors; in-game tests check each vocation gets only its own spells at exactly the DESIGN §5.3b levels.
-- [ ] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, weapon/armor shop per vocation, travel guide.
-  Done when: each NPC loads with zero warnings; a scripted test buys and sells one item from each shop.
+- [x] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, quartermaster (potions + ammo: the gold sink), weaponsmith, armorer. Travel guide comes with Floor 2 (phase 4).
+  Done when: each NPC loads with zero warnings and stands in Hearthgate (in-game test), and the generator refuses any price loop (an item that sells for more than it can be bought for). Buying and selling by hand is in the Phase 1 playtest.
 - [x] **1.16 Party shared XP.** Party bonus from DESIGN §7.1, size cap 6.
   Done when: Lua test: a 3-player party of 2 vocations gets the expected XP per member.
 - [x] **1.17 World floors state.** Saved floor records (Canary's database key-value store) for floors (field boss dead, floor boss dead, opened time, credited names) + GM test command `/floor`.

@@ -36,6 +36,7 @@ def build(m):
     m.towns.append((1, "Hearthgate", temple))
     m.points["temple_hearthgate"] = temple
     m.npcs.append(("Registrar Maelis", (tpx + 6, tpy + 5, Z)))
+    m.npcs.append(("Priest Odran", (tpx + 14, tpy + 5, Z)))
     m.sign(tpx + 9, tpy + 12, Z, "Hearthgate Temple. New climbers: speak to Registrar Maelis (say hi).")
 
     # depot
@@ -46,6 +47,7 @@ def build(m):
     m.put(dx + 14, dy + 8, Z, 3501)  # mailbox
     m.sign(dx + 7, dy + 10, Z, "Hearthgate Depot")
     m.points["depot_hearthgate"] = (dx + 8, dy + 5, Z)
+    m.npcs.append(("Quartermaster Bryn", (dx + 3, dy + 6, Z)))
 
     # shops row (NPCs arrive in task 1.15)
     for i, name in enumerate(["General Store", "Weaponsmith", "Armorer", "Bank"]):
@@ -53,6 +55,8 @@ def build(m):
         m.building(sx, ty + 8, 11, 9, Z, floor="wood", door_side="s")
         m.sign(sx + 5, ty + 17, Z, name)
         m.points["shop_" + name.lower().replace(" ", "_")] = (sx + 5, ty + 12, Z)
+        npc = {"General Store": "Merchant Wenna", "Weaponsmith": "Weaponsmith Garrick", "Armorer": "Armorer Hesta", "Bank": "Banker Tolliver"}[name]
+        m.npcs.append((npc, (sx + 5, ty + 11, Z)))
 
     # houses (south streets)
     hid = 1

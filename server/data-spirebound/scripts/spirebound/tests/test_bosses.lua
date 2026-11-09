@@ -68,8 +68,8 @@ SpireTest.add("map: monsters, NPCs and the floor 1 bosses are in the world", fun
 	if count < 80 then
 		error("only " .. count .. " monsters spawned")
 	end
-	if Game.getNpcCount() < 1 then
-		error("no NPCs spawned")
+	if Game.getNpcCount() < 7 then
+		error("only " .. Game.getNpcCount() .. " NPCs spawned")
 	end
 	local function near(pointName, monsterName)
 		for _, c in ipairs(Game.getSpectators(WorldPoints[pointName], false, false, 3, 3, 3, 3)) do
@@ -117,4 +117,19 @@ SpireTest.add("bosses: first kills open the labyrinth and the stair to floor 2",
 		Game.createItem(1772, 1, WorldPoints[n])
 	end
 	SpireTest.eq(Floors.isOpen(2), false, "state restored")
+end)
+
+SpireTest.add("town: all Hearthgate NPCs are standing in town", function()
+	local want = { "Registrar Maelis", "Priest Odran", "Banker Tolliver", "Merchant Wenna", "Quartermaster Bryn", "Weaponsmith Garrick", "Armorer Hesta" }
+	local found = {}
+	for _, c in ipairs(Game.getSpectators(WorldPoints.temple_hearthgate, false, false, 60, 60, 50, 50)) do
+		if c:isNpc() then
+			found[c:getName()] = true
+		end
+	end
+	for _, n in ipairs(want) do
+		if not found[n] then
+			error(n .. " is not in Hearthgate")
+		end
+	end
 end)

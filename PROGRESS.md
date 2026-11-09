@@ -59,3 +59,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - **Monsters:** 13 Floor 1 monsters + 2 bosses generated from one table (`tools/gen_monsters.py`), placeholder Tibia looks.
 - **Bosses:** the Gate Hound (howls in a telegraphed ring, summons wolves) seals the Pass until its first death, then never returns. The Axe-Lord has 3 phases (marked tiles, guards at 60%, long blade and 3-tile line at 25%), resets if left alone, enrages by headcount, credits the top 20 recent damage dealers, awards titles, opens the stair to Floor 2 with a server-wide announcement, and respawns every 30 minutes for repeat kills. Boot test: online, 0 errors, 20 in-game tests pass (tests now only run on test boots, never on your playing server).
 - Old 10.98 map tools and the test town moved to `legacy/`.
+
+### 2026-11-08 (overnight) — Task 1.15: Hearthgate's shopkeepers
+- Six NPCs from one table (`tools/gen_npcs.py`): Priest Odran (free healing under level 50 or when badly hurt; blessings for gold), Banker Tolliver (balance/deposit/withdraw/transfer), Merchant Wenna (rope, shovel, food, fishing gear), Quartermaster Bryn (potions and ammunition: the main gold burn), Weaponsmith Garrick (starter weapons for all 8 weapon types), Armorer Hesta (leather to brass). The generator blocks buy-low/sell-high loops. Boot test: 21 in-game tests pass.
+- Known gap: blessing names still use Canary's built-in (Tibia) names; renamed when the blessings get their own design.
