@@ -105,6 +105,14 @@ SpireBoss.register("Axe-Lord of the Stair", {
 		if Floors.recordClear(FLOOR, credit, lastHit, duration) then
 			openGate("gate_floor2")
 			Floors.announceClear(FLOOR, credit)
+			local town = SpireHouses.floorTown[FLOOR + 1]
+			if town then
+				local size = 0
+				for _, h in ipairs(Game.getHouses()) do
+					if h:getTown():getId() == town then size = size + 1 end
+				end
+				SpireHouses.startHeadStart(town, credit, size, os.time())
+			end
 			for _, name in ipairs(credit) do
 				local p = Player(name)
 				if p then
@@ -192,6 +200,9 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	end
 	logger.info("[Spirebound] {} killed; credit: {}; last hit: {}", creature:getName(), table.concat(credit, ", "), tostring(lastHit))
 	def.onFirstKill(credit, lastHit, state.started and (now - state.started) or 0)
+	for _, name in ipairs(credit) do
+		SpireHouses.awardSigil(name, creature:getName())
+	end
 	if def.respawn then
 		local name = creature:getName()
 		addEvent(function()

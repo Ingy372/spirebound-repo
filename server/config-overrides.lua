@@ -50,6 +50,9 @@ forgeInfluencedLimit = 0
 forgeFiendishLimit = 0
 boostedBossSlot = false
 
--- Houses
+-- Houses (DESIGN.md 7.3): listed price, no auction, one per character, weekly rent
+toggleCyclopediaHouseAuction = false
+housePriceEachSQM = 1000
+houseBuyLevel = 20
 houseRentPeriod = "weekly"
 houseOwnedByAccount = false

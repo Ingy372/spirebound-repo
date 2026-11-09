@@ -104,3 +104,10 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - **Autoloot** switched on (loot goes straight to your loot containers, rarest first), and drops with a 2% chance or less are announced as "Rare drop!" to you and your party.
 - **Taskmaster Ren** (Hearthgate): 7 daily hunting tasks (wolves, boars, bandits, shardlings, sentinels, rams, mire toads) paying gold and task points; one task at a time.
 - **Catch-up for new players:** Normal characters under level 50 lose no experience when they die, and everyone under 50 trains skills twice as fast. Boot test: 42 in-game tests pass.
+
+### 2026-11-08 (overnight) — Phase 3 started: houses that do things
+- **Buying:** `!buyhouse` while facing a free house's doorway (1,000 gold per tile, level 20, one house each, weekly rent). When a floor is first cleared, its credited players get the new district for an hour (half the houses at most), then everyone.
+- **House Portal:** `!portal set` where you want to go (only 3 times ever, never into boss rooms, Deadzones, secrets or near a floor boss), then `!portal` from inside your house.
+- **Summoning Circle:** every credited boss kill gives a Boss Sigil; `!summon <boss>` in a house of 30+ tiles spawns a private copy (normal loot, never counts as a first clear).
+- **Fortune Hall:** `!fortune license` (250,000 gold) turns your house into a gambling hall; visitors bet with `!dice <amount> high|low` against the owner's bank. Gold only (bank to bank, so shop items can't be bet), 100 to 1,000,000 per roll, the hall keeps 5% which is destroyed, every bet logged.
+- **Open House:** `!openhouse` opens your house to everyone for 2 hours with an announcement. House management spells now use our own words ("house guests", "house doors", "house subowners", "house kick"). Boot test: 44 in-game tests pass.

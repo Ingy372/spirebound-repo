@@ -138,6 +138,9 @@ class Map:
             for x in range(x0 + 1, x0 + w - 1):
                 self.house[(x, y, z)] = hid
                 tiles.append((x, y, z))
+        # the doorway is part of the house, so "!buyhouse" works when you stand outside and face it
+        self.house[(door[0], door[1], z)] = hid
+        tiles.append((door[0], door[1], z))
         entry = {"s": (door[0], door[1] + 1), "n": (door[0], door[1] - 1), "e": (door[0] + 1, door[1]), "w": (door[0] - 1, door[1])}[door_side]
         self.houses[hid] = {"name": name, "town": town, "rent": rent, "entry": (entry[0], entry[1], z), "size": len(tiles)}
 
