@@ -12,7 +12,7 @@ This week is a quick install test, not a gameplay test yet. The map is still a b
 1. In the repo folder, open `windows` and double-click **Install-Spirebound.bat**. Allow the Windows prompts. Wait for **Done!** (first run downloads about 1 GB).
 2. Double-click **Start-Spirebound.bat**. A black server window should say "Spirebound server online!", then the client opens.
 3. Log in: account `jay`, password `spirebound`. Pick **Climber**.
-4. Walk around for a minute. Type `arc slash` (it should say you need a sword: proof the sword skills are loaded).
+4. Walk around for a minute. Type `arc slash`: the game should answer with a short refusal message (Climber has no vocation yet), which proves the sword skills are loaded. The Registrar isn't placed on the stand-in map yet; he arrives with the Floor 1 map.
 5. Close everything with **Stop-Spirebound.bat**.
 6. Write what happened in `PLAYTEST.md`: "install OK" or copy any red error text. Screenshots welcome.
 
