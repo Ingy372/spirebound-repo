@@ -38,6 +38,38 @@ local function creatureSayCallback(npc, player, type, msg)
 	local lower = msg:lower()
 	local now = os.time()
 
+	-- recruiting board (DESIGN.md 6.5: finding a clan was the hardest part)
+	if lower == "recruit on" or lower == "recruit off" then
+		local leader, guild = isLeader(player)
+		if not leader then
+			return say(npc, player, "Only a guild leader can post on the recruiting board.")
+		end
+		kv.scoped("spirebound-recruit"):set(tostring(guild:getId()), lower == "recruit on" and guild:getName() or false)
+		return say(npc, player, lower == "recruit on" and "Your guild is on the recruiting board." or "Your guild is off the board.")
+	end
+	if lower == "guilds" or lower == "recruiting" then
+		local names = {}
+		local q = db.storeQuery("SELECT `name`, `id` FROM `guilds`")
+		if q then
+			repeat
+				if kv.scoped("spirebound-recruit"):get(tostring(Result.getNumber(q, "id"))) then
+					table.insert(names, Result.getString(q, "name"))
+				end
+			until not Result.next(q)
+			Result.free(q)
+		end
+		return say(npc, player, #names == 0 and "No guild is recruiting right now. Say !lfg to let leaders know you're looking." or ("Recruiting: " .. table.concat(names, ", ") .. "."))
+	end
+	if lower == "lfg" or lower == "looking" then
+		local names = {}
+		for _, p in ipairs(Game.getPlayers()) do
+			if p:kv():scoped("spirebound-social"):get("lfg") and not p:getGuild() then
+				table.insert(names, p:getName() .. " (" .. p:getLevel() .. ")")
+			end
+		end
+		return say(npc, player, #names == 0 and "Nobody is looking for a guild right now." or ("Looking for a guild: " .. table.concat(names, ", ") .. "."))
+	end
+
 	-- found <name>
 	local newName = msg:match("^[Ff]ound%s+(.+)$")
 	if newName then
@@ -120,7 +152,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Greetings, |PLAYERNAME|. I keep the guild rolls. Say {found} <name> to start a guild (level " .. FOUND_LEVEL .. ", " .. FOUND_COST .. " gold). Leaders can offer a {war}: say war <days> <kill limit, 0 for none> <guild>. Wars only happen if both leaders agree.")
+npcHandler:setMessage(MESSAGE_GREET, "Greetings, |PLAYERNAME|. I keep the guild rolls. Say {found} <name> to start a guild (level " .. FOUND_LEVEL .. ", " .. FOUND_COST .. " gold). Leaders can offer a {war}: say war <days> <kill limit, 0 for none> <guild>. Wars only happen if both leaders agree. See who is {recruiting}, or who's {looking} for a guild. Leaders: {recruit on} / {recruit off}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "May your banner fly high.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

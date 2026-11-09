@@ -111,3 +111,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - **Summoning Circle:** every credited boss kill gives a Boss Sigil; `!summon <boss>` in a house of 30+ tiles spawns a private copy (normal loot, never counts as a first clear).
 - **Fortune Hall:** `!fortune license` (250,000 gold) turns your house into a gambling hall; visitors bet with `!dice <amount> high|low` against the owner's bank. Gold only (bank to bank, so shop items can't be bet), 100 to 1,000,000 per roll, the hall keeps 5% which is destroyed, every bet logged.
 - **Open House:** `!openhouse` opens your house to everyone for 2 hours with an announcement. House management spells now use our own words ("house guests", "house doors", "house subowners", "house kick"). Boot test: 44 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 3.6: guild tools and chat channels
+- Guild bank at Banker Tolliver; Guildwarden Sela keeps a recruiting board ("recruit on" for leaders, "recruiting" to see who's hiring) and lists players looking for a guild (`!lfg` to flag yourself). New chat channels: World (English), Mundo (Portuguese/Spanish), Trade, Help, Looking for Group; the Canary channel with a Tibia town name is gone.
+- Caught and fixed: a generator was deleting hand-written NPC files that share its file-name prefix; it now only rewrites its own files, and the town test checks all 12 Hearthgate NPCs. Boot test: 44 in-game tests pass.

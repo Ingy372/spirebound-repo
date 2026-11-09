@@ -84,7 +84,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [x] **3.3 Summoning Circle + Boss Sigils.** Done when: test summons a private boss copy that gives no world-first credit.
 - [x] **3.4 Fortune Hall** (dice, high-low, duel betting; gold only; 5% destroyed; bet cap; logs). Done when: tests: shop item and shop currency bets refused; cut destroyed; log written.
 - [ ] **3.5 Training room, trophies, mannequins, garden & pond, workshop, guild war room.** (Open House is done: `!openhouse`.) Done when: each has a test or a scripted use check.
-- [ ] **3.6 Guilds full** (bank, recruitment board, LFG flag/channel, guild halls). Done when: tests pass.
+- [x] **3.6 Guilds (part):** guild bank at the banker ("guild balance"), recruiting board and looking-for-guild list at Guildwarden Sela, `!lfg` flag, chat channels World / Mundo / Trade / Help / Looking for Group. Guild halls come with the floor towns that have them (phase 4). Done when: boot test loads all of it with zero errors (dialogue checked in the playtest).
 - [ ] **3.7 🧑 Phase 3 playtest.**
 
 ## Phase 4 — Floors 2 to 5

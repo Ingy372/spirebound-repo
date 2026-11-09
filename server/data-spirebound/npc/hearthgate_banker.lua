@@ -46,11 +46,12 @@ local function creatureSayCallback(npc, player, type, msg)
 		return false
 	end
 	npc:parseBank(msg, npc, player, npcHandler)
+	npc:parseGuildBank(msg, npc, player, player:getId(), npcHandler)
 	npc:parseBankMessages(msg, npc, player, npcHandler)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold.")
+npcHandler:setMessage(MESSAGE_GREET, "Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold. Guild members can use the {guild balance} too.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, function(npc, player) return refuseMurderers(npc, player) and NpcBankGreetCallback(npc, player) end)

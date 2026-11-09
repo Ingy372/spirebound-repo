@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Spirebound chat channels (DESIGN.md 13 and 15): World (English), Mundo (Portuguese/Spanish), Trade, Help, LFG. -->
+<channels>
+	<channel id="2" name="Tutor" script="tutor.lua" />
+	<channel id="3" name="World" public="1" script="world_chat.lua" />
+	<channel id="4" name="Mundo" public="1" script="mundo.lua" />
+	<channel id="5" name="Trade" public="1" script="trade.lua" />
+	<channel id="7" name="Help" public="1" script="help.lua" />
+	<channel id="9" name="Looking for Group" public="1" script="lfg.lua" />
+	<channel id="8" name="Gamemaster" script="gamemaster.lua" />
+	<channel id="11" name="Guild Leaders" script="guild_leaders.lua" />
+</channels>

@@ -120,7 +120,8 @@ SpireTest.add("bosses: first kills open the labyrinth and the stair to floor 2",
 end)
 
 SpireTest.add("town: all Hearthgate NPCs are standing in town", function()
-	local want = { "Registrar Maelis", "Priest Odran", "Banker Tolliver", "Merchant Wenna", "Quartermaster Bryn", "Weaponsmith Garrick", "Armorer Hesta" }
+	local want = { "Registrar Maelis", "Priest Odran", "Banker Tolliver", "Merchant Wenna", "Quartermaster Bryn", "Weaponsmith Garrick", "Armorer Hesta",
+		"Vesper", "Bounty Warden Cass", "Guildwarden Sela", "Taskmaster Ren", "Captain Dorrow" }
 	local found = {}
 	for _, c in ipairs(Game.getSpectators(WorldPoints.temple_hearthgate, false, false, 60, 60, 50, 50)) do
 		if c:isNpc() then

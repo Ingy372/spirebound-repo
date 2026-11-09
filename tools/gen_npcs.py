@@ -21,7 +21,7 @@ NPCS = {
         kind="priest", voices=["The tower takes, the temple gives back.", "Wounded? Come, sit."]),
     "hearthgate_banker": dict(
         name="Banker Tolliver", desc="the banker of Hearthgate", look=(132, 115, 76, 35, 116, 0),
-        greet="Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold.",
+        greet="Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold. Guild members can use the {guild balance} too.",
         kind="bank", voices=["Coins are safer here than in your pockets."]),
     "hearthgate_merchant": dict(
         name="Merchant Wenna", desc="the general merchant", look=(136, 78, 86, 107, 115, 0),
@@ -123,6 +123,7 @@ local function creatureSayCallback(npc, player, type, msg)
 		return false
 	end
 	npc:parseBank(msg, npc, player, npcHandler)
+	npc:parseGuildBank(msg, npc, player, player:getId(), npcHandler)
 	npc:parseBankMessages(msg, npc, player, npcHandler)
 	return true
 end
@@ -214,8 +215,7 @@ def check_prices():
 
 def main():
     check_prices()
-    for f in OUT.glob("hearthgate_*.lua"):
-        f.unlink()
+    # only rewrite this generator's own files (hand-written NPCs live next to them)
     for key, d in NPCS.items():
         (OUT / f"{key}.lua").write_text(render(d))
     print(f"wrote {len(NPCS)} NPCs")
