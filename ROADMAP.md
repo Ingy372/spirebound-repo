@@ -19,10 +19,10 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: `tools/test_boot.sh` exits 0 and its log shows the server online.
 - [x] **1.4 Spirebound datapack skeleton.** `server/data-spirebound/` based on Canary's small `data-canary` pack, rebranded, CipSoft names removed, the systems in DESIGN §2 switched off in config.
   Done when: boot test passes with `dataPackDirectory = data-spirebound` and `check_names.py` reports 0 banned names in it.
-- [ ] **1.5 Windows one-click setup.** `windows/Install-Spirebound.ps1` downloads pinned Canary (Windows build), OTClient Redemption 4.2 (Windows build), portable MariaDB and the 15.11 client files; creates the database; points the client at localhost. `Start-Spirebound.bat` / `Stop-Spirebound.bat`.
+- [ ] **1.5 Windows one-click setup.** *(built and checked in the cloud; waiting for Jay's first run)* `windows/Install-Spirebound.ps1` downloads pinned Canary (Windows build), OTClient Redemption 4.2 (Windows build), portable MariaDB and the 15.11 client files; creates the database; points the client at localhost. `Start-Spirebound.bat` / `Stop-Spirebound.bat`.
   Done when: script passes a dry-run check in the cloud (all download URLs answer, all paths exist), and 🧑 Jay double-clicks it once and reaches the login screen (logged in PLAYTEST.md).
-- [ ] **1.6 Dev accounts.** Script that creates a test account + GM character in the database.
-  Done when: running it twice gives two working accounts, verified by a database query in the boot test.
+- [x] **1.6 Dev accounts.** Script that creates a test account + GM character in the database.
+  Done when: running it twice still gives exactly one test account (jay) with its 2 characters, verified by a database query in every boot test.
 - [ ] **1.7 Map tools for 15.x.** Update the ASCII map compiler legend to Canary/15.11 item ids; renderer makes a PNG preview.
   Done when: the 40×40 test town compiles to `.otbm`, the server loads it with zero map warnings, and a preview PNG is written.
 - [ ] **1.8 Floor 1 placeholder map.** Hearthgate (temple, depot, bank, shops, 6 houses, Arrival Yard), Millcross, starter fields, 6 hunting camps, apex spawn (outer + inner layer), the Pass arena, a 3-level labyrinth, boss room, sealed stair, the Underkeep grate (sealed), a Floor 2 landing room.

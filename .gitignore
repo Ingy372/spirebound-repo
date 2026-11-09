@@ -35,3 +35,4 @@ Thumbs.db
 # build output and local secrets
 .build/
 server/local.env
+.local/

@@ -31,6 +31,12 @@ MY=(mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DATABASE")
 if ! "${MY[@]}" -N -e "SHOW TABLES LIKE 'server_config'" | grep -q server_config; then
   echo "importing schema"; "${MY[@]}" < "$B/schema.sql"
 fi
+# Local test accounts (roadmap 1.6); safe to repeat
+"${MY[@]}" < "$ROOT/server/sql/dev_accounts.sql"
+ACC=$("${MY[@]}" -N -e "SELECT COUNT(*) FROM accounts WHERE name='jay'")
+CHARS=$("${MY[@]}" -N -e "SELECT COUNT(*) FROM players p JOIN accounts a ON a.id=p.account_id WHERE a.name='jay' AND p.name IN ('Jay','Climber')")
+if [[ "$ACC" != "1" || "$CHARS" != "2" ]]; then echo "FAIL: dev accounts (accounts=$ACC characters=$CHARS)"; exit 1; fi
+echo "dev account jay: 1 account, 2 characters"
 
 LOG="$ROOT/.build/boot.log"
 cd "$B"

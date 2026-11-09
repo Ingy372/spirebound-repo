@@ -31,3 +31,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 — Task 1.14: sword skills v1
 - 24 sword skills live (3 for each of the 8 weapon families: sword, axe, club, bow, crossbow, spear, wand, rod). Each needs the right weapon in hand, has its own cooldown plus a 1-second shared cooldown, and is tagged Opener / Link / Finisher.
 - Combo: Opener → Link → Finisher within 4 seconds each = Finisher hits 30% harder and shouts "COMBO!". For now cast by typing the skill's name (e.g. `arc slash`); the hotbar comes with the client work (task 1.20). Boot test: online, 0 errors, 13 in-game tests pass.
+
+### 2026-11-08 — Tasks 1.5 (built), 1.6: one-click Windows setup and test accounts
+- New `windows/` folder: **Install-Spirebound.bat** (installs free MariaDB + C++ runtime with winget, downloads Canary, OTClient and the placeholder Tibia art, builds everything into the hidden `.local` folder, creates the database), **Start-Spirebound.bat**, **Stop-Spirebound.bat**, and a plain-English README.
+- Checked in the cloud: every download link answers, the script parses, its server config comes out byte-for-byte identical to the tested Linux build, and its client edits (connect to this PC, protocol 15.11) apply correctly. It has not run on Windows yet: that's your first playtest step.
+- Test account **jay / spirebound** with characters **Jay** (gamemaster) and **Climber** (new player); created on every install/boot, checked by the boot test.
