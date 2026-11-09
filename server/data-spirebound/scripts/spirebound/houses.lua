@@ -228,3 +228,35 @@ function SpireHouses.awardSigil(name, bossName)
 		p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You earned a Boss Sigil: " .. bossName .. ". Use it in a house Summoning Circle (!summon).")
 	end
 end
+
+-- Relist announcements: every 5 minutes (and right after start-up, when unpaid rent is collected), houses
+-- that lost their owner since the last look are announced as back on the market.
+local relist = GlobalEvent("SpireHouseRelist")
+function relist.onThink(interval)
+	local store = kv.scoped("spirebound-houselist")
+	local before = store:get("owned")
+	local now, names = {}, {}
+	for _, house in ipairs(Game.getHouses()) do
+		if house:getOwnerGuid() > 0 then
+			now[tostring(house:getId())] = true
+		end
+	end
+	if before then
+		for _, id in ipairs(SpireHouses.freedHouses(before, now)) do
+			local house = House(tonumber(id))
+			if house and house:getOwnerGuid() == 0 then
+				local town = house:getTown()
+				table.insert(names, string.format("%s (%s)", house:getName(), town and town:getName() or "?"))
+			end
+		end
+		local text = SpireHouses.relistText(names)
+		if text then
+			Game.broadcastMessage(text, MESSAGE_EVENT_ADVANCE)
+			logger.info("[Spirebound] houses relisted: {}", #names)
+		end
+	end
+	store:set("owned", now)
+	return true
+end
+relist:interval(5 * 60 * 1000)
+relist:register()

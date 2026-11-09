@@ -32,3 +32,15 @@ SpireTest.add("houses: houses loaded with doorways, house spells use our words",
 	if n < 9 then error("only " .. n .. " houses") end
 	SpireTest.eq(Spell("House Guest List") ~= nil, true, "house guest list spell")
 end)
+
+SpireTest.add("houses: relist announcements for houses that lost their owner", function()
+	local freed = SpireHouses.freedHouses({ ["3"] = true, ["7"] = true, ["9"] = true }, { ["7"] = true, ["12"] = true })
+	SpireTest.eq(#freed, 2, "two houses freed")
+	SpireTest.eq(freed[1], "3", "house 3 freed")
+	SpireTest.eq(SpireHouses.relistText({}), nil, "nothing freed: no message")
+	SpireTest.eq(SpireHouses.relistText({ "Mill Row 1 (Hearthgate)" }), "Back on the market: Mill Row 1 (Hearthgate). Say !buyhouse at the door.", "one house")
+	local many = SpireHouses.relistText({ "a", "b", "c", "d", "e" })
+	SpireTest.eq(many:sub(1, 34), "5 houses are back on the market, i", "many houses summarised")
+	SpireTest.eq(type(House) == "table" or type(House) == "userdata" or type(House) == "function", true, "House class exists")
+	SpireTest.eq(#Game.getHouses() > 0, true, "the map has houses")
+end)

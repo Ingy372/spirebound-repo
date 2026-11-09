@@ -79,7 +79,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 
 ## Phase 3 — Houses and gambling
 - [x] **3.1 Houses, rent, head start.** Listed price (1,000 gold per tile), level 20, one per character, weekly rent (the engine reverts unpaid houses), first-clear head start with the half-district cap. Done when: in-game tests for the head-start rules and that every house has a reachable doorway. Relisting announcements moved to 3.1b.
-- [ ] **3.1b Relist announcements** for reverted houses at server save. Done when: test.
+- [x] **3.1b Relist announcements** for reverted houses at server save. Done when: test. *(Done: checked every 5 minutes and right after start-up; 4+ houses are summarised in one message.)*
 - [x] **3.2 House Portal (3 changes ever).** Done when: test: 4th change refused; forbidden targets refused.
 - [x] **3.3 Summoning Circle + Boss Sigils.** Done when: test summons a private boss copy that gives no world-first credit.
 - [x] **3.4 Fortune Hall** (dice, high-low, duel betting; gold only; 5% destroyed; bet cap; logs). Done when: tests: shop item and shop currency bets refused; cut destroyed; log written.

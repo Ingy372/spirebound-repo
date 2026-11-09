@@ -85,3 +85,27 @@ function SpireHouses.diceWins(call, roll)
 	end
 	return roll <= 3
 end
+
+-- Relist announcements (roadmap 3.1b) ------------------------------------
+-- Pure: which houses were owned in `before` (id -> true) but are free in `now` (id -> true if owned)?
+function SpireHouses.freedHouses(before, now)
+	local freed = {}
+	for id, _ in pairs(before or {}) do
+		if not now[id] then
+			table.insert(freed, id)
+		end
+	end
+	table.sort(freed)
+	return freed
+end
+
+-- Pure: the announcement text for freed houses (names = list of "House (Town)"), nil if none
+function SpireHouses.relistText(names)
+	if #names == 0 then
+		return nil
+	end
+	if #names <= 3 then
+		return "Back on the market: " .. table.concat(names, ", ") .. ". Say !buyhouse at the door."
+	end
+	return string.format("%d houses are back on the market, including %s. Say !buyhouse at the door.", #names, table.concat({ names[1], names[2], names[3] }, ", "))
+end

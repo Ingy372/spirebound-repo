@@ -67,7 +67,7 @@ function SpireSeason.wipeStatements()
 		"DELETE FROM `kv_store` WHERE `key_name` LIKE 'player.%' OR `key_name` LIKE 'spirebound-floors%' OR `key_name` LIKE 'spirebound-secrets-public%'"
 			.. " OR `key_name` LIKE 'spirebound-bounties%' OR `key_name` LIKE 'spirebound-headstart%' OR `key_name` LIKE 'spirebound-twinfang%'"
 			.. " OR `key_name` LIKE 'spirebound-fortune%' OR `key_name` LIKE 'spirebound-recruit%' OR `key_name` LIKE 'spirebound-memorial%'"
-			.. " OR `key_name` LIKE 'spirebound-openhouse%'",
+			.. " OR `key_name` LIKE 'spirebound-openhouse%' OR `key_name` LIKE 'spirebound-houselist%'",
 	}
 end
 
