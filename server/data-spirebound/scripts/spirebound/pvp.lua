@@ -78,6 +78,18 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 	end
 	local now = os.time()
 	local zone = SpirePvP.zoneAt(player:getPosition())
+	-- Bounty on the victim?
+	local bounty = SpireBounty.get(player:getGuid())
+	if (bounty.total or 0) > 0 then
+		local ok, why = SpireBounty.validClaimer(Difficulty.playerInfo(player), Difficulty.playerInfo(k))
+		if ok then
+			k:setBankBalance(k:getBankBalance() + bounty.total)
+			SpireBounty.clear(player:getGuid())
+			Game.broadcastMessage(string.format("%s collected the %d gold bounty on %s!", k:getName(), bounty.total, player:getName()), MESSAGE_EVENT_ADVANCE)
+		else
+			k:sendTextMessage(MESSAGE_EVENT_ADVANCE, "No bounty for you on " .. player:getName() .. " (" .. why .. ").")
+		end
+	end
 	-- Sanctuary against a guild that keeps killing you (outside wars)
 	local kg = guildId(k)
 	if kg ~= 0 and unjustified then
