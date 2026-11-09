@@ -79,6 +79,9 @@ for i, def in ipairs(SwordSkills.list) do
 		activeMultiplier[pid] = mult
 		local ok = combat:execute(creature, var)
 		activeMultiplier[pid] = nil
+		if ok and SpireClient then
+			SpireClient.send(player, { t = "cast", name = def.name, cd = def.cd, combo = mult > 1 })
+		end
 		if mult > 1 then
 			player:say("COMBO!", TALKTYPE_MONSTER_SAY)
 			player:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)

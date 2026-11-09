@@ -1,13 +1,10 @@
-# client
+# client/
 
-The Spirebound client is OTClient (mehah fork, MIT license) at a pinned commit, plus our changes.
-We do not vendor the client source; `.github/workflows/client-windows.yml` checks out the pinned commit,
-builds it, and `tools/package_client.py` applies Spirebound's changes:
+Spirebound's additions to OTClient Redemption (pinned in `server/PINS.env`). The Windows installer copies `client/modules/*` into the downloaded client.
 
-- name, server list (our login server only), our RSA public key
-- the upstream third-party client-asset downloader is disabled
-- `data/things/1098/` contains only `Spirebound.dat` / `Spirebound.spr` from `tools/build_assets.py`
-- the bot module (`mods/game_bot`) is removed
-- our UI modules from `client/modules/spire_*` (phase 1+)
+| Module | What it does |
+|---|---|
+| `modules/game_spirebound` | Floor indicator ("Floor 1 - Hearthgate Plains") at the top of the game screen, Hardcore / Death Game label, the sword-skill bar (up to 6 skills for the weapon in your hand, Shift+1..6 or click, live cooldowns, colour by Opener/Link/Finisher), and SAO-style cursors over players (green clean, orange aggressor, red murderer, dark red serial murderer) |
 
-Pinned: mehah/otclient @ 396f0b396741bdd4469f27cf9376103930712cff (recorded in STATUS.md).
+Server side of the link: `server/data-spirebound/lib/spirebound/client_link.lua` (extended opcode 210, JSON).
+Cursor images are placeholders; final art is in `ART_REQUESTS.md` batch 2.

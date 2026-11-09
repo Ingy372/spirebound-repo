@@ -67,3 +67,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 1.14b: spells to level 50
 - 42 spells live, unlocking automatically at their level with a "New spell" message: 8 shared (light, find a player, first aid, cleanse, climb up/down, food, haste, strong light) plus each vocation's own up to level 50 (Vanguard 7, Ranger 8, Arcanist 9, Mystic 10). Includes party buffs, damage-reduction stances, a taunt, dashes, blink, summons (Ember Sprite, Wolf Companion), rune conjuring (fire, strike, healing, paralysis runes) and no ammo conjuring.
 - Tibia's own spells and incantations are removed from the server build, and Canary's weapon/rune files are rewritten to our vocation names, so Arcanists can use wands, Rangers bows, and so on (same step added to the Windows installer and checked to give identical results). Boot test: 25 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 1.20: Spirebound client UI v1
+- New client module `client/modules/game_spirebound` (installed automatically): floor name at the top of the screen, a Hardcore / Death Game label, a sword-skill bar at the bottom (the skills of the weapon in your hand; click or Shift+1..6; cooldowns count down; colours show Opener / Link / Finisher), and SAO cursors over players (green, orange, red, dark red). The server sends floor, difficulty, skills and cast cooldowns on a private channel. Boot test: 26 in-game tests pass.
+- Not yet verified in the real client: that's in your Phase 1 playtest. Cursor images are simple placeholders.

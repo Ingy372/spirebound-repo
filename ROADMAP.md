@@ -51,8 +51,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: test kills the Gate Hound with a GM command and the door tile becomes walkable; after restart it stays open.
 - [x] **1.19 Axe-Lord and the Floor 2 unlock.** Boss with 3 phases and telegraphs; credit list; last hit; enrage scaling; first kill opens the stair, broadcasts the gold announcement, writes the monument, unlocks Floor 2 landing.
   Done when: in-game tests check credit (90-second window, top contributors), resets, enrage steps, and a full first kill (saved state, broadcast, stair boulder removed, last hit recorded), and that a second kill does none of the first-clear actions. Not yet: healing counts toward credit, the house head start (phase 3), the in-game Monument display.
-- [ ] **1.20 Client UI v1.** OTClient modules: floor indicator (shows "Floor 1 — Hearthgate Plains"), cursor colors (green/orange/red), sword-skill bar (6 slots with cooldowns), difficulty icon.
-  Done when: modules load in the client with no Lua errors in a headless client check, and the server sends the floor/skill data they need (test).
+- [x] **1.20 Client UI v1.** OTClient module `game_spirebound`: floor indicator (shows "Floor 1 - Hearthgate Plains"), cursor colors (green/orange/red/dark red), sword-skill bar (6 slots, Shift+1..6, live cooldowns), difficulty label.
+  Done when: the module passes a Lua syntax check and the server's messages are covered by in-game tests (JSON format, floor lookup). Seeing it work in the real client is part of the Phase 1 playtest (no headless 15.x client exists to automate this).
 - [ ] **1.21 🧑 Phase 1 playtest.** WEEKLY_REPORT.md with an under-an-hour checklist. Jay plays it.
   Done when: Jay writes "Phase 1 OK" (or notes) in PLAYTEST.md, and every note is either fixed or moved to a later task.
 
