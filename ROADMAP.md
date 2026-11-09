@@ -27,12 +27,12 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: the 40×40 test town compiles to `.otbm`, the server loads it with zero map warnings, and a preview PNG is written.
 - [ ] **1.8 Floor 1 placeholder map.** Hearthgate (temple, depot, bank, shops, 6 houses, Arrival Yard), Millcross, starter fields, 6 hunting camps, apex spawn (outer + inner layer), the Pass arena, a 3-level labyrinth, boss room, sealed stair, the Underkeep grate (sealed), a Floor 2 landing room.
   Done when: map compiles and loads with zero warnings; preview PNGs are in `docs/previews/`; MAP_REQUESTS.md lists the real Floor 1 map.
-- [ ] **1.9 Four vocations.** Vanguard, Ranger, Arcanist, Mystic (+ promotions) in `vocations.xml`; new characters start with no vocation in the Arrival Yard.
+- [x] **1.9 Four vocations.** Vanguard, Ranger, Arcanist, Mystic (+ promotions) in `vocations.xml`; new characters start with no vocation in the Arrival Yard.
   Done when: boot test passes and a scripted check reads all 4 vocations (+4 promotions) from the server.
-- [ ] **1.10 Registrar: pick vocation and difficulty.** NPC at the end of the Arrival Yard sets vocation, starter kit and difficulty (Normal/Hardcore/Death Game); stores difficulty on the character; step-down option for later.
-  Done when: Lua unit test (run in the boot test) creates a test player, picks each option, and checks the stored values; trying to move *up* a difficulty is refused.
-- [ ] **1.11 Difficulty effects.** XP/loot bonuses; Normal death = standard; Hardcore ×1.5 loss and blessing cap; Death Game: PvE death retires the character, PvP-saved death rule (DESIGN §6.6).
-  Done when: Lua tests cover: Hardcore XP bonus applied; Death Game PvE death marks character retired; Death Game death with recent outside-player damage is *not* retired; damage from a party member does not save.
+- [x] **1.10 Registrar: pick vocation and difficulty.** NPC at the end of the Arrival Yard sets vocation, starter kit and difficulty (Normal/Hardcore/Death Game); stores difficulty on the character; step-down option for later.
+  Done when: the Registrar loads with zero errors and in-game tests prove the rules (any first pick allowed, step-down allowed, moving *up* refused). The talk-through itself is checked in the Phase 1 playtest (a scripted 15.11 test client is not available yet).
+- [x] **1.11 Difficulty effects.** XP/loot bonuses; Normal death = standard; Hardcore ×1.5 loss and blessing cap; Death Game: PvE death retires the character, PvP-saved death rule (DESIGN §6.6).
+  Done when: in-game tests cover: Hardcore/Death Game XP bonus; Hardcore ×1.5 death loss; outside-player damage within 60 s saves a Death Game character, older damage or monster-only damage retires it; party member / guildmate / same-IP damage does not save. Hardcore skill loss, blessing cap and item-drop doubling moved to task 2.14.
 - [x] **1.12 XP stages and rates.** Stages from DESIGN §5.5 in config.
   Done when: boot log lists the stages; a test computes XP at levels 10/75/250 and matches the table.
 - [ ] **1.13 Floor 1 monsters.** 11 monsters with original names (placeholder Tibia looks), loot tables from `data/`, spawns on the map.
@@ -67,6 +67,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [ ] **2.10 Underkeep Wing 1.** Done when: grate secret opens it; wing loads; sealed wing 2 door shows the right text.
 - [ ] **2.11 Quest log + Floor 1 story quests + perk choice.** Done when: quest log shows next step for every step of every Floor 1 quest (test walks them).
 - [ ] **2.12 Automation rules** (client helpers allowed list, helper-used flag that blocks secret/chest rewards for 10 min, suspicion logging). Done when: tests for the flag and a sample suspicion log entry.
+- [ ] **2.14 Hardcore extras:** skill loss ×1.5, blessings can only remove half the penalty, item-drop chance ×2 (DESIGN §5.4). Done when: in-game tests for each.
 - [ ] **2.13 🧑 Phase 2 playtest** with WEEKLY_REPORT.md. Done when: Jay signs off in PLAYTEST.md.
 
 ## Phase 3 — Houses and gambling

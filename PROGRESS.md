@@ -18,3 +18,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - `tools/build_server.py` downloads the pinned Canary v3.6.1 and assembles a server from it plus our own files; `tools/test_boot.sh` starts it, runs in-game tests and fails on any error. Result: **server online, 0 errors, 1 in-game test passed** (cloud test box).
 - New datapack `server/data-spirebound/` (from Canary's small sample pack, all CipSoft-named monsters/NPCs/quests stripped). Prey, hunting tasks, Wheel of Destiny, Forge monsters and boosted boss are switched off; newbie protection set to level 50; 2 characters online per account.
 - XP stages from DESIGN.md 5.5 are live (25x early down to 2x at 401+), checked by an in-game test. The world map is still Canary's sample map as a stand-in until task 1.8.
+
+### 2026-11-08 — Tasks 1.9, 1.10, 1.11: vocations, the Registrar, difficulty modes
+- Four vocations live: Vanguard, Ranger, Arcanist, Mystic, promoting to Blade Warden, Far Warden, High Arcanist, Elder Mystic (Canary's extra Monk vocation removed).
+- New NPC **Registrar Maelis** (Arrival Yard): pick a vocation (with starter kit) and Normal / Hardcore / Death Game; later, "step down" to an easier mode (never up).
+- Difficulty effects: +25%/+50% XP, +15%/+30% loot, Hardcore death costs ×1.5 XP. Death Game: killed by monsters = character retired to the Memorial with a server announcement; if an outside player hit you in the last 60 s it counts as PvP and you survive (party, guild or same-IP hits don't count). Boot test: online, 0 errors, 5 in-game tests pass. Hardcore extras (skills, blessing cap, item drops) queued as task 2.14.
