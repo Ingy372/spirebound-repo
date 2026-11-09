@@ -26,6 +26,13 @@ function target.creatureOnTargetCombat(creature, victim)
 		return RETURNVALUE_NOERROR
 	end
 	local zone = SpirePvP.zoneAt(v:getPosition())
+	if zone == "arena" then
+		-- equal-footing events: only opponents in the running event (no level rules)
+		if SpireArena.current and SpireArena.canHit(SpireArena.current, a:getGuid(), v:getGuid()) then
+			return RETURNVALUE_NOERROR
+		end
+		return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
+	end
 	local ra = recentAttacks[a:getGuid()] or {}
 	local ok, reason = SpirePvP.canAttack(
 		{ level = a:getLevel(), skull = a:getSkull(), sanctuaryVsTheirGuild = sanctuaryActive(a, guildId(v)) },
@@ -47,7 +54,7 @@ local hits = CreatureEvent("SpirePvPHits")
 function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
 	local v = creature:getPlayer()
 	local a = attacker and (attacker:getPlayer() or (attacker:getMaster() and attacker:getMaster():getPlayer()))
-	if v and a and a ~= v and primaryType ~= COMBAT_HEALING then
+	if v and a and a ~= v and primaryType ~= COMBAT_HEALING and SpirePvP.zoneAt(v:getPosition()) ~= "arena" then
 		local now = os.time()
 		local list = recentAttacks[v:getGuid()] or {}
 		list[a:getGuid()] = now

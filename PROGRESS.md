@@ -159,3 +159,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 
 ### 2026-11-08 (overnight) — Task 6.5c: the Season Path
 - A free reward track (say **!path**). Daily goals (300 monsters, 25 sword-skill combos, 5 fish: +10 each) and weekly goals (3,000 monsters, 3 bosses, 2 hunting tasks, 1 secret: +40 each). Every 100 points is a tier: 30 tiers of house furniture kits, tapestries, trophies and 6 titles. Cosmetic only, resets each season, and kills while the built-in cavebot is on don't count. About 8 weeks of steady play fills it (my call on the numbers). Boot test: 58 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 5.7c: Arena events on equal footing
+- A walled Arena under Floor 1 (reached only by event teleport). Sign-ups open daily at 19:00 and 22:00 server time (**!arena join**, level 20+, 4–20 fighters), rotating **Last Man Standing** (one life, last one wins), **Team Rush** (first team to 20 kills) and **Capture the Banner** (hold the centre square alone: a point every 5 seconds, first to 60). 10-minute limit.
+- Equal footing (my call, engine limit): inside, everyone has 1,500 health and 1,000 mana, and every hit, spell and heal between fighters is a fixed amount, so level and gear don't matter. Nobody dies, nothing is lost, Death Game characters are safe. Winners get the "Arena Victor" title. GM test commands: `/arena open lms|rush|banner`, `/arena start`, `/arena stop`. Boot test: 61 in-game tests pass.

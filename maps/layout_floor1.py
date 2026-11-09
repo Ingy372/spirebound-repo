@@ -285,3 +285,19 @@ def build(m):
         back = (e[0] - 1, e[1] - 1, e[2])
         m.teleport(back, (src[0] - 2, src[1], src[2]), f"uk_back{wid}")
 
+
+    # ------------------------------------------------ The Arena (DESIGN.md 15, roadmap 5.7c): z 11, reached only by
+    # event teleport. Engine PvP-zone flag (0x10): no skulls, no death loss. Two team starts and a banner tile.
+    ax0, ay0, az = X0 + 10, Y0 + 10, 11
+    m.fill(ax0, ay0, 40, 30, az, "gravel")
+    m.walls(ax0, ay0, 40, 30, az)
+    m.flag(ax0 + 1, ay0 + 1, 38, 28, az, 0x0010)
+    for px_, py_ in ((ax0 + 12, ay0 + 9), (ax0 + 27, ay0 + 9), (ax0 + 12, ay0 + 20), (ax0 + 27, ay0 + 20)):
+        m.put(px_, py_, az, ID_PILLAR)  # cover
+    m.fill(ax0 + 18, ay0 + 13, 4, 4, az, "stonefloor")  # the banner square
+    m.points["arena_a"] = (ax0 + 4, ay0 + 15, az)
+    m.points["arena_b"] = (ax0 + 35, ay0 + 15, az)
+    m.points["arena_center"] = (ax0 + 20, ay0 + 15, az)
+    m.points["arena_nw"] = (ax0 + 1, ay0 + 1, az)
+    m.points["arena_se"] = (ax0 + 38, ay0 + 28, az)
+    m.zone("arena", ax0, ay0, 40, 30, az)
