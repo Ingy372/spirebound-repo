@@ -76,6 +76,12 @@ MONSTERS = {
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
                                   elements={"physical": 10},
                                   events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
+    # ---------------------------------------------------------------- spell summons (DESIGN.md 5.3b)
+    "Ember Sprite": dict(desc="an ember sprite", look=(49,), corpse=0, hp=300, xp=0, speed=150, race="fire",
+                         attacks=[("melee", 0, -40), ("fire", -20, -60, 4)], armor=10, defense=10, summon=True,
+                         loot=[], elements={"fire": 100, "ice": -20}),
+    "Wolf Companion": dict(desc="a wolf companion", look=(27,), corpse=0, hp=400, xp=0, speed=160, race="blood",
+                           attacks=[("melee", 0, -50)], armor=15, defense=15, summon=True, loot=[]),
 }
 
 ELEMENTS = ["physical", "energy", "earth", "fire", "lifedrain", "manadrain", "drown", "ice", "holy", "death"]
@@ -83,6 +89,7 @@ SPELL = {
     "earth": ('name = "combat", type = COMBAT_EARTHDAMAGE', "CONST_ANI_EARTH", "CONST_ME_CARNIPHILA"),
     "energy": ('name = "combat", type = COMBAT_ENERGYDAMAGE', "CONST_ANI_ENERGY", "CONST_ME_ENERGYHIT"),
     "physical": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', "CONST_ANI_THROWINGKNIFE", "CONST_ME_HITAREA"),
+    "fire": ('name = "combat", type = COMBAT_FIREDAMAGE', "CONST_ANI_FIRE", "CONST_ME_FIREAREA"),
     "arrow": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', "CONST_ANI_ARROW", "CONST_ME_HITAREA"),
     "charge": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_GROUNDSHAKER"),
     "howl": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_SOUND_RED"),
@@ -108,7 +115,7 @@ def render(name, d):
          "monster.changeTarget = { interval = 4000, chance = %d }" % (20 if boss else 0),
          "monster.strategiesTarget = { nearest = 100 }", "",
          "monster.flags = {",
-         "\tsummonable = false, attackable = true, hostile = true, convinceable = false, pushable = false,",
+         f"\tsummonable = {str(d.get('summon', False)).lower()}, attackable = true, hostile = true, convinceable = false, pushable = false,",
          f"\trewardBoss = false, illusionable = false, canPushItems = {str(boss).lower()}, canPushCreatures = {str(boss).lower()},",
          f"\tstaticAttackChance = 90, targetDistance = {d.get('dist', 1)}, runHealth = 0, healthHidden = false, isBlockable = false,",
          "\tcanWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,",
@@ -125,8 +132,8 @@ def render(name, d):
         for sname, c in d["summons"]:
             L.append(f'\t{{ name = "{sname}", chance = 10, interval = 2000, count = {c} }},')
         L.append("} }")
-    if d.get("events"):
-        L.append("monster.events = { " + ", ".join(f'"{e}"' for e in d["events"]) + " }")
+    events = ["SpireBuffDamage"] + d.get("events", [])
+    L.append("monster.events = { " + ", ".join(f'"{e}"' for e in events) + " }")
     L.append("")
     L.append("monster.loot = {")
     for iid, chance, mx in d["loot"]:

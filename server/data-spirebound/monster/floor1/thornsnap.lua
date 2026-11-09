@@ -30,6 +30,7 @@ monster.light = { level = 0, color = 0 }
 monster.voices = {
 	interval = 5000, chance = 0,
 }
+monster.events = { "SpireBuffDamage" }
 
 monster.loot = {
 	{ id = 3031, chance = 85000, maxCount = 22 },

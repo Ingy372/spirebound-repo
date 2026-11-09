@@ -99,6 +99,33 @@ def apply_overrides(dist: str, overrides_path: Path, values: dict[str, str]) -> 
     return out
 
 
+# Canary's core files name Tibia's vocations; ours have Spirebound names (server/core-overrides/XML/vocations.xml).
+VOCATION_RENAMES = [  # longest first
+    ("master sorcerer", "high arcanist"), ("elder druid", "elder mystic"), ("royal paladin", "far warden"),
+    ("elite knight", "blade warden"), ("sorcerer", "arcanist"), ("druid", "mystic"), ("paladin", "ranger"), ("knight", "vanguard"),
+]
+
+
+def rename_vocations(text: str, pattern: str) -> str:
+    """Rename vocation names only inside matches of `pattern` (vocation attributes / vocation(...) calls)."""
+    def fix(m):
+        chunk = m.group(0)
+        for old, new in VOCATION_RENAMES:
+            chunk = re.sub(old, lambda mm, new=new: new.title() if mm.group(0)[0].isupper() else new, chunk, flags=re.I)
+        return chunk
+    return re.sub(pattern, fix, text)
+
+
+def patch_core(build: Path) -> None:
+    items = build / "data" / "items" / "items.xml"
+    items.write_text(rename_vocations(items.read_text(encoding="utf-8"), r'key="vocation" value="[^"]*"'), encoding="utf-8")
+    for folder in ("runes", "weapons"):
+        for f in (build / "data" / "scripts" / folder).rglob("*.lua"):
+            f.write_text(rename_vocations(f.read_text(encoding="utf-8"), r"vocation\([^)]*\)"), encoding="utf-8")
+    # Tibia's spells (and their incantations) are replaced by Spirebound's own (data-spirebound/scripts/spirebound/spells)
+    shutil.rmtree(build / "data" / "scripts" / "spells", ignore_errors=True)
+
+
 def main(argv: list[str]) -> None:
     offline = "--offline" in argv
     CACHE.mkdir(exist_ok=True)
@@ -113,6 +140,8 @@ def main(argv: list[str]) -> None:
     (BUILD / "canary").chmod(0o755)
     with tarfile.open(tgz) as t:
         t.extractall(BUILD, filter="data") if sys.version_info >= (3, 12) else t.extractall(BUILD)
+
+    patch_core(BUILD)
 
     # our datapack + core overrides
     shutil.copytree(ROOT / "server" / "data-spirebound", BUILD / "data-spirebound")

@@ -39,7 +39,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: boot test reports all 11 monster types loaded with zero warnings, each spawned at least once on the map; ART_REQUESTS.md has an entry for each.
 - [x] **1.14 Sword skill system v1.** Skill framework (weapon-family check, cooldowns, shared 1 s cooldown, Opener/Link/Finisher combo bonus) + the first 3 skills of all 8 weapon families.
   Done when: all 24 skills register as spells with cooldowns; in-game tests check 3 skills per family, weapon-family detection (right/wrong weapon), and that only Opener → Link → Finisher within 4 s gives +30%. Feel, damage and cooldown display are checked in the Phase 1 playtest.
-- [ ] **1.14b Spells v1.** The 8 shared spells and every vocation spell up to level 50 from DESIGN §5.3b (own incantations), learned automatically on reaching the level (no trainer, no gold), with a "you learned" message.
+- [x] **1.14b Spells v1.** The 8 shared spells and every vocation spell up to level 50 from DESIGN §5.3b (own incantations), learned automatically on reaching the level (no trainer, no gold), with a "you learned" message.
   Done when: every listed spell up to level 50 registers with zero errors; in-game tests check each vocation gets only its own spells at exactly the DESIGN §5.3b levels.
 - [x] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, quartermaster (potions + ammo: the gold sink), weaponsmith, armorer. Travel guide comes with Floor 2 (phase 4).
   Done when: each NPC loads with zero warnings and stands in Hearthgate (in-game test), and the generator refuses any price loop (an item that sells for more than it can be bought for). Buying and selling by hand is in the Phase 1 playtest.

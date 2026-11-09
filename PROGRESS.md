@@ -63,3 +63,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 1.15: Hearthgate's shopkeepers
 - Six NPCs from one table (`tools/gen_npcs.py`): Priest Odran (free healing under level 50 or when badly hurt; blessings for gold), Banker Tolliver (balance/deposit/withdraw/transfer), Merchant Wenna (rope, shovel, food, fishing gear), Quartermaster Bryn (potions and ammunition: the main gold burn), Weaponsmith Garrick (starter weapons for all 8 weapon types), Armorer Hesta (leather to brass). The generator blocks buy-low/sell-high loops. Boot test: 21 in-game tests pass.
 - Known gap: blessing names still use Canary's built-in (Tibia) names; renamed when the blessings get their own design.
+
+### 2026-11-08 (overnight) — Task 1.14b: spells to level 50
+- 42 spells live, unlocking automatically at their level with a "New spell" message: 8 shared (light, find a player, first aid, cleanse, climb up/down, food, haste, strong light) plus each vocation's own up to level 50 (Vanguard 7, Ranger 8, Arcanist 9, Mystic 10). Includes party buffs, damage-reduction stances, a taunt, dashes, blink, summons (Ember Sprite, Wolf Companion), rune conjuring (fire, strike, healing, paralysis runes) and no ammo conjuring.
+- Tibia's own spells and incantations are removed from the server build, and Canary's weapon/rune files are rewritten to our vocation names, so Arcanists can use wands, Rangers bows, and so on (same step added to the Windows installer and checked to give identical results). Boot test: 25 in-game tests pass.

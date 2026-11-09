@@ -100,6 +100,30 @@ if (Test-Path $Srv) { Remove-Item -Recurse -Force $Srv }
 New-Item -ItemType Directory -Force -Path $Srv | Out-Null
 Expand-Archive -Path $canaryExeZip -DestinationPath $Srv -Force
 foreach ($n in @("data", "config.lua.dist", "schema.sql", "LICENSE")) { Copy-Item -Recurse (Join-Path $src.FullName $n) $Srv }
+# Canary's core files name Tibia's vocations; rename them to ours (same rules as tools/build_server.py)
+$renames = @(@("master sorcerer","high arcanist"), @("elder druid","elder mystic"), @("royal paladin","far warden"),
+             @("elite knight","blade warden"), @("sorcerer","arcanist"), @("druid","mystic"), @("paladin","ranger"), @("knight","vanguard"))
+function Rename-Vocations([string]$text, [string]$pattern) {
+    return [regex]::Replace($text, $pattern, {
+        param($m)
+        $chunk = $m.Value
+        foreach ($r in $renames) {
+            $chunk = [regex]::Replace($chunk, $r[0], {
+                param($mm)
+                $new = $r[1]
+                if ([char]::IsUpper($mm.Value[0])) { (Get-Culture).TextInfo.ToTitleCase($new) } else { $new }
+            }, "IgnoreCase")
+        }
+        return $chunk
+    })
+}
+$itemsXml = Join-Path $Srv "data\items\items.xml"
+[IO.File]::WriteAllText($itemsXml, (Rename-Vocations ([IO.File]::ReadAllText($itemsXml)) 'key="vocation" value="[^"]*"'))
+foreach ($f in Get-ChildItem (Join-Path $Srv "data\scripts\runes"), (Join-Path $Srv "data\scripts\weapons") -Recurse -Filter *.lua) {
+    [IO.File]::WriteAllText($f.FullName, (Rename-Vocations ([IO.File]::ReadAllText($f.FullName)) 'vocation\([^)]*\)'))
+}
+# Tibia's spells are replaced by Spirebound's own
+Remove-Item -Recurse -Force (Join-Path $Srv "data\scripts\spells") -ErrorAction SilentlyContinue
 Copy-Item -Recurse (Join-Path $Root "server\data-spirebound") (Join-Path $Srv "data-spirebound")
 Copy-Item -Recurse -Force (Join-Path $Root "server\core-overrides\*") (Join-Path $Srv "data")
 $world = Join-Path $Srv "data-spirebound\world"
