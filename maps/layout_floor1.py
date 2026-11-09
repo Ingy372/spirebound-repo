@@ -73,7 +73,7 @@ def build(m):
 
     # monument square + fountain
     m.put(tx + 70, ty + 36, Z, 1922)
-    m.sign(tx + 70, ty + 39, Z, "The Monument. Names of those who opened the tower's floors are carved here.")
+    m.sign(tx + 70, ty + 39, Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
     m.points["monument"] = (tx + 70, ty + 37, Z)
     m.npcs.append(("Bounty Warden Cass", (tx + 66, ty + 42, Z)))
     m.npcs.append(("Guildwarden Sela", (tx + 74, ty + 42, Z)))

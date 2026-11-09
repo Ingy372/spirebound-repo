@@ -109,7 +109,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 
 ## Phase 6 — Client polish and languages
 - [ ] **6.1 Info Broker window, secret list, fishing log, quest log UI.**
-- [ ] **6.2 Death Game Memorial + leaderboard (in game).**
+- [x] **6.2 Death Game Memorial + leaderboard (in game).** *(Done: `!memorial` and `!top [normal|hardcore|deathgame]`; the Monument sign points to them. A proper client window comes with 6.1.)*
 - [ ] **6.3 Portuguese and Spanish text** for UI, NPCs, quests, server messages.
 - [ ] **6.4 Custom asset pipeline for 15.x** (our own appearances + sprite sheets from Jay's PNGs). Done when: a test sprite made from a PNG shows up in the client in place of a placeholder.
 - [ ] **6.5 Swap in all art Jay has delivered so far.**

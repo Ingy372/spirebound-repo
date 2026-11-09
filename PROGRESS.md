@@ -153,3 +153,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 2.14b: the rest of the Hardcore death penalty
 - **Skills:** a Hardcore death now costs 1.5× the normal skill and magic loss. The engine can't take skill progress away from a script, so the extra half becomes a "skill debt": your next training of that skill pays it off first (you get a message when it's cleared).
 - **Items:** each equipped item gets a second 10% chance to fall into the corpse, which matches "doubled, blessings only remove half". An amulet of loss shatters on a Hardcore death and protects nothing. Not in arenas; red/black skulls already drop everything. DESIGN.md 5.5 explains it. Boot test: 56 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 6.2: the Memorial and leaderboards
+- **!memorial** lists every Death Game climber who fell this season (level, vocation, what killed them, date). **!top** shows the 20 highest climbers, marking Hardcore, Death Game and fallen characters; **!top normal / hardcore / deathgame** shows each mode's own board. The Monument sign in Hearthgate tells players about both. Boot test: 57 in-game tests pass.
