@@ -28,3 +28,6 @@ Thumbs.db
 /dist/
 /server/data/logs/*
 !/server/data/logs/.gitkeep
+
+# local downloads (never commit; may contain third-party files)
+.cache/

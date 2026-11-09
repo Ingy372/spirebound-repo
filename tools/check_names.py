@@ -26,8 +26,10 @@ ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_GLOBS = [
     "data/*.csv", "tools/secrets_src.csv", "assets/assets.csv",
     "maps/src/**/*.txt", "maps/src/**/*.csv",
-    "server/data/**/*.xml", "server/data/**/*.lua",
-    "client/modules/spire_*/**/*", "website/**/*.php", "website/**/*.html", "website/**/*.json",
+    "server/data-spirebound/**/*.xml", "server/data-spirebound/**/*.lua",
+    "server/data-spirebound/**/*.json", "client/modules/**/*.lua", "client/modules/**/*.otui",
+    "DESIGN.md", "ART_REQUESTS.md", "MAP_REQUESTS.md",
+    "website/**/*.php", "website/**/*.html", "website/**/*.json",
 ]
 # Upstream engine libraries copied verbatim from TFS (not player-visible content).
 SKIP_PARTS = {"migrations", "npcsystem"}

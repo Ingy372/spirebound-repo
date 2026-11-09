@@ -9,3 +9,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - **Kept, not deleted:** the October design pack (`docs/`, `data/`, `tools/`) and the phase-0 TFS server work. The old `CLAUDE.md` is replaced by the new one; the old `STATUS.md`, `CHANGELOG.md` and `OWNER_INPUT.md` (your player-experience answers, which DESIGN.md still draws on) moved into `docs/` with "_2026-10" in their names. Work now happens on the `main` branch (the phase-0 branch was merged in).
 - **Task 1.1 done:** wrote DESIGN.md (game bible from your brief, gaps marked "Claude's call"), ROADMAP.md (10 phases, Phase 1 = character creation → Floor 1 boss → Floor 2 unlocks), CLAUDE.md (your working rules), QUESTIONS.md (9 questions, each with a recommendation already assumed), PLAYTEST.md, ART_REQUESTS.md (first batch with Grok prompts), MAP_REQUESTS.md.
 - **Research:** Canary v3.6.1 (protocol 15.11) and OTClient Redemption 4.2 both publish ready-made Windows builds, so your PC never needs a compiler. Cyntara's bot rules summarized in DESIGN.md §12.
+
+### 2026-11-08 — Task 1.2: old TFS setup archived
+- Moved the TFS 1.4.2 server, its config scripts, the 10.98 art pipeline, the old test client and old CI into `legacy/tfs-1.4.2/` (nothing deleted; `legacy/README.md` lists every item and why).
+- Kept in use: name checker (now also scans DESIGN.md, ART_REQUESTS.md and the new datapack), table generator, map writer and map compiler. Name check: 0 banned names.

@@ -13,7 +13,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 
 - [x] **1.1 Planning files.** DESIGN.md, ROADMAP.md, CLAUDE.md, PROGRESS.md, QUESTIONS.md, PLAYTEST.md, ART_REQUESTS.md, MAP_REQUESTS.md exist in the repo root.
   Done when: all eight files are committed.
-- [ ] **1.2 Archive the old TFS setup.** Move the TFS 1.4.2 server import and the 10.98-only tools into `legacy/`, keep every reusable tool (names checker, table generator, map compiler). Note it in PROGRESS.md.
+- [x] **1.2 Archive the old TFS setup.** Move the TFS 1.4.2 server import and the 10.98-only tools into `legacy/`, keep every reusable tool (names checker, table generator, map compiler). Note it in PROGRESS.md.
   Done when: `legacy/README.md` explains what moved and why; `server/` is free for Canary; `python3 tools/check_names.py` still runs.
 - [ ] **1.3 Cloud test server.** Script that downloads pinned Canary v3.6.1 (Linux build), sets up MariaDB, and boots it with our datapack.
   Done when: `tools/test_boot.sh` exits 0 and its log shows the server online.
