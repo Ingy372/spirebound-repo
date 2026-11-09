@@ -152,6 +152,12 @@ def build(m, n):
     m.points[P + "gate_next"] = (bx + 15, by + 2, bz)
     m.points[f"stair_floor{n + 1}_src"] = (bx + 15, by + 1, bz)
 
+    # Floor 8: the hidden Twin Fang trial (DESIGN.md 5.6): a stone circle inside the apex cave
+    if n == 8:
+        tf = (ax + 30, ay + 30, 8)
+        m.clear_items(*tf)
+        m.points["twin_fang_trial"] = tf
+
     # secrets: 12 trigger tiles spread over the camps and wilds
     spots = [(X0 + 15 + (k * 23) % 260, Y0 + 100 + (k * 37) % 150) for k in range(40)]
     placed = 0

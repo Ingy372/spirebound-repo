@@ -1,7 +1,7 @@
 -- Spirebound client UI (roadmap 1.20). Talks to the server over extended opcode 210 (JSON);
 -- server side: server/data-spirebound/lib/spirebound/client_link.lua
 local OPCODE = 210
-local SLOTS = 6
+local SLOTS = 9
 local floorLabel, diffLabel, bar = nil, nil, nil
 local floorText, zoneText = '', ''
 local ZONES = {

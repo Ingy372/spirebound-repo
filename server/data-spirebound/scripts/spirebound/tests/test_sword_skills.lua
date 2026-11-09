@@ -2,7 +2,9 @@
 SpireTest.add("sword skills: 6 per weapon family, all with words and cooldowns", function()
 	local count = {}
 	for _, d in ipairs(SwordSkills.list) do
-		count[d.family] = (count[d.family] or 0) + 1
+		if not d.twinFang then
+			count[d.family] = (count[d.family] or 0) + 1
+		end
 		if not d.words or d.cd < 1000 then
 			error(d.key .. " missing words or cooldown")
 		end

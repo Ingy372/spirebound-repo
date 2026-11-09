@@ -31,7 +31,7 @@ monster.voices = {
 	interval = 5000, chance = 10,
 	{ text = "Grrr!", yell = false },
 }
-monster.events = { "SpireBuffDamage" }
+monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 70000, maxCount = 10 },

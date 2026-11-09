@@ -427,6 +427,7 @@ WorldPoints = {
 	["stair_floor9"] = Position(4550, 1011, 4),
 	["stair_floor9_src"] = Position(4550, 1011, 4),
 	["temple_hearthgate"] = Position(1235, 1287, 7),
+	["twin_fang_trial"] = Position(4450, 1050, 8),
 	["underkeep_chest"] = Position(1254, 1264, 8),
 	["underkeep_entry"] = Position(1194, 1264, 8),
 	["underkeep_exit"] = Position(1192, 1262, 8),

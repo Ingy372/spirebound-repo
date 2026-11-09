@@ -67,6 +67,10 @@ for i, def in ipairs(SwordSkills.list) do
 		if not player then
 			return false
 		end
+		if def.twinFang and not SwordSkills.hasTwinFang(player) then
+			player:sendCancelMessage(def.name .. " belongs to the Twin Fang. Only its holders know it.")
+			return false
+		end
 		local held = SwordSkills.heldFamily(player)
 		if held ~= def.family then
 			player:sendCancelMessage(def.name .. " needs a " .. def.family .. " in hand.")
@@ -83,6 +87,8 @@ for i, def in ipairs(SwordSkills.list) do
 			SpireClient.send(player, { t = "cast", name = def.name, cd = def.cd, combo = mult > 1 })
 		end
 		if mult > 1 then
+			local kvs = player:kv():scoped("spirebound-twinfang")
+			kvs:set("combos", (kvs:get("combos") or 0) + 1)
 			player:say("COMBO!", TALKTYPE_MONSTER_SAY)
 			player:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)
 		end

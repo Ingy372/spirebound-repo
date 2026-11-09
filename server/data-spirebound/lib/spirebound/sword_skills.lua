@@ -83,7 +83,35 @@ SwordSkills.list = {
 	{ key = "glacial_edge", name = "Glacial Edge", words = "glacial edge", family = "rod", tag = "opener", area = "target", coef = 1.7, cd = 4000, level = 60, effect = CONST_ME_ICEATTACK, distance = CONST_ANI_ICE, element = COMBAT_ICEDAMAGE },
 	{ key = "bramble_script", name = "Bramble Script", words = "bramble script", family = "rod", tag = "link", area = "targetaround1", coef = 1.5, cd = 8000, level = 100, effect = CONST_ME_SMALLPLANTS, distance = CONST_ANI_EARTH, element = COMBAT_EARTHDAMAGE, slow = true },
 	{ key = "lifebloom_rite", name = "Lifebloom Rite", words = "lifebloom rite", family = "rod", tag = "finisher", area = "around2", coef = 2.0, cd = 16000, level = 150, effect = CONST_ME_PLANTATTACK, element = COMBAT_EARTHDAMAGE, partyHeal = 0.08 },
+	-- Twin Fang (DESIGN.md 5.6): only for holders of the rare unique skill
+	{ key = "twin_fang_rush", name = "Twin Fang Rush", words = "twin fang rush", family = "sword", tag = "opener", area = "line4", coef = 2.0, cd = 6000, level = 1, twinFang = true, effect = CONST_ME_HITAREA, element = COMBAT_PHYSICALDAMAGE },
+	{ key = "crossed_fangs", name = "Crossed Fangs", words = "crossed fangs", family = "sword", tag = "link", area = "around1", coef = 2.2, cd = 9000, level = 1, twinFang = true, effect = CONST_ME_DRAWBLOOD, element = COMBAT_PHYSICALDAMAGE },
+	{ key = "fang_storm", name = "Fang Storm", words = "fang storm", family = "sword", tag = "finisher", area = "target", coef = 4.0, cd = 18000, level = 1, twinFang = true, effect = CONST_ME_EXPLOSIONHIT, element = COMBAT_PHYSICALDAMAGE },
 }
+
+-- Twin Fang -----------------------------------------------------------------
+SwordSkills.TWIN_FANG = { MAX_HOLDERS = 3, SWORD_SKILL = 80, COMBOS = 1000, OFFHAND = 0.5 }
+
+function SwordSkills.hasTwinFang(player)
+	return player:kv():scoped("spirebound-twinfang"):get("holder") == true
+end
+
+-- Pure: may this character take the trial?
+function SwordSkills.twinFangEligible(baseVocation, swordSkill, combos, holders)
+	if holders >= SwordSkills.TWIN_FANG.MAX_HOLDERS then
+		return false, "The trial is sealed until next season. Three already hold the Twin Fang."
+	end
+	if baseVocation ~= 4 then
+		return false, "Only a Vanguard can hold two fangs."
+	end
+	if swordSkill < SwordSkills.TWIN_FANG.SWORD_SKILL then
+		return false, "Your sword skill must reach " .. SwordSkills.TWIN_FANG.SWORD_SKILL .. "."
+	end
+	if combos < SwordSkills.TWIN_FANG.COMBOS then
+		return false, string.format("Finish %d sword-skill combos first (%d so far).", SwordSkills.TWIN_FANG.COMBOS, combos)
+	end
+	return true
+end
 
 -- Pure combo rule. state = { stage = 0|1|2, t = seconds }. Returns newState, multiplier.
 function SwordSkills.comboStep(state, tag, now)

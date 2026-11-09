@@ -92,6 +92,9 @@ MONSTERS = {
     "Ember Sprite": dict(desc="an ember sprite", look=(49,), corpse=0, hp=300, xp=0, speed=150, race="fire",
                          attacks=[("melee", 0, -40), ("fire", -20, -60, 4)], armor=10, defense=10, summon=True,
                          loot=[], elements={"fire": 100, "ice": -20}),
+    "Twin Fang Warden": dict(desc="the Twin Fang Warden", look=(131, 114, 94, 114, 94, 3), corpse=18074, hp=60000, xp=0, speed=220,
+                             race="blood", attacks=[("melee", 0, -900), ("lance_", -500, -1100, 1)], armor=80, defense=80,
+                             loot=[], boss=True, voices=["Show me two blades in one heart."], events=["SpireTwinFangDeath"]),
     "Mirror Image": dict(desc="a mirror image", look=(130,), corpse=0, hp=2000, xp=0, speed=0, race="undead",
                          attacks=[("melee", 0, 0)], armor=50, defense=50, summon=True, loot=[]),
     "Wolf Companion": dict(desc="a wolf companion", look=(27,), corpse=0, hp=400, xp=0, speed=160, race="blood",
@@ -108,6 +111,7 @@ SPELL = {
     "charge": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_GROUNDSHAKER"),
     "howl": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_SOUND_RED"),
     "cleave": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_HITAREA"),
+    "lance_": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_HITAREA"),
 }
 
 
@@ -146,7 +150,7 @@ def render(name, d):
         for sname, c in d["summons"]:
             L.append(f'\t{{ name = "{sname}", chance = 10, interval = 2000, count = {c} }},')
         L.append("} }")
-    events = ["SpireBuffDamage"] + d.get("events", [])
+    events = ["SpireBuffDamage", "SpireTwinFangOffhand"] + d.get("events", [])
     L.append("monster.events = { " + ", ".join(f'"{e}"' for e in events) + " }")
     L.append("")
     L.append("monster.loot = {")
@@ -170,7 +174,7 @@ def render(name, d):
             if kind in ("howl",):
                 parts.append(f"radius = {rng}")
                 parts.append("target = false")
-            elif kind == "cleave":
+            elif kind in ("cleave", "lance_"):
                 parts.append("length = 3, spread = 0")
                 parts.append("target = false")
             elif kind == "charge":

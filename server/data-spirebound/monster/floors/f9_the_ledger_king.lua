@@ -33,7 +33,7 @@ monster.voices = {
 monster.summon = { maxSummons = 2, summons = {
 	{ name = "Ledger Ghost", chance = 10, interval = 2000, count = 2 },
 } }
-monster.events = { "SpireBuffDamage", "SpireBossHealth", "SpireBossDeath", "SpireBossThink" }
+monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand", "SpireBossHealth", "SpireBossDeath", "SpireBossThink" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },

@@ -52,8 +52,9 @@ end
 function SpireClient.skillList(player)
 	local fam = SwordSkills.heldFamily(player)
 	local list = {}
+	local twin = SwordSkills.hasTwinFang(player)
 	for _, d in ipairs(SwordSkills.list) do
-		if d.family == fam then
+		if d.family == fam and (d.level or 1) <= player:getLevel() and (not d.twinFang or twin) then
 			table.insert(list, { name = d.name, words = d.words, cd = d.cd, tag = d.tag })
 		end
 	end

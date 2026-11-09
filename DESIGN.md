@@ -297,9 +297,10 @@ Bonus percentages are **(Claude's call, Jay can veto)**.
 
 ### 5.6 Dual wielding: the rare unique skill "Twin Fang"
 - Earned in-game only. Never sold.
-- Hidden trial on Floor 8 (itself a secret). To enter: Vanguard, sword proficiency at a high tier, and you must have finished a sword-skill combo 1,000 times **(Claude's call)**.
+- Hidden trial on Floor 8 (itself a secret). To enter: Vanguard, sword skill 80+, and you must have finished a sword-skill combo 1,000 times **(Claude's call)**.
 - **Rare:** only the first **3** characters per season to complete the trial get it. When the third is taken, the trial room seals with a server announcement **(Claude's call, Jay can veto the number)**.
-- Effect: equip a second sword in the shield hand. Off-hand adds an extra hit per attack at 50% damage, unlocks 3 exclusive dual-blade sword skills, and you lose the shield's defense. Balanced so it is a distinct style, not a must-have.
+- Effect: fight with a sword and an **empty shield hand**: every melee hit is followed by an off-hand strike at 50% damage, and 3 exclusive sword skills unlock (Twin Fang Rush, Crossed Fangs, Fang Storm). You give up the shield's defense. Balanced so it is a distinct style, not a must-have. (The engine can't hold two weapons at once, so the second blade is the off-hand strike. **Claude's call, Jay can veto.**)
+- The trial: a stone circle hidden in Floor 8's apex cave. Step on it with the requirements met and the Twin Fang Warden rises; defeat it to claim the skill.
 - If a Twin Fang holder dies on Death Game or the season ends, the slot reopens next season (not mid-season) **(Claude's call)**.
 
 ---
