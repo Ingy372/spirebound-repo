@@ -149,3 +149,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 
 ### 2026-11-08 (overnight) — Task 3.1b: houses back on the market
 - When a house loses its owner (unpaid rent, deleted character), the server announces it: "Back on the market: <house> (<town>). Say !buyhouse at the door." Checked right after start-up and every 5 minutes; many at once are summarised in one line. Boot test: 55 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 2.14b: the rest of the Hardcore death penalty
+- **Skills:** a Hardcore death now costs 1.5× the normal skill and magic loss. The engine can't take skill progress away from a script, so the extra half becomes a "skill debt": your next training of that skill pays it off first (you get a message when it's cleared).
+- **Items:** each equipped item gets a second 10% chance to fall into the corpse, which matches "doubled, blessings only remove half". An amulet of loss shatters on a Hardcore death and protects nothing. Not in arenas; red/black skulls already drop everything. DESIGN.md 5.5 explains it. Boot test: 56 in-game tests pass.

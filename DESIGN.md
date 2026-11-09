@@ -270,7 +270,7 @@ Bonus percentages are **(Claude's call, Jay can veto)**.
 
 **Normal = standard Tibia:** you lose a share of your experience and skill progress on death, reduced by blessings bought from the temple priest; with no blessings and no amulet you can drop items. Red/black skulls lose more (6.4).
 
-**Hardcore (Claude's call):** experience and skill loss ×1.5. Blessings can only reduce the penalty by half (not fully). Item drop chance on death doubled. No amulet that prevents item loss.
+**Hardcore (Claude's call):** experience and skill loss ×1.5. Blessings can only reduce the penalty by half (not fully). Item drop chance on death doubled. No amulet that prevents item loss. *How it works (engine limits, Claude's call):* the extra skill loss is a "skill debt" — half of what the death took must be re-trained before new progress counts (the engine can't remove skill progress from a script). Items get a second 10% roll per equipped item, which works out to exactly "doubled, blessings only remove half". An amulet of loss shatters on a Hardcore death and protects nothing.
 
 **Death Game (Claude's call on details):**
 - Death by monsters, bosses, traps or environment deletes the character. In practice: the character is **retired**, locked forever, and placed on the Memorial wall in Hearthgate and the website with level, floor reached and cause of death. The account keeps every title and cosmetic already earned.

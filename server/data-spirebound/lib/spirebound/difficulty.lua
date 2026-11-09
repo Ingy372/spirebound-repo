@@ -123,3 +123,47 @@ function Difficulty.playerInfo(player)
 		partyId = party and party:getLeader():getGuid() or nil,
 	}
 end
+
+-- Hardcore death penalties beyond XP (roadmap 2.14b) ---------------------
+-- Skills: the engine takes its normal loss; Hardcore adds half of that again as a "skill debt" that eats your
+-- next training of that skill (the engine has no way to remove skill progress from a script).
+-- Items: Hardcore rolls a second, equal chance for every equipped item (backpack excluded) to fall into the corpse.
+Difficulty.HARDCORE_SKILL_EXTRA = 0.5
+Difficulty.ITEM_DROP_BASE = 10 -- percent per item with no blessings; each of 5 blessings removes a fifth
+
+-- Pure: total progress lost between two (level, tries) states. req(level) = tries needed to REACH that level.
+function Difficulty.lostTries(req, levelBefore, triesBefore, levelAfter, triesAfter)
+	local lost = triesBefore - triesAfter
+	for l = levelAfter + 1, levelBefore do
+		lost = lost + req(l)
+	end
+	return math.max(0, lost)
+end
+
+-- Pure: extra skill debt for a death that lost `lost` tries
+function Difficulty.skillDebt(mode, lost)
+	if mode ~= Difficulty.HARDCORE then
+		return 0
+	end
+	return math.floor(lost * Difficulty.HARDCORE_SKILL_EXTRA)
+end
+
+-- Pure: incoming training pays the debt first. Returns tries that still count, debt left.
+function Difficulty.payDebt(debt, tries)
+	if not debt or debt <= 0 then
+		return tries, 0
+	end
+	if tries <= debt then
+		return 0, debt - tries
+	end
+	return tries - debt, 0
+end
+
+-- Pure: Hardcore's extra drop chance (percent) per equipped item
+function Difficulty.extraItemDropChance(mode, blessings, hasAmuletOfLoss, redOrBlackSkull, inArena)
+	if mode ~= Difficulty.HARDCORE or hasAmuletOfLoss or redOrBlackSkull or inArena then
+		return 0 -- red/black skulls already drop everything; arenas never drop
+	end
+	local b = math.max(0, math.min(5, blessings or 0))
+	return Difficulty.ITEM_DROP_BASE * (5 - b) / 5
+end

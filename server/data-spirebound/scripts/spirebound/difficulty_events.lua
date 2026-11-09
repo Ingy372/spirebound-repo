@@ -22,7 +22,18 @@ lose:register()
 local skills = EventCallback("SpireCatchUpSkills")
 function skills.playerOnGainSkillTries(player, skill, tries)
 	if player:getLevel() < 50 then
-		return tries * 2
+		tries = tries * 2
+	end
+	-- Hardcore skill debt from a death is paid off first
+	local debts = player:kv():scoped("spirebound-skilldebt")
+	local debt = debts:get(tostring(skill))
+	if debt and debt > 0 then
+		local left
+		tries, left = Difficulty.payDebt(debt, tries)
+		debts:set(tostring(skill), left)
+		if left == 0 then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your Hardcore death penalty for this skill is paid off.")
+		end
 	end
 	return tries
 end
@@ -91,6 +102,98 @@ function login.onLogin(player)
 	end
 	player:registerEvent("SpireDeathGameHits")
 	player:registerEvent("SpireDeathGameDeath")
+	player:registerEvent("SpireHardcorePrepareDeath")
+	player:registerEvent("SpireHardcoreItemDrop")
+	SpireHardcore.settleDeath(player)
 	return true
 end
 login:register()
+
+-- Hardcore: skill debt and extra item drops (roadmap 2.14b) --------------
+SpireHardcore = {}
+local SKILLS = { SKILL_FIST, SKILL_CLUB, SKILL_SWORD, SKILL_AXE, SKILL_DISTANCE, SKILL_SHIELD, SKILL_FISHING }
+
+local function snapshot(player)
+	local snap = { magic = { player:getBaseMagicLevel(), player:getManaSpent() } }
+	for _, s in ipairs(SKILLS) do
+		snap[tostring(s)] = { player:getSkillLevel(s), player:getSkillTries(s) }
+	end
+	return snap
+end
+
+-- Called at login: compare with the snapshot taken just before death and add the Hardcore extra as debt
+function SpireHardcore.settleDeath(player)
+	local store = player:kv():scoped("spirebound")
+	local snap = store:get("deathsnap")
+	if not snap then
+		return
+	end
+	store:remove("deathsnap")
+	local voc = player:getVocation()
+	local debts = player:kv():scoped("spirebound-skilldebt")
+	local total = 0
+	for _, s in ipairs(SKILLS) do
+		local b = snap[tostring(s)]
+		if b then
+			local lost = Difficulty.lostTries(function(l) return voc:getRequiredSkillTries(s, l) end, b[1], b[2], player:getSkillLevel(s), player:getSkillTries(s))
+			local add = Difficulty.skillDebt(Difficulty.HARDCORE, lost)
+			if add > 0 then
+				debts:set(tostring(s), (debts:get(tostring(s)) or 0) + add)
+				total = total + add
+			end
+		end
+	end
+	local m = snap.magic
+	if m then
+		local lost = Difficulty.lostTries(function(l) return voc:getRequiredManaSpent(l) end, m[1], m[2], player:getBaseMagicLevel(), player:getManaSpent())
+		local add = Difficulty.skillDebt(Difficulty.HARDCORE, lost)
+		if add > 0 then
+			debts:set(tostring(SKILL_MAGLEVEL), (debts:get(tostring(SKILL_MAGLEVEL)) or 0) + add)
+			total = total + add
+		end
+	end
+	if total > 0 then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Hardcore: your death costs extra training. Your next skill and magic progress goes to paying it off first.")
+	end
+end
+
+local prep = CreatureEvent("SpireHardcorePrepareDeath")
+function prep.onPrepareDeath(player, killer, realDamage)
+	if Difficulty.get(player) == Difficulty.HARDCORE then
+		player:kv():scoped("spirebound"):set("deathsnap", snapshot(player))
+	end
+	return true
+end
+prep:register()
+
+local AMULET_OF_LOSS = 3057
+local DROP_SLOTS = { CONST_SLOT_HEAD, CONST_SLOT_NECKLACE, CONST_SLOT_ARMOR, CONST_SLOT_RIGHT, CONST_SLOT_LEFT, CONST_SLOT_LEGS, CONST_SLOT_FEET, CONST_SLOT_RING, CONST_SLOT_AMMO }
+
+local drop = CreatureEvent("SpireHardcoreItemDrop")
+function drop.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
+	if not corpse or Difficulty.get(player) ~= Difficulty.HARDCORE then
+		return true
+	end
+	local neck = player:getSlotItem(CONST_SLOT_NECKLACE)
+	local blessings = 0
+	for i = 1, 5 do
+		if player:hasBlessing(i) then
+			blessings = blessings + 1
+		end
+	end
+	local skull = player:getSkull()
+	local tile = Tile(player:getPosition())
+	local chance = Difficulty.extraItemDropChance(Difficulty.HARDCORE, blessings, neck and neck:getId() == AMULET_OF_LOSS,
+		skull == SKULL_RED or skull == SKULL_BLACK, tile and tile:hasFlag(TILESTATE_PVPZONE))
+	if chance <= 0 then
+		return true
+	end
+	for _, slot in ipairs(DROP_SLOTS) do
+		local item = player:getSlotItem(slot)
+		if item and math.random(1, 1000) <= chance * 10 then
+			item:moveTo(corpse)
+		end
+	end
+	return true
+end
+drop:register()
