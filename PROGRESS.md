@@ -36,3 +36,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - New `windows/` folder: **Install-Spirebound.bat** (installs free MariaDB + C++ runtime with winget, downloads Canary, OTClient and the placeholder Tibia art, builds everything into the hidden `.local` folder, creates the database), **Start-Spirebound.bat**, **Stop-Spirebound.bat**, and a plain-English README.
 - Checked in the cloud: every download link answers, the script parses, its server config comes out byte-for-byte identical to the tested Linux build, and its client edits (connect to this PC, protocol 15.11) apply correctly. It has not run on Windows yet: that's your first playtest step.
 - Test account **jay / spirebound** with characters **Jay** (gamemaster) and **Climber** (new player); created on every install/boot, checked by the boot test.
+
+### 2026-11-08 — End of session 1
+- Wrote WEEKLY_REPORT.md (install test checklist for Jay). All commits are on Jay's PC on the `main` branch; **not pushed to GitHub** (no upload access from this session; QUESTIONS.md Q1).
+- Next session: task 1.7 (map tools for 15.x item ids), then 1.8 (Floor 1 placeholder map), 1.13, 1.15, 1.18, 1.19, 1.20.
