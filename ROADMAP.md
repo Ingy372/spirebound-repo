@@ -91,7 +91,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field boss, labyrinth, floor boss, 12 secrets, fish list, story quests, perk.
 - [x] **4.1 Floor 2** · [x] **4.2 Floor 3** · [x] **4.3 Floor 4** · [x] **4.4 Floor 5** (placeholder versions from one generator)
   Done when (each): map, town with 7 NPCs, stairs up and down, field and floor boss spawned, 12 secrets placed, 7 fish and 3 story quests with perks (in-game tests); boot test passes. Hand-tuned boss mechanics and real maps come later (MAP_REQUESTS M3, playtest notes).
-- [ ] **4.5 Underkeep Wings 2–3.** Done when: wings open at Floors 2 and 4.
+- [x] **4.5 Underkeep Wings 2–3.** Done when: wings open at Floors 2 and 4 (in-game test checks each seal against its floor).
 - [x] **4.6 Sword skills 4–6 for every weapon family.** Done when: tests as in 1.14.
 - [x] **4.6b Spells above level 50 + the Lost Arts** (★ spells from quests, secrets and bosses). Done when: every spell in DESIGN §5.3b registers; tests check Lost Arts can't be bought.
 - [ ] **4.7 🧑 Phase 4 playtest.**
@@ -99,7 +99,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 ## Phase 5 — Floors 6 to 10 and Azhrakkar
 - [x] **5.1 Floor 6** · [x] **5.2 Floor 7** · [x] **5.3 Floor 8 (+ Twin Fang trial)** · [x] **5.4 Floor 9** · [x] **5.5 Floor 10 + Azhrakkar** (placeholder versions; Azhrakkar's 3 phases are in the pattern library, a scripted 3-phase test is still open)
   Done when (each): scripted speed run clears the floor; for 5.3 the 4th Twin Fang attempt is refused; for 5.5 all 3 Azhrakkar phases trigger in a scripted fight.
-- [ ] **5.6 Underkeep Wings 4–6.**
+- [x] **5.6 Underkeep Wings 4–6.**
 - [x] **5.7 World events scheduler** (Frenzy, Incursion, Fishing Frenzy, Wandering Champion). Done when: test forces each event and checks its announcement and end.
 - [x] **5.7b Weekend rotating bonus** (double XP / rapid respawn / double loot / double fishing / double skill). Done when: test forces each bonus and checks it ends.
 - [ ] **5.7c Equal-footing PvP arena events** (Last Man Standing, Team Rush, Capture the Banner; same level/gear for all). Done when: scripted event with test players starts, scores and ends.

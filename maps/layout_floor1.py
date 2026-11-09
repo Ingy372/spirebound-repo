@@ -250,3 +250,38 @@ def build(m):
     m.points["underkeep_wing2_door"] = (ux + 69, uy + 25, uz)
     m.sign(ux + 67, uy + 25, uz, "A black iron door. Sealed until the tower reaches Floor 2.")
 
+    # ------------------------------------------------ Underkeep Wings 2-6 (DESIGN.md 3.4): one per two floors cleared
+    # wing: (x, y, z, w, h, monsters, opens when floor N is open, boss)
+    wings = [
+        (2, ux + 70, uy + 5, uz, 60, 40, ["Vault Rat", "Chain Ghoul"], 2, "Drain Matron"),
+        (3, ux, uy, 9, 60, 50, ["Trap Mimic", "Iron Shade"], 4, None),
+        (4, ux - 55, uy + 5, 9, 50, 40, ["Keep Warden", "Iron Shade"], 6, None),
+        (5, ux, uy, 10, 40, 40, ["Keep Warden", "Chain Ghoul"], 8, "Vault Warden"),
+        (6, ux + 45, uy, 10, 45, 40, ["Deep Sentinel", "Vault Wraith"], 10, "The Underkeeper"),
+    ]
+    prev_exit = {2: (ux + 69, uy + 25, uz)}
+    for wid, wx, wy, wz, ww, wh, mons, req, boss in wings:
+        m.fill(wx, wy, ww, wh, wz, "cavefloor")
+        m.walls(wx, wy, ww, wh, wz)
+        for i, mon in enumerate(mons):
+            for j in range(2):
+                m.monsters.append((mon, (wx + 10 + j * (ww // 2), wy + 10 + i * (wh // 3), wz), 4, 4, 90))
+        if boss:
+            m.monsters.append((boss, (wx + ww - 8, wy + wh - 8, wz), 1, 1, 1800))
+        entry = (wx + 3, wy + 3, wz)
+        m.points[f"uk_wing{wid}_entry"] = entry
+        m.points[f"uk_wing{wid}_req"] = (req, 0, 0)  # floor that opens it (read by scripts/spirebound/underkeep.lua)
+        m.sign(wx + 4, wy + 1, wz, f"Underkeep, Wing {wid}.")
+    # doors between wings: a portal guarded by a boulder until the wing opens
+    links = [(2, (ux + 66, uy + 25, uz)), (3, (ux + 5, uy + 45, uz)), (4, (ux + 60, uy + 44, uz)),
+             (5, (ux + 6, uy + 44, 9)), (6, (ux + 30, uy + 35, 10))]
+    for wid, src in links:
+        if src not in m.ground:
+            continue
+        m.clear_items(*src)
+        e = m.points[f"uk_wing{wid}_entry"]
+        m.teleport(src, (e[0] + 1, e[1] + 1, e[2]), f"uk_door{wid}")  # sealed by script until the wing opens
+        m.points[f"uk_door{wid}_dest"] = (e[0] + 1, e[1] + 1, e[2])
+        back = (e[0] - 1, e[1] - 1, e[2])
+        m.teleport(back, (src[0] - 2, src[1], src[2]), f"uk_back{wid}")
+

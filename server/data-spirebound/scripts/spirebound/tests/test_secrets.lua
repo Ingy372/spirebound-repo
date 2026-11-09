@@ -40,3 +40,13 @@ SpireTest.add("underkeep: wing 1 exists, its monsters spawned, exit leads back u
 	end
 	if found < 10 then error("only " .. found .. " Underkeep monsters") end
 end)
+
+SpireTest.add("underkeep: wings 2-6 exist and stay sealed until their floor opens", function()
+	for wid = 2, 6 do
+		local src, req = WorldPoints["uk_door" .. wid], WorldPoints["uk_wing" .. wid .. "_req"]
+		if not src or not req or not WorldPoints["uk_wing" .. wid .. "_entry"] then error("wing " .. wid .. " missing") end
+		local tile = Tile(src)
+		local sealed = tile:getItemById(1772) ~= nil
+		SpireTest.eq(sealed, not Floors.isOpen(req.x), "wing " .. wid .. " seal matches floor " .. req.x)
+	end
+end)

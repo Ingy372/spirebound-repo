@@ -139,3 +139,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 5.3: the Twin Fang
 - Hidden stone circle in Floor 8's apex cave. A Vanguard with sword skill 80+ and 1,000 finished sword-skill combos (counted automatically) who steps on it faces the Twin Fang Warden; defeating it grants the Twin Fang, the title, and a server-wide announcement. Only 3 per season; after the third the trial seals.
 - Effect: with a sword and an empty shield hand, every melee hit adds a 50% off-hand strike, and three exclusive skills unlock (Twin Fang Rush, Crossed Fangs, Fang Storm). The engine can't hold two weapons, so this is how the "second blade" works (DESIGN.md 5.6 updated, my call). The client's skill bar grew to 9 slots and only shows skills you can use. Boot test: 51 in-game tests pass.
+
+### 2026-11-08 (overnight) — Tasks 4.5, 5.6: the Underkeep grows
+- Wings 2–6 now exist under Hearthgate (levels 8–10), each behind a portal that stays a boulder until the tower reaches its floor: Wing 2 at Floor 2 (Vault Rats, Chain Ghouls, the Drain Matron), Wing 3 at Floor 4 (Trap Mimics, Iron Shades), Wing 4 at Floor 6 (Keep Wardens), Wing 5 at Floor 8 (the Vault Warden), Wing 6 at Floor 10 (Deep Sentinels, Vault Wraiths, The Underkeeper). Opening is announced server-wide. Boot test: 52 in-game tests pass.

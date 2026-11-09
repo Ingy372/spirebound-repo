@@ -21,3 +21,53 @@ function box.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 end
 box:position(WorldPoints.underkeep_chest)
 box:register()
+
+-- Wings 2-6 open one by one as the tower climbs (DESIGN.md 3.4). Until then, the portal into the wing is a boulder.
+local TELEPORT, BOULDER = 1949, 1772
+
+local function setWing(wid, open)
+	local src, dest, req = WorldPoints["uk_door" .. wid], WorldPoints["uk_door" .. wid .. "_dest"], WorldPoints["uk_wing" .. wid .. "_req"]
+	if not src or not dest or not req then
+		return
+	end
+	local tile = Tile(src)
+	if not tile then
+		return
+	end
+	local tp, rock = tile:getItemById(TELEPORT), tile:getItemById(BOULDER)
+	if open and rock then
+		rock:remove()
+		local t = Game.createItem(TELEPORT, 1, src)
+		if t and t.setDestination then
+			t:setDestination(dest)
+		end
+		Game.broadcastMessage("A deeper wing of the Underkeep has opened: Wing " .. wid .. ".", MESSAGE_EVENT_ADVANCE)
+	elseif not open and tp then
+		tp:remove()
+		Game.createItem(BOULDER, 1, src)
+	end
+end
+
+function SpireUnderkeep_refresh()
+	for wid = 2, 6 do
+		local req = WorldPoints["uk_wing" .. wid .. "_req"]
+		if req then
+			setWing(wid, Floors.isOpen(req.x))
+		end
+	end
+end
+
+local startup = GlobalEvent("SpireUnderkeepStartup")
+function startup.onStartup()
+	SpireUnderkeep_refresh()
+	return true
+end
+startup:register()
+
+local check = GlobalEvent("SpireUnderkeepCheck")
+function check.onThink(interval)
+	SpireUnderkeep_refresh()
+	return true
+end
+check:interval(60000)
+check:register()
