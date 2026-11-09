@@ -124,7 +124,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **7.3 🧑 Jay picks shop prices and payment setup** (QUESTIONS.md).
 
 ## Phase 8 — Seasons
-- [ ] **8.1 Season reset tool** (archives characters to the Hall of Seasons, keeps account-wide rewards). Done when: test season: create chars + rewards, run reset, account rewards remain and characters are archived.
+- [x] **8.1 Season reset tool** (archives characters to the Hall of Seasons, keeps account-wide rewards). Done when: test season: create chars + rewards, run reset, account rewards remain and characters are archived. *(Done: `/season end <n>` for the owner; automated test checks the archive, account titles and that the wipe never touches accounts. A full live reset still needs a real test season.)*
 - [ ] **8.2 Season remix tooling** (shuffle secrets, add Underkeep wing, rotate boss mechanics).
 
 ## Phase 9 — Friends test (still on Jay's PC)
