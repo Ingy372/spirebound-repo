@@ -16,6 +16,10 @@ end
 
 local runner = GlobalEvent("SpireTestRunner")
 function runner.onStartup()
+	-- Only on test boots (tools/test_boot.sh sets SPIRE_TESTS=1); never on a server people play on.
+	if os.getenv("SPIRE_TESTS") ~= "1" then
+		return true
+	end
 	addEvent(function()
 		local pass, fail = 0, 0
 		for _, t in ipairs(SpireTest.tests) do

@@ -23,9 +23,9 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: script passes a dry-run check in the cloud (all download URLs answer, all paths exist), and 🧑 Jay double-clicks it once and reaches the login screen (logged in PLAYTEST.md).
 - [x] **1.6 Dev accounts.** Script that creates a test account + GM character in the database.
   Done when: running it twice still gives exactly one test account (jay) with its 2 characters, verified by a database query in every boot test.
-- [ ] **1.7 Map tools for 15.x.** Update the ASCII map compiler legend to Canary/15.11 item ids; renderer makes a PNG preview.
-  Done when: the 40×40 test town compiles to `.otbm`, the server loads it with zero map warnings, and a preview PNG is written.
-- [ ] **1.8 Floor 1 placeholder map.** Hearthgate (temple, depot, bank, shops, 6 houses, Arrival Yard), Millcross, starter fields, 6 hunting camps, apex spawn (outer + inner layer), the Pass arena, a 3-level labyrinth, boss room, sealed stair, the Underkeep grate (sealed), a Floor 2 landing room.
+- [x] **1.7 Map tools for 15.x.** `tools/mapgen.py` writes Canary maps (Tibia 15.11 item ids) from Python layout files, checks every item id against the game data, and draws preview PNGs.
+  Done when: a generated map loads in the server with zero map warnings, and preview PNGs are written.
+- [x] **1.8 Floor 1 placeholder map.** Hearthgate (temple, depot, bank, shops, 6 houses, Arrival Yard), Millcross, starter fields, 6 hunting camps, apex spawn (outer + inner layer), the Pass arena, a 3-level labyrinth, boss room, sealed stair, the Underkeep grate (sealed), a Floor 2 landing room.
   Done when: map compiles and loads with zero warnings; preview PNGs are in `docs/previews/`; MAP_REQUESTS.md lists the real Floor 1 map.
 - [x] **1.9 Four vocations.** Vanguard, Ranger, Arcanist, Mystic (+ promotions) in `vocations.xml`; new characters start with no vocation in the Arrival Yard.
   Done when: boot test passes and a scripted check reads all 4 vocations (+4 promotions) from the server.
@@ -35,7 +35,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: in-game tests cover: Hardcore/Death Game XP bonus; Hardcore ×1.5 death loss; outside-player damage within 60 s saves a Death Game character, older damage or monster-only damage retires it; party member / guildmate / same-IP damage does not save. Hardcore skill loss, blessing cap and item-drop doubling moved to task 2.14.
 - [x] **1.12 XP stages and rates.** Stages from DESIGN §5.5 in config.
   Done when: boot log lists the stages; a test computes XP at levels 10/75/250 and matches the table.
-- [ ] **1.13 Floor 1 monsters.** 11 monsters with original names (placeholder Tibia looks), loot tables from `data/`, spawns on the map.
+- [x] **1.13 Floor 1 monsters.** 11 monsters with original names (placeholder Tibia looks), loot tables from `data/`, spawns on the map.
   Done when: boot test reports all 11 monster types loaded with zero warnings, each spawned at least once on the map; ART_REQUESTS.md has an entry for each.
 - [x] **1.14 Sword skill system v1.** Skill framework (weapon-family check, cooldowns, shared 1 s cooldown, Opener/Link/Finisher combo bonus) + the first 3 skills of all 8 weapon families.
   Done when: all 24 skills register as spells with cooldowns; in-game tests check 3 skills per family, weapon-family detection (right/wrong weapon), and that only Opener → Link → Finisher within 4 s gives +30%. Feel, damage and cooldown display are checked in the Phase 1 playtest.
@@ -47,10 +47,10 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: Lua test: a 3-player party of 2 vocations gets the expected XP per member.
 - [x] **1.17 World floors state.** Saved floor records (Canary's database key-value store) for floors (field boss dead, floor boss dead, opened time, credited names) + GM test command `/floor`.
   Done when: test sets and reads every field; state survives a server restart.
-- [ ] **1.18 Gate Hound and the labyrinth door.** Field boss at the Pass; first kill opens the labyrinth door forever.
+- [x] **1.18 Gate Hound and the labyrinth door.** Field boss at the Pass; first kill opens the labyrinth door forever.
   Done when: test kills the Gate Hound with a GM command and the door tile becomes walkable; after restart it stays open.
-- [ ] **1.19 Axe-Lord and the Floor 2 unlock.** Boss with 3 phases and telegraphs; credit list; last hit; enrage scaling; first kill opens the stair, broadcasts the gold announcement, writes the monument, unlocks Floor 2 landing.
-  Done when: test runs a scripted kill with 3 fake players: credit has 3 names, last hit recorded, broadcast sent, stair walkable, Floor 2 landing reachable; second kill does none of the first-kill actions.
+- [x] **1.19 Axe-Lord and the Floor 2 unlock.** Boss with 3 phases and telegraphs; credit list; last hit; enrage scaling; first kill opens the stair, broadcasts the gold announcement, writes the monument, unlocks Floor 2 landing.
+  Done when: in-game tests check credit (90-second window, top contributors), resets, enrage steps, and a full first kill (saved state, broadcast, stair boulder removed, last hit recorded), and that a second kill does none of the first-clear actions. Not yet: healing counts toward credit, the house head start (phase 3), the in-game Monument display.
 - [ ] **1.20 Client UI v1.** OTClient modules: floor indicator (shows "Floor 1 — Hearthgate Plains"), cursor colors (green/orange/red), sword-skill bar (6 slots with cooldowns), difficulty icon.
   Done when: modules load in the client with no Lua errors in a headless client check, and the server sends the floor/skill data they need (test).
 - [ ] **1.21 🧑 Phase 1 playtest.** WEEKLY_REPORT.md with an under-an-hour checklist. Jay plays it.

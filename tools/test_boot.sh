@@ -24,6 +24,10 @@ python3 "$ROOT/tools/check_names.py" >/dev/null || { echo "FAIL: banned names"; 
 python3 "$ROOT/tools/build_server.py" $OFFLINE
 B="$ROOT/.build/server"
 
+# Cloud/CI convenience: start a local MariaDB if none is answering and we're allowed to
+if ! mysqladmin -h"$MYSQL_HOST" ping >/dev/null 2>&1 && [[ "$(id -u)" == "0" ]] && command -v service >/dev/null; then
+  service mariadb start >/dev/null 2>&1 || true; sleep 3
+fi
 if [[ "${SPIRE_SETUP_DB:-0}" == "1" ]]; then
   mysql -uroot -hlocalhost --protocol=socket -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'localhost'; FLUSH PRIVILEGES;"
 fi
@@ -40,7 +44,7 @@ echo "dev account jay: 1 account, 2 characters"
 
 LOG="$ROOT/.build/boot.log"
 cd "$B"
-./canary > "$LOG" 2>&1 &
+SPIRE_TESTS=1 ./canary > "$LOG" 2>&1 &
 PID=$!
 ok=0
 for _ in $(seq 1 "$WAIT"); do

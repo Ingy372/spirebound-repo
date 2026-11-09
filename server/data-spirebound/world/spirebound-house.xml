@@ -1,2 +1,12 @@
 <?xml version="1.0"?>
-<houses />
+<houses>
+	<house name="Lantern Row 1" houseid="1" entryx="1204" entryy="1301" entryz="7" rent="1250" townid="1" size="42" clientid="1" guildhall="false" beds="2" />
+	<house name="Lantern Row 2" houseid="2" entryx="1228" entryy="1301" entryz="7" rent="1500" townid="1" size="42" clientid="2" guildhall="false" beds="2" />
+	<house name="Lantern Row 3" houseid="3" entryx="1252" entryy="1301" entryz="7" rent="1750" townid="1" size="42" clientid="3" guildhall="false" beds="2" />
+	<house name="Lantern Row 4" houseid="4" entryx="1204" entryy="1314" entryz="7" rent="2000" townid="1" size="42" clientid="4" guildhall="false" beds="2" />
+	<house name="Lantern Row 5" houseid="5" entryx="1228" entryy="1314" entryz="7" rent="2250" townid="1" size="42" clientid="5" guildhall="false" beds="2" />
+	<house name="Lantern Row 6" houseid="6" entryx="1252" entryy="1314" entryz="7" rent="2500" townid="1" size="42" clientid="6" guildhall="false" beds="2" />
+	<house name="Millcross Cottage 1" houseid="7" entryx="1042" entryy="1218" entryz="7" rent="800" townid="2" size="42" clientid="7" guildhall="false" beds="2" />
+	<house name="Millcross Cottage 2" houseid="8" entryx="1058" entryy="1218" entryz="7" rent="800" townid="2" size="42" clientid="8" guildhall="false" beds="2" />
+	<house name="Millcross Cottage 3" houseid="9" entryx="1074" entryy="1218" entryz="7" rent="800" townid="2" size="42" clientid="9" guildhall="false" beds="2" />
+</houses>

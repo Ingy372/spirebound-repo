@@ -28,10 +28,16 @@ function floorCmd.onSay(player, words, param)
 	end
 	if action == "field" then
 		player:sendTextMessage(MESSAGE_ADMINISTRATOR, Floors.markFieldBoss(n, { player:getName() }) and "Pass opened." or "Pass was already open.")
+		if n == 1 and SpireGates then
+			SpireGates.open("gate_pass")
+		end
 	elseif action == "clear" then
 		local names = args[3] and args[3]:split(",") or { player:getName() }
 		if Floors.recordClear(n, names, names[#names], 0) then
 			Floors.announceClear(n, names)
+			if n == 1 and SpireGates then
+				SpireGates.open("gate_floor2")
+			end
 		else
 			player:sendCancelMessage("Floor " .. n .. " was already cleared.")
 		end

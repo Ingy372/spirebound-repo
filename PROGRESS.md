@@ -53,3 +53,9 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 — Research: what top servers share
 - Looked at RubinOT, Aurera Global, Cyleria, Baiak-Ilusion, Gunzodus (otservlist snapshot, 2026-11-08). Report: `docs/RESEARCH_TOP_SERVERS_2026-11.md`.
 - Added DESIGN.md §15 with what we adopt (autoloot, weekend bonuses, guild castle "Spire Siege", equal-footing arena events, offline training, livestream, hunting tasks, Season Path, catch-up rules, Android client, website wiki) and our answer to the top reasons players quit. New roadmap tasks 2.15–2.17, 5.7b–e, 6.5b–c, 7.2b. Summary question Q12.
+
+### 2026-11-08 (overnight) — Tasks 1.7, 1.8, 1.13, 1.18, 1.19: Floor 1 is playable end to end
+- **Map:** new map generator (`tools/mapgen.py`) and a Floor 1 placeholder (`maps/layout_floor1.py`): Hearthgate with temple, depot, 4 shops, 6 houses, monument, drain grate; Millcross village with 3 cottages; a river; 3 starter fields and 6 hunting camps; the Old Watchtower apex spawn with a rope spot to a cave; the Pass arena; a 3-level maze labyrinth; the boss room; and a Floor 2 landing. Previews in `docs/previews/`. 116 monsters spawn.
+- **Monsters:** 13 Floor 1 monsters + 2 bosses generated from one table (`tools/gen_monsters.py`), placeholder Tibia looks.
+- **Bosses:** the Gate Hound (howls in a telegraphed ring, summons wolves) seals the Pass until its first death, then never returns. The Axe-Lord has 3 phases (marked tiles, guards at 60%, long blade and 3-tile line at 25%), resets if left alone, enrages by headcount, credits the top 20 recent damage dealers, awards titles, opens the stair to Floor 2 with a server-wide announcement, and respawns every 30 minutes for repeat kills. Boot test: online, 0 errors, 20 in-game tests pass (tests now only run on test boots, never on your playing server).
+- Old 10.98 map tools and the test town moved to `legacy/`.

@@ -1,2 +1,179 @@
 <?xml version="1.0"?>
-<monsters />
+<monsters>
+	<monster centerx="1160" centery="1272" centerz="7" radius="3">
+		<monster name="Field Rat" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1168" centery="1275" centerz="7" radius="3">
+		<monster name="Hopper Toad" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1148" centery="1267" centerz="7" radius="3">
+		<monster name="Field Rat" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1230" centery="1354" centerz="7" radius="3">
+		<monster name="Sproutling" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1215" centery="1350" centerz="7" radius="3">
+		<monster name="Field Rat" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1236" centery="1347" centerz="7" radius="3">
+		<monster name="Hopper Toad" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1306" centery="1262" centerz="7" radius="3">
+		<monster name="Hopper Toad" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Hopper Toad" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1302" centery="1275" centerz="7" radius="3">
+		<monster name="Sproutling" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Sproutling" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1313" centery="1277" centerz="7" radius="3">
+		<monster name="Field Rat" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Rat" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1161" centery="1349" centerz="7" radius="3">
+		<monster name="Bristle Boar" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1157" centery="1358" centerz="7" radius="3">
+		<monster name="Bristle Boar" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1075" centery="1295" centerz="7" radius="3">
+		<monster name="Meadow Wolf" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Meadow Wolf" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1069" centery="1278" centerz="7" radius="3">
+		<monster name="Meadow Wolf" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Meadow Wolf" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1046" centery="1296" centerz="7" radius="3">
+		<monster name="Grey Alpha" x="-1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1341" centery="1312" centerz="7" radius="3">
+		<monster name="Field Shardling" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1336" centery="1325" centerz="7" radius="3">
+		<monster name="Field Shardling" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1354" centery="1188" centerz="7" radius="3">
+		<monster name="Road Bandit" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Road Bandit" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Road Bandit" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Road Bandit" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1341" centery="1190" centerz="7" radius="3">
+		<monster name="Road Bandit" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Road Bandit" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Road Bandit" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1361" centery="1187" centerz="7" radius="3">
+		<monster name="Bandit Captain" x="-1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1172" centery="1166" centerz="7" radius="3">
+		<monster name="Thornsnap" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Thornsnap" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Thornsnap" x="1" y="-1" z="7" spawntime="60" />
+		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1173" centery="1163" centerz="7" radius="3">
+		<monster name="Bristle Boar" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Bristle Boar" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1245" centery="1137" centerz="7" radius="3">
+		<monster name="Ruin Sentinel" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Ruin Sentinel" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Ruin Sentinel" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1235" centery="1141" centerz="7" radius="3">
+		<monster name="Ruin Archer" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Ruin Archer" x="0" y="-1" z="7" spawntime="60" />
+		<monster name="Ruin Archer" x="1" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1247" centery="1153" centerz="7" radius="3">
+		<monster name="Field Shardling" x="-1" y="-1" z="7" spawntime="60" />
+		<monster name="Field Shardling" x="0" y="-1" z="7" spawntime="60" />
+	</monster>
+	<monster centerx="1038" centery="1066" centerz="7" radius="3">
+		<monster name="Stonehorn Ram" x="-1" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="-1" z="7" spawntime="90" />
+	</monster>
+	<monster centerx="1066" centery="1066" centerz="7" radius="3">
+		<monster name="Stonehorn Ram" x="-1" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="-1" z="7" spawntime="90" />
+	</monster>
+	<monster centerx="1052" centery="1052" centerz="7" radius="4">
+		<monster name="Stonehorn Ram" x="-1" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="-1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="-1" y="0" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="0" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="0" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="-1" y="1" z="7" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="1" z="7" spawntime="90" />
+	</monster>
+	<monster centerx="1052" centery="1052" centerz="8" radius="5">
+		<monster name="Stonehorn Ram" x="-1" y="-1" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="-1" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="-1" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="-1" y="0" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="0" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="0" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="-1" y="1" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="0" y="1" z="8" spawntime="90" />
+		<monster name="Stonehorn Ram" x="1" y="1" z="8" spawntime="90" />
+	</monster>
+	<monster centerx="1233" centery="1027" centerz="7" radius="4">
+		<monster name="Ruin Sentinel" x="-1" y="-1" z="7" spawntime="90" />
+		<monster name="Ruin Sentinel" x="0" y="-1" z="7" spawntime="90" />
+		<monster name="Ruin Sentinel" x="1" y="-1" z="7" spawntime="90" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="7" spawntime="90" />
+	</monster>
+	<monster centerx="1233" centery="1027" centerz="6" radius="4">
+		<monster name="Ruin Archer" x="-1" y="-1" z="6" spawntime="90" />
+		<monster name="Ruin Archer" x="0" y="-1" z="6" spawntime="90" />
+		<monster name="Ruin Archer" x="1" y="-1" z="6" spawntime="90" />
+		<monster name="Ruin Archer" x="-1" y="0" z="6" spawntime="90" />
+	</monster>
+	<monster centerx="1233" centery="1027" centerz="5" radius="4">
+		<monster name="Ruin Sentinel" x="-1" y="-1" z="5" spawntime="90" />
+		<monster name="Ruin Sentinel" x="0" y="-1" z="5" spawntime="90" />
+		<monster name="Ruin Sentinel" x="1" y="-1" z="5" spawntime="90" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="5" spawntime="90" />
+		<monster name="Ruin Sentinel" x="0" y="0" z="5" spawntime="90" />
+	</monster>
+</monsters>

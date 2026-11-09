@@ -103,12 +103,8 @@ foreach ($n in @("data", "config.lua.dist", "schema.sql", "LICENSE")) { Copy-Ite
 Copy-Item -Recurse (Join-Path $Root "server\data-spirebound") (Join-Path $Srv "data-spirebound")
 Copy-Item -Recurse -Force (Join-Path $Root "server\core-overrides\*") (Join-Path $Srv "data")
 $world = Join-Path $Srv "data-spirebound\world"
-$ourMap = Join-Path $Root ".build\maps\spirebound.otbm"
-if (Test-Path $ourMap) {
-    Copy-Item $ourMap $world
-    Copy-Item (Join-Path $Root ".build\maps\spirebound-*.xml") $world
-} else {
-    # temporary stand-in map until roadmap task 1.8
+if (-not (Test-Path (Join-Path $world "spirebound.otbm"))) {
+    # fallback only: Canary's sample map
     Copy-Item (Join-Path $src.FullName "data-canary\world\canary.otbm") (Join-Path $world "spirebound.otbm")
     foreach ($k in @("monster", "npc", "house", "zones")) { Copy-Item (Join-Path $world "spirebound-$k.xml") (Join-Path $world "canary-$k.xml") }
 }

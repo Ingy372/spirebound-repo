@@ -123,20 +123,15 @@ def main(argv: list[str]) -> None:
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(f, dst)
 
-    # map: ours if compiled, else Canary's small test map as a temporary stand-in
+    # map: our generated map is part of the datapack (tools/mapgen.py); Canary's sample map only as a fallback
     world = BUILD / "data-spirebound" / "world"
-    ours = ROOT / ".build" / "maps" / "spirebound.otbm"
-    if ours.exists():
-        shutil.copy2(ours, world / "spirebound.otbm")
-        for f in (ROOT / ".build" / "maps").glob("spirebound-*.xml"):
-            shutil.copy2(f, world / f.name)
-        print("map: Spirebound compiled map")
+    if (world / "spirebound.otbm").exists():
+        print("map: Spirebound map (tools/mapgen.py)")
     else:
         shutil.copy2(BUILD / "data-canary" / "world" / "canary.otbm", world / "spirebound.otbm")
-        # that map names its side files canary-*.xml; give it our (empty) ones under those names
         for k in ("monster", "npc", "house", "zones"):
             shutil.copy2(world / f"spirebound-{k}.xml", world / f"canary-{k}.xml")
-        print("map: TEMPORARY stand-in (Canary test map) until roadmap task 1.8")
+        print("map: TEMPORARY stand-in (Canary test map)")
     shutil.rmtree(BUILD / "data-canary")
 
     env = read_env(ROOT / "server" / "local.env")
