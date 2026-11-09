@@ -23,7 +23,7 @@ SpirePath.REWARDS = {
 	{ item = 2801, name = "a pendulum clock kit" }, { item = 2808, name = "a harp kit" }, { item = 2647, name = "a green tapestry" },
 	{ item = 2805, name = "a large amphora kit" }, { title = "Summit Seeker" },
 	{ item = 2802, name = "a knight statue kit" }, { item = 2803, name = "a minotaur statue kit" }, { item = 2667, name = "a white tapestry" },
-	{ item = 902, name = "a marlin trophy" }, { title = "Pilgrim of the Spire" },
+	{ item = 2911, name = "a candelabrum" }, { title = "Pilgrim of the Spire" },
 	{ item = 2807, name = "a piano kit" }, { item = 872, name = "a trophy stand" }, { item = 2644, name = "a purple tapestry" },
 	{ item = 2806, name = "a coal basin kit" }, { title = "Path Champion" },
 }
