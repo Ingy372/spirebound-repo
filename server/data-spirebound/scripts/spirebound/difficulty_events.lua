@@ -6,7 +6,7 @@ local lastOutsideHit = {}
 -- XP bonus
 local xp = EventCallback("SpireDifficultyXp")
 function xp.playerOnGainExperience(player, target, exp, rawExp)
-	return math.floor(Difficulty.applyXp(Difficulty.get(player), exp) * SpireCavebot.xpFactor(player))
+	return math.floor(Difficulty.applyXp(Difficulty.get(player), exp) * SpireCavebot.xpFactor(player) * SpireSiege.factor(player))
 end
 xp:register()
 
@@ -46,7 +46,7 @@ function loot.monsterOnDropLoot(monster, corpse)
 	if not player or not player:canReceiveLoot() then
 		return
 	end
-	local bonus = Difficulty.lootBonus[Difficulty.get(player)] or 0
+	local bonus = (Difficulty.lootBonus[Difficulty.get(player)] or 0) + (SpireSiege.factor(player) - 1) -- Siege holders: +5%
 	local mType = monster:getType()
 	if bonus <= 0 or not mType then
 		return
@@ -175,16 +175,13 @@ function drop.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mos
 		return true
 	end
 	local neck = player:getSlotItem(CONST_SLOT_NECKLACE)
-	local blessings = 0
-	for i = 1, 5 do
-		if player:hasBlessing(i) then
-			blessings = blessings + 1
-		end
+	if neck and neck:getId() == AMULET_OF_LOSS then
+		neck:remove() -- no amulet protects a Hardcore character (DESIGN.md 5.5)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your amulet of loss shatters. It cannot protect a Hardcore climber.")
 	end
 	local skull = player:getSkull()
 	local tile = Tile(player:getPosition())
-	local chance = Difficulty.extraItemDropChance(Difficulty.HARDCORE, blessings, neck and neck:getId() == AMULET_OF_LOSS,
-		skull == SKULL_RED or skull == SKULL_BLACK, tile and tile:hasFlag(TILESTATE_PVPZONE))
+	local chance = Difficulty.extraItemDropChance(Difficulty.HARDCORE, skull == SKULL_RED or skull == SKULL_BLACK, tile and tile:hasFlag(TILESTATE_PVPZONE))
 	if chance <= 0 then
 		return true
 	end

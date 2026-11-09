@@ -301,3 +301,21 @@ def build(m):
     m.points["arena_nw"] = (ax0 + 1, ay0 + 1, az)
     m.points["arena_se"] = (ax0 + 38, ay0 + 28, az)
     m.zone("arena", ax0, ay0, 40, 30, az)
+
+    # ------------------------------------------------ Spire Siege keep (DESIGN.md 15, roadmap 5.7d): z 11, event
+    # teleport only. Courtyard with four guild gates and the throne room in the middle (PvP-zone flag).
+    sx0, sy0, sz = X0 + 70, Y0 + 10, 11
+    m.fill(sx0, sy0, 60, 50, sz, "gravel")
+    m.walls(sx0, sy0, 60, 50, sz)
+    m.flag(sx0 + 1, sy0 + 1, 58, 48, sz, 0x0010)
+    kx, ky = sx0 + 22, sy0 + 17
+    m.fill(kx, ky, 16, 16, sz, "marble")
+    m.walls(kx, ky, 16, 16, sz, gaps={(kx + 8, ky), (kx + 8, ky + 15), (kx, ky + 8), (kx + 15, ky + 8)})
+    m.points["siege_throne"] = (kx + 8, ky + 8, sz)
+    m.points["siege_throne_nw"] = (kx + 1, ky + 1, sz)
+    m.points["siege_throne_se"] = (kx + 14, ky + 14, sz)
+    m.points["siege_gate_1"] = (sx0 + 4, sy0 + 4, sz)
+    m.points["siege_gate_2"] = (sx0 + 55, sy0 + 4, sz)
+    m.points["siege_gate_3"] = (sx0 + 4, sy0 + 45, sz)
+    m.points["siege_gate_4"] = (sx0 + 55, sy0 + 45, sz)
+    m.zone("siege", sx0, sy0, 60, 50, sz)
