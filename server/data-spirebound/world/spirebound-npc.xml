@@ -39,4 +39,88 @@
 	<npc centerx="1059" centery="1204" centerz="7" radius="1">
 		<npc name="Miller Agna" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="2155" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2114" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2139" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2153" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2167" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2179" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2153" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Highrest" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2555" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2514" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2539" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2553" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2567" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2579" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2553" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2955" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2914" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2939" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2953" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2967" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2979" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2953" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Lakehold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3355" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3314" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3339" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3353" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3367" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3379" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3353" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 </npcs>

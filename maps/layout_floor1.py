@@ -182,19 +182,8 @@ def build(m):
     m.put(bx + 15, by + 2, bz, 1772)
     m.points["gate_floor2"] = (bx + 15, by + 2, bz)
 
-    # ------------------------------------------------ Floor 2 landing (placeholder until phase 4)
-    fx, fy = 2000, 1000
-    m.fill(fx, fy, 30, 30, Z, "grass")
-    for y in range(fy, fy + 30):
-        for x in range(fx, fx + 30):
-            if x in (fx, fx + 29) or y in (fy, fy + 29):
-                m.put(x, y, Z, m.pick("tree"))
-    m.flag(fx + 1, fy + 1, 28, 28, Z, 0x0001)
-    m.towns.append((3, "Highrest (landing)", (fx + 15, fy + 15, Z)))
-    m.points["floor2_landing"] = (fx + 15, fy + 16, Z)
-    m.sign(fx + 15, fy + 13, Z, "Floor 2: Highrest Highlands. The rest of this floor arrives in a later update.")
-    m.teleport((bx + 15, by + 1, bz), (fx + 15, fy + 16, Z), "stair_floor2")
-    m.teleport((fx + 15, fy + 25, Z), (temple[0], temple[1] + 2, Z), "floor2_to_hearthgate")
+    # stair to floor 2: linked to Floor 2's landing by tools/mapgen.py (link_floors)
+    m.points["stair_floor2_src"] = (bx + 15, by + 1, bz)
 
     # ------------------------------------------------ PvP zone tiers (DESIGN.md 6.3). Default everywhere: Open.
     m.zone("open", X0, Y0, SIZE, SIZE)
@@ -207,7 +196,6 @@ def build(m):
     m.zone("bossroom", bx, by, 30, 24, 4)                            # the Axe-Lord's room
     m.zone("town", tx, ty, tw, th, 7)
     m.zone("town", mx, my, 50, 40, 7)
-    m.zone("town", fx, fy, 30, 30, 7)
 
     # ------------------------------------------------ Floor 1 secrets (DESIGN.md 8.1). Trigger tiles only; no markers.
     def secret(sid, x, y, z=Z):

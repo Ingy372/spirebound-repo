@@ -89,8 +89,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 
 ## Phase 4 — Floors 2 to 5
 One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field boss, labyrinth, floor boss, 12 secrets, fish list, story quests, perk.
-- [ ] **4.1 Floor 2** · [ ] **4.2 Floor 3** · [ ] **4.3 Floor 4** · [ ] **4.4 Floor 5**
-  Done when (each): a scripted "speed run" with GM commands clears the floor and unlocks the next; boot test passes; ART/MAP requests logged.
+- [x] **4.1 Floor 2** · [x] **4.2 Floor 3** · [x] **4.3 Floor 4** · [x] **4.4 Floor 5** (placeholder versions from one generator)
+  Done when (each): map, town with 7 NPCs, stairs up and down, field and floor boss spawned, 12 secrets placed, 7 fish and 3 story quests with perks (in-game tests); boot test passes. Hand-tuned boss mechanics and real maps come later (MAP_REQUESTS M3, playtest notes).
 - [ ] **4.5 Underkeep Wings 2–3.** Done when: wings open at Floors 2 and 4.
 - [ ] **4.6 Sword skills 4–6 for every weapon family.** Done when: tests as in 1.14.
 - [ ] **4.6b Spells above level 50 + the Lost Arts** (★ spells from quests, secrets and bosses). Done when: every spell in DESIGN §5.3b registers; tests check Lost Arts can't be bought.

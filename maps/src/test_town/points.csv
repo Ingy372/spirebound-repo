@@ -1,0 +1,8 @@
+type,x,y,z,ref,params
+town,10,9,7,1,name=Hearthgate (test)
+npc,12,7,7,Sister Ilse,
+spawn,24,32,7,Field Rat,count=4;radius=3;interval=60
+house_rect,7,16,7,1,w=6;h=5;name=Test Cottage;rent=750;town=1
+door,9,15,7,1,
+zone_rect,5,4,7,pz,w=24;h=19
+sign,15,22,7,,text=Hearthgate test town. Field Rats to the south. Spirebound phase 0.

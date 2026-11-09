@@ -121,24 +121,24 @@ local function creatureSayCallback(npc, player, type, msg)
 		return true
 	end
 
-	-- Floor perks (DESIGN.md 8.3): after all story quests of a floor
+	-- Floor perks (DESIGN.md 8.3): one choice per floor, after all of that floor's story quests
 	if MsgContains(lower, "perk") then
-		local floor = 1
-		if not SpireQuests.floorStoryDone(player, floor) then
-			npcHandler:say("Perks are earned. Finish every story quest on Floor " .. floor .. " first.", npc, player)
-		elseif SpirePerks.get(player, floor) then
-			npcHandler:say("You already chose your Floor " .. floor .. " perk.", npc, player)
-		else
+		for floor = 1, Floors.LAUNCH_FLOORS do
 			local opts = SpireQuests.PERKS[floor]
-			npcHandler:say(string.format("Choose one: {%s} (%s) or {%s} (%s).", opts[1].name, opts[1].text, opts[2].name, opts[2].text), npc, player)
-			npcHandler:setTopic(pid, 20)
+			if opts and SpireQuests.floorStoryDone(player, floor) and not SpirePerks.get(player, floor) then
+				npcHandler:say(string.format("Floor %d perk. Choose one: {%s} (%s) or {%s} (%s).", floor, opts[1].name, opts[1].text, opts[2].name, opts[2].text), npc, player)
+				npcHandler:setTopic(pid, 100 + floor)
+				return true
+			end
 		end
+		npcHandler:say("No perk is waiting for you. Perks come from finishing every story quest on a floor.", npc, player)
 		return true
 	end
-	if topic == 20 then
-		for _, o in ipairs(SpireQuests.PERKS[1]) do
+	if topic > 100 and topic <= 100 + Floors.LAUNCH_FLOORS then
+		local floor = topic - 100
+		for _, o in ipairs(SpireQuests.PERKS[floor] or {}) do
 			if MsgContains(lower, o.name:lower()) then
-				SpirePerks.choose(player, 1, o.key)
+				SpirePerks.choose(player, floor, o.key)
 				npcHandler:say("It is written: " .. o.name .. ".", npc, player)
 				npcHandler:setTopic(pid, 0)
 				return true

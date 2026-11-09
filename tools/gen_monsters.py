@@ -110,7 +110,7 @@ SPELL = {
 
 
 def lua_name(name):
-    return name.lower().replace("-", "_").replace(" ", "_").replace("'", "")
+    return name.lower().replace("-", "_").replace(" ", "_").replace("'", "").replace(",", "")
 
 
 def render(name, d):
@@ -209,14 +209,82 @@ def render(name, d):
     return "\n".join(L) + "\n"
 
 
+# ---------------------------------------------------------------- floors 2-10 (generated from maps/floors.py)
+import sys as _sys
+_sys.path.insert(0, str(ROOT / "maps"))
+from floors import FLOORS  # noqa: E402
+
+# placeholder looks (Tibia outfits) with matching corpses
+LOOKS = [(27, 5968), (52, 5997), (119, 6046), (122, 6053), (56, 5964), (222, 6077), (28, 3998), (129, 18050), (131, 18074),
+         (15, 5960), (22, 5962), (61, 6002), (55, 5999), (240, 6331), (34, 4025), (121, 6048), (291, 8113), (197, 6072),
+         (607, 20996), (19, 2127), (137, 18042), (152, 18046), (139, 18242), (53, 5998), (280, 771), (238, 6532)]
+GEAR = {2: [3352, 3359, 3282], 3: [3357, 3351, 3279, 3065, 3068], 4: [3370, 3371, 3303, 3070, 3072],
+        5: [3381, 3382, 3385, 3281, 3067, 3073], 6: [3364, 3392, 3415], 7: [3280, 3422, 3360], 8: [3392, 3364, 3360],
+        9: [3366, 3360, 3422], 10: [3366, 3280, 3415]}
+RANGED_WORDS = ("Archer", "Witch", "Wisp", "Imp", "Hag", "Wraith", "Shade", "Ghost", "Bat", "Wasp")
+
+
+def floor_monsters():
+    out = {}
+    look_i = 0
+    for n, f in FLOORS.items():
+        hp0 = int(150 * n ** 1.5)
+        dmg0 = int(40 * n ** 1.3)
+        gear = GEAR.get(n, [])
+        def row(name, mult_hp, mult_xp, mult_dmg, role):
+            nonlocal look_i
+            lt, corpse = LOOKS[look_i % len(LOOKS)]
+            look_i += 1
+            hp = int(hp0 * mult_hp)
+            dmg = int(dmg0 * mult_dmg)
+            ranged = any(w in name for w in RANGED_WORDS)
+            attacks = [("melee", 0, -dmg if not ranged else -dmg // 3)]
+            if ranged:
+                attacks.append(("energy" if n % 2 else "earth", -dmg // 3, -dmg, 5))
+            elif role in ("elite", "apex", "labyrinth"):
+                attacks.append(("physical", -dmg // 2, -int(dmg * 1.2), 4))
+            loot = [(GOLD, 100000, min(100, 20 * n)), (PLAT, 20000 + 5000 * n, max(1, n // 2)),
+                    (239 if n >= 4 else 236, 8000, 1), (238 if n >= 4 else 237, 8000, 1)]
+            for gi, g in enumerate(gear):
+                loot.append((g, (1500 if role == "camp" else 4000) // (gi + 1), 1))
+            d = dict(desc=("an " if name[0] in "AEIOU" else "a ") + name.lower(), look=(lt,), corpse=corpse,
+                     hp=hp, xp=int(hp * mult_xp), speed=100 + 5 * n, race="blood", attacks=attacks,
+                     armor=8 + 4 * n, defense=8 + 4 * n, loot=loot, dist=4 if ranged else 1, floor=n)
+            if role == "apex":
+                d["heal"] = (0.04, 6000)
+            if role in ("field", "floor"):
+                d["boss"] = True
+                d["events"] = ["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]
+                d["desc"] = "the " + name if not name.startswith(("The ", "Azhrakkar")) else name
+                d["loot"] = [(GOLD, 100000, 100), (PLAT, 100000, 10 * n), (239, 100000, 5), (238, 100000, 5)] + \
+                            [(g, 30000, 1) for g in gear]
+                d["summons"] = [(f["camp"][0], 2)]
+            return d
+        for i, name in enumerate(f["camp"]):
+            out[name] = row(name, 0.8 + 0.12 * i, 0.5, 0.8 + 0.1 * i, "camp")
+        out[f["elite"]] = row(f["elite"], 2.6, 0.6, 1.5, "elite")
+        out[f["labyrinth"]] = row(f["labyrinth"], 1.7, 0.55, 1.3, "labyrinth")
+        out[f["apex"]] = row(f["apex"], 4.5, 0.6, 1.8, "apex")
+        out[f["field_boss"]] = row(f["field_boss"], 25 * n ** 0.3, 0.4, 2.2, "field")
+        out[f["floor_boss"]] = row(f["floor_boss"], 70 * n ** 0.4, 0.35, 2.8, "floor")
+    return out
+
+
 def main():
+    floors_dir = OUT / "floors"
+    floors_dir.mkdir(parents=True, exist_ok=True)
+    for f in floors_dir.glob("*.lua"):
+        f.unlink()
+    extra = floor_monsters()
+    for name, d in extra.items():
+        (floors_dir / f"f{d['floor']}_{lua_name(name)}.lua").write_text(render(name, d))
     folder = OUT / "floor1"
     folder.mkdir(parents=True, exist_ok=True)
     for f in folder.glob("*.lua"):
         f.unlink()
     for name, d in MONSTERS.items():
         (folder / f"{lua_name(name)}.lua").write_text(render(name, d))
-    print(f"wrote {len(MONSTERS)} monsters to {folder}")
+    print(f"wrote {len(MONSTERS)} floor 1 monsters and {len(extra)} floor 2-10 monsters")
 
 
 if __name__ == "__main__":

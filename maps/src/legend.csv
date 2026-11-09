@@ -1,0 +1,23 @@
+char,layer,item,notes
+.,ground,100-105,grass (procedural variants)
+",",ground,106-111,dirt road
+=,ground,112-117,cobblestone
+~,ground,118-123,shallow water (blocks)
+p,ground,124-129,wooden floor
+m,ground,130-135,temple floor
+#,ground,wall:112-117,stone wall on cobble (autotiled horizontal/vertical/corner/pillar)
+T,ground,100-105+1600,tree on grass
+b,ground,100-105+1601,bush on grass
+r,ground,100-105+1602,rock on grass
+f,ground,100-105+1010,fence on grass
+D,objects,1100,door (horizontal wall)
+d,objects,1102,door (vertical wall)
+H,objects,1110,house door (horizontal wall)
+h,objects,1112,house door (vertical wall)
+A,objects,1610,altar
+t,objects,1611,table
+n,objects,1612,bench
+L,objects,2021,depot locker (depot id = town id)
+M,objects,2055,mailbox
+S,objects,1620,sign (text from points.csv)
+l,objects,1630,torch bracket

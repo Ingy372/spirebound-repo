@@ -42,6 +42,15 @@ ID = {
     "cavefloor": [351],
     "sand": [104],
     "water": [4597, 4609],  # deep-ish water, blocks walking
+    "dried": [970, 971, 972],
+    "jungle": [1019],
+    "gravel": [4584],
+    "rocksoil": [4394, 4395],
+    "earth": [280],
+    "swamp": [6352],
+    "mud": [17238],
+    "snow": [799, 6594, 6595],
+    "blackmarble": [410],
     "wall_v": 1270, "wall_h": 1271, "wall_c": 1272, "wall_p": 1273,  # brick wall family (orientation is a best guess)
     "tree": [3614],
     "bush": [3681],
@@ -312,7 +321,11 @@ class Map:
                        **{i: (150, 150, 150) for i in ID["cobble"]}, **{i: (170, 120, 60) for i in ID["wood"]},
                        **{i: (230, 230, 230) for i in ID["marble"]}, **{i: (110, 110, 120) for i in ID["stonefloor"]},
                        **{i: (90, 70, 50) for i in ID["cavefloor"]}, **{i: (40, 80, 200) for i in ID["water"]},
-                       **{i: (220, 200, 140) for i in ID["sand"]}}.get(g, (255, 0, 255))
+                       **{i: (220, 200, 140) for i in ID["sand"]}, **{i: (150, 160, 70) for i in ID["dried"]},
+                       **{i: (40, 110, 50) for i in ID["jungle"]}, **{i: (140, 135, 125) for i in ID["gravel"]},
+                       **{i: (110, 80, 60) for i in ID["rocksoil"]}, **{i: (120, 90, 60) for i in ID["earth"]},
+                       **{i: (70, 90, 60) for i in ID["swamp"]}, **{i: (90, 75, 55) for i in ID["mud"]},
+                       **{i: (235, 240, 250) for i in ID["snow"]}, **{i: (40, 40, 50) for i in ID["blackmarble"]}}.get(g, (255, 0, 255))
                 ids = [i for i, _ in self.items.get(p, [])]
                 if any(i in (ID["wall_v"], ID["wall_h"], ID["wall_c"], ID["wall_p"]) for i in ids):
                     col = (60, 40, 30)
@@ -327,9 +340,13 @@ class Map:
                 px[x - x0, y - y0] = col
             scale = 2
             img = img.resize((img.width * scale, img.height * scale))
-            if z == 7:  # floor 1 only (the floor 2 landing sits far east)
-                img = img.crop((0, 0, min(img.width, 400 * scale), img.height))
-            img.save(out / f"floor1_z{z}.png")
+            if z == 7:  # one picture per floor on the main level
+                for n in [1] + list(BUILT_FLOORS):
+                    fx0 = 0 if n == 1 else (2000 + (n - 2) * 400 - x0)
+                    w = 400 if n == 1 else 300
+                    img.crop((fx0 * scale, 0, (fx0 + w) * scale, w * scale)).save(out / f"floor{n}_z7.png")
+            else:
+                img.save(out / f"all_floors_z{z}.png")
 
 
 def check_ids(m: Map, appearances_path: str):
@@ -346,10 +363,30 @@ def check_ids(m: Map, appearances_path: str):
     return sorted(set(bad))[:50]
 
 
+BUILT_FLOORS = range(2, 6)  # floors with generated maps beyond floor 1 (phase 4: 2-5; phase 5 adds 6-10)
+
+
+def link_floors(m):
+    """Stairs up from each boss room to the next floor's landing, and portals back down from each floor town."""
+    for n in [1] + list(BUILT_FLOORS):
+        src, dst = m.points.get(f"stair_floor{n + 1}_src"), m.points.get(f"floor{n + 1}_landing")
+        if src and dst:
+            m.teleport(src, dst, f"stair_floor{n + 1}")
+    for n in BUILT_FLOORS:
+        down = m.points.get(f"f{n}_down_src")
+        back = m.points["temple_hearthgate"] if n == 2 else m.points.get(f"f{n - 1}_temple")
+        if down and back:
+            m.teleport(down, (back[0], back[1] + 2, back[2]), f"f{n}_down")
+
+
 def main(argv):
     import layout_floor1
+    import layout_floor
     m = Map()
     layout_floor1.build(m)
+    for n in BUILT_FLOORS:
+        layout_floor.build(m, n)
+    link_floors(m)
     out = m.write()
     m.preview()
     print(f"map: {len(m.ground)} tiles, {sum(len(v) for v in m.items.values())} items, {len(m.houses)} houses, "

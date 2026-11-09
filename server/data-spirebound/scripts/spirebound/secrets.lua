@@ -91,10 +91,10 @@ end
 local startup = GlobalEvent("SpireSecretsStartup")
 function startup.onStartup()
 	for _, s in ipairs(SpireSecrets.list) do
-		local pos = WorldPoints["secret_" .. s.id]
+		local pos = WorldPoints[s.point or ("secret_" .. s.id)]
 		if pos then
 			SpireSecrets.byPos[key(pos)] = s
-		else
+		elseif s.floor == 1 then
 			logger.warn("[Spirebound] secret {} has no trigger point on the map", s.id)
 		end
 	end

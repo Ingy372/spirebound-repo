@@ -61,16 +61,16 @@ Canary ships many newer-Tibia systems. To keep Spirebound focused and avoid pay-
 |---|---|---|---|---|---|
 | 1 | Hearthgate Plains | meadows, ruins, windmills, river | 1–35 | Axe-Lord of the Stair | names and bands |
 | 2 | Highrest Highlands | cliffs, herds, bone mesas | 35–60 | Crowned Aurochs | |
-| 3 | Rootwell Fogwood | fog forest, giant roots | 60–90 | Mossback Warden | |
-| 4 | Lakehold | lake castle, islands, boats | 90–120 | Tidewrought Castellan | |
-| 5 | Ringhold | arena city, colosseum ruins | 120–160 | The Undying Champion | |
+| 3 | Rootwell Fogwood | fog forest, giant roots | 60–90 | Sleeping Trunk (field boss: Mossback Warden) | |
+| 4 | Lakehold | lake castle, islands, boats | 90–120 | Knight of the Closed Helm (field boss: Lake Knight) | |
+| 5 | Ringhold | arena city, colosseum ruins | 120–160 | Empty Colossus (field boss: Arena Warden) | |
 | 6 | Emberreach | volcanic badlands, forges | 160–200 | Cinder Matriarch | |
 | 7 | Glasswater Marsh | swamp, crystal reeds | 200–250 | The Many-Mouthed | |
 | 8 | Frostspire | snow peaks, ice caves | 250–300 | Rimebound Jarl | |
 | 9 | The Hollow Bazaar | ruined merchant city, catacombs | 300–350 | The Ledger King | |
 | 10 | The Cobalt Labyrinth | blue-lit stone maze | 350–400+ | **Azhrakkar, the Cerulean Ruin** (see 9.3) | |
 
-Level bands are hunting targets, not doors. No level cap.
+Level bands are hunting targets, not doors. No level cap. Floors 2–5 use the October pack's bosses and monsters; every floor's roster lives in `maps/floors.py` **(Claude's call, 2026-11-08)**.
 
 ### 3.2 How a floor unlocks
 1. The **field boss** at the pass must die once (anyone, any time). After that the labyrinth door is open forever for everyone.

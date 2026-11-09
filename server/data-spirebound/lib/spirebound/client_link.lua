@@ -38,7 +38,7 @@ end
 -- Which floor is a position on? (coordinate plan: maps/layout_floor1.py)
 Floors.areas = {
 	{ floor = 1, x1 = 1000, y1 = 1000, x2 = 1399, y2 = 1399 },
-	{ floor = 2, x1 = 2000, y1 = 1000, x2 = 2399, y2 = 1399 },
+	-- floors 2-10 are added by lib/spirebound/floor_content.lua
 }
 function Floors.at(pos)
 	for _, a in ipairs(Floors.areas) do

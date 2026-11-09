@@ -9,4 +9,28 @@
 	<house name="Millcross Cottage 1" houseid="7" entryx="1042" entryy="1218" entryz="7" rent="800" townid="2" size="43" clientid="7" guildhall="false" beds="2" />
 	<house name="Millcross Cottage 2" houseid="8" entryx="1058" entryy="1218" entryz="7" rent="800" townid="2" size="43" clientid="8" guildhall="false" beds="2" />
 	<house name="Millcross Cottage 3" houseid="9" entryx="1074" entryy="1218" entryz="7" rent="800" townid="2" size="43" clientid="9" guildhall="false" beds="2" />
+	<house name="Highrest House 1" houseid="200" entryx="2117" entryy="1253" entryz="7" rent="4000" townid="3" size="43" clientid="200" guildhall="false" beds="2" />
+	<house name="Highrest House 2" houseid="201" entryx="2141" entryy="1253" entryz="7" rent="4500" townid="3" size="43" clientid="201" guildhall="false" beds="2" />
+	<house name="Highrest House 3" houseid="202" entryx="2165" entryy="1253" entryz="7" rent="5000" townid="3" size="43" clientid="202" guildhall="false" beds="2" />
+	<house name="Highrest House 4" houseid="203" entryx="2117" entryy="1265" entryz="7" rent="5500" townid="3" size="43" clientid="203" guildhall="false" beds="2" />
+	<house name="Highrest House 5" houseid="204" entryx="2141" entryy="1265" entryz="7" rent="6000" townid="3" size="43" clientid="204" guildhall="false" beds="2" />
+	<house name="Highrest House 6" houseid="205" entryx="2165" entryy="1265" entryz="7" rent="6500" townid="3" size="43" clientid="205" guildhall="false" beds="2" />
+	<house name="Rootwell House 1" houseid="300" entryx="2517" entryy="1253" entryz="7" rent="6000" townid="4" size="43" clientid="300" guildhall="false" beds="2" />
+	<house name="Rootwell House 2" houseid="301" entryx="2541" entryy="1253" entryz="7" rent="6500" townid="4" size="43" clientid="301" guildhall="false" beds="2" />
+	<house name="Rootwell House 3" houseid="302" entryx="2565" entryy="1253" entryz="7" rent="7000" townid="4" size="43" clientid="302" guildhall="false" beds="2" />
+	<house name="Rootwell House 4" houseid="303" entryx="2517" entryy="1265" entryz="7" rent="7500" townid="4" size="43" clientid="303" guildhall="false" beds="2" />
+	<house name="Rootwell House 5" houseid="304" entryx="2541" entryy="1265" entryz="7" rent="8000" townid="4" size="43" clientid="304" guildhall="false" beds="2" />
+	<house name="Rootwell House 6" houseid="305" entryx="2565" entryy="1265" entryz="7" rent="8500" townid="4" size="43" clientid="305" guildhall="false" beds="2" />
+	<house name="Lakehold House 1" houseid="400" entryx="2917" entryy="1253" entryz="7" rent="8000" townid="5" size="43" clientid="400" guildhall="false" beds="2" />
+	<house name="Lakehold House 2" houseid="401" entryx="2941" entryy="1253" entryz="7" rent="8500" townid="5" size="43" clientid="401" guildhall="false" beds="2" />
+	<house name="Lakehold House 3" houseid="402" entryx="2965" entryy="1253" entryz="7" rent="9000" townid="5" size="43" clientid="402" guildhall="false" beds="2" />
+	<house name="Lakehold House 4" houseid="403" entryx="2917" entryy="1265" entryz="7" rent="9500" townid="5" size="43" clientid="403" guildhall="false" beds="2" />
+	<house name="Lakehold House 5" houseid="404" entryx="2941" entryy="1265" entryz="7" rent="10000" townid="5" size="43" clientid="404" guildhall="false" beds="2" />
+	<house name="Lakehold House 6" houseid="405" entryx="2965" entryy="1265" entryz="7" rent="10500" townid="5" size="43" clientid="405" guildhall="false" beds="2" />
+	<house name="Ringhold House 1" houseid="500" entryx="3317" entryy="1253" entryz="7" rent="10000" townid="6" size="43" clientid="500" guildhall="false" beds="2" />
+	<house name="Ringhold House 2" houseid="501" entryx="3341" entryy="1253" entryz="7" rent="10500" townid="6" size="43" clientid="501" guildhall="false" beds="2" />
+	<house name="Ringhold House 3" houseid="502" entryx="3365" entryy="1253" entryz="7" rent="11000" townid="6" size="43" clientid="502" guildhall="false" beds="2" />
+	<house name="Ringhold House 4" houseid="503" entryx="3317" entryy="1265" entryz="7" rent="11500" townid="6" size="43" clientid="503" guildhall="false" beds="2" />
+	<house name="Ringhold House 5" houseid="504" entryx="3341" entryy="1265" entryz="7" rent="12000" townid="6" size="43" clientid="504" guildhall="false" beds="2" />
+	<house name="Ringhold House 6" houseid="505" entryx="3365" entryy="1265" entryz="7" rent="12500" townid="6" size="43" clientid="505" guildhall="false" beds="2" />
 </houses>
