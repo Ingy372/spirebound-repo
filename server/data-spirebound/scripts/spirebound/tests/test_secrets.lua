@@ -29,3 +29,14 @@ SpireTest.add("secrets: selling rules never lock anyone out", function()
 	SpireTest.eq(SpireSecrets.publicBy("s12"), "Tester", "marked public")
 	if before then SpireSecrets.markPublic("s12", before) else SpireSecrets.unpublish("s12") end
 end)
+
+SpireTest.add("underkeep: wing 1 exists, its monsters spawned, exit leads back up", function()
+	for _, n in ipairs({ "underkeep_entry", "underkeep_exit", "underkeep_chest", "underkeep_wing2_door" }) do
+		if not WorldPoints[n] or not Tile(WorldPoints[n]) then error("missing " .. n) end
+	end
+	local found = 0
+	for _, c in ipairs(Game.getSpectators(WorldPoints.underkeep_entry, false, false, 70, 70, 50, 50)) do
+		if c:isMonster() and (c:getName() == "Mire Toad" or c:getName() == "Black Crawler") then found = found + 1 end
+	end
+	if found < 10 then error("only " .. found .. " Underkeep monsters") end
+end)

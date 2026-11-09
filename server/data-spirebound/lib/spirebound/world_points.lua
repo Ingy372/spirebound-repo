@@ -51,7 +51,11 @@ WorldPoints = {
 	["shop_weaponsmith"] = Position(1238, 1262, 7),
 	["stair_floor2"] = Position(1234, 1015, 4),
 	["temple_hearthgate"] = Position(1235, 1287, 7),
+	["underkeep_chest"] = Position(1254, 1264, 8),
+	["underkeep_entry"] = Position(1194, 1264, 8),
+	["underkeep_exit"] = Position(1192, 1262, 8),
 	["underkeep_grate"] = Position(1196, 1320, 7),
+	["underkeep_wing2_door"] = Position(1259, 1285, 8),
 }
 -- PvP zone tiers (DESIGN.md 6.3). Later rectangles win. z = -1 means every level.
 WorldZones = {

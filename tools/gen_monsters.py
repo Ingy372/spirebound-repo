@@ -76,6 +76,13 @@ MONSTERS = {
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
                                   elements={"physical": 10},
                                   events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
+    # ---------------------------------------------------------------- the Underkeep, Wing 1 (tuned to Floor 2)
+    "Mire Toad": dict(desc="a mire toad", look=(222, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=210, speed=95, race="venom",
+                      attacks=[("melee", 0, -70, None, "poison"), ("earth", -30, -90, 4)], armor=18, defense=18,
+                      loot=[(GOLD, 100000, 60), (236, 8000, 1), (3032, 2000, 1)], elements={"earth": 100, "fire": -10}),
+    "Black Crawler": dict(desc="a black crawler", look=(56, 0, 0, 0, 0, 0), corpse=5964, hp=520, xp=260, speed=130, race="blood",
+                          attacks=[("melee", 0, -110)], armor=22, defense=20,
+                          loot=[(GOLD, 100000, 70), (PLAT, 10000, 1), (3029, 2000, 1)], voices=["Skrrrk!"]),
     # ---------------------------------------------------------------- secret bosses (DESIGN.md 8.1)
     "Old Tusk": dict(desc="Old Tusk", look=(119,), corpse=6046, hp=1800, xp=900, speed=125, race="blood",
                      attacks=[("melee", 0, -140), ("charge", -60, -160, 4)], armor=25, defense=25,

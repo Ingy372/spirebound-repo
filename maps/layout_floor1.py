@@ -4,6 +4,7 @@ the apex cave is z 8). Floor 2's landing is at x 2000+.
 Everything here is a playable stand-in; the real map is MAP_REQUESTS.md M1."""
 
 X0, Y0, Z = 1000, 1000, 7
+ID_PILLAR = 1273  # wall pole piece used as a column
 SIZE = 400
 
 
@@ -226,4 +227,31 @@ def build(m):
     secret("s10", X0 + 380, Y0 + 380)                   # ruined well in the south-east corner
     secret("s11", X0 + 160, Y0 + 170)                   # bramble ring in the thornsnap hollow
     secret("s12", X0 + 296, Y0 + 60)                    # broken stair of a ruined side tower near the Pass
+
+    # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
+    ux, uy, uz = tx, ty + 10, 8
+    m.fill(ux, uy, 70, 50, uz, "cavefloor")
+    m.walls(ux, uy, 70, 50, uz)
+    # a water channel and column hall
+    for y in range(uy + 3, uy + 47):
+        m.ground[(ux + 20, y, uz)] = m.pick("water")
+        m.ground[(ux + 21, y, uz)] = m.pick("water")
+    for y in (uy + 15, uy + 16, uy + 30, uy + 31):  # crossings
+        m.ground[(ux + 20, y, uz)] = 351
+        m.ground[(ux + 21, y, uz)] = 351
+    for cx_ in range(ux + 30, ux + 66, 6):
+        for cy_ in range(uy + 6, uy + 46, 8):
+            m.put(cx_, cy_, uz, ID_PILLAR)
+    m.points["underkeep_entry"] = (ux + 4, uy + 4, uz)
+    m.teleport((ux + 2, uy + 2, uz), (tx + 7, ty + 72, Z), "underkeep_exit")
+    m.monsters.append(("Mire Toad", (ux + 10, uy + 25, uz), 4, 5, 90))
+    m.monsters.append(("Mire Toad", (ux + 40, uy + 12, uz), 4, 4, 90))
+    m.monsters.append(("Black Crawler", (ux + 45, uy + 30, uz), 4, 5, 90))
+    m.monsters.append(("Black Crawler", (ux + 58, uy + 40, uz), 4, 4, 90))
+    # daily chest room (scripted reward, task 2.10) and the sealed door to Wing 2
+    m.points["underkeep_chest"] = (ux + 64, uy + 4, uz)
+    m.walls(ux + 58, uy + 1, 11, 8, uz, gaps={(ux + 58, uy + 4)})
+    m.put(ux + 64, uy + 4, uz, 3515)  # an old stone altar used as the daily strongbox (scripted)
+    m.points["underkeep_wing2_door"] = (ux + 69, uy + 25, uz)
+    m.sign(ux + 67, uy + 25, uz, "A black iron door. Sealed until the tower reaches Floor 2.")
 

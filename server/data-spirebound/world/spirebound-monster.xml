@@ -176,4 +176,30 @@
 		<monster name="Ruin Sentinel" x="-1" y="0" z="5" spawntime="90" />
 		<monster name="Ruin Sentinel" x="0" y="0" z="5" spawntime="90" />
 	</monster>
+	<monster centerx="1200" centery="1285" centerz="8" radius="4">
+		<monster name="Mire Toad" x="-1" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="0" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="1" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="-1" y="0" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="0" y="0" z="8" spawntime="90" />
+	</monster>
+	<monster centerx="1230" centery="1272" centerz="8" radius="4">
+		<monster name="Mire Toad" x="-1" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="0" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="1" y="-1" z="8" spawntime="90" />
+		<monster name="Mire Toad" x="-1" y="0" z="8" spawntime="90" />
+	</monster>
+	<monster centerx="1235" centery="1290" centerz="8" radius="4">
+		<monster name="Black Crawler" x="-1" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="0" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="1" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="-1" y="0" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="0" y="0" z="8" spawntime="90" />
+	</monster>
+	<monster centerx="1248" centery="1300" centerz="8" radius="4">
+		<monster name="Black Crawler" x="-1" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="0" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="1" y="-1" z="8" spawntime="90" />
+		<monster name="Black Crawler" x="-1" y="0" z="8" spawntime="90" />
+	</monster>
 </monsters>
