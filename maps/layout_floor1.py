@@ -82,6 +82,7 @@ def build(m):
 
     # ------------------------------------------------ roads
     gate_n = (tx + tw // 2, ty)
+    m.npcs.append(("Captain Dorrow", (gate_n[0] + 3, ty + 3, Z)))
     m.road((tx - 60, ty + th // 2), (tx + tw // 2, ty + th // 2), Z)        # west road (crosses the river: bridge)
     m.road((tx + tw // 2, ty + th // 2), (tx + tw + 60, ty + th // 2), Z)   # east road
     m.road((tx + tw // 2, Y0 + 90), (tx + tw // 2, ty), Z)                  # north road to the Pass
@@ -94,6 +95,7 @@ def build(m):
     m.flag(mx, my, 50, 40, Z, 0x0001)
     m.building(mx + 18, my + 4, 14, 10, Z, floor="wood", door_side="s")  # inn
     m.sign(mx + 25, my + 15, Z, "Millcross Inn")
+    m.npcs.append(("Miller Agna", (mx + 24, my + 9, Z)))
     for i in range(3):
         m.house_building(hid, f"Millcross Cottage {i + 1}", mx + 3 + i * 16, my + 24, 9, 8, Z, town=2, rent=800, door_side="n")
         hid += 1

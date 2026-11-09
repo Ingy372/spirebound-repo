@@ -93,3 +93,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Tasks 2.9, 2.10: fishing and the Underkeep
 - **Fishing:** use a fishing rod on water; when "Something is biting!" appears you have 3 seconds to use the rod again (unattended fishing catches nothing). Worms are the bait. Floor 1 has 7 fish (one only bites at night, one legendary with a server-wide announcement), plus treasure and junk. Your fishing log keeps counts and best weights; "Angler" titles. The weekly Derby comes with world events.
 - **The Underkeep, Wing 1:** a cave under Hearthgate reached through the drain-grate secret: a water channel, a column hall, Mire Toads and Black Crawlers (tuned to Floor 2), a daily strongbox (gold + a chance at a gem), and a sealed door to Wing 2. Boot test: 38 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 2.11: story quests, quest log, Floor 1 perk
+- Three Floor 1 story quests (old pack names, simpler steps): **Bread for the Road** and **Millstone** from Miller Agna in Millcross, **The Lost Patrol** from Captain Dorrow at Hearthgate's north gate. Kill counters, "report" to collect gold (and the title Millhand). Each shows its next step in the client's Quest Log.
+- Finish all three and Registrar Maelis offers the Floor 1 perk: **Thick Skin** (+5% max health) or **Light Step** (+10 speed). Earned only.
+- Cleanup: removed four leftover Canary sample scripts (an example quest chest, a sample world board, an imbuement shrine) that referenced the old sample map. Boot test: 40 in-game tests pass.

@@ -1,5 +1,5 @@
 -- Core API functions implemented in Lua
-dofile(DATA_DIRECTORY .. "/lib/core/load.lua")
+-- Spirebound systems first (the quest catalog in lib/core reads SpireQuests)
 dofile(DATA_DIRECTORY .. "/lib/spirebound/difficulty.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/floors.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/sword_skills.lua")
@@ -12,3 +12,5 @@ dofile(DATA_DIRECTORY .. "/lib/spirebound/bounty_war.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/secrets.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/cavebot.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/fishing.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/quests.lua")
+dofile(DATA_DIRECTORY .. "/lib/core/load.lua")

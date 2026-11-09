@@ -121,6 +121,31 @@ local function creatureSayCallback(npc, player, type, msg)
 		return true
 	end
 
+	-- Floor perks (DESIGN.md 8.3): after all story quests of a floor
+	if MsgContains(lower, "perk") then
+		local floor = 1
+		if not SpireQuests.floorStoryDone(player, floor) then
+			npcHandler:say("Perks are earned. Finish every story quest on Floor " .. floor .. " first.", npc, player)
+		elseif SpirePerks.get(player, floor) then
+			npcHandler:say("You already chose your Floor " .. floor .. " perk.", npc, player)
+		else
+			local opts = SpireQuests.PERKS[floor]
+			npcHandler:say(string.format("Choose one: {%s} (%s) or {%s} (%s).", opts[1].name, opts[1].text, opts[2].name, opts[2].text), npc, player)
+			npcHandler:setTopic(pid, 20)
+		end
+		return true
+	end
+	if topic == 20 then
+		for _, o in ipairs(SpireQuests.PERKS[1]) do
+			if MsgContains(lower, o.name:lower()) then
+				SpirePerks.choose(player, 1, o.key)
+				npcHandler:say("It is written: " .. o.name .. ".", npc, player)
+				npcHandler:setTopic(pid, 0)
+				return true
+			end
+		end
+	end
+
 	-- Already registered: stepping down
 	local current = Difficulty.get(player)
 	if MsgContains(lower, "step down") then
