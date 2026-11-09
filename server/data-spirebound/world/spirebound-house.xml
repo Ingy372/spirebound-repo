@@ -33,4 +33,34 @@
 	<house name="Ringhold House 4" houseid="503" entryx="3317" entryy="1265" entryz="7" rent="11500" townid="6" size="43" clientid="503" guildhall="false" beds="2" />
 	<house name="Ringhold House 5" houseid="504" entryx="3341" entryy="1265" entryz="7" rent="12000" townid="6" size="43" clientid="504" guildhall="false" beds="2" />
 	<house name="Ringhold House 6" houseid="505" entryx="3365" entryy="1265" entryz="7" rent="12500" townid="6" size="43" clientid="505" guildhall="false" beds="2" />
+	<house name="Cinderhold House 1" houseid="600" entryx="3717" entryy="1253" entryz="7" rent="12000" townid="7" size="43" clientid="600" guildhall="false" beds="2" />
+	<house name="Cinderhold House 2" houseid="601" entryx="3741" entryy="1253" entryz="7" rent="12500" townid="7" size="43" clientid="601" guildhall="false" beds="2" />
+	<house name="Cinderhold House 3" houseid="602" entryx="3765" entryy="1253" entryz="7" rent="13000" townid="7" size="43" clientid="602" guildhall="false" beds="2" />
+	<house name="Cinderhold House 4" houseid="603" entryx="3717" entryy="1265" entryz="7" rent="13500" townid="7" size="43" clientid="603" guildhall="false" beds="2" />
+	<house name="Cinderhold House 5" houseid="604" entryx="3741" entryy="1265" entryz="7" rent="14000" townid="7" size="43" clientid="604" guildhall="false" beds="2" />
+	<house name="Cinderhold House 6" houseid="605" entryx="3765" entryy="1265" entryz="7" rent="14500" townid="7" size="43" clientid="605" guildhall="false" beds="2" />
+	<house name="Reedhaven House 1" houseid="700" entryx="4117" entryy="1253" entryz="7" rent="14000" townid="8" size="43" clientid="700" guildhall="false" beds="2" />
+	<house name="Reedhaven House 2" houseid="701" entryx="4141" entryy="1253" entryz="7" rent="14500" townid="8" size="43" clientid="701" guildhall="false" beds="2" />
+	<house name="Reedhaven House 3" houseid="702" entryx="4165" entryy="1253" entryz="7" rent="15000" townid="8" size="43" clientid="702" guildhall="false" beds="2" />
+	<house name="Reedhaven House 4" houseid="703" entryx="4117" entryy="1265" entryz="7" rent="15500" townid="8" size="43" clientid="703" guildhall="false" beds="2" />
+	<house name="Reedhaven House 5" houseid="704" entryx="4141" entryy="1265" entryz="7" rent="16000" townid="8" size="43" clientid="704" guildhall="false" beds="2" />
+	<house name="Reedhaven House 6" houseid="705" entryx="4165" entryy="1265" entryz="7" rent="16500" townid="8" size="43" clientid="705" guildhall="false" beds="2" />
+	<house name="Rimewatch House 1" houseid="800" entryx="4517" entryy="1253" entryz="7" rent="16000" townid="9" size="43" clientid="800" guildhall="false" beds="2" />
+	<house name="Rimewatch House 2" houseid="801" entryx="4541" entryy="1253" entryz="7" rent="16500" townid="9" size="43" clientid="801" guildhall="false" beds="2" />
+	<house name="Rimewatch House 3" houseid="802" entryx="4565" entryy="1253" entryz="7" rent="17000" townid="9" size="43" clientid="802" guildhall="false" beds="2" />
+	<house name="Rimewatch House 4" houseid="803" entryx="4517" entryy="1265" entryz="7" rent="17500" townid="9" size="43" clientid="803" guildhall="false" beds="2" />
+	<house name="Rimewatch House 5" houseid="804" entryx="4541" entryy="1265" entryz="7" rent="18000" townid="9" size="43" clientid="804" guildhall="false" beds="2" />
+	<house name="Rimewatch House 6" houseid="805" entryx="4565" entryy="1265" entryz="7" rent="18500" townid="9" size="43" clientid="805" guildhall="false" beds="2" />
+	<house name="Last Market House 1" houseid="900" entryx="4917" entryy="1253" entryz="7" rent="18000" townid="10" size="43" clientid="900" guildhall="false" beds="2" />
+	<house name="Last Market House 2" houseid="901" entryx="4941" entryy="1253" entryz="7" rent="18500" townid="10" size="43" clientid="901" guildhall="false" beds="2" />
+	<house name="Last Market House 3" houseid="902" entryx="4965" entryy="1253" entryz="7" rent="19000" townid="10" size="43" clientid="902" guildhall="false" beds="2" />
+	<house name="Last Market House 4" houseid="903" entryx="4917" entryy="1265" entryz="7" rent="19500" townid="10" size="43" clientid="903" guildhall="false" beds="2" />
+	<house name="Last Market House 5" houseid="904" entryx="4941" entryy="1265" entryz="7" rent="20000" townid="10" size="43" clientid="904" guildhall="false" beds="2" />
+	<house name="Last Market House 6" houseid="905" entryx="4965" entryy="1265" entryz="7" rent="20500" townid="10" size="43" clientid="905" guildhall="false" beds="2" />
+	<house name="Bluegate House 1" houseid="1000" entryx="5317" entryy="1253" entryz="7" rent="20000" townid="11" size="43" clientid="1000" guildhall="false" beds="2" />
+	<house name="Bluegate House 2" houseid="1001" entryx="5341" entryy="1253" entryz="7" rent="20500" townid="11" size="43" clientid="1001" guildhall="false" beds="2" />
+	<house name="Bluegate House 3" houseid="1002" entryx="5365" entryy="1253" entryz="7" rent="21000" townid="11" size="43" clientid="1002" guildhall="false" beds="2" />
+	<house name="Bluegate House 4" houseid="1003" entryx="5317" entryy="1265" entryz="7" rent="21500" townid="11" size="43" clientid="1003" guildhall="false" beds="2" />
+	<house name="Bluegate House 5" houseid="1004" entryx="5341" entryy="1265" entryz="7" rent="22000" townid="11" size="43" clientid="1004" guildhall="false" beds="2" />
+	<house name="Bluegate House 6" houseid="1005" entryx="5365" entryy="1265" entryz="7" rent="22500" townid="11" size="43" clientid="1005" guildhall="false" beds="2" />
 </houses>

@@ -363,7 +363,7 @@ def check_ids(m: Map, appearances_path: str):
     return sorted(set(bad))[:50]
 
 
-BUILT_FLOORS = range(2, 6)  # floors with generated maps beyond floor 1 (phase 4: 2-5; phase 5 adds 6-10)
+BUILT_FLOORS = range(2, 11)  # floors 2-10 have generated maps (phase 4: 2-5, phase 5: 6-10)
 
 
 def link_floors(m):

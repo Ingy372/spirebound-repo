@@ -1,6 +1,6 @@
--- Phase 4: floors 2-5 exist, link up and have their bosses, NPCs, secrets and quests.
-SpireTest.add("floors 2-5: maps, stairs, bosses, towns", function()
-	for n = 2, 5 do
+-- Phases 4-5: floors 2-10 exist, link up and have their bosses, NPCs, secrets and quests.
+SpireTest.add("floors 2-10: maps, stairs, bosses, towns", function()
+	for n = 2, 10 do
 		local P = "f" .. n .. "_"
 		for _, k in ipairs({ "temple", "boss_spawn", "field_spawn", "gate_next", "gate_pass_1", "down_src", "lab1_up", "lab3_up", "lake" }) do
 			if not WorldPoints[P .. k] then error("floor " .. n .. " missing point " .. k) end

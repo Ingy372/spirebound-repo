@@ -121,3 +121,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - 90 new monsters for floors 2–10 from the roster (old pack names for 2–5, new for 6–10), with placeholder looks and floor gear in their loot.
 - Bosses for floors 2–10 use a pattern library: stomp, root and spores, lance lines, rotating stances, charge lines, the "don't move" slam, the visor silence with Jay's aggro-bounce, the split, and Azhrakkar's three-phase ruin dance. First kills open the labyrinth/next floor, announce the clear, award titles, sigils and the house head start.
 - Content for floors 2–10 generated: 27 story quests (in the quest log), 18 perk choices (any floor at the Registrar), 108 secrets (old pack names for 2–5), 63 fish. DESIGN.md table updated to the old pack's floor 3–5 bosses (my call). Boot test: 46 in-game tests pass, 570 monsters and 41 NPCs in the world.
+
+### 2026-11-08 (overnight) — Phase 5: Floors 6–10 (placeholder versions)
+- The same generator now builds **Emberreach, Glasswater Marsh, Frostspire, The Hollow Bazaar and The Cobalt Labyrinth**, so all 10 launch floors exist end to end: towns, camps, apex spawns, passes, labyrinths, boss rooms, stairs, 12 secrets and 7 fish each. Azhrakkar, the Cerulean Ruin waits at the top of Floor 10 with his three-phase fight (sweeps, burning blade + wardens, ruin dance with aggro bounce). Boot test: 46 in-game tests pass, 1,115 monsters and 76 NPCs.
+- Still open in phase 5: the Twin Fang trial on Floor 8, world events, weekend bonuses, arena events, Spire Siege, offline training and livestream.

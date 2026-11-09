@@ -123,4 +123,109 @@
 	<npc centerx="3353" centery="1213" centerz="7" radius="1">
 		<npc name="Scout of Ringhold" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="3755" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3714" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3739" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3753" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3767" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3779" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3753" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Cinderhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4155" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4114" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4139" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4153" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4167" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4179" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4153" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4555" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4514" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4539" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4553" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4567" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4579" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4553" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Rimewatch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4955" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4914" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4939" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4953" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4967" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4979" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4953" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Last Market" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5355" centery="1238" centerz="7" radius="1">
+		<npc name="Priest of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5314" centery="1222" centerz="7" radius="1">
+		<npc name="Quartermaster of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5339" centery="1220" centerz="7" radius="1">
+		<npc name="Banker of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5353" centery="1220" centerz="7" radius="1">
+		<npc name="Merchant of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5367" centery="1220" centerz="7" radius="1">
+		<npc name="Outfitter of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5379" centery="1240" centerz="7" radius="1">
+		<npc name="Elder of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5353" centery="1213" centerz="7" radius="1">
+		<npc name="Scout of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 </npcs>

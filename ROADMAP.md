@@ -97,7 +97,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **4.7 🧑 Phase 4 playtest.**
 
 ## Phase 5 — Floors 6 to 10 and Azhrakkar
-- [ ] **5.1 Floor 6** · [ ] **5.2 Floor 7** · [ ] **5.3 Floor 8 (+ Twin Fang trial)** · [ ] **5.4 Floor 9** · [ ] **5.5 Floor 10 + Azhrakkar**
+- [x] **5.1 Floor 6** · [x] **5.2 Floor 7** · [ ] **5.3 Floor 8 (+ Twin Fang trial)** (floor done, trial open) · [x] **5.4 Floor 9** · [x] **5.5 Floor 10 + Azhrakkar** (placeholder versions; Azhrakkar's 3 phases are in the pattern library, a scripted 3-phase test is still open)
   Done when (each): scripted speed run clears the floor; for 5.3 the 4th Twin Fang attempt is refused; for 5.5 all 3 Azhrakkar phases trigger in a scripted fight.
 - [ ] **5.6 Underkeep Wings 4–6.**
 - [ ] **5.7 World events scheduler** (Frenzy, Incursion, Fishing Frenzy, Wandering Champion). Done when: test forces each event and checks its announcement and end.
