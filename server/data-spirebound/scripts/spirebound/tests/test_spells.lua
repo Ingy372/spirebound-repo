@@ -17,7 +17,7 @@ SpireTest.add("spells: each vocation gets 8 shared + its own, nothing from other
 	local per = { 0, 0, 0, 0 }
 	for _, row in ipairs(SpireSpells.list) do
 		for v = 1, 4 do
-			if SpireSpells.allowed(row, v) then
+			if row.level <= 50 and SpireSpells.allowed(row, v) then
 				per[v] = per[v] + 1
 			end
 		end
@@ -58,5 +58,27 @@ SpireTest.add("vocations: weapons and runes use Spirebound vocation names", func
 		if not v:find("arcanist") then
 			error("wand of vortex vocations: " .. v)
 		end
+	end
+end)
+
+SpireTest.add("spells: about 20 per vocation including Lost Arts", function()
+	local per, lost = { 0, 0, 0, 0 }, { 0, 0, 0, 0 }
+	for _, row in ipairs(SpireSpells.list) do
+		for v = 1, 4 do
+			if SpireSpells.allowed(row, v) then
+				per[v] = per[v] + 1
+				if row.lostArt then lost[v] = lost[v] + 1 end
+			end
+		end
+	end
+	for v = 1, 4 do
+		if per[v] < 19 then error("vocation " .. v .. " has only " .. per[v] .. " spells") end
+		SpireTest.eq(lost[v], 2, "lost arts for vocation " .. v)
+	end
+	local row = { lostArt = 5 }
+	SpireTest.eq(SpireSpells.knowsLostArt(row, function(f) return false end), false, "not yet earned")
+	SpireTest.eq(SpireSpells.knowsLostArt(row, function(f) return f == 5 end), true, "earned on floor 5")
+	for _, r in ipairs(SpireSpells.unlockedAt(100, 1)) do
+		if r.lostArt then error("Lost Arts must not unlock by level") end
 	end
 end)

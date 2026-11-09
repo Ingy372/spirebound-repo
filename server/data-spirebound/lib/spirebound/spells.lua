@@ -57,7 +57,30 @@ SpireSpells.list = {
 	{ name = "Mass Mend", words = "mass mend", voc = { 2 }, level = 36, mana = 160, cd = 2, kind = "heal_party", min = 1.0, max = 1.6, base = 20, radius = 4 },
 	{ name = "Entangle", words = "entangle", voc = { 2 }, level = 40, mana = 500, cd = 2, kind = "conjure", item = 3165, count = 1 },
 	{ name = "Summon Wolf Companion", words = "summon wolf companion", voc = { 2 }, level = 50, mana = 300, cd = 30, kind = "summon", monster = "Wolf Companion" },
+
+	-- Above level 50 (roadmap 4.6b)
+	{ name = "Bulwark Aura", words = "bulwark aura", voc = { 4 }, level = 60, mana = 200, cd = 60, kind = "dr_party", pct = 8, duration = 120, radius = 4 },
+	{ name = "Recovery", words = "recovery", voc = { 4 }, level = 70, mana = 120, cd = 2, kind = "heal_self", min = 2.2, max = 3.4, base = 60 },
+	{ name = "Iron Will", words = "iron will", voc = { 4 }, level = 80, mana = 80, cd = 12, kind = "break_free" },
+	{ name = "Eagle Eye", words = "eagle eye", voc = { 3 }, level = 55, mana = 180, cd = 60, kind = "party_buff", buff = "crit", amount = 10, duration = 120 },
+	{ name = "Sanctified Ground", words = "sanctified ground", voc = { 3 }, level = 70, mana = 220, cd = 30, kind = "heal_zone", min = 0.6, max = 1.0, base = 20, radius = 2, duration = 6 },
+	{ name = "Arcane Empower", words = "arcane empower", voc = { 1 }, level = 60, mana = 220, cd = 60, kind = "party_buff", buff = "magic", amount = 10, duration = 120 },
+
+	-- Lost Arts (DESIGN 5.3b): never unlocked by level alone; earned from Floor 5 and Floor 8 story quests (Claude's call)
+	{ name = "Last Bastion", words = "last bastion", voc = { 4 }, level = 100, mana = 250, cd = 60, kind = "heal_last_stand", min = 2.0, max = 3.0, base = 100, lostArt = 5 },
+	{ name = "Unbroken Line", words = "unbroken line", voc = { 4 }, level = 150, mana = 400, cd = 90, kind = "dr_party", pct = 15, duration = 10, radius = 4, lostArt = 8 },
+	{ name = "Hawk's Path", words = "hawks path", voc = { 3 }, level = 100, mana = 150, cd = 20, kind = "blink", tiles = 6, lostArt = 5 },
+	{ name = "Volley of Dawn", words = "volley of dawn", voc = { 3 }, level = 150, mana = 500, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_HOLYDAMAGE, min = 3.0, max = 4.6, effect = CONST_ME_HOLYAREA, lostArt = 8 },
+	{ name = "Meteor Rain", words = "meteor rain", voc = { 1 }, level = 100, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_FIREDAMAGE, min = 3.2, max = 5.0, effect = CONST_ME_FIREAREA, lostArt = 5 },
+	{ name = "Mirror Image", words = "mirror image", voc = { 1 }, level = 150, mana = 300, cd = 60, kind = "decoy", monster = "Mirror Image", duration = 5, lostArt = 8 },
+	{ name = "Wellspring", words = "wellspring", voc = { 2 }, level = 100, mana = 400, cd = 45, kind = "heal_zone", min = 1.0, max = 1.6, base = 40, radius = 3, duration = 8, lostArt = 5 },
+	{ name = "Winter's Breath", words = "winters breath", voc = { 2 }, level = 150, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 3.2, max = 5.0, effect = CONST_ME_ICEAREA, lostArt = 8 },
 }
+
+-- Lost Arts: a player knows one once every story quest of its floor is done
+function SpireSpells.knowsLostArt(row, floorStoryDone)
+	return not row.lostArt or floorStoryDone(row.lostArt)
+end
 
 -- Pure: may this base vocation use this spell row?
 function SpireSpells.allowed(row, baseVocation)
@@ -72,11 +95,11 @@ function SpireSpells.allowed(row, baseVocation)
 	return false
 end
 
--- Pure: spells that unlock exactly at `level` for this vocation (for the "you learned" message)
+-- Pure: spells that unlock exactly at `level` for this vocation (for the "you learned" message; Lost Arts excluded)
 function SpireSpells.unlockedAt(level, baseVocation)
 	local out = {}
 	for _, row in ipairs(SpireSpells.list) do
-		if row.level == level and SpireSpells.allowed(row, baseVocation) then
+		if row.level == level and not row.lostArt and SpireSpells.allowed(row, baseVocation) then
 			table.insert(out, row)
 		end
 	end

@@ -92,6 +92,8 @@ MONSTERS = {
     "Ember Sprite": dict(desc="an ember sprite", look=(49,), corpse=0, hp=300, xp=0, speed=150, race="fire",
                          attacks=[("melee", 0, -40), ("fire", -20, -60, 4)], armor=10, defense=10, summon=True,
                          loot=[], elements={"fire": 100, "ice": -20}),
+    "Mirror Image": dict(desc="a mirror image", look=(130,), corpse=0, hp=2000, xp=0, speed=0, race="undead",
+                         attacks=[("melee", 0, 0)], armor=50, defense=50, summon=True, loot=[]),
     "Wolf Companion": dict(desc="a wolf companion", look=(27,), corpse=0, hp=400, xp=0, speed=160, race="blood",
                            attacks=[("melee", 0, -50)], armor=15, defense=15, summon=True, loot=[]),
 }

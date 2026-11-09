@@ -148,7 +148,7 @@ Every vocation unlocks about 20 spells, including utility and support spells (Ja
 ### 5.3 Sword skills
 Every vocation gets sword skills: combo-style abilities with cooldowns, tied to the weapon type in hand. Change weapon type, change skill list.
 - **Hotbar:** a dedicated sword-skill bar in our client (up to 6 slots), separate from normal hotkeys. Skills glow when ready and show their cooldown.
-- **Unlocks:** each weapon family has 6 skills. 2 at the start, then more unlock through weapon proficiency (Canary 15.11's built-in proficiency per weapon) and through quests/secrets **(Claude's call)**.
+- **Unlocks:** each weapon family has 6 skills: 3 from the start, then one each at levels 60, 100 and 150 **(Claude's call; weapon proficiency or quests can replace the level gates later)**.
 - **Combos:** every skill is tagged *Opener*, *Link* or *Finisher*. Opener → Link → Finisher within 4 seconds of each other is a **combo**: the Finisher deals +30% and the combo counter on the bar lights up. Skills still work alone; combos are a skill reward, not a requirement **(Claude's call)**.
 - **Cooldowns** are enforced by the server (a bot gains nothing from fast clicking). Each skill has its own cooldown plus a short shared 1-second "skill" cooldown.
 - **Look:** sword skills must be "captivating to watch" (Jay). Each gets a distinct effect; big ones get bigger art budgets in `ART_REQUESTS.md`.
@@ -168,7 +168,7 @@ Sword skills are the combo attacks. **Spells** are everything else: healing, sup
 
 **How spells unlock:**
 - Spells **unlock automatically when you reach their level** (Jay, 2026-11-08: "spells should be learned on level unlock, not gold"). No trainer, no cost. A message tells you what you just learned.
-- **3 per vocation are "Lost Arts"**: earned only from quests, secrets or bosses, never sold. Marked ★ below **(Claude's call)**.
+- **2 per vocation are "Lost Arts"**: earned only by finishing every story quest on Floor 5 (first) and Floor 8 (second), never sold. Marked ★ below **(Claude's call)**.
 - **Ammunition can't be conjured** (Jay). Arrows, bolts and spears are bought from NPCs, alongside potions; together they are the main everyday gold sink.
 - Incantations are our own words (not Tibia's), short and easy to type, e.g. `spire mend`. Everything can also sit on a hotkey.
 

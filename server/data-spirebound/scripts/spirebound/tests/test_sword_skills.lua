@@ -1,5 +1,5 @@
 -- Roadmap 1.14: sword skill rules.
-SpireTest.add("sword skills: 3 per weapon family, all with words and cooldowns", function()
+SpireTest.add("sword skills: 6 per weapon family, all with words and cooldowns", function()
 	local count = {}
 	for _, d in ipairs(SwordSkills.list) do
 		count[d.family] = (count[d.family] or 0) + 1
@@ -8,7 +8,7 @@ SpireTest.add("sword skills: 3 per weapon family, all with words and cooldowns",
 		end
 	end
 	for fam in pairs(SwordSkills.families) do
-		SpireTest.eq(count[fam], 3, "skills for " .. fam)
+		SpireTest.eq(count[fam], 6, "skills for " .. fam)
 	end
 end)
 

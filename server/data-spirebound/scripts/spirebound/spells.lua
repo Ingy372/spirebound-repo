@@ -11,6 +11,7 @@ local VOC_NAMES = {
 local AREAS = {
 	wave = { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 3, 0 } },
 	beam = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 3 } },
+	ring2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
 }
 
 local function formula(row, player)
@@ -299,6 +300,8 @@ KINDS.party_buff = function(row, player)
 			c:setParameter(CONDITION_PARAM_SKILL_MELEEPERCENT, 100 + row.amount)
 		elseif row.buff == "distance" then
 			c:setParameter(CONDITION_PARAM_SKILL_DISTANCEPERCENT, 100 + row.amount)
+		elseif row.buff == "crit" then
+			c:setParameter(CONDITION_PARAM_SKILL_CRITICAL_HIT_CHANCE, row.amount * 100)
 		elseif row.buff == "magic" then
 			c:setParameter(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT, 100 + row.amount)
 		end
@@ -378,6 +381,67 @@ KINDS.manashield = function(row, player)
 	return true
 end
 
+KINDS.heal_last_stand = function(row, player)
+	local mn, mx = formula(row, player)
+	local missing = 1 - player:getHealth() / player:getMaxHealth()
+	player:addHealth(math.floor(math.random(mn, mx) * (1 + missing * 2)))
+	player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
+	return true
+end
+
+KINDS.heal_zone = function(row, player)
+	local center = player:getPosition()
+	local pid = player:getId()
+	for tick = 0, row.duration - 1 do
+		addEvent(function()
+			local caster = Player(pid)
+			if not caster then
+				return
+			end
+			local mn, mx = formula(row, caster)
+			for _, c in ipairs(Game.getSpectators(center, false, true, row.radius, row.radius, row.radius, row.radius)) do
+				local party = caster:getParty()
+				if c == caster or (party and c:getParty() == party) then
+					c:addHealth(math.random(mn, mx))
+					c:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+				end
+			end
+			center:sendMagicEffect(CONST_ME_HOLYAREA)
+		end, tick * 1000)
+	end
+	return true
+end
+
+KINDS.break_free = function(row, player)
+	player:removeCondition(CONDITION_PARALYZE)
+	player:removeCondition(CONDITION_ROOTED)
+	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
+	return true
+end
+
+KINDS.decoy = function(row, player)
+	local m = Game.createMonster(row.monster, player:getPosition(), true, false)
+	if not m then
+		player:sendCancelMessage(RETURNVALUE_NOTENOUGHROOM)
+		return false
+	end
+	local pos = m:getPosition()
+	for _, c in ipairs(Game.getSpectators(pos, false, false, 4, 4, 4, 4)) do
+		if c:isMonster() and c ~= m and not c:getMaster() then
+			c:setTarget(m)
+		end
+	end
+	local mid = m:getId()
+	addEvent(function()
+		local d = Creature(mid)
+		if d then
+			d:getPosition():sendMagicEffect(CONST_ME_POFF)
+			d:remove()
+		end
+	end, row.duration * 1000)
+	return true
+end
+
 KINDS.conjure = function(row, player)
 	player:addItem(row.item, row.count)
 	player:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
@@ -427,6 +491,10 @@ for i, row in ipairs(SpireSpells.list) do
 		if not player then
 			return false
 		end
+		if row.lostArt and not SpireSpells.knowsLostArt(row, function(f) return SpireQuests.floorStoryDone(player, f) end) then
+			player:sendCancelMessage(row.name .. " is a Lost Art. Finish every story quest on Floor " .. row.lostArt .. " to learn it.")
+			return false
+		end
 		if combat then
 			return combat:execute(creature, var)
 		end
@@ -452,6 +520,8 @@ for i, row in ipairs(SpireSpells.list) do
 		spell:hasParams(true)
 	elseif row.kind == "find_person" or row.kind == "levitate" then
 		spell:hasParams(true)
+	elseif row.area == "ring2" then
+		-- centred on the caster, no target needed
 	elseif row.area == "wave" or row.area == "beam" then
 		spell:needDirection(true)
 	end

@@ -125,3 +125,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Phase 5: Floors 6–10 (placeholder versions)
 - The same generator now builds **Emberreach, Glasswater Marsh, Frostspire, The Hollow Bazaar and The Cobalt Labyrinth**, so all 10 launch floors exist end to end: towns, camps, apex spawns, passes, labyrinths, boss rooms, stairs, 12 secrets and 7 fish each. Azhrakkar, the Cerulean Ruin waits at the top of Floor 10 with his three-phase fight (sweeps, burning blade + wardens, ruin dance with aggro bounce). Boot test: 46 in-game tests pass, 1,115 monsters and 76 NPCs.
 - Still open in phase 5: the Twin Fang trial on Floor 8, world events, weekend bonuses, arena events, Spire Siege, offline training and livestream.
+
+### 2026-11-08 (overnight) — Tasks 4.6, 4.6b: the rest of the sword skills and spells
+- 24 more sword skills (now 6 per weapon family; the new ones unlock at levels 60, 100 and 150), e.g. Blade Tempest, Worldsplitter, Titan's Fall, Heartseeker, Ballista Shot, Skyfall Lance, Cataclysm Rite, Lifebloom Rite.
+- 14 more spells: Bulwark Aura, Recovery, Iron Will, Eagle Eye, Sanctified Ground, Arcane Empower, plus the Lost Arts (Last Bastion, Unbroken Line, Hawk's Path, Volley of Dawn, Meteor Rain, Mirror Image, Wellspring, Winter's Breath), which only work after finishing every story quest on Floor 5 (first) and Floor 8 (second). Every vocation now has 19–22 spells. DESIGN.md says 2 Lost Arts per vocation (the table always listed 2). Boot test: 47 in-game tests pass.

@@ -109,7 +109,7 @@ for i, def in ipairs(SwordSkills.list) do
 	spell:id(240 + i) -- spell ids 241+ are unused by Canary's default spells
 	spell:cooldown(def.cd)
 	spell:groupCooldown(SwordSkills.SHARED_COOLDOWN, SwordSkills.SHARED_COOLDOWN)
-	spell:level(1)
+	spell:level(def.level or 1)
 	spell:mana(0)
 	spell:isPremium(false)
 	spell:isAggressive(true)
