@@ -16,9 +16,9 @@ Your PC's Spirebound folder was pointed at your **Dojo-game** GitHub repo, so an
 - **Recommendation:** delete the `phase-0-toolchain` branch from the Dojo-game repo on GitHub (Branches page → trash icon). Everything in it is also in spirebound-repo.
 - Jay's answer:
 
-### Q10. Cavebot penalty numbers
-You decided the cavebot is built in with much lower XP. My numbers, now in DESIGN.md §12:
-- **Recommendation:** cavebot on = 30% XP and 50% loot; the cut lasts 10 minutes after switching off; a gear icon shows who is botting; no secrets, rare chests or boss rooms while botting; auto-targeting alone has no penalty.
+### Q11. Should the cavebot XP cut linger 10 minutes after switching it off?
+Without it, someone can bot the boring parts, switch it off just before a boss or rare monster for full XP, then switch it back on.
+- **Recommendation:** keep the 10 minutes. If you'd rather have full XP the moment it's off, write "no linger".
 - Jay's answer:
 
 ### Q5. Your new brief changes several decisions from the October design pack (FYI)
@@ -46,6 +46,12 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 ---
 
 ## Answered
+
+### Q10. Cavebot numbers
+- Jay's answer (2026-11-08): **XP 45% while botting** ("you want the players to have a reason to bot occasionally"); **no icon or indicator**; blocked from secrets/chests/boss rooms: yes; auto-targeting alone free: yes; third-party bots banned: yes. Loot stays 50% (my call). Linger: see Q11.
+
+### Spells and ammo (Jay, 2026-11-08)
+- Spells unlock automatically at their level, no gold. Players can't conjure ammo; ammo and healing supplies are the gold burn. DESIGN.md §5.3b updated (3 Ranger conjure spells replaced).
 
 ### Q3. Seasons or 100 permanent floors? (FYI, no action needed)
 - **Recommendation: keep seasons** (about 5 months each, 10 floors at launch growing to ~25). Seasonal resets give every season a fresh "launch week", and resets close the level gap that lets top guilds farm new players. 100 permanent floors would need far more content and the world-first race would happen only once. Full reasoning in DESIGN.md §4.

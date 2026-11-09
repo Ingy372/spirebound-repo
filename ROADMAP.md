@@ -39,8 +39,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: boot test reports all 11 monster types loaded with zero warnings, each spawned at least once on the map; ART_REQUESTS.md has an entry for each.
 - [x] **1.14 Sword skill system v1.** Skill framework (weapon-family check, cooldowns, shared 1 s cooldown, Opener/Link/Finisher combo bonus) + the first 3 skills of all 8 weapon families.
   Done when: all 24 skills register as spells with cooldowns; in-game tests check 3 skills per family, weapon-family detection (right/wrong weapon), and that only Opener → Link → Finisher within 4 s gives +30%. Feel, damage and cooldown display are checked in the Phase 1 playtest.
-- [ ] **1.14b Spells v1 + vocation trainers.** The 8 shared spells and every vocation spell up to level 50 from DESIGN §5.3b (own incantations), sold by a trainer NPC per vocation in Hearthgate.
-  Done when: every listed spell up to level 50 registers with zero errors; in-game tests check each vocation can learn only its own spells and that the level requirements match DESIGN §5.3b.
+- [ ] **1.14b Spells v1.** The 8 shared spells and every vocation spell up to level 50 from DESIGN §5.3b (own incantations), learned automatically on reaching the level (no trainer, no gold), with a "you learned" message.
+  Done when: every listed spell up to level 50 registers with zero errors; in-game tests check each vocation gets only its own spells at exactly the DESIGN §5.3b levels.
 - [ ] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, weapon/armor shop per vocation, travel guide.
   Done when: each NPC loads with zero warnings; a scripted test buys and sells one item from each shop.
 - [x] **1.16 Party shared XP.** Party bonus from DESIGN §7.1, size cap 6.
@@ -68,7 +68,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [ ] **2.9 Fishing system** (floor fish tables, time/bait conditions, struggle click, collection log, derby). Done when: tests cover a catch table roll, a night-only fish, a struggle timeout giving junk.
 - [ ] **2.10 Underkeep Wing 1.** Done when: grate secret opens it; wing loads; sealed wing 2 door shows the right text.
 - [ ] **2.11 Quest log + Floor 1 story quests + perk choice.** Done when: quest log shows next step for every step of every Floor 1 quest (test walks them).
-- [ ] **2.12 Cavebot penalty (server side).** Client reports cavebot on/off; while on and for 10 min after: XP ×0.3, loot ×0.5, gear icon on the name, no secrets/rare chests/Twin Fang trial, boss rooms refuse entry; auto-targeting alone has no penalty; suspicion logging. Done when: in-game tests for each rule.
+- [ ] **2.12 Cavebot penalty (server side).** Client reports cavebot on/off; while on and for 10 min after: XP ×0.45, loot ×0.5, no visible marker, no secrets/rare chests/Twin Fang trial, boss rooms refuse entry; auto-targeting alone has no penalty; suspicion logging. Done when: in-game tests for each rule.
 - [ ] **2.12b Cavebot and auto-targeting in the client.** Adapt OTClient Redemption's built-in bot module: route recorder, walker, auto-target, auto-heal, auto-eat, looter; reports its state to the server; everything else from that module removed. Done when: the module loads with no errors and a headless check shows it sends the on/off message.
 - [ ] **2.14 Hardcore extras:** skill loss ×1.5, blessings can only remove half the penalty, item-drop chance ×2 (DESIGN §5.4). Done when: in-game tests for each.
 - [ ] **2.13 🧑 Phase 2 playtest** with WEEKLY_REPORT.md. Done when: Jay signs off in PLAYTEST.md.

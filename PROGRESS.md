@@ -45,3 +45,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - Seasons confirmed (DESIGN.md §4, QUESTIONS Q3 answered).
 - Bots (DESIGN.md §12 rewritten): cavebot and auto-targeting are built into our client. Cavebot on = 30% XP, 50% loot, visible gear icon, no secrets/boss rooms, penalty lingers 10 min; auto-targeting alone is free. Numbers are my call, open for veto as Q10. New roadmap tasks 2.12 (server penalty) and 2.12b (client cavebot from OTClient's built-in bot module).
 - Spells (new DESIGN.md §5.3b): about 20 per vocation (8 shared + 12 own) covering attack, healing, support and utility; 3 per vocation are "Lost Arts" earned only from quests, secrets and bosses. New roadmap tasks 1.14b (spells to level 50 + trainers) and 4.6b (the rest).
+
+### 2026-11-08 — More of Jay's answers applied
+- Cavebot: 45% XP (was 30%), no visible marker, other rules confirmed. The 10-minute linger is explained and waiting on Jay (QUESTIONS Q11).
+- Spells now unlock automatically by level, no gold. Ammo can't be conjured: Ranger's 3 conjure spells became Keen Sight, Tracker's Mark and Disengage. Ammo + potions are the gold burn.

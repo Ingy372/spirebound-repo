@@ -166,9 +166,10 @@ Every vocation gets sword skills: combo-style abilities with cooldowns, tied to 
 
 Sword skills are the combo attacks. **Spells** are everything else: healing, support, utility, and (for the two mage vocations) the big magic. Each vocation unlocks **about 20 spells**: 8 shared spells plus 12 of its own. Names, levels and words below are **(Claude's call, Jay can veto any of them)**; exact numbers live in the spell data file once built.
 
-**How spells unlock (Claude's call):**
-- Most are **learned from the vocation trainer** in town once you reach the level (a gold cost, which is also a gold sink).
-- **3 per vocation are "Lost Arts"**: earned only from quests, secrets or bosses (never bought, never sold). Marked ★ below.
+**How spells unlock:**
+- Spells **unlock automatically when you reach their level** (Jay, 2026-11-08: "spells should be learned on level unlock, not gold"). No trainer, no cost. A message tells you what you just learned.
+- **3 per vocation are "Lost Arts"**: earned only from quests, secrets or bosses, never sold. Marked ★ below **(Claude's call)**.
+- **Ammunition can't be conjured** (Jay). Arrows, bolts and spears are bought from NPCs, alongside potions; together they are the main everyday gold sink.
 - Incantations are our own words (not Tibia's), short and easy to type, e.g. `spire mend`. Everything can also sit on a hotkey.
 
 **Shared by all four vocations (8)**
@@ -205,10 +206,10 @@ Sword skills are the combo attacks. **Spells** are everything else: healing, sup
 
 | Spell | Type | Level | What it does |
 |---|---|---|---|
-| Conjure Arrows | utility | 13 | makes arrows |
+| Keen Sight | utility | 13 | see invisible creatures and hidden traps nearby for 1 minute |
 | Field Dressing | healing | 15 | heal yourself or one ally |
-| Conjure Bolts | utility | 20 | makes crossbow bolts |
-| Conjure Spears | utility | 25 | makes throwing spears |
+| Tracker's Mark | support | 20 | marks one monster: your party deals 10% more damage to it for 15 seconds |
+| Disengage | utility | 25 | leap 2 tiles away from your target |
 | Swift Foot | utility | 30 | strong haste |
 | Snare | support | 35 | roots one monster in place (slows players) |
 | Radiant Shot | attack | 40 | holy-damage strike at range |
@@ -477,9 +478,9 @@ Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp 
 - Auto-heal (spell or potion at the HP/mana % you set), auto-eat, ring/amulet refill, loot helper, hotkeys.
 
 **The cost of the cavebot (Claude's call on numbers, Jay can veto):**
-- While the cavebot is on, you get **30% of normal XP** and **50% of normal loot**. Manual hunting is more than 3× better.
-- The reduction stays for **10 minutes after you switch it off**, so nobody flicks it off just for a boss or a rare spawn.
-- Cavebot characters show a small **gear icon** next to their name, so everyone can see who's botting. Being PKed is the risk you take (Jay); all normal PvP rules and protections still apply.
+- While the cavebot is on, you get **45% of normal XP** (Jay, 2026-11-08: "You want the players to have a reason to bot occasionally") and **50% of normal loot** (Claude's call). Manual hunting is more than twice as good.
+- The reduction stays for **10 minutes after you switch it off**, so nobody flicks it off just for a boss or a rare spawn (Claude's call, waiting on Jay: QUESTIONS Q11).
+- No icon or marker shows who is botting (Jay). Being PKed is the risk you take (Jay); all normal PvP rules and protections still apply.
 - Stamina still drains as usual.
 - Secrets, rare chests and the Twin Fang trial never trigger while the cavebot is on, or within 10 minutes of using it.
 - Boss rooms (field and floor bosses) refuse to let a cavebot character in.

@@ -19,7 +19,7 @@ This week is a quick install test, not a gameplay test yet. The map is still a b
 ## Open questions (my recommendation is already in use; details in QUESTIONS.md)
 - **Q1 GitHub access (please do this one):** I can't upload to GitHub from here. Add `Ingy372/spirebound-repo` to the GitHub repos Claude can access, or press "Push origin" in GitHub Desktop. Until then all work is safe on your PC only.
 - **Q2:** delete the stray `phase-0-toolchain` branch from your Dojo-game repo.
-- Answered: seasons (yes), built-in cavebot with reduced XP. New: Q10 cavebot numbers (30% XP, 50% loot). · Q5 old design changes (FYI) · Q6 Twin Fang: 3 per season · Q7 newer Tibia systems off · Q8 Hardcore +25% XP/+15% loot, Death Game +50%/+30% · Q9 newbie protection to level 50, 70% level-range rule.
+- Answered: seasons (yes), built-in cavebot with reduced XP. Cavebot XP 45%, no marker; spells unlock by level; no conjured ammo. New: Q11 (10-minute linger). · Q5 old design changes (FYI) · Q6 Twin Fang: 3 per season · Q7 newer Tibia systems off · Q8 Hardcore +25% XP/+15% loot, Death Game +50%/+30% · Q9 newbie protection to level 50, 70% level-range rule.
 
 ## Art and map requests
 - **Art batch 1** (`ART_REQUESTS.md`): the 4 vocation outfits, 11 Floor 1 monsters, Gate Hound, Axe-Lord (two forms), 5 town NPCs. Batch 2: small UI pieces (cursors, floor badge, skill frames). Prompts are ready to paste into Grok.
