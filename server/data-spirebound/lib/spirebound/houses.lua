@@ -109,3 +109,53 @@ function SpireHouses.relistText(names)
 	end
 	return string.format("%d houses are back on the market, including %s. Say !buyhouse at the door.", #names, table.concat({ names[1], names[2], names[3] }, ", "))
 end
+
+-- Construction kits and house fixtures (roadmap 3.5) ---------------------
+-- Our own kit: the exercise dummy (Canary's house dummy). Furniture kits use the stock construction_kits action.
+SpireHouses.KITS = { [23398] = 28559 }
+-- Furniture kits the stock action builds (used to check Season Path rewards and the Housewright's shop)
+SpireHouses.FURNITURE_KITS = {}
+for id = 2775, 2812 do
+	SpireHouses.FURNITURE_KITS[id] = true
+end
+SpireHouses.MANNEQUIN_SLOTS = 3
+SpireHouses.POND_BAIT_BASE = 5
+
+-- Pure: may a kit be built here? onFloor = not in a container; houseAccess = owner/subowner of the house on that tile
+function SpireHouses.canBuild(kitId, onFloor, isHouseTile, houseAccess)
+	if not SpireHouses.KITS[kitId] then
+		return false, "This is not a construction kit."
+	end
+	if not onFloor then
+		return false, "Put the kit on the floor of your house first."
+	end
+	if not isHouseTile then
+		return false, "You can only build this inside a house."
+	end
+	if not houseAccess then
+		return false, "Only the owner or a subowner can build here."
+	end
+	return true
+end
+
+-- Pure: trophy hall lines from { [boss] = { first = time, kills = n } }
+function SpireHouses.trophyLines(trophies)
+	local list = {}
+	for boss, t in pairs(trophies or {}) do
+		table.insert(list, { boss = boss, first = t.first or 0, kills = t.kills or 1 })
+	end
+	table.sort(list, function(a, b) return a.first < b.first end)
+	local out = {}
+	for i, t in ipairs(list) do
+		out[i] = string.format("%s - first beaten %s, %d time%s", t.boss, os.date("%Y-%m-%d", t.first), t.kills, t.kills == 1 and "" or "s")
+	end
+	return out
+end
+
+-- Pure: daily bait from the pond: 5 worms + 1 per fish kind stocked (max 20). lastDay = day number last collected
+function SpireHouses.pondBait(kinds, lastDay, today)
+	if lastDay == today then
+		return 0
+	end
+	return math.min(20, SpireHouses.POND_BAIT_BASE + (kinds or 0))
+end

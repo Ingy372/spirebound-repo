@@ -14,7 +14,7 @@ SpirePath.GOALS = {
 
 -- tier -> reward. item = takeable furniture kit / decoration (checked against appearances.dat); title = account-free title
 SpirePath.REWARDS = {
-	{ item = 2785, name = "a big table kit" }, { item = 2779, name = "a sofa chair kit" }, { item = 2659, name = "a blue tapestry" },
+	{ item = 2784, name = "a square table kit" }, { item = 2779, name = "a sofa chair kit" }, { item = 2659, name = "a blue tapestry" },
 	{ item = 2798, name = "a table lamp kit" }, { title = "Pathwalker" },
 	{ item = 2811, name = "an indoor plant kit" }, { item = 2790, name = "a dresser kit" }, { item = 2664, name = "a cuckoo clock" },
 	{ item = 2797, name = "a globe kit" }, { title = "Trailblazer" },
@@ -22,7 +22,7 @@ SpirePath.REWARDS = {
 	{ item = 2799, name = "a telescope kit" }, { title = "Wayfarer of the Spire" },
 	{ item = 2801, name = "a pendulum clock kit" }, { item = 2808, name = "a harp kit" }, { item = 2647, name = "a green tapestry" },
 	{ item = 2805, name = "a large amphora kit" }, { title = "Summit Seeker" },
-	{ item = 2802, name = "a knight statue kit" }, { item = 2803, name = "a minotaur statue kit" }, { item = 2667, name = "a white tapestry" },
+	{ item = 2804, name = "a goblin statue kit" }, { item = 2803, name = "a minotaur statue kit" }, { item = 2667, name = "a white tapestry" },
 	{ item = 2911, name = "a candelabrum" }, { title = "Pilgrim of the Spire" },
 	{ item = 2807, name = "a piano kit" }, { item = 872, name = "a trophy stand" }, { item = 2644, name = "a purple tapestry" },
 	{ item = 2806, name = "a coal basin kit" }, { title = "Path Champion" },

@@ -75,6 +75,7 @@ def build(m):
     m.put(tx + 70, ty + 36, Z, 1922)
     m.sign(tx + 70, ty + 39, Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
     m.points["monument"] = (tx + 70, ty + 37, Z)
+    m.npcs.append(("Housewright Orla", (tx + 74, ty + 41, Z)))  # furniture kits, exercise dummy (DESIGN 7.5)
     m.npcs.append(("Bounty Warden Cass", (tx + 66, ty + 42, Z)))
     m.npcs.append(("Guildwarden Sela", (tx + 74, ty + 42, Z)))
     m.npcs.append(("Vesper", (tx + 78, ty + 36, Z)))

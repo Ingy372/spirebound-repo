@@ -225,6 +225,10 @@ function SpireHouses.awardSigil(name, bossName)
 	if p then
 		local s = p:kv():scoped("spirebound-sigils")
 		s:set(bossName, (s:get(bossName) or 0) + 1)
+		local tr = p:kv():scoped("spirebound-trophies")
+		local t = tr:get(bossName) or { first = os.time(), kills = 0 }
+		t.kills = t.kills + 1
+		tr:set(bossName, t)
 		p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You earned a Boss Sigil: " .. bossName .. ". Use it in a house Summoning Circle (!summon).")
 	end
 end

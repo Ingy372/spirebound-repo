@@ -392,7 +392,7 @@ When a floor boss dies for the first time, the credited players get a 1-hour hea
 | Trophy Hall | Stands for boss trophies (cosmetic drops). Visitors see who you've beaten. |
 | Garden & Fish Pond **(Claude's idea)** | Grow herbs for cooking; stock a pond with fish you caught (shows off your collection, slowly breeds bait). |
 | Mannequins **(Claude's idea)** | Display outfits and gear sets. |
-| Workshop Bench **(Claude's idea)** | Craft and repair at home. |
+| Workshop Bench **(Claude's idea)** | Craft and repair at home. *(Waits for a crafting system; not built yet.)* |
 | Open House **(Claude's idea)** | Owners can open their house to the public for 2 hours; it appears on a list in town. Great for showing off and for gambling nights. |
 | Guild Hall War Room **(Claude's idea)** | Guild halls get a war board showing active wars and a teleport to agreed war arenas. |
 

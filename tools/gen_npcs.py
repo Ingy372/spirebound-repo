@@ -46,6 +46,15 @@ NPCS = {
               ("club", 3270, 5, 1), ("mace", 3286, 90, 30),
               ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("spear", 3277, 10, 3),
               ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+    "hearthgate_housewright": dict(
+        name="Housewright Orla", desc="the housewright", look=(128, 58, 68, 109, 115, 0),
+        greet="A house should do things, |PLAYERNAME|. Furniture kits, tapestries and an exercise dummy for your own training room: ask for a {trade}. Kits are built by using them on your house floor.",
+        voices=["Furniture kits! Make your house a home!"],
+        shop=[("exercise dummy kit", 23398, 250000, None),
+              ("sofa chair kit", 2779, 1200, None), ("wooden chair kit", 2777, 400, None), ("square table kit", 2784, 800, None),
+              ("small table kit", 2782, 600, None), ("dresser kit", 2790, 1500, None), ("locker kit", 2791, 1500, None),
+              ("table lamp kit", 2798, 900, None), ("indoor plant kit", 2811, 700, None), ("barrel kit", 2793, 500, None),
+              ("red tapestry", 2656, 1000, None), ("blue tapestry", 2659, 1000, None), ("green tapestry", 2647, 1000, None)]),
     "hearthgate_armorer": dict(
         name="Armorer Hesta", desc="the armorer", look=(139, 113, 38, 76, 96, 0),
         greet="Armor keeps climbers breathing, |PLAYERNAME|. Ask for a {trade}.",

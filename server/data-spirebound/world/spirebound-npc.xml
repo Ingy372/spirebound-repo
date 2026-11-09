@@ -21,6 +21,9 @@
 	<npc centerx="1264" centery="1261" centerz="7" radius="1">
 		<npc name="Banker Tolliver" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="1264" centery="1291" centerz="7" radius="1">
+		<npc name="Housewright Orla" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="1256" centery="1292" centerz="7" radius="1">
 		<npc name="Bounty Warden Cass" x="0" y="0" z="7" spawntime="60" />
 	</npc>

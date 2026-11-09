@@ -171,3 +171,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 8.2: season remix
 - From season 2 on, each season automatically remixes the tower so veterans can't coast on old knowledge: field bosses and floor bosses swap mechanics among themselves (Azhrakkar keeps his ruin dance), and on every floor the big/medium/small rewards move between that floor's secrets (locations and hints stay; special secrets like the Underkeep keep their reward). Season 1 is exactly as designed. **/season remix** shows you what the next season will change.
 - A new Underkeep wing per season is map work, added as MAP_REQUESTS.md M5. Boot test: 64 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 3.5: house fixtures
+- **Housewright Orla** (next to the Monument) sells furniture kits, tapestries and an **exercise dummy kit** (250,000 gold) for your own training room; kits are built by using them on your house floor. The Season Path's kit rewards build the same way (two rewards swapped for kits that actually build).
+- **!trophies** in any house shows the owner's Trophy Hall (every boss beaten, first date, kill count). **!mannequin save/wear 1-3** stores outfits at home. **!pond stock** fills your house pond with every fish kind you've caught (visitors see it with **!pond**), and **!pond bait** gives worms once a day. **!warroom** in a guildmate's house shows your guild's wars.
+- Not built: the workshop bench and garden need crafting/cooking, which the game doesn't have yet (new task 3.5b). Also fixed: the Monument sign text from the leaderboard task hadn't made it into the map file; it has now. Boot test: 65 in-game tests pass.
