@@ -125,7 +125,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 
 ## Phase 8 — Seasons
 - [x] **8.1 Season reset tool** (archives characters to the Hall of Seasons, keeps account-wide rewards). Done when: test season: create chars + rewards, run reset, account rewards remain and characters are archived. *(Done: `/season end <n>` for the owner; automated test checks the archive, account titles and that the wipe never touches accounts. A full live reset still needs a real test season.)*
-- [ ] **8.2 Season remix tooling** (shuffle secrets, add Underkeep wing, rotate boss mechanics).
+- [x] **8.2 Season remix tooling** (shuffle secrets, add Underkeep wing, rotate boss mechanics). *(Done: automatic from the season number; `/season remix [n]` previews it. New Underkeep wings are map work: MAP_REQUESTS.md M5.)*
 
 ## Phase 9 — Friends test (still on Jay's PC)
 - [ ] **9.1 Remote friend access on Jay's PC** (free options only; written guide). 🧑

@@ -294,6 +294,7 @@ end
 
 local startup = GlobalEvent("SpireFloorsStartup")
 function startup.onStartup()
+	SpireRemix.applyBosses(SpireFloorBosses, SpireSeason.current()) -- season remix (roadmap 8.2)
 	for n, f in pairs(SpireFloorBosses) do
 		if registerFloor(n, f) then
 			local P = "f" .. n .. "_"

@@ -91,6 +91,7 @@ end
 
 local startup = GlobalEvent("SpireSecretsStartup")
 function startup.onStartup()
+	SpireRemix.applySecrets(SpireSecrets.list, SpireSeason.current()) -- season remix (roadmap 8.2)
 	for _, s in ipairs(SpireSecrets.list) do
 		local pos = WorldPoints[s.point or ("secret_" .. s.id)]
 		if pos then

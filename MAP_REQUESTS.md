@@ -15,3 +15,6 @@ Format rules for whoever makes them:
 | M4 | The Cobalt Labyrinth (Floor 10) | 3 levels, 80 × 80 | Blue-lit maze, huge double door, Azhrakkar's boss room (round, 30 × 30) | task 5.5 | later |
 
 Placeholder notes: walls in the generated map use a single wall family with guessed orientation, and floor changes are blue portals instead of stairs. Both are fine for testing and go away with the real map.
+
+## M5 — One new Underkeep wing per season (for season 2 onward)
+Each season should add a fresh Underkeep wing below the existing ones, so veterans have something new under Hearthgate. Size like Wing 1 (about 70×30 tiles), one floor level, a mini-boss room at the far end, and a spot for the entrance portal next to the previous wing's exit. Any theme you like; the script-made placeholder works until you draw one. Not needed before the first season ends.

@@ -167,3 +167,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-08 (overnight) — Task 5.7d: Spire Siege
 - A walled keep under Floor 1 with four guild gates and a throne room. Every Sunday sign-ups open at 19:45 server time (**!siege join**, guild members level 20+); at 20:00 every guild with 2+ fighters is teleported in. A guild scores a point every 5 seconds while only its members stand in the throne room; after 30 minutes the top guild holds the keep for a week (+5% experience and loot for its members, "Keeper of the Spire" title for its leader). Ties keep the old holder.
 - Level-scaled the same way as the Arena: same health and mana, fixed hits and heals; downed fighters go back to their gate, nobody dies or loses anything. GM test commands: `/siege open`, `/siege start`, `/siege stop`. Boot test: 63 in-game tests pass.
+
+### 2026-11-08 (overnight) — Task 8.2: season remix
+- From season 2 on, each season automatically remixes the tower so veterans can't coast on old knowledge: field bosses and floor bosses swap mechanics among themselves (Azhrakkar keeps his ruin dance), and on every floor the big/medium/small rewards move between that floor's secrets (locations and hints stay; special secrets like the Underkeep keep their reward). Season 1 is exactly as designed. **/season remix** shows you what the next season will change.
+- A new Underkeep wing per season is map work, added as MAP_REQUESTS.md M5. Boot test: 64 in-game tests pass.
