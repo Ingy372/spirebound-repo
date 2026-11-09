@@ -41,9 +41,9 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: Lua tests cast each skill with the right/wrong weapon, check the cooldown blocks a recast, and check a full combo gives +30% on the finisher.
 - [ ] **1.15 Starter NPCs.** Temple priest (heal, blessings), bank, general store, weapon/armor shop per vocation, travel guide.
   Done when: each NPC loads with zero warnings; a scripted test buys and sells one item from each shop.
-- [ ] **1.16 Party shared XP.** Party bonus from DESIGN §7.1, size cap 6.
+- [x] **1.16 Party shared XP.** Party bonus from DESIGN §7.1, size cap 6.
   Done when: Lua test: a 3-player party of 2 vocations gets the expected XP per member.
-- [ ] **1.17 World floors state.** Database table for floors (field boss dead, floor boss dead, opened time, credited names) + GM test command `/floor`.
+- [x] **1.17 World floors state.** Saved floor records (Canary's database key-value store) for floors (field boss dead, floor boss dead, opened time, credited names) + GM test command `/floor`.
   Done when: test sets and reads every field; state survives a server restart.
 - [ ] **1.18 Gate Hound and the labyrinth door.** Field boss at the Pass; first kill opens the labyrinth door forever.
   Done when: test kills the Gate Hound with a GM command and the door tile becomes walkable; after restart it stays open.

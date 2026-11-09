@@ -23,3 +23,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - Four vocations live: Vanguard, Ranger, Arcanist, Mystic, promoting to Blade Warden, Far Warden, High Arcanist, Elder Mystic (Canary's extra Monk vocation removed).
 - New NPC **Registrar Maelis** (Arrival Yard): pick a vocation (with starter kit) and Normal / Hardcore / Death Game; later, "step down" to an easier mode (never up).
 - Difficulty effects: +25%/+50% XP, +15%/+30% loot, Hardcore death costs ×1.5 XP. Death Game: killed by monsters = character retired to the Memorial with a server announcement; if an outside player hit you in the last 60 s it counts as PvP and you survive (party, guild or same-IP hits don't count). Boot test: online, 0 errors, 5 in-game tests pass. Hardcore extras (skills, blessing cap, item drops) queued as task 2.14.
+
+### 2026-11-08 — Tasks 1.16, 1.17: party bonus and the tower's memory
+- Parties: each member gets (XP × (1 + 30% per extra member + 10% per extra vocation)) ÷ members; parties cap at 6; level range 1.5× (Canary's setting already matched).
+- World floor records: field boss / floor boss / first-clear credit / last hit are saved for the whole server and survive restarts (checked across two boots). Credit keeps the top 20; boss enrage = 60 min solo, 16 min for 4, 8 min for 8 or more. GM test command `/floor` shows, opens, clears or resets floors. Boot test: online, 0 errors, 9 in-game tests pass.
