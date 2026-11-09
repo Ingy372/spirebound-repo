@@ -16,13 +16,9 @@ Your PC's Spirebound folder was pointed at your **Dojo-game** GitHub repo, so an
 - **Recommendation:** delete the `phase-0-toolchain` branch from the Dojo-game repo on GitHub (Branches page → trash icon). Everything in it is also in spirebound-repo.
 - Jay's answer:
 
-### Q3. Seasons or 100 permanent floors? (FYI, no action needed)
-- **Recommendation: keep seasons** (about 5 months each, 10 floors at launch growing to ~25). Seasonal resets give every season a fresh "launch week", and resets close the level gap that lets top guilds farm new players. 100 permanent floors would need far more content and the world-first race would happen only once. Full reasoning in DESIGN.md §4.
-- Jay's answer:
-
-### Q4. Cyntara's bot rules are stricter on paper than you may remember (FYI)
-Cyntara's written rules ban macros and outside programs. In practice its own client has helpers built in (walker, looter, experimental vBot support), and the game quietly withholds some rewards from players who used the auto-walker recently.
-- **Recommendation:** allow only helpers built into our client: auto-heal, auto-eat, ring/amulet refill, loot helper. Ban cavebots/walkers, auto-targeting, auto skill rotations, auto-fishing, and all outside programs. Details in DESIGN.md §12.
+### Q10. Cavebot penalty numbers
+You decided the cavebot is built in with much lower XP. My numbers, now in DESIGN.md §12:
+- **Recommendation:** cavebot on = 30% XP and 50% loot; the cut lasts 10 minutes after switching off; a gear icon shows who is botting; no secrets, rare chests or boss rooms while botting; auto-targeting alone has no penalty.
 - Jay's answer:
 
 ### Q5. Your new brief changes several decisions from the October design pack (FYI)
@@ -50,4 +46,12 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 ---
 
 ## Answered
-(none yet)
+
+### Q3. Seasons or 100 permanent floors? (FYI, no action needed)
+- **Recommendation: keep seasons** (about 5 months each, 10 floors at launch growing to ~25). Seasonal resets give every season a fresh "launch week", and resets close the level gap that lets top guilds farm new players. 100 permanent floors would need far more content and the world-first race would happen only once. Full reasoning in DESIGN.md §4.
+- Jay's answer (2026-11-08): **"Seasons are a go then."**
+
+### Q4. Cyntara's bot rules are stricter on paper than you may remember (FYI)
+Cyntara's written rules ban macros and outside programs. In practice its own client has helpers built in (walker, looter, experimental vBot support), and the game quietly withholds some rewards from players who used the auto-walker recently.
+- **Recommendation:** allow only helpers built into our client: auto-heal, auto-eat, ring/amulet refill, loot helper. Ban cavebots/walkers, auto-targeting, auto skill rotations, auto-fishing, and all outside programs. Details in DESIGN.md §12.
+- Jay's answer (2026-11-08): **cavebot and auto-targeting will be built into the client; with the cavebot on, XP is cut a lot so manual play is much better; botters risk being PKed.** DESIGN.md §12 rewritten to match (see Q10 for my numbers).

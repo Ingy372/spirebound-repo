@@ -112,7 +112,7 @@ Jay's brief: 20–30 floors per season with seasonal resets; account-wide reward
 - Seasonal resets are a proven OT model. Cyntara (the server Jay remembers best) runs on seasons and is on its 19th version; its launch week is what Jay remembers most fondly. Every reset is a new "launch week" with a fresh race, which is the strongest population spike an OT server gets.
 - Seasons directly fix the toxicity problem Jay cares about most: on permanent servers the level gap between veterans and newcomers grows forever, and that gap is what lets top guilds farm new players. A reset closes the gap every few months.
 - 100 permanent floors would need roughly 4–10× the content before the server feels "complete", and the world-first race would happen only once per floor, ever.
-- Recommendation recorded in `QUESTIONS.md` as an FYI, not a blocker.
+- **Jay confirmed seasons on 2026-11-08** ("Seasons are a go").
 
 ### Season rules **(Claude's call, Jay can veto)**
 - Season length: about **5 months**. Season 1 launches with 10 floors; content updates add floors through the season, target **25 floors** by season end (inside Jay's 20–30 range).
@@ -143,7 +143,7 @@ Account is created on the website (or, while testing locally, by a script). A ne
 
 Names are **(Claude's call, Jay can veto)**. Vocations keep Tibia's familiar feel: hit points, mana, capacity, skills (sword/axe/club/distance/shielding/magic level/fishing), and promotion at level 20 (Vanguard → Blade Warden, Ranger → Far Warden, Arcanist → High Arcanist, Mystic → Elder Mystic) for the familiar regeneration bump **(Claude's call)**.
 
-Classic spells stay for familiarity (healing, haste, light, food, support buffs) and a small rune set (healing rune, an area rune, a strike rune) **(Claude's call, Jay can veto)**. Most offensive power comes from **sword skills**.
+Every vocation unlocks about 20 spells, including utility and support spells (Jay), listed in 5.3b. Melee and ranged attack power comes mostly from **sword skills**; Arcanists and Mystics also get big attack spells.
 
 ### 5.3 Sword skills
 Every vocation gets sword skills: combo-style abilities with cooldowns, tied to the weapon type in hand. Change weapon type, change skill list.
@@ -161,6 +161,98 @@ Every vocation gets sword skills: combo-style abilities with cooldowns, tied to 
   - Spear: *Skewer* (Opener), *Javelin Arc* (Link), *Comet Spear* (Finisher)
   - Wand (Arcanist): *Spark Edge* (Opener), *Flame Script* (Link, area), *Starfall Rite* (Finisher, big area)
   - Rod (Mystic): *Thorn Edge* (Opener), *Frost Script* (Link, slow), *Verdant Burst* (Finisher, damage + small party heal)
+
+### 5.3b Spells (Jay, 2026-11-08: "Each voc should have a decent amount of spells they can unlock. Make sure there are utility spells and support spells as well.")
+
+Sword skills are the combo attacks. **Spells** are everything else: healing, support, utility, and (for the two mage vocations) the big magic. Each vocation unlocks **about 20 spells**: 8 shared spells plus 12 of its own. Names, levels and words below are **(Claude's call, Jay can veto any of them)**; exact numbers live in the spell data file once built.
+
+**How spells unlock (Claude's call):**
+- Most are **learned from the vocation trainer** in town once you reach the level (a gold cost, which is also a gold sink).
+- **3 per vocation are "Lost Arts"**: earned only from quests, secrets or bosses (never bought, never sold). Marked ★ below.
+- Incantations are our own words (not Tibia's), short and easy to type, e.g. `spire mend`. Everything can also sit on a hotkey.
+
+**Shared by all four vocations (8)**
+
+| Spell | Type | Level | What it does |
+|---|---|---|---|
+| Kindle | utility | 8 | small light around you |
+| Wayfinder | utility | 8 | tells you the direction and distance of a player |
+| First Aid | healing | 8 | small self-heal |
+| Cleanse | support | 10 | removes poison, burning, bleeding from yourself |
+| Skystep | utility | 12 | climb up or down one level where there is room (Tibia's levitate) |
+| Hearth Ration | utility | 14 | creates a piece of food |
+| Quickstep | utility | 14 | haste for 30 seconds |
+| Beacon | utility | 20 | strong light for a long time |
+
+**Vanguard (12)** — the protector
+
+| Spell | Type | Level | What it does |
+|---|---|---|---|
+| Second Wind | healing | 10 | heals a share of your max HP |
+| Rally Cry | support | 20 | pulls nearby monsters onto you (taunt) |
+| Charge | utility | 25 | dash up to 3 tiles toward your target |
+| Iron Hide | support | 30 | 30% less damage for 6 seconds |
+| Intimidate | utility | 35 | slows monsters around you |
+| Battle Hymn | support | 45 | party: melee skills up for 2 minutes |
+| Guardian Stance | support | 50 | take part of the damage meant for an adjacent ally |
+| Bulwark Aura | support | 60 | party: armor up for 2 minutes |
+| Recovery | healing | 70 | strong self-heal |
+| Iron Will | utility | 80 | break free of slows and paralysis |
+| ★ Last Bastion | healing | 100 | big heal that grows stronger the lower your HP |
+| ★ Unbroken Line | support | 150 | party: 15% less damage for 10 seconds |
+
+**Ranger (12)** — the scout
+
+| Spell | Type | Level | What it does |
+|---|---|---|---|
+| Conjure Arrows | utility | 13 | makes arrows |
+| Field Dressing | healing | 15 | heal yourself or one ally |
+| Conjure Bolts | utility | 20 | makes crossbow bolts |
+| Conjure Spears | utility | 25 | makes throwing spears |
+| Swift Foot | utility | 30 | strong haste |
+| Snare | support | 35 | roots one monster in place (slows players) |
+| Radiant Shot | attack | 40 | holy-damage strike at range |
+| Camouflage | utility | 45 | monsters lose track of you for 10 seconds (players can still see you) |
+| Eagle Eye | support | 55 | party: critical-hit chance up for 2 minutes |
+| Sanctified Ground | support | 70 | small area that heals allies standing in it |
+| ★ Hawk's Path | utility | 100 | long dash in a straight line |
+| ★ Volley of Dawn | attack | 150 | huge holy area attack |
+
+**Arcanist (12)** — the destroyer
+
+| Spell | Type | Level | What it does |
+|---|---|---|---|
+| Ember Strike | attack | 8 | fire strike at range |
+| Volt Strike | attack | 12 | energy strike at range |
+| Mana Ward | support | 14 | damage comes out of your mana first (Tibia's magic shield) |
+| Fireburst Wave | attack | 23 | fire wave in front of you |
+| Conjure Fire Rune | utility | 27 | makes an area fire rune |
+| Arc Beam | attack | 35 | long energy line |
+| Blink | utility | 40 | teleport up to 3 tiles |
+| Summon Ember Sprite | support | 50 | a small fire spirit fights for you |
+| Arcane Empower | support | 60 | party: magic damage up for 2 minutes |
+| Conjure Strike Rune | utility | 45 | makes a strong single-target rune |
+| ★ Meteor Rain | attack | 100 | huge fire area around you |
+| ★ Mirror Image | utility | 150 | a decoy that monsters attack for 5 seconds |
+
+**Mystic (12)** — the healer
+
+| Spell | Type | Level | What it does |
+|---|---|---|---|
+| Frost Strike | attack | 8 | ice strike at range |
+| Mend Other | healing | 18 | heal another player |
+| Thorn Strike | attack | 14 | earth strike at range |
+| Purify | support | 20 | removes harmful conditions from your whole party nearby |
+| Conjure Healing Rune | utility | 24 | makes a healing rune anyone can use |
+| Barkskin | support | 30 | party: armor up for 2 minutes |
+| Rejuvenate | healing | 35 | heal over time on one player |
+| Mass Mend | healing | 36 | heals everyone in your party around you |
+| Entangle | support | 40 | conjures a paralysis rune |
+| Summon Wolf Companion | support | 50 | a wolf fights at your side |
+| ★ Wellspring | healing | 100 | large area heal-over-time zone |
+| ★ Winter's Breath | attack | 150 | huge ice area around you |
+
+Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and cooldowns.
 
 ### 5.4 Difficulty modes
 Chosen at creation. You can move **down** a difficulty at the Registrar (Death Game → Hardcore → Normal), **never up**.
@@ -375,29 +467,34 @@ Every floor has story quests and side quests. Every quest has a quest-log entry 
 
 ## 12. Bots and automation
 
-Jay's brief: allow light automation such as auto-healing, based on how Cyntara handles it.
+Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp gain will be significantly reduced. Training manually will be much more beneficial. But it can be an option for when they afk or what not. The risk of course is being pked. Auto targeting is also going to need to be built in."*
 
-**What the research found (2026-11-08):** Cyntara's written rules ban macros ("tools to automatically perform or repeat certain actions without any interaction by the player") and third-party software. In practice its own client ships helper tools (a walker, a looter preset, experimental support for the vBot module) and the game itself discourages unattended play: certain rewards (Cursed Chests) don't appear for players who used the auto-walker recently, it uses stamina, and bounty payouts refuse same-IP kills. So Cyntara's model is: **helpers live inside the official client, outside tools are banned, and game design makes AFK farming not worth it.**
+**Background research:** Cyntara's written rules ban macros and outside programs, but its own client ships helper tools (a walker, a looter, experimental vBot support) and some rewards stay hidden from players who used the auto-walker recently. Spirebound goes further in the same direction: the helpers, cavebot included, are **built into our client**, and the game makes manual play clearly better.
 
-**Spirebound rules (Claude's call, Jay can veto any line):**
+**Built into the Spirebound client (allowed):**
+- **Cavebot**: walks a route you record, attacks what it meets, loots, and uses supplies. Usable when you're away from the keyboard.
+- **Auto-targeting**: picks the next monster for you.
+- Auto-heal (spell or potion at the HP/mana % you set), auto-eat, ring/amulet refill, loot helper, hotkeys.
 
-Allowed — built into the Spirebound client only:
-- Auto-heal: use a healing spell or potion when HP/mana drops below a percentage you set.
-- Auto-eat, auto-refill ring/amulet slot.
-- Loot helper (collects loot you clicked into a chosen backpack).
-- Hotkeys: one key press = one action.
+**The cost of the cavebot (Claude's call on numbers, Jay can veto):**
+- While the cavebot is on, you get **30% of normal XP** and **50% of normal loot**. Manual hunting is more than 3× better.
+- The reduction stays for **10 minutes after you switch it off**, so nobody flicks it off just for a boss or a rare spawn.
+- Cavebot characters show a small **gear icon** next to their name, so everyone can see who's botting. Being PKed is the risk you take (Jay); all normal PvP rules and protections still apply.
+- Stamina still drains as usual.
+- Secrets, rare chests and the Twin Fang trial never trigger while the cavebot is on, or within 10 minutes of using it.
+- Boss rooms (field and floor bosses) refuse to let a cavebot character in.
+- **Auto-targeting on its own (no cavebot) costs nothing.** It's a convenience for players at the keyboard **(Claude's call)**.
 
-Not allowed:
-- Cavebot / auto-walker / waypoints, auto-targeting the next monster, automatic sword-skill rotations, auto-fishing.
+**Not allowed:**
 - Any third-party bot or modified client. Our client is the only allowed client.
-- Playing while away from the keyboard with automation running.
+- Auto-fishing (fishing has its own anti-AFK "struggle" click) **(Claude's call)**.
+- Cheating the cavebot penalty (e.g. a hacked client that hides the cavebot) = immediate ban.
 
-Enforcement:
-- The game makes unattended play pointless: stamina, telegraphed boss and elite attacks, fishing "struggle" clicks, secrets and rare chests that never trigger for characters using automation helpers in the last 10 minutes (Cyntara-style).
-- The server logs patterns (identical routes for 20+ minutes, 24-hour sessions with steady XP, impossibly fast reactions). Staff review evidence; no automatic bans.
-- Punishment: first offense 7-day ban and removal of gains; second offense permanent.
+**Enforcement:**
+- The client tells the server when the cavebot is on, and the server applies the XP/loot cut. The server also logs patterns that look like an unmarked bot (identical routes for 20+ minutes, 24-hour sessions with steady XP, impossibly fast reactions) for staff review. No automatic bans.
+- Punishment for third-party bots or a hidden cavebot: first offense 7-day ban and removal of gains; second offense permanent.
 - Up to 2 clients per computer at once **(Claude's call)**.
-- Rules are published on the website and in-game.
+- Rules are published on the website and in game.
 
 ---
 
