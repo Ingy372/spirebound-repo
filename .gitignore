@@ -31,3 +31,7 @@ Thumbs.db
 
 # local downloads (never commit; may contain third-party files)
 .cache/
+
+# build output and local secrets
+.build/
+server/local.env

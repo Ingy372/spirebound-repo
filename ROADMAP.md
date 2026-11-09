@@ -15,9 +15,9 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: all eight files are committed.
 - [x] **1.2 Archive the old TFS setup.** Move the TFS 1.4.2 server import and the 10.98-only tools into `legacy/`, keep every reusable tool (names checker, table generator, map compiler). Note it in PROGRESS.md.
   Done when: `legacy/README.md` explains what moved and why; `server/` is free for Canary; `python3 tools/check_names.py` still runs.
-- [ ] **1.3 Cloud test server.** Script that downloads pinned Canary v3.6.1 (Linux build), sets up MariaDB, and boots it with our datapack.
+- [x] **1.3 Cloud test server.** Script that downloads pinned Canary v3.6.1 (Linux build), sets up MariaDB, and boots it with our datapack.
   Done when: `tools/test_boot.sh` exits 0 and its log shows the server online.
-- [ ] **1.4 Spirebound datapack skeleton.** `server/data-spirebound/` based on Canary's small `data-canary` pack, rebranded, CipSoft names removed, the systems in DESIGN §2 switched off in config.
+- [x] **1.4 Spirebound datapack skeleton.** `server/data-spirebound/` based on Canary's small `data-canary` pack, rebranded, CipSoft names removed, the systems in DESIGN §2 switched off in config.
   Done when: boot test passes with `dataPackDirectory = data-spirebound` and `check_names.py` reports 0 banned names in it.
 - [ ] **1.5 Windows one-click setup.** `windows/Install-Spirebound.ps1` downloads pinned Canary (Windows build), OTClient Redemption 4.2 (Windows build), portable MariaDB and the 15.11 client files; creates the database; points the client at localhost. `Start-Spirebound.bat` / `Stop-Spirebound.bat`.
   Done when: script passes a dry-run check in the cloud (all download URLs answer, all paths exist), and 🧑 Jay double-clicks it once and reaches the login screen (logged in PLAYTEST.md).
@@ -33,7 +33,7 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: Lua unit test (run in the boot test) creates a test player, picks each option, and checks the stored values; trying to move *up* a difficulty is refused.
 - [ ] **1.11 Difficulty effects.** XP/loot bonuses; Normal death = standard; Hardcore ×1.5 loss and blessing cap; Death Game: PvE death retires the character, PvP-saved death rule (DESIGN §6.6).
   Done when: Lua tests cover: Hardcore XP bonus applied; Death Game PvE death marks character retired; Death Game death with recent outside-player damage is *not* retired; damage from a party member does not save.
-- [ ] **1.12 XP stages and rates.** Stages from DESIGN §5.5 in config.
+- [x] **1.12 XP stages and rates.** Stages from DESIGN §5.5 in config.
   Done when: boot log lists the stages; a test computes XP at levels 10/75/250 and matches the table.
 - [ ] **1.13 Floor 1 monsters.** 11 monsters with original names (placeholder Tibia looks), loot tables from `data/`, spawns on the map.
   Done when: boot test reports all 11 monster types loaded with zero warnings, each spawned at least once on the map; ART_REQUESTS.md has an entry for each.
