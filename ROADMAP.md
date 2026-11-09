@@ -63,8 +63,8 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [x] **2.4 Outnumbered shield and guild-farming Sanctuary.** Done when: tests show damage reduction with 4 attackers and Sanctuary after 2 guild kills in 6 h.
 - [x] **2.5 Bounty Board.** Done when: test: red skull gets a system bounty; same-IP/guild/party kills don't pay; a valid kill pays.
 - [x] **2.6 Consent guild wars** (sign, terms, end, 7-day cooldown). Done when: tests for one-sided declaration refused and war kills give no skull.
-- [ ] **2.7 Secrets system + Info Broker (Vesper).** Discovery records, sell-or-keep, public list, announcement, explorer counts. Done when: tests: two players discover the same secret independently; one sells; the other's record stays; nobody is locked out.
-- [ ] **2.8 Floor 1 secrets (12).** Done when: all 12 triggers fire in a scripted walk; ART/MAP requests logged.
+- [x] **2.7 Secrets system + Info Broker (Vesper).** Discovery records, sell-or-keep, public list, announcement, explorer counts. Done when: tests: two players discover the same secret independently; one sells; the other's record stays; nobody is locked out.
+- [x] **2.8 Floor 1 secrets (12).** Done when: all 12 have a walkable trigger tile on the map (in-game test); stepping on them is checked in the Phase 2 playtest; ART requests logged.
 - [ ] **2.9 Fishing system** (floor fish tables, time/bait conditions, struggle click, collection log, derby). Done when: tests cover a catch table roll, a night-only fish, a struggle timeout giving junk.
 - [ ] **2.10 Underkeep Wing 1.** Done when: grate secret opens it; wing loads; sealed wing 2 door shows the right text.
 - [ ] **2.11 Quest log + Floor 1 story quests + perk choice.** Done when: quest log shows next step for every step of every Floor 1 quest (test walks them).

@@ -40,6 +40,14 @@ Base Tibia sprites stand in for all of these until your art arrives, so nothing 
 | [ ] | `boss_axe_lord_blade_*` | **64×64**, 12 | The same warlord (rusted bronze plate, horned helm) now holding a long curved blade instead of the axe, battle-damaged armor. |
 | [ ] | `npc_registrar.png`, `npc_priest.png`, `npc_vesper.png`, `npc_banker.png`, `npc_merchant.png` | 32×32, 1 frame each (facing south) | Town NPCs: a clerk with a ledger; a temple priest in white; a sly information broker in a dark purple coat with a feathered hat and a small notebook; a banker with spectacles; a merchant with an apron. |
 
+## Batch 1b — added overnight 2026-11-08 (Priority: medium)
+
+| ✓ | File names | Size / frames | Grok prompt (after the style lock) |
+|---|---|---|---|
+| [ ] | `mon_old_tusk_*` | 32×32, 12 | A huge old wild boar with one broken tusk, grey-streaked bristles and scars, angry and battle-worn (secret mini-boss). |
+| [ ] | `npc_bounty_warden.png`, `npc_guildwarden.png`, `npc_quartermaster.png` | 32×32, 1 frame each (facing south) | Town NPCs: a stern bounty warden in a dark red coat with a wanted-poster scroll; a guild official in blue robes holding a banner staff; a quartermaster in a leather apron with a crate of arrows and potions. |
+| [ ] | `summon_ember_sprite_*`, `summon_wolf_companion_*` | 32×32, 12 each | A small floating fire spirit with a bright core; a loyal grey wolf with a green leaf collar (friendly spell summons). |
+
 ## Batch 2 — UI (Priority: high, small)
 
 | ✓ | File names | Size / frames | Grok prompt |

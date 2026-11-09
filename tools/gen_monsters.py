@@ -76,6 +76,11 @@ MONSTERS = {
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
                                   elements={"physical": 10},
                                   events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
+    # ---------------------------------------------------------------- secret bosses (DESIGN.md 8.1)
+    "Old Tusk": dict(desc="Old Tusk", look=(119,), corpse=6046, hp=1800, xp=900, speed=125, race="blood",
+                     attacks=[("melee", 0, -140), ("charge", -60, -160, 4)], armor=25, defense=25,
+                     loot=[(GOLD, 100000, 100), (PLAT, 100000, 5), (3582, 100000, 5), (236, 50000, 2)],
+                     voices=["HRRROOONK!"]),
     # ---------------------------------------------------------------- spell summons (DESIGN.md 5.3b)
     "Ember Sprite": dict(desc="an ember sprite", look=(49,), corpse=0, hp=300, xp=0, speed=150, race="fire",
                          attacks=[("melee", 0, -40), ("fire", -20, -60, 4)], armor=10, defense=10, summon=True,

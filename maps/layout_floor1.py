@@ -72,6 +72,7 @@ def build(m):
     m.points["monument"] = (tx + 70, ty + 37, Z)
     m.npcs.append(("Bounty Warden Cass", (tx + 66, ty + 42, Z)))
     m.npcs.append(("Guildwarden Sela", (tx + 74, ty + 42, Z)))
+    m.npcs.append(("Vesper", (tx + 78, ty + 36, Z)))
 
     # Underkeep grate (sealed; it becomes a secret in task 2.10)
     m.put(tx + 6, ty + 70, Z, 435)
@@ -203,4 +204,26 @@ def build(m):
     m.zone("town", tx, ty, tw, th, 7)
     m.zone("town", mx, my, 50, 40, 7)
     m.zone("town", fx, fy, 30, 30, 7)
+
+    # ------------------------------------------------ Floor 1 secrets (DESIGN.md 8.1). Trigger tiles only; no markers.
+    def secret(sid, x, y, z=Z):
+        if (x, y, z) not in m.ground:
+            raise ValueError(f"secret {sid} has no ground at {(x, y, z)}")
+        m.clear_items(x, y, z)  # trigger tiles must be walkable
+        m.points["secret_" + sid] = (x, y, z)
+    secret("s1", tx + 6, ty + 71)                       # beside the drain grate
+    bm = m.points["camp_boar_meadow"]
+    secret("s2", bm[0] + 18, bm[1] + 2)                 # mud wallow east of the boar meadow
+    m.points["old_tusk_spawn"] = (bm[0] + 15, bm[1] + 4, Z)
+    secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
+    secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
+    secret("s5", X0 + 225, Y0 + 132)                    # cracked wall in the old quarry
+    m.points["north_crack_exit"] = (mx + 25, my + 20, Z)
+    secret("s6", mx + 44, my + 2)                       # hollow behind the Millcross well (night only)
+    secret("s7", X0 + 352, Y0 + 186)                    # ruined shrine on the bandit road
+    secret("s8", X0 + 330, Y0 + 330)                    # plates in the shard fields
+    secret("s9", X0 + 44, Y0 + 300)                     # abandoned bedroll in the wolf copse
+    secret("s10", X0 + 380, Y0 + 380)                   # ruined well in the south-east corner
+    secret("s11", X0 + 160, Y0 + 170)                   # bramble ring in the thornsnap hollow
+    secret("s12", X0 + 296, Y0 + 60)                    # broken stair of a ruined side tower near the Pass
 
