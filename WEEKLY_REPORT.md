@@ -1,4 +1,4 @@
-# Weekly report — week of 2026-11-08 (Phase 1 built, ready for your playtest)
+# Weekly report — week of 2026-11-08 (Phases 1 and 2 built, ready for your playtest)
 
 ## What's new
 - **Floor 1 is playable from start to finish (on the test server in my cloud workspace; not yet run on your PC).** You create a character, pick a vocation and difficulty, level on Floor 1, kill the Gate Hound to open the labyrinth, climb its 3 levels, kill the Axe-Lord, and the whole server gets the "Floor 1 cleared" announcement while the stair to Floor 2 opens.
@@ -7,14 +7,16 @@
 - **Fighting:** 24 sword skills (combos) + 42 spells that unlock by level (utility and support included), party XP bonus, difficulty bonuses, Death Game rules.
 - **Client:** floor name at the top, sword-skill bar at the bottom (Shift+1..6), SAO cursors, Hardcore/Death Game label.
 - **Design updates from your answers:** seasons confirmed; cavebot built in at 45% XP with no marker; spells by level; no conjured ammo; research on top servers added (DESIGN.md §15).
-- Every change passes the automatic boot test (server online, 0 errors, 26 in-game checks).
+- **Phase 2, also built overnight:** PvP zones (shown on screen), weighted skulls and murderer penalties, newbie protection to 50, the 70% level-range rule, the outnumbered shield, guild Sanctuary, the bounty board (Bounty Warden Cass), consent guild wars (Guildwarden Sela), 12 Floor 1 secrets + Vesper the Info Broker, fishing, the Underkeep's first wing, 3 story quests with quest-log steps + the Floor 1 perk, the cavebot rules (45% XP, reported by the client's built-in bot), autoloot with rare-drop alerts, daily hunting tasks (Taskmaster Ren), catch-up rules for new players.
+- Every change passes the automatic boot test (server online, 0 errors, 42 in-game checks).
 
 ## Playtest checklist (about 45 minutes)
 1. **Install / update (10 min):** double-click `windows\Install-Spirebound.bat`, wait for **Done!**. Then `Start-Spirebound.bat`. Log in: `jay` / `spirebound`.
 2. **New character (10 min):** pick **Climber**. In the temple say `hi` to **Registrar Maelis** → pick a vocation → pick a difficulty (try Normal). Check the floor name at the top of the screen and the skill bar at the bottom.
 3. **Hunt (10 min):** leave town by any gate. Kill rats/toads in the fields. Try a sword skill with Shift+1 (or type its name). Reach level 8 and check you get "New spell" messages. Visit the shops (say `hi`, then `trade`).
 4. **Boss run as a GM (10 min):** log in as **Jay** (gamemaster). Go north up the road to the Pass (walled arena) and kill the **Gate Hound**: the boulders north of the arena should vanish with an announcement. Go through the maze (blue portals take you up), kill the **Axe-Lord**, watch for the gold "Floor 1 has been cleared" message, and step on the portal behind him to reach Floor 2's landing. (Shortcut if a fight is too hard: say `/floor field 1` or `/floor clear 1`; `/floor reset 1` puts it back.)
-5. **Notes (5 min):** in `PLAYTEST.md` write what felt good, what felt bad, and any error text. Short is fine.
+5. **Phase 2 extras, if you have time (optional):** say `hi` to Vesper, Bounty Warden Cass, Guildwarden Sela and Taskmaster Ren near the Monument; fish in the river (buy a rod and worms from Merchant Wenna, use the rod on water, use it again when "Something is biting!"); step on the drain grate in the south-west corner of town.
+6. **Notes (5 min):** in `PLAYTEST.md` write what felt good, what felt bad, and any error text. Short is fine.
 
 ## Open questions (my recommendation is in use until you answer; details in QUESTIONS.md)
 - **Q1 (please):** give Claude GitHub access to `spirebound-repo` or push from GitHub Desktop. All of tonight's work is only on your PC.
