@@ -1,3 +1,5 @@
+> **Superseded (2026-11-08):** the root `DESIGN.md` and `ROADMAP.md` replace this pack where they disagree (Canary engine, 4 vocations, 10 floors, gold currency, difficulty modes). Keep this folder as an idea bank.
+
 # Spirebound — start here
 
 Docs live in `/docs`. Every path in these docs is written from the repository root (for example `data/monsters.csv`, `tools/gen_tables.py`, `STATUS.md`).

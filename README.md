@@ -1,26 +1,13 @@
 # Spirebound
 
-An original-art Open Tibia server inspired by a floating tower of floors: when a raid kills a floor boss, the whole world advances. Five paths, real skull PvP, houses, guilds, a secret-broker economy, and a dungeon under the starting town that grows as the tower opens.
+An original-art Open Tibia server shaped like a floating tower of floors: when anyone kills a floor boss, the next floor opens for the whole server. Four vocations with sword skills, difficulty modes up to Death Game, PvP with strong anti-bullying protection, functional houses, an Info Broker who buys secrets, fishing, and a hidden dungeon under Floor 1 that grows as the tower opens.
 
-Status: phase 0 (toolchain) in progress. See [STATUS.md](STATUS.md).
+Engine: Canary v3.6.1 (protocol 15.11) + OTClient Redemption 4.2. Runs locally on the owner's Windows PC during development.
 
-## For the build agent (Claude Cowork / Claude Code)
+## Start here
+- Owner (Jay): `PROGRESS.md` (what got done), `QUESTIONS.md` (questions with recommendations), `PLAYTEST.md` (your notes), `ART_REQUESTS.md`, `MAP_REQUESTS.md`, `WEEKLY_REPORT.md`.
+- Build agent (Claude): `CLAUDE.md`, then `DESIGN.md` and `ROADMAP.md`.
 
-Read [CLAUDE.md](CLAUDE.md), then [docs/00_START_HERE.md](docs/00_START_HERE.md).
+`docs/` holds the older October 2026 design pack (v2.3), kept as an idea bank. `DESIGN.md` wins where they differ.
 
-## For the owner
-
-- Where the build is: [STATUS.md](STATUS.md)
-- Help shape the game with your player experience: [OWNER_INPUT.md](OWNER_INPUT.md)
-- What you or Grok need to handle: [docs/20_HANDOFF.md](docs/20_HANDOFF.md)
-
-## Layout
-
-| Path | Contents |
-|---|---|
-| docs/ | Full design (start at 00) |
-| data/ | Generated design tables — do not hand-edit |
-| tools/ | Generators and build scripts |
-| server/ client/ assets/ maps/ website/ sql/ ops/ | Filled in during the build phases |
-
-Fan-inspired and unofficial. Not affiliated with any rights holder. No CipSoft assets. No pay-to-win.
+Fan-inspired and unofficial. Not affiliated with any rights holder. No CipSoft assets in this repository. No pay-to-win.
