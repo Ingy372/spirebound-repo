@@ -56,6 +56,17 @@ NPCS = {
               ("wooden shield", 3412, 15, 5), ("studded shield", 3426, 50, 16), ("brass shield", 3411, 65, 25)]),
 }
 
+MURDERER = '''
+-- Murderers (red/black) get no service in town (DESIGN.md 6.4)
+local function refuseMurderers(npc, player)
+	if SpirePvP and SpirePvP.isMurderer(player) then
+		npcHandler:say("I don't deal with murderers. Get out.", npc, player)
+		return false
+	end
+	return true
+end
+'''
+
 PRIEST = '''
 local HEAL_LEVEL = 50 -- free healing below this level (catch-up for new climbers)
 
@@ -172,16 +183,17 @@ def render(d):
                 parts.append(f"sell = {sell}")
             rows.append("\t{ " + ", ".join(parts) + " },")
         shop = "npcConfig.shop = {\n" + "\n".join(rows) + "\n}\n"
-    logic, callbacks = "", ""
+    logic, callbacks = MURDERER, ""
     if d.get("kind") == "priest":
-        logic = PRIEST
-        callbacks = "npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n"
+        logic = MURDERER + PRIEST
+        callbacks = "npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\nnpcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n"
     elif d.get("kind") == "bank":
-        logic = BANK
-        callbacks = ("npcHandler:setCallback(CALLBACK_GREET, NpcBankGreetCallback)\n"
+        logic = MURDERER + BANK
+        callbacks = ("npcHandler:setCallback(CALLBACK_GREET, function(npc, player) return refuseMurderers(npc, player) and NpcBankGreetCallback(npc, player) end)\n"
                      "npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n")
     elif d.get("shop"):
-        logic = '\nkeywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "' + d["desc"].capitalize() + '. Ask me for a {trade}." })\n'
+        callbacks = "npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\n"
+        logic = MURDERER + '\nkeywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "' + d["desc"].capitalize() + '. Ask me for a {trade}." })\n'
     return TEMPLATE.format(name=d["name"], desc=d["desc"], l0=look[0], l1=look[1], l2=look[2], l3=look[3], l4=look[4], l5=look[5],
                            voices=voices, shop=shop, logic=logic, greet=d["greet"], callbacks=callbacks)
 

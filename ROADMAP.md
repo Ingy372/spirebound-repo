@@ -57,10 +57,10 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
   Done when: Jay writes "Phase 1 OK" (or notes) in PLAYTEST.md, and every note is either fixed or moved to a later task.
 
 ## Phase 2 — Core systems
-- [ ] **2.1 PvP cursors and skulls** (orange/red/black timings and penalties, DESIGN §6.4.7). Done when: tests for each skull threshold and penalty pass.
-- [ ] **2.2 Zone tiers** (Guarded/Open/Contested/Deadzone) from map zones + client corner icon. Done when: test kills in each zone give the expected skull result.
-- [ ] **2.3 Newbie and level-range protection.** Done when: tests: level 40 can't be attacked; level 200 can't start a fight with level 139 but can fight back.
-- [ ] **2.4 Outnumbered shield and guild-farming Sanctuary.** Done when: tests show damage reduction with 4 attackers and Sanctuary after 2 guild kills in 6 h.
+- [x] **2.1 PvP cursors and skulls** (orange/red/black timings and penalties, DESIGN §6.4.7). Done when: tests for each skull threshold and penalty pass.
+- [x] **2.2 Zone tiers** (Guarded/Open/Contested/Deadzone) from map zones + client corner icon. Done when: test kills in each zone give the expected skull result.
+- [x] **2.3 Newbie and level-range protection.** Done when: tests: level 40 can't be attacked; level 200 can't start a fight with level 139 but can fight back.
+- [x] **2.4 Outnumbered shield and guild-farming Sanctuary.** Done when: tests show damage reduction with 4 attackers and Sanctuary after 2 guild kills in 6 h.
 - [ ] **2.5 Bounty Board.** Done when: test: red skull gets a system bounty; same-IP/guild/party kills don't pay; a valid kill pays.
 - [ ] **2.6 Consent guild wars** (sign, terms, end, 7-day cooldown). Done when: tests for one-sided declaration refused and war kills give no skull.
 - [ ] **2.7 Secrets system + Info Broker (Vesper).** Discovery records, sell-or-keep, public list, announcement, explorer counts. Done when: tests: two players discover the same secret independently; one sells; the other's record stays; nobody is locked out.

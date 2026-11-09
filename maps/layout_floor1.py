@@ -188,3 +188,17 @@ def build(m):
     m.sign(fx + 15, fy + 13, Z, "Floor 2: Highrest Highlands. The rest of this floor arrives in a later update.")
     m.teleport((bx + 15, by + 1, bz), (fx + 15, fy + 16, Z), "stair_floor2")
     m.teleport((fx + 15, fy + 25, Z), (temple[0], temple[1] + 2, Z), "floor2_to_hearthgate")
+
+    # ------------------------------------------------ PvP zone tiers (DESIGN.md 6.3). Default everywhere: Open.
+    m.zone("open", X0, Y0, SIZE, SIZE)
+    m.zone("guarded", tx - 60, ty - 40, tw + 120, th + 90, 7)       # roads and fields around Hearthgate + starter fields
+    m.zone("guarded", mx - 20, my - 20, 90, 80, 7)                   # around Millcross
+    m.zone("contested", ax - 5, ay - 5, 54, 54, 7)                   # the Old Watchtower approach and outer layer
+    m.zone("deadzone", ax + 12, ay + 12, 20, 20, 7)                  # the packed inner room
+    m.zone("deadzone", cx, cy, 44, 44, 8)                            # the cliff caves below
+    m.zone("bossroom", px, py, 24, 20, 7)                            # the Pass arena
+    m.zone("bossroom", bx, by, 30, 24, 4)                            # the Axe-Lord's room
+    m.zone("town", tx, ty, tw, th, 7)
+    m.zone("town", mx, my, 50, 40, 7)
+    m.zone("town", fx, fy, 30, 30, 7)
+

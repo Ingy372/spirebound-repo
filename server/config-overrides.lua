@@ -22,11 +22,12 @@ mysqlDatabase = "@MYSQL_DATABASE@"
 
 -- PvP (DESIGN.md 6). Newbie protection below level 50.
 worldType = "pvp"
-protectionLevel = 50
+protectionLevel = 1  -- newbie protection (level 50) is done in scripts so boss rooms can be the exception
 experienceByKillingPlayers = false
-dayKillsToRedSkull = 3
-weekKillsToRedSkull = 5
-monthKillsToRedSkull = 10
+-- Red/black skulls are handled by Spirebound scripts (weighted unjust kills, DESIGN.md 6.4); the engine's own counter is switched off
+dayKillsToRedSkull = 999
+weekKillsToRedSkull = 999
+monthKillsToRedSkull = 999
 pushWhenAttacking = false
 
 -- Rates (DESIGN.md 5.5): stages live in server/core-overrides/stages.lua

@@ -3,6 +3,17 @@
 local OPCODE = 210
 local SLOTS = 6
 local floorLabel, diffLabel, bar = nil, nil, nil
+local floorText, zoneText = '', ''
+local ZONES = {
+  town = { 'Safe zone', '#7fff7f' }, guarded = { 'Guarded', '#c8e6ff' }, open = { 'Open PvP', '#ffffff' },
+  contested = { 'Contested', '#ffb347' }, deadzone = { 'DEADZONE', '#ff4040' }, bossroom = { 'Boss room: PvP on', '#ff7f7f' },
+}
+
+local function updateFloorLabel()
+  if floorLabel then
+    floorLabel:setText(floorText .. (zoneText ~= '' and ('   [' .. zoneText .. ']') or ''))
+  end
+end
 local buttons = {}
 local skills = {}
 local cooldownUntil = {} -- skill name -> g_clock.millis() when ready
@@ -80,13 +91,12 @@ local function onMessage(protocol, opcode, data)
     return
   end
   if data.t == 'floor' then
-    if floorLabel then
-      if data.n and data.n > 0 then
-        floorLabel:setText('Floor ' .. data.n .. ' - ' .. (data.name or ''))
-      else
-        floorLabel:setText('')
-      end
-    end
+    floorText = (data.n and data.n > 0) and ('Floor ' .. data.n .. ' - ' .. (data.name or '')) or ''
+    updateFloorLabel()
+  elseif data.t == 'zone' then
+    local z = ZONES[data.tier]
+    zoneText = z and z[1] or ''
+    updateFloorLabel()
   elseif data.t == 'difficulty' then
     if diffLabel then
       local text = ''

@@ -13,7 +13,8 @@ xp:register()
 -- Heavier death XP loss for Hardcore (and for Death Game deaths saved by PvP)
 local lose = EventCallback("SpireDifficultyLoseXp")
 function lose.playerOnLoseExperience(player, exp)
-	return Difficulty.applyDeathLoss(Difficulty.get(player), exp)
+	local lost = Difficulty.applyDeathLoss(Difficulty.get(player), exp)
+	return math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
 end
 lose:register()
 

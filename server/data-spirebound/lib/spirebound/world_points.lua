@@ -39,3 +39,17 @@ WorldPoints = {
 	["temple_hearthgate"] = Position(1235, 1287, 7),
 	["underkeep_grate"] = Position(1196, 1320, 7),
 }
+-- PvP zone tiers (DESIGN.md 6.3). Later rectangles win. z = -1 means every level.
+WorldZones = {
+	{ tier = "open", x1 = 1000, y1 = 1000, x2 = 1399, y2 = 1399, z = -1 },
+	{ tier = "guarded", x1 = 1130, y1 = 1210, x2 = 1339, y2 = 1379, z = 7 },
+	{ tier = "guarded", x1 = 1015, y1 = 1175, x2 = 1104, y2 = 1254, z = 7 },
+	{ tier = "contested", x1 = 1025, y1 = 1025, x2 = 1078, y2 = 1078, z = 7 },
+	{ tier = "deadzone", x1 = 1042, y1 = 1042, x2 = 1061, y2 = 1061, z = 7 },
+	{ tier = "deadzone", x1 = 1030, y1 = 1030, x2 = 1073, y2 = 1073, z = 8 },
+	{ tier = "bossroom", x1 = 1223, y1 = 1070, x2 = 1246, y2 = 1089, z = 7 },
+	{ tier = "bossroom", x1 = 1219, y1 = 1014, x2 = 1248, y2 = 1037, z = 4 },
+	{ tier = "town", x1 = 1190, y1 = 1250, x2 = 1279, y2 = 1329, z = 7 },
+	{ tier = "town", x1 = 1035, y1 = 1195, x2 = 1084, y2 = 1234, z = 7 },
+	{ tier = "town", x1 = 2000, y1 = 1000, x2 = 2029, y2 = 1029, z = 7 },
+}

@@ -1,5 +1,5 @@
 -- Keeps the Spirebound client UI (floor indicator, difficulty icon, sword-skill bar) up to date.
-local lastFloor, lastFamily = {}, {}
+local lastFloor, lastFamily, lastZone = {}, {}, {}
 
 local login = CreatureEvent("SpireClientLogin")
 function login.onLogin(player)
@@ -25,6 +25,11 @@ function tick.onThink(interval)
 			lastFloor[pid] = n
 			SpireClient.send(p, { t = "floor", n = n, name = Floors.names[n] or "" })
 		end
+		local zone = SpirePvP.zoneAt(p:getPosition())
+		if lastZone[pid] ~= zone then
+			lastZone[pid] = zone
+			SpireClient.send(p, { t = "zone", tier = zone })
+		end
 		local fam, list = SpireClient.skillList(p)
 		if lastFamily[pid] ~= fam then
 			lastFamily[pid] = fam
@@ -33,5 +38,5 @@ function tick.onThink(interval)
 	end
 	return true
 end
-tick:interval(2000)
+tick:interval(1000)
 tick:register()

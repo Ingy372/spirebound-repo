@@ -33,6 +33,15 @@ npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name
 end
 npcType.onCheckItem = function(npc, player, clientId, subType) end
 
+-- Murderers (red/black) get no service in town (DESIGN.md 6.4)
+local function refuseMurderers(npc, player)
+	if SpirePvP and SpirePvP.isMurderer(player) then
+		npcHandler:say("I don't deal with murderers. Get out.", npc, player)
+		return false
+	end
+	return true
+end
+
 local HEAL_LEVEL = 50 -- free healing below this level (catch-up for new climbers)
 
 local function creatureSayCallback(npc, player, type, msg)
@@ -84,6 +93,7 @@ end
 npcHandler:setMessage(MESSAGE_GREET, "Peace, |PLAYERNAME|. I can {heal} you, and my prayers ({blessings}) soften the tower's price for death.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
+npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)

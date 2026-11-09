@@ -32,6 +32,15 @@ npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name
 end
 npcType.onCheckItem = function(npc, player, clientId, subType) end
 
+-- Murderers (red/black) get no service in town (DESIGN.md 6.4)
+local function refuseMurderers(npc, player)
+	if SpirePvP and SpirePvP.isMurderer(player) then
+		npcHandler:say("I don't deal with murderers. Get out.", npc, player)
+		return false
+	end
+	return true
+end
+
 local function creatureSayCallback(npc, player, type, msg)
 	if not npcHandler:checkInteraction(npc, player) then
 		return false
@@ -44,7 +53,7 @@ end
 npcHandler:setMessage(MESSAGE_GREET, "Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
-npcHandler:setCallback(CALLBACK_GREET, NpcBankGreetCallback)
+npcHandler:setCallback(CALLBACK_GREET, function(npc, player) return refuseMurderers(npc, player) and NpcBankGreetCallback(npc, player) end)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)

@@ -41,10 +41,20 @@ npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name
 end
 npcType.onCheckItem = function(npc, player, clientId, subType) end
 
+-- Murderers (red/black) get no service in town (DESIGN.md 6.4)
+local function refuseMurderers(npc, player)
+	if SpirePvP and SpirePvP.isMurderer(player) then
+		npcHandler:say("I don't deal with murderers. Get out.", npc, player)
+		return false
+	end
+	return true
+end
+
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "The quartermaster. Ask me for a {trade}." })
 
 npcHandler:setMessage(MESSAGE_GREET, "Supplies, |PLAYERNAME|? Potions and ammunition. Nobody conjures arrows in this tower. Ask for a {trade}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
+npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)
