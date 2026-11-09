@@ -6,7 +6,7 @@ local lastOutsideHit = {}
 -- XP bonus
 local xp = EventCallback("SpireDifficultyXp")
 function xp.playerOnGainExperience(player, target, exp, rawExp)
-	return Difficulty.applyXp(Difficulty.get(player), exp)
+	return math.floor(Difficulty.applyXp(Difficulty.get(player), exp) * SpireCavebot.xpFactor(player))
 end
 xp:register()
 

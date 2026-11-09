@@ -165,6 +165,20 @@ Remove-Item -Recurse -Force $tmp
 # Spirebound client modules (floor indicator, sword-skill bar, cursors) arrive in roadmap task 1.20
 if (Test-Path (Join-Path $Root "client\modules")) { Copy-Item -Recurse -Force (Join-Path $Root "client\modules\*") (Join-Path $Cli "modules") }
 
+# Built-in bot (vBot): report cavebot use to the server, remove the external bot server and the floor spy, keep one config
+$botCfg = Join-Path $Cli "mods\game_bot\default_configs"
+if (Test-Path $botCfg) {
+    Remove-Item -Recurse -Force (Join-Path $botCfg "cavebot_1.3") -ErrorAction SilentlyContinue
+    $vbot = Join-Path $botCfg "vBot_4.8"
+    Copy-Item -Force (Join-Path $Root "client\bot\spirebound_report.lua") (Join-Path $vbot "vBot\spirebound_report.lua")
+    $loader = Join-Path $vbot "_Loader.lua"
+    $lt = [IO.File]::ReadAllText($loader)
+    $lt = $lt.Replace('  "BotServer",' + "`n", '').Replace('  "BotServer",' + "`r`n", '')
+    $lt = $lt.Replace('  "spy_level",' + "`n", '').Replace('  "spy_level",' + "`r`n", '')
+    $lt = $lt.Replace('  "cavebot_control_panel"', '  "cavebot_control_panel",' + "`n" + '  "spirebound_report"')
+    [IO.File]::WriteAllText($loader, $lt)
+}
+
 # client files (placeholder Tibia art) into data\things\<protocol>
 $things = Join-Path $Cli ("data\things\" + $Pins["CLIENT_PROTOCOL"])
 Expand-To $assetsZip $tmp
