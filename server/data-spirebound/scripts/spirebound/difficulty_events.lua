@@ -13,10 +13,20 @@ xp:register()
 -- Heavier death XP loss for Hardcore (and for Death Game deaths saved by PvP)
 local lose = EventCallback("SpireDifficultyLoseXp")
 function lose.playerOnLoseExperience(player, exp)
-	local lost = Difficulty.applyDeathLoss(Difficulty.get(player), exp)
+	local lost = Difficulty.finalDeathLoss(Difficulty.get(player), exp, player:getLevel(), player:getExperience())
 	return math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
 end
 lose:register()
+
+-- Catch-up: skills train twice as fast below level 50 (DESIGN.md 15)
+local skills = EventCallback("SpireCatchUpSkills")
+function skills.playerOnGainSkillTries(player, skill, tries)
+	if player:getLevel() < 50 then
+		return tries * 2
+	end
+	return tries
+end
+skills:register()
 
 -- Loot bonus: an extra, scaled loot roll for Hardcore / Death Game corpse owners
 local loot = EventCallback("SpireDifficultyLoot")

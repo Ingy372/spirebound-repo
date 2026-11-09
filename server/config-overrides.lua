@@ -33,6 +33,9 @@ pushWhenAttacking = false
 -- Rates (DESIGN.md 5.5): stages live in server/core-overrides/stages.lua
 rateUseStages = true
 rateLoot = 2
+-- Autoloot and rare drops first (DESIGN.md 15)
+autoLoot = true
+sortLootByChance = true
 
 -- Accounts: up to 2 characters online per account (DESIGN.md 12)
 maxPlayersOnlinePerAccount = 2

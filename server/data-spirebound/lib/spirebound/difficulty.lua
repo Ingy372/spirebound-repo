@@ -33,6 +33,27 @@ function Difficulty.applyDeathLoss(mode, lostExp)
 	return math.floor(lostExp * (Difficulty.deathXpLossMultiplier[mode] or 1) + 0.5)
 end
 
+-- Tibia's unblessed death loss for a level (used for the Hardcore blessing cap)
+function Difficulty.baseDeathLoss(level, totalExp)
+	if level < 24 then
+		return math.floor(totalExp * 0.1)
+	end
+	return math.floor(((level + 50) / 100) * 50 * (level * level - 5 * level + 8))
+end
+
+-- Final death loss. Hardcore: x1.5, and blessings can only remove half of the unblessed loss.
+-- Catch-up (DESIGN.md 15): Normal characters below level 50 lose nothing.
+function Difficulty.finalDeathLoss(mode, engineLoss, level, totalExp)
+	if mode <= Difficulty.NORMAL and level < 50 then
+		return 0
+	end
+	local lost = Difficulty.applyDeathLoss(mode, engineLoss)
+	if mode == Difficulty.HARDCORE then
+		lost = math.max(lost, math.floor(Difficulty.baseDeathLoss(level, totalExp) * 0.5))
+	end
+	return lost
+end
+
 -- Does damage from `attacker` count toward saving `victim` from Death Game deletion?
 -- Both are plain tables: { guid, ip, guildId, partyId }. Friends can't "tag" you to make you immortal.
 function Difficulty.countsAsOutsidePlayer(victim, attacker)

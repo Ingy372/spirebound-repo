@@ -74,6 +74,7 @@ def build(m):
     m.npcs.append(("Bounty Warden Cass", (tx + 66, ty + 42, Z)))
     m.npcs.append(("Guildwarden Sela", (tx + 74, ty + 42, Z)))
     m.npcs.append(("Vesper", (tx + 78, ty + 36, Z)))
+    m.npcs.append(("Taskmaster Ren", (tx + 62, ty + 36, Z)))
 
     # Underkeep grate (sealed; it becomes a secret in task 2.10)
     m.put(tx + 6, ty + 70, Z, 435)

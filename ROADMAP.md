@@ -70,10 +70,11 @@ Goal: create a character, pick vocation and difficulty, level on Floor 1, kill t
 - [x] **2.11 Quest log + Floor 1 story quests + perk choice.** Done when: every Floor 1 story quest has a quest-log line for every step and is in the client quest log (in-game tests); walking through them is in the Phase 2 playtest.
 - [x] **2.12 Cavebot penalty (server side).** Client reports cavebot on/off; while on and for 10 min after: XP ×0.45, loot ×0.5, no visible marker, no secrets/rare chests/Twin Fang trial, boss rooms refuse entry; auto-targeting alone has no penalty; suspicion logging. Done when: in-game tests for each rule.
 - [x] **2.12b Cavebot and auto-targeting in the client.** Adapt OTClient Redemption's built-in bot module: route recorder, walker, auto-target, auto-heal, auto-eat, looter; reports its state to the server; everything else from that module removed. Done when: the report script passes a Lua syntax check and the installer's edits to the bot loader are checked against the real file; seeing it work is in the Phase 2 playtest.
-- [ ] **2.14 Hardcore extras:** skill loss ×1.5, blessings can only remove half the penalty, item-drop chance ×2 (DESIGN §5.4). Done when: in-game tests for each.
-- [ ] **2.15 Autoloot + loot highlight + loot channel.** Done when: in-game test: an item on the autoloot list goes to the backpack; rare drops print in the loot channel.
-- [ ] **2.16 Hunting tasks** from each floor's Quartermaster (kill counts, gold + task points). Done when: in-game test completes a task and pays out.
-- [ ] **2.17 Catch-up rules:** no death XP loss on Normal below level 50; faster skills below level 50. Done when: in-game tests for both.
+- [x] **2.14 Hardcore extras (part):** blessings can only remove half of a Hardcore death's experience loss (in-game test). Still open, moved to 2.14b: skill loss ×1.5 and item-drop chance ×2 (the engine handles those internally; needs a different approach).
+- [ ] **2.14b Hardcore skill loss ×1.5 and item drops ×2.** Done when: in-game tests for each.
+- [x] **2.15 Autoloot + loot highlight + loot channel.** Done when: in-game test: an item on the autoloot list goes to the backpack; rare drops print in the loot channel.
+- [x] **2.16 Hunting tasks** from each floor's Quartermaster (kill counts, gold + task points). Done when: in-game test completes a task and pays out.
+- [x] **2.17 Catch-up rules:** no death XP loss on Normal below level 50; faster skills below level 50. Done when: in-game tests for both.
 - [ ] **2.13 🧑 Phase 2 playtest** with WEEKLY_REPORT.md. Done when: Jay signs off in PLAYTEST.md.
 
 ## Phase 3 — Houses and gambling

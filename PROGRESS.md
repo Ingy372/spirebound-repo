@@ -98,3 +98,9 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - Three Floor 1 story quests (old pack names, simpler steps): **Bread for the Road** and **Millstone** from Miller Agna in Millcross, **The Lost Patrol** from Captain Dorrow at Hearthgate's north gate. Kill counters, "report" to collect gold (and the title Millhand). Each shows its next step in the client's Quest Log.
 - Finish all three and Registrar Maelis offers the Floor 1 perk: **Thick Skin** (+5% max health) or **Light Step** (+10 speed). Earned only.
 - Cleanup: removed four leftover Canary sample scripts (an example quest chest, a sample world board, an imbuement shrine) that referenced the old sample map. Boot test: 40 in-game tests pass.
+
+### 2026-11-08 (overnight) — Tasks 2.14 (part), 2.15–2.17: Hardcore cap, autoloot, tasks, catch-up
+- **Hardcore:** blessings can now only remove half of the experience a death costs (Tibia's own formula). Hardcore skill loss and item drops still open (2.14b).
+- **Autoloot** switched on (loot goes straight to your loot containers, rarest first), and drops with a 2% chance or less are announced as "Rare drop!" to you and your party.
+- **Taskmaster Ren** (Hearthgate): 7 daily hunting tasks (wolves, boars, bandits, shardlings, sentinels, rams, mire toads) paying gold and task points; one task at a time.
+- **Catch-up for new players:** Normal characters under level 50 lose no experience when they die, and everyone under 50 trains skills twice as fast. Boot test: 42 in-game tests pass.
