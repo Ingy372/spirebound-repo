@@ -142,6 +142,12 @@ function SpireJournal.build(player, tab)
 	else
 		return nil
 	end
+	if type(player.getGuid) == "function" then
+		title = SpireI18n.t(player, title)
+		for i, l in ipairs(lines) do
+			lines[i] = SpireI18n.t(player, l)
+		end
+	end
 	while #lines > SpireJournal.MAX_LINES do
 		table.remove(lines)
 	end
