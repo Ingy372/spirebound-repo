@@ -20,3 +20,15 @@ ON DUPLICATE KEY UPDATE `group_id` = 6, `account_id` = @acc, `town_id` = @town, 
 INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
 VALUES ('Climber', 1, @acc, 1, 0, 150, 150, 0, 68, 76, 78, 58, 128, 55, 55, @town, '', 400, 1)
 ON DUPLICATE KEY UPDATE `account_id` = @acc, `town_id` = @town, `posx` = 0, `posy` = 0, `posz` = 0;
+
+-- One test character per vocation (level 30) plus a Hardcore one, all on account jay.
+-- On first login scripts/spirebound/dev_seed.lua sets their difficulty and gives a starter kit.
+-- vocation ids: 1 arcanist, 2 mystic, 3 ranger, 4 vanguard. Experience 368300 = level 30.
+INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
+VALUES
+ ('Test Vanguard', 1, @acc, 30, 4, 560, 560, 368300, 68, 76, 78, 58, 128, 150, 150, @town, '', 700, 1),
+ ('Test Ranger', 1, @acc, 30, 3, 440, 440, 368300, 68, 76, 78, 58, 129, 250, 250, @town, '', 650, 1),
+ ('Test Arcanist', 1, @acc, 30, 1, 320, 320, 368300, 68, 76, 78, 58, 130, 600, 600, @town, '', 550, 1),
+ ('Test Mystic', 1, @acc, 30, 2, 320, 320, 368300, 68, 76, 78, 58, 131, 600, 600, @town, '', 550, 1),
+ ('Test Hardcore', 1, @acc, 30, 4, 560, 560, 368300, 113, 115, 95, 39, 128, 150, 150, @town, '', 700, 1)
+ON DUPLICATE KEY UPDATE `account_id` = @acc, `town_id` = @town;
