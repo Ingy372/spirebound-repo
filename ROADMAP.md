@@ -109,7 +109,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **5.8 🧑 Phase 5 playtest.**
 
 ## Phase 6 — Client polish and languages
-- [ ] **6.1 Info Broker window, secret list, fishing log, quest log UI.**
+- [x] **6.1 Info Broker window, secret list, fishing log, quest log UI.** *(Done as one Journal window on the J key: secrets, fishing log, quests, hunting task, top climbers, Memorial. Server side is tested; the window itself needs Jay's first run. Selling secrets still happens by talking to the Info Broker.)*
 - [x] **6.2 Death Game Memorial + leaderboard (in game).** *(Done: `!memorial` and `!top [normal|hardcore|deathgame]`; the Monument sign points to them. A proper client window comes with 6.1.)*
 - [ ] **6.3 Portuguese and Spanish text** for UI, NPCs, quests, server messages.
 - [ ] **6.4 Custom asset pipeline for 15.x** (our own appearances + sprite sheets from Jay's PNGs). Done when: a test sprite made from a PNG shows up in the client in place of a placeholder.

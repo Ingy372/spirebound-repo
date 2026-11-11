@@ -1,0 +1,55 @@
+SpireTabButton < Button
+  height: 22
+  width: 92
+  margin-right: 4
+  font: verdana-11px-rounded
+
+MainWindow
+  id: spireJournal
+  !text: 'Journal'
+  size: 560 420
+  @onEscape: modules.game_spirebound.hideJournal()
+
+  Panel
+    id: tabs
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 4
+    height: 24
+    layout:
+      type: horizontalBox
+
+  ScrollablePanel
+    id: body
+    anchors.top: tabs.bottom
+    anchors.left: parent.left
+    anchors.right: next.left
+    anchors.bottom: closeButton.top
+    margin-top: 6
+    margin-bottom: 6
+    margin-right: 4
+    vertical-scrollbar: bodyScroll
+    layout:
+      type: verticalBox
+    border-width: 1
+    border-color: #555555
+    padding: 4
+
+  VerticalScrollBar
+    id: bodyScroll
+    anchors.top: tabs.bottom
+    anchors.right: parent.right
+    anchors.bottom: closeButton.top
+    margin-top: 6
+    margin-bottom: 6
+    step: 24
+    pixels-scroll: true
+
+  Button
+    id: closeButton
+    !text: 'Close'
+    width: 72
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_spirebound.hideJournal()

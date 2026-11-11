@@ -111,6 +111,8 @@ local function onMessage(protocol, opcode, data)
     end
   elseif data.t == 'skills' then
     skills = data.list or {}
+  elseif data.t == 'journal' then
+    SpireJournalUi.show(data)
   elseif data.t == 'cast' then
     cooldownUntil[data.name] = g_clock.millis() + (data.cd or 0)
   end
@@ -178,6 +180,7 @@ local function onGameStart()
 end
 
 local function onGameEnd()
+  SpireJournalUi.hide()
   removeEvent(tickEvent)
   removeEvent(cursorEvent)
   destroyUi()
@@ -194,13 +197,19 @@ function init()
       originalOnSkullChange(self, skullId)
     end
   end
+  g_keyboard.bindKeyDown('J', SpireJournalUi.toggle)
   connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd })
   if g_game.isOnline() then
     onGameStart()
   end
 end
 
+function hideJournal()
+  SpireJournalUi.hide()
+end
+
 function terminate()
+  g_keyboard.unbindKeyDown('J')
   ProtocolGame.unregisterExtendedJSONOpcode(OPCODE)
   if originalOnSkullChange then
     Creature.onSkullChange = originalOnSkullChange
