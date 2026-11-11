@@ -7,6 +7,15 @@ local TABS = {
   { 'task', 'Task' }, { 'top', 'Top' }, { 'memorial', 'Memorial' },
 }
 local current = 'secrets'
+local LABELS = {
+  pt = { secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', top = 'Top', memorial = 'Memorial', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
+  es = { secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', top = 'Top', memorial = 'Memorial', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
+}
+SpireJournalUi.lang = 'en'
+local function label(key, english)
+  local l = LABELS[SpireJournalUi.lang]
+  return (l and l[key]) or english
+end
 
 local function request(tab)
   current = tab
@@ -15,7 +24,7 @@ local function request(tab)
     protocol:sendExtendedJSONOpcode(210, { t = 'journal', tab = tab })
   end
   if win then
-    win:setText('Journal - loading...')
+    win:setText(label('journal', 'Journal') .. ' - ' .. label('loading', 'loading...'))
   end
 end
 
@@ -23,7 +32,7 @@ function SpireJournalUi.show(data)
   if not win or data.tab ~= current then
     return
   end
-  win:setText('Journal - ' .. (data.title or ''))
+  win:setText(label('journal', 'Journal') .. ' - ' .. (data.title or ''))
   local body = win:getChildById('body')
   body:destroyChildren()
   for _, line in ipairs(data.lines or {}) do
@@ -59,9 +68,10 @@ function SpireJournalUi.toggle()
   local tabs = win:getChildById('tabs')
   for _, t in ipairs(TABS) do
     local b = g_ui.createWidget('SpireTabButton', tabs)
-    b:setText(t[2])
+    b:setText(label(t[1], t[2]))
     b.onClick = function() request(t[1]) end
   end
+  win:getChildById('closeButton'):setText(label('close', 'Close'))
   win:show()
   win:raise()
   win:focus()

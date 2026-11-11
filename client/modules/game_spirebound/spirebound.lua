@@ -111,6 +111,8 @@ local function onMessage(protocol, opcode, data)
     end
   elseif data.t == 'skills' then
     skills = data.list or {}
+  elseif data.t == 'lang' then
+    SpireJournalUi.lang = data.lang or 'en'
   elseif data.t == 'journal' then
     SpireJournalUi.show(data)
   elseif data.t == 'cast' then

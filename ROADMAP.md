@@ -111,7 +111,8 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 ## Phase 6 — Client polish and languages
 - [x] **6.1 Info Broker window, secret list, fishing log, quest log UI.** *(Done as one Journal window on the J key: secrets, fishing log, quests, hunting task, top climbers, Memorial. Server side is tested; the window itself needs Jay's first run. Selling secrets still happens by talking to the Info Broker.)*
 - [x] **6.2 Death Game Memorial + leaderboard (in game).** *(Done: `!memorial` and `!top [normal|hardcore|deathgame]`; the Monument sign points to them. A proper client window comes with 6.1.)*
-- [ ] **6.3 Portuguese and Spanish text** for UI, NPCs, quests, server messages.
+- [ ] **6.3 Portuguese and Spanish text** for UI, NPCs, quests, server messages. *(Partly done: `!language en|pt|es`, 43 sentences + 25 patterns of server messages, the Journal and its client labels. Still English: NPC talk, quest text, item and monster names, secret hints. Next: 6.3b.)*
+- [ ] **6.3b Translate NPC dialogue, quest text and secret hints** into pt and es (extend `tools/gen_i18n.py`).
 - [ ] **6.4 Custom asset pipeline for 15.x** (our own appearances + sprite sheets from Jay's PNGs). Done when: a test sprite made from a PNG shows up in the client in place of a placeholder.
 - [ ] **6.5 Swap in all art Jay has delivered so far.**
 - [ ] **6.5b Android client build** (OTClient Redemption's Android target). Done when: an APK builds in CI.
