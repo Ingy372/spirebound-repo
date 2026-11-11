@@ -82,6 +82,12 @@ RULES = [
  ("^Reward: (%d+) gold, (%d+) task points?%.$", "Recompensa: %1 de ouro, %2 ponto(s) de tarefa.", "Recompensa: %1 de oro, %2 punto(s) de tarea."),
 ]
 
+import sys
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import i18n_npc  # NPC dialogue (roadmap 6.3b)
+EXACT.extend(i18n_npc.EXACT)
+RULES.extend(i18n_npc.RULES)
+
 HEADERS = {
     "pt": "Portuguese (Brazil)",
     "es": "Spanish",

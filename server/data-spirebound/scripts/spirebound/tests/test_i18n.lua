@@ -34,3 +34,14 @@ SpireTest.add("i18n: journal text has a translation for the tab titles and secre
 	local hidden = SpireJournal.secretLine(SpireSecrets.list[6], false)
 	SpireTest.eq(SpireI18n.translate("pt", hidden):sub(1, 14), "[ ] Andar 1 - ", "hidden row")
 end)
+
+SpireTest.add("i18n: Registrar dialogue translates, keywords stay English, Latin-1 conversion works", function()
+	local greet = "Welcome to Hearthgate, Test. Before you climb, choose your path: {vanguard}, {ranger}, {arcanist} or {mystic}?"
+	local pt = SpireI18n.translate("pt", greet)
+	SpireTest.eq(pt:find("Bem-vindo a Hearthgate, Test.", 1, true) ~= nil, true, "greeting translated")
+	SpireTest.eq(pt:find("{vanguard}", 1, true) ~= nil, true, "keyword kept")
+	local voc = "Vanguards hold the front line with sword, axe or club and a shield. Will you walk the path of the vanguard? {yes} or {no}?"
+	SpireTest.eq(SpireI18n.translate("es", voc):find("{yes}", 1, true) ~= nil and SpireI18n.translate("es", voc) ~= voc, true, "vocation question")
+	SpireTest.eq(SpireI18n.toLatin1("a\195\169b"), "a\233b", "UTF-8 e-acute becomes one Latin-1 byte")
+	SpireTest.eq(SpireI18n.toLatin1("plain"), "plain", "ASCII unchanged")
+end)

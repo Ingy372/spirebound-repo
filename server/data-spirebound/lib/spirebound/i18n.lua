@@ -47,6 +47,27 @@ end
 function SpireI18n.load(player)
 	local lang = player:kv():scoped("spirebound-lang"):get("lang")
 	SpireI18n.cache[player:getGuid()] = (lang and lang ~= "en" and SpireI18n.LANGS[lang]) and lang or nil
+	SpireI18n.hookNpc()
+end
+
+-- NPC dialogue goes through NpcHandler:say; translate it the same way (roadmap 6.3b).
+-- Hooked on first login because the NPC library loads after this file. A missing translation or
+-- an error sends the English line, so dialogue can never break.
+function SpireI18n.hookNpc()
+	if SpireI18n.npcHooked or not NpcHandler or not NpcHandler.say then
+		return
+	end
+	SpireI18n.npcHooked = true
+	local origSay = NpcHandler.say
+	function NpcHandler:say(message, npc, player, ...)
+		if type(message) == "string" and player then
+			local ok, out = pcall(SpireI18n.t, player, message)
+			if ok and out ~= message then
+				message = SpireI18n.toLatin1(out)
+			end
+		end
+		return origSay(self, message, npc, player, ...)
+	end
 end
 
 -- Translate a text for a player
