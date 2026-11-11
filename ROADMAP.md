@@ -136,5 +136,5 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 
 ## Phase 10 — Move to a rented server (only after Jay says testing is done)
 - [ ] **10.1 🧑 Jay picks a host** (QUESTIONS.md has options and prices).
-- [ ] **10.2 Server setup scripts, backups, monitoring.** *(Part done for Jay's PC: Backup-Spirebound.bat, Restore-Spirebound.bat, automatic backup at each start. Not yet run on a real install. Rented-server scripts and monitoring wait for 10.1.)*
+- [ ] **10.2 Server setup scripts, backups, monitoring.** *(Part done for Jay's PC and tested on 2026-11-11: Backup-Spirebound.bat, Restore-Spirebound.bat, automatic backup at each start (the database lives in WSL). Rented-server scripts and monitoring wait for 10.1.)*
 - [ ] **10.3 Launch checklist** (all placeholders replaced, rules page, Discord, countdown).
