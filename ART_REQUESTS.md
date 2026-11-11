@@ -53,7 +53,7 @@ Base Tibia sprites stand in for all of these until your art arrives, so nothing 
 
 | ✓ | File names | Size / frames | Grok prompt |
 |---|---|---|---|
-| [ ] | `ui_cursor_green.png`, `ui_cursor_orange.png`, `ui_cursor_red.png`, `ui_cursor_black.png` | 16×16, 1 each | A small downward-pointing diamond cursor marker floating above a character, glossy, colored green / orange / red / dark red with black outline. |
+| [ ] | `ui_cursor_green.png`, `ui_cursor_orange.png`, `ui_cursor_red.png`, `ui_cursor_black.png` | **11×11**, 1 each (the client's skull size) | A small downward-pointing diamond cursor marker floating above a character, glossy, colored green / orange / red / dark red with black outline. |
 | [ ] | `ui_floor_badge.png` | 96×32, 1 | A sleek fantasy UI banner plate for showing "Floor 1" text, dark metal with a thin glowing cyan edge, empty center. |
 | [ ] | `ui_skill_frame.png`, `ui_skill_frame_ready.png` | 36×36, 1 each | A square skill-slot frame, dark metal; the "ready" version has a soft cyan glow. |
 | [ ] | `ui_difficulty_hardcore.png`, `ui_difficulty_deathgame.png` | 12×12, 1 each | A tiny flame icon; a tiny skull-with-crossed-blade icon. |

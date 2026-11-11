@@ -38,3 +38,9 @@ If the game window never opens after about 10 minutes, look at the black server 
 
 ## If something breaks
 Write what you saw in `PLAYTEST.md` (a screenshot path is plenty). Everything I did overnight is in `PROGRESS.md`.
+
+## Also done overnight
+- Registrar Maelis now speaks Portuguese and Spanish (say `!language pt`, then log in or talk to her).
+- `DECISIONS.md` has my homework for you: shop prices, a crafting design, hosting options, art priority list. Just say yes/no.
+- Not done: ROADMAP 6.4, 6.5b, 9.2 (reasons at the bottom of DECISIONS.md).
+- The server's log is saved in `.local\server.log` if something looks wrong.
