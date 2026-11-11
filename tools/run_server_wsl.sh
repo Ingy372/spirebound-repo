@@ -30,4 +30,5 @@ LOGIN_PID=$!
 trap 'kill $LOGIN_PID 2>/dev/null || true' EXIT
 cd "$B"
 echo "Starting the Spirebound server (wait for 'Spirebound server online!')..."
-./canary
+mkdir -p "$WIN_REPO/.local"
+./canary 2>&1 | tee "$WIN_REPO/.local/server.log"
