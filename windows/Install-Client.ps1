@@ -101,3 +101,11 @@ Set-Content -Encoding UTF8 -Path $init -Value $text
 
 
 Say "Client ready in .local\client"
+
+# Start the client in English (skips the language picker on the first run)
+$cfgDir = Join-Path $env:APPDATA "otcr\otclient"
+$cfg = Join-Path $cfgDir "config.otml"
+if (-not (Test-Path $cfg)) {
+    New-Item -ItemType Directory -Force -Path $cfgDir | Out-Null
+    Set-Content -Encoding ASCII -Path $cfg -Value "locale: en"
+}

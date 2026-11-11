@@ -58,12 +58,26 @@ function SpireI18n.t(player, text)
 	return SpireI18n.translate(lang, text)
 end
 
+-- The game protocol carries Latin-1 text (the client turns it into UTF-8 for display), but our translation
+-- files are UTF-8. Convert accented letters (U+0080..U+00FF) to single Latin-1 bytes before sending.
+function SpireI18n.toLatin1(text)
+	if type(text) ~= "string" then
+		return text
+	end
+	return (text:gsub("([\194\195])([\128-\191])", function(a, b)
+		return string.char((a:byte() - 194) * 64 + 128 + (b:byte() - 128))
+	end))
+end
+
 -- Wrap the message senders once. If translation ever throws, the English text goes out instead.
 if not SpireI18n.hooked then
 	SpireI18n.hooked = true
 	local origSend = Player.sendTextMessage
 	function Player:sendTextMessage(messageType, text, ...)
 		local ok, out = pcall(SpireI18n.t, self, text)
+		if ok and out ~= text then
+			out = SpireI18n.toLatin1(out)
+		end
 		return origSend(self, messageType, ok and out or text, ...)
 	end
 	local origDialog = Player.showTextDialog

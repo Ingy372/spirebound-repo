@@ -7,7 +7,7 @@ set -euo pipefail
 WIN_REPO="${1:-/mnt/c/Users/Muth3/Desktop/spirebound-repo}"
 SB=/root/sb
 mkdir -p "$SB"
-rsync -a --delete --exclude .git --exclude .build --exclude .local --exclude backups --exclude screenshots --exclude 'server/local.env' "$WIN_REPO/" "$SB/"
+rsync -a --delete --exclude .git --exclude .build --exclude .cache --exclude .local --exclude backups --exclude screenshots --exclude 'server/local.env' "$WIN_REPO/" "$SB/"
 cd "$SB"
 # files written on Windows may have CRLF line endings; the Linux tools need LF
 find tools -name '*.sh' -o -name '*.py' | xargs sed -i 's/\r$//'

@@ -1,16 +1,16 @@
 # Playing Spirebound on your PC
 
-1. **Install (once):** double-click `Install-Spirebound.bat`. It downloads about 1 GB the first time and may ask Windows for permission to install MariaDB (the free database the server uses). When it says **Done!**, close the window.
-2. **Play:** double-click `Start-Spirebound.bat`. A black server window opens (leave it open), then the game client.
-3. **Log in:** account `jay`, password `spirebound`. Characters: **Jay** (gamemaster tools) and **Climber** (a brand-new character: talk to the Registrar).
-4. **Stop:** double-click `Stop-Spirebound.bat`, or close the black server window.
+The game server runs inside **WSL** (the free Ubuntu that Windows keeps inside itself); the game client is a normal Windows program. Nothing is uploaded anywhere.
 
-**Backups:** `Start-Spirebound.bat` saves a copy of your world (characters, houses, guilds, market) into the `backups` folder before every start and keeps the newest 14. Double-click `Backup-Spirebound.bat` for one any time. If something goes wrong, stop the server and double-click `Restore-Spirebound.bat` to go back to the newest copy. Do this before ending a season too.
+1. **Play:** double-click the **Play Spirebound** shortcut on the desktop (it runs `Start-Spirebound.bat`). It saves a backup, starts the server (a black window; leave it open), waits until the server is ready, then opens the client. The first start builds the server and the client and takes several minutes.
+2. **Log in:** account `jay@localhost`, password `spirebound`. See `MORNING.md` for the list of test characters.
+3. **Stop:** double-click **Stop Spirebound** (`Stop-Spirebound.bat`).
 
-After Claude pushes new work, run `Install-Spirebound.bat` again to rebuild (it skips the downloads).
+**Backups:** `Start-Spirebound.bat` saves a copy of your world into the `backups` folder before every start and keeps the newest 14. Double-click `Backup-Spirebound.bat` for one any time. To go back, stop the server and double-click `Restore-Spirebound.bat` (it saves the current state first). Do this before ending a season too.
 
-Notes
-- Everything installed lives in the hidden `.local` folder inside the repo, plus MariaDB under Program Files. Nothing is uploaded anywhere.
-- The Tibia art in `.local\client` is a placeholder for testing on this PC only. Your Grok art replaces it before any public launch.
-- Passwords for the local database are in `server\local.env` (never uploaded to GitHub).
-- If something fails, copy the red text into `PLAYTEST.md` and Claude will fix it next session.
+How it fits together
+- `tools/run_server_wsl.sh` (run by Start): copies the repo into WSL, builds the Linux server, makes sure the database and test accounts exist, starts the server and the local login service (`tools/login_server.py`, port 8080, which hands the character list to the client).
+- `Install-Client.bat` builds only the client (Start does this by itself if the client is missing). The older `Install-Spirebound.bat` builds a fully native Windows server instead; it is not used right now.
+- `tools/winui/*.ps1` are small helpers Claude uses to drive and screenshot the client for testing.
+
+If something fails, copy the red text into `PLAYTEST.md` and Claude will fix it next session.
