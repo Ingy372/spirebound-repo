@@ -121,7 +121,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 
 ## Phase 7 — Accounts, website, donation shop
 - [ ] **7.1 Website** (account creation, character pages, floor monument, secret list, Hall of Fame, rules). Free software only (MyAAC or similar). *(Part done: static pages — home, how to play, the tower, vocations, difficulty, PvP rules, events, rules — built by `tools/gen_site.py` into `website/public/`. Still to do: account creation, character pages, Hall of Fame (need MyAAC + the database).)*
-- [ ] **7.2 Donation shop** (cosmetics, housing, convenience; never power), off until launch. Done when: test confirms no shop item has combat stats and shop items can't be gambled.
+- [x] **7.2 Donation shop** (cosmetics, housing, convenience; never power), off until launch. Done when: test confirms no shop item has combat stats and shop items can't be gambled. *(Done, closed: `!shop` is off until launch (SpireShop.ENABLED). 11 placeholder items (furniture, statues, tapestries, 2 outfits, 1 mount) with placeholder prices; a test fails the build if any item has attack, defense or armor or is gold. Payment hookup is 7.3.)*
 - [ ] **7.2b Website wiki pages** generated from our data files; boss cooldowns and event countdowns on the website; Discord announcements. *(Part done: floors, fish and secret counts generated from our data. Still to do: boss cooldowns, event countdowns, Discord announcements.)*
 - [ ] **7.3 🧑 Jay picks shop prices and payment setup** (QUESTIONS.md).
 

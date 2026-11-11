@@ -188,3 +188,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-10 (unattended) — Task 7.1 / 7.2b (part): the public website
 - `python3 tools/gen_site.py` builds eight plain pages into `website/public/` (home, how to play, the tower with every floor's monsters, bosses and fish, vocations, difficulty, PvP rules, events, rules). They are generated from DESIGN rules and our data files so they can't drift; no scripts, no tracking, light and dark mode. Secrets are only counted, never named. The boot test now checks the site builds with no broken links.
 - Still open: account creation, character pages and the Hall of Fame (need MyAAC and the database), boss cooldowns and event countdowns. The website is not hosted anywhere.
+
+### 2026-11-10 (unattended) — Task 7.2: the donation shop (closed)
+- **!shop** lists and sells cosmetics and house decorations for "Spire Coins" (account-wide). It is switched off with a "opens at launch" message until the launch flag is turned on. Outfits and mounts follow the account to every character. The owner can hand out test coins with /shopgrant.
+- A test runs on every boot: every item must be a cosmetic kind, a real takeable item with zero attack, defense and armor, not a weapon or shield, and not gold. Prices and the 2 outfit / 1 mount looks are placeholders (Jay picks prices in 7.3; looks need art). Boot test: 71 in-game tests pass.
