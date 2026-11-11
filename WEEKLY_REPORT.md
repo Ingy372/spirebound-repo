@@ -1,3 +1,24 @@
+# Update, 2026-11-10 (overnight session)
+
+## What's new since the last report
+- **Journal window (press J):** secrets (hints until found), fishing log, quests, hunting task, top climbers and the Memorial in one window. The text is tested; the window itself has never run in a real client, so it is the first thing to try.
+- **Portuguese and Spanish:** `!language pt` or `!language es`. Server messages and the Journal switch language. NPC talk, quest text and item names are still English (new task 6.3b).
+- **Public website pages** (rules, the tower, vocations, difficulty, PvP, events), built from the game's own data. Not online anywhere; open `website\public\index.html` in a browser to see them.
+- **Donation shop (closed):** `!shop` says "opens at launch". Behind it: 11 cosmetic placeholder items; a test fails the build if anything in it has combat stats. Prices are placeholders (your call in QUESTIONS.md, 7.3).
+- **Backups:** `Backup-Spirebound.bat` / `Restore-Spirebound.bat`, and Start now backs up automatically. Never tried on a real install yet.
+- **Fixed:** a hidden file that stopped fresh copies of the repo from building, and a load-order bug that broke the in-game tests on some machines. Boot test: 71 in-game checks pass.
+
+## Quick extra checks (about 10 minutes)
+1. In game press **J** and click each tab. Say `!language pt`, then press J again: tab names and a few messages should be Portuguese.
+2. Open `website\public\index.html` and click through the pages.
+3. Run `windows\Backup-Spirebound.bat`; a zip should appear in the `backups` folder.
+4. Say `!shop`: it should say the shop opens at launch.
+
+## Art/map requests
+Nothing new tonight. (Shop outfits and the mount use placeholder looks; real ones are needed before launch: see ART_REQUESTS.md.)
+
+---
+
 # Weekly report — week of 2026-11-08 (Phases 1–5 built, plus the season reset; ready for your playtest)
 
 ## What's new

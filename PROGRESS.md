@@ -196,3 +196,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-10 (unattended) — Task 10.2 (part): backups on Jay's PC
 - `windows/Backup-Spirebound.bat` saves the whole database as a zip in a `backups` folder (newest 14 kept); `Start-Spirebound.bat` now does it automatically before every start; `Restore-Spirebound.bat` puts back the newest copy (and saves the current state first as a safety net). Worth running before ending a season.
 - Rough: the scripts passed a syntax check but have not run against a real Windows install (no MariaDB on the build machine). First real run is the test; if the backup fails the game still starts.
+
+### 2026-11-10 (unattended) — stopping point
+- Done tonight: setup fixes, 6.1 Journal, 6.3 (part) languages, 7.1/7.2b (part) static website, 7.2 closed shop, 10.2 (part) backups. WEEKLY_REPORT.md has a new top section with a 10-minute check list.
+- **Pick up next:** (1) 6.3b translate NPC dialogue/quest text/hints (extend `tools/gen_i18n.py`; the translation hook in `lib/spirebound/i18n.lua` already covers `sendTextMessage` and text dialogs, NPC `say` is not hooked yet); (2) 6.4 custom sprite pipeline (see `tools/appearances.py`); (3) 6.5b Android build in CI; (4) 9.2 bot load test (needs a protocol 15.11 test client). Everything else left in ROADMAP.md needs Jay (playtests, host, prices, art) or a crafting design pass (3.5b).
+- Test command on Jay's PC: `wsl -d Ubuntu -u root -- bash -c 'cd /root/sb && git pull && bash tools/test_boot.sh'` (a clone lives in WSL at /root/sb; MariaDB is installed there and may need `service mariadb start`).

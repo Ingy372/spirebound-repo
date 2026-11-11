@@ -68,3 +68,6 @@ Prompt: *"A square fantasy skill icon showing <one-line description of the move>
 | [ ] | `boss_azhrakkar_{s,e,n,w}_{0,1,2}.png` | **64×64**, 12 | A giant muscular blue-skinned horned fiend with glowing pale-cyan eyes, dark ridged armor plates on the shoulders, wielding an enormous jagged greatsword taller than itself. Menacing, original design. |
 | [ ] | `boss_azhrakkar_attack_{s,e,n,w}_{0,1,2}.png` | **64×64**, 12 | The same blue fiend mid-swing with the enormous greatsword, blue fire trailing the blade. |
 | [ ] | `fx_cerulean_sweep_{0..5}.png` | 32×32, 6 | A wide blue-fire sword-sweep slash effect, 6-frame animation, transparent background. |
+
+## Shop placeholders (added 2026-11-10)
+The donation shop (closed until launch) uses placeholder looks for 2 outfits (Hearth Cloak, Tower Mantle) and 1 mount (Stone Hound). Grok prompts when we get to launch art: "32x32 pixel-art outfit, Tibia style, 4 directions, 3 walk frames, [description]". No sprites needed for testing.
