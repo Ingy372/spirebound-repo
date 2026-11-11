@@ -24,3 +24,15 @@ function login.onLogin(player)
 	return true
 end
 login:register()
+
+-- Gamemasters (group 4 and up) run fast so they can cross the map while testing. Speed resets at every
+-- login, so this applies every time. Change GM_SPEED_BONUS to taste (a normal level-30 player is ~170).
+local GM_SPEED_BONUS = 600
+local gmSpeed = CreatureEvent("SpireGmSpeedLogin")
+function gmSpeed.onLogin(player)
+	if player:getGroup():getId() >= 4 then
+		player:changeSpeed(GM_SPEED_BONUS)
+	end
+	return true
+end
+gmSpeed:register()
