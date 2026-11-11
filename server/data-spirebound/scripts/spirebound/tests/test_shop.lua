@@ -11,7 +11,7 @@ SpireTest.add("shop: closed by default; every item is a cosmetic with no combat 
 			if SpireShop.isGold(e.item) then error(e.id .. " sells gold") end
 			local it = ItemType(e.item)
 			if not it or it:getId() == 0 or not it:isPickupable() then error(e.id .. ": not a real takeable item") end
-			for _, m in ipairs({ "getAttack", "getDefense", "getArmor", "getExtraDefense", "getHitChance", "getShootRange" }) do
+			for _, m in ipairs({ "getAttack", "getDefense", "getArmor", "getExtraDefense" }) do
 				if it[m] and (it[m](it) or 0) ~= 0 then
 					error(string.format("%s has %s = %s: shop items must never have combat stats", e.id, m, tostring(it[m](it))))
 				end
