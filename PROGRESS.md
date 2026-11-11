@@ -184,3 +184,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-10 (unattended) — Task 6.3 (part): Portuguese and Spanish
 - New command **!language en / pt / es** (remembered per character). Every server message is looked up in the player's language before it is sent; anything without a translation is simply sent in English, so nothing can break. 43 sentences and 25 patterns (fishing, arena, siege, house, PvP, Hardcore, Journal...) are translated, plus the Journal window and its tab labels in the client. Translations come from one list in `tools/gen_i18n.py` so Portuguese and Spanish can't drift apart; a test checks that.
 - Not done (new task 6.3b): NPC dialogue, quest text, secret hints, item/monster names. Boot test: 70 in-game tests pass.
+
+### 2026-11-10 (unattended) — Task 7.1 / 7.2b (part): the public website
+- `python3 tools/gen_site.py` builds eight plain pages into `website/public/` (home, how to play, the tower with every floor's monsters, bosses and fish, vocations, difficulty, PvP rules, events, rules). They are generated from DESIGN rules and our data files so they can't drift; no scripts, no tracking, light and dark mode. Secrets are only counted, never named. The boot test now checks the site builds with no broken links.
+- Still open: account creation, character pages and the Hall of Fame (need MyAAC and the database), boss cooldowns and event countdowns. The website is not hosted anywhere.
