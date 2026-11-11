@@ -178,7 +178,7 @@ local function onGameStart()
   removeEvent(tickEvent)
   removeEvent(cursorEvent)
   redrawButtons()
-  refreshCursors()
+  -- (polling every creature with g_map.getSpectators crashed the Windows client (heap corruption); cursors now update only when the server sends a skull change)
 end
 
 local function onGameEnd()

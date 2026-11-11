@@ -191,7 +191,7 @@ Remove-Item -Recurse -Force $tmp
 # point the client at this PC and turn off its own asset downloader
 $init = Join-Path $Cli "init.lua"
 $text = Get-Content -Raw $init
-$serverLine = 'Servers_init = { ["127.0.0.1"] = { port = 7171, protocol = ' + $Pins['CLIENT_PROTOCOL'] + ', httpLogin = false } }'
+$serverLine = 'Servers_init = { ["127.0.0.1"] = { port = 8080, protocol = ' + $Pins['CLIENT_PROTOCOL'] + ', httpLogin = true } }'
 $text = $text.Replace('g_app.setName("OTClient - Redemption");', $serverLine + "`r`n" + 'g_app.setName("Spirebound");')
 $text = $text -replace "enabled = true,(\s*\r?\n\s*repository)", 'enabled = false,$1'
 Set-Content -Encoding UTF8 -Path $init -Value $text
