@@ -5,6 +5,8 @@
 3. **Log in:** account `jay`, password `spirebound`. Characters: **Jay** (gamemaster tools) and **Climber** (a brand-new character: talk to the Registrar).
 4. **Stop:** double-click `Stop-Spirebound.bat`, or close the black server window.
 
+**Backups:** `Start-Spirebound.bat` saves a copy of your world (characters, houses, guilds, market) into the `backups` folder before every start and keeps the newest 14. Double-click `Backup-Spirebound.bat` for one any time. If something goes wrong, stop the server and double-click `Restore-Spirebound.bat` to go back to the newest copy. Do this before ending a season too.
+
 After Claude pushes new work, run `Install-Spirebound.bat` again to rebuild (it skips the downloads).
 
 Notes

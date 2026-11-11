@@ -37,3 +37,4 @@ Thumbs.db
 .build/
 server/local.env
 .local/
+backups/
