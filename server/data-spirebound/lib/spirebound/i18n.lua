@@ -74,13 +74,10 @@ if not SpireI18n.hooked then
 				return text
 			end
 			local lines = {}
-			for line in (text .. "
-"):gmatch("(.-)
-") do
+			for line in (text .. "\n"):gmatch("(.-)\n") do
 				table.insert(lines, SpireI18n.t(self, line))
 			end
-			return table.concat(lines, "
-")
+			return table.concat(lines, "\n")
 		end)
 		return origDialog(self, itemId, ok and out or text, ...)
 	end
