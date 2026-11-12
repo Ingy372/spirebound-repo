@@ -1,0 +1,31 @@
+{
+ "_about": "edge pieces where grounds meet; learned by tools/learn_ground_edges.py",
+ "grass": {
+  "dSE": 4538,
+  "N": 4531,
+  "iNE": 4540,
+  "S": 4533,
+  "dSW": 4537,
+  "iSW": 4541,
+  "dNE": 4536,
+  "iNW": 4539,
+  "W": 4534,
+  "E": 4532,
+  "iSE": 4542,
+  "dNW": 4535
+ },
+ "water": {
+  "iNW": 4637,
+  "N": 4633,
+  "dNW": 4641,
+  "iNE": 4638,
+  "E": 4634,
+  "dNE": 4642,
+  "W": 4636,
+  "iSW": 4639,
+  "S": 4635,
+  "dSW": 4643,
+  "iSE": 4640,
+  "dSE": 4644
+ }
+}

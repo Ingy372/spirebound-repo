@@ -254,3 +254,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-11 — Roofs, upstairs rooms, stairs and ladders (Jay: "add the stairs and roofs")
 - Learned from Canary's hand-made map how roofs sit (one level up, lined up with the wall tops, edge pieces around them), how stairs pair with the stair tile above, and how ladders pair with trapdoors. The map builder now roofs every surface building automatically and has builders for upstairs rooms, stairs and ladders; the map renderer can draw upper levels.
 - Added upstairs to the Guild Hall, Millcross Inn, Hunters' Hall (ladder) and four corner houses on Lantern Row (part of the house, higher rent). Town safe zone now covers upstairs. New in-game tests: a character walks up and down real stairs, the ladder and trapdoor work, upstairs rooms belong to their house, the temple has a roof. Walked the Guild Hall stairs and the Hunters' Hall ladder in the client. Boot test: 86 in-game tests, 0 errors.
+
+### 2026-11-11 — Soft ground edges and shorelines (Jay: "do edges next")
+- `tools/learn_ground_edges.py` learned the two edge sets real maps use (grass edges over dirt and sand; shoreline pieces on land next to water, 12 pieces each) into `tools/ground_edges.json`. The map builder now smooths coastlines and edges every place where grass meets roads, dirt, mud, gravel, sand or paving, and where land meets water, on every floor.
+- Checked by render and in the client (river shore and road edges). Boot test: 86 in-game tests, 0 errors.

@@ -17,6 +17,7 @@ Usage: python3 tools/mapgen.py [--check-ids path/to/appearances.dat]
 """
 from __future__ import annotations
 
+import collections
 import random
 import struct
 import sys
@@ -490,10 +491,71 @@ class Map:
         return removed
 
     # ---------------------------------------------------------------- output
+    def edge_grounds(self):
+        """Soft edges where grounds meet, the way the hand-made maps do it (tools/ground_edges.json, learned by
+        tools/learn_ground_edges.py): grass spills over the edge of dirt, mud, gravel, sand, roads and paving next to it,
+        and every bit of land next to water gets a shoreline. Indoor floors, bridges and walls are left alone."""
+        import json
+        path = Path(__file__).resolve().parent / "ground_edges.json"
+        if not path.exists():
+            return
+        sets = json.loads(path.read_text())
+        grass = set(ID["grass"]) | set(ID["dark_grass"])
+        water = set(ID["water"]) | set(range(4597, 4626))
+        under_grass = {g for k in ("dirt", "mud", "gravel", "sand", "cobble", "pave", "earth", "rocksoil", "dried", "swamp")
+                       for g in ID[k]}
+        no_shore = {408, 409} | water            # bridges, marble and water itself never get a shoreline
+        # tidy the coastline first: a bit of land almost surrounded by water becomes water, a lone water tile becomes
+        # land (shorelines cannot be drawn around single-tile islands and puddles)
+        for _ in range(2):
+            flips = []
+            for (x, y, z), g in self.ground.items():
+                if (x, y, z) in self.items and g not in water:
+                    continue
+                nbs = [self.ground.get((x + dx, y + dy, z)) for dx in (-1, 0, 1) for dy in (-1, 0, 1) if dx or dy]
+                wet = sum(1 for n in nbs if n in water)
+                if g not in water and g not in (408, 409) and wet >= 6 and (x, y, z) not in self.house:
+                    flips.append(((x, y, z), ID["water"][0]))
+                elif g in water and wet <= 2:
+                    dry = collections.Counter(n for n in nbs if n is not None and n not in water)
+                    if dry:
+                        flips.append(((x, y, z), dry.most_common(1)[0][0]))
+            for q, ng in flips:
+                self.ground[q] = ng
+        d8 = {"N": (0, -1), "E": (1, 0), "S": (0, 1), "W": (-1, 0), "NW": (-1, -1), "NE": (1, -1), "SE": (1, 1), "SW": (-1, 1)}
+        adj = {"NW": ("N", "W"), "NE": ("N", "E"), "SW": ("S", "W"), "SE": ("S", "E")}
+
+        def pieces(nb, edge):
+            out, covered = [], set()
+            for c, (a, b) in adj.items():
+                if a in nb and b in nb:
+                    out.append(edge["i" + c])
+                    covered |= {a, b}
+            out += [edge[d] for d in "NESW" if d in nb and d not in covered]
+            out += [edge["d" + c] for c, (a, b) in adj.items() if c in nb and a not in nb and b not in nb]
+            return out
+
+        for (x, y, z), g in list(self.ground.items()):
+            here = self.items.get((x, y, z), [])
+            if any(i in WALL_IDS for i, _a in here) or (x, y, z) in self.house:
+                continue
+            add = []
+            if g in under_grass:
+                nb = {d for d, (dx, dy) in d8.items() if self.ground.get((x + dx, y + dy, z)) in grass}
+                if nb:
+                    add += pieces(nb, sets["grass"])
+            if g not in no_shore:
+                nb = {d for d, (dx, dy) in d8.items() if self.ground.get((x + dx, y + dy, z)) in water}
+                if nb:
+                    add += pieces(nb, sets["water"])
+            if add:
+                self.items[(x, y, z)] = [(i, b"") for i in add] + list(here)
+
     def finish(self):
         """Last steps before writing: a roof on every building at ground level (over its top storey), then complete
         every multi-piece object."""
         if not getattr(self, "_finished", False):
+            self.edge_grounds()
             for b in self.buildings:
                 if b["z"] == 7 and b.get("roof"):
                     x0, y0, w, h = b["rect"]

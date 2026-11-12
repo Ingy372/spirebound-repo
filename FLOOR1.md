@@ -98,3 +98,6 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 - Every building on the surface has a roof (red clay over white walls, dark shingle over brick and stone, straw over timber and sandstone). The game hides it when you walk inside. Roof shape and edge pieces follow Canary's hand-made map.
 - Upstairs: the Guild Hall meeting room (stairs), the Millcross Inn guest rooms (stairs), the Hunters' Hall trophy loft (ladder and trapdoor), and four two-storey Lantern Row houses on the street corners (rent 2,800 instead of 1,500; the upstairs belongs to the house).
 - Upstairs rooms in Hearthgate and Millcross count as town (safe zone).
+
+## Ground edges (2026-11-11)
+- Grass now spills softly over the edges of roads, dirt, mud, gravel, sand and paving, and every shore of the river, lake and ponds has a proper shoreline. The coastline is tidied first so there are no one-tile islands or puddles. Both edge sets were learned from Canary's hand-made map.
