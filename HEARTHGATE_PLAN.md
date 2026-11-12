@@ -116,12 +116,12 @@ The cross of the two aisles divides the floor into four rooms. They are divided 
 | **The Hearthstone** (spawn and respawn) | (56,49) | carpet crossing | `temple_hearthgate` and town 1's temple position. Keep this tile and its eight neighbours empty. |
 | Colonnade | pillars (2153) at (54,47), (59,47), (54,51), (59,51), (54,43), (59,43), (54,55), (59,55) | | |
 | Braziers | coal basins (2113) at (54,39), (59,39), (54,59), (59,59) | | beside the north and south arches |
-| **Depot, west** | x 43..54, y 39..47 | wood | lockers on the north wall at x 44, 46, 48, 50, 52 (y 39); on the west wall at (43,41), (43,43); a row facing the aisle at y 46, x 45, 47, 49, 51. Mailbox (3501) at (43,45). |
+| **Depot, west** | x 43..54, y 39..47 | wood | Tibia-style depot booths (built 2026-11-12 at Jay's request): five booths on the north wall (lockers x 44..52, y 39), and a back-to-back island of 4 + 4 booths (lockers x 46..52 at y 45 and y 46). Each locker stands on a counter, with wooden railings between booths. Mailbox (3501) at (43,44); stairs up at (43,47). The east wing mirrors it (lockers x 61..69). |
 | **Depot, east** | x 59..70, y 39..47 | wood | mirror: north wall x 61, 63, 65, 67, 69; east wall (70,41), (70,43); aisle row y 46 at x 62, 64, 66, 68. Mailbox at (70,45). |
 | **Bank and Exchange** | x 43..54, y 51..59 | black marble | counter (`S.counter`) along y 53 from x 44 to 53. Behind it at y 55: **Trader Osric** (52,55), **Banker Tolliver** (48,55), **Broker Nell** (44,55). Chests (2472, 2480) on the south wall at x 44, 47, 50, 53. Sign at (43,52). |
 | **Chapel** | x 59..70, y 51..59 | marble | altar (3515) at (65,58); carpet x 64..66, y 53..57; **Priest Odran** at (61,54); benches (2370) at (61,57) and (67,57). |
 
-That makes 22 lockers on this level. Points: `depot_hearthgate` (49,44), `hearth_bank` (48,52), `hearth_trader` (52,52), `trade_hall` (50,52).
+That makes 26 lockers on this level (10 more in booths in the gallery upstairs). Points: `depot_hearthgate` (49,42), `hearth_bank` (48,52), `hearth_trader` (52,52), `trade_hall` (50,52).
 
 **Stairs up to the gallery:** `m.stairs` at (44,45) named `hearth_west`, and at (69,52) named `hearth_east`.
 

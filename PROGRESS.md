@@ -317,3 +317,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
   - **Spire Manor:** moved to the East High Road, with a forecourt and public Spire Gardens.
   - **Houses and parks:** 30 houses in eight streets, plus Hearthgate Green, Old Well Yard and a pocket garden.
 - Two small tool changes: roofs can now wrap round a tower, and `building()` accepts an explicit doorway and extra open archways. Walked the Hearth, the gate and the manor in the client. Boot test: 95 in-game tests, 0 errors.
+
+### 2026-11-12: Hearth depots rebuilt as booths (Jay: "banks should be booths... just use what tibia uses for their dp's")
+- Copied the real Tibia depot booth from Canary's hand-made map: each locker stands on a counter, and wooden railings two tiles deep split the row into one-person booths. Players can drop items on the counters to trade across them. New map tool `depot_booths()`, so every future depot uses the same pattern.
+- The Hearth now has 26 lockers in booths on the ground floor (a wall row plus a back-to-back island in each wing) and 10 in booths in the gallery. The west stairs moved to the wing's south-west corner. Opened a locker from a booth in the real client; boot test 95 in-game tests, 0 errors.
