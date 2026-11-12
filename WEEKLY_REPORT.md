@@ -1,3 +1,48 @@
+# Update, 2026-11-12: your direction list
+
+## What's new
+- **Hearthgate is bigger and planned block by block** (112×96 tiles; it was 80×72). Nothing is wasted:
+  - ten shops along the north wall: the five old ones plus a Fletcher (arrows), Alchemist (potions), Runewright (blank runes, wands, temple scrolls), Tailor and Post Office;
+  - the Market Square, with free stalls for player trading;
+  - a Trade Hall with the market broker and market lockers;
+  - an inn with rooms upstairs, a Training Yard (the offline training statues moved here), and a Carriage Station (Coachman Ferro drives to Millcross and back for 20 gold);
+  - 22 houses, up from 14.
+- **Spire Manor:** four floors at the end of the avenue:
+  - a grand hall with display counters and an indoor fountain;
+  - a trophy gallery;
+  - private quarters;
+  - a rooftop garden with a telescope.
+  Only the shop can hand it out. `!buyhouse` refuses it. Price and resale are in Q26.
+- **Research:** `docs/RESEARCH_TOP_SERVERS_2026-11b.md` covers who is biggest now and what they all share: minigames, travel, PvP, gear, houses and premium.
+- **I played a brand-new character in your client** and fixed what I found:
+  - Guide Pell's quest offer never appeared: a client bug hides any line with keywords inside brackets.
+  - The tutorial yard showed Open PvP.
+  - New characters fought barehanded.
+  - Three tutorial rats killed my level-1 character, and they could walk out of the pen.
+  - Two confusing login lines.
+  - Wrong advice on how to attack.
+  - No healing before town.
+- **Economy:** every Floor 1 monster now drops a trade material.
+  - **Crafters:** Fletcher, Alchemist, Runewright and Tailor turn materials into things no shop sells, such as sniper arrows, piercing bolts, cheap strong potions and hunter outfit addons. So hunters need each other's loot.
+  - **Burn rates:** `ECONOMY.md` lists them for every hunting ground and vocation. The build fails if anyone loses money where they're meant to hunt.
+- **Also new:** a boosted creature of the day (+50% experience, extra loot), and the temple teleport scroll. Boot test: 93 in-game checks, all passing.
+
+## Playtest checklist (about 40 minutes)
+1. Walk Hearthgate from the north gate to the south gate. Visit the new shops, the Trade Hall, the inn upstairs, the Training Yard and the Carriage Station. Say `hi`, then `millcross`, to Coachman Ferro.
+2. As GM, go to Spire Manor (`/pos 1233, 1294, 7`) and climb all four floors to the rooftop.
+3. Make a new character, or ask me to reset Climber. Do Guide Pell's quest in the rat pen, then reach the Registrar. To attack, right-click a monster and choose Attack, or click its name in the Battle List (Ctrl+B).
+4. Say `craft` to Fletcher Tamsin, Alchemist Ivo, Runewright Mael and Tailor Quill.
+5. Buy a temple teleport scroll from the Runewright, walk out of town and use it.
+6. Read `ECONOMY.md` and tell me if any number feels wrong to you as a Tibia player.
+
+## Open questions
+Q26 (Spire Manor's price and resale) and Q27 (forge from Floor 3) are new. My recommendations are assumed until you answer.
+
+## Art and map requests
+Nothing new from you. The manor and the new shops use base sprites.
+
+---
+
 # Update, 2026-11-11 — Floor 1's map is finished (end of the map phase)
 
 ## What's new
