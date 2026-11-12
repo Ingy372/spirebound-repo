@@ -35,6 +35,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 monster.loot = {
 	{ id = 3031, chance = 85000, maxCount = 20 },
 	{ id = 268, chance = 6000, maxCount = 1 },
+	{ id = 3033, chance = 6000, maxCount = 1 },
 }
 
 monster.attacks = {

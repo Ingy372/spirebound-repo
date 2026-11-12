@@ -40,6 +40,16 @@ local function creatureSayCallback(npc, player, type, msg)
 		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
 		return true
 	end
+	if MsgContains(msg, "heal") or MsgContains(msg, "hurt") then
+		if player:getLevel() < 10 then  -- newcomers can be patched up before they reach the temple (2026-11-12 playthrough)
+			player:addHealth(player:getMaxHealth() - player:getHealth())
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+			npcHandler:say("There, good as new. Priest Odran in Hearthgate heals climbers for free until level 50.", npc, player)
+		else
+			npcHandler:say("You have outgrown my bandages. Priest Odran in the Hearthgate temple can help you.", npc, player)
+		end
+		return true
+	end
 	if SpireQuests.talk(npc, npcHandler, player, msg, npcName) then
 		return true
 	end
@@ -55,7 +65,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing. Take on my {quest} to learn to fight, or ask me about {skills}, {spells}, {gold}, {death} or where to {hunt}.")
+npcHandler:setMessage(MESSAGE_GREET, "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing. Take on my {quest} to learn to fight, ask me to {heal} you, or ask about {skills}, {spells}, {gold}, {death} or where to {hunt}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good luck, climber.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

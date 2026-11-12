@@ -1,0 +1,49 @@
+camp,levels,role,vocation,kills_h,xp_h,gold_h,loot_npc_h,materials_market_h,supplies_h,net_npc_h,net_with_trading_h
+The Ratwarren,1-4,xp,Vanguard,300,45000,525,0,0,151,374,374
+The Ratwarren,1-4,xp,Ranger (arrows),300,45000,525,0,0,1651,-1126,-1126
+The Ratwarren,1-4,xp,Ranger (spears),300,45000,525,0,0,286,239,239
+The Ratwarren,1-4,xp,Arcanist/Mystic,300,45000,525,0,0,200,325,325
+Toad Pond,3-7,xp,Vanguard,300,60750,672,0,987,152,520,1507
+Toad Pond,3-7,xp,Ranger (arrows),300,60750,672,0,987,1432,-760,227
+Toad Pond,3-7,xp,Ranger (spears),300,60750,672,0,987,267,405,1392
+Toad Pond,3-7,xp,Arcanist/Mystic,300,60750,672,0,987,201,471,1458
+Sproutling Glade,5-10,xp,Vanguard,300,84375,859,0,1665,171,687,2352
+Sproutling Glade,5-10,xp,Ranger (arrows),300,84375,859,0,1665,1532,-673,992
+Sproutling Glade,5-10,xp,Ranger (spears),300,84375,859,0,1665,294,565,2230
+Sproutling Glade,5-10,xp,Arcanist/Mystic,300,84375,859,0,1665,227,632,2297
+Waspgrass Fields,7-12,xp,Vanguard,300,150000,945,0,2000,314,631,2631
+Waspgrass Fields,7-12,xp,Ranger (arrows),300,150000,945,0,2000,1872,-927,1073
+Waspgrass Fields,7-12,xp,Ranger (spears),300,150000,945,0,2000,454,491,2491
+Waspgrass Fields,7-12,xp,Arcanist/Mystic,300,150000,945,0,2000,415,530,2530
+Boar Meadow,9-15,xp,Vanguard,264,264220,1797,0,4228,843,954,5182
+Boar Meadow,9-15,xp,Ranger (arrows),264,264220,1797,0,4228,3072,-1275,2952
+Boar Meadow,9-15,xp,Ranger (spears),264,264220,1797,0,4228,1043,753,4981
+Boar Meadow,9-15,xp,Arcanist/Mystic,264,264220,1797,0,4228,1115,682,4910
+Burrow Hills,11-16,xp,Vanguard,230,258835,2795,0,1215,1064,1731,2946
+Burrow Hills,11-16,xp,Ranger (arrows),230,258835,2795,0,1215,3703,-908,307
+Burrow Hills,11-16,xp,Ranger (spears),230,258835,2795,0,1215,1302,1494,2709
+Burrow Hills,11-16,xp,Arcanist/Mystic,230,258835,2795,0,1215,1408,1388,2603
+Wolf Copse,12-18,xp,Vanguard,265,410930,1550,0,7110,816,734,7844
+Wolf Copse,12-18,xp,Ranger (arrows),265,410930,1550,0,7110,3035,-1484,5626
+Wolf Copse,12-18,xp,Ranger (spears),265,410930,1550,0,7110,1016,534,7645
+Wolf Copse,12-18,xp,Arcanist/Mystic,265,410930,1550,0,7110,1875,-325,6785
+Thornsnap Hollow,14-20,xp,Vanguard,254,355168,2329,0,1814,1009,1320,3134
+Thornsnap Hollow,14-20,xp,Ranger (arrows),254,355168,2329,0,1814,3365,-1036,778
+Thornsnap Hollow,14-20,xp,Ranger (spears),254,355168,2329,0,1814,1221,1108,2922
+Thornsnap Hollow,14-20,xp,Arcanist/Mystic,254,355168,2329,0,1814,2096,233,2047
+Reedmarsh,14-19,money,Vanguard,232,319355,3948,0,11591,1251,2697,14289
+Reedmarsh,14-19,money,Ranger (arrows),232,319355,3948,0,11591,3864,84,11676
+Reedmarsh,14-19,money,Ranger (spears),232,319355,3948,0,11591,1486,2462,14054
+Reedmarsh,14-19,money,Arcanist/Mystic,232,319355,3948,0,11591,2352,1597,13188
+Shard Fields,17-24,xp,Vanguard,277,380769,2472,0,1246,523,1948,3194
+Shard Fields,17-24,xp,Ranger (arrows),277,380769,2472,0,1246,2600,-129,1117
+Shard Fields,17-24,xp,Ranger (spears),277,380769,2472,0,1246,710,1761,3007
+Shard Fields,17-24,xp,Arcanist/Mystic,277,380769,2472,0,1246,1523,948,2195
+The Bandit Road,19-27,money,Vanguard,237,563135,4480,548,2651,1626,3403,6054
+The Bandit Road,19-27,money,Ranger (arrows),237,563135,4480,548,2651,4187,842,3493
+The Bandit Road,19-27,money,Ranger (spears),237,563135,4480,548,2651,1857,3172,5824
+The Bandit Road,19-27,money,Arcanist/Mystic,237,563135,4480,548,2651,2861,2168,4819
+The Old Quarry,23-30,money,Vanguard,229,657839,4390,400,850,1338,3452,4302
+The Old Quarry,23-30,money,Ranger (arrows),229,657839,4390,400,850,3992,798,1648
+The Old Quarry,23-30,money,Ranger (spears),229,657839,4390,400,850,1577,3213,4063
+The Old Quarry,23-30,money,Arcanist/Mystic,229,657839,4390,400,850,2456,2334,3184

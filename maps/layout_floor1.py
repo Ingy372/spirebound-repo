@@ -584,7 +584,7 @@ def build(m):
     m.clear_items(pen[0] + 5, pen[1] + 5, Z)
     m.flag(pen[0] + 5, pen[1] + 5, 1, 1, Z, 0x0001)  # the pen's gap is a safe tile: rats can't cross it, players can
     m.fill(pen[0] + 5, pen[1] + 6, 1, 4, Z, "pave")  # little path from the gap down to the main path
-    m.monsters.append(("Field Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
+    m.monsters.append(("Pen Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
     m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
     m.sign(yx + 11, yy + 9, Z, "Stop 1: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
     m.sign(yx + 21, yy + 9, Z, "Stop 2: Sword skills and spells. The bar on the right holds your skills (Shift+1..6). Say !spells to see what you will learn. Press J for your Journal.")

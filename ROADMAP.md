@@ -183,3 +183,25 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [x] **F1.2 Floor 1 NPCs and quests.** Promotion at level 20 (Ascendant Veyra), Hunters' Hall (Brannoch, Taskmaster, Bounty Warden), Innkeeper Bess, Fisher Corwin, Guide Pell; six story quests and four side quests with a quest-log entry each. Done when: all NPCs stand in town and every quest has log lines and a real target (in-game tests).
 - [x] **F1.3 BESTIARY.md and the hunting ladder logic.** `maps/floor1_plan.py` -> map + BESTIARY.md + `!hunt` and NPC advice. Done when: tests check each level 1-40 has a ground and the advice names it.
 - [~] **F1.4 Tutorial (first version).** New characters start in the Arrival Yard with a guide, signs and a rat pen; a letter, `!guide`, `!hunt` and level-up advice. Added since: a tutorial quest from Guide Pell (First Blood: three rats) and hints at levels 2, 5, 8, 10 and 20. Still open: stop gates that need a step done, and a walked-through playtest in the real client. (R11)
+
+## Jay's direction list (2026-11-11)
+- [x] **J1 Expand Hearthgate, no wasted space.** 112x96, ten shops, Market Square, Trade Hall, inn, training yard, carriage station, 22 houses. Done when: map builds with no overlapping buildings and every named place loads (in-game tests).
+- [x] **J2 Second top-server research pass.** `docs/RESEARCH_TOP_SERVERS_2026-11b.md`.
+- [x] **J3 Spire Manor, the shop-only showcase house.** Four levels, stairs, trophy gallery, rooftop garden; only the shop hands it out. Done when: in-game test walks its stairs and checks the shop-only rule.
+- [x] **J4 Newcomer playthrough and fixes.** Played a fresh character in the real client; fixed:
+  - silent quest offers (the client crashed on keywords in brackets);
+  - the Arrival Yard showing Open PvP;
+  - the first fight barehanded;
+  - tutorial rats that could kill a level 1, and rats escaping the pen;
+  - confusing login lines;
+  - Pell's wrong attack advice and missing plural keywords;
+  - no way to heal in the yard.
+  Done when: in-game tests cover the quest talk, the yard zone and the pen gap.
+- [~] **J5 Economy.** `tools/gen_economy.py` writes ECONOMY.md (burn rates per hunting ground and vocation) and fails the build if a vocation loses money where it should hunt. Floor 1 monsters drop trade materials; crafters (Fletcher, Alchemist, Runewright, Tailor) turn them into things no shop sells. Done so far: model, materials, recipes, tests. Still open: the same for Floors 2-10 (J5b) and a playtest of crafting in the client (J5c).
+- [ ] **J5b Economy for Floors 2-10:** materials, recipes and burn-rate check per floor.
+- [ ] **J5c Crafting playtest in the client:** buy materials on the market, craft at each crafter.
+- [ ] **J6 Client defaults for newcomers:** Battle List open by default, and make sure the first chat line after switching tabs is never lost (seen twice in the playthrough). Alt+click attack does nothing in our client: either fix it or stop mentioning it.
+- [ ] **J7 Boosted creature of the day** (research pass: cheap, moves players around).
+- [ ] **J8 Temple scroll** (out of combat, cooldown) sold by the Runewright as a small gold sink.
+- [ ] **J9 Ten-minute mini events** between the big ones (snowball fight, quiz, last man standing at fixed gear).
+- [ ] **J10 Forge for Floor 3 and up** (waiting on Q27).

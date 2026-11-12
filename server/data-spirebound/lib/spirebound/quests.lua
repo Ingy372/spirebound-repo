@@ -23,9 +23,9 @@ SpireQuests = {
 			report = "Return to Miller Agna in Millcross and say 'report'.",
 			thanks = "The road's clear! You've earned the name Millhand, and 900 gold." },
 		{ id = "t1_1", floor = 1, side = true, name = "First Blood", giver = "Guide Pell", storage = 50121, killStorage = 50122,
-			target = "Field Rat", count = 3, reward = { gold = 100 },
-			offer = "Let's find out what you can do. The rat pen is just along the path: defeat three Field Rats. Ready?",
-			step = "Defeat Field Rats in the pen along the stone path: %d of %d.",
+			target = "Pen Rat", count = 3, reward = { gold = 100 },
+			offer = "Let's find out what you can do. The rat pen is just along the path: defeat three of its rats. Ready?",
+			step = "Defeat the rats in the pen along the stone path: %d of %d.",
 			report = "Return to Guide Pell at the start of the path and say 'report'.",
 			thanks = "Well fought! Here are 100 gold. Now follow the path to the Registrar. Say 'hunt' to me any time you wonder where to fight next." },
 		-- more of the Hearthgate ladder (each one sends you to the next step: see BESTIARY.md)

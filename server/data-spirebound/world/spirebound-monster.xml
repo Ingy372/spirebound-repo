@@ -1167,9 +1167,9 @@
 		<monster name="Field Shardling" x="1" y="0" z="7" spawntime="65" />
 	</monster>
 	<monster centerx="1288" centery="1341" centerz="7" radius="3">
-		<monster name="Field Rat" x="-1" y="-1" z="7" spawntime="15" />
-		<monster name="Field Rat" x="0" y="-1" z="7" spawntime="15" />
-		<monster name="Field Rat" x="1" y="-1" z="7" spawntime="15" />
+		<monster name="Pen Rat" x="-1" y="-1" z="7" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="7" spawntime="15" />
+		<monster name="Pen Rat" x="1" y="-1" z="7" spawntime="15" />
 	</monster>
 	<monster centerx="1038" centery="1066" centerz="7" radius="3">
 		<monster name="Stonehorn Ram" x="-1" y="-1" z="7" spawntime="90" />

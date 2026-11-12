@@ -38,7 +38,7 @@ local KITS = {
 	[1] = { { 3074, 1 } }, -- wand of vortex
 	[2] = { { 3066, 1 } }, -- snakebite rod
 }
-local COMMON_KIT = { { 3361, 1 }, { 3355, 1 }, { 3559, 1 }, { 3552, 1 }, { 3582, 5 }, { 266, 5 }, { 268, 5 }, { 3003, 1 }, { 3457, 1 } }
+local COMMON_KIT = { { 3361, 1 }, { 3355, 1 }, { 3559, 1 }, { 3552, 1 }, { 3582, 5 }, { 266, 5 }, { 268, 5 }, { 3003, 1 }, { 3457, 1 }, { 2920, 1 } }
 -- leather armor, leather helmet, leather legs, leather boots, ham, health/mana potions, rope, shovel
 
 local MODES = {

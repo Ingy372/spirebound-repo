@@ -48,24 +48,24 @@ NPCS = {
               ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
     "hearthgate_fletcher": dict(
         name="Fletcher Tamsin", desc="the fletcher", look=(137, 59, 63, 58, 114, 0),
-        greet="Arrows, bolts and spears, |PLAYERNAME|. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
+        greet="Arrows, bolts and spears, |PLAYERNAME|. Bring materials and I'll {craft} better ones. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
         voices=["Fresh-cut arrows!", "Bolts, a hundred at a time!"],
         shop=[("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120)]),
     "hearthgate_alchemist": dict(
         name="Alchemist Ivo", desc="the alchemist", look=(130, 0, 87, 87, 95, 0),
-        greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them. Ask for a {trade}.",
+        greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them, or bring materials and I'll {craft} strong potions cheaply. Ask for a {trade}.",
         voices=["Health and mana, bottled!", "I buy empty flasks!"],
         shop=[("health potion", 266, 45, None), ("mana potion", 268, 50, None), ("strong health potion", 236, 100, None),
               ("strong mana potion", 237, 93, None), ("great health potion", 239, 190, None), ("great mana potion", 238, 144, None),
               ("empty potion flask", 283, None, 5), ("empty potion flask", 284, None, 5), ("empty potion flask", 285, None, 5)]),
     "hearthgate_runewright": dict(
         name="Runewright Mael", desc="the runewright", look=(130, 76, 94, 94, 114, 0),
-        greet="Blank runes for your conjuring, |PLAYERNAME|, and wands and rods for those who need one. Ask for a {trade}.",
+        greet="Blank runes for your conjuring, |PLAYERNAME|, made cheaper if you bring gems to {craft} with, and wands and rods for those who need one. Ask for a {trade}.",
         voices=["Blank runes! Ready for your spells!"],
         shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
     "hearthgate_tailor": dict(
         name="Tailor Quill", desc="the tailor", look=(128, 95, 113, 114, 76, 0),
-        greet="Good cloth for the climb, |PLAYERNAME|, and strong bags to carry your loot home. Ask for a {trade}.",
+        greet="Good cloth for the climb, |PLAYERNAME|, and strong bags to carry your loot home. Bring furs and cloth and I'll {craft} you a hunter's outfit. Ask for a {trade}.",
         voices=["Bags! Backpacks! Sturdy and cheap!"],
         shop=[("bag", 2853, 4, None), ("backpack", 2854, 20, None), ("jacket", 3561, 12, 1), ("coat", 3562, 30, 3),
               ("leather legs", 3559, 15, 3)]),
@@ -294,6 +294,9 @@ def render(d):
     elif d.get("shop"):
         callbacks = ("npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\n"
                      "npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)\n"
+                     "\tif SpireCraft and SpireCraft.talk(npc, npcHandler, player, msg, npcConfig.name) then\n"
+                     "\t\treturn false\n"
+                     "\tend\n"
                      "\tif SpireHunt and MsgContains(msg, \"hunt\") then\n"
                      "\t\tnpcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)\n"
                      "\t\treturn false\n"

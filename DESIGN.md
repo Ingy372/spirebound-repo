@@ -453,6 +453,8 @@ Every floor has story quests and side quests. Every quest has a quest-log entry 
 
 - Gold / platinum / crystal coins. Gold enters from monster loot, quests, secrets sold to the broker, fishing. Gold leaves through: blessings, rent, travel fees, NPC supplies, guild/war fees, Fortune Hall cut, skull fines, repair costs **(Claude's call on sink list)**.
 - Market in every town depot (Canary's built-in market).
+- **Trade materials and crafting (Claude's call, Jay can veto; 2026-11-12):** every monster drops a material (honeycomb, wolf paw, turtle shell, rope belt...). NPCs pay almost nothing for materials, but town crafters turn them plus a fee into things no shop sells (sniper arrows, piercing bolts, outfit addons) or into supplies cheaper than the shop price. That is what makes hunters trade with each other. NPCs buy gear back at about a fifth of its price, so selling to players always pays more.
+- **Burn-rate check:** `tools/gen_economy.py` models gold in and supplies out for every hunting ground and vocation and writes ECONOMY.md. The build fails if a vocation loses money where it is meant to hunt, or if a recipe isn't worth crafting.
 - Numbers come from generated tables (`data/`, produced by `tools/gen_tables.py`), with an economy check that fails loudly if prices make no sense.
 
 ---

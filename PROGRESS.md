@@ -283,3 +283,14 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
   Stairs join every level. It is house 99 and 1 of 1 on the server.
 - Only the shop can hand it out: a new "house" kind in the catalog, and !buyhouse refuses it. Price and resale are in Q26 (assumed: placeholder 5,000 coins, not resellable).
 - Fixed: big objects inside houses (beds, fountains) were being removed, and an upstairs floor could cover the stair hole from below. New test covers the manor's four levels, its stairs and the shop-only rule. Boot test: 88 in-game tests, 0 errors.
+
+### 2026-11-12 — Newcomer playthrough, the holes it found, and the economy (Jay's direction list, steps 4-5)
+- Played a fresh character in your client from the Arrival Yard. Found and fixed:
+  - Guide Pell's quest offer never showed: the client crashes drawing keywords inside brackets.
+  - The yard showed Open PvP: a variable got overwritten.
+  - The first fight was barehanded; new characters now get a practice club.
+  - Three tutorial rats killed the character at level 1; there are now weak Pen Rats, and they can't leave the pen.
+  - Canary's "joker tokens" and empty "boosted boss" login lines are gone.
+  - Pell's attack advice and his plural keywords were wrong.
+  - There was no healing before town; Pell now heals below level 10.
+- Economy: Floor 1 monsters drop trade materials, and seven crafting recipes turn them into things no shop sells. `tools/gen_economy.py` writes ECONOMY.md with burn rates for each of the 12 hunting grounds and 4 vocations, and fails the build if a vocation loses money. It caught moles too poor for arrow-using rangers, which are now fixed. Boot test: 91 in-game tests, 0 errors.

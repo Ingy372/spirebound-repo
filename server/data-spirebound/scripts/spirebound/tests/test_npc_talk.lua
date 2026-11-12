@@ -32,3 +32,26 @@ SpireTest.add("newcomer: the Arrival Yard is guarded, the rat pen gap keeps rats
 	local gap = Tile(Position(pen.x, pen.y + 1, pen.z))
 	SpireTest.eq(gap ~= nil and gap:hasFlag(TILESTATE_PROTECTIONZONE), true, "pen gap is a safe tile monsters can't cross")
 end)
+
+SpireTest.add("economy: crafting recipes are real, need materials and gold, and the crafters know them", function()
+	SpireTest.eq(#SpireCraft.recipes >= 7, true, "recipes loaded")
+	for _, r in ipairs(SpireCraft.recipes) do
+		if not r.addon then
+			SpireTest.eq(ItemType(r.item):getId() ~= 0, true, r.name .. " is a real item")
+		end
+		for _, need in ipairs(r.needs) do
+			SpireTest.eq(ItemType(need[1]):getId() ~= 0, true, r.name .. ": material " .. need[1] .. " is a real item")
+		end
+	end
+	local r = SpireCraft.forNpc("Fletcher Tamsin")[1]
+	local none = function() return 0 end
+	local plenty = function() return 99 end
+	SpireTest.eq(#SpireCraft.missing(r, none, 0) > 0, true, "nothing in the bag: something is missing")
+	SpireTest.eq(#SpireCraft.missing(r, plenty, 10000), 0, "materials and gold: nothing missing")
+	SpireTest.eq(#SpireCraft.missing(r, plenty, 0), 1, "only the fee is missing")
+	local said
+	local handler = { say = function(_, text) said = text end }
+	SpireTest.eq(SpireCraft.talk(nil, handler, nil, "craft", "Fletcher Tamsin"), true, "the Fletcher answers 'craft'")
+	SpireTest.eq(said:find("sniper arrows", 1, true) ~= nil, true, "and lists sniper arrows")
+	SpireTest.eq(SpireCraft.talk(nil, handler, nil, "craft", "Priest Odran"), false, "the priest crafts nothing")
+end)
