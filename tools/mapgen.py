@@ -179,7 +179,7 @@ class Map:
         return door
 
     def house_building(self, hid, name, x0, y0, w, h, z, town, rent, door_side="s", style="brick", floor="wood"):
-        door = self.building(x0, y0, w, h, z, floor=floor, door_side=door_side, style=style)
+        door = self.building(x0, y0, w, h, z, floor=floor, door_side=door_side, style=style, doors=True)
         tiles = []
         for y in range(y0 + 1, y0 + h - 1):
             for x in range(x0 + 1, x0 + w - 1):
@@ -211,6 +211,8 @@ class Map:
                 for e in range(width):
                     pass
             p = (x, y, z)
+            if any(i in WALL_IDS for i, _a in self.items.get(p, [])):
+                return                      # a road never eats a building's wall or door
             if p in self.ground:
                 self.ground[p] = 408 if self.ground[p] in (4597, 4609, 4610) else self.pick(key)
                 self.clear_items(*p)

@@ -237,3 +237,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - Built two tools so the map can be designed by eye: `tools/spriteview.py` (decodes the client's sprite sheets and appearances file; contact sheets of item ids) and `tools/maprender.py` (draws the real map with the real sprites). First pieces of roadmap 6.4. Outputs stay in `.local/scratch/` (CipSoft art, never committed).
 - Rebuilt how the map looks: six wall families with windows, doors and closed corners; furnished shops and halls; a stone city wall with pillars; a marble plaza with statues, lamps, trees and stalls; a winding river with bridges; winding roads; forests, lakes, ruins and standing stones; a distinct look for each of the twelve hunting grounds. Fixed a bug where the old east-west road ran through the temple.
 - Boot test: 82 in-game tests, 0 errors, 0 map warnings. `CLAUDE.md` map rule updated: Claude builds the real maps; Cowork polishes later. Not yet seen in the real client.
+
+### 2026-11-11 — Fixed missing walls on the cabins; Floor 1 plan picture (from Jay's screenshot)
+- Cause of the holes: the little lane roads beside the Wallside Cabins were drawn after the cabins and erased their north walls and doors. Roads now never erase walls or doors, and every house now has a visible open door in its doorway.
+- Added `docs/FLOOR1_PLAN.png` (made by `tools/plan_image.py`): the labelled Floor 1 plan, hunting grounds by level range. Boot test: 82 in-game tests, 0 errors.

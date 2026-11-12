@@ -313,8 +313,8 @@ def build(m):
                 S.prop(m, hx + 5, hy - 1, Z, rng.choice([2519, 116]))
                 hid += 1
         lane0 = x_start - 2
-        m.road((lane0, ty + 39), (lane0 + 43, ty + 39), Z, width=2)
-        m.road((lane0, ty + 48), (lane0 + 43, ty + 48), Z, width=2)
+        m.road((lane0, ty + 39), (lane0 + 43, ty + 39), Z, width=2, wind=False)
+        m.road((lane0, ty + 48), (lane0 + 43, ty + 48), Z, width=2, wind=False)
     fisher = []
     for col_x in (X0 + 134, X0 + 146):
         for j in range(5):
