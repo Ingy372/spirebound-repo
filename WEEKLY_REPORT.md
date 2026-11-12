@@ -1,3 +1,36 @@
+# Update, 2026-11-11 — Floor 1's map is finished (end of the map phase)
+
+## What's new
+- **I'm the mapper now, with real tools.** I can draw the map with the game's own art and check it in your client. I learned Tibia's building rules from Canary's hand-made map, so they now apply automatically to every map, on every floor: wall corners, doors, whole objects, roofs, stairs, ladders, ground edges, shorelines and caves. The rules are written into `CLAUDE.md`.
+- **Hearthgate and Millcross:** clean wall corners, matching doors, roofs on every building, and whole fountains and benches. The Guild Hall, the Millcross Inn and four corner houses on Lantern Row have an upstairs (the corner houses now rent for 2,800). The Hunters' Hall has a ladder up to a trophy loft.
+- **The land:** soft grass edges on every road and patch, shorelines on the river, the lake and the ponds, and whole boulders.
+- **Dungeons:** each special area is furnished, with lamps and torches on the walls and nothing that blocks a spawn or an entrance:
+  - the Pass;
+  - the labyrinth (a different floor on each level);
+  - the Axe-Lord's throne hall;
+  - the Old Watchtower and its natural cave;
+  - the Underkeep;
+  - the Arena;
+  - the Siege keep.
+- **Tests:** 87 in-game checks pass. New ones walk a character up real stairs and check that every landing and entrance stays walkable.
+
+## Playtest checklist (about 30 minutes)
+1. Walk around Hearthgate. Look at the corners, the doors and the roofs (they vanish when you go inside), and the plaza fountain and benches.
+2. In the Guild Hall, walk up the stairs at the east end and back down. In the Hunters' Hall, right-click the ladder's own tile and choose Use to climb, then walk onto the trapdoor to come back down.
+3. Visit a corner house on Lantern Row and go upstairs.
+4. Walk along the river west of town and look at the shoreline and the bridge.
+5. As GM, jump to the special areas: `/pos 1230, 1080, 7` (the Pass), `/pos 1229, 1030, 4` (the Axe-Lord's hall), `/pos 1052, 1060, 7` (the Old Watchtower), `/pos 1040, 1040, 8` (its cave), `/pos 1194, 1264, 8` (the Underkeep).
+6. Tell me anything that looks unfinished or odd. A screenshot is perfect.
+
+## Open questions
+No new ones. Q13–Q25 in `QUESTIONS.md` still have my recommendations assumed.
+
+## Art and map requests
+- **Map:** none needed from you. Floors 2–10 are still placeholders, and I'll build them with the same tools when we get there. Cowork's finishing polish can come later.
+- **Art:** nothing new (see `ART_REQUESTS.md`).
+
+---
+
 # Update, 2026-11-10 (overnight session)
 
 ## What's new since the last report
