@@ -262,3 +262,14 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-11 — Floor 1 finished: the Pass, labyrinth, boss hall, watchtower, cave, Underkeep, Arena and Siege keep dressed (Jay: "finish Floor 1")
 - New `maps/dungeon.py`: natural caves (cave walls learned from Canary's map), wall lamps/torches/chains on the right walls, and decoration that can never block spawns, teleports, doors or corridors. Every special area on Floor 1 now has its own look (see FLOOR1.md).
 - New in-game test: every landing, start and entrance stays walkable. Checked the boss hall and the cave in the client. Boot test: 87 in-game tests, 0 errors.
+
+### 2026-11-11 — Hearthgate expanded and re-planned; second top-server research pass (Jay's direction list, steps 1-2)
+- Hearthgate grew from 80x72 to 112x96 with every block used. The layout:
+  - ten shops along the north wall: five new (Fletcher, Alchemist, Runewright, Tailor, Post Office) plus the five old;
+  - the Market Square, with free stalls for player trading;
+  - the temple between the depot and a new Trade Hall (west) and the workshop and Hunters' Hall (east);
+  - a high road gate to gate;
+  - the inn (rooms upstairs), a Training Yard (the offline statues moved here), a plot for Spire Manor, and a Carriage Station (Coachman Ferro to Millcross, Coachwoman Dara back);
+  - 22 houses (was 14).
+  Camps, cabins, the Arrival Yard and the standing stones moved to fit around the bigger walls.
+- `docs/RESEARCH_TOP_SERVERS_2026-11b.md`: who is biggest now (RubinOT, Best-Baiak, Streamy, Miracle, Ezodus) and the patterns in minigames, travel, PvP, gear, houses and premium, with what we have and what we are missing. Boot test: 87 in-game tests, 0 errors.

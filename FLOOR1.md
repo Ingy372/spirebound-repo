@@ -109,3 +109,12 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 - **The Old Watchtower:** an overgrown courtyard with broken masonry around a paved keep with braziers and wall torches; the rope spot hides behind rubble. Its cave below is now a natural cave (rock walls, stalagmites, crystals, bones).
 - **The Underkeep:** pale stone halls with lamps, a storeroom by the entrance, braziers in the column hall, cobwebs and bones; the strongbox room has a carpet. Wings 2-6 get pillars, braziers and clutter.
 - **The Arena:** a sand floor with flagstone ends, red and blue team pads, braziers and torches. **The Siege keep:** a grassy courtyard with paved roads from the four gates to a white keep with a red cross carpet and a throne.
+
+## Hearthgate, redesigned (2026-11-11, Jay: "i want the town expanded ... dont waste much space")
+112 x 96 tiles. North to south:
+- **North wall:** ten shops. West of the avenue: General Store, Weaponsmith, Armorer, Fletcher, Alchemist. East: Runewright, Quartermaster, Tailor, Bank, Post Office.
+- **Market Square:** fountain, Monument, benches, eight free trading stalls. The Ascendancy is west of it, the Guild Hall (meeting room upstairs) east.
+- **Temple block:** depot and Trade Hall (Broker Nell, market lockers) | temple | Housewright's workshop and Hunters' Hall (trophy loft by ladder).
+- **High road:** west gate to east gate.
+- **South of the high road:** the Lantern & Lark inn (rooms upstairs), the Training Yard (offline training statues, practice posts), Spire Manor (the showcase house) closing the avenue, and the Carriage Station.
+- **South wall:** two streets of houses, 22 in all (8 with an upstairs).

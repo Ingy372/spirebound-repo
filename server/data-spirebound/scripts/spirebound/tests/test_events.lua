@@ -29,12 +29,15 @@ SpireTest.add("events: a GM-started event spawns and the fishing luck applies", 
 end)
 
 SpireTest.add("offline training statues and livestream are available", function()
-	local t = Tile(Position(WorldPoints.temple_hearthgate.x - 7, WorldPoints.temple_hearthgate.y - 6, 7))
+	-- the statues stand in the Training Yard (town redesign, 2026-11-11)
+	local yard = WorldPoints.training_yard
 	local found = false
-	for dx = -10, 10 do
-		local tile = Tile(Position(WorldPoints.temple_hearthgate.x + dx, WorldPoints.temple_hearthgate.y - 6, 7))
-		if tile and tile:getItemById(16198) then found = true end
+	for dx = -12, 12 do
+		for dy = -6, 0 do
+			local tile = Tile(Position(yard.x + dx, yard.y + dy, yard.z))
+			if tile and tile:getItemById(16198) then found = true end
+		end
 	end
-	SpireTest.eq(found, true, "sword training statue in the Hearthgate temple")
+	SpireTest.eq(found, true, "sword training statue in the Hearthgate Training Yard")
 	SpireTest.eq(configManager.getFloat(configKeys.LIVESTREAM_EXPERIENCE_MULTIPLIER), 1.0, "no XP bonus for streaming")
 end)

@@ -135,167 +135,237 @@ def build(m):
     for c in CAMPS:
         camp(c)
 
-    # ------------------------------------------------ Hearthgate: a compact walled city (80 x 72)
-    # Plan (x across, y down):  shop row along the north wall, a plaza in front of the temple, depot and workshop
-    # either side of the temple, two streets of houses to the south. Every service is within about 30 steps of the temple.
+    # ------------------------------------------------ Hearthgate: the walled city (112 x 96), redesigned 2026-11-11
+    # Plan (x across, y down; drawn in FLOOR1.md). Every block is a building, a street or a square; nothing is left over.
+    #   y  2-10  ten shops along the north wall, five either side of the north avenue
+    #   y 14-28  the Market Square, the Ascendancy west of it, the Guild Hall east
+    #   y 30-45  depot and Trade Hall | the temple | workshop and Hunters' Hall
+    #   y 47-51  the high road, west gate to east gate
+    #   y 53-68  the inn, the training yard, Spire Manor (the showcase house) and the carriage station
+    #   y 72-90  two streets of houses along the south wall (22 houses); the avenue runs on to the south gate
     tx, ty, tw, th = X0 + TOWN["x"], Y0 + TOWN["y"], TOWN["w"], TOWN["h"]
     m.fill(tx, ty, tw, th, Z, "cobble")
     for x in range(tx, tx + tw):
         for y in range(ty, ty + th):
             m.clear_items(x, y, Z)
-    # gates as wide as what runs through them: the north and south avenues are 4 tiles, the east and west roads 3
     gates = {(tx + tw // 2 + d, ty) for d in (-1, 0, 1, 2)} | {(tx + tw // 2 + d, ty + th - 1) for d in (-1, 0, 1, 2)}
     gates |= {(tx, ty + th // 2 + d) for d in (0, 1, 2)} | {(tx + tw - 1, ty + th // 2 + d) for d in (0, 1, 2)}
     m.walls(tx, ty, tw, th, Z, gaps=gates, style="pale")          # pale stone: stands out against the grey streets
     m.flag(tx + 1, ty + 1, tw - 2, th - 2, Z, 0x0001)  # whole town is a safe zone (DESIGN 6.2)
     gate_n = (tx + tw // 2, ty)
-    # paving: the plaza in dark flagstone with a marble border, avenues north and south in flagstone
-    for y in range(ty + 14, ty + 26):
-        for x in range(tx + 18, tx + 62):
-            m.ground[(x, y, Z)] = 409 if (18 < x - tx < 61 and 14 < y - ty < 25) else 416
-    for y in list(range(ty + 1, ty + 14)) + list(range(ty + 40, ty + th - 1)):
-        for x in range(tx + 39, tx + 43):
-            if (x, y, Z) not in m.items:
-                m.ground[(x, y, Z)] = 409
 
-    # temple (centre, door to the north plaza)
-    tpx, tpy = tx + 30, ty + 26
-    claim("temple", tpx, tpy, 20, 14)
-    m.building(tpx, tpy, 20, 14, Z, floor="marble", door_side="n", style="white", doors=True)
-    temple = (tpx + 10, tpy + 7, Z)
-    S.carpet(m, tpx + 9, tpy + 1, 2, 12, Z, 2576)
+    def R(x, y):
+        return tx + x, ty + y
+
+    # paving: marble avenues north and south, the flagstone high road east-west, the Market Square
+    for y in list(range(1, 14)) + list(range(45, 53)) + list(range(69, 95)):   # (Spire Manor ends the avenue's middle)
+        for x in range(55, 59):
+            m.ground[(tx + x, ty + y, Z)] = 409
+    for y in range(47, 52):
+        for x in range(1, 111):
+            m.ground[(tx + x, ty + y, Z)] = 416
+    for y in range(14, 29):
+        for x in range(20, 92):
+            m.ground[(tx + x, ty + y, Z)] = 409 if (20 < x < 91 and 14 < y < 28) else 416
+
+    # ---- the shop row along the north wall (9 x 9 each, door south, NPC behind the counter)
+    shops = [("General Store", 2, "Merchant Wenna", "brick", "general"), ("Weaponsmith", 12, "Weaponsmith Garrick", "brick", "weapons"),
+             ("Armorer", 22, "Armorer Hesta", "brick", "armor"), ("Fletcher", 32, "Fletcher Tamsin", "timber", "fletcher"),
+             ("Alchemist", 42, "Alchemist Ivo", "sand", "alchemist"),
+             ("Runewright", 61, "Runewright Mael", "stone", "runes"), ("Quartermaster's Stores", 71, "Quartermaster Bryn", "brick", "general"),
+             ("Tailor", 81, "Tailor Quill", "timber", "tailor"), ("Bank", 91, "Banker Tolliver", "white", "bank"),
+             ("Post Office", 101, "Postmaster Hobb", "sand", "post")]
+    for name, rx, npc, style, kind in shops:
+        sx, sy = tx + rx, ty + 2
+        claim(name, sx, sy, 9, 9)
+        m.building(sx, sy, 9, 9, Z, floor="marble" if kind == "bank" else "wood", door_side="s", style=style, doors=True)
+        m.sign(sx + 3, sy + 9, Z, name)
+        S.prop(m, sx + 1, sy + 9, Z, 316)
+        S.prop(m, sx + 7, sy + 9, Z, 321)
+        m.points["shop_" + name.lower().replace("'", "").replace(" ", "_")] = (sx + 4, sy + 5, Z)
+        m.npcs.append((npc, (sx + 4, sy + 3, Z)))
+        if kind != "post":
+            S.counter(m, sx + 1, sy + 4, 7, Z)
+        props = {"general": ((1, 1, 2519), (2, 1, 2523), (6, 1, 116), (7, 1, 117), (7, 3, 2523)),
+                 "weapons": ((1, 2, 3458), (6, 1, 116), (7, 1, 118), (7, 3, 2472)),
+                 "armor": ((1, 1, 2429), (6, 1, 2429), (7, 3, 2480), (1, 3, 2472)),
+                 "fletcher": ((1, 1, 2519), (7, 1, 116), (7, 3, 2523)),
+                 "alchemist": ((1, 1, 2472), (7, 1, 2472), (1, 3, 2480)),
+                 "runes": ((1, 1, 2480), (7, 1, 2480), (7, 3, 2472)),
+                 "tailor": ((1, 1, 2429), (7, 1, 2429), (1, 3, 2480)),
+                 "bank": ((1, 1, 2480), (7, 1, 2480)),
+                 "post": ((1, 6, 3501), (7, 6, 3501), (1, 1, 2523), (7, 1, 2523))}[kind]
+        for px, py, pid in props:
+            S.prop(m, sx + px, sy + py, Z, pid)
+        if kind == "bank":
+            S.carpet(m, sx + 2, sy + 5, 5, 3, Z, 5572)
+    m.npcs.append(("Captain Dorrow", R(59, 3) + (Z,)))
+
+    # ---- the Market Square (x 20-91, y 14-28): fountain, the Monument, benches, trees, and stalls where players trade
+    m.put(*R(38, 21), Z, 1922)
+    for bx_, by_ in ((35, 18), (39, 18), (35, 24), (39, 24)):
+        S.prop(m, *R(bx_, by_), Z, 2370)
+    S.prop(m, *R(72, 21), Z, HERO_STATUE)
+    S.prop(m, *R(47, 21), Z, ANGEL_STATUE)
+    m.sign(*R(72, 24), Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
+    m.points["monument"] = R(72, 23) + (Z,)
+    m.sign(*R(57, 15), Z, "Hearthgate. Shops along the north wall; the temple, depot and Trade Hall south of this square; "
+           "the inn, training yard and carriages past the high road; houses by the south wall. Say !guide for your first steps.")
+    for px, py in ((22, 16), (89, 16), (22, 26), (89, 26)):
+        S.prop(m, *R(px, py), Z, 3619)
+    for k, sx_ in enumerate((26, 31, 79, 84)):           # four open stalls: counters players can stand behind to trade
+        S.counter(m, *R(sx_, 16), 3, Z)
+        S.prop(m, *R(sx_, 15), Z, (2519, 116, 2523, 117)[k])
+    for sx_ in (26, 31, 79, 84):
+        S.counter(m, *R(sx_, 26), 3, Z)
+    m.sign(*R(30, 21), Z, "The Market Square. Stalls are free: stand behind one and trade with other climbers. "
+           "For lasting offers use the market in the Trade Hall or any depot.")
+    m.npcs.append(("Vesper", R(66, 25) + (Z,)))
+    lamps = [(54, 15), (59, 15), (54, 27), (59, 27), (24, 21), (88, 21), (54, 5), (59, 5), (54, 12), (59, 12),
+             (54, 46), (59, 46), (54, 75), (59, 75), (54, 90), (59, 90), (10, 46), (30, 46), (80, 46), (100, 46)]
+    for px, py in lamps:
+        S.lamp(m, *R(px, py), Z)
+
+    # ---- the Ascendancy (west of the square) and the Guild Hall (east, with a meeting room upstairs)
+    claim("ascendancy", *R(3, 15), 15, 11)
+    m.building(*R(3, 15), 15, 11, Z, floor="marble", door_side="e", style="sand", doors=True)
+    S.carpet(m, *R(5, 19), 10, 3, Z, 2576)
+    for px, py in ((5, 17), (14, 17), (5, 23), (14, 23)):
+        S.prop(m, *R(px, py), Z, MARBLE_PILLAR)
+    m.sign(*R(19, 19), Z, "The Ascendancy. Climbers of level 20 and above may be promoted here.")
+    m.npcs.append(("Ascendant Veyra", R(9, 20) + (Z,)))
+    gx_, gy_ = R(94, 15)
+    claim("guildhall", gx_, gy_, 15, 11)
+    m.building(gx_, gy_, 15, 11, Z, floor="wood", door_side="w", style="timber", doors=True)
+    S.carpet(m, gx_ + 2, gy_ + 2, 10, 7, Z, 5572)
+    S.prop(m, gx_ + 10, gy_ + 1, Z, 2322)
+    S.prop(m, gx_ + 11, gy_ + 1, Z, 2358)
+    m.sign(gx_ - 1, gy_ + 3, Z, "Guild Hall. Found a guild, read the recruiting board.")
+    m.npcs.append(("Guildwarden Sela", (gx_ + 7, gy_ + 5, Z)))
+    m.storey(gx_, gy_, 15, 11, Z - 1, floor="wood", style="timber")
+    m.stairs(gx_ + 13, gy_ + 3, Z, name="guild_hall")
+    S.carpet(m, gx_ + 2, gy_ + 3, 9, 5, Z - 1, 5572)
+    for px in (3, 5, 7, 9):
+        S.prop(m, gx_ + px, gy_ + 5, Z - 1, 2322)
+        S.prop(m, gx_ + px, gy_ + 6, Z - 1, 2358)
+
+    # ---- the temple (centre), with the depot and Trade Hall west and the workshop and Hunters' Hall east
+    tpx, tpy = R(46, 30)
+    claim("temple", tpx, tpy, 21, 15)
+    m.building(tpx, tpy, 21, 15, Z, floor="marble", door_side="n", style="white", doors=True)
+    temple = (tpx + 10, tpy + 8, Z)
+    S.carpet(m, tpx + 9, tpy + 1, 3, 13, Z, 2576)
     m.put(tpx + 10, tpy + 3, Z, 3515)  # altar
-    for px, py in ((tpx + 3, tpy + 5), (tpx + 16, tpy + 5), (tpx + 3, tpy + 10), (tpx + 16, tpy + 10)):
+    for px, py in ((tpx + 3, tpy + 5), (tpx + 17, tpy + 5), (tpx + 3, tpy + 11), (tpx + 17, tpy + 11)):
         S.prop(m, px, py, Z, MARBLE_PILLAR)
     m.towns.append((1, "Hearthgate", temple))
     m.points["temple_hearthgate"] = temple
     m.npcs.append(("Priest Odran", (tpx + 14, tpy + 5, Z)))
     m.sign(tpx + 12, tpy - 1, Z, "Hearthgate Temple. Priest Odran heals the wounded and sells blessings.")
-    # offline training statues (sword, axe, club, distance, magic): use one to log out and train slowly
-    for i, sid in enumerate(range(16198, 16203)):
-        m.put(tpx + 3 + i * 3, tpy + 1, Z, sid)
-    m.sign(tpx + 17, tpy + 1, Z, "Offline training: use a statue to log out and train that skill slowly while you're away.")
 
-    # plaza (x 18..61, y 14..25): fountain, the Monument (a hero statue), trees, lamps, benches, market stalls
-    m.put(tx + 28, ty + 19, Z, 1922)
-    S.prop(m, tx + 52, ty + 19, Z, HERO_STATUE)
-    S.prop(m, tx + 34, ty + 19, Z, ANGEL_STATUE)
-    m.sign(tx + 52, ty + 22, Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
-    m.points["monument"] = (tx + 52, ty + 21, Z)
-    m.sign(tx + 40, ty + 14, Z, "Hearthgate. Shops to the north, the Ascendancy west, the Guild Hall east, the depot and workshop beside the temple, houses south. Say !guide for your first steps.")
-    for px, py in ((tx + 20, ty + 16), (tx + 59, ty + 16), (tx + 20, ty + 24), (tx + 59, ty + 24)):
-        S.prop(m, px, py, Z, 3619)
-    for px, py in ((tx + 36, ty + 15), (tx + 45, ty + 15), (tx + 36, ty + 24), (tx + 45, ty + 24), (tx + 25, ty + 21), (tx + 55, ty + 21),
-                   (tx + 38, ty + 5), (tx + 43, ty + 5), (tx + 38, ty + 30), (tx + 43, ty + 30), (tx + 38, ty + 44), (tx + 43, ty + 44),
-                   (tx + 38, ty + 62), (tx + 43, ty + 62)):
-        S.lamp(m, px, py, Z)
-    for px, py, b in ((tx + 26, ty + 22, 2370), (tx + 30, ty + 22, 2370), (tx + 26, ty + 17, 2370), (tx + 30, ty + 17, 2370)):
-        S.prop(m, px, py, Z, b)
-    for sx in (tx + 22, tx + 56):                        # two market stalls: counter, barrels, crates behind
-        S.counter(m, sx, ty + 17, 3, Z)
-        S.prop(m, sx, ty + 16, Z, 2519)
-        S.prop(m, sx + 2, ty + 16, Z, 116)
-    m.npcs.append(("Vesper", (tx + 57, ty + 22, Z)))
-    m.npcs.append(("Captain Dorrow", (tx + 43, ty + 2, Z)))
+    dx, dy = R(2, 31)
+    claim("depot", dx, dy, 17, 12)
+    m.building(dx, dy, 17, 12, Z, floor="wood", door_side="e", style="brick", doors=True)
+    for i in range(5):
+        m.depot(dx + 2 + i * 3, dy + 1, Z, 1)
+    m.put(dx + 15, dy + 10, Z, 3501)  # mailbox
+    S.carpet(m, dx + 2, dy + 4, 13, 4, Z, 2576)
+    m.sign(dx + 17, dy + 4, Z, "Hearthgate Depot")
+    m.points["depot_hearthgate"] = (dx + 8, dy + 6, Z)
+    hx_, hy_ = R(21, 30)
+    claim("trade hall", hx_, hy_, 22, 15)
+    m.building(hx_, hy_, 22, 15, Z, floor="marble", door_side="n", style="white", doors=True)
+    for k in range(3):                                    # broker's counters and the market lockers
+        S.counter(m, hx_ + 2 + k * 6, hy_ + 5, 4, Z)
+    for i in range(5):
+        m.depot(hx_ + 3 + i * 4, hy_ + 12, Z, 1)
+    S.carpet(m, hx_ + 2, hy_ + 7, 18, 3, Z, 5572)
+    m.sign(hx_ + 12, hy_ - 1, Z, "The Trade Hall. Broker Nell keeps the market: post offers, buy from other climbers, any time.")
+    m.npcs.append(("Broker Nell", (hx_ + 11, hy_ + 3, Z)))
+    m.points["trade_hall"] = (hx_ + 11, hy_ + 8, Z)
 
-    # shop row along the north wall (door south, sign in front). NPC stands behind the counter.
-    shops = [("General Store", 3, "Merchant Wenna", "brick", "general"), ("Weaponsmith", 15, "Weaponsmith Garrick", "brick", "weapons"),
-             ("Armorer", 27, "Armorer Hesta", "brick", "armor"), ("Quartermaster's Stores", 45, "Quartermaster Bryn", "brick", "general"),
-             ("Bank", 57, "Banker Tolliver", "white", "bank"), ("Hunters' Hall", 68, "Taskmaster Ren", "stone", "hall")]
-    for name, rx, npc, style, kind in shops:
-        sx, sy = tx + rx, ty + 4
-        claim(name, sx, sy, 10, 9)
-        m.building(sx, sy, 10, 9, Z, floor="wood" if kind != "bank" else "marble", door_side="s", style=style, doors=True)
-        m.sign(sx + 5, sy + 9, Z, name)
-        S.prop(m, sx + 4, sy + 10, Z, 316)
-        S.prop(m, sx + 6, sy + 10, Z, 321)
-        m.points["shop_" + name.lower().replace("'", "").replace(" ", "_")] = (sx + 5, sy + 4, Z)
-        m.npcs.append((npc, (sx + 5, sy + 3, Z)))
-        if kind in ("general", "weapons", "armor", "bank"):
-            S.counter(m, sx + 1, sy + 4, 8, Z)
-        if kind == "general":
-            for px, pid in ((1, 2519), (2, 2523), (7, 116), (8, 117)):
-                S.prop(m, sx + px, sy + 1, Z, pid)
-            S.prop(m, sx + 8, sy + 3, Z, 2523)
-        elif kind == "weapons":
-            S.prop(m, sx + 2, sy + 2, Z, 3458)
-            S.prop(m, sx + 7, sy + 1, Z, 116)
-            S.prop(m, sx + 8, sy + 1, Z, 118)
-            S.prop(m, sx + 8, sy + 3, Z, 2472)
-        elif kind == "armor":
-            S.prop(m, sx + 2, sy + 1, Z, 2429)
-            S.prop(m, sx + 7, sy + 1, Z, 2429)
-            S.prop(m, sx + 8, sy + 3, Z, 2480)
-            S.prop(m, sx + 1, sy + 3, Z, 2472)
-        elif kind == "bank":
-            S.carpet(m, sx + 2, sy + 5, 6, 3, Z, 5572)
-            S.prop(m, sx + 1, sy + 1, Z, 2480)
-            S.prop(m, sx + 8, sy + 1, Z, 2480)
-        elif kind == "hall":
-            S.carpet(m, sx + 2, sy + 5, 6, 3, Z, 2576)
-            S.prop(m, sx + 1, sy + 6, Z, 2033)
-            S.prop(m, sx + 8, sy + 6, Z, 2030)
-            S.prop(m, sx + 2, sy + 1, Z, 2322)
-            S.prop(m, sx + 1, sy + 1, Z, 2358)
-    m.npcs.append(("Bounty Warden Cass", (tx + 71, ty + 9, Z)))   # inside the Hunters' Hall
-    # the Hunters' Hall has a trophy loft, reached by a ladder in the north-east corner
-    m.storey(tx + 68, ty + 4, 10, 9, Z - 1, floor="wood", style="stone")
-    m.ladder(tx + 76, ty + 5, Z, name="hunters_hall")
-    for px, py, pid in ((70, 7, 2519), (71, 7, 2523), (70, 10, 2472), (74, 10, 2429)):
-        S.prop(m, tx + px, ty + py, Z - 1, pid)
-    m.npcs.append(("Hunter Brannoch", (tx + 76, ty + 7, Z)))
+    wx_, wy_ = R(69, 30)
+    claim("workshop", wx_, wy_, 17, 12)
+    m.building(wx_, wy_, 17, 12, Z, floor="wood", door_side="w", style="stone", doors=True)
+    for px, py, pid in ((2, 3, 3458), (4, 1, 116), (5, 1, 118), (12, 1, 2519), (13, 1, 2523), (14, 1, 2472), (10, 1, 2429)):
+        S.prop(m, wx_ + px, wy_ + py, Z, pid)
+    S.counter(m, wx_ + 3, wy_ + 5, 10, Z)
+    m.sign(wx_ - 1, wy_ + 4, Z, "Housewright's Workshop: furniture kits and tapestries.")
+    m.npcs.append(("Housewright Orla", (wx_ + 8, wy_ + 4, Z)))
 
-    # the Ascendancy (promotion hall, west of the plaza) and the Guild Hall (east)
-    claim("ascendancy", tx + 4, ty + 15, 14, 10)
-    m.building(tx + 4, ty + 15, 14, 10, Z, floor="marble", door_side="e", style="sand", doors=True)
-    S.carpet(m, tx + 6, ty + 18, 9, 3, Z, 2576)
-    for px, py in ((tx + 6, ty + 17), (tx + 14, ty + 17), (tx + 6, ty + 22), (tx + 14, ty + 22)):
-        S.prop(m, px, py, Z, MARBLE_PILLAR)
-    m.sign(tx + 18, ty + 18, Z, "The Ascendancy. Climbers of level 20 and above may be promoted here.")
-    m.npcs.append(("Ascendant Veyra", (tx + 10, ty + 19, Z)))
-    claim("guildhall", tx + 62, ty + 15, 14, 10)
-    m.building(tx + 62, ty + 15, 14, 10, Z, floor="wood", door_side="w", style="timber", doors=True)
-    S.carpet(m, tx + 64, ty + 17, 10, 6, Z, 5572)
-    S.prop(m, tx + 72, ty + 16, Z, 2322)
-    S.prop(m, tx + 73, ty + 16, Z, 2358)
-    S.prop(m, tx + 72, ty + 22, Z, 2472)
-    m.sign(tx + 61, ty + 18, Z, "Guild Hall. Found a guild, read the recruiting board.")
-    m.npcs.append(("Guildwarden Sela", (tx + 69, ty + 19, Z)))
-    # upstairs: the guild meeting room (stairs in the east corner)
-    m.storey(tx + 62, ty + 15, 14, 10, Z - 1, floor="wood", style="timber")
-    m.stairs(tx + 74, ty + 18, Z, name="guild_hall")
-    S.carpet(m, tx + 64, ty + 18, 8, 4, Z - 1, 5572)
-    for px in (65, 67, 69, 71):
-        S.prop(m, tx + px, ty + 19, Z - 1, 2322)
-        S.prop(m, tx + px, ty + 20, Z - 1, 2358)
+    hhx, hhy = R(89, 30)
+    claim("Hunters' Hall", hhx, hhy, 20, 15)
+    m.building(hhx, hhy, 20, 15, Z, floor="wood", door_side="w", style="stone", doors=True)
+    m.points["shop_hunters_hall"] = (hhx + 6, hhy + 7, Z)
+    S.carpet(m, hhx + 3, hhy + 8, 12, 4, Z, 2576)
+    S.prop(m, hhx + 1, hhy + 12, Z, 2033)
+    S.prop(m, hhx + 17, hhy + 12, Z, 2030)
+    S.prop(m, hhx + 2, hhy + 1, Z, 2322)
+    S.prop(m, hhx + 1, hhy + 1, Z, 2358)
+    m.sign(hhx - 1, hhy + 6, Z, "Hunters' Hall. Hunting tasks, bounties and the trophy loft.")
+    m.npcs.append(("Taskmaster Ren", (hhx + 6, hhy + 4, Z)))
+    m.npcs.append(("Bounty Warden Cass", (hhx + 11, hhy + 4, Z)))
+    m.npcs.append(("Hunter Brannoch", (hhx + 15, hhy + 4, Z)))
+    m.storey(hhx, hhy, 20, 15, Z - 1, floor="wood", style="stone")
+    m.ladder(hhx + 18, hhy + 1, Z, name="hunters_hall")
+    for px, py, pid in ((3, 3, 2519), (4, 3, 2523), (3, 10, 2472), (12, 10, 2429), (8, 6, 2322)):
+        S.prop(m, hhx + px, hhy + py, Z - 1, pid)
 
-    # depot (west of the temple, door facing it) and the Housewright's workshop (east, door facing it)
-    dx, dy = tx + 6, ty + 26
-    claim("depot", dx, dy, 16, 10)
-    m.building(dx, dy, 16, 10, Z, floor="wood", door_side="e", style="brick", doors=True)
-    for i in range(4):
-        m.depot(dx + 3 + i * 3, dy + 1, Z, 1)
-    m.put(dx + 14, dy + 8, Z, 3501)  # mailbox
-    S.carpet(m, dx + 2, dy + 4, 12, 3, Z, 2576)
-    m.sign(dx + 16, dy + 3, Z, "Hearthgate Depot")
-    m.points["depot_hearthgate"] = (dx + 8, dy + 5, Z)
-    claim("workshop", tx + 60, ty + 26, 16, 10)
-    m.building(tx + 60, ty + 26, 16, 10, Z, floor="wood", door_side="w", style="stone", doors=True)
-    for px, pid in ((62, 3458), (64, 116), (65, 118), (72, 2519), (73, 2523), (74, 2472), (70, 2429)):
-        S.prop(m, tx + px, ty + 27 + (0 if pid != 3458 else 2), Z, pid)
-    S.counter(m, tx + 63, ty + 31, 8, Z)
-    m.sign(tx + 59, ty + 29, Z, "Housewright's Workshop: furniture kits and tapestries.")
-    m.npcs.append(("Housewright Orla", (tx + 68, ty + 30, Z)))
+    # ---- south of the high road: the inn, the training yard, Spire Manor (reserved) and the carriage station
+    ix, iy = R(2, 53)
+    claim("inn", ix, iy, 17, 15)
+    m.building(ix, iy, 17, 15, Z, floor="wood", door_side="e", style="timber", doors=True)
+    S.counter(m, ix + 2, iy + 3, 8, Z)
+    for px, py in ((3, 8), (8, 8), (3, 12), (8, 12), (12, 10)):
+        S.prop(m, ix + px, iy + py, Z, 2322)
+        S.prop(m, ix + px + 1, iy + py, Z, 2358)
+    S.prop(m, ix + 1, iy + 1, Z, 2519)
+    S.prop(m, ix + 2, iy + 1, Z, 2523)
+    m.sign(ix + 17, iy + 6, Z, "The Lantern & Lark. Food, drink, and rooms upstairs. Innkeeper Roan.")
+    m.npcs.append(("Innkeeper Roan", (ix + 6, iy + 2, Z)))
+    m.storey(ix, iy, 17, 15, Z - 1, floor="wood", style="timber")
+    m.stairs(ix + 15, iy + 3, Z, name="hearthgate_inn")
+    m.autowall([(ix + 8, iy + y) for y in range(1, 14) if y not in (6, 7, 8)], Z - 1, "timber")
+    for px, py, pid in ((2, 2, 2322), (3, 2, 2358), (11, 2, 2322), (12, 2, 2358), (2, 12, 2519), (11, 12, 2523)):
+        S.prop(m, ix + px, iy + py, Z - 1, pid)
 
-    # houses (south): two streets of small houses with the main avenue (x 38..44) left open to the south gate
+    yx_, yy_ = R(21, 53)
+    claim("training yard", yx_, yy_, 24, 15)
+    m.fill(yx_, yy_, 24, 15, Z, "dirt")
+    m.walls(yx_, yy_, 24, 15, Z, gaps={(yx_ + 23, yy_ + 6), (yx_ + 23, yy_ + 7), (yx_ + 12, yy_), (yx_ + 13, yy_)}, style="timber")
+    for i, sid in enumerate(range(16198, 16203)):        # offline training statues: log out and train that skill slowly
+        m.put(yx_ + 3 + i * 4, yy_ + 2, Z, sid)
+    m.sign(yx_ + 21, yy_ + 4, Z, "Training Yard. Use a statue to log out and train that skill slowly while you're away.")
+    for px, py in ((4, 9), (9, 9), (14, 9), (19, 9)):     # practice posts
+        S.prop(m, yx_ + px, yy_ + py, Z, 2263)
+    m.points["training_yard"] = (yx_ + 12, yy_ + 6, Z)
+
+    claim("spire manor", *R(46, 53), 22, 16)              # Spire Manor, the showcase house, ends the avenue (built below)
+    m.points["spire_manor_plot"] = R(46, 53) + (Z,)
+
+    cx_, cy_ = R(74, 53)
+    claim("carriage station", cx_, cy_, 35, 15)
+    m.fill(cx_, cy_, 35, 15, Z, "dirt")
+    m.building(cx_ + 22, cy_, 13, 10, Z, floor="wood", door_side="w", style="timber", doors=True)   # the coach house
+    m.sign(cx_ + 21, cy_ + 3, Z, "Carriage Station. Coachman Ferro drives to Millcross and the Arrival Yard.")
+    m.npcs.append(("Coachman Ferro", (cx_ + 18, cy_ + 5, Z)))
+    m.points["carriage_hearthgate"] = (cx_ + 16, cy_ + 6, Z)
+    for px, py, pid in ((3, 2, 2519), (4, 2, 2523), (3, 12, 2519), (9, 12, 2523), (14, 12, 2472)):
+        S.prop(m, cx_ + px, cy_ + py, Z, pid)
+    for px in (2, 6, 10, 14):                              # hitching posts
+        S.prop(m, cx_ + px, cy_ + 8, Z, 2264)
+
+    # ---- the houses: two streets along the south wall, the avenue down the middle to the south gate
     hid = 1
     styles = ["timber", "sand", "timber", "white", "brick", "timber", "sand"]
-    for row_y, side in ((46, "n"), (56, "s")):
-        for k, hx_rel in enumerate((3, 12, 21, 30, 45, 54, 63)):
+    west_xs, east_xs = (2, 11, 20, 29, 38, 47), (60, 69, 78, 87, 96)
+    for row_y, side in ((72, "n"), (83, "s")):
+        xs = west_xs + east_xs
+        for k, hx_rel in enumerate(xs):
             hx, hy = tx + hx_rel, ty + row_y
             claim(f"house {hid}", hx, hy, 8, 8)
             st = styles[(k + (3 if side == "s" else 0)) % len(styles)]
-            two = k in (0, 6)                 # the corner houses of each street have an upstairs (and cost more)
+            two = k in (0, len(west_xs) - 1, len(west_xs), len(xs) - 1)   # the houses at each end of a street have an upstairs
             m.house_building(hid, f"Lantern Row {hid}", hx, hy, 8, 8, Z, town=1, rent=2800 if two else 1500, door_side=side,
                              style=st, floor="marble" if st == "white" else "wood", storeys=2 if two else 1)
             fy = hy - 1 if side == "n" else hy + 8
@@ -303,15 +373,16 @@ def build(m):
             S.prop(m, hx + 6, fy, Z, 321)
             hid += 1
     # Underkeep grate (sealed; it becomes a secret in task 2.10)
-    grate = (tx + 6, ty + 67, Z)
+    grate = R(3, 93) + (Z,)
     m.put(*grate, 435)
-    m.sign(tx + 7, ty + 67, Z, "An old drain grate. Something echoes far below.")
+    m.sign(*R(5, 93), Z, "An old drain grate. Something echoes far below.")
     m.points["underkeep_grate"] = grate
+
 
     # ------------------------------------------------ housing outside the walls (cheaper, less safe)
     # Wallside Cabins: two clusters of ten small cabins beside the west and east roads. Fisher's Huts: ten on the river bank.
     for cluster, x_start in (("West", tx - 44), ("East", tx + tw + 5)):
-        for row_y in (40, 49):
+        for row_y in (60, 69):
             for i in range(5):
                 hx, hy = x_start + i * 8, ty + row_y
                 claim(f"{cluster} cabin {hid}", hx, hy, 7, 6)
@@ -320,8 +391,8 @@ def build(m):
                 S.prop(m, hx + 5, hy - 1, Z, rng.choice([2519, 116]))
                 hid += 1
         lane0 = x_start - 2
-        m.road((lane0, ty + 39), (lane0 + 43, ty + 39), Z, width=2, wind=False)
-        m.road((lane0, ty + 48), (lane0 + 43, ty + 48), Z, width=2, wind=False)
+        m.road((lane0, ty + 59), (lane0 + 43, ty + 59), Z, width=2, wind=False)
+        m.road((lane0, ty + 68), (lane0 + 43, ty + 68), Z, width=2, wind=False)
     fisher = []
     for col_x in (X0 + 134, X0 + 146):
         for j in range(5):
@@ -394,6 +465,9 @@ def build(m):
         S.prop(m, px, py, Z, 3619)
     S.prop(m, mx + 25, my + 19, Z, 1922)
     m.towns.append((2, "Millcross", (mx + 25, my + 18, Z)))
+    m.npcs.append(("Coachwoman Dara", (mx + 50, my + 19, Z)))                      # carriages to Hearthgate
+    m.points["carriage_millcross"] = (mx + 48, my + 18, Z)
+    m.sign(mx + 52, my + 17, Z, "Carriage stop. Coachwoman Dara drives to Hearthgate.")
     # the mill fields north of the village: wheat inside a fence
     fx, fy, fw, fh = mx + 4, my - 26, 30, 18
     S.patch(m, fx + fw // 2, fy + fh // 2, fw // 2, fh // 2, Z, "dirt", wobble=0.1)
@@ -411,7 +485,7 @@ def build(m):
                 m.put(xx, yy, Z, 17232)
 
     # ------------------------------------------------ the Arrival Yard (town 50): where every new character starts
-    yx, yy = X0 + 270, Y0 + 332
+    yx, yy = X0 + 270, Y0 + 336
     m.fill(yx, yy, 40, 24, Z, "grass")
     for xx in range(yx, yx + 40):
         for y2 in range(yy, yy + 24):
@@ -616,7 +690,7 @@ def build(m):
         for cy_ in range(uy + 6, uy + 46, 8):
             m.put(cx_, cy_, uz, ID_PILLAR)
     m.points["underkeep_entry"] = (ux + 4, uy + 4, uz)
-    m.teleport((ux + 2, uy + 2, uz), (tx + 7, ty + 69, Z), "underkeep_exit")
+    m.teleport((ux + 2, uy + 2, uz), (tx + 4, ty + 92, Z), "underkeep_exit")
     m.monsters.append(("Mire Toad", (ux + 10, uy + 25, uz), 4, 5, 90))
     m.monsters.append(("Mire Toad", (ux + 40, uy + 12, uz), 4, 4, 90))
     m.monsters.append(("Black Crawler", (ux + 45, uy + 30, uz), 4, 5, 90))
@@ -740,7 +814,7 @@ def build(m):
     S.ruin(m, X0 + 312, Y0 + 125, 14, 11, Z)                       # ruined watchtower by the lake
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
     S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
-    S.standing_stones(m, X0 + 292, Y0 + 238, Z)                    # a ring of standing stones east of the city
+    S.standing_stones(m, X0 + 305, Y0 + 240, Z)                    # a ring of standing stones east of the city
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep)

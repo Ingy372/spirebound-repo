@@ -20,17 +20,17 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 | # | Level | Ground | Role | Monsters | Where |
 |---|---|---|---|---|---|
 | 1 | 1-4 | **The Ratwarren** | experience | Field Rat | west, about 80 steps from the city centre |
-| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 70 steps from the city centre |
-| 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 60 steps from the city centre |
+| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 90 steps from the city centre |
+| 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 70 steps from the city centre |
 | 4 | 7-12 | **Waspgrass Fields** | experience | Meadow Wasp | north, about 70 steps from the city centre |
-| 5 | 9-15 | **Boar Meadow** | experience | Bristle Boar | south-west, about 70 steps from the city centre |
+| 5 | 9-15 | **Boar Meadow** | experience | Bristle Boar | south-west, about 80 steps from the city centre |
 | 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole | north-east, about 80 steps from the city centre |
 | 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | west, about 160 steps from the city centre |
-| 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | south-west, about 140 steps from the city centre |
-| 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | north-west, about 130 steps from the city centre |
-| 10 | 17-24 | **Shard Fields** | experience | Field Shardling | east, about 120 steps from the city centre |
-| 11 | 19-27 | **The Bandit Road** | money | Road Bandit, Bandit Captain | north-east, about 130 steps from the city centre |
-| 12 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | north, about 140 steps from the city centre |
+| 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | south-west, about 150 steps from the city centre |
+| 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | north-west, about 120 steps from the city centre |
+| 10 | 17-24 | **Shard Fields** | experience | Field Shardling | east, about 130 steps from the city centre |
+| 11 | 19-27 | **The Bandit Road** | money | Road Bandit, Bandit Captain | north-east, about 120 steps from the city centre |
+| 12 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | north, about 130 steps from the city centre |
 | 13 | 28-40 | **The Old Watchtower** | experience and money | Stonehorn Ram | north-west, about 230 steps from the city centre |
 
 ### The suggested route
@@ -59,7 +59,7 @@ Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you he
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Toad Pond  (levels 3-7, experience)
-*east, about 70 steps from the city centre. Safety: guarded.*
+*east, about 90 steps from the city centre. Safety: guarded.*
 
 Toads hit a little harder and give a little more. Leave when rats feel too easy.
 
@@ -72,7 +72,7 @@ Toads hit a little harder and give a little more. Leave when rats feel too easy.
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Sproutling Glade  (levels 5-10, experience)
-*south, about 60 steps from the city centre. Safety: guarded.*
+*south, about 70 steps from the city centre. Safety: guarded.*
 
 Sproutlings spit a little poison-green magic. Still inside the Guarded ring around town.
 
@@ -96,7 +96,7 @@ Fast and stingy, little health. Just north of the city gate, beside the Pass roa
 - **Meadow Wasp:** Fast, low health, poisons. Kill it quickly and let the poison wear off.
 
 ### Boar Meadow  (levels 9-15, experience)
-*south-west, about 70 steps from the city centre. Safety: open.*
+*south-west, about 80 steps from the city centre. Safety: open.*
 
 Where most climbers spend their first real hours. Boars drop ham. Old Tusk hides here.
 
@@ -131,7 +131,7 @@ Wolves hunt in packs, and each pack has a Grey Alpha that calls for help. Across
 - **Grey Alpha:** Leads a wolf pack and calls two wolves when hurt. Worth killing first: the drops are better.
 
 ### Reedmarsh  (levels 14-19, money)
-*south-west, about 140 steps from the city centre. Safety: open.*
+*south-west, about 150 steps from the city centre. Safety: open.*
 
 Snappers carry more coins than their level suggests. Good first money run.
 
@@ -142,7 +142,7 @@ Snappers carry more coins than their level suggests. Good first money run.
 - **Reed Snapper:** Tough shell, slow. It carries more coins than anything else at this level.
 
 ### Thornsnap Hollow  (levels 14-20, experience)
-*north-west, about 130 steps from the city centre. Safety: open.*
+*north-west, about 120 steps from the city centre. Safety: open.*
 
 Poison bites; bring antidotes or healing. Good experience for the effort.
 
@@ -155,7 +155,7 @@ Poison bites; bring antidotes or healing. Good experience for the effort.
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
 ### Shard Fields  (levels 17-24, experience)
-*east, about 120 steps from the city centre. Safety: open.*
+*east, about 130 steps from the city centre. Safety: open.*
 
 Shardlings hit with energy and resist it; wands are weak here. Strong experience.
 
@@ -166,7 +166,7 @@ Shardlings hit with energy and resist it; wands are weak here. Strong experience
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
 ### The Bandit Road  (levels 19-27, money)
-*north-east, about 130 steps from the city centre. Safety: open.*
+*north-east, about 120 steps from the city centre. Safety: open.*
 
 Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money.
 
@@ -179,7 +179,7 @@ Bandits carry coins and gear you can sell. Captains lead them and drop platinum.
 - **Bandit Captain:** A tough leader who calls two bandits. Drops platinum coins. Take friends the first time.
 
 ### The Old Quarry  (levels 23-30, money)
-*north, about 140 steps from the city centre. Safety: open.*
+*north, about 130 steps from the city centre. Safety: open.*
 
 Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well.
 

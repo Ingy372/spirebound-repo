@@ -46,6 +46,51 @@ NPCS = {
               ("club", 3270, 5, 1), ("mace", 3286, 90, 30),
               ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("spear", 3277, 10, 3),
               ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+    "hearthgate_fletcher": dict(
+        name="Fletcher Tamsin", desc="the fletcher", look=(137, 59, 63, 58, 114, 0),
+        greet="Arrows, bolts and spears, |PLAYERNAME|. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
+        voices=["Fresh-cut arrows!", "Bolts, a hundred at a time!"],
+        shop=[("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120)]),
+    "hearthgate_alchemist": dict(
+        name="Alchemist Ivo", desc="the alchemist", look=(130, 0, 87, 87, 95, 0),
+        greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them. Ask for a {trade}.",
+        voices=["Health and mana, bottled!", "I buy empty flasks!"],
+        shop=[("health potion", 266, 45, None), ("mana potion", 268, 50, None), ("strong health potion", 236, 100, None),
+              ("strong mana potion", 237, 93, None), ("great health potion", 239, 190, None), ("great mana potion", 238, 144, None),
+              ("empty potion flask", 283, None, 5), ("empty potion flask", 284, None, 5), ("empty potion flask", 285, None, 5)]),
+    "hearthgate_runewright": dict(
+        name="Runewright Mael", desc="the runewright", look=(130, 76, 94, 94, 114, 0),
+        greet="Blank runes for your conjuring, |PLAYERNAME|, and wands and rods for those who need one. Ask for a {trade}.",
+        voices=["Blank runes! Ready for your spells!"],
+        shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+    "hearthgate_tailor": dict(
+        name="Tailor Quill", desc="the tailor", look=(128, 95, 113, 114, 76, 0),
+        greet="Good cloth for the climb, |PLAYERNAME|, and strong bags to carry your loot home. Ask for a {trade}.",
+        voices=["Bags! Backpacks! Sturdy and cheap!"],
+        shop=[("bag", 2853, 4, None), ("backpack", 2854, 20, None), ("jacket", 3561, 12, 1), ("coat", 3562, 30, 3),
+              ("leather legs", 3559, 15, 3)]),
+    "hearthgate_postmaster": dict(
+        name="Postmaster Hobb", desc="the postmaster", look=(128, 76, 94, 94, 114, 0),
+        greet="Letters and parcels, |PLAYERNAME|. Write the name on a label, put it in the parcel and drop it in a mailbox. Ask for a {trade}.",
+        voices=["Parcels go anywhere in the tower!"],
+        shop=[("parcel", 3503, 15, None), ("label", 3507, 1, None), ("letter", 3505, 8, None)]),
+    "hearthgate_broker": dict(
+        name="Broker Nell", desc="the market broker", look=(136, 95, 113, 114, 76, 0),
+        greet="The market, |PLAYERNAME|: open it from any depot locker. Post what you want to sell or buy, and other climbers will deal with you even when you're away.",
+        voices=["Buy low, sell to a climber in a hurry."]),
+    "hearthgate_innkeeper": dict(
+        name="Innkeeper Roan", desc="the innkeeper of Hearthgate", look=(128, 78, 96, 59, 115, 0),
+        greet="Welcome to the Lantern & Lark, |PLAYERNAME|. Food and drink, or ask me where to {hunt}. Ask for a {trade}.",
+        voices=["Hot food! Cold ale!"],
+        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None), ("cheese", 3607, 6, None), ("fish", 3578, 6, None)]),
+    "hearthgate_coachman": dict(
+        name="Coachman Ferro", desc="the coachman", look=(128, 58, 68, 109, 115, 0),
+        greet="Need a ride, |PLAYERNAME|? I drive to {Millcross} and back to {Hearthgate}.",
+        kind="travel", voices=["Carriage leaving soon!"]),
+    "millcross_coachman": dict(
+        name="Coachwoman Dara", desc="the Millcross coachwoman", look=(136, 58, 68, 109, 115, 0),
+        greet="Back to the city, |PLAYERNAME|? I drive to {Hearthgate}.",
+        kind="travel", voices=["Carriage to Hearthgate!"]),
     "millcross_innkeeper": dict(
         name="Innkeeper Bess", desc="the innkeeper of Millcross", look=(137, 78, 96, 59, 115, 0),
         greet="Welcome to the Millcross Inn, |PLAYERNAME|. Hot food, cold ale and good advice. Ask for a {trade}, or ask me where to {hunt}.",
@@ -76,6 +121,43 @@ local function refuseMurderers(npc, player)
 	if SpirePvP and SpirePvP.isMurderer(player) then
 		npcHandler:say("I don't deal with murderers. Get out.", npc, player)
 		return false
+	end
+	return true
+end
+'''
+
+TRAVEL = '''
+-- carriage routes: keyword, map point (tools/mapgen.py world_points), fare in gold
+local ROUTES = { { "millcross", "carriage_millcross", 20 }, { "hearthgate", "carriage_hearthgate", 20 } }
+
+local function creatureSayCallback(npc, player, type, msg)
+	if not npcHandler:checkInteraction(npc, player) then
+		return false
+	end
+	local pid = player:getId()
+	for i, r in ipairs(ROUTES) do
+		if MsgContains(msg, r[1]) and WorldPoints and WorldPoints[r[2]] then
+			npcHandler:say("To " .. r[1] .. " for " .. r[3] .. " gold? Climb in and say {yes}.", npc, player)
+			npcHandler:setTopic(pid, i)
+			return true
+		end
+	end
+	if MsgContains(msg, "yes") and npcHandler:getTopic(pid) > 0 then
+		local r = ROUTES[npcHandler:getTopic(pid)]
+		npcHandler:setTopic(pid, 0)
+		if player:isPzLocked() then
+			npcHandler:say("Not with blood still on your hands. Calm down first.", npc, player)
+		elseif not player:removeMoneyBank(r[3]) then
+			npcHandler:say("You can't pay the fare.", npc, player)
+		else
+			npcHandler:say("Hold on to your hat!", npc, player)
+			player:teleportTo(WorldPoints[r[2]])
+			WorldPoints[r[2]]:sendMagicEffect(CONST_ME_TELEPORT)
+		end
+		return true
+	end
+	if MsgContains(msg, "route") or MsgContains(msg, "travel") or MsgContains(msg, "where") then
+		npcHandler:say("I drive between {Millcross} and {Hearthgate}. The fare is 20 gold.", npc, player)
 	end
 	return true
 end
@@ -201,6 +283,9 @@ def render(d):
     logic, callbacks = MURDERER, ""
     if d.get("kind") == "priest":
         logic = MURDERER + PRIEST
+        callbacks = "npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\nnpcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n"
+    elif d.get("kind") == "travel":
+        logic = MURDERER + TRAVEL
         callbacks = "npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\nnpcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n"
     elif d.get("kind") == "bank":
         logic = MURDERER + BANK
