@@ -2,6 +2,10 @@
 
 Written for Jay. This is what Floor 1 is meant to be; the placeholder map in the game follows it. The hunting grounds and monsters are in `BESTIARY.md`; the exact coordinates are in `maps/floor1_plan.py` and `maps/layout_floor1.py`.
 
+## How to look at the map (for the builders)
+- `python tools/maprender.py out.png x y w h [z] [scale]` draws any part of the map with the real sprites, exactly the way the client shows it. Output goes to `.local/scratch/` (never committed: it contains the base game's art).
+- `python tools/spriteview.py sheet out.png 1270-1280 ...` draws labelled contact sheets of item ids; `find <word>` lists ids by name. Wall families, doors, windows, trees, props and carpets in `tools/mapgen.py` and `maps/scenery.py` were all picked by looking at their sprites.
+
 ## The idea
 A new climber starts in a small walled yard, picks a path, and walks into **Hearthgate**: one compact walled city where every service is a short walk from the temple. Around it lies a ring of safe starter fields, then a spread of hunting grounds that get harder and richer the farther you walk, ending in the Old Quarry and the Old Watchtower. To the north, the Pass and the labyrinth lead to the Axe-Lord and Floor 2.
 
@@ -76,3 +80,10 @@ The four starter grounds and the roads around the city are *Guarded* (players ca
 New characters appear in a walled yard south-east of the city. Guide Pell greets them; a stone path leads east past a rat pen (Stop 1: fighting), a sign about skills, spells and the Journal (Stop 2), and into the Registrar's hall (Stop 3), where they choose a path and a difficulty and are sent to the temple. They also get a letter (`!guide`) with the story and first steps.
 Guide Pell also gives a first quest (*First Blood*: three rats in the pen), and short hints appear at levels 2, 5, 8, 10 and 20.
 Still to build for the full tutorial (roadmap R11): gates that open only after a step is done, and a walked-through test with a real new character in the client.
+
+## Look and feel (2026-11-11 pass)
+- **Buildings** come in wall families (brick, grey stone, timber and plaster, sandstone, white stone, pale stone), with windows, open doors in the public buildings, a post on every outside corner, and furnished interiors: shop counters, barrels, crates, anvils, wardrobes, carpets, marble pillars, tables and chairs.
+- **The city wall** is grey stone with a vine-covered pillar on each corner and a pillar either side of every gate. The plaza is cream marble inside a flagstone border, with fountain, statues, trees, benches, market stalls and lamp posts. Streets are cobble with a cream stripe down the two avenues.
+- **The land** has a winding river with muddy banks and wooden bridges, winding dirt roads, forest masses between the places people go (never within about eight tiles of a road, building or hunting ground), three ponds and a lake, ruins (a watchtower by the lake, a farmhouse, a toppled shrine), two rings of standing stones, and a fenced wheat field north of Millcross.
+- **Each hunting ground has its own look:** dirt mounds (Ratwarren), a pond (Toad Pond), ferns and bushes (Sproutling Glade), a flower meadow (Waspgrass), oak groves and mud wallows (Boar Meadow), bare dirt and boulders (Burrow Hills), dark fir forest (Wolf Copse), a thorn thicket (Thornsnap Hollow), pools and mud (Reedmarsh), grey gravel and boulders (Shard Fields), a ruined camp with carts and fires (Bandit Road), rubble and broken pillars (Old Quarry).
+- **Still to do:** roofs are not possible with these tools (the game draws roofs as a separate floor), the Pass, labyrinth and Axe-Lord's room are plain stone boxes, the camps want more landmark set pieces, and the river banks need proper shore tiles. Cowork's finishing polish should start there.

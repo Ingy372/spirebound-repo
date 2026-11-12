@@ -232,3 +232,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 - **Progression logic:** `BESTIARY.md` and `!hunt` come from one plan; shop NPCs and quest givers answer "hunt"; level-ups tell you when to move on; new characters start in the Arrival Yard. Boot test: 82 in-game tests pass, 0 errors. Not yet seen in the real client.
 
 - Tutorial additions the same day: Guide Pell's quest *First Blood* (3 rats), level hints at 2/5/8/10/20, the new quest in the quest log. Boot test: 82 in-game tests, 0 errors.
+
+### 2026-11-11 — Claude is the mapper: Floor 1 look-and-feel pass (Jay: "you are going to take over as the mapper/architect")
+- Built two tools so the map can be designed by eye: `tools/spriteview.py` (decodes the client's sprite sheets and appearances file; contact sheets of item ids) and `tools/maprender.py` (draws the real map with the real sprites). First pieces of roadmap 6.4. Outputs stay in `.local/scratch/` (CipSoft art, never committed).
+- Rebuilt how the map looks: six wall families with windows, doors and closed corners; furnished shops and halls; a stone city wall with pillars; a marble plaza with statues, lamps, trees and stalls; a winding river with bridges; winding roads; forests, lakes, ruins and standing stones; a distinct look for each of the twelve hunting grounds. Fixed a bug where the old east-west road ran through the temple.
+- Boot test: 82 in-game tests, 0 errors, 0 map warnings. `CLAUDE.md` map rule updated: Claude builds the real maps; Cowork polishes later. Not yet seen in the real client.

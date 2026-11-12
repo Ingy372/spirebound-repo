@@ -33,7 +33,10 @@ PREVIEWS = ROOT / "docs" / "previews"
 
 # ---------------------------------------------------------------- item palette (Tibia 15.11 client ids)
 ID = {
-    "grass": [4526, 106],
+    "grass": [4526, 4526, 4526, 4526, 4515, 4517, 4518, 4519, 4520, 4521, 4522],
+    "dark_grass": [106],
+    "pave": [416],
+    "mud": [17238],
     "dirt": [103],
     "cobble": [870],
     "wood": [408],
@@ -48,7 +51,6 @@ ID = {
     "rocksoil": [4394, 4395],
     "earth": [280],
     "swamp": [6352],
-    "mud": [17238],
     "snow": [799, 6594, 6595],
     "blackmarble": [410],
     "wall_v": 1270, "wall_h": 1271, "wall_c": 1272, "wall_p": 1273,  # brick wall family (orientation is a best guess)
@@ -67,6 +69,18 @@ ID = {
     "fountain": 1922,
 }
 
+# Wall families: v = vertical piece, h = horizontal, pole = single post, corner = L piece, wh / wv = window pieces,
+# door_h / door_v = an open door set in a doorway of a horizontal / vertical wall. Ids checked visually (tools/spriteview.py).
+FAMILIES = {
+    "brick":  dict(v=1270, h=1271, pole=1272, corner=1273, wh=1736, wv=1737, door_h=1649, door_v=1647),
+    "stone":  dict(v=1294, h=1295, pole=1296, corner=1298, wh=1738, wv=1739, door_h=1649, door_v=1647),
+    "timber": dict(v=1281, h=1282, pole=1283, corner=1285, wh=1734, wv=1735, door_h=1649, door_v=1647),
+    "sand":   dict(v=1305, h=1306, pole=1307, corner=1309, wh=1744, wv=1745, door_h=1649, door_v=1647),
+    "white":  dict(v=1356, h=1357, pole=1358, corner=1360, wh=1740, wv=1741, door_h=1673, door_v=1670),
+    "pale":   dict(v=1450, h=1451, pole=1452, corner=1454, wh=None, wv=None, door_h=1673, door_v=1670),
+}
+
+WALL_IDS = {i for f in FAMILIES.values() for i in f.values() if i}
 TILE_PZ = 0x0001
 TILE_NOPVP = 0x0004
 
@@ -109,24 +123,48 @@ class Map:
                 self.flags[(x, y, z)] = self.flags.get((x, y, z), 0) | f
 
     def blocked(self, x, y, z):
-        return any(i in (ID["wall_v"], ID["wall_h"], ID["wall_c"], ID["wall_p"]) or i in ID["tree"] or i in ID["boulder"]
+        return any(i in (ID["wall_v"], ID["wall_h"], ID["wall_c"], ID["wall_p"]) or i in WALL_IDS or i in ID["tree"] or i in ID["boulder"]
                    for i, _ in self.items.get((x, y, z), []))
 
     # -- structures
-    def walls(self, x0, y0, w, h, z, gaps=()):
-        """Rectangle outline of wall; gaps = set of (x,y) left open (doorways)."""
+    def walls(self, x0, y0, w, h, z, gaps=(), style="brick", windows=False, doors=False):
+        """Rectangle outline of wall in a family (FAMILIES). gaps = set of (x,y) left open (doorways); with doors=True an
+        open door is set in each gap. windows=True swaps some plain pieces for window pieces. The SE corner gets a post."""
+        f = FAMILIES[style]
         gaps = set(gaps)
+
+        def near_gap(x, y):
+            return any(abs(x - gx) <= 1 and abs(y - gy) <= 1 for gx, gy in gaps)
+
         for x in range(x0, x0 + w):
             for y in (y0, y0 + h - 1):
-                if (x, y) not in gaps:
-                    self.put(x, y, z, ID["wall_h"])
+                if (x, y) in gaps:
+                    if doors:
+                        self.put(x, y, z, f["door_h"])
+                    continue
+                piece = f["h"]
+                if x == x0 and y == y0:
+                    piece = f["corner"]
+                elif windows and f["wh"] and 2 <= x - x0 <= w - 3 and (x - x0) % 4 == 2 and not near_gap(x, y):
+                    piece = f["wh"]
+                self.put(x, y, z, piece)
+        self.put(x0 + w - 1, y0 + h - 1, z, f["pole"]) if (x0 + w - 1, y0 + h - 1) not in gaps else None
         for y in range(y0 + 1, y0 + h - 1):
             for x in (x0, x0 + w - 1):
-                if (x, y) not in gaps:
-                    self.put(x, y, z, ID["wall_v"])
+                if (x, y) in gaps:
+                    if doors:
+                        self.put(x, y, z, f["door_v"])
+                    continue
+                piece = f["v"]
+                if windows and f["wv"] and 2 <= y - y0 <= h - 3 and (y - y0) % 4 == 2 and not near_gap(x, y):
+                    piece = f["wv"]
+                self.put(x, y, z, piece)
 
-    def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True):
+    def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True, style="brick", windows=True, doors=False):
         self.fill(x0, y0, w, h, z, floor)
+        for yy in range(y0, y0 + h):
+            for xx in range(x0, x0 + w):
+                self.clear_items(xx, yy, z)  # nothing the plain grew may stand inside a building
         if door_side == "s":
             door = (x0 + w // 2, y0 + h - 1)
         elif door_side == "n":
@@ -135,13 +173,13 @@ class Map:
             door = (x0 + w - 1, y0 + h // 2)
         else:
             door = (x0, y0 + h // 2)
-        self.walls(x0, y0, w, h, z, gaps={door})
+        self.walls(x0, y0, w, h, z, gaps={door}, style=style, windows=windows, doors=doors)
         if pz:
             self.flag(x0, y0, w, h, z, TILE_PZ)
         return door
 
-    def house_building(self, hid, name, x0, y0, w, h, z, town, rent, door_side="s"):
-        door = self.building(x0, y0, w, h, z, door_side=door_side)
+    def house_building(self, hid, name, x0, y0, w, h, z, town, rent, door_side="s", style="brick", floor="wood"):
+        door = self.building(x0, y0, w, h, z, floor=floor, door_side=door_side, style=style)
         tiles = []
         for y in range(y0 + 1, y0 + h - 1):
             for x in range(x0 + 1, x0 + w - 1):
@@ -162,18 +200,39 @@ class Map:
                         continue
                     self.put(x, y, z, self.pick(key))
 
-    def road(self, a, b, z, width=3, key="dirt"):
+    def road(self, a, b, z, width=3, key="dirt", wind=True):
+        """A road from a to b: first along x, then along y. Long stretches wind a little (zero wobble at both ends, so
+        junctions meet). Where it crosses water the road becomes a wooden bridge."""
+        import math
         (x1, y1), (x2, y2) = a, b
-        for x in range(min(x1, x2), max(x1, x2) + 1):
+
+        def lay(x, y):
             for d in range(width):
-                p = (x, y1 + d - width // 2, z)
-                self.ground[p] = self.pick(key)
+                for e in range(width):
+                    pass
+            p = (x, y, z)
+            if p in self.ground:
+                self.ground[p] = 408 if self.ground[p] in (4597, 4609, 4610) else self.pick(key)
                 self.clear_items(*p)
-        for y in range(min(y1, y2), max(y1, y2) + 1):
+
+        def wob(length, t, seed):
+            if not wind or length < 40:
+                return 0
+            amp = min(4.0, length / 22.0)
+            return int(round(amp * math.sin(math.pi * t) * math.sin((2 + seed % 3) * math.pi * t)))
+
+        n = abs(x2 - x1)
+        for i in range(n + 1):
+            x = min(x1, x2) + i
+            off = wob(n, i / max(n, 1), x1 + y1)
             for d in range(width):
-                p = (x2 + d - width // 2, y, z)
-                self.ground[p] = self.pick(key)
-                self.clear_items(*p)
+                lay(x, y1 + d - width // 2 + off)
+        n = abs(y2 - y1)
+        for i in range(n + 1):
+            y = min(y1, y2) + i
+            off = wob(n, i / max(n, 1), x2 + y2)
+            for d in range(width):
+                lay(x2 + d - width // 2 + off, y)
 
     def zone(self, tier, x, y, w, h, z=None):
         self.zones.append((tier, x, y, x + w - 1, y + h - 1, z))
