@@ -21,7 +21,7 @@ end
 -- Pure: may this task be taken now? lastDone = time it was last completed (or nil)
 function SpireTasks.canTake(activeId, lastDone, now)
 	if activeId then
-		return false, "Finish (or {cancel}) your current task first."
+		return false, "Finish your current task first, or {cancel} it."
 	end
 	if lastDone and now - lastDone < SpireTasks.COOLDOWN then
 		return false, "You did that one recently. Come back tomorrow."

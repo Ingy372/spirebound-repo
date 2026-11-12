@@ -27,7 +27,7 @@ advance:register()
 -- A short hint at a few early levels, once each.
 local HINTS = {
 	[2] = "Level 2! Your health and mana grow with every level. Keep fighting: the first levels come fast.",
-	[5] = "Level 5! Visit the shops in Hearthgate: Armorer Hesta for armor, Weaponsmith Garrick for weapons, Quartermaster Bryn for potions. Say 'trade' to a merchant.",
+	[5] = "Level 5! Visit the shops along Hearthgate's north wall: Armorer Hesta, Weaponsmith Garrick, Alchemist Ivo for potions and Fletcher Tamsin for arrows. Say 'hi' and then 'trade' to a merchant.",
 	[8] = "Level 8! You have learned your first spells. Say !spells to read them, and say a spell's words to cast it.",
 	[10] = "Level 10! Quest givers are waiting: Captain Dorrow at the north gate, Hunter Brannoch in the Hunters' Hall, Miller Agna in Millcross. Press J to see your quest log.",
 	[20] = "Level 20! You can be promoted at the Ascendancy in Hearthgate, and you can buy a house.",
@@ -58,6 +58,9 @@ function login.onLogin(player)
 		if yard then
 			player:setTown(yard)
 			player:teleportTo(yard:getTemplePosition())
+			-- a practice club so the first rats aren't fought bare-handed (2026-11-12 playthrough); the Registrar
+			-- gives the real starter kit for your path at the end of the yard
+			player:addItem(3270, 1, true, 1, CONST_SLOT_LEFT)
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Welcome to Spirebound. Follow the stone path east; Guide Pell will help you. Say !guide for a letter of first steps.")
 		end
 	end

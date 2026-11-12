@@ -17,7 +17,7 @@ OUT = ROOT / "server" / "data-spirebound" / "npc"
 NPCS = {
     "hearthgate_priest": dict(
         name="Priest Odran", desc="the priest of Hearthgate", look=(57, 0, 0, 0, 0, 0),
-        greet="Peace, |PLAYERNAME|. I can {heal} you, and my prayers ({blessings}) soften the tower's price for death.",
+        greet="Peace, |PLAYERNAME|. I can {heal} you, and my prayers, the {blessings}, soften the tower's price for death.",
         kind="priest", voices=["The tower takes, the temple gives back.", "Wounded? Come, sit."]),
     "hearthgate_banker": dict(
         name="Banker Tolliver", desc="the banker of Hearthgate", look=(132, 115, 76, 35, 116, 0),

@@ -515,7 +515,7 @@ WorldZones = {
 	{ tier = "guarded", x1 = 1204, y1 = 1184, x2 = 1265, y2 = 1235, z = 7 },
 	{ tier = "guarded", x1 = 1186, y1 = 1195, x2 = 1255, y2 = 1249, z = 7 },
 	{ tier = "guarded", x1 = 1128, y1 = 1186, x2 = 1157, y2 = 1235, z = 7 },
-	{ tier = "guarded", x1 = 1268, y1 = 1087, x2 = 1311, y2 = 1114, z = 7 },
+	{ tier = "guarded", x1 = 1268, y1 = 1334, x2 = 1311, y2 = 1361, z = 7 },
 	{ tier = "guarded", x1 = 1015, y1 = 1175, x2 = 1118, y2 = 1258, z = 7 },
 	{ tier = "contested", x1 = 1025, y1 = 1025, x2 = 1078, y2 = 1078, z = 7 },
 	{ tier = "deadzone", x1 = 1042, y1 = 1042, x2 = 1061, y2 = 1061, z = 7 },

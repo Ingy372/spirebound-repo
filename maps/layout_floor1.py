@@ -582,6 +582,7 @@ def build(m):
     m.walls(pen[0], pen[1], pen[2], pen[3], Z, gaps={(pen[0] + 5, pen[1] + 5)}, style="timber")
     m.fill(pen[0] + 1, pen[1] + 1, pen[2] - 2, pen[3] - 2, Z, "dirt")
     m.clear_items(pen[0] + 5, pen[1] + 5, Z)
+    m.flag(pen[0] + 5, pen[1] + 5, 1, 1, Z, 0x0001)  # the pen's gap is a safe tile: rats can't cross it, players can
     m.fill(pen[0] + 5, pen[1] + 6, 1, 4, Z, "pave")  # little path from the gap down to the main path
     m.monsters.append(("Field Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
     m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
@@ -592,6 +593,7 @@ def build(m):
     S.carpet(m, yx + 31, yy + 9, 6, 6, Z, 2576)
     m.npcs.append(("Registrar Maelis", (yx + 34, yy + 12, Z)))
     m.points["tutorial_registrar"] = (yx + 34, yy + 12, Z)
+    yard_x, yard_y = yx, yy                       # kept for the zones below (yx/yy are reused as loop names later)
 
     # ------------------------------------------------ apex spawn: the Old Watchtower (Contested from task 2.2)
     ax, ay = X0 + 30, Y0 + 30
@@ -717,7 +719,7 @@ def build(m):
             m.zone("guarded", X0 + c["x"] - 6, Y0 + c["y"] - 6, c["w"] + 12, c["h"] + 12, 7)
     m.zone("guarded", tx + 10, Y0 + 195, 70, 55, 7)                  # the gate road up to the Waspgrass Fields
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
-    m.zone("guarded", yx - 2, yy - 2, 44, 28, 7)                      # the Arrival Yard
+    m.zone("guarded", yard_x - 2, yard_y - 2, 44, 28, 7)              # the Arrival Yard
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
     m.zone("contested", ax - 5, ay - 5, 54, 54, 7)                   # the Old Watchtower approach and outer layer
     m.zone("deadzone", ax + 12, ay + 12, 20, 20, 7)                  # the packed inner room

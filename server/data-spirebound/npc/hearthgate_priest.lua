@@ -90,7 +90,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Peace, |PLAYERNAME|. I can {heal} you, and my prayers ({blessings}) soften the tower's price for death.")
+npcHandler:setMessage(MESSAGE_GREET, "Peace, |PLAYERNAME|. I can {heal} you, and my prayers, the {blessings}, soften the tower's price for death.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)

@@ -199,7 +199,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		for _, q in ipairs(SpireQuests.list) do
 			if q.giver == giver and SpireQuests.available(q, SpireQuests.state(player, q), done) then
 				offered[pid] = q.id
-				npcHandler:say(q.offer .. " ({yes} or {no})", npc, player)
+				npcHandler:say(q.offer .. " Say {yes} or {no}.", npc, player)
 				return true
 			end
 		end
