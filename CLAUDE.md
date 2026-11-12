@@ -34,6 +34,7 @@ Repo: GitHub `Ingy372/spirebound-repo` (private). Jay's local copy: `C:\Users\Mu
 - **Pins:** Canary v3.6.1 (protocol 15.11), OTClient Redemption 4.2. Change a pin only on purpose, and log why.
 - **Git:** work on `main` and push directly (Jay is new to pull requests; keep it simple). Commit messages are plain English, e.g. `Add the Floor 1 boss and the Floor 2 unlock`.
 - **Testing:** Claude's cloud workspace runs the Linux build of the same server for automated tests. Jay's PC runs the Windows build for playtests.
+- **Ticking tasks (from REVIEW.md 9.4):** tick a roadmap task only when a test goes through the real game path (the actual event, NPC or map), not just a pure rule. Anything cut from a task becomes a new open task, never just a note.
 - **Jay's preferences:** short, plain updates; turn technical work into clear steps he can act on; no code-level instructions.
 
 ## File map

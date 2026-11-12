@@ -6,6 +6,69 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+*Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
+
+### Q13. Calendar gate on floor bosses? [1.4]
+Nothing stops a big guild finishing all 10 floors in the first week or two, and then the season's story is over.
+- **Recommendation:** yes. Each floor boss room unseals on a date (Floor 2 no earlier than day 3, then one floor every 5–7 days). Every unlock becomes an event. Also drop the "25 floors per season" promise; say "10 floors, more if the season goes well".
+- Jay's answer:
+
+### Q14. Death Game: what does stepping down cost, and what happens on a lag/crash death? [2.7, 3.4]
+Today a Death Game character earns +50% XP and can step down to Normal any time, keeping every level, so it's the *safest* way to level.
+- **Recommendation:** stepping down removes the extra XP the bonus gave (you keep what a Normal character would have earned). Deaths caused by a server crash or server lag are restored by a GM; your own internet dropping is not ("the tower is cruel"), and that rule is written on the website.
+- Jay's answer:
+
+### Q15. Pay-to-win line: can shop items be traded for gold? [6.3]
+If shop items can be sold to players for gold, then money → gold → gear is two steps away, so "never pay-to-win" isn't quite true.
+- **Recommendation:** (b) shop items stay tradeable (lets non-payers earn cosmetics), but each floor's best gear is bound to the character that earned it. Shop items can never be bet (already true).
+- Jay's answer:
+
+### Q16. Bot rules in detail [3.8]
+- **Recommendation:** auto sword-skill rotation is **not** allowed (remove the attack helper from the client; combos should be skill). Auto-target + auto-heal while standing still counts as botting after 10 minutes without manual movement. A character following a botting one gets the same 45% XP.
+- Jay's answer:
+
+### Q17. Fortune Hall: keep, cap or drop? [6.5]
+Gold has a real-money price once shop items can be sold for gold, which makes a gold casino risky with payment companies.
+- **Recommendation:** keep it, but with a low cap (10,000 gold per bet), hosts set their own limit, and the 5% truly destroyed. Revisit with a professional before the shop takes money.
+- Jay's answer:
+
+### Q18. Twin Fang: real power or style? [2.5]
+As built, it's +50% damage on every melee hit for three players: the strongest build in the game.
+- **Recommendation:** style with a small edge: off-hand hit at 20–25%, one-handed swords only, trial solo. Keep it rare and flashy.
+- Jay's answer:
+
+### Q19. Boss warning time [3.9]
+Big hits land 0.6 s after the warning; players far from the server have about a third of a second.
+- **Recommendation:** 1.0 s for hits that can kill, 0.6 s for the rest. Decide after one boss fight.
+- Jay's answer:
+
+### Q20. Houses: many more, or rentable rooms? [3.7]
+There are 63 houses on the whole server, and most house features need one.
+- **Recommendation:** both: about 3× more houses on the real maps, plus cheap rentable rooms in each town's inn that give access to the portal, workshop and Fortune Hall table.
+- Jay's answer:
+
+### Q21. Art: make everything with Grok, or start from an open sprite pack? [8.1]
+A public launch needs every tile, wall, tree, item and effect replaced, not just the ~150 pieces in ART_REQUESTS.md: thousands of sprites.
+- **Recommendation:** start from an open-licence Tibia-style sprite pack for tiles and items; make monsters, bosses, outfits and the UI yourself with Grok. I'll first prove the pipeline with one sprite (R22) so we know the real cost.
+- Jay's answer:
+
+### Q22. Friends test: Floors 1–2 only? [9.2 of review]
+- **Recommendation:** yes. Seal Floors 3–10, switch off arena, siege, shop and Season Path for the test. Wipe after.
+- Jay's answer:
+
+### Q23. Who moderates at launch, in which languages? [§4]
+- **Recommendation:** you plus 2 trusted friends as GMs (ideally one Portuguese and one Spanish speaker), with the report command and GM log from R14.
+- Jay's answer:
+
+### Q24. Azhrakkar's look [8.4]
+He's too close to the boss that inspired him (giant blue horned fiend with a huge sword).
+- **Recommendation:** change colour (deep red/black), no goat head, a different weapon (a chained halberd). Keep the size and the sweep attack.
+- Jay's answer:
+
+### Q25. Money: business, policies and tax before the shop opens? [6.5]
+- **Recommendation:** launch the first season **without a shop**. Open it only once you've registered what you need to, have refund/privacy policies, and have checked tax with a professional.
+- Jay's answer:
+
 ### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
 Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
 - **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").

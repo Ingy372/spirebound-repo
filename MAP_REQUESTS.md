@@ -5,6 +5,8 @@ Real maps that are needed. Every map below already has a **script-generated plac
 Format rules for whoever makes them:
 - Canary / Tibia 15.11 item ids, `.otbm` format.
 - No CipSoft map pieces (no copying areas from the official map).
+- Never put a sealed area directly above or below a walkable one (spells and holes can cross levels), and put each next-floor stair behind a real door (REVIEW.md 3.2, 5.3).
+- Floor 1 must hold a launch-day crowd: about 1,500 monsters across 14+ camps from easy to hard, with caves under some camps (REVIEW.md 5.2). Keep bank, depot, supply shop and temple a few steps apart.
 - Keep the listed points (temple, doors, boss room, stairs) at the listed positions, or update the points file in `maps/src/<map>/points.csv` so the scripts keep working.
 
 | # | Map | Size | Must contain | Placeholder | Status |
