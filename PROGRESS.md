@@ -308,3 +308,12 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
   - **Level 3:** the Hall of Climbers.
   The workshop moved into the old depot building.
 - Trader Osric buys every item monsters drop (53 kinds, near standard Tibia prices). The account vault keeps gold for every character on an account. Banker Ansel runs a branch on the north wall. Checked in the client; boot test: 94 in-game tests, 0 errors. Questions Q28 (the vault) and Q29 (Osric's prices).
+
+### 2026-11-12 — Hearthgate v3 built from the plan (Jay: "review the plan and execute it")
+- Rebuilt the whole town block from `HEARTHGATE_PLAN.md`:
+  - **The Hearth:** a compact three-level hall at the crossing of the two main roads, with four open archways and a tower.
+  - **The Ring and Hearth Square:** the Ring is a marble square around the hall; the Hearth Square, with its fountain, Monument and six stalls, is its south side.
+  - **Shops and public buildings:** all moved to the new layout.
+  - **Spire Manor:** moved to the East High Road, with a forecourt and public Spire Gardens.
+  - **Houses and parks:** 30 houses in eight streets, plus Hearthgate Green, Old Well Yard and a pocket garden.
+- Two small tool changes: roofs can now wrap round a tower, and `building()` accepts an explicit doorway and extra open archways. Walked the Hearth, the gate and the manor in the client. Boot test: 95 in-game tests, 0 errors.

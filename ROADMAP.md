@@ -210,3 +210,4 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
   - **Level 2:** the trading gallery, with 16 more lockers and trade tables.
   - **Level 3:** the Hall of Climbers.
   Also added: an account vault shared by all characters on an account, and a branch bank on the north wall. Done when: in-game test checks that the respawn point is in the Hearth, all stairs work both ways, the NPCs are loaded and the vault arithmetic holds; Osric's trade window was checked in the client.
+- [x] **J12 Hearthgate v3, built from the plan** (Jay, 2026-11-12). The Hearth at the centre, four quarters, 30 houses, Spire Manor moved to the East High Road, Spire Gardens, Hearthgate Green, Old Well Yard. Done when: map builds with no overlaps, in-game tests check the archways, a locker near the Hearthstone, 30 street houses, all stairs; walked in the client.

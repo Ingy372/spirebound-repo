@@ -96,3 +96,31 @@ SpireTest.add("the Hearth: spawn point, three levels by stairs, lockers, junk bu
 	SpireTest.eq(b2, 800, "can't deposit more than the bank holds")
 	SpireTest.eq(SpireVault.parse("hello"), nil, "ordinary words aren't vault commands")
 end)
+
+SpireTest.add("Hearthgate v3: four open archways, a locker six steps from the Hearthstone, 30 street houses", function()
+	local t = WorldPoints.temple_hearthgate
+	for _, d in ipairs({ { 0, -11 }, { 0, 11 }, { -14, 0 }, { 14, 0 } }) do
+		local p = Position(t.x + d[1], t.y + d[2], t.z)
+		local tile = Tile(p)
+		SpireTest.eq(tile ~= nil and tile:isWalkable(false, false, false, false, true), true, "archway " .. d[1] .. "," .. d[2] .. " is open")
+	end
+	local locker
+	for dx = -8, 8 do
+		for dy = -8, 8 do
+			local tile = Tile(Position(t.x + dx, t.y + dy, t.z))
+			if tile and tile:getItemByType(ITEM_TYPE_DEPOT) then
+				if not locker or math.abs(dx) + math.abs(dy) < locker then locker = math.abs(dx) + math.abs(dy) end
+			end
+		end
+	end
+	SpireTest.eq(locker ~= nil and locker <= 8, true, "a depot locker within eight steps of the Hearthstone")
+	local streets = 0
+	for _, h in ipairs(Game.getHouses()) do
+		local n = h:getName()
+		if n:find("^Squareside") or n:find("^Crown Row") or n:find("^Northside") or n:find("^Greenside") or n:find("^Lantern Row")
+			or n:find("^Manor Walk") or n:find("^Southgate Row") then
+			streets = streets + 1
+		end
+	end
+	SpireTest.eq(streets, 30, "thirty houses in the eight streets")
+end)

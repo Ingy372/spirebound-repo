@@ -124,3 +124,17 @@ Hearthgate's home hall, replacing the old temple, depot and Trade Hall. It is 62
 - **Level 1:** the temple nave in the middle (the spawn and respawn point, the altar, Priest Odran). The depot wing is to the west (18 lockers, 2 mailboxes); the bank and exchange to the east (Banker Tolliver and the account vault, Trader Osric who buys loot, Broker Nell for the market).
 - **Level 2:** the trading gallery, with 16 lockers and six long trade tables.
 - **Level 3:** the Hall of Climbers, with statues and a meeting carpet for finding a party.
+
+## Hearthgate v3 (2026-11-12, built from HEARTHGATE_PLAN.md)
+This replaces the earlier Hearthgate descriptions above. The full plan, with every coordinate, is `HEARTHGATE_PLAN.md`; the picture is `docs/HEARTHGATE_PLAN.png`.
+- **The Hearth** stands where North Avenue and the East-West High Road cross, with four open archways. You spawn on the Hearthstone in the middle of a red carpet cross.
+  - **Ground floor:** depot wings with 22 lockers; the bank and exchange (Tolliver, Osric, Nell); the chapel (Priest Odran).
+  - **Level 2:** the Trading Gallery.
+  - **Level 3:** the Hall of Climbers, in a tower with its own roof.
+- **The Hearth Ring** is a marble square around the hall. Its south side is the Hearth Square: fountain, Monument, six free trading stalls. The Alchemist, Fletcher and Runewright face it.
+- **Four quarters:**
+  - Garden Quarter: Hearthgate Green with a pond.
+  - Crown Quarter: Ascendancy and Guild Hall on Crown Court, Hunters' Hall, Training Yard.
+  - Lantern Quarter: Market Street shops, the inn, the Coach Yard, Old Well Yard with the Underkeep grate.
+  - Manor Quarter: Spire Manor on the East High Road with its forecourt and the public Spire Gardens.
+- **30 houses** in eight streets (Squareside, Crown Row, Northside, Greenside, Lantern Row North and South, Manor Walk, Southgate Row); every third house is smaller with a garden strip; 12 have an upstairs.

@@ -195,8 +195,6 @@ class Map:
         r = ROOFS[style]
         rz = z - 1
         rx0, ry0, rx1, ry1 = x0 + 1, y0 + 1, x0 + w - 1, y0 + h - 1
-        if any((x, y, rz) in self.ground for y in range(ry0, ry1 + 1) for x in range(rx0, rx1 + 1)):
-            return False                      # something already stands up there: no half roof
         for y in range(ry0, ry1 + 1):
             for x in range(rx0, rx1 + 1):
                 if (x, y, rz) not in self.ground:
@@ -253,7 +251,8 @@ class Map:
         self.ground[(x, y, z - 1)] = TRAPDOOR
         self.clear_items(x, y, z - 1)
 
-    def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True, style="brick", windows=True, doors=False):
+    def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True, style="brick", windows=True, doors=False, door=None,
+                 extra_gaps=()):
         # as in the hand-made maps, the top row and the left-hand column of walls stand on the OUTSIDE ground and the
         # bottom row and right-hand column on the floor (otherwise a little triangle of floor shows past the corners)
         outside = {(xx, y0): self.ground.get((xx, y0, z)) for xx in range(x0, x0 + w)}
@@ -265,20 +264,22 @@ class Map:
         for yy in range(y0, y0 + h):
             for xx in range(x0, x0 + w):
                 self.clear_items(xx, yy, z)  # nothing the plain grew may stand inside a building
-        if door_side == "s":
+        if door is None and door_side == "s":
             door = (x0 + w // 2, y0 + h - 1)
-        elif door_side == "n":
+        elif door is None and door_side == "n":
             door = (x0 + w // 2, y0)
-        elif door_side == "e":
+        elif door is None and door_side == "e":
             door = (x0 + w - 1, y0 + h // 2)
-        else:
+        elif door is None and door_side == "w":
             door = (x0, y0 + h // 2)
-        self.ground[(door[0], door[1], z)] = self.pick(floor)   # the doorway shows the floor, not the street
+        # door_side None and no door: a hall with no main door, only the extra open archways (the Hearth)
+        if door is not None:
+            self.ground[(door[0], door[1], z)] = self.pick(floor)   # the doorway shows the floor, not the street
         # an open door is thinner than a wall piece, so the wall tile before it (above a west door, left of a north
         # door) shows a corner of its ground: give it the floor too
-        if door_side == "w":
+        if door is not None and door_side == "w":
             self.ground[(door[0], door[1] - 1, z)] = self.pick(floor)
-        elif door_side == "n":
+        elif door is not None and door_side == "n":
             self.ground[(door[0] - 1, door[1], z)] = self.pick(floor)
         # no tree, bush or rock hugging the walls or standing in front of the door
         try:
@@ -287,13 +288,15 @@ class Map:
             SCENERY = set()
         ring = [(xx, yy) for xx in range(x0 - 1, x0 + w + 1) for yy in (y0 - 1, y0 + h)]
         ring += [(xx, yy) for yy in range(y0, y0 + h) for xx in (x0 - 1, x0 + w)]
-        step = {"s": (0, 1), "n": (0, -1), "e": (1, 0), "w": (-1, 0)}[door_side]
-        ring += [(door[0] + step[0] * k + step[1] * d, door[1] + step[1] * k + step[0] * d) for k in (1, 2) for d in (-1, 0, 1)]
+        if door is not None:
+            step = {"s": (0, 1), "n": (0, -1), "e": (1, 0), "w": (-1, 0)}[door_side]
+            ring += [(door[0] + step[0] * k + step[1] * d, door[1] + step[1] * k + step[0] * d) for k in (1, 2) for d in (-1, 0, 1)]
         for xx, yy in ring:
             its = self.items.get((xx, yy, z))
             if its and all(i in SCENERY for i, _a in its):
                 self.clear_items(xx, yy, z)
-        self.walls(x0, y0, w, h, z, gaps={door}, style=style, windows=windows, doors=doors)
+        self.walls(x0, y0, w, h, z, gaps=({door} if door is not None else set()) | set(extra_gaps), style=style, windows=windows,
+                   doors=doors)
         self.buildings.append(dict(rect=(x0, y0, w, h), z=z, style=style, top=z, roof=ROOF_FOR.get(style, "red")))
         if pz:
             self.flag(x0, y0, w, h, z, TILE_PZ)
