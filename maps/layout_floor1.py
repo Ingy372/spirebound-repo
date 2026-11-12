@@ -189,15 +189,16 @@ def build(m):
         S.prop(m, *R(px, py), Z, MARBLE_PILLAR)
     for px, py in ((54, 39), (59, 39), (54, 59), (59, 59)):
         S.prop(m, *R(px, py), Z, DG.COAL_BASIN)
-    # depot, west and east: 22 lockers and two mailboxes
-    for x in (44, 46, 48, 50, 52, 61, 63, 65, 67, 69):
-        m.depot(*R(x, 39), Z, 1)
-    for x, y in ((43, 41), (43, 43), (70, 41), (70, 43), (45, 46), (47, 46), (49, 46), (51, 46), (62, 46), (64, 46), (66, 46), (68, 46)):
-        m.depot(*R(x, y), Z, 1)
-    m.put(*R(43, 45), Z, 3501)
-    m.put(*R(70, 45), Z, 3501)
-    m.sign(*R(51, 44), Z, "Depot. Your lockers are shared by every depot in the tower. Open the market from any locker.")
-    m.points["depot_hearthgate"] = R(49, 44) + (Z,)
+    # depot, west and east (Jay, 2026-11-12: "banks should be booths... just use what tibia uses for their dp's"):
+    # in each wing a row of five booths along the north wall and a back-to-back island of 4 + 4 booths: 26 lockers
+    for bx in (44, 61):
+        m.depot_booths(*R(bx, 39), 5, Z, 1, face="s")
+        m.depot_booths(*R(bx + 2 if bx == 44 else bx, 45), 4, Z, 1, face="n")
+        m.depot_booths(*R(bx + 2 if bx == 44 else bx, 46), 4, Z, 1, face="s", depth=1)
+    m.put(*R(43, 44), Z, 3501)
+    m.put(*R(70, 44), Z, 3501)
+    m.sign(*R(44, 45), Z, "Depot. Your lockers are shared by every depot in the tower. Open the market from any locker.")
+    m.points["depot_hearthgate"] = R(49, 42) + (Z,)
     # the bank and exchange: one long counter, three keepers behind it
     S.counter(m, *R(44, 53), 10, Z)
     m.npcs.append(("Banker Tolliver", R(48, 55) + (Z,)))
@@ -220,8 +221,8 @@ def build(m):
            "The trading gallery is upstairs.")
     DG.hang(m, *R(hx0, hy0), HW, HH, Z, every=5, offset=3)
     # level 2: the Trading Gallery
-    for x in (44, 47, 50, 53, 60, 63, 66, 69):
-        m.depot(*R(x, 39), Z - 1, 1)
+    for bx in (44, 61):
+        m.depot_booths(*R(bx, 39), 5, Z - 1, 1, face="s")
     for tx_, ty_ in ((45, 43), (61, 43), (45, 55), (61, 55)):
         S.counter(m, *R(tx_, ty_), 8, Z - 1)                                        # trade tables: stand either side and deal
     for px, py in ((48, 58), (64, 58)):
@@ -236,7 +237,7 @@ def build(m):
     S.carpet(m, *R(53, 48), 8, 3, Z - 2, 2576)
     m.sign(*R(56, 45), Z - 2, "The Hall of Climbers. Look for a party here before you climb. Say !top for the climbers.")
     DG.hang(m, *R(49, 44), 16, 11, Z - 2, every=4, offset=3)
-    m.stairs(*R(44, 45), Z, floor="wood", name="hearth_west")
+    m.stairs(*R(43, 47), Z, floor="wood", name="hearth_west")
     m.stairs(*R(69, 52), Z, floor="wood", name="hearth_east")
     m.stairs(*R(62, 52), Z - 1, floor="marble", name="hearth_hall")
     m.roof(*R(49, 44), 16, 11, Z - 2, "red")                                         # the tower's own roof

@@ -382,8 +382,27 @@ class Map:
     def sign(self, x, y, z, text):
         self.put(x, y, z, ID["sign"], bytes([6]) + otf.pstr(text))
 
-    def depot(self, x, y, z, town):
-        self.put(x, y, z, ID["locker"], bytes([10]) + struct.pack("<H", town))  # OTBM_ATTR_DEPOT_ID = 10
+    def depot(self, x, y, z, town, locker=None):
+        self.put(x, y, z, locker or ID["locker"], bytes([10]) + struct.pack("<H", town))  # OTBM_ATTR_DEPOT_ID = 10
+
+    # depot booths as in every Tibia depot (learned from Canary's hand-made map): a row of counters, a locker standing on
+    # every other counter, and two-tile wooden railings between the lockers, so each player gets a little booth to stand
+    # in. Players drop items on the counters to trade across them. face = the side the player stands on.
+    BOOTH = {"s": (3499, 2321, 5315, (0, 1)), "n": (3497, 2321, 5315, (0, -1)),
+             "e": (3498, 2317, 5314, (1, 0)), "w": (3500, 2320, 5314, (-1, 0))}
+
+    def depot_booths(self, x0, y0, n, z, town, face="s", depth=2):
+        """n booths in a row starting with the first locker at (x0, y0); railings sit before, between and after them."""
+        locker, counter, rail, (fx, fy) = self.BOOTH[face]
+        ax, ay = (0, 1) if fx else (1, 0)                       # along the row
+        for i in range(2 * n + 1):
+            x, y = x0 + (i - 1) * ax, y0 + (i - 1) * ay
+            self.put(x, y, z, counter)
+            if i % 2:
+                self.depot(x, y, z, town, locker)
+                continue
+            for d in range(1, depth + 1):
+                self.put(x + d * fx, y + d * fy, z, rail)
 
     def autowall(self, tiles, z, style="stone"):
         """Lay wall on every (x, y) in tiles, each piece chosen from which neighbours are wall too, by the rules the
