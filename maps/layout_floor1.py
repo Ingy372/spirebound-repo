@@ -93,7 +93,7 @@ def build(m):
         elif name == "shards":                              # Shard Fields: grey gravel, boulders
             for _ in range(8):
                 S.patch(m, cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5), rng.randint(3, 6), rng.randint(3, 5), Z, "gravel")
-            sp(m, cx, cy, w, h, Z, S.BOULDERS, 0.05, seed=30, grass_only=False)
+            sp(m, cx, cy, w, h, Z, S.BOULDERS, 0.018, seed=30, grass_only=False)  # each is a 2x2 rock
             sp(m, cx, cy, w, h, Z, S.STONES, 0.05, seed=31, grass_only=False)
         elif name == "bandits":                             # the Bandit Road: a ruined camp with carts, barrels, fires
             sp(m, cx, cy, w, h, Z, S.BUSHES + S.STONES, 0.04, seed=32)
@@ -107,7 +107,7 @@ def build(m):
         elif name == "quarry":                              # the Old Quarry: bare rock, rubble, broken pillars
             for _ in range(7):
                 S.patch(m, cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5), rng.randint(3, 6), rng.randint(3, 5), Z, "gravel")
-            sp(m, cx, cy, w, h, Z, S.BOULDERS + [593, 1822], 0.1, seed=34, grass_only=False)
+            sp(m, cx, cy, w, h, Z, S.BOULDERS + [1822, 1822], 0.1, seed=34, grass_only=False)
             sp(m, cx, cy, w, h, Z, [2264, 2290, 2152], 0.012, seed=35, grass_only=False)
         else:
             sp(m, cx, cy, w, h, Z, S.FLOWERS + S.BUSHES, 0.04, seed=36)
@@ -642,6 +642,6 @@ def build(m):
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
     S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
     S.standing_stones(m, X0 + 292, Y0 + 238, Z)                    # a ring of standing stones east of the city
-    S.standing_stones(m, X0 + 105, Y0 + 365, Z)
+    S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep)

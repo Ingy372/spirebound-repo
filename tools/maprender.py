@@ -114,6 +114,7 @@ def build_map():
     import layout_floor1
     m = mapgen.Map()
     layout_floor1.build(m)
+    m.complete_objects()
     return m
 
 

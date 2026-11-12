@@ -345,8 +345,62 @@ class Map:
         exit_ = (x0 + W - 3, y0 + H - 3, z)
         return entry, exit_
 
+    def complete_objects(self):
+        """Big objects (2x2 boulders, fountains, benches, beds, stalls...) are made of several pieces on neighbouring
+        tiles. Every piece placed anywhere gets its other pieces added (tools/object_parts.json, learned from a
+        hand-made map). If an object does not fit (a wall, a road, water or something solid in the way) the piece is
+        removed instead: never half an object. Runs automatically before the map is written."""
+        import json
+        path = Path(__file__).resolve().parent / "object_parts.json"
+        if not path.exists():
+            return 0
+        parts = {int(k): v for k, v in json.loads(path.read_text())["parts"].items()}
+        soft = set(ID["flowers"]) | {102, 6225, 6226, 6227, 6228, 6229, 6230, 3656, 3737, 3751, 3754}
+        kind = {}
+        for key, v in ID.items():                      # ground variants of one kind (all the grasses, all the dirts...)
+            for gid in (v if isinstance(v, list) else [v]):
+                kind.setdefault(gid, key)
+        for gid in (4526, 4515, 4517, 4518, 4519, 4520, 4521, 4522, 106):
+            kind[gid] = "grass"
+        removed = 0
+        for _ in range(4):
+            changed = False
+            for p in list(self.items):
+                for iid, _a in list(self.items.get(p, [])):
+                    if iid not in parts:
+                        continue
+                    x, y, z = p
+                    g0 = self.ground.get(p)
+                    need, fits = [], True
+                    for dx, dy, piece in parts[iid]:
+                        q = (x + dx, y + dy, z)
+                        here = [i for i, _b in self.items.get(q, [])]
+                        if piece in here:
+                            continue
+                        g = self.ground.get(q)
+                        same_ground = g is not None and (g == g0 or kind.get(g, g) == kind.get(g0, g0))
+                        if not same_ground or any(i not in soft for i in here) or q in self.house:
+                            fits = False
+                            break
+                        need.append((q, piece))
+                    if not fits:
+                        self.items[p] = [t for t in self.items[p] if t[0] != iid]
+                        if not self.items[p]:
+                            del self.items[p]
+                        removed += 1
+                        changed = True
+                    elif need:
+                        for q, piece in need:
+                            self.clear_items(*q)
+                            self.put(*q, piece)
+                        changed = True
+            if not changed:
+                break
+        return removed
+
     # ---------------------------------------------------------------- output
     def write(self, out=OUT):
+        self.complete_objects()
         out.mkdir(parents=True, exist_ok=True)
         root = otf.Node(0, struct.pack("<IHHII", 2, 65000, 65000, 3, 62))
         props = bytearray()

@@ -9,8 +9,8 @@ BUSHES = [3681, 3699, 3700]
 THORNS = [3703, 3704, 3705, 3706]
 FLOWERS = [102, 6225, 6226, 6227, 6228, 6229, 6230, 3656]
 FERNS = [3737, 3751, 3754]
-STONES = [1780, 1781, 1782, 1783]
-BOULDERS = [1783, 1784, 1785, 1786]
+STONES = [1780, 1781, 1782]                     # small single-tile stones
+BOULDERS = [1783]                               # a big 2x2 rock: the map builder adds its other three pieces
 GRASS_IDS = {4526, 4515, 4517, 4518, 4519, 4520, 4521, 4522, 106}
 
 
@@ -46,8 +46,20 @@ def patch(m, cx, cy, rx, ry, z, key, wobble=0.25):
     for y in range(cy - ry - 1, cy + ry + 2):
         for x in range(cx - rx - 1, cx + rx + 2):
             d = ((x - cx) / max(rx, 1)) ** 2 + ((y - cy) / max(ry, 1)) ** 2
-            if d <= 1.0 + (rng.random() - 0.5) * wobble and (x, y, z) in m.ground and (x, y, z) not in m.items:
+            if d <= 1.0 + (rng.random() - 0.5) * wobble and (x, y, z) in m.ground:
+                # paint under objects too (a grass square left under a rock looks unfinished); never under walls,
+                # and water drowns whatever natural thing stood there
+                its = [i for i, _a in m.items.get((x, y, z), [])]
+                if _solid(its):
+                    continue
+                if its and key == "water":
+                    m.clear_items(x, y, z)
                 m.ground[(x, y, z)] = m.pick(key)
+
+
+def _solid(ids):
+    """Walls, furniture, signs and other placed things keep their ground; only natural things get painted under."""
+    return any(i not in SCENERY for i in ids)
 
 
 def pond(m, cx, cy, rx, ry, z, ring="mud"):
@@ -91,7 +103,7 @@ def bridge(m, x0, y0, w, h, z):
                 m.clear_items(x, y, z)
 
 
-SCENERY = set(TREES_BROAD + TREES_FIR + TREES_DEAD + BUSHES + THORNS + FLOWERS + FERNS + STONES + BOULDERS + [3605, 7957, 593, 1822])
+SCENERY = set(TREES_BROAD + TREES_FIR + TREES_DEAD + BUSHES + THORNS + FLOWERS + FERNS + STONES + BOULDERS + [1784, 1785, 1786, 2264, 2290, 3605, 7957, 1822])
 
 
 def ruin(m, x0, y0, w, h, z, style="stone"):
@@ -99,27 +111,33 @@ def ruin(m, x0, y0, w, h, z, style="stone"):
     from mapgen import FAMILIES
     rng = m.rng
     m.fill(x0, y0, w, h, z, "pave")
-    f = FAMILIES[style]
-    for x in range(x0, x0 + w):
-        for y in (y0, y0 + h - 1):
-            if rng.random() < 0.6:
-                prop(m, x, y, z, f["h"])
-    for y in range(y0 + 1, y0 + h - 1):
-        for x in (x0, x0 + w - 1):
-            if rng.random() < 0.6:
-                prop(m, x, y, z, f["v"])
+    # the wall outline with whole stretches missing (breaks of 1-3 tiles, rubble lying in them); every piece left
+    # standing is chosen from its neighbours, so each stretch ends cleanly instead of looking half-built
+    ring = [(x, y0) for x in range(x0, x0 + w)] + [(x0 + w - 1, y) for y in range(y0 + 1, y0 + h)]
+    ring += [(x, y0 + h - 1) for x in range(x0 + w - 2, x0 - 1, -1)] + [(x0, y) for y in range(y0 + h - 2, y0, -1)]
+    keep, gap = [], 0
+    for t in ring:
+        if gap > 0:
+            gap -= 1
+            if rng.random() < 0.5:
+                prop(m, t[0], t[1], z, 1822)
+            continue
+        if rng.random() < 0.18:
+            gap = rng.randint(0, 2)
+            prop(m, t[0], t[1], z, 1822)
+            continue
+        keep.append(t)
+    m.autowall(keep, z, style)
     for _ in range(max(3, w * h // 14)):
-        prop(m, x0 + rng.randint(1, w - 2), y0 + rng.randint(1, h - 2), z, rng.choice([1822, 593, 1783, 2264, 2290, 3737]))
-    for cx, cy in ((x0, y0), (x0 + w - 1, y0), (x0, y0 + h - 1), (x0 + w - 1, y0 + h - 1)):
-        replace(m, cx, cy, z, rng.choice([2264, 2290, 2152]))
+        prop(m, x0 + rng.randint(1, w - 2), y0 + rng.randint(1, h - 2), z, rng.choice([1822, 1822, 1783, 2264, 2290, 3737]))
 
 
 def standing_stones(m, cx, cy, z, n=8, radius=5):
+    patch(m, cx, cy, radius + 2, radius + 2, z, "dirt", wobble=0.6)      # ground first, so no grass shows under a stone
     for i in range(n):
         a = 2 * math.pi * i / n
         prop(m, cx + int(round(radius * math.cos(a))), cy + int(round(radius * math.sin(a))), z, 2152 if i % 2 == 0 else 2263)
     prop(m, cx, cy, z, 1996)
-    patch(m, cx, cy, radius + 2, radius + 2, z, "dirt", wobble=0.6)
 
 
 def forest(m, x0, y0, w, h, z, keep=(), thresh=0.6, density=0.5, seed=7, cell=4):
