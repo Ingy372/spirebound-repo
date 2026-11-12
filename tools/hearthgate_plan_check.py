@@ -1,3 +1,5 @@
+"""Checks the Hearthgate v3 plan (HEARTHGATE_PLAN.md) for overlaps and draws docs/HEARTHGATE_PLAN.png.
+Coordinates are town-relative. Run: python tools/hearthgate_plan_check.py  (must print: problems 0)"""
 from PIL import Image, ImageDraw, ImageFont
 W, H = 112, 96
 # name: (x, y, w, h, kind, door)   kind: hub/shop/civic/house/yard/green
@@ -20,7 +22,7 @@ B = {
 }
 houses = {"Crown Row": [(75, 21), (84, 21), (93, 21), (102, 21)], "Northside": [(2, 2), (11, 2), (20, 2), (29, 2)],
           "Greenside": [(2, 14), (2, 24)], "Lantern Row N": [(2, 72), (15, 72), (24, 72)],
-          "Squareside": [(38, 72), (46, 72), (60, 72), (68, 72)], "Lantern Row S": [(3, 83), (12, 83), (21, 83), (30, 83), (39, 83)],
+          "Squareside": [(38, 72), (47, 72), (59, 72), (68, 72)], "Lantern Row S": [(3, 83), (12, 83), (21, 83), (30, 83), (39, 83)],
           "Manor Walk": [(77, 72), (86, 72), (95, 72)], "Southgate Row": [(62, 83), (71, 83), (80, 83), (89, 83), (98, 83)]}
 n = 0
 for d, lst in houses.items():
@@ -93,5 +95,6 @@ for gy in range(48, 51):
 d.ellipse([56 * S - 4, 49 * S - 4, 57 * S + 4, 50 * S + 4], fill=(220, 40, 40), outline=(0, 0, 0))
 d.text((46 * S, 62 * S), "Hearth Square (stalls, fountain, Monument)", fill=(60, 50, 30), font=fs)
 d.text((12, H * S - 26), "Hearthgate plan v3   red dot = spawn / respawn   white squares = doors   north is up   1 square = 1 tile x10", fill=(255, 255, 255), font=fs)
-img.save(r"C:\Users\Muth3\Desktop\spirebound-repo\docs\HEARTHGATE_PLAN.png")
+import os
+img.save(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "docs", "HEARTHGATE_PLAN.png"))
 print("saved")
