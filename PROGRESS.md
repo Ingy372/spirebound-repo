@@ -241,3 +241,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-11 — Fixed missing walls on the cabins; Floor 1 plan picture (from Jay's screenshot)
 - Cause of the holes: the little lane roads beside the Wallside Cabins were drawn after the cabins and erased their north walls and doors. Roads now never erase walls or doors, and every house now has a visible open door in its doorway.
 - Added `docs/FLOOR1_PLAN.png` (made by `tools/plan_image.py`): the labelled Floor 1 plan, hunting grounds by level range. Boot test: 82 in-game tests, 0 errors.
+
+### 2026-11-11 — Corners and walls fixed everywhere, checked in the real client (Jay: "focus on the corners of everything")
+- Learned the real rules by counting how Canary's hand-made map builds walls: which piece goes on each corner (top-left post, bottom-right L piece), which ground goes under each wall, and each wall family's own open door. The wall builder now follows them, and a new "auto-wall" picks every piece from its neighbours (used by the labyrinth).
+- Fixed on the way: brick corner used the wrong piece; floor triangles past corners; city wall now pale stone with gates as wide as the avenues; fallen-looking gate pillars removed; standing stones that sat inside the city; Hunters' Hall pressed against the city wall; a ruin dropped on the Arrival Yard; Millcross back-row cottages had no path; bushes and trees on streets, in doorways, in the Pass and in the labyrinth corridors.
+- Checked in the client by logging in with Jay's GM character and teleporting around. Boot test: 82 in-game tests, 0 errors.

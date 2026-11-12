@@ -70,14 +70,15 @@ ID = {
 }
 
 # Wall families: v = vertical piece, h = horizontal, pole = single post, corner = L piece, wh / wv = window pieces,
-# door_h / door_v = an open door set in a doorway of a horizontal / vertical wall. Ids checked visually (tools/spriteview.py).
+# door_h / door_v = the family's own OPEN door (walkable) for a horizontal / vertical wall: the pairings real maps use
+# (counted in Canary's own map) and checked for "walkable" in the appearances file.
 FAMILIES = {
-    "brick":  dict(v=1270, h=1271, pole=1272, corner=1273, wh=1736, wv=1737, door_h=1649, door_v=1647),
-    "stone":  dict(v=1294, h=1295, pole=1296, corner=1298, wh=1738, wv=1739, door_h=1649, door_v=1647),
+    "brick":  dict(v=1270, h=1271, pole=1272, corner=1274, wh=1736, wv=1737, door_h=5099, door_v=5108),
+    "stone":  dict(v=1294, h=1295, pole=1296, corner=1298, wh=1738, wv=1739, door_h=6253, door_v=6255),
     "timber": dict(v=1281, h=1282, pole=1283, corner=1285, wh=1734, wv=1735, door_h=1649, door_v=1647),
-    "sand":   dict(v=1305, h=1306, pole=1307, corner=1309, wh=1744, wv=1745, door_h=1649, door_v=1647),
+    "sand":   dict(v=1305, h=1306, pole=1307, corner=1309, wh=1744, wv=1745, door_h=1655, door_v=1657),
     "white":  dict(v=1356, h=1357, pole=1358, corner=1360, wh=1740, wv=1741, door_h=1673, door_v=1670),
-    "pale":   dict(v=1450, h=1451, pole=1452, corner=1454, wh=None, wv=None, door_h=1673, door_v=1670),
+    "pale":   dict(v=1450, h=1451, pole=1452, corner=1454, wh=None, wv=None, door_h=1482, door_v=1484),
 }
 
 WALL_IDS = {i for f in FAMILIES.values() for i in f.values() if i}
@@ -129,39 +130,54 @@ class Map:
     # -- structures
     def walls(self, x0, y0, w, h, z, gaps=(), style="brick", windows=False, doors=False):
         """Rectangle outline of wall in a family (FAMILIES). gaps = set of (x,y) left open (doorways); with doors=True an
-        open door is set in each gap. windows=True swaps some plain pieces for window pieces. The SE corner gets a post."""
+        open door is set in each gap. windows=True swaps some plain pieces for window pieces.
+
+        Corner pieces follow the hand-made maps (counted in Canary's own map, 2026-11-11): top-left = the post,
+        top-right = horizontal, bottom-left = vertical, bottom-right = the L-shaped corner piece.
+        """
         f = FAMILIES[style]
         gaps = set(gaps)
+        x1, y1 = x0 + w - 1, y0 + h - 1
 
         def near_gap(x, y):
             return any(abs(x - gx) <= 1 and abs(y - gy) <= 1 for gx, gy in gaps)
 
-        for x in range(x0, x0 + w):
-            for y in (y0, y0 + h - 1):
-                if (x, y) in gaps:
-                    if doors:
-                        self.put(x, y, z, f["door_h"])
-                    continue
-                piece = f["h"]
-                if x == x0 and y == y0:
+        def place(x, y, piece, door):
+            if (x, y) in gaps:
+                if doors:
+                    self.put(x, y, z, door)
+                return
+            self.put(x, y, z, piece)
+
+        for x in range(x0, x1 + 1):
+            for y in (y0, y1):
+                if y == y0 and x == x0:
+                    piece = f["pole"]
+                elif y == y1 and x == x0:
+                    piece = f["v"]
+                elif y == y1 and x == x1:
                     piece = f["corner"]
                 elif windows and f["wh"] and 2 <= x - x0 <= w - 3 and (x - x0) % 4 == 2 and not near_gap(x, y):
                     piece = f["wh"]
-                self.put(x, y, z, piece)
-        self.put(x0 + w - 1, y0 + h - 1, z, f["pole"]) if (x0 + w - 1, y0 + h - 1) not in gaps else None
-        for y in range(y0 + 1, y0 + h - 1):
-            for x in (x0, x0 + w - 1):
-                if (x, y) in gaps:
-                    if doors:
-                        self.put(x, y, z, f["door_v"])
-                    continue
+                else:
+                    piece = f["h"]
+                place(x, y, piece, f["door_h"])
+        for y in range(y0 + 1, y1):
+            for x in (x0, x1):
                 piece = f["v"]
                 if windows and f["wv"] and 2 <= y - y0 <= h - 3 and (y - y0) % 4 == 2 and not near_gap(x, y):
                     piece = f["wv"]
-                self.put(x, y, z, piece)
+                place(x, y, piece, f["door_v"])
 
     def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True, style="brick", windows=True, doors=False):
+        # as in the hand-made maps, the top row and the left-hand column of walls stand on the OUTSIDE ground and the
+        # bottom row and right-hand column on the floor (otherwise a little triangle of floor shows past the corners)
+        outside = {(xx, y0): self.ground.get((xx, y0, z)) for xx in range(x0, x0 + w)}
+        outside.update({(x0, yy): self.ground.get((x0, yy, z)) for yy in range(y0, y0 + h)})
         self.fill(x0, y0, w, h, z, floor)
+        for (xx, yy), g in outside.items():
+            if g is not None and g not in (4597, 4609, 4610):
+                self.ground[(xx, yy, z)] = g
         for yy in range(y0, y0 + h):
             for xx in range(x0, x0 + w):
                 self.clear_items(xx, yy, z)  # nothing the plain grew may stand inside a building
@@ -173,6 +189,26 @@ class Map:
             door = (x0 + w - 1, y0 + h // 2)
         else:
             door = (x0, y0 + h // 2)
+        self.ground[(door[0], door[1], z)] = self.pick(floor)   # the doorway shows the floor, not the street
+        # an open door is thinner than a wall piece, so the wall tile before it (above a west door, left of a north
+        # door) shows a corner of its ground: give it the floor too
+        if door_side == "w":
+            self.ground[(door[0], door[1] - 1, z)] = self.pick(floor)
+        elif door_side == "n":
+            self.ground[(door[0] - 1, door[1], z)] = self.pick(floor)
+        # no tree, bush or rock hugging the walls or standing in front of the door
+        try:
+            from scenery import SCENERY
+        except ImportError:
+            SCENERY = set()
+        ring = [(xx, yy) for xx in range(x0 - 1, x0 + w + 1) for yy in (y0 - 1, y0 + h)]
+        ring += [(xx, yy) for yy in range(y0, y0 + h) for xx in (x0 - 1, x0 + w)]
+        step = {"s": (0, 1), "n": (0, -1), "e": (1, 0), "w": (-1, 0)}[door_side]
+        ring += [(door[0] + step[0] * k + step[1] * d, door[1] + step[1] * k + step[0] * d) for k in (1, 2) for d in (-1, 0, 1)]
+        for xx, yy in ring:
+            its = self.items.get((xx, yy, z))
+            if its and all(i in SCENERY for i, _a in its):
+                self.clear_items(xx, yy, z)
         self.walls(x0, y0, w, h, z, gaps={door}, style=style, windows=windows, doors=doors)
         if pz:
             self.flag(x0, y0, w, h, z, TILE_PZ)
@@ -251,11 +287,36 @@ class Map:
     def depot(self, x, y, z, town):
         self.put(x, y, z, ID["locker"], bytes([10]) + struct.pack("<H", town))  # OTBM_ATTR_DEPOT_ID = 10
 
-    def maze(self, x0, y0, cells_w, cells_h, z, floor="stonefloor", seed=1):
+    def autowall(self, tiles, z, style="stone"):
+        """Lay wall on every (x, y) in tiles, each piece chosen from which neighbours are wall too, by the rules the
+        hand-made maps follow (counted in Canary's own map): wall to the north and west = the L corner; only east and
+        south = the post; otherwise vertical runs use the vertical piece and horizontal runs the horizontal one."""
+        f = FAMILIES[style]
+        t = set(tiles)
+        for x, y in t:
+            n, e, s, w = (x, y - 1) in t, (x + 1, y) in t, (x, y + 1) in t, (x - 1, y) in t
+            if n and w:
+                piece = f["corner"]
+            elif e and s and not n:
+                piece = f["pole"] if not w else f["h"]
+            elif n:
+                piece = f["v"]
+            elif w or e:
+                piece = f["h"]
+            elif s:
+                piece = f["v"]
+            else:
+                piece = f["pole"]
+            self.put(x, y, z, piece)
+
+    def maze(self, x0, y0, cells_w, cells_h, z, floor="stonefloor", seed=1, style="stone"):
         """Perfect maze with 2-tile corridors. Returns (entry, exit) tile positions."""
         rng = random.Random(seed)
         W, H = cells_w * 3 + 1, cells_h * 3 + 1
         self.fill(x0, y0, W, H, z, floor)
+        for y in range(y0, y0 + H):
+            for x in range(x0, x0 + W):
+                self.clear_items(x, y, z)  # nothing the plain grew may stand in the corridors
         open_ = set()
         for cy in range(cells_h):
             for cx in range(cells_w):
@@ -279,10 +340,7 @@ class Map:
                 wy = (max(cy, ny)) * 3
                 open_.update({(cx * 3 + 1, wy), (cx * 3 + 2, wy)})
             seen.add((nx, ny)); stack.append((nx, ny))
-        for y in range(H):
-            for x in range(W):
-                if (x, y) not in open_:
-                    self.put(x0 + x, y0 + y, z, ID["wall_p"])
+        self.autowall([(x0 + x, y0 + y) for y in range(H) for x in range(W) if (x, y) not in open_], z, style)
         entry = (x0 + 1, y0 + 1, z)
         exit_ = (x0 + W - 3, y0 + H - 3, z)
         return entry, exit_

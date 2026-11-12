@@ -12,7 +12,7 @@ import scenery as S  # noqa: E402
 from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 X0, Y0, Z = 1000, 1000, 7
-ID_PILLAR = 1273  # wall corner piece, used as a column in the Underkeep and the arena
+ID_PILLAR = 1296  # grey stone post, used as a free-standing column in the Underkeep and the arena
 SIZE = 400
 PILLAR, PILLAR_VINE, MARBLE_PILLAR, HERO_STATUE, ANGEL_STATUE = 24001, 24003, 2153, 2027, 2031
 
@@ -142,17 +142,10 @@ def build(m):
     for x in range(tx, tx + tw):
         for y in range(ty, ty + th):
             m.clear_items(x, y, Z)
-    gates = {(tx + tw // 2, ty), (tx + tw // 2 + 1, ty), (tx, ty + th // 2), (tx, ty + th // 2 + 1),
-             (tx + tw - 1, ty + th // 2), (tx + tw - 1, ty + th // 2 + 1), (tx + tw // 2, ty + th - 1), (tx + tw // 2 + 1, ty + th - 1)}
-    m.walls(tx, ty, tw, th, Z, gaps=gates, style="stone")
-    # towers: a pillar on each corner and on both sides of every gate
-    for px, py in [(tx, ty), (tx + tw - 1, ty), (tx, ty + th - 1), (tx + tw - 1, ty + th - 1)]:
-        S.replace(m, px, py, Z, PILLAR_VINE)
-    for gx, gy in gates:
-        for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-            nx, ny = gx + dx, gy + dy
-            if (nx, ny) not in gates and (nx, ny, Z) in m.items and tx <= nx < tx + tw and ty <= ny < ty + th and (nx in (tx, tx + tw - 1) or ny in (ty, ty + th - 1)):
-                S.replace(m, nx, ny, Z, PILLAR)
+    # gates as wide as what runs through them: the north and south avenues are 4 tiles, the east and west roads 3
+    gates = {(tx + tw // 2 + d, ty) for d in (-1, 0, 1, 2)} | {(tx + tw // 2 + d, ty + th - 1) for d in (-1, 0, 1, 2)}
+    gates |= {(tx, ty + th // 2 + d) for d in (0, 1, 2)} | {(tx + tw - 1, ty + th // 2 + d) for d in (0, 1, 2)}
+    m.walls(tx, ty, tw, th, Z, gaps=gates, style="pale")          # pale stone: stands out against the grey streets
     m.flag(tx + 1, ty + 1, tw - 2, th - 2, Z, 0x0001)  # whole town is a safe zone (DESIGN 6.2)
     gate_n = (tx + tw // 2, ty)
     # paving: the plaza in dark flagstone with a marble border, avenues north and south in flagstone
@@ -207,7 +200,7 @@ def build(m):
     # shop row along the north wall (door south, sign in front). NPC stands behind the counter.
     shops = [("General Store", 3, "Merchant Wenna", "brick", "general"), ("Weaponsmith", 15, "Weaponsmith Garrick", "brick", "weapons"),
              ("Armorer", 27, "Armorer Hesta", "brick", "armor"), ("Quartermaster's Stores", 45, "Quartermaster Bryn", "brick", "general"),
-             ("Bank", 57, "Banker Tolliver", "white", "bank"), ("Hunters' Hall", 69, "Taskmaster Ren", "stone", "hall")]
+             ("Bank", 57, "Banker Tolliver", "white", "bank"), ("Hunters' Hall", 68, "Taskmaster Ren", "stone", "hall")]
     for name, rx, npc, style, kind in shops:
         sx, sy = tx + rx, ty + 4
         claim(name, sx, sy, 10, 9)
@@ -248,7 +241,7 @@ def build(m):
 
     # the Ascendancy (promotion hall, west of the plaza) and the Guild Hall (east)
     claim("ascendancy", tx + 4, ty + 15, 14, 10)
-    m.building(tx + 4, ty + 15, 14, 10, Z, floor="marble", door_side="e", style="pale", doors=True)
+    m.building(tx + 4, ty + 15, 14, 10, Z, floor="marble", door_side="e", style="sand", doors=True)
     S.carpet(m, tx + 6, ty + 18, 9, 3, Z, 2576)
     for px, py in ((tx + 6, ty + 17), (tx + 14, ty + 17), (tx + 6, ty + 22), (tx + 14, ty + 22)):
         S.prop(m, px, py, Z, MARBLE_PILLAR)
@@ -354,10 +347,12 @@ def build(m):
             m.clear_items(xx, yy, Z)
     m.fill(mx + 1, my + 16, mw - 2, 5, Z, "dirt")                      # the main street
     for i in range(4):
-        m.fill(mx + 6 + i * 15, my + 21, 3, 3, Z, "dirt")             # paths to the cottage doors
-        m.fill(mx + 6 + i * 15, my + 31, 3, 3, Z, "dirt")
+        m.fill(mx + 6 + i * 15, my + 21, 3, 3, Z, "dirt")             # paths to the front-row cottage doors
+    m.fill(mx + 1, my + 32, mw - 2, 2, Z, "dirt")                     # the back lane, for the back-row cottage doors
+    m.fill(mx + 1, my + 21, 2, 13, Z, "dirt")                         # ... joined to the main street at both ends
+    m.fill(mx + 59, my + 21, 2, 13, Z, "dirt")
     m.fill(mx + 23, my + 14, 4, 3, Z, "dirt")                         # the inn's front path
-    S.sprinkle(m, mx, my, mw, mh, Z, S.FLOWERS + S.BUSHES, 0.05, seed=50)
+    S.sprinkle(m, mx, my, mw, mh, Z, S.FLOWERS, 0.05, seed=50)                # flowers only: bushes block the way
     m.flag(mx, my, mw, mh, Z, 0x0001)
     m.building(mx + 18, my + 4, 14, 10, Z, floor="wood", door_side="s", style="white", doors=True)  # inn
     S.counter(m, mx + 20, my + 7, 8, Z)
@@ -376,7 +371,7 @@ def build(m):
                              style=["timber", "sand", "timber", "brick"][(i + (row_y // 10)) % 4])
             S.prop(m, mx + 5 + i * 15, my + row_y - 1, Z, 316)
             hid += 1
-    for px, py in ((mx + 10, my + 18), (mx + 40, my + 18), (mx + 25, my + 21)):
+    for px, py in ((mx + 10, my + 14), (mx + 40, my + 14)):                       # shade trees beside the street
         S.prop(m, px, py, Z, 3619)
     S.prop(m, mx + 25, my + 19, Z, 1922)
     m.towns.append((2, "Millcross", (mx + 25, my + 18, Z)))
@@ -433,6 +428,9 @@ def build(m):
     # ------------------------------------------------ apex spawn: the Old Watchtower (Contested from task 2.2)
     ax, ay = X0 + 30, Y0 + 30
     m.fill(ax, ay, 44, 44, Z, "stonefloor")
+    for yy in range(ay, ay + 44):
+        for xx in range(ax, ax + 44):
+            m.clear_items(xx, yy, Z)
     m.walls(ax, ay, 44, 44, Z, gaps={(ax + 22, ay + 43), (ax + 23, ay + 43)}, style="stone")
     m.walls(ax + 12, ay + 12, 20, 20, Z, gaps={(ax + 22, ay + 31)}, style="stone")  # the packed inner room
     m.monsters.append(("Stonehorn Ram", (ax + 8, ay + 36, Z), 3, 3, 90))
@@ -450,6 +448,9 @@ def build(m):
     # ------------------------------------------------ the Pass (field boss arena) and the labyrinth
     px, py = gate_n[0] - 12, Y0 + 70
     m.fill(px, py, 24, 20, Z, "stonefloor")
+    for yy in range(py, py + 20):
+        for xx in range(px, px + 24):
+            m.clear_items(xx, yy, Z)
     m.walls(px, py, 24, 20, Z, gaps={(px + 12, py + 19), (px + 13, py + 19), (px + 12, py), (px + 13, py)}, style="stone")
     m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script (it never returns once dead)
     m.points["pass_arena"] = (px + 12, py + 10, Z)
@@ -639,8 +640,8 @@ def build(m):
     S.pond(m, X0 + 96, Y0 + 130, 11, 7, Z, ring="mud")            # a pond across the river
     S.ruin(m, X0 + 312, Y0 + 125, 14, 11, Z)                       # ruined watchtower by the lake
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
-    S.ruin(m, X0 + 280, Y0 + 330, 10, 8, Z)                        # a toppled shrine in the south-east
-    S.standing_stones(m, X0 + 262, Y0 + 252, Z)                    # a ring of standing stones east of the city
+    S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
+    S.standing_stones(m, X0 + 292, Y0 + 238, Z)                    # a ring of standing stones east of the city
     S.standing_stones(m, X0 + 105, Y0 + 365, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep)

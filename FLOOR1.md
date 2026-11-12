@@ -87,3 +87,9 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 - **The land** has a winding river with muddy banks and wooden bridges, winding dirt roads, forest masses between the places people go (never within about eight tiles of a road, building or hunting ground), three ponds and a lake, ruins (a watchtower by the lake, a farmhouse, a toppled shrine), two rings of standing stones, and a fenced wheat field north of Millcross.
 - **Each hunting ground has its own look:** dirt mounds (Ratwarren), a pond (Toad Pond), ferns and bushes (Sproutling Glade), a flower meadow (Waspgrass), oak groves and mud wallows (Boar Meadow), bare dirt and boulders (Burrow Hills), dark fir forest (Wolf Copse), a thorn thicket (Thornsnap Hollow), pools and mud (Reedmarsh), grey gravel and boulders (Shard Fields), a ruined camp with carts and fires (Bandit Road), rubble and broken pillars (Old Quarry).
 - **Still to do:** roofs are not possible with these tools (the game draws roofs as a separate floor), the Pass, labyrinth and Axe-Lord's room are plain stone boxes, the camps want more landmark set pieces, and the river banks need proper shore tiles. Cowork's finishing polish should start there.
+
+## Wall rules (2026-11-11, learned from Canary's hand-made map)
+- Corners: top-left = the small post, top-right = horizontal piece, bottom-left = vertical piece, bottom-right = the L-shaped corner piece. `Map.autowall` applies the same rule to any shape (the labyrinth uses it).
+- Ground: the top row and left column of a building's walls stand on the outside ground; the bottom row and right column on the floor. Doorways always show the floor.
+- Doors: each wall family has its own open door (brick 5099/5108, stone 6253/6255, sandstone 1655/1657, pale stone archway 1482/1484, white 1673/1670, timber 1649/1647).
+- Nothing natural (trees, bushes, rocks) within one tile of a building or two tiles in front of its door.

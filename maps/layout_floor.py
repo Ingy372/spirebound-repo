@@ -5,7 +5,7 @@ Named points are prefixed f<N>_ so scripts can find them. The real maps are MAP_
 
 from floors import FLOORS, SIZE, origin
 
-ID_PILLAR = 1273
+ID_PILLAR = 1296  # grey stone post (a free-standing column)
 BIOME_KEYS = {"grass": "grass", "dried": "dried", "dirt": "dirt", "jungle": "jungle", "dirtfloor": "cavefloor",
               "sand": "sand", "cobble": "cobble", "gravel": "gravel", "stonefloor": "stonefloor", "rocksoil": "rocksoil",
               "earth": "earth", "swamp": "swamp", "mud": "mud", "wood": "wood", "snow": "snow", "blackmarble": "blackmarble"}

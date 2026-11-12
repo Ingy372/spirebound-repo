@@ -26,14 +26,15 @@ def free(m, x, y, z):
     return (x, y, z) in m.ground and (x, y, z) not in m.items and m.ground[(x, y, z)] not in (4597, 4609, 4610)
 
 
-def sprinkle(m, x0, y0, w, h, z, kinds, density, seed=0, lo=0.0, grass_only=True):
-    """Place items from `kinds` at the given density, only where noise() >= lo (use lo ~0.55 for clumps)."""
+def sprinkle(m, x0, y0, w, h, z, kinds, density, seed=0, lo=0.0, grass_only=True, on_dirt=False):
+    """Place items from `kinds` at the given density, only where noise() >= lo (use lo ~0.55 for clumps).
+    Never on roads and streets unless on_dirt=True (for dirt-covered hunting grounds)."""
     rng = m.rng
     for y in range(y0, y0 + h):
         for x in range(x0, x0 + w):
             if not free(m, x, y, z):
                 continue
-            if grass_only and m.ground[(x, y, z)] not in GRASS_IDS and m.ground[(x, y, z)] != 103:
+            if grass_only and m.ground[(x, y, z)] not in GRASS_IDS and not (on_dirt and m.ground[(x, y, z)] == 103):
                 continue
             if noise(x, y, seed) >= lo and rng.random() < density:
                 m.put(x, y, z, rng.choice(kinds))
