@@ -211,3 +211,18 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
   - **Level 3:** the Hall of Climbers.
   Also added: an account vault shared by all characters on an account, and a branch bank on the north wall. Done when: in-game test checks that the respawn point is in the Hearth, all stairs work both ways, the NPCs are loaded and the vault arithmetic holds; Osric's trade window was checked in the client.
 - [x] **J12 Hearthgate v3, built from the plan** (Jay, 2026-11-12). The Hearth at the centre, four quarters, 30 houses, Spire Manor moved to the East High Road, Spire Gardens, Hearthgate Green, Old Well Yard. Done when: map builds with no overlaps, in-game tests check the archways, a locker near the Hearthstone, 30 street houses, all stairs; walked in the client.
+
+## Floor 1 wilds rebuild (plan ready 2026-11-12: `FLOOR1_WILDS_PLAN.md`, picture `docs/FLOOR1_WILDS_PLAN.png`)
+Jay: "monster spawn areas are currently messy and need to have more of a dedicated area where a few players at a time will be able to bot or farm." Follow the plan exactly; one commit per task; details and "done when" are in its Part 9.
+- [ ] **W0 Find out how the engine respawns** (three questions in Part 7).
+- [ ] **W1 Put the new ground table into `maps/floor1_plan.py`** (nothing on the map changes yet).
+- [ ] **W2 Builder pieces:** wall ring, loop, fixed groups, named points, the walk test.
+- [ ] **W3 Pilot: Boar Meadow** with Old Tusk's wallow.
+- [ ] **W4 The four starter grounds.**
+- [ ] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
+- [ ] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
+- [ ] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
+- [ ] **W8 The six caves.**
+- [ ] **W9 Experience stages and the ladder** (Q30).
+- [ ] **W10 The crowd system and the `!hunt` line** (Q31).
+- [ ] **W11 Regenerate documents and pictures; playtest list for Jay.**

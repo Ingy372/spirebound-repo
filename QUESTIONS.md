@@ -89,6 +89,21 @@ Trader Osric buys nearly every monster drop at close to the standard Tibia NPC p
 - **Recommendation:** keep these prices for the friends test, then adjust from what testers earn per hour (ECONOMY.md shows the model).
 - Jay's answer:
 
+### Q30. Slow the early levels so Floor 1 lasts? (2026-11-12, from FLOOR1_WILDS_PLAN.md)
+With experience at 25 times normal, a new character passes level 35 (the end of Floor 1) after about 1 hour 15 minutes. Twelve hunting grounds go by in minutes each.
+- **Recommendation:** levels 1 to 8 at 10 times, 9 to 20 at 4 times, 21 to 50 at 3 times. Floor 1 then takes about 11 to 15 hours by hand, about a day and a half on the cavebot. Later stages get the same check when Floor 2 is planned.
+- Jay's answer:
+
+### Q31. Crowd system: more monsters when a hunting ground is over-full? (2026-11-12)
+Each ground counts the players inside it. Past 5 players, extra monster groups switch on at set spots; past 8, all of them; they switch off five minutes after the crowd leaves. Starter grounds can reach four times their normal size (for launch day); harder grounds only one and a half times, so good spots stay worth competing for.
+- **Recommendation:** build it as described in FLOOR1_WILDS_PLAN.md Part 7.
+- Jay's answer:
+
+### Q32. No cavebot inside the new caves? (2026-11-12)
+Six hunting grounds get a cave underneath with bigger groups, meant for a party of two to four at the keyboard. The loops above are for solo players and bots.
+- **Recommendation:** refuse the cavebot in caves, the same way boss rooms do.
+- Jay's answer:
+
 ### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
 Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
 - **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").
