@@ -4,7 +4,7 @@
 SpireShop = {
 	ENABLED = false,
 	CURRENCY = "Spire Coins", -- account-wide; granted by the payment system (7.3) or by the owner with /shopgrant
-	KINDS = { furniture = true, outfit = true, mount = true, decoration = true },
+	KINDS = { furniture = true, outfit = true, mount = true, decoration = true, house = true },
 }
 
 -- kind: furniture/decoration = a takeable item (item id); outfit = lookType (+addons 3); mount = mount id.
@@ -20,7 +20,23 @@ SpireShop.catalog = {
 	{ id = "outfit_hearth_cloak", kind = "outfit", name = "Hearth Cloak outfit", price = 400, lookType = 129 }, -- placeholder look until art arrives
 	{ id = "outfit_tower_mantle", kind = "outfit", name = "Tower Mantle outfit", price = 400, lookType = 130 },
 	{ id = "mount_stone_hound", kind = "mount", name = "Stone Hound mount", price = 500, mount = 1 },
+	-- Spire Manor: the only way to own it (Jay, 2026-11-11: "pay to obtain only"). Cosmetic: no stats, no bonuses.
+	{ id = "spire_manor", kind = "house", name = "the deed to Spire Manor (Hearthgate)", price = 5000, house = "Spire Manor" },
 }
+
+-- Houses that only the shop can hand out (!buyhouse refuses them)
+SpireShop.SHOP_HOUSES = { ["Spire Manor"] = true }
+
+-- Pure: may this player take this shop house? owner guid of the house (0 = free), does the player own a house already
+function SpireShop.houseAvailable(ownerGuid, playerHasHouse)
+	if (ownerGuid or 0) ~= 0 then
+		return false, "Spire Manor already has an owner this season."
+	end
+	if playerHasHouse then
+		return false, "Leave your current house first: a climber can own one house."
+	end
+	return true
+end
 
 local GOLD_COINS = { [3031] = true, [3035] = true, [3043] = true } -- gold, platinum, crystal
 

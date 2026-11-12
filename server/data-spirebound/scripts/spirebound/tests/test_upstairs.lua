@@ -91,3 +91,28 @@ SpireTest.add("map: decoration never blocks a landing, start or entrance", funct
 	local e = WorldPoints.apex_cave_exit
 	SpireTest.eq(walkable(Position(e.x + 1, e.y + 1, e.z)), true, "apex cave landing is walkable")
 end)
+
+SpireTest.add("map: Spire Manor has four levels joined by stairs, and only the shop can hand it out", function()
+	for i = 1, 3 do
+		checkStairs("spire_manor_" .. i)
+	end
+	local h
+	for _, house in ipairs(Game.getHouses()) do
+		if house:getName() == "Spire Manor" then h = house end
+	end
+	if not h then error("Spire Manor is not on the map") end
+	local p = WorldPoints.spire_manor
+	for dz = 0, 3 do
+		local found = false
+		for dx = -8, 8 do
+			local t = Tile(Position(p.x + dx, p.y + 4, p.z - dz))
+			if t and t:getHouse() and t:getHouse():getId() == h:getId() then found = true end
+		end
+		SpireTest.eq(found, true, "the manor has rooms on level " .. (p.z - dz))
+	end
+	SpireTest.eq(SpireShop.SHOP_HOUSES["Spire Manor"], true, "!buyhouse refuses it")
+	SpireTest.eq(SpireShop.get("spire_manor").kind, "house", "the shop sells its deed")
+	SpireTest.eq((SpireShop.houseAvailable(0, false)), true, "free and the buyer has no house")
+	SpireTest.eq((SpireShop.houseAvailable(42, false)), false, "already owned")
+	SpireTest.eq((SpireShop.houseAvailable(0, true)), false, "buyer already owns a house")
+end)

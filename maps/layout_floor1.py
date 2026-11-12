@@ -355,6 +355,81 @@ def build(m):
     for px in (2, 6, 10, 14):                              # hitching posts
         S.prop(m, cx_ + px, cy_ + 8, Z, 2264)
 
+
+    # ---- Spire Manor (Jay, 2026-11-11: "a beautiful house that will be pay to obtain only ... at least 3 levels high").
+    # Four levels on the avenue's south end: the Grand Hall (display counters, statues, indoor fountain), the Trophy
+    # Gallery (display rows, bookcases, weapon and armour racks), the private quarters (bedroom, study) and a rooftop
+    # garden with a fountain and a telescope. Obtained only from the shop (!shop); !buyhouse refuses it. Cosmetic only.
+    mx0, my0 = R(46, 53)
+    MW, MH, MID = 22, 16, 99      # house 99: clear of every other floor's numbers
+    m.building(mx0, my0, MW, MH, Z, floor="marble", door_side="n", style="white", doors=True)
+    m.buildings[-1]["roof"] = None                       # the roof is the garden terrace instead
+    for yy in range(my0 + 1, my0 + MH - 1):
+        for xx in range(mx0 + 1, mx0 + MW - 1):
+            if xx in (mx0 + 1, mx0 + MW - 2) or yy in (my0 + 1, my0 + MH - 2):
+                m.ground[(xx, yy, Z)] = 410               # a black marble border round the hall
+    m.put(mx0 + 10, my0 + 8, Z, 1922)                    # indoor fountain
+    for px, py in ((3, 3), (18, 3), (3, 12), (18, 12)):
+        S.prop(m, mx0 + px, my0 + py, Z, MARBLE_PILLAR)
+    S.counter(m, mx0 + 2, my0 + 5, 6, Z, vertical=True)  # display counters along both side walls
+    S.counter(m, mx0 + 19, my0 + 5, 6, Z, vertical=True)
+    S.prop(m, mx0 + 6, my0 + 12, Z, ANGEL_STATUE)
+    S.prop(m, mx0 + 15, my0 + 12, Z, HERO_STATUE)
+    DG.hang(m, mx0, my0, MW, MH, Z, every=3, h_item=2670, v_item=DG.LAMP_V, offset=2)   # trophies on the north wall
+    m.stairs(mx0 + 20, my0 + 3, Z, floor="wood", name="spire_manor_1")
+    # level 2: the Trophy Gallery
+    m.storey(mx0, my0, MW, MH, Z - 1, floor="wood", style="white")
+    for row in (6, 10):
+        S.counter(m, mx0 + 4, my0 + row, 13, Z - 1)      # two long display rows
+    for px in (5, 7, 13, 15):
+        S.prop(m, mx0 + px, my0 + 1, Z - 1, 2437)          # bookcases along the north wall
+    DG.hang(m, mx0, my0, MW, MH, Z - 1, every=4, h_item=6110, v_item=DG.LAMP_V, offset=3)
+    for px in (2, 10, 18):
+        if (mx0 + px, my0, Z - 1) in m.items:
+            m.put(mx0 + px, my0, Z - 1, 6112)              # armour racks between the weapon racks
+    m.stairs(mx0 + 1, my0 + 3, Z - 1, floor="wood", name="spire_manor_2")
+    # level 3: private quarters (bedroom west, study east)
+    m.storey(mx0, my0, MW, MH, Z - 2, floor="wood", style="white")
+    m.autowall([(mx0 + 11, my0 + y) for y in range(1, 15) if y not in (7, 8)], Z - 2, "white")
+    for px, py, pid in ((3, 3, 2487), (6, 3, 2487), (2, 12, 2427), (8, 1, 2435), (15, 7, 2310), (17, 10, 2357), (13, 12, 2435)):
+        S.prop(m, mx0 + px, my0 + py, Z - 2, pid)
+    S.prop(m, mx0 + 2, my0 + 0, Z - 2, 2630)             # a mirror in the bedroom
+    DG.hang(m, mx0, my0, MW, MH, Z - 2, every=5, offset=4)
+    m.stairs(mx0 + 20, my0 + 3, Z - 2, floor="wood", name="spire_manor_3")
+    # level 4: the rooftop garden (no roof: open to the sky)
+    tz = Z - 3
+    for yy in range(my0 + 1, my0 + MH):
+        for xx in range(mx0 + 1, mx0 + MW):
+            if (xx, yy, tz) not in m.ground:
+                edge = xx in (mx0 + 1, mx0 + MW - 1) or yy in (my0 + 1, my0 + MH - 1)
+                m.ground[(xx, yy, tz)] = 416 if edge or not (mx0 + 3 <= xx <= mx0 + MW - 3 and my0 + 3 <= yy <= my0 + MH - 3) else m.pick("grass")
+    for xx in range(mx0 + 1, mx0 + MW):                  # a limestone balustrade round the edge
+        for yy in (my0 + 1, my0 + MH - 1):
+            if (xx, yy) != (mx0 + 20, my0 + 2):
+                m.put(xx, yy, tz, 9273)
+    for yy in range(my0 + 2, my0 + MH - 1):
+        for xx in (mx0 + 1, mx0 + MW - 1):
+            m.put(xx, yy, tz, 9272)
+    m.put(mx0 + 10, my0 + 7, tz, 1922)                   # garden fountain
+    for px, py in ((6, 5), (14, 5), (6, 11), (14, 11)):
+        S.prop(m, mx0 + px, my0 + py, tz, 2370)
+    for px, py in ((4, 4), (17, 4), (4, 12), (17, 12)):
+        S.prop(m, mx0 + px, my0 + py, tz, 3619)
+    S.prop(m, mx0 + 18, my0 + 13, tz, 3488)              # a telescope over the city
+    m.flag(mx0 + 1, my0 + 1, MW - 1, MH - 1, tz, 0x0001)
+    # the house itself: every floor tile on every level, plus the doorway
+    tiles = []
+    for zz in (Z, Z - 1, Z - 2, tz):
+        for yy in range(my0 + 1, my0 + MH):
+            for xx in range(mx0 + 1, mx0 + MW):
+                if (xx, yy, zz) in m.ground and not (zz == Z and (xx == mx0 + MW - 1 or yy == my0 + MH - 1)):
+                    m.house[(xx, yy, zz)] = MID
+                    tiles.append((xx, yy, zz))
+    m.house[(mx0 + 11, my0, Z)] = MID
+    m.houses[MID] = {"name": "Spire Manor", "town": 1, "rent": 0, "entry": (mx0 + 11, my0 - 1, Z), "size": len(tiles) + 1}
+    m.points["spire_manor"] = (mx0 + 10, my0 + 4, Z)
+    m.sign(mx0 + 9, my0 - 1, Z, "Spire Manor. Four floors, a trophy gallery and a rooftop garden. Its deed is sold in the Spire Shop (!shop).")
+
     # ---- the houses: two streets along the south wall, the avenue down the middle to the south gate
     hid = 1
     styles = ["timber", "sand", "timber", "white", "brick", "timber", "sand"]

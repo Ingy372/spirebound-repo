@@ -273,3 +273,13 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
   - 22 houses (was 14).
   Camps, cabins, the Arrival Yard and the standing stones moved to fit around the bigger walls.
 - `docs/RESEARCH_TOP_SERVERS_2026-11b.md`: who is biggest now (RubinOT, Best-Baiak, Streamy, Miracle, Ezodus) and the patterns in minigames, travel, PvP, gear, houses and premium, with what we have and what we are missing. Boot test: 87 in-game tests, 0 errors.
+
+### 2026-11-11 — Spire Manor, the shop-only showcase house (Jay's direction list, step 3)
+- Four levels at the south end of Hearthgate's avenue:
+  - **The Grand Hall:** an indoor fountain, display counters along both walls, statues and trophies.
+  - **The Trophy Gallery:** two long display rows, bookcases, weapon and armour racks.
+  - **The private quarters:** a bedroom and a study.
+  - **A rooftop garden:** fountain, benches, trees, a telescope and a balustrade.
+  Stairs join every level. It is house 99 and 1 of 1 on the server.
+- Only the shop can hand it out: a new "house" kind in the catalog, and !buyhouse refuses it. Price and resale are in Q26 (assumed: placeholder 5,000 coins, not resellable).
+- Fixed: big objects inside houses (beds, fountains) were being removed, and an upstairs floor could cover the stair hole from below. New test covers the manor's four levels, its stairs and the shop-only rule. Boot test: 88 in-game tests, 0 errors.

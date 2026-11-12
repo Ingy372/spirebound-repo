@@ -221,6 +221,8 @@ class Map:
         rectangle, standing in the air on its top and left side (as the hand-made maps do), with a floor inside."""
         for y in range(y0 + 1, y0 + h):
             for x in range(x0 + 1, x0 + w):
+                if self.ground.get((x, y, z)) in (STAIRS_DOWN, TRAPDOOR):
+                    continue                  # a stairwell or trapdoor already opened from below stays open
                 self.ground[(x, y, z)] = self.pick(floor)
                 self.clear_items(x, y, z)
         self.walls(x0, y0, w, h, z, style=style, windows=windows)
@@ -472,7 +474,7 @@ class Map:
                             continue
                         g = self.ground.get(q)
                         same_ground = g is not None and (g == g0 or kind.get(g, g) == kind.get(g0, g0))
-                        if not same_ground or any(i not in soft for i in here) or q in self.house:
+                        if not same_ground or any(i not in soft for i in here) or self.house.get(q) != self.house.get(p):
                             fits = False
                             break
                         need.append((q, piece))

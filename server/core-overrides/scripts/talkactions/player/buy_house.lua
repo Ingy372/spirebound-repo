@@ -36,6 +36,12 @@ function buyHouse.onSay(player, words, param)
 		return true
 	end
 
+	-- Spirebound: some houses come only from the shop (Spire Manor)
+	if SpireShop and SpireShop.SHOP_HOUSES[house:getName()] then
+		player:sendCancelMessage(house:getName() .. " can't be bought with gold. Its deed is sold in the Spire Shop (!shop).")
+		return true
+	end
+
 	if player:getHouse() then
 		player:sendCancelMessage("You are already the owner of a house.")
 		return true

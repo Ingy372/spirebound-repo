@@ -60,6 +60,7 @@
 	<house name="Millcross Cottage 58" houseid="58" entryx="1057" entryy="1228" entryz="7" rent="800" townid="2" size="43" clientid="58" guildhall="false" beds="2" />
 	<house name="Millcross Cottage 59" houseid="59" entryx="1072" entryy="1228" entryz="7" rent="800" townid="2" size="43" clientid="59" guildhall="false" beds="2" />
 	<house name="Millcross Cottage 60" houseid="60" entryx="1087" entryy="1228" entryz="7" rent="800" townid="2" size="43" clientid="60" guildhall="false" beds="2" />
+	<house name="Spire Manor" houseid="99" entryx="1233" entryy="1288" entryz="7" rent="0" townid="1" size="1226" clientid="99" guildhall="false" beds="2" />
 	<house name="Highrest House 1" houseid="200" entryx="2117" entryy="1253" entryz="7" rent="4000" townid="3" size="43" clientid="200" guildhall="false" beds="2" />
 	<house name="Highrest House 2" houseid="201" entryx="2141" entryy="1253" entryz="7" rent="4500" townid="3" size="43" clientid="201" guildhall="false" beds="2" />
 	<house name="Highrest House 3" houseid="202" entryx="2165" entryy="1253" entryz="7" rent="5000" townid="3" size="43" clientid="202" guildhall="false" beds="2" />

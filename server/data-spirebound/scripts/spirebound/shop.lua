@@ -1,5 +1,18 @@
 -- !shop: the donation shop. Closed until launch (SpireShop.ENABLED). Owner command /shopgrant <name>, <coins> for testing.
+local function findHouse(name)
+	for _, h in ipairs(Game.getHouses()) do
+		if h:getName() == name then
+			return h
+		end
+	end
+end
+
 local function deliver(player, e)
+	if e.kind == "house" then
+		local h = findHouse(e.house)
+		h:setHouseOwner(player:getGuid())
+		return
+	end
 	if e.kind == "outfit" then
 		player:addOutfitAddon(e.lookType, 3)
 	elseif e.kind == "mount" then
@@ -37,6 +50,14 @@ function cmd.onSay(player, words, param)
 		local e = SpireShop.get(buy)
 		local coins = SpireShop.coinsOf(player)
 		local ok, why = SpireShop.canBuy(coins, e)
+		if ok and e.kind == "house" then
+			local h = findHouse(e.house)
+			if not h then
+				ok, why = false, "That house is not on this map."
+			else
+				ok, why = SpireShop.houseAvailable(h:getOwnerGuid(), player:getHouse() ~= nil)
+			end
+		end
 		if not ok then
 			player:sendCancelMessage(why)
 			return false

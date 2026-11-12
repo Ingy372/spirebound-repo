@@ -69,6 +69,16 @@ He's too close to the boss that inspired him (giant blue horned fiend with a hug
 - **Recommendation:** launch the first season **without a shop**. Open it only once you've registered what you need to, have refund/privacy policies, and have checked tax with a professional.
 - Jay's answer:
 
+### Q26. Spire Manor: price, and can the owner sell it on? (2026-11-11)
+You said it should be "pay to obtain only". I built it as a shop-only house: !buyhouse refuses it, and the shop hands it over. It is cosmetic only, with no stat bonuses, and there is one per server. It is free of rent, and it is released when its owner leaves it or the season ends.
+- **Recommendation:** a placeholder price of 5,000 Spire Coins, set properly with the other shop prices (7.3). The owner **can't** sell or trade it to another player (that keeps "pay to obtain only" true). Add a second manor on a later floor if there is demand.
+- Jay's answer:
+
+### Q27. Upgrade/forge system (from the second research pass)
+Almost every popular server has a way to upgrade gear (item +1 to +10, fusion, Canary's Forge). In Q7 I recommended keeping Canary's Forge off at launch.
+- **Recommendation:** keep it off for Floors 1-2, and switch the Forge on from Floor 3 as a loot and gold sink that players trade for. No forge materials in the shop, ever.
+- Jay's answer:
+
 ### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
 Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
 - **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").
