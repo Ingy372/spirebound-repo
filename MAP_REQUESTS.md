@@ -20,3 +20,10 @@ Placeholder notes: walls in the generated map use a single wall family with gues
 
 ## M5 — One new Underkeep wing per season (for season 2 onward)
 Each season should add a fresh Underkeep wing below the existing ones, so veterans have something new under Hearthgate. Size like Wing 1 (about 70×30 tiles), one floor level, a mini-boss room at the far end, and a spot for the entrance portal next to the previous wing's exit. Any theme you like; the script-made placeholder works until you draw one. Not needed before the first season ends.
+
+## M1 update (2026-11-11): what the redesigned Floor 1 placeholder already does
+The placeholder is now a real plan, and the real map should follow it (positions and sizes are in `maps/floor1_plan.py` and `FLOOR1.md`):
+- **Hearthgate is compact (80 x 72).** Shop row along the north wall, a plaza in front of the temple (door to the north), the depot and the workshop either side of the temple, two streets of 14 houses to the south, a main avenue from the north gate to the south gate. Everything is within about 30 steps of the temple. Please keep it that tight.
+- **Housing outside the walls:** 20 Wallside Cabins (beside the west and east roads, cheap, less safe) and 10 Fisher's Huts on the river bank; Millcross has 8 cottages. 52 houses on Floor 1 in total.
+- **Twelve hunting grounds plus the apex** laid out as a ladder (levels 1-4, 3-7, 5-10, 7-12, 9-15, 11-16, 12-18, 14-19, 14-20, 17-24, 19-27, 23-30, then the Old Watchtower 28-40), each with its own decor; about 1,000 monsters on the floor. Real maps should keep the ladder order and distances (each next step 30-60 tiles beyond the last) and add caves under the bigger grounds.
+- **The Arrival Yard** (a walled 40 x 24 yard south-east of the city, with a rat pen and the Registrar's hall) is where new characters start.

@@ -62,5 +62,12 @@ npcHandler:setMessage(MESSAGE_GREET, "A house should do things, |PLAYERNAME|. Fu
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
+npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireHunt and MsgContains(msg, "hunt") then
+		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
+		return false
+	end
+	return true
+end)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)

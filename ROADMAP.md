@@ -177,3 +177,9 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **10.3 Launch checklist** (all placeholders replaced, rules page, Discord, countdown; open beta that gets wiped; staffed first week; written update/rollback routine; backups copied off the server every few hours [REVIEW 1.6, 7.7]).
 - [ ] **10.4 Launch-size Floor 1** [REVIEW 5.2]: ~1,500 monsters across 14+ camps of rising difficulty, caves, busier-floor respawn. Real map work (MAP_REQUESTS M1).
 - [ ] **10.5 Stronger passwords and two-step login** [REVIEW 7.4], through the website package.
+
+## Floor 1 build (2026-11-11, from Jay's instructions)
+- [x] **F1.1 Floor 1 map redesign.** Compact walled Hearthgate with 14 inner houses, 20 wallside cabins, 10 fisher huts, Millcross with 8 cottages, twelve hunting grounds laid out as a level ladder, roads between them, the Arrival Yard. Done when: map builds and loads, every ground's monsters exist, every camp is on the map (in-game tests). *(Placeholder look; real map is MAP_REQUESTS M1.)*
+- [x] **F1.2 Floor 1 NPCs and quests.** Promotion at level 20 (Ascendant Veyra), Hunters' Hall (Brannoch, Taskmaster, Bounty Warden), Innkeeper Bess, Fisher Corwin, Guide Pell; six story quests and four side quests with a quest-log entry each. Done when: all NPCs stand in town and every quest has log lines and a real target (in-game tests).
+- [x] **F1.3 BESTIARY.md and the hunting ladder logic.** `maps/floor1_plan.py` -> map + BESTIARY.md + `!hunt` and NPC advice. Done when: tests check each level 1-40 has a ground and the advice names it.
+- [~] **F1.4 Tutorial (first version).** New characters start in the Arrival Yard with a guide, signs and a rat pen; a letter, `!guide`, `!hunt` and level-up advice. Still open: stop gates that need a step done, hint pop-ups at levels 2/5/10, and a walked-through playtest. (R11)

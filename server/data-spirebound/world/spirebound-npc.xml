@@ -1,46 +1,61 @@
 <?xml version="1.0"?>
 <npcs>
-	<npc centerx="1231" centery="1285" centerz="7" radius="1">
-		<npc name="Registrar Maelis" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1239" centery="1285" centerz="7" radius="1">
+	<npc centerx="1234" centery="1281" centerz="7" radius="1">
 		<npc name="Priest Odran" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1207" centery="1286" centerz="7" radius="1">
-		<npc name="Quartermaster Bryn" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1217" centery="1269" centerz="7" radius="1">
-		<npc name="Merchant Wenna" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1229" centery="1269" centerz="7" radius="1">
-		<npc name="Weaponsmith Garrick" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1241" centery="1269" centerz="7" radius="1">
-		<npc name="Armorer Hesta" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1253" centery="1269" centerz="7" radius="1">
-		<npc name="Banker Tolliver" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1260" centery="1291" centerz="7" radius="1">
-		<npc name="Housewright Orla" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1252" centery="1292" centerz="7" radius="1">
-		<npc name="Bounty Warden Cass" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1260" centery="1292" centerz="7" radius="1">
-		<npc name="Guildwarden Sela" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1264" centery="1286" centerz="7" radius="1">
+	<npc centerx="1247" centery="1272" centerz="7" radius="1">
 		<npc name="Vesper" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1248" centery="1286" centerz="7" radius="1">
+	<npc centerx="1233" centery="1252" centerz="7" radius="1">
+		<npc name="Captain Dorrow" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1198" centery="1257" centerz="7" radius="1">
+		<npc name="Merchant Wenna" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1210" centery="1257" centerz="7" radius="1">
+		<npc name="Weaponsmith Garrick" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1222" centery="1257" centerz="7" radius="1">
+		<npc name="Armorer Hesta" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1240" centery="1257" centerz="7" radius="1">
+		<npc name="Quartermaster Bryn" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1252" centery="1257" centerz="7" radius="1">
+		<npc name="Banker Tolliver" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1264" centery="1257" centerz="7" radius="1">
 		<npc name="Taskmaster Ren" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1238" centery="1253" centerz="7" radius="1">
-		<npc name="Captain Dorrow" x="0" y="0" z="7" spawntime="60" />
+	<npc centerx="1261" centery="1259" centerz="7" radius="1">
+		<npc name="Bounty Warden Cass" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1266" centery="1257" centerz="7" radius="1">
+		<npc name="Hunter Brannoch" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1200" centery="1269" centerz="7" radius="1">
+		<npc name="Ascendant Veyra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1259" centery="1269" centerz="7" radius="1">
+		<npc name="Guildwarden Sela" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1258" centery="1280" centerz="7" radius="1">
+		<npc name="Housewright Orla" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1143" centery="1190" centerz="7" radius="1">
+		<npc name="Fisher Corwin" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1059" centery="1204" centerz="7" radius="1">
 		<npc name="Miller Agna" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1063" centery="1204" centerz="7" radius="1">
+		<npc name="Innkeeper Bess" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1276" centery="1343" centerz="7" radius="1">
+		<npc name="Guide Pell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1304" centery="1344" centerz="7" radius="1">
+		<npc name="Registrar Maelis" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="2155" centery="1238" centerz="7" radius="1">
 		<npc name="Priest of Highrest" x="0" y="0" z="7" spawntime="60" />

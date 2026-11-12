@@ -55,9 +55,16 @@ end
 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "The general merchant. Ask me for a {trade}." })
 
-npcHandler:setMessage(MESSAGE_GREET, "Hello, |PLAYERNAME|! Rope, shovels, food, fishing gear: ask for a {trade}.")
+npcHandler:setMessage(MESSAGE_GREET, "Hello, |PLAYERNAME|! Rope, shovels, food, fishing gear: ask for a {trade}. Lost? Ask me where to {hunt}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
+npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireHunt and MsgContains(msg, "hunt") then
+		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
+		return false
+	end
+	return true
+end)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)

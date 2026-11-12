@@ -71,3 +71,16 @@ Prompt: *"A square fantasy skill icon showing <one-line description of the move>
 
 ## Shop placeholders (added 2026-11-10)
 The donation shop (closed until launch) uses placeholder looks for 2 outfits (Hearth Cloak, Tower Mantle) and 1 mount (Stone Hound). Grok prompts when we get to launch art: "32x32 pixel-art outfit, Tibia style, 4 directions, 3 walk frames, [description]". No sprites needed for testing.
+
+## Batch 1b — Floor 1 redesign (2026-11-11): new monsters and NPCs (Priority: medium)
+
+| ✓ | File names | Size / frames | Grok prompt (after the style lock) |
+|---|---|---|---|
+| [ ] | `mon_meadow_wasp_*` | 32×32, 12 | A large striped wasp the size of a dog, yellow and black, translucent wings, a long stinger. |
+| [ ] | `mon_burrow_mole_*` | 32×32, 12 | A stocky grey-brown mole with huge pale digging claws, tiny eyes, a pink nose, a little dirt on its back. |
+| [ ] | `mon_reed_snapper_*` | 32×32, 12 | A big green-brown snapping turtle-crab with a reed-covered shell and a hooked beak, standing in shallow water. |
+| [ ] | `npc_ascendant_veyra_*` | 32×32, 12 | A calm priestess-scholar in white and violet robes with a tall collar and a glowing hand, serene face. |
+| [ ] | `npc_hunter_brannoch_*` | 32×32, 12 | A weathered hunter in brown leathers with a wolf-pelt mantle, a bow across his back, a scar over one eye. |
+| [ ] | `npc_innkeeper_bess_*` | 32×32, 12 | A cheerful round innkeeper in an apron with rolled sleeves, a ladle in one hand, red cheeks. |
+| [ ] | `npc_fisher_corwin_*` | 32×32, 12 | A lean fisher in a patched oilskin coat and a floppy hat, a fishing rod over his shoulder. |
+| [ ] | `npc_guide_pell_*` | 32×32, 12 | A friendly young guide in a bright tabard with a satchel and a small pennant on a stick, wide smile. |

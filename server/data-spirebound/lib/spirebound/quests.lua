@@ -22,6 +22,50 @@ SpireQuests = {
 			step = "Clear Thornsnaps in the thornsnap hollow (north-west of Hearthgate): %d of %d.",
 			report = "Return to Miller Agna in Millcross and say 'report'.",
 			thanks = "The road's clear! You've earned the name Millhand, and 900 gold." },
+		-- more of the Hearthgate ladder (each one sends you to the next step: see BESTIARY.md)
+		{ id = "q1_4", floor = 1, name = "Wasp Nest", giver = "Captain Dorrow", storage = 50104, killStorage = 50114,
+			target = "Meadow Wasp", count = 12, reward = { gold = 500 },
+			offer = "Wasps have nested in the fields just north of the gate, and they sting my guards. Clear out 12 of them?",
+			step = "Kill Meadow Wasps in the Waspgrass Fields (just north of Hearthgate): %d of %d.",
+			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
+			thanks = "Quiet at last. Here is 500 gold for your trouble." },
+		{ id = "q1_5", floor = 1, name = "Pelts for the Hall", giver = "Hunter Brannoch", storage = 50105, killStorage = 50115,
+			target = "Meadow Wolf", count = 20, reward = { gold = 1200 },
+			offer = "The Hunters' Hall needs wolf pelts. The wolves of the Copse, across the river beside Millcross, will do. Twenty of them. Will you hunt them?",
+			step = "Kill Meadow Wolves in the Wolf Copse (west, across the river): %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall (north of the plaza) and say 'report'.",
+			thanks = "Fine pelts. The Hall pays 1,200 gold, and I have more work if you want it." },
+		{ id = "q1_6", floor = 1, name = "Quarry Watch", giver = "Hunter Brannoch", storage = 50106, killStorage = 50116,
+			target = "Ruin Archer", count = 10, reward = { gold = 2500, title = "Quarrywatch" }, requires = "q1_5",
+			offer = "Archers have taken the Old Quarry, north of town, and our scouts cannot pass. Bring down ten of them. A long walk, and a real fight. Ready?",
+			step = "Kill Ruin Archers in the Old Quarry (north of Hearthgate): %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
+			thanks = "The scouts can pass again. You have earned the title Quarrywatch and 2,500 gold." },
+		-- side quests: they pay well but do not block the Floor 1 perk
+		{ id = "s1_1", floor = 1, side = true, name = "Snapper Season", giver = "Fisher Corwin", storage = 50107, killStorage = 50117,
+			target = "Reed Snapper", count = 15, reward = { gold = 1500 },
+			offer = "Snappers are tearing my nets in the marsh across the river. Thin them out: fifteen. I'll pay what I can.",
+			step = "Kill Reed Snappers in Reedmarsh (south-west, across the river): %d of %d.",
+			report = "Return to Fisher Corwin at the Fisher's Huts and say 'report'.",
+			thanks = "My nets will last the season. Take 1,500 gold." },
+		{ id = "s1_2", floor = 1, side = true, name = "Mole Hills", giver = "Miller Agna", storage = 50108, killStorage = 50118,
+			target = "Burrow Mole", count = 15, reward = { gold = 1000 }, requires = "q1_1",
+			offer = "Moles from the Burrow Hills are digging up the grain road. Fifteen of them should discourage the rest. Will you?",
+			step = "Kill Burrow Moles in the Burrow Hills (north-east of Hearthgate): %d of %d.",
+			report = "Return to Miller Agna in Millcross and say 'report'.",
+			thanks = "The road is whole again. Here's 1,000 gold." },
+		{ id = "s1_3", floor = 1, side = true, name = "The Alpha", giver = "Hunter Brannoch", storage = 50109, killStorage = 50119,
+			target = "Grey Alpha", count = 1, reward = { gold = 1800 }, requires = "q1_5",
+			offer = "One Grey Alpha leads every wolf pack, and it calls its wolves when hurt. Kill one and I will pay you well. Interested?",
+			step = "Kill a Grey Alpha in the Wolf Copse: %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
+			thanks = "An Alpha! That is a hunter's work. 1,800 gold." },
+		{ id = "s1_4", floor = 1, side = true, name = "Shard Hunt", giver = "Hunter Brannoch", storage = 50110, killStorage = 50120,
+			target = "Field Shardling", count = 20, reward = { gold = 2200 }, requires = "s1_3",
+			offer = "The Shard Fields, south-east of the city, are filling with shardlings. Twenty of them, if you can stand their sting. Are you in?",
+			step = "Kill Field Shardlings in the Shard Fields (south-east of Hearthgate): %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
+			thanks = "Twenty shardlings. You are becoming a real climber. 2,200 gold." },
 	},
 	PERKS = {
 		[1] = {
@@ -79,7 +123,7 @@ end
 
 function SpireQuests.floorStoryDone(player, floor)
 	for _, q in ipairs(SpireQuests.list) do
-		if q.floor == floor and SpireQuests.state(player, q) ~= 3 then
+		if q.floor == floor and not q.side and SpireQuests.state(player, q) ~= 3 then
 			return false
 		end
 	end

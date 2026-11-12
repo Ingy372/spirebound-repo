@@ -25,7 +25,7 @@ NPCS = {
         kind="bank", voices=["Coins are safer here than in your pockets."]),
     "hearthgate_merchant": dict(
         name="Merchant Wenna", desc="the general merchant", look=(136, 78, 86, 107, 115, 0),
-        greet="Hello, |PLAYERNAME|! Rope, shovels, food, fishing gear: ask for a {trade}.",
+        greet="Hello, |PLAYERNAME|! Rope, shovels, food, fishing gear: ask for a {trade}. Lost? Ask me where to {hunt}.",
         voices=["Ropes! Shovels! Fresh bread!"],
         shop=[("rope", 3003, 50, 15), ("shovel", 3457, 50, 8), ("torch", 2920, 2, None), ("bag", 2853, 4, None),
               ("backpack", 2854, 20, None), ("fishing rod", 3483, 150, 40), ("worm", 3492, 1, None),
@@ -46,6 +46,11 @@ NPCS = {
               ("club", 3270, 5, 1), ("mace", 3286, 90, 30),
               ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("spear", 3277, 10, 3),
               ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+    "millcross_innkeeper": dict(
+        name="Innkeeper Bess", desc="the innkeeper of Millcross", look=(137, 78, 96, 59, 115, 0),
+        greet="Welcome to the Millcross Inn, |PLAYERNAME|. Hot food, cold ale and good advice. Ask for a {trade}, or ask me where to {hunt}.",
+        voices=["Stew's hot!", "Climbers eat free if they bring the boars home. Well, nearly free."],
+        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None), ("cheese", 3607, 6, None)]),
     "hearthgate_housewright": dict(
         name="Housewright Orla", desc="the housewright", look=(128, 58, 68, 109, 115, 0),
         greet="A house should do things, |PLAYERNAME|. Furniture kits, tapestries and an exercise dummy for your own training room: ask for a {trade}. Kits are built by using them on your house floor.",
@@ -202,7 +207,14 @@ def render(d):
         callbacks = ("npcHandler:setCallback(CALLBACK_GREET, function(npc, player) return refuseMurderers(npc, player) and NpcBankGreetCallback(npc, player) end)\n"
                      "npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)\n")
     elif d.get("shop"):
-        callbacks = "npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\n"
+        callbacks = ("npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)\n"
+                     "npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)\n"
+                     "\tif SpireHunt and MsgContains(msg, \"hunt\") then\n"
+                     "\t\tnpcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)\n"
+                     "\t\treturn false\n"
+                     "\tend\n"
+                     "\treturn true\n"
+                     "end)\n")
         logic = MURDERER + '\nkeywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "' + d["desc"].capitalize() + '. Ask me for a {trade}." })\n'
     return TEMPLATE.format(name=d["name"], desc=d["desc"], l0=look[0], l1=look[1], l2=look[2], l3=look[3], l4=look[4], l5=look[5],
                            voices=voices, shop=shop, logic=logic, greet=d["greet"], callbacks=callbacks)
