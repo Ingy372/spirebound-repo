@@ -114,6 +114,30 @@ SpireTest.add("Hearthgate v3: four open archways, a locker six steps from the He
 		end
 	end
 	SpireTest.eq(locker ~= nil and locker <= 8, true, "a depot locker within eight steps of the Hearthstone")
+	-- the Hearth's depot booths: a switch tile in front of every locker, walled in two tiles deep on both sides
+	local function blocked(x, y)
+		local tile = Tile(Position(x, y, t.z))
+		return not (tile and tile:isWalkable(false, false, false, false, true))
+	end
+	local booths, good = 0, 0
+	for dx = -14, 14 do
+		for dy = -11, 0 do
+			local x, y = t.x + dx, t.y + dy
+			local tile = Tile(Position(x, y, t.z))
+			if tile and tile:getItemByType(ITEM_TYPE_DEPOT) then
+				booths = booths + 1
+				for _, f in ipairs({ { 0, 1 }, { 0, -1 } }) do
+					local st = Tile(Position(x, y + f[2], t.z))
+					if st and st:getGround() and st:getGround():getId() == 10145 then
+						local s1, s2 = y + f[2], y + 2 * f[2]
+						if blocked(x - 1, s1) and blocked(x + 1, s1) and blocked(x - 1, s2) and blocked(x + 1, s2) then good = good + 1 end
+					end
+				end
+			end
+		end
+	end
+	SpireTest.eq(booths, 20, "twenty lockers in the Hearth's depot wings")
+	SpireTest.eq(good, 20, "every booth has a depot switch and two-deep dividers")
 	local streets = 0
 	for _, h in ipairs(Game.getHouses()) do
 		local n = h:getName()

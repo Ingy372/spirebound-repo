@@ -128,7 +128,7 @@ Hearthgate's home hall, replacing the old temple, depot and Trade Hall. It is 62
 ## Hearthgate v3 (2026-11-12, built from HEARTHGATE_PLAN.md)
 This replaces the earlier Hearthgate descriptions above. The full plan, with every coordinate, is `HEARTHGATE_PLAN.md`; the picture is `docs/HEARTHGATE_PLAN.png`.
 - **The Hearth** stands where North Avenue and the East-West High Road cross, with four open archways. You spawn on the Hearthstone in the middle of a red carpet cross.
-  - **Ground floor:** depot wings with 26 lockers in Tibia-style booths; the bank and exchange (Tolliver, Osric, Nell); the chapel (Priest Odran).
+  - **Ground floor:** depot wings with 20 lockers in Tibia-style booths (10 more upstairs); the bank and exchange (Tolliver, Osric, Nell); the chapel (Priest Odran).
   - **Level 2:** the Trading Gallery.
   - **Level 3:** the Hall of Climbers, in a tower with its own roof.
 - **The Hearth Ring** is a marble square around the hall. Its south side is the Hearth Square: fountain, Monument, six free trading stalls. The Alchemist, Fletcher and Runewright face it.

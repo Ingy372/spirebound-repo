@@ -391,8 +391,10 @@ class Map:
     BOOTH = {"s": (3499, 2321, 5315, (0, 1)), "n": (3497, 2321, 5315, (0, -1)),
              "e": (3498, 2317, 5314, (1, 0)), "w": (3500, 2320, 5314, (-1, 0))}
 
-    def depot_booths(self, x0, y0, n, z, town, face="s", depth=2):
-        """n booths in a row starting with the first locker at (x0, y0); railings sit before, between and after them."""
+    def depot_booths(self, x0, y0, n, z, town, face="s", depth=2, switch=10145):
+        """n booths in a row starting with the first locker at (x0, y0); railings sit before, between and after them.
+        The tile in front of each locker is a depot switch (red 10145; also 452 wooden, 431 stone): it lights up when you step on it
+        and tells you what your depot holds. Keep depth at 2 so nobody can be pushed out of a booth."""
         locker, counter, rail, (fx, fy) = self.BOOTH[face]
         ax, ay = (0, 1) if fx else (1, 0)                       # along the row
         for i in range(2 * n + 1):
@@ -400,6 +402,8 @@ class Map:
             self.put(x, y, z, counter)
             if i % 2:
                 self.depot(x, y, z, town, locker)
+                if switch:
+                    self.ground[(x + fx, y + fy, z)] = switch
                 continue
             for d in range(1, depth + 1):
                 self.put(x + d * fx, y + d * fy, z, rail)
