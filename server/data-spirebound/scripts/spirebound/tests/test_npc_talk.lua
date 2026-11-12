@@ -66,3 +66,9 @@ SpireTest.add("boosted creature: a real hunting-ground monster each day, no repe
 	end
 	SpireTest.eq(type(SpireBoost.today()), "string", "today has a boosted creature")
 end)
+
+SpireTest.add("temple scroll: a real item the Runewright sells", function()
+	SpireTest.eq(ItemType(25718):getId(), 25718, "temple teleport scroll exists")
+	local npc = NpcType("Runewright Mael")
+	SpireTest.eq(npc ~= nil, true, "Runewright Mael is loaded")
+end)

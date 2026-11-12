@@ -297,3 +297,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 
 ### 2026-11-12 — Boosted creature of the day (roadmap J7)
 - Each day one Floor 1 hunting-ground monster gives +50% experience and an extra loot roll; the login message names it. Canary's own version picked nothing because our monsters aren't in the official bestiary (that is why the login line used to be blank). Boot test: 92 in-game tests, 0 errors.
+
+### 2026-11-12 — Temple teleport scroll (roadmap J8)
+- Runewright Mael sells a temple teleport scroll (300 gold, used up) that takes you home when you're not in a fight. It never works from a boss room, Deadzone, the Arena or the Siege. A small gold sink, and common on popular servers. Boot test: 93 in-game tests, 0 errors.

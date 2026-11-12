@@ -62,7 +62,8 @@ NPCS = {
         name="Runewright Mael", desc="the runewright", look=(130, 76, 94, 94, 114, 0),
         greet="Blank runes for your conjuring, |PLAYERNAME|, made cheaper if you bring gems to {craft} with, and wands and rods for those who need one. Ask for a {trade}.",
         voices=["Blank runes! Ready for your spells!"],
-        shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+        shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100),
+              ("temple teleport scroll", 25718, 300, None)]),
     "hearthgate_tailor": dict(
         name="Tailor Quill", desc="the tailor", look=(128, 95, 113, 114, 76, 0),
         greet="Good cloth for the climb, |PLAYERNAME|, and strong bags to carry your loot home. Bring furs and cloth and I'll {craft} you a hunter's outfit. Ask for a {trade}.",
