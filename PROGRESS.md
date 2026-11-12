@@ -258,3 +258,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-11 — Soft ground edges and shorelines (Jay: "do edges next")
 - `tools/learn_ground_edges.py` learned the two edge sets real maps use (grass edges over dirt and sand; shoreline pieces on land next to water, 12 pieces each) into `tools/ground_edges.json`. The map builder now smooths coastlines and edges every place where grass meets roads, dirt, mud, gravel, sand or paving, and where land meets water, on every floor.
 - Checked by render and in the client (river shore and road edges). Boot test: 86 in-game tests, 0 errors.
+
+### 2026-11-11 — Floor 1 finished: the Pass, labyrinth, boss hall, watchtower, cave, Underkeep, Arena and Siege keep dressed (Jay: "finish Floor 1")
+- New `maps/dungeon.py`: natural caves (cave walls learned from Canary's map), wall lamps/torches/chains on the right walls, and decoration that can never block spawns, teleports, doors or corridors. Every special area on Floor 1 now has its own look (see FLOOR1.md).
+- New in-game test: every landing, start and entrance stays walkable. Checked the boss hall and the cave in the client. Boot test: 87 in-game tests, 0 errors.

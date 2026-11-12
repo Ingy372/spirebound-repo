@@ -101,3 +101,11 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 
 ## Ground edges (2026-11-11)
 - Grass now spills softly over the edges of roads, dirt, mud, gravel, sand and paving, and every shore of the river, lake and ponds has a proper shoreline. The coastline is tidied first so there are no one-tile islands or puddles. Both edge sets were learned from Canary's hand-made map.
+
+## Dungeons and special areas (2026-11-11)
+- **The Pass:** a dirt fighting pit inside a flagstone ring, four pillars, braziers at both gates, torches on the walls, old bones.
+- **The labyrinth:** stone walls with lamps along the corridors, cobwebs and bones; a different floor on each level (stone, stone tile, black marble).
+- **The Axe-Lord's hall:** black marble, a red runner from the door to the sealed stair, two rows of pillars, braziers, a throne, chains on the back wall.
+- **The Old Watchtower:** an overgrown courtyard with broken masonry around a paved keep with braziers and wall torches; the rope spot hides behind rubble. Its cave below is now a natural cave (rock walls, stalagmites, crystals, bones).
+- **The Underkeep:** pale stone halls with lamps, a storeroom by the entrance, braziers in the column hall, cobwebs and bones; the strongbox room has a carpet. Wings 2-6 get pillars, braziers and clutter.
+- **The Arena:** a sand floor with flagstone ends, red and blue team pads, braziers and torches. **The Siege keep:** a grassy courtyard with paved roads from the four gates to a white keep with a red cross carpet and a throne.

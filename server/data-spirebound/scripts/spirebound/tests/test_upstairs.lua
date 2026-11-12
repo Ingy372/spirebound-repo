@@ -74,3 +74,20 @@ SpireTest.add("map: upstairs of a two-storey house belongs to the house; buildin
 	local roof = Tile(Position(temple.x, temple.y, temple.z - 1))
 	SpireTest.eq(roof ~= nil and roof:getGround() ~= nil, true, "the temple has a roof over it")
 end)
+
+SpireTest.add("map: decoration never blocks a landing, start or entrance", function()
+	local names = { "apex_watchtower", "pass_arena", "boss_room_floor1", "underkeep_entry", "arena_a", "arena_b",
+		"arena_center", "siege_throne", "siege_gate_1", "siege_gate_2", "siege_gate_3", "siege_gate_4" }
+	for k, _ in pairs(WorldPoints) do
+		if k:match("^uk_door%d_dest$") then names[#names + 1] = k end
+	end
+	for _, n in ipairs(names) do
+		local p = WorldPoints[n]
+		if p then
+			SpireTest.eq(walkable(p), true, n .. " is walkable")
+		end
+	end
+	-- the apex cave: where the rope spot drops you
+	local e = WorldPoints.apex_cave_exit
+	SpireTest.eq(walkable(Position(e.x + 1, e.y + 1, e.z)), true, "apex cave landing is walkable")
+end)

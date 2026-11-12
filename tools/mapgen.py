@@ -44,6 +44,7 @@ ID = {
     "marble": [409],
     "stonefloor": [416],
     "cavefloor": [351],
+    "stonetile": [429],
     "sand": [104],
     "water": [4597, 4609],  # deep-ish water, blocks walking
     "dried": [970, 971, 972],

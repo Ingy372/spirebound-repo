@@ -9,10 +9,11 @@ import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scenery as S  # noqa: E402
+import dungeon as DG  # noqa: E402
 from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 X0, Y0, Z = 1000, 1000, 7
-ID_PILLAR = 1296  # grey stone post, used as a free-standing column in the Underkeep and the arena
+ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
 SIZE = 400
 PILLAR, PILLAR_VINE, MARBLE_PILLAR, HERO_STATUE, ANGEL_STATUE = 24001, 24003, 2153, 2027, 2031
 
@@ -454,13 +455,34 @@ def build(m):
     m.monsters.append(("Stonehorn Ram", (ax + 8, ay + 36, Z), 3, 3, 90))
     m.monsters.append(("Stonehorn Ram", (ax + 36, ay + 36, Z), 3, 3, 90))
     m.monsters.append(("Stonehorn Ram", (ax + 22, ay + 22, Z), 4, 8, 90))
+    # dressing: an overgrown courtyard around a paved keep, broken masonry, braziers in the keep
+    for yy in range(ay + 1, ay + 43):
+        for xx in range(ax + 1, ax + 43):
+            if not (ax + 12 <= xx < ax + 32 and ay + 12 <= yy < ay + 32) and not m.items.get((xx, yy, Z)):
+                m.ground[(xx, yy, Z)] = m.pick("grass")
+    m.fill(ax + 21, ay + 32, 4, 11, Z, "stonefloor")                  # flagstone path from the gate to the keep
+    keep_out = DG.keep_clear(m, Z) | {(ax + 40, ay + 3), (ax + 39, ay + 4)}
+    S.patch(m, ax + 10, ay + 8, 4, 3, Z, "dirt")
+    S.patch(m, ax + 34, ay + 30, 4, 3, Z, "dirt")
+    DG.scatter(m, ax + 1, ay + 1, 42, 42, Z, DG.DEBRIS + [2264, 2290], 40, avoid=keep_out)
+    DG.scatter(m, ax + 1, ay + 1, 42, 42, Z, DG.RUBBLE + DG.PILLARS, 14, solid=True, avoid=keep_out)
+    DG.scatter(m, ax + 1, ay + 1, 42, 42, Z, S.BUSHES + S.FERNS, 25, avoid=keep_out)
+    for bx_, by_ in ((ax + 14, ay + 14), (ax + 29, ay + 14), (ax + 14, ay + 29), (ax + 29, ay + 29)):
+        S.prop(m, bx_, by_, Z, DG.COAL_BASIN)
+    DG.scatter(m, ax + 13, ay + 13, 18, 18, Z, DG.BONES, 14, avoid=keep_out)
+    DG.hang(m, ax + 12, ay + 12, 20, 20, Z, every=4, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+    for rx_, ry_ in ((ax + 41, ay + 3), (ax + 41, ay + 2)):         # the rope spot hides behind rubble
+        S.replace(m, rx_, ry_, Z, DG.RUBBLE[0])
     # semi-hidden rope spot to the cliff caves (z 8), a Deadzone later
     cx, cy, cz = ax, ay, 8
-    m.fill(cx, cy, 44, 44, cz, "cavefloor")
-    m.walls(cx, cy, 44, 44, cz)
+    DG.cave(m, DG.blob(cx, cy, 44, 44, [(cx + 4, cy + 4), (cx + 3, cy + 3), (cx + 22, cy + 22)], m.rng, seed=3), cz)
     m.teleport((ax + 40, ay + 3, Z), (cx + 4, cy + 4, cz), "apex_rope_spot")
     m.teleport((cx + 3, cy + 3, cz), (ax + 39, ay + 4, Z), "apex_cave_exit")
     m.monsters.append(("Stonehorn Ram", (cx + 22, cy + 22, cz), 5, 9, 90))
+    cave_out = DG.keep_clear(m, cz)
+    DG.scatter(m, cx, cy, 44, 44, cz, DG.STALAGMITES, 45, solid=True, avoid=cave_out)
+    DG.scatter(m, cx, cy, 44, 44, cz, DG.CRYSTALS, 6, solid=True, avoid=cave_out)
+    DG.scatter(m, cx, cy, 44, 44, cz, DG.BONES + DG.DEBRIS, 30, avoid=cave_out)
     m.points["apex_watchtower"] = (ax + 22, ay + 40, Z)
 
     # ------------------------------------------------ the Pass (field boss arena) and the labyrinth
@@ -470,12 +492,20 @@ def build(m):
         for xx in range(px, px + 24):
             m.clear_items(xx, yy, Z)
     m.walls(px, py, 24, 20, Z, gaps={(px + 12, py + 19), (px + 13, py + 19), (px + 12, py), (px + 13, py)}, style="stone")
+    DG.flagstones(m, px + 3, py + 3, 18, 14, Z, 351)                  # a trampled dirt pit inside a flagstone ring
     m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script (it never returns once dead)
     m.points["pass_arena"] = (px + 12, py + 10, Z)
     # sealed until the Gate Hound dies once (scripts remove the boulders)
     for i, gx in enumerate((px + 12, px + 13)):
         m.put(gx, py, Z, 1772)
         m.points[f"gate_pass_{i + 1}"] = (gx, py, Z)
+    pass_out = DG.keep_clear(m, Z) | {(px + 12, py + 18), (px + 13, py + 18), (px + 12, py + 1), (px + 13, py + 1)}
+    for qx, qy in ((px + 3, py + 3), (px + 20, py + 3), (px + 3, py + 16), (px + 20, py + 16)):
+        S.prop(m, qx, qy, Z, DG.PILLAR)
+    for qx, qy in ((px + 10, py + 2), (px + 15, py + 2), (px + 10, py + 17), (px + 15, py + 17)):
+        S.prop(m, qx, qy, Z, DG.COAL_BASIN)
+    DG.scatter(m, px + 4, py + 4, 16, 12, Z, DG.BONES + DG.DEBRIS, 22, avoid=pass_out)
+    DG.hang(m, px, py, 24, 20, Z, every=4, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
     # labyrinth level 1 (z 7) north of the Pass
     lx, ly = px - 10, Y0 + 12
     m.fill(px + 11, ly + 31, 4, py - (ly + 31), Z, "stonefloor")  # corridor from the Pass to the maze
@@ -484,8 +514,8 @@ def build(m):
     for p in [(lx + 22, ly + 30, Z), (lx + 23, ly + 30, Z), (lx + 22, ly + 31, Z), (lx + 23, ly + 31, Z)]:
         m.clear_items(*p)
     # levels 2 and 3 (z 6, z 5) and the boss room (z 4) stacked above
-    e2, x2 = m.maze(lx, ly, 14, 10, 6, seed=22)
-    e3, x3 = m.maze(lx, ly, 14, 10, 5, seed=33)
+    e2, x2 = m.maze(lx, ly, 14, 10, 6, floor="stonetile", seed=22)
+    e3, x3 = m.maze(lx, ly, 14, 10, 5, floor="blackmarble", seed=33)
     m.teleport(x1, (e2[0] + 1, e2[1], 6), "lab1_up")
     m.teleport(x2, (e3[0] + 1, e3[1], 5), "lab2_up")
     m.teleport(e2, (x1[0] + 1, x1[1], Z), "lab2_down")
@@ -493,10 +523,15 @@ def build(m):
     m.monsters.append(("Ruin Sentinel", (lx + 20, ly + 15, Z), 4, 4, 90))
     m.monsters.append(("Ruin Archer", (lx + 20, ly + 15, 6), 4, 4, 90))
     m.monsters.append(("Ruin Sentinel", (lx + 20, ly + 15, 5), 4, 5, 90))
+    for lz in (Z, 6, 5):                  # lamps on the corridor walls, cobwebs and old bones (nothing that blocks)
+        lab_out = DG.keep_clear(m, lz)
+        DG.hang_maze(m, lx, ly, 43, 31, lz, share=0.07)
+        DG.scatter(m, lx, ly, 43, 31, lz, DG.COBWEBS, 40, avoid=lab_out)
+        DG.scatter(m, lx, ly, 43, 31, lz, DG.BONES + DG.DEBRIS, 30, avoid=lab_out)
     # boss room (z 4) with a back chamber holding the stair to floor 2
     bx, by, bz = lx + 6, ly + 2, 4
-    m.fill(bx, by, 30, 24, bz, "stonefloor")
-    m.walls(bx, by, 30, 24, bz)
+    m.fill(bx, by, 30, 24, bz, "blackmarble")
+    m.walls(bx, by, 30, 24, bz, style="stone")
     m.teleport(x3, (bx + 15, by + 21, bz), "lab3_up")
     m.teleport((bx + 15, by + 22, bz), (x3[0] + 1, x3[1], 5), "boss_room_exit")
     m.points["axe_lord_spawn"] = (bx + 15, by + 10, bz)  # spawned by script
@@ -508,9 +543,18 @@ def build(m):
     m.put(bx + 15, by + 2, bz, 1772)
     m.points["gate_floor2"] = (bx + 15, by + 2, bz)
     # the stair sits in a walled back chamber: the boulder tile is the only way in (no walking around it)
-    for wx in range(bx + 1, bx + 29):
-        if wx != bx + 15:
-            m.put(wx, by + 2, bz, 1271)  # horizontal brick wall (tools/mapgen.py ID["wall_h"])
+    m.autowall([(wx, by + 2) for wx in range(bx + 1, bx + 29) if wx != bx + 15], bz, "stone")
+    # dressing: a throne hall. Red runner from the door to the sealed stair, two rows of pillars, braziers, the throne
+    hall_out = DG.keep_clear(m, bz) | {(bx + 15, by + 3), (bx + 14, by + 3), (bx + 16, by + 3)}
+    DG.carpet_path(m, bx + 14, by + 3, 3, 19, bz, 2576)
+    for qy in range(by + 6, by + 20, 4):
+        for qx in (bx + 7, bx + 22):
+            S.prop(m, qx, qy, bz, DG.PILLAR)
+    for qx, qy in ((bx + 3, by + 4), (bx + 26, by + 4), (bx + 3, by + 20), (bx + 26, by + 20), (bx + 12, by + 4), (bx + 18, by + 4)):
+        S.prop(m, qx, qy, bz, DG.COAL_BASIN)
+    S.prop(m, bx + 17, by + 5, bz, DG.THRONE)
+    DG.scatter(m, bx + 2, by + 4, 26, 18, bz, DG.BONES, 18, avoid=hall_out)
+    DG.hang(m, bx, by + 2, 30, 22, bz, every=4, h_item=DG.CHAINS_H, v_item=DG.TORCH_V)
 
     # stair to floor 2: linked to Floor 2's landing by tools/mapgen.py (link_floors)
     m.points["stair_floor2_src"] = (bx + 15, by + 1, bz)
@@ -559,8 +603,8 @@ def build(m):
 
     # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
     ux, uy, uz = tx, ty + 10, 8
-    m.fill(ux, uy, 70, 50, uz, "cavefloor")
-    m.walls(ux, uy, 70, 50, uz)
+    m.fill(ux, uy, 70, 50, uz, "stonetile")
+    m.walls(ux, uy, 70, 50, uz, style="pale")
     # a water channel and column hall
     for y in range(uy + 3, uy + 47):
         m.ground[(ux + 20, y, uz)] = m.pick("water")
@@ -579,10 +623,20 @@ def build(m):
     m.monsters.append(("Black Crawler", (ux + 58, uy + 40, uz), 4, 4, 90))
     # daily chest room (scripted reward, task 2.10) and the sealed door to Wing 2
     m.points["underkeep_chest"] = (ux + 64, uy + 4, uz)
-    m.walls(ux + 58, uy + 1, 11, 8, uz, gaps={(ux + 58, uy + 4)})
+    m.walls(ux + 58, uy + 1, 11, 8, uz, gaps={(ux + 58, uy + 4)}, style="pale")
+    S.carpet(m, ux + 60, uy + 3, 8, 3, uz, 5572)
     m.put(ux + 64, uy + 4, uz, 3515)  # an old stone altar used as the daily strongbox (scripted)
     m.points["underkeep_wing2_door"] = (ux + 69, uy + 25, uz)
     m.sign(ux + 67, uy + 25, uz, "A black iron door. Sealed until the tower reaches Floor 2.")
+    # dressing: lamps, a storeroom by the entrance, damp and old bones, braziers in the column hall
+    uk_out = DG.keep_clear(m, uz) | {(ux + 2, uy + 2), (ux + 3, uy + 3)}
+    for qx, qy, pid in ((ux + 6, uy + 2, 2519), (ux + 7, uy + 2, 2523), (ux + 9, uy + 2, 2519), (ux + 2, uy + 7, 2523),
+                        (ux + 2, uy + 8, 2519)):
+        S.prop(m, qx, qy, uz, pid)
+    DG.hang(m, ux, uy, 70, 50, uz, every=6)
+    DG.scatter(m, ux + 1, uy + 1, 68, 48, uz, DG.COBWEBS, 35, avoid=uk_out)
+    DG.scatter(m, ux + 1, uy + 1, 68, 48, uz, DG.BONES + DG.DEBRIS, 35, avoid=uk_out)
+    DG.scatter(m, ux + 23, uy + 1, 34, 48, uz, [DG.COAL_BASIN], 6, solid=True, avoid=uk_out)
 
     # ------------------------------------------------ Underkeep Wings 2-6 (DESIGN.md 3.4): one per two floors cleared
     # wing: (x, y, z, w, h, monsters, opens when floor N is open, boss)
@@ -595,8 +649,8 @@ def build(m):
     ]
     prev_exit = {2: (ux + 69, uy + 25, uz)}
     for wid, wx, wy, wz, ww, wh, mons, req, boss in wings:
-        m.fill(wx, wy, ww, wh, wz, "cavefloor")
-        m.walls(wx, wy, ww, wh, wz)
+        m.fill(wx, wy, ww, wh, wz, "stonetile" if wid % 2 == 0 else "cavefloor")
+        m.walls(wx, wy, ww, wh, wz, style="pale")
         for i, mon in enumerate(mons):
             for j in range(2):
                 m.monsters.append((mon, (wx + 10 + j * (ww // 2), wy + 10 + i * (wh // 3), wz), 4, 4, 90))
@@ -606,6 +660,10 @@ def build(m):
         m.points[f"uk_wing{wid}_entry"] = entry
         m.points[f"uk_wing{wid}_req"] = (req, 0, 0)  # floor that opens it (read by scripts/spirebound/underkeep.lua)
         m.sign(wx + 4, wy + 1, wz, f"Underkeep, Wing {wid}.")
+        wing_out = DG.keep_clear(m, wz) | {(wx + 3, wy + 3), (wx + 4, wy + 4), (wx + 2, wy + 2)}
+        DG.hang(m, wx, wy, ww, wh, wz, every=6)
+        DG.scatter(m, wx + 1, wy + 1, ww - 2, wh - 2, wz, DG.PILLARS + [DG.COAL_BASIN], ww * wh // 160, solid=True, avoid=wing_out)
+        DG.scatter(m, wx + 1, wy + 1, ww - 2, wh - 2, wz, DG.COBWEBS + DG.BONES + DG.DEBRIS, ww * wh // 60, avoid=wing_out)
     # doors between wings: a portal guarded by a boulder until the wing opens
     links = [(2, (ux + 66, uy + 25, uz)), (3, (ux + 5, uy + 45, uz)), (4, (ux + 60, uy + 44, uz)),
              (5, (ux + 6, uy + 44, 9)), (6, (ux + 30, uy + 35, 10))]
@@ -623,8 +681,10 @@ def build(m):
     # ------------------------------------------------ The Arena (DESIGN.md 15, roadmap 5.7c): z 11, reached only by
     # event teleport. Engine PvP-zone flag (0x10): no skulls, no death loss. Two team starts and a banner tile.
     ax0, ay0, az = X0 + 10, Y0 + 10, 11
-    m.fill(ax0, ay0, 40, 30, az, "gravel")
-    m.walls(ax0, ay0, 40, 30, az)
+    m.fill(ax0, ay0, 40, 30, az, "sand")
+    m.walls(ax0, ay0, 40, 30, az, style="pale")
+    DG.flagstones(m, ax0 + 1, ay0 + 1, 38, 2, az, 416)
+    DG.flagstones(m, ax0 + 1, ay0 + 27, 38, 2, az, 416)
     m.flag(ax0 + 1, ay0 + 1, 38, 28, az, 0x0010)
     for px_, py_ in ((ax0 + 12, ay0 + 9), (ax0 + 27, ay0 + 9), (ax0 + 12, ay0 + 20), (ax0 + 27, ay0 + 20)):
         m.put(px_, py_, az, ID_PILLAR)  # cover
@@ -635,16 +695,23 @@ def build(m):
     m.points["arena_nw"] = (ax0 + 1, ay0 + 1, az)
     m.points["arena_se"] = (ax0 + 38, ay0 + 28, az)
     m.zone("arena", ax0, ay0, 40, 30, az)
+    S.carpet(m, ax0 + 3, ay0 + 14, 3, 3, az, 2576)                     # team starts: red and blue
+    S.carpet(m, ax0 + 34, ay0 + 14, 3, 3, az, 5572)
+    for qx, qy in ((ax0 + 2, ay0 + 3), (ax0 + 37, ay0 + 3), (ax0 + 2, ay0 + 26), (ax0 + 37, ay0 + 26)):
+        S.prop(m, qx, qy, az, DG.COAL_BASIN)
+    DG.hang(m, ax0, ay0, 40, 30, az, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
 
     # ------------------------------------------------ Spire Siege keep (DESIGN.md 15, roadmap 5.7d): z 11, event
     # teleport only. Courtyard with four guild gates and the throne room in the middle (PvP-zone flag).
     sx0, sy0, sz = X0 + 70, Y0 + 10, 11
-    m.fill(sx0, sy0, 60, 50, sz, "gravel")
-    m.walls(sx0, sy0, 60, 50, sz)
+    m.fill(sx0, sy0, 60, 50, sz, "grass")
+    m.walls(sx0, sy0, 60, 50, sz, style="pale")
     m.flag(sx0 + 1, sy0 + 1, 58, 48, sz, 0x0010)
     kx, ky = sx0 + 22, sy0 + 17
+    for gx_, gy_ in ((sx0 + 4, sy0 + 4), (sx0 + 55, sy0 + 4), (sx0 + 4, sy0 + 45), (sx0 + 55, sy0 + 45)):
+        m.road((gx_, gy_), (kx + 8, ky + 8), sz, width=3, key="cobble", wind=False)  # paved roads from each gate
     m.fill(kx, ky, 16, 16, sz, "marble")
-    m.walls(kx, ky, 16, 16, sz, gaps={(kx + 8, ky), (kx + 8, ky + 15), (kx, ky + 8), (kx + 15, ky + 8)})
+    m.walls(kx, ky, 16, 16, sz, gaps={(kx + 8, ky), (kx + 8, ky + 15), (kx, ky + 8), (kx + 15, ky + 8)}, style="white", doors=True)
     m.points["siege_throne"] = (kx + 8, ky + 8, sz)
     m.points["siege_throne_nw"] = (kx + 1, ky + 1, sz)
     m.points["siege_throne_se"] = (kx + 14, ky + 14, sz)
@@ -653,6 +720,19 @@ def build(m):
     m.points["siege_gate_3"] = (sx0 + 4, sy0 + 45, sz)
     m.points["siege_gate_4"] = (sx0 + 55, sy0 + 45, sz)
     m.zone("siege", sx0, sy0, 60, 50, sz)
+    DG.carpet_path(m, kx + 7, ky + 1, 3, 14, sz, 2576)
+    DG.carpet_path(m, kx + 1, ky + 7, 14, 3, sz, 2576)
+    S.prop(m, kx + 8, ky + 3, sz, DG.THRONE)
+    for qx, qy in ((kx + 2, ky + 2), (kx + 13, ky + 2), (kx + 2, ky + 13), (kx + 13, ky + 13)):
+        S.prop(m, qx, qy, sz, DG.PILLAR)
+    DG.hang(m, kx, ky, 16, 16, sz, every=3)
+    siege_out = DG.keep_clear(m, sz) | {(x, y) for x in range(kx - 1, kx + 17) for y in range(ky - 1, ky + 17)}
+    for gx_, gy_ in ((sx0 + 4, sy0 + 4), (sx0 + 55, sy0 + 4), (sx0 + 4, sy0 + 45), (sx0 + 55, sy0 + 45)):
+        for qx, qy in ((gx_ - 2, gy_ - 2), (gx_ + 2, gy_ - 2)):
+            if (qx, qy) not in siege_out and (qx, qy, sz) in m.ground:
+                S.prop(m, qx, qy, sz, DG.COAL_BASIN)
+    DG.scatter(m, sx0 + 1, sy0 + 1, 58, 48, sz, S.BUSHES, 30, solid=True, avoid=siege_out)
+    DG.scatter(m, sx0 + 1, sy0 + 1, 58, 48, sz, S.FLOWERS, 40, avoid=siege_out)
 
     # ------------------------------------------------ landmarks, lakes and forests (the world between the camps)
     S.pond(m, X0 + 330, Y0 + 92, 20, 12, Z, ring="mud")           # a lake in the north-east
