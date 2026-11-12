@@ -221,3 +221,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 ### 2026-11-11 — Roadmap updated from REVIEW.md
 - New **Phase R — Make it real** at the top of ROADMAP.md: 22 tasks from the review, in priority order (R1–R3 already fixed). No new features until it's done. Tasks the review found ticked too early (1.8, 2.12, 3.3, 3.4) now point to their R task.
 - Added Q13–Q25 to QUESTIONS.md (the review's questions for Jay, each with my recommendation, assumed until answered). New tasks 7.4, 7.5, 8.3, 8.4, 10.4, 10.5; map rules added to MAP_REQUESTS.md; a stricter "when to tick a task" rule added to CLAUDE.md.
+
+### 2026-11-11 — Jay's first playtest notes applied (PLAYTEST.md)
+- Mage wand and rod now work from level 1 (the build patches the item file); base walking speed 110 → 170 for all vocations; new starter letter with lore and first steps (given by the Registrar, `!guide` re-reads it); `!spells` lists a vocation's spells and when each unlocks (spells are never sold); Hearthgate compacted (depot beside temple, shops at the temple door, monument closer). Boot test: 78 tests pass.
+- **Not yet:** a real tutorial and quests (R11, R12), more compact real maps, and the level-8 gap before a first spell (consider a level-1 spell for mages).

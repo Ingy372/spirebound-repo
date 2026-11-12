@@ -118,7 +118,12 @@ def rename_vocations(text: str, pattern: str) -> str:
 
 def patch_core(build: Path) -> None:
     items = build / "data" / "items" / "items.xml"
-    items.write_text(rename_vocations(items.read_text(encoding="utf-8"), r'key="vocation" value="[^"]*"'), encoding="utf-8")
+    text = rename_vocations(items.read_text(encoding="utf-8"), r'key="vocation" value="[^"]*"')
+    # Starter mage weapons (wand of vortex, snakebite rod) must be usable from level 1: a new Arcanist or
+    # Mystic would otherwise fist-fight up to level 6 (playtest 2026-11-11).
+    for item_id in (3074, 3066):
+        text = re.sub(r'(<item id="%d"[^>]*>.*?<attribute key="level" value=")\d+(")' % item_id, r"\g<1>1\g<2>", text, count=1, flags=re.S)
+    items.write_text(text, encoding="utf-8")
     for folder in ("runes", "weapons"):
         for f in (build / "data" / "scripts" / folder).rglob("*.lua"):
             f.write_text(rename_vocations(f.read_text(encoding="utf-8"), r"vocation\([^)]*\)"), encoding="utf-8")

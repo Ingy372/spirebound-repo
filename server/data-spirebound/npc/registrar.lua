@@ -55,6 +55,9 @@ local function giveKit(player, vocId)
 			player:addItem(entry[1], entry[2])
 		end
 	end
+	if SpireGuide then
+		SpireGuide.giveLetter(player) -- lore and first steps
+	end
 end
 
 local function greetCallback(npc, player)

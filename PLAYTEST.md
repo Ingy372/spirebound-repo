@@ -14,3 +14,13 @@ Template:
 ---
 
 (no playtests yet: the first one comes at the end of Phase 1)
+
+## 2026-11-11 (Jay, first look)
+- What I tested: logging in, walking Hearthgate, the Arcanist path. Not the boss.
+- Felt bad / change this:
+  - Content is very thin (matches REVIEW.md). Quests or a tutorial are needed so players know where to go.
+  - Hearthgate is too spread out; walking between places takes 2-3 minutes. Travel speed matters a lot in Tibia, so starting speed must be higher.
+  - Idea: new characters spawn with a sheet of paper: lore, their mission, and the first few objectives.
+  - Arcanist is broken: the wand needs level 6, so the player fist-fights to get there.
+  - Couldn't find the NPC who sells spells, so couldn't test spells.
+- Done the same day: mage starter wand and rod usable from level 1; base walking speed 110 → 170 for every vocation; starter letter (Registrar gives it; `!guide` re-reads it); `!spells` lists your spells (nobody sells them, they unlock by level); town compacted (depot beside the temple, shops just outside the temple door, monument closer). Still open: real quests and the Arrival Yard tutorial (ROADMAP R11, R12), more Hearthgate tightening in the real map.

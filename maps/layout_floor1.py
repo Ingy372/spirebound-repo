@@ -31,7 +31,7 @@ def build(m):
 
     # temple (centre)
     tpx, tpy = tx + 35, ty + 30
-    m.building(tpx, tpy, 20, 14, Z, floor="marble", door_side="s")
+    m.building(tpx, tpy, 20, 14, Z, floor="marble", door_side="n")
     temple = (tpx + 10, tpy + 7, Z)
     m.put(tpx + 10, tpy + 3, Z, 3515)  # altar
     m.towns.append((1, "Hearthgate", temple))
@@ -45,23 +45,23 @@ def build(m):
     m.sign(tpx + 17, tpy + 1, Z, "Offline training: use a statue to log out and train that skill slowly while you're away.")
 
     # depot
-    dx, dy = tx + 8, ty + 8
-    m.building(dx, dy, 16, 10, Z, floor="wood", door_side="s")
+    dx, dy = tx + 14, ty + 30  # beside the temple, door facing it (playtest: town too spread out)
+    m.building(dx, dy, 16, 10, Z, floor="wood", door_side="e")
     for i in range(4):
         m.depot(dx + 3 + i * 3, dy + 1, Z, 1)
     m.put(dx + 14, dy + 8, Z, 3501)  # mailbox
-    m.sign(dx + 7, dy + 10, Z, "Hearthgate Depot")
+    m.sign(dx + 16, dy + 3, Z, "Hearthgate Depot")
     m.points["depot_hearthgate"] = (dx + 8, dy + 5, Z)
     m.npcs.append(("Quartermaster Bryn", (dx + 3, dy + 6, Z)))
 
     # shops row (NPCs arrive in task 1.15)
     for i, name in enumerate(["General Store", "Weaponsmith", "Armorer", "Bank"]):
-        sx = tx + 30 + i * 13
-        m.building(sx, ty + 8, 11, 9, Z, floor="wood", door_side="s")
-        m.sign(sx + 5, ty + 17, Z, name)
-        m.points["shop_" + name.lower().replace(" ", "_")] = (sx + 5, ty + 12, Z)
+        sx = tx + 22 + i * 12  # shops sit just north of the temple door
+        m.building(sx, ty + 16, 11, 9, Z, floor="wood", door_side="s")
+        m.sign(sx + 5, ty + 25, Z, name)
+        m.points["shop_" + name.lower().replace(" ", "_")] = (sx + 5, ty + 20, Z)
         npc = {"General Store": "Merchant Wenna", "Weaponsmith": "Weaponsmith Garrick", "Armorer": "Armorer Hesta", "Bank": "Banker Tolliver"}[name]
-        m.npcs.append((npc, (sx + 5, ty + 11, Z)))
+        m.npcs.append((npc, (sx + 5, ty + 19, Z)))
 
     # houses (south streets)
     hid = 1
@@ -72,14 +72,14 @@ def build(m):
             hid += 1
 
     # monument square + fountain
-    m.put(tx + 70, ty + 36, Z, 1922)
-    m.sign(tx + 70, ty + 39, Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
-    m.points["monument"] = (tx + 70, ty + 37, Z)
-    m.npcs.append(("Housewright Orla", (tx + 74, ty + 41, Z)))  # furniture kits, exercise dummy (DESIGN 7.5)
-    m.npcs.append(("Bounty Warden Cass", (tx + 66, ty + 42, Z)))
-    m.npcs.append(("Guildwarden Sela", (tx + 74, ty + 42, Z)))
-    m.npcs.append(("Vesper", (tx + 78, ty + 36, Z)))
-    m.npcs.append(("Taskmaster Ren", (tx + 62, ty + 36, Z)))
+    m.put(tx + 66, ty + 36, Z, 1922)
+    m.sign(tx + 66, ty + 39, Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
+    m.points["monument"] = (tx + 66, ty + 37, Z)
+    m.npcs.append(("Housewright Orla", (tx + 70, ty + 41, Z)))  # furniture kits, exercise dummy (DESIGN 7.5)
+    m.npcs.append(("Bounty Warden Cass", (tx + 62, ty + 42, Z)))
+    m.npcs.append(("Guildwarden Sela", (tx + 70, ty + 42, Z)))
+    m.npcs.append(("Vesper", (tx + 74, ty + 36, Z)))
+    m.npcs.append(("Taskmaster Ren", (tx + 58, ty + 36, Z)))
 
     # Underkeep grate (sealed; it becomes a secret in task 2.10)
     m.put(tx + 6, ty + 70, Z, 435)

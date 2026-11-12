@@ -20,6 +20,7 @@ function login.onLogin(player)
 			end
 		end
 		player:addMoney(10000)
+		if SpireGuide then SpireGuide.giveLetter(player) end
 	end
 	return true
 end
