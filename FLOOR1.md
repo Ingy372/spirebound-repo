@@ -74,4 +74,5 @@ The four starter grounds and the roads around the city are *Guarded* (players ca
 
 ## The Arrival Yard (tutorial)
 New characters appear in a walled yard south-east of the city. Guide Pell greets them; a stone path leads east past a rat pen (Stop 1: fighting), a sign about skills, spells and the Journal (Stop 2), and into the Registrar's hall (Stop 3), where they choose a path and a difficulty and are sent to the temple. They also get a letter (`!guide`) with the story and first steps.
-Still to build for the full tutorial (roadmap R11): gates that open only after a step is done, pop-up hints at levels 2, 5 and 10, and a walked-through test with a real new character.
+Guide Pell also gives a first quest (*First Blood*: three rats in the pen), and short hints appear at levels 2, 5, 8, 10 and 20.
+Still to build for the full tutorial (roadmap R11): gates that open only after a step is done, and a walked-through test with a real new character in the client.

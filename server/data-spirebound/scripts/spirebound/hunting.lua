@@ -24,11 +24,34 @@ function advance.onAdvance(player, skill, oldLevel, newLevel)
 end
 advance:register()
 
+-- A short hint at a few early levels, once each.
+local HINTS = {
+	[2] = "Level 2! Your health and mana grow with every level. Keep fighting: the first levels come fast.",
+	[5] = "Level 5! Visit the shops in Hearthgate: Armorer Hesta for armor, Weaponsmith Garrick for weapons, Quartermaster Bryn for potions. Say 'trade' to a merchant.",
+	[8] = "Level 8! You have learned your first spells. Say !spells to read them, and say a spell's words to cast it.",
+	[10] = "Level 10! Quest givers are waiting: Captain Dorrow at the north gate, Hunter Brannoch in the Hunters' Hall, Miller Agna in Millcross. Press J to see your quest log.",
+	[20] = "Level 20! You can be promoted at the Ascendancy in Hearthgate, and you can buy a house.",
+}
+local hints = CreatureEvent("SpireLevelHints")
+function hints.onAdvance(player, skill, oldLevel, newLevel)
+	if skill ~= SKILL_LEVEL then
+		return true
+	end
+	for level = oldLevel + 1, newLevel do
+		if HINTS[level] then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, HINTS[level])
+		end
+	end
+	return true
+end
+hints:register()
+
 -- New characters (no path, no difficulty, never seen the yard) start in the Arrival Yard.
 local STORAGE_YARD = 50900
 local login = CreatureEvent("SpireHuntLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireHuntAdvice")
+	player:registerEvent("SpireLevelHints")
 	if player:getVocation():getId() == 0 and Difficulty.get(player) == Difficulty.NONE and player:getStorageValue(STORAGE_YARD) ~= 1 then
 		player:setStorageValue(STORAGE_YARD, 1)
 		local yard = Town(50)

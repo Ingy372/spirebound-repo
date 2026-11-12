@@ -40,6 +40,9 @@ local function creatureSayCallback(npc, player, type, msg)
 		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
 		return true
 	end
+	if SpireQuests.talk(npc, npcHandler, player, msg, npcName) then
+		return true
+	end
 	for _, row in ipairs(ANSWERS) do
 		for _, word in ipairs(row[1]) do
 			if MsgContains(msg, word) then
@@ -52,7 +55,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing. Ask me about {fighting}, {skills}, {spells}, {gold}, {quests}, {death} or where to {hunt}.")
+npcHandler:setMessage(MESSAGE_GREET, "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing. Take on my {quest} to learn to fight, or ask me about {skills}, {spells}, {gold}, {death} or where to {hunt}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good luck, climber.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
