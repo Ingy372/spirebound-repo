@@ -77,6 +77,12 @@ SpireSpells.list = {
 	{ name = "Winter's Breath", words = "winters breath", voc = { 2 }, level = 150, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 3.2, max = 5.0, effect = CONST_ME_ICEAREA, lostArt = 8 },
 }
 
+-- Pure: Skystep needs a real gap. gapHasFloor = the tile you would pass through (above your head when going up,
+-- in front of you when going down) has a floor.
+function SpireSpells.levitateGapFree(gapHasFloor)
+	return not gapHasFloor
+end
+
 -- Lost Arts: a player knows one once every story quest of its floor is done
 function SpireSpells.knowsLostArt(row, floorStoryDone)
 	return not row.lostArt or floorStoryDone(row.lostArt)

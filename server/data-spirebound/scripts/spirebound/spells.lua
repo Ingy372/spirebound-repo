@@ -151,7 +151,13 @@ KINDS.levitate = function(row, player, var)
 	to:getNextPosition(player:getDirection())
 	local dz = param == "up" and -1 or 1
 	local tile = Tile(Position(to.x, to.y, to.z + dz))
-	if tile and tile:getGround() and not tile:hasFlag(bit.bor(TILESTATE_IMMOVABLEBLOCKSOLID, TILESTATE_FLOORCHANGE)) then
+	-- You can only climb through a gap: going up, nothing may be above your head; going down, the tile in front of
+	-- you must have no floor. Without this, Skystep passed through solid floors and ceilings.
+	local gapPos = param == "up" and Position(from.x, from.y, from.z - 1) or Position(to.x, to.y, to.z)
+	local gapTile = Tile(gapPos)
+	local gapFree = SpireSpells.levitateGapFree(gapTile ~= nil and gapTile:getGround() ~= nil)
+	local destZone = SpirePvP and SpirePvP.zoneAt(Position(to.x, to.y, to.z + dz)) or "open"
+	if gapFree and destZone ~= "bossroom" and tile and tile:getGround() and not tile:hasFlag(bit.bor(TILESTATE_IMMOVABLEBLOCKSOLID, TILESTATE_FLOORCHANGE)) then
 		if player:move(tile, bit.bor(FLAG_IGNOREBLOCKITEM, FLAG_IGNOREBLOCKCREATURE)) == RETURNVALUE_NOERROR then
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 			return true

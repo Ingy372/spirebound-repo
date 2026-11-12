@@ -150,6 +150,10 @@ def build(m, n):
     m.sign(bx + 13, by + 21, bz, "Beyond this door the tower's protection ends.")
     m.put(bx + 15, by + 2, bz, 1772)
     m.points[P + "gate_next"] = (bx + 15, by + 2, bz)
+    # the stair sits in a walled back chamber: the boulder tile is the only way in (no walking around it)
+    for wx in range(bx + 1, bx + 29):
+        if wx != bx + 15:
+            m.put(wx, by + 2, bz, 1271)  # horizontal brick wall (tools/mapgen.py ID["wall_h"])
     m.points[f"stair_floor{n + 1}_src"] = (bx + 15, by + 1, bz)
 
     # Floor 8: the hidden Twin Fang trial (DESIGN.md 5.6): a stone circle inside the apex cave

@@ -86,6 +86,17 @@ function SpirePvP.skullFor(frags, now)
 	return nil
 end
 
+-- Pure: how long a skull lasts, in SECONDS REMAINING. The engine's player:setSkullTime() takes a duration
+-- (it counts down while the player is online), not a calendar time.
+function SpirePvP.skullSeconds(skull)
+	if skull == SKULL_BLACK then
+		return SpirePvP.BLACK_DAYS * 86400
+	elseif skull == SKULL_RED then
+		return SpirePvP.RED_DAYS * 86400
+	end
+	return 0
+end
+
 function SpirePvP.deathLossMultiplier(skull)
 	return (skull == SKULL_RED or skull == SKULL_BLACK) and 2 or 1
 end

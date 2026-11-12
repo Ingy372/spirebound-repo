@@ -186,6 +186,10 @@ def build(m):
     # stair to floor 2 (sealed by a boulder until the first clear)
     m.put(bx + 15, by + 2, bz, 1772)
     m.points["gate_floor2"] = (bx + 15, by + 2, bz)
+    # the stair sits in a walled back chamber: the boulder tile is the only way in (no walking around it)
+    for wx in range(bx + 1, bx + 29):
+        if wx != bx + 15:
+            m.put(wx, by + 2, bz, 1271)  # horizontal brick wall (tools/mapgen.py ID["wall_h"])
 
     # stair to floor 2: linked to Floor 2's landing by tools/mapgen.py (link_floors)
     m.points["stair_floor2_src"] = (bx + 15, by + 1, bz)

@@ -147,11 +147,11 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 	local skull = SpirePvP.skullFor(kept, now)
 	if skull == SKULL_BLACK then
 		k:setSkull(SKULL_BLACK)
-		k:setSkullTime(now + SpirePvP.BLACK_DAYS * 86400)
+		k:setSkullTime(SpirePvP.skullSeconds(SKULL_BLACK)) -- seconds remaining, not a calendar time
 		Game.broadcastMessage(k:getName() .. " now carries a black mark for serial murder.", MESSAGE_EVENT_ADVANCE)
 	elseif skull == SKULL_RED and k:getSkull() ~= SKULL_BLACK then
 		k:setSkull(SKULL_RED)
-		k:setSkullTime(now + SpirePvP.RED_DAYS * 86400)
+		k:setSkullTime(SpirePvP.skullSeconds(SKULL_RED))
 		k:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are now a murderer (red). Towns, shops and boss rooms are closed to you, and death will cost you everything you carry.")
 	end
 	if skull and SpireBounty then

@@ -35,6 +35,15 @@ function Floors.isOpen(n)
 	return Floors.get(n - 1).bossDeadAt ~= nil
 end
 
+-- Pure: may a character stand on floor n? Nobody (except staff) may be on a floor the tower has not opened yet,
+-- however they got there. n = 0 means "not on any floor" (always fine).
+function Floors.mayStandOn(n, floorIsOpen, isStaff)
+	if isStaff or not n or n <= 1 then
+		return true
+	end
+	return floorIsOpen == true
+end
+
 function Floors.highestOpen()
 	local n = 1
 	while n < Floors.LAUNCH_FLOORS and Floors.isOpen(n + 1) do

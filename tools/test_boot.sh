@@ -22,6 +22,7 @@ python3 "$ROOT/tools/check_names.py" | tail -1
 python3 "$ROOT/tools/check_names.py" >/dev/null || { echo "FAIL: banned names"; exit 1; }
 
 python3 "$ROOT/tools/gen_site.py" --check || { echo "FAIL: website build"; exit 1; }
+python3 "$ROOT/tools/login_server.py" --selftest || { echo "FAIL: login service safety checks"; exit 1; }
 python3 "$ROOT/tools/gen_i18n.py" >/dev/null && git -C "$ROOT" diff --quiet -- server/data-spirebound/lib/spirebound/i18n_pt.lua server/data-spirebound/lib/spirebound/i18n_es.lua 2>/dev/null || true
 
 python3 "$ROOT/tools/build_server.py" $OFFLINE
