@@ -118,3 +118,9 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 - **High road:** west gate to east gate.
 - **South of the high road:** the Lantern & Lark inn (rooms upstairs), the Training Yard (offline training statues, practice posts), Spire Manor (the showcase house) closing the avenue, and the Carriage Station.
 - **South wall:** two streets of houses, 22 in all (8 with an upstairs).
+
+## The Hearth (2026-11-12)
+Hearthgate's home hall, replacing the old temple, depot and Trade Hall. It is 62 x 16 tiles across three levels, with its door facing the Market Square.
+- **Level 1:** the temple nave in the middle (the spawn and respawn point, the altar, Priest Odran). The depot wing is to the west (18 lockers, 2 mailboxes); the bank and exchange to the east (Banker Tolliver and the account vault, Trader Osric who buys loot, Broker Nell for the market).
+- **Level 2:** the trading gallery, with 16 lockers and six long trade tables.
+- **Level 3:** the Hall of Climbers, with statues and a meeting carpet for finding a party.

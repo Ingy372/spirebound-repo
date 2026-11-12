@@ -205,3 +205,8 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [x] **J8 Temple scroll.** Runewright Mael sells it (300 gold, used up): back to your home temple when not in a fight; never from a boss room, Deadzone, the Arena or the Siege. Done when: in-game test finds the item and the seller. *(Still to check by hand in the client: J5c-style playtest.)*
 - [ ] **J9 Ten-minute mini events** between the big ones (snowball fight, quiz, last man standing at fixed gear).
 - [ ] **J10 Forge for Floor 3 and up** (waiting on Q27).
+- [x] **J11 The Hearth, Hearthgate's home hall** (Jay, 2026-11-12). It brings temple, depot, bank and market together across three levels:
+  - **Level 1:** the spawn and respawn point, 18 lockers, Trader Osric (junk buyer), Banker Tolliver, and Broker Nell.
+  - **Level 2:** the trading gallery, with 16 more lockers and trade tables.
+  - **Level 3:** the Hall of Climbers.
+  Also added: an account vault shared by all characters on an account, and a branch bank on the north wall. Done when: in-game test checks that the respawn point is in the Hearth, all stairs work both ways, the NPCs are loaded and the vault arithmetic holds; Osric's trade window was checked in the client.

@@ -79,6 +79,16 @@ Almost every popular server has a way to upgrade gear (item +1 to +10, fusion, C
 - **Recommendation:** keep it off for Floors 1-2, and switch the Forge on from Floor 3 as a loot and gold sink that players trade for. No forge materials in the shop, ever.
 - Jay's answer:
 
+### Q28. "A banker that can store gold between all accounts": did I read that right? (2026-11-12)
+I built an **account vault**: gold that every character on the same account can reach at any banker ("vault deposit 500", "vault withdraw 500"). Each character still has its own bank balance, and gold can still be sent to another player's character with "transfer", as in Tibia.
+- **Recommendation:** keep it like this. Sharing gold between different people's accounts is already covered by "transfer" and the market. If you meant something else, describe it in a sentence.
+- Jay's answer:
+
+### Q29. Is the junk buyer too generous? (2026-11-12)
+Trader Osric buys nearly every monster drop at close to the standard Tibia NPC prices. Materials sell to him for 8–25 gold each, still well under what they're worth to crafters, so trading between players stays worthwhile.
+- **Recommendation:** keep these prices for the friends test, then adjust from what testers earn per hour (ECONOMY.md shows the model).
+- Jay's answer:
+
 ### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
 Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
 - **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").

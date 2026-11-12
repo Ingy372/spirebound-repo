@@ -139,7 +139,7 @@ def build(m):
     # Plan (x across, y down; drawn in FLOOR1.md). Every block is a building, a street or a square; nothing is left over.
     #   y  2-10  ten shops along the north wall, five either side of the north avenue
     #   y 14-28  the Market Square, the Ascendancy west of it, the Guild Hall east
-    #   y 30-45  depot and Trade Hall | the temple | workshop and Hunters' Hall
+    #   y 30-45  the workshop | the Hearth (temple, depot, bank, market; 3 levels) | the Hunters' Hall
     #   y 47-51  the high road, west gate to east gate
     #   y 53-68  the inn, the training yard, Spire Manor (the showcase house) and the carriage station
     #   y 72-90  two streets of houses along the south wall (22 houses); the avenue runs on to the south gate
@@ -173,7 +173,7 @@ def build(m):
              ("Armorer", 22, "Armorer Hesta", "brick", "armor"), ("Fletcher", 32, "Fletcher Tamsin", "timber", "fletcher"),
              ("Alchemist", 42, "Alchemist Ivo", "sand", "alchemist"),
              ("Runewright", 61, "Runewright Mael", "stone", "runes"), ("Quartermaster's Stores", 71, "Quartermaster Bryn", "brick", "general"),
-             ("Tailor", 81, "Tailor Quill", "timber", "tailor"), ("Bank", 91, "Banker Tolliver", "white", "bank"),
+             ("Tailor", 81, "Tailor Quill", "timber", "tailor"), ("Bank", 91, "Banker Ansel", "white", "bank"),
              ("Post Office", 101, "Postmaster Hobb", "sand", "post")]
     for name, rx, npc, style, kind in shops:
         sx, sy = tx + rx, ty + 2
@@ -249,48 +249,93 @@ def build(m):
         S.prop(m, gx_ + px, gy_ + 5, Z - 1, 2322)
         S.prop(m, gx_ + px, gy_ + 6, Z - 1, 2358)
 
-    # ---- the temple (centre), with the depot and Trade Hall west and the workshop and Hunters' Hall east
-    tpx, tpy = R(46, 30)
-    claim("temple", tpx, tpy, 21, 15)
-    m.building(tpx, tpy, 21, 15, Z, floor="marble", door_side="n", style="white", doors=True)
-    temple = (tpx + 10, tpy + 8, Z)
-    S.carpet(m, tpx + 9, tpy + 1, 3, 13, Z, 2576)
-    m.put(tpx + 10, tpy + 3, Z, 3515)  # altar
-    for px, py in ((tpx + 3, tpy + 5), (tpx + 17, tpy + 5), (tpx + 3, tpy + 11), (tpx + 17, tpy + 11)):
-        S.prop(m, px, py, Z, MARBLE_PILLAR)
+    # ---- The Hearth: Hearthgate's home hall (Jay, 2026-11-12: a "temple" or "home" area where players gather, with
+    # banks, trading, the respawn point, 2-3 levels, a junk buyer and a banker). Like the depot squares of the big servers:
+    # temple, depot, bank and market under one roof, every service a few steps from where you appear.
+    #   level 1 (z 7): the temple nave in the middle (spawn and respawn point, Priest Odran), the depot west (18 lockers,
+    #                  mailboxes), the bank and exchange east (Banker Tolliver, Trader Osric the junk buyer, Broker Nell)
+    #   level 2 (z 6): the trading gallery: 20 more lockers, trade tables and benches, where players meet to trade
+    #   level 3 (z 5): the Hall of Climbers: statues, boards, a quiet place to group up
+    hx0, hy0 = R(25, 30)
+    HW, HH = 62, 16
+    claim("the hearth", hx0, hy0, HW, HH)
+    m.building(hx0, hy0, HW, HH, Z, floor="marble", door_side="n", style="white", doors=True)
+    m.storey(hx0, hy0, HW, HH, Z - 1, floor="wood", style="white")
+    m.storey(hx0, hy0, HW, HH, Z - 2, floor="marble", style="white")
+    # the nave and its two wings, joined by wide archways
+    for lvl in (Z, Z - 1, Z - 2):
+        for wx in (20, 41):
+            m.autowall([(hx0 + wx, hy0 + y) for y in range(1, 15) if not 5 <= y <= 9], lvl, "white")
+    for yy in range(hy0 + 1, hy0 + HH - 1):
+        for xx in range(hx0 + 1, hx0 + 20):
+            m.ground[(xx, yy, Z)] = 408                   # the depot wing has a wooden floor
+        for xx in range(hx0 + 42, hx0 + HW - 1):
+            m.ground[(xx, yy, Z)] = 410                   # the bank wing black marble
+    temple = (hx0 + 31, hy0 + 8, Z)
+    S.carpet(m, hx0 + 30, hy0 + 1, 3, 11, Z, 2576)
+    m.put(hx0 + 31, hy0 + 12, Z, 3515)                   # the altar
+    for px, py in ((23, 3), (38, 3), (23, 12), (38, 12), (26, 3), (35, 3)):
+        S.prop(m, hx0 + px, hy0 + py, Z, MARBLE_PILLAR)
+    for px, py in ((24, 7), (36, 7)):
+        S.prop(m, hx0 + px, hy0 + py, Z, 2370)           # benches either side of the aisle
     m.towns.append((1, "Hearthgate", temple))
     m.points["temple_hearthgate"] = temple
-    m.npcs.append(("Priest Odran", (tpx + 14, tpy + 5, Z)))
-    m.sign(tpx + 12, tpy - 1, Z, "Hearthgate Temple. Priest Odran heals the wounded and sells blessings.")
+    m.npcs.append(("Priest Odran", (hx0 + 34, hy0 + 11, Z)))
+    m.sign(hx0 + 33, hy0 - 1, Z, "The Hearth. Temple, depot, bank and market under one roof: you wake here when you fall. "
+           "The trading gallery is upstairs.")
+    # west wing: the depot
+    for x in range(2, 20, 2):
+        m.depot(hx0 + x, hy0 + 1, Z, 1)
+        m.depot(hx0 + x, hy0 + 14, Z, 1)
+    for px in (6, 14):
+        m.put(hx0 + px, hy0 + 7, Z, 3501)                # mailboxes
+    m.sign(hx0 + 10, hy0 + 8, Z, "Depot. Your lockers are shared by every depot in the tower. Open the market from any locker.")
+    m.points["depot_hearthgate"] = (hx0 + 10, hy0 + 5, Z)
+    # east wing: the bank and exchange
+    S.counter(m, hx0 + 43, hy0 + 5, 17, Z)
+    m.npcs.append(("Banker Tolliver", (hx0 + 46, hy0 + 3, Z)))
+    m.npcs.append(("Trader Osric", (hx0 + 52, hy0 + 3, Z)))
+    m.npcs.append(("Broker Nell", (hx0 + 57, hy0 + 3, Z)))
+    for px, pid in ((43, 2480), (49, 2472), (55, 2480), (59, 2472)):
+        S.prop(m, hx0 + px, hy0 + 1, Z, pid)
+    m.sign(hx0 + 50, hy0 + 7, Z, "Bank and Exchange. Banker Tolliver keeps your gold and your account vault; Trader Osric buys "
+           "your loot; Broker Nell explains the market.")
+    m.points["trade_hall"] = (hx0 + 51, hy0 + 9, Z)
+    m.points["hearth_bank"] = (hx0 + 46, hy0 + 6, Z)
+    m.points["hearth_trader"] = (hx0 + 52, hy0 + 6, Z)
+    # level 2: the trading gallery
+    for x in range(2, 60, 3):
+        if not 19 <= x <= 22 and not 40 <= x <= 43:
+            m.depot(hx0 + x, hy0 + 1, Z - 1, 1)
+    for row in (6, 10):
+        for x0_ in (4, 24, 45):
+            S.counter(m, hx0 + x0_, hy0 + row, 11, Z - 1)  # trade tables: stand either side and deal
+    for px, py in ((10, 13), (29, 13), (51, 13)):
+        S.prop(m, hx0 + px, hy0 + py, Z - 1, 2370)
+    m.sign(hx0 + 31, hy0 + 4, Z - 1, "The Trading Gallery. Meet, haggle, and trade face to face. Lockers along the north wall.")
+    DG.hang(m, hx0, hy0, HW, HH, Z - 1, every=5, offset=4)
+    # level 3: the Hall of Climbers
+    for px, py, pid in ((8, 4, HERO_STATUE), (54, 4, ANGEL_STATUE), (8, 11, ANGEL_STATUE), (54, 11, HERO_STATUE)):
+        S.prop(m, hx0 + px, hy0 + py, Z - 2, pid)
+    for px, py in ((25, 4), (37, 4), (25, 11), (37, 11)):
+        S.prop(m, hx0 + px, hy0 + py, Z - 2, MARBLE_PILLAR)
+    S.carpet(m, hx0 + 24, hy0 + 6, 15, 4, Z - 2, 2576)
+    m.sign(hx0 + 31, hy0 + 4, Z - 2, "The Hall of Climbers. Look for a party here before you climb. Say !top for the climbers.")
+    DG.hang(m, hx0, hy0, HW, HH, Z - 2, every=5, offset=4)
+    # stairs: from each wing up to the gallery, and from the gallery's middle up to the hall
+    m.stairs(hx0 + 19, hy0 + 4, Z, floor="wood", name="hearth_west")
+    m.stairs(hx0 + 42, hy0 + 11, Z, floor="wood", name="hearth_east")
+    m.stairs(hx0 + 31, hy0 + 3, Z - 1, floor="marble", name="hearth_hall")
+    DG.hang(m, hx0, hy0, HW, HH, Z, every=5, offset=3)
 
-    dx, dy = R(2, 31)
-    claim("depot", dx, dy, 17, 12)
-    m.building(dx, dy, 17, 12, Z, floor="wood", door_side="e", style="brick", doors=True)
-    for i in range(5):
-        m.depot(dx + 2 + i * 3, dy + 1, Z, 1)
-    m.put(dx + 15, dy + 10, Z, 3501)  # mailbox
-    S.carpet(m, dx + 2, dy + 4, 13, 4, Z, 2576)
-    m.sign(dx + 17, dy + 4, Z, "Hearthgate Depot")
-    m.points["depot_hearthgate"] = (dx + 8, dy + 6, Z)
-    hx_, hy_ = R(21, 30)
-    claim("trade hall", hx_, hy_, 22, 15)
-    m.building(hx_, hy_, 22, 15, Z, floor="marble", door_side="n", style="white", doors=True)
-    for k in range(3):                                    # broker's counters and the market lockers
-        S.counter(m, hx_ + 2 + k * 6, hy_ + 5, 4, Z)
-    for i in range(5):
-        m.depot(hx_ + 3 + i * 4, hy_ + 12, Z, 1)
-    S.carpet(m, hx_ + 2, hy_ + 7, 18, 3, Z, 5572)
-    m.sign(hx_ + 12, hy_ - 1, Z, "The Trade Hall. Broker Nell keeps the market: post offers, buy from other climbers, any time.")
-    m.npcs.append(("Broker Nell", (hx_ + 11, hy_ + 3, Z)))
-    m.points["trade_hall"] = (hx_ + 11, hy_ + 8, Z)
-
-    wx_, wy_ = R(69, 30)
+    # the Housewright's workshop moved into the old depot building, west of the Hearth
+    wx_, wy_ = R(2, 31)
     claim("workshop", wx_, wy_, 17, 12)
-    m.building(wx_, wy_, 17, 12, Z, floor="wood", door_side="w", style="stone", doors=True)
+    m.building(wx_, wy_, 17, 12, Z, floor="wood", door_side="e", style="stone", doors=True)
     for px, py, pid in ((2, 3, 3458), (4, 1, 116), (5, 1, 118), (12, 1, 2519), (13, 1, 2523), (14, 1, 2472), (10, 1, 2429)):
         S.prop(m, wx_ + px, wy_ + py, Z, pid)
     S.counter(m, wx_ + 3, wy_ + 5, 10, Z)
-    m.sign(wx_ - 1, wy_ + 4, Z, "Housewright's Workshop: furniture kits and tapestries.")
+    m.sign(wx_ + 17, wy_ + 4, Z, "Housewright's Workshop: furniture kits and tapestries.")
     m.npcs.append(("Housewright Orla", (wx_ + 8, wy_ + 4, Z)))
 
     hhx, hhy = R(89, 30)

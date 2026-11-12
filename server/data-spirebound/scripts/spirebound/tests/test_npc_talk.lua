@@ -72,3 +72,27 @@ SpireTest.add("temple scroll: a real item the Runewright sells", function()
 	local npc = NpcType("Runewright Mael")
 	SpireTest.eq(npc ~= nil, true, "Runewright Mael is loaded")
 end)
+
+SpireTest.add("the Hearth: spawn point, three levels by stairs, lockers, junk buyer, vault", function()
+	local t = WorldPoints.temple_hearthgate
+	SpireTest.eq(Town(1):getTemplePosition() == t, true, "Hearthgate's temple position is the Hearth's nave")
+	SpireTest.eq(Tile(t):hasFlag(TILESTATE_PROTECTIONZONE), true, "the respawn point is a safe tile")
+	for _, n in ipairs({ "hearth_west", "hearth_east", "hearth_hall" }) do
+		local s = WorldPoints["stairs_" .. n]
+		SpireTest.eq(Tile(s):hasFlag(TILESTATE_FLOORCHANGE), true, n .. " stairs go up")
+		SpireTest.eq(Tile(Position(s.x, s.y, s.z - 1)):hasFlag(TILESTATE_FLOORCHANGE_DOWN), true, n .. " stairs come back down")
+	end
+	SpireTest.eq(NpcType("Trader Osric") ~= nil, true, "the junk buyer is loaded")
+	SpireTest.eq(NpcType("Banker Tolliver") ~= nil and NpcType("Banker Ansel") ~= nil, true, "two bankers")
+	local action, n = SpireVault.parse("vault deposit 500")
+	SpireTest.eq(action, "deposit", "parses a vault deposit")
+	SpireTest.eq(n, 500, "parses the amount")
+	local bank, vault = SpireVault.move("deposit", 500, 800, 100)
+	SpireTest.eq(bank, 300, "bank goes down")
+	SpireTest.eq(vault, 600, "vault goes up")
+	bank, vault = SpireVault.move("withdraw", -1, 0, 600)
+	SpireTest.eq(bank, 600, "withdraw all moves everything back")
+	local b2 = SpireVault.move("deposit", 900, 800, 0)
+	SpireTest.eq(b2, 800, "can't deposit more than the bank holds")
+	SpireTest.eq(SpireVault.parse("hello"), nil, "ordinary words aren't vault commands")
+end)

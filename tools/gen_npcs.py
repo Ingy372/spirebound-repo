@@ -10,6 +10,10 @@ from __future__ import annotations
 
 from pathlib import Path
 
+import sys
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from junk_prices import JUNK  # noqa: E402
+
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "server" / "data-spirebound" / "npc"
 
@@ -21,7 +25,7 @@ NPCS = {
         kind="priest", voices=["The tower takes, the temple gives back.", "Wounded? Come, sit."]),
     "hearthgate_banker": dict(
         name="Banker Tolliver", desc="the banker of Hearthgate", look=(132, 115, 76, 35, 116, 0),
-        greet="Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold. Guild members can use the {guild balance} too.",
+        greet="Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold. Your account {vault} is shared by all your characters. Guild members can use the {guild balance} too.",
         kind="bank", voices=["Coins are safer here than in your pockets."]),
     "hearthgate_merchant": dict(
         name="Merchant Wenna", desc="the general merchant", look=(136, 78, 86, 107, 115, 0),
@@ -46,6 +50,15 @@ NPCS = {
               ("club", 3270, 5, 1), ("mace", 3286, 90, 30),
               ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("spear", 3277, 10, 3),
               ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100)]),
+    "hearthgate_junk_trader": dict(
+        name="Trader Osric", desc="the trader of the Hearth", look=(129, 95, 116, 121, 115, 0),
+        greet="Back from the field, |PLAYERNAME|? I buy nearly everything monsters drop: gear, hides, gems, odds and ends. Ask for a {trade} and sell me your loot.",
+        voices=["I buy loot! Bring me everything!", "Gear, hides, gems: I pay in gold!"],
+        shop=[(n, i, None, v) for n, i, v in JUNK]),
+    "hearthgate_banker_branch": dict(
+        name="Banker Ansel", desc="the banker of the north wall", look=(132, 115, 76, 35, 116, 0),
+        greet="The north-wall branch of the bank, |PLAYERNAME|. Your {balance}, {deposit}, {withdraw} and your account {vault}, all here too.",
+        kind="bank", voices=["Banking, near the shops."]),
     "hearthgate_fletcher": dict(
         name="Fletcher Tamsin", desc="the fletcher", look=(137, 59, 63, 58, 114, 0),
         greet="Arrows, bolts and spears, |PLAYERNAME|. Bring materials and I'll {craft} better ones. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
@@ -218,6 +231,9 @@ BANK = '''
 local function creatureSayCallback(npc, player, type, msg)
 	if not npcHandler:checkInteraction(npc, player) then
 		return false
+	end
+	if SpireVault and SpireVault.talk(npc, npcHandler, player, msg) then
+		return true
 	end
 	npc:parseBank(msg, npc, player, npcHandler)
 	npc:parseGuildBank(msg, npc, player, player:getId(), npcHandler)

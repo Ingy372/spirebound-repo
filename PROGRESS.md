@@ -300,3 +300,11 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
 
 ### 2026-11-12 — Temple teleport scroll (roadmap J8)
 - Runewright Mael sells a temple teleport scroll (300 gold, used up) that takes you home when you're not in a fight. It never works from a boss room, Deadzone, the Arena or the Siege. A small gold sink, and common on popular servers. Boot test: 93 in-game tests, 0 errors.
+
+### 2026-11-12 — The Hearth: Hearthgate's home hall (Jay: a "temple" or "home" area ... 2-3 levels ... a junk buyer ... a banker)
+- The temple, depot, Trade Hall and workshop are replaced by one three-level hall in the middle of town, as the big servers do:
+  - **Level 1:** the temple nave, where you spawn and respawn; the depot (18 lockers, mailboxes); and the bank and exchange (Banker Tolliver, Trader Osric, Broker Nell).
+  - **Level 2:** a trading gallery with 16 more lockers and trade tables.
+  - **Level 3:** the Hall of Climbers.
+  The workshop moved into the old depot building.
+- Trader Osric buys every item monsters drop (53 kinds, near standard Tibia prices). The account vault keeps gold for every character on an account. Banker Ansel runs a branch on the north wall. Checked in the client; boot test: 94 in-game tests, 0 errors. Questions Q28 (the vault) and Q29 (Osric's prices).
