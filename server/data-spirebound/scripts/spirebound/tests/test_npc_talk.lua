@@ -55,3 +55,14 @@ SpireTest.add("economy: crafting recipes are real, need materials and gold, and 
 	SpireTest.eq(said:find("sniper arrows", 1, true) ~= nil, true, "and lists sniper arrows")
 	SpireTest.eq(SpireCraft.talk(nil, handler, nil, "craft", "Priest Odran"), false, "the priest crafts nothing")
 end)
+
+SpireTest.add("boosted creature: a real hunting-ground monster each day, no repeats within 13 days", function()
+	local seen = {}
+	for d = 100, 112 do
+		local n = SpireBoost.pick(d)
+		SpireTest.eq(MonsterType(n) ~= nil, true, n .. " is a real monster")
+		SpireTest.eq(seen[n] == nil, true, n .. " not boosted twice in 13 days")
+		seen[n] = true
+	end
+	SpireTest.eq(type(SpireBoost.today()), "string", "today has a boosted creature")
+end)

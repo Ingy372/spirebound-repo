@@ -37,7 +37,8 @@ function playerLoginGlobal.onLogin(player)
 	end
 
 	-- Boosted
-	player:sendTextMessage(MESSAGE_BOOSTED_CREATURE, string.format("Today's boosted creature: %s.", Game.getBoostedCreature()))
+	-- Spirebound picks its own boosted creature (lib/spirebound/boost.lua): +50% experience and an extra loot roll
+	player:sendTextMessage(MESSAGE_BOOSTED_CREATURE, string.format("Today's boosted creature: %s (+50%% experience, extra loot).", SpireBoost and SpireBoost.today() or Game.getBoostedCreature()))
 	if configManager.getBoolean(configKeys.BOOSTED_BOSS_SLOT) then
 		player:sendTextMessage(MESSAGE_BOOSTED_CREATURE, string.format("Today's boosted boss: %s.", Game.getBoostedBoss()))
 	end

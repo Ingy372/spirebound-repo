@@ -201,7 +201,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **J5b Economy for Floors 2-10:** materials, recipes and burn-rate check per floor.
 - [ ] **J5c Crafting playtest in the client:** buy materials on the market, craft at each crafter.
 - [ ] **J6 Client defaults for newcomers:** Battle List open by default, and make sure the first chat line after switching tabs is never lost (seen twice in the playthrough). Alt+click attack does nothing in our client: either fix it or stop mentioning it.
-- [ ] **J7 Boosted creature of the day** (research pass: cheap, moves players around).
+- [x] **J7 Boosted creature of the day.** One Floor 1 hunting-ground monster a day: +50% experience and an extra loot roll, named at login (Canary's own version can't pick our monsters). Done when: in-game test checks every pick is a real monster with no repeats for 13 days.
 - [ ] **J8 Temple scroll** (out of combat, cooldown) sold by the Runewright as a small gold sink.
 - [ ] **J9 Ten-minute mini events** between the big ones (snowball fight, quiz, last man standing at fixed gear).
 - [ ] **J10 Forge for Floor 3 and up** (waiting on Q27).

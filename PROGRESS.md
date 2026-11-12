@@ -294,3 +294,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English.
   - Pell's attack advice and his plural keywords were wrong.
   - There was no healing before town; Pell now heals below level 10.
 - Economy: Floor 1 monsters drop trade materials, and seven crafting recipes turn them into things no shop sells. `tools/gen_economy.py` writes ECONOMY.md with burn rates for each of the 12 hunting grounds and 4 vocations, and fails the build if a vocation loses money. It caught moles too poor for arrow-using rangers, which are now fixed. Boot test: 91 in-game tests, 0 errors.
+
+### 2026-11-12 — Boosted creature of the day (roadmap J7)
+- Each day one Floor 1 hunting-ground monster gives +50% experience and an extra loot roll; the login message names it. Canary's own version picked nothing because our monsters aren't in the official bestiary (that is why the login line used to be blank). Boot test: 92 in-game tests, 0 errors.
