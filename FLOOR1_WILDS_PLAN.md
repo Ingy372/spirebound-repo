@@ -40,7 +40,7 @@ Part 1 is for Jay. Parts 2 to 9 are the build instructions.
 | Monsters when the floor is packed | about 1,000 | about 1,500 |
 | Players one ground feeds | about 20, all on top of each other | 4 to 8 at rest, 12 to 16 when packed, plus a party in the cave |
 
-### Questions for you (also in QUESTIONS.md; I assume my recommendation until you answer)
+### Questions (answered by Jay on 2026-11-12: yes to all three)
 - **Q30. Slow the early levels?** Recommendation: yes. Levels 1 to 8 at 10 times, 9 to 20 at 4 times, 21 to 50 at 3 times.
 - **Q31. Crowd system as described?** Recommendation: yes.
 - **Q32. No cavebot inside the caves?** Recommendation: yes. Loops are for solo players and bots; caves are for teams at the keyboard.
@@ -104,7 +104,7 @@ Part 1 is for Jay. Parts 2 to 9 are the build instructions.
 | 35 | 10.7 | The Old Watchtower, the Axe-Lord |
 | 40 | 14.7 | The Old Watchtower's inner room and cave |
 
-Done when: `tools/gen_economy.py` prints this ladder with every target met, an in-game test reads the three new stages, and `DESIGN.md` 5.5, `ECONOMY.md` and `BESTIARY.md` are regenerated or updated. Quote Jay's answer to Q30 in `PROGRESS.md` if he has given one.
+Done when: `tools/gen_economy.py` prints this ladder with every target met, an in-game test reads the three new stages, and `DESIGN.md` 5.5, `ECONOMY.md` and `BESTIARY.md` are regenerated or updated. Quote Jay's answer to Q30 in `PROGRESS.md`: "yes slow it down to what you recommend. it should last about 11-15 hours. this will give a great sense of FOMO on launch day and on season resets."
 
 ---
 
