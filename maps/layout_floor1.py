@@ -237,6 +237,11 @@ def build(m):
             S.prop(m, sx + 2, sy + 1, Z, 2322)
             S.prop(m, sx + 1, sy + 1, Z, 2358)
     m.npcs.append(("Bounty Warden Cass", (tx + 71, ty + 9, Z)))   # inside the Hunters' Hall
+    # the Hunters' Hall has a trophy loft, reached by a ladder in the north-east corner
+    m.storey(tx + 68, ty + 4, 10, 9, Z - 1, floor="wood", style="stone")
+    m.ladder(tx + 76, ty + 5, Z, name="hunters_hall")
+    for px, py, pid in ((70, 7, 2519), (71, 7, 2523), (70, 10, 2472), (74, 10, 2429)):
+        S.prop(m, tx + px, ty + py, Z - 1, pid)
     m.npcs.append(("Hunter Brannoch", (tx + 76, ty + 7, Z)))
 
     # the Ascendancy (promotion hall, west of the plaza) and the Guild Hall (east)
@@ -255,6 +260,13 @@ def build(m):
     S.prop(m, tx + 72, ty + 22, Z, 2472)
     m.sign(tx + 61, ty + 18, Z, "Guild Hall. Found a guild, read the recruiting board.")
     m.npcs.append(("Guildwarden Sela", (tx + 69, ty + 19, Z)))
+    # upstairs: the guild meeting room (stairs in the east corner)
+    m.storey(tx + 62, ty + 15, 14, 10, Z - 1, floor="wood", style="timber")
+    m.stairs(tx + 74, ty + 18, Z, name="guild_hall")
+    S.carpet(m, tx + 64, ty + 18, 8, 4, Z - 1, 5572)
+    for px in (65, 67, 69, 71):
+        S.prop(m, tx + px, ty + 19, Z - 1, 2322)
+        S.prop(m, tx + px, ty + 20, Z - 1, 2358)
 
     # depot (west of the temple, door facing it) and the Housewright's workshop (east, door facing it)
     dx, dy = tx + 6, ty + 26
@@ -282,8 +294,9 @@ def build(m):
             hx, hy = tx + hx_rel, ty + row_y
             claim(f"house {hid}", hx, hy, 8, 8)
             st = styles[(k + (3 if side == "s" else 0)) % len(styles)]
-            m.house_building(hid, f"Lantern Row {hid}", hx, hy, 8, 8, Z, town=1, rent=1500, door_side=side, style=st,
-                             floor="marble" if st == "white" else "wood")
+            two = k in (0, 6)                 # the corner houses of each street have an upstairs (and cost more)
+            m.house_building(hid, f"Lantern Row {hid}", hx, hy, 8, 8, Z, town=1, rent=2800 if two else 1500, door_side=side,
+                             style=st, floor="marble" if st == "white" else "wood", storeys=2 if two else 1)
             fy = hy - 1 if side == "n" else hy + 8
             S.prop(m, hx + 2, fy, Z, 316)
             S.prop(m, hx + 6, fy, Z, 321)
@@ -355,6 +368,11 @@ def build(m):
     S.sprinkle(m, mx, my, mw, mh, Z, S.FLOWERS, 0.05, seed=50)                # flowers only: bushes block the way
     m.flag(mx, my, mw, mh, Z, 0x0001)
     m.building(mx + 18, my + 4, 14, 10, Z, floor="wood", door_side="s", style="white", doors=True)  # inn
+    m.storey(mx + 18, my + 4, 14, 10, Z - 1, floor="wood", style="white")                          # guest rooms upstairs
+    m.stairs(mx + 30, my + 6, Z, name="millcross_inn")
+    m.autowall([(mx + 24, my + y) for y in range(5, 13) if y not in (8, 9)], Z - 1, "white")       # two rooms, a gap between
+    for px, py, pid in ((20, 6, 2322), (21, 6, 2358), (27, 11, 2322), (28, 11, 2358), (20, 11, 2519), (28, 7, 2523)):
+        S.prop(m, mx + px, my + py, Z - 1, pid)
     S.counter(m, mx + 20, my + 7, 8, Z)
     for px, py in ((mx + 20, my + 11), (mx + 24, my + 11), (mx + 28, my + 11)):
         S.prop(m, px, py, Z, 2322)
@@ -513,8 +531,9 @@ def build(m):
     m.zone("deadzone", cx, cy, 44, 44, 8)                            # the cliff caves below
     m.zone("bossroom", px, py, 24, 20, 7)                            # the Pass arena
     m.zone("bossroom", bx, by, 30, 24, 4)                            # the Axe-Lord's room
-    m.zone("town", tx, ty, tw, th, 7)
-    m.zone("town", mx, my, mw, mh, 7)
+    for lvl in (7, 6, 5):                                             # the towns' upstairs rooms are town too
+        m.zone("town", tx, ty, tw, th, lvl)
+        m.zone("town", mx, my, mw, mh, lvl)
 
     # ------------------------------------------------ Floor 1 secrets (DESIGN.md 8.1). Trigger tiles only; no markers.
     def secret(sid, x, y, z=Z):

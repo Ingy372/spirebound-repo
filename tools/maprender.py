@@ -4,7 +4,8 @@
 A mapper's eyes: lets the map be designed and checked visually without starting the server and client.
 Needs the client files in .local/client (CipSoft art, Jay's PC only). Output goes to .local/scratch/ and is never committed.
 
-Usage:  python tools/maprender.py out.png x y w h [z] [scale]     (x y = world coordinates of the top-left tile)
+Usage:  python tools/maprender.py out.png x y w h [z] [scale] [top]   (x y = world coordinates of the top-left tile;
+        top = highest level to draw too, e.g. 4, to see upper storeys and roofs from outside)
         python tools/maprender.py out.png town                     (Hearthgate, shortcut)
 """
 from __future__ import annotations
@@ -72,26 +73,31 @@ class Renderer:
             img = self.cache[sid] = self.spr.get(sid)
         return img
 
-    def render(self, m, x0, y0, w, h, z, out, scale=1.0):
+    def render(self, m, x0, y0, w, h, z, out, scale=1.0, top=None):
+        """Draws level z and, if top < z, every level above it up to top, each one shifted one tile up-left per level
+        the way the client draws them (that is how roofs and upper storeys line up with the walls below).
+        top=None draws z alone: the view from inside a building."""
+        top = z if top is None else top
         canvas = Image.new("RGBA", (w * 32 + 64, h * 32 + 64), (0, 0, 0, 255))
-        for ty in range(y0, y0 + h):
-            for tx in range(x0, x0 + w):
-                gid = m.ground.get((tx, ty, z))
-                px, py = (tx - x0) * 32, (ty - y0) * 32
-                if gid is None:
-                    continue
-                g = self.sprite(gid, tx, ty, z)
-                if g is not None:
-                    canvas.alpha_composite(g, (px + 32 - g.width + 32 - 32, py + 32 - g.height + 32 - 32)) if False else canvas.alpha_composite(g, (px, py))
-        # items in a second pass, top to bottom so tall things overlap what is behind them
-        for ty in range(y0, y0 + h):
-            for tx in range(x0, x0 + w):
-                px, py = (tx - x0) * 32, (ty - y0) * 32
-                for iid, _attrs in m.items.get((tx, ty, z), []):
-                    s = self.sprite(iid, tx, ty, z)
-                    if s is not None:
-                        canvas.alpha_composite(s, (px + 32 - s.width, py + 32 - s.height)) if (px + 32 - s.width) >= 0 and (py + 32 - s.height) >= 0 else \
-                            canvas.paste(s, (px + 32 - s.width, py + 32 - s.height), s) if False else self._safe_paste(canvas, s, px + 32 - s.width, py + 32 - s.height)
+        for zf in range(z, top - 1, -1):
+            off = (z - zf) * 32
+            span = z - zf
+            for ty in range(y0, y0 + h + span):
+                for tx in range(x0, x0 + w + span):
+                    gid = m.ground.get((tx, ty, zf))
+                    if gid is None:
+                        continue
+                    g = self.sprite(gid, tx, ty, zf)
+                    if g is not None:
+                        self._safe_paste(canvas, g, (tx - x0) * 32 - off + 32 - g.width, (ty - y0) * 32 - off + 32 - g.height)
+            # items in a second pass, top to bottom so tall things overlap what is behind them
+            for ty in range(y0, y0 + h + span):
+                for tx in range(x0, x0 + w + span):
+                    px, py = (tx - x0) * 32 - off, (ty - y0) * 32 - off
+                    for iid, _attrs in m.items.get((tx, ty, zf), []):
+                        s = self.sprite(iid, tx, ty, zf)
+                        if s is not None:
+                            self._safe_paste(canvas, s, px + 32 - s.width, py + 32 - s.height)
         canvas = canvas.crop((0, 0, w * 32, h * 32))
         if scale != 1.0:
             canvas = canvas.resize((int(canvas.width * scale), int(canvas.height * scale)), Image.LANCZOS)
@@ -103,6 +109,8 @@ class Renderer:
     def _safe_paste(canvas, s, x, y):
         # tall sprites near the top/left edge: clip instead of failing
         cx, cy = max(0, -x), max(0, -y)
+        if cx >= s.width or cy >= s.height:
+            return
         if cx or cy:
             s = s.crop((cx, cy, s.width, s.height))
             x, y = x + cx, y + cy
@@ -114,7 +122,7 @@ def build_map():
     import layout_floor1
     m = mapgen.Map()
     layout_floor1.build(m)
-    m.complete_objects()
+    m.finish()
     return m
 
 
@@ -130,4 +138,5 @@ if __name__ == "__main__":
         x, y, w, h = (int(a) for a in sys.argv[2:6])
         z = int(sys.argv[6]) if len(sys.argv) > 6 else 7
         scale = float(sys.argv[7]) if len(sys.argv) > 7 else 1.0
-        r.render(m, x, y, w, h, z, out, scale)
+        top = int(sys.argv[8]) if len(sys.argv) > 8 else None   # e.g. 4: also draw the upper storeys and roofs
+        r.render(m, x, y, w, h, z, out, scale, top)

@@ -1,19 +1,19 @@
 <?xml version="1.0"?>
 <houses>
-	<house name="Lantern Row 1" houseid="1" entryx="1197" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="1" guildhall="false" beds="2" />
+	<house name="Lantern Row 1" houseid="1" entryx="1197" entryy="1295" entryz="7" rent="2800" townid="1" size="73" clientid="1" guildhall="false" beds="2" />
 	<house name="Lantern Row 2" houseid="2" entryx="1206" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="2" guildhall="false" beds="2" />
 	<house name="Lantern Row 3" houseid="3" entryx="1215" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="3" guildhall="false" beds="2" />
 	<house name="Lantern Row 4" houseid="4" entryx="1224" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="4" guildhall="false" beds="2" />
 	<house name="Lantern Row 5" houseid="5" entryx="1239" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="5" guildhall="false" beds="2" />
 	<house name="Lantern Row 6" houseid="6" entryx="1248" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="6" guildhall="false" beds="2" />
-	<house name="Lantern Row 7" houseid="7" entryx="1257" entryy="1295" entryz="7" rent="1500" townid="1" size="37" clientid="7" guildhall="false" beds="2" />
-	<house name="Lantern Row 8" houseid="8" entryx="1197" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="8" guildhall="false" beds="2" />
+	<house name="Lantern Row 7" houseid="7" entryx="1257" entryy="1295" entryz="7" rent="2800" townid="1" size="73" clientid="7" guildhall="false" beds="2" />
+	<house name="Lantern Row 8" houseid="8" entryx="1197" entryy="1314" entryz="7" rent="2800" townid="1" size="73" clientid="8" guildhall="false" beds="2" />
 	<house name="Lantern Row 9" houseid="9" entryx="1206" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="9" guildhall="false" beds="2" />
 	<house name="Lantern Row 10" houseid="10" entryx="1215" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="10" guildhall="false" beds="2" />
 	<house name="Lantern Row 11" houseid="11" entryx="1224" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="11" guildhall="false" beds="2" />
 	<house name="Lantern Row 12" houseid="12" entryx="1239" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="12" guildhall="false" beds="2" />
 	<house name="Lantern Row 13" houseid="13" entryx="1248" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="13" guildhall="false" beds="2" />
-	<house name="Lantern Row 14" houseid="14" entryx="1257" entryy="1314" entryz="7" rent="1500" townid="1" size="37" clientid="14" guildhall="false" beds="2" />
+	<house name="Lantern Row 14" houseid="14" entryx="1257" entryy="1314" entryz="7" rent="2800" townid="1" size="73" clientid="14" guildhall="false" beds="2" />
 	<house name="Wallside Cabin 15" houseid="15" entryx="1149" entryy="1289" entryz="7" rent="600" townid="1" size="21" clientid="15" guildhall="false" beds="2" />
 	<house name="Wallside Cabin 16" houseid="16" entryx="1157" entryy="1289" entryz="7" rent="600" townid="1" size="21" clientid="16" guildhall="false" beds="2" />
 	<house name="Wallside Cabin 17" houseid="17" entryx="1165" entryy="1289" entryz="7" rent="600" townid="1" size="21" clientid="17" guildhall="false" beds="2" />

@@ -82,6 +82,21 @@ FAMILIES = {
 }
 
 WALL_IDS = {i for f in FAMILIES.values() for i in f.values() if i}
+
+# Roofs, learned from Canary's hand-made map (2026-11-11). g = the roof tile. The edge pieces hang on the empty tiles
+# around the roof and are named by where the roof is, seen from that tile: "N" = the roof is to the north (the piece
+# under the roof's south edge), "SE" = the roof is only diagonally south-east (the piece off its north-west corner).
+ROOFS = {
+    "straw":  dict(g=1152, N=5052, S=1153, E=1154, W=5049, NW=5050, NE=5054, SE=1155, SW=5048),
+    "shingle": dict(g=1197, N=1202, S=1199, E=1204, W=1205, NW=1203, NE=1201, SE=1198, SW=1200),
+    "moss":   dict(g=6171, N=6163, S=6160, E=6165, W=6166, NW=6164, NE=6162, SE=6159, SW=6161),
+    "red":    dict(g=8620, N=8637, S=8634, E=8639, W=8640, NW=8638, NE=8636, SE=8633, SW=8635),
+}
+ROOF_IDS = {i for r in ROOFS.values() for i in r.values()}
+# the roof each wall style gets unless a building asks for another (checked by eye in tools/maprender.py)
+ROOF_FOR = {"brick": "shingle", "stone": "shingle", "timber": "straw", "sand": "straw", "white": "red", "pale": "red"}
+STAIRS_UP, STAIRS_DOWN = 5258, 413      # stairs item on the lower level (walk on: up and north); stair tile above it
+LADDER, TRAPDOOR = 1948, 369            # ladder on the lower level (use it: up); trapdoor tile above it (walk on: down)
 TILE_PZ = 0x0001
 TILE_NOPVP = 0x0004
 
@@ -99,6 +114,7 @@ class Map:
         self.points = {}  # name -> (x,y,z)
         self.zones = []  # (tier, x1, y1, x2, y2, z or None for all levels); later entries win
         self.rng = random.Random(seed)
+        self.buildings = []  # dict(rect=(x0, y0, w, h), z, style, top, roof): every building, for roofs and storeys
 
     # -- basic painting
     def pick(self, key):
@@ -111,8 +127,8 @@ class Map:
                 self.ground[(x, y, z)] = self.pick(key)
 
     def put(self, x, y, z, iid, attrs=b""):
-        if (x, y, z) not in self.ground:
-            raise ValueError(f"item {iid} at {(x, y, z)} has no ground")
+        if (x, y, z) not in self.ground and z >= 7:
+            raise ValueError(f"item {iid} at {(x, y, z)} has no ground")   # above ground level, items may hang in the air
         self.items.setdefault((x, y, z), []).append((iid, attrs))
 
     def clear_items(self, x, y, z):
@@ -169,6 +185,70 @@ class Map:
                     piece = f["wv"]
                 place(x, y, piece, f["door_v"])
 
+    def roof(self, x0, y0, w, h, z, style="red"):
+        """A roof over the building whose walls are the rectangle x0, y0, w, h on level z. As in the hand-made maps the
+        roof sits one level up, one tile in from the top and left walls and over the bottom and right walls (the game
+        draws each higher level one tile up-left, so on screen it lines up with the tops of the walls). Edge pieces
+        hang on the empty tiles around it. The game hides the roof when a player walks inside."""
+        r = ROOFS[style]
+        rz = z - 1
+        rx0, ry0, rx1, ry1 = x0 + 1, y0 + 1, x0 + w - 1, y0 + h - 1
+        if any((x, y, rz) in self.ground for y in range(ry0, ry1 + 1) for x in range(rx0, rx1 + 1)):
+            return False                      # something already stands up there: no half roof
+        for y in range(ry0, ry1 + 1):
+            for x in range(rx0, rx1 + 1):
+                if (x, y, rz) not in self.ground:
+                    self.ground[(x, y, rz)] = r["g"]
+                    self.flags[(x, y, rz)] = self.flags.get((x, y, z), 0)
+        inside = lambda x, y: rx0 <= x <= rx1 and ry0 <= y <= ry1
+        for y in range(ry0 - 1, ry1 + 2):
+            for x in range(rx0 - 1, rx1 + 2):
+                if inside(x, y) or (x, y, rz) in self.ground:
+                    continue
+                n, s_, e, w_ = inside(x, y - 1), inside(x, y + 1), inside(x + 1, y), inside(x - 1, y)
+                key = ("N" if n else "S" if s_ else "") + ("E" if e else "W" if w_ else "")
+                if len(key) == 2:      # beside a straight edge, never two at once for a rectangle
+                    key = key[0]
+                if not key:
+                    key = ("N" if inside(x, y - 1) or inside(x - 1, y - 1) or inside(x + 1, y - 1) else "S") +                           ("W" if inside(x - 1, y - 1) or inside(x - 1, y + 1) else "E")
+                self.put(x, y, rz, r[key])
+        return True
+
+    def storey(self, x0, y0, w, h, z, floor="wood", style="brick", windows=True):
+        """An upper storey on level z over the building whose walls are x0, y0, w, h one level below: the same wall
+        rectangle, standing in the air on its top and left side (as the hand-made maps do), with a floor inside."""
+        for y in range(y0 + 1, y0 + h):
+            for x in range(x0 + 1, x0 + w):
+                self.ground[(x, y, z)] = self.pick(floor)
+                self.clear_items(x, y, z)
+        self.walls(x0, y0, w, h, z, style=style, windows=windows)
+        self.flag(x0 + 1, y0 + 1, w - 1, h - 1, z, TILE_PZ)
+        for b in self.buildings:
+            if b["rect"] == (x0, y0, w, h) and b["z"] > z:
+                b["top"] = min(b["top"], z)
+
+    def stairs(self, x, y, z, floor="wood", name=None):
+        """Stairs up from level z: step on (x, y, z) to arrive at (x, y - 1, z - 1); the stair tile above at (x, y, z - 1)
+        takes you back down to (x, y + 1, z). Both landings must stay clear."""
+        if name:
+            self.points["stairs_" + name] = (x, y, z)
+        self.clear_items(x, y, z)
+        self.put(x, y, z, STAIRS_UP)
+        self.ground[(x, y, z - 1)] = STAIRS_DOWN
+        self.clear_items(x, y, z - 1)
+        if (x, y - 1, z - 1) not in self.ground:
+            self.ground[(x, y - 1, z - 1)] = self.pick(floor)
+
+    def ladder(self, x, y, z, floor="wood", name=None):
+        """A ladder up from level z (use it to climb, arriving beside the trapdoor); the trapdoor above at
+        (x, y, z - 1) takes you back down."""
+        if name:
+            self.points["ladder_" + name] = (x, y, z)
+        self.clear_items(x, y, z)
+        self.put(x, y, z, LADDER)
+        self.ground[(x, y, z - 1)] = TRAPDOOR
+        self.clear_items(x, y, z - 1)
+
     def building(self, x0, y0, w, h, z, floor="wood", door_side="s", pz=True, style="brick", windows=True, doors=False):
         # as in the hand-made maps, the top row and the left-hand column of walls stand on the OUTSIDE ground and the
         # bottom row and right-hand column on the floor (otherwise a little triangle of floor shows past the corners)
@@ -210,17 +290,28 @@ class Map:
             if its and all(i in SCENERY for i, _a in its):
                 self.clear_items(xx, yy, z)
         self.walls(x0, y0, w, h, z, gaps={door}, style=style, windows=windows, doors=doors)
+        self.buildings.append(dict(rect=(x0, y0, w, h), z=z, style=style, top=z, roof=ROOF_FOR.get(style, "red")))
         if pz:
             self.flag(x0, y0, w, h, z, TILE_PZ)
         return door
 
-    def house_building(self, hid, name, x0, y0, w, h, z, town, rent, door_side="s", style="brick", floor="wood"):
+    def house_building(self, hid, name, x0, y0, w, h, z, town, rent, door_side="s", style="brick", floor="wood", storeys=1):
         door = self.building(x0, y0, w, h, z, floor=floor, door_side=door_side, style=style, doors=True)
         tiles = []
         for y in range(y0 + 1, y0 + h - 1):
             for x in range(x0 + 1, x0 + w - 1):
                 self.house[(x, y, z)] = hid
                 tiles.append((x, y, z))
+        if storeys > 1:                       # an upstairs, reached by stairs in the back right corner; part of the house
+            self.storey(x0, y0, w, h, z - 1, floor=floor, style=style)
+            # stairs in the back right corner, away from the door (a north door puts them at the south end)
+            sx, sy = x0 + w - 2, (y0 + h - 3 if door_side == "n" else y0 + 2)
+            self.stairs(sx, sy, z, floor=floor, name=f"house_{hid}")
+            for y in range(y0 + 1, y0 + h - 1):
+                for x in range(x0 + 1, x0 + w - 1):
+                    if (x, y, z - 1) in self.ground:
+                        self.house[(x, y, z - 1)] = hid
+                        tiles.append((x, y, z - 1))
         # the doorway is part of the house, so "!buyhouse" works when you stand outside and face it
         self.house[(door[0], door[1], z)] = hid
         tiles.append((door[0], door[1], z))
@@ -399,8 +490,19 @@ class Map:
         return removed
 
     # ---------------------------------------------------------------- output
+    def finish(self):
+        """Last steps before writing: a roof on every building at ground level (over its top storey), then complete
+        every multi-piece object."""
+        if not getattr(self, "_finished", False):
+            for b in self.buildings:
+                if b["z"] == 7 and b.get("roof"):
+                    x0, y0, w, h = b["rect"]
+                    self.roof(x0, y0, w, h, b["top"], b["roof"])
+            self.complete_objects()
+            self._finished = True
+
     def write(self, out=OUT):
-        self.complete_objects()
+        self.finish()
         out.mkdir(parents=True, exist_ok=True)
         root = otf.Node(0, struct.pack("<IHHII", 2, 65000, 65000, 3, 62))
         props = bytearray()
@@ -409,7 +511,7 @@ class Map:
             props += bytes([a]) + otf.pstr(s)
         md = root.add(otf.Node(2, bytes(props)))
         areas = {}
-        for (x, y, z) in self.ground:
+        for (x, y, z) in set(self.ground) | {p for p, l in self.items.items() if l}:
             areas.setdefault((x & ~0xFF, y & ~0xFF, z), []).append((x, y))
         for (ax, ay, z), tiles in sorted(areas.items()):
             area = md.add(otf.Node(4, struct.pack("<HHB", ax, ay, z)))
@@ -422,7 +524,8 @@ class Map:
                 attrs = b""
                 if self.flags.get(p):
                     attrs += bytes([3]) + struct.pack("<I", self.flags[p])
-                attrs += bytes([9]) + struct.pack("<H", self.ground[p])
+                if p in self.ground:
+                    attrs += bytes([9]) + struct.pack("<H", self.ground[p])
                 tnode = area.add(otf.Node(14 if hid else 5, head + attrs))
                 for iid, a in self.items.get(p, []):
                     tnode.add(otf.Node(6, struct.pack("<H", iid) + a))

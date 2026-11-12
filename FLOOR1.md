@@ -93,3 +93,8 @@ Still to build for the full tutorial (roadmap R11): gates that open only after a
 - Ground: the top row and left column of a building's walls stand on the outside ground; the bottom row and right column on the floor. Doorways always show the floor.
 - Doors: each wall family has its own open door (brick 5099/5108, stone 6253/6255, sandstone 1655/1657, pale stone archway 1482/1484, white 1673/1670, timber 1649/1647).
 - Nothing natural (trees, bushes, rocks) within one tile of a building or two tiles in front of its door.
+
+## Roofs, upstairs, stairs and ladders (2026-11-11)
+- Every building on the surface has a roof (red clay over white walls, dark shingle over brick and stone, straw over timber and sandstone). The game hides it when you walk inside. Roof shape and edge pieces follow Canary's hand-made map.
+- Upstairs: the Guild Hall meeting room (stairs), the Millcross Inn guest rooms (stairs), the Hunters' Hall trophy loft (ladder and trapdoor), and four two-storey Lantern Row houses on the street corners (rent 2,800 instead of 1,500; the upstairs belongs to the house).
+- Upstairs rooms in Hearthgate and Millcross count as town (safe zone).
