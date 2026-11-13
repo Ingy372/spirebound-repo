@@ -65,6 +65,7 @@ function Floors.markFieldBoss(n, names)
 	rec.fieldBossDeadAt = os.time()
 	rec.fieldBossCredit = names or {}
 	put(n, rec)
+	SpireSave.now("floor " .. n .. " field boss") -- R8: never lose a first kill to a crash
 	return true
 end
 
@@ -106,6 +107,7 @@ function Floors.recordClear(n, creditNames, lastHit, durationSeconds)
 	local nextRec = Floors.get(n + 1)
 	nextRec.openedAt = rec.bossDeadAt
 	put(n + 1, nextRec)
+	SpireSave.now("floor " .. n .. " cleared")
 	return true
 end
 

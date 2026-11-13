@@ -1,6 +1,7 @@
 -- Core API functions implemented in Lua
 -- Spirebound systems first (the quest catalog in lib/core reads SpireQuests)
 dofile(DATA_DIRECTORY .. "/lib/spirebound/test_api.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/save.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/difficulty.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/deathgame.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/floors.lua")

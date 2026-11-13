@@ -97,6 +97,7 @@ end
 
 function SpireSecrets.markPublic(id, sellerName)
 	public():set(id, { by = sellerName, at = os.time() })
+	SpireSave.now("secret sold") -- R8: a sale (and its gold) is never lost to a crash
 end
 
 function SpireSecrets.unpublish(id)

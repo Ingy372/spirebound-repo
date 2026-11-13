@@ -64,6 +64,7 @@ function cmd.onSay(player, words, param)
 		end
 		SpireShop.setCoins(player, coins - e.price)
 		deliver(player, e)
+		SpireSave.now("shop purchase") -- R8: a bought item is never lost to a crash
 		if e.kind == "outfit" or e.kind == "mount" then
 			SpireShop.owned(player):set(e.id, os.time())
 		end

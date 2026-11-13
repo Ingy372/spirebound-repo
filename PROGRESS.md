@@ -403,3 +403,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Kills now credit everyone who did real damage (at least 10% of the victim's health in the last minute), not only the last hit: each can get the unjust kill and the skull, each of their guilds counts toward Sanctuary, and a bounty is split among them by damage. The "partied together in the last 24 hours" bounty rule now really works: joining a party records partners.
 - The outnumbered shield counts only outside attackers who did real damage. Healing a skulled player costs your own protection for 5 minutes. Murderers who die wake in the new Outlaw Camp (a palisade far west with a track to the Watch Road), not in town. DESIGN.md 6.4 has the numbers.
 - Five new in-game tests use the same damage records the real fight events write. Boot test 117 in-game tests, 0 errors.
+
+### 2026-11-13: Saving at the big moments (roadmap R8)
+- The whole server now saves at once after a field boss's first kill, a floor clear, a Death Game retirement, a shop purchase and a secret sale, so a crash can't undo them. Moments a few seconds apart share one save.
+- Found that Canary's own "save interval" only runs once a day at the global save time; the server now also saves quietly every 10 minutes. New in-game test goes through the real floor-state calls and counts the saves. Boot test 118 in-game tests, 0 errors.

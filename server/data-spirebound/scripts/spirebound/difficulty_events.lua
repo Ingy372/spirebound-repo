@@ -112,6 +112,7 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 		Difficulty.retire(player, cause)
 		SpireDeathGame.free(guid)
 		player:save()
+		SpireSave.now("Death Game retirement")
 		Game.broadcastMessage(string.format("%s, a Death Game climber of level %d, has fallen to %s. Their name is carved on the Memorial.", player:getName(), player:getLevel(), cause), MESSAGE_EVENT_ADVANCE)
 		logger.info("[Spirebound] Death Game character {} retired (killed by {})", player:getName(), cause)
 	end
