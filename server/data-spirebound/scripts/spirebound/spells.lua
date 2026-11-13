@@ -561,6 +561,9 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 		primaryDamage = SpireBuffs.apply(primaryDamage, rp, mp)
 		secondaryDamage = SpireBuffs.apply(secondaryDamage, rp, mp)
 	end
+	if SpirePerks and SpirePerks.onDealt and creature:isMonster() then -- floor perks (R12)
+		primaryDamage = SpirePerks.onDealt(attacker, creature, primaryDamage)
+	end
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 buffs:register()

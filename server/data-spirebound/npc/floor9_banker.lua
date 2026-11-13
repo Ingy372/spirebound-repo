@@ -44,6 +44,9 @@ local function creatureSayCallback(npc, player, type, msg)
 	if not npcHandler:checkInteraction(npc, player) then
 		return false
 	end
+	if SpireVault and SpireVault.talk(npc, npcHandler, player, msg) then
+		return true
+	end
 	npc:parseBank(msg, npc, player, npcHandler)
 	npc:parseGuildBank(msg, npc, player, player:getId(), npcHandler)
 	npc:parseBankMessages(msg, npc, player, npcHandler)

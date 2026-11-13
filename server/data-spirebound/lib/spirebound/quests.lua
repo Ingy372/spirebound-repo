@@ -22,6 +22,31 @@ SpireQuests = {
 			step = "Clear Thornsnaps in the thornsnap hollow (north-west of Hearthgate): %d of %d.",
 			report = "Return to Miller Agna in Millcross and say 'report'.",
 			thanks = "The road's clear! You've earned the name Millhand, and 900 gold." },
+		-- R12: a hand-written quest line whose reward is gear for your path, not gold
+		{ id = "q1_iron1", floor = 1, side = true, name = "Iron for the Stair (1 of 2)", giver = "Hunter Brannoch", storage = 50131, killStorage = 50132,
+			target = "Burrow Mole", count = 25, reward = { gold = 200 },
+			offer = "The Hall's armourer wants mole claws for rivets: they never rust. Twenty-five moles from Burrow Hills, north-east of town. Will you?",
+			step = "Hunt Burrow Moles in Burrow Hills (north-east of Hearthgate): %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
+			thanks = "Good claws. Here's a little for the walk. Ask me for a quest again: the armourer has one more request." },
+		{ id = "q1_iron2", floor = 1, side = true, name = "Iron for the Stair (2 of 2)", giver = "Hunter Brannoch", storage = 50133, killStorage = 50134,
+			target = "Road Bandit", count = 30, reward = { gear = true }, requires = "q1_iron1",
+			offer = "The rivets need iron, and the bandits east of town stole a cartload of it. Take back thirty bandits' worth of it. The armourer will make you something for your path.",
+			step = "Defeat Road Bandits on the Bandit Road (east of Hearthgate): %d of %d.",
+			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
+			thanks = "The iron's back! The armourer made this for you. Wear it well, climber." },
+		{ id = "q2_horn1", floor = 2, side = true, name = "The Hornbreaker's Due (1 of 2)", giver = "Scout of Highrest", storage = 50231, killStorage = 50232,
+			target = "Ridge Cat", count = 40, reward = { gold = 1000 },
+			offer = "Ridge cats stalk our herders. Forty of them, and the herders will trust you. Will you?",
+			step = "Hunt Ridge Cats on Floor 2: %d of %d.",
+			report = "Return to Scout of Highrest and say 'report'.",
+			thanks = "The herders are talking about you. Ask me again: there is one more thing." },
+		{ id = "q2_horn2", floor = 2, side = true, name = "The Hornbreaker's Due (2 of 2)", giver = "Scout of Highrest", storage = 50233, killStorage = 50234,
+			target = "Stonehide Bull", count = 5, reward = { gear = true }, requires = "q2_horn1",
+			offer = "The stonehide bulls in the labyrinth wear horns tougher than steel. Five of them, and our smith will forge you gear from what they leave.",
+			step = "Defeat Stonehide Bulls on Floor 2: %d of %d.",
+			report = "Return to Scout of Highrest and say 'report'.",
+			thanks = "The smith outdid herself. This is yours." },
 		{ id = "t1_1", floor = 1, side = true, name = "First Blood", giver = "Guide Pell", storage = 50121, killStorage = 50122,
 			target = "Pen Rat", count = 3, reward = { gold = 100 },
 			offer = "Let's find out what you can do. The rat pen is just along the path: defeat three of its rats. Ready?",
@@ -148,24 +173,7 @@ function SpirePerks.choose(player, floor, key)
 	SpirePerks.apply(player)
 end
 
-function SpirePerks.apply(player)
-	player:removeCondition(CONDITION_ATTRIBUTES, CONDITIONID_DEFAULT, 4501)
-	player:removeCondition(CONDITION_HASTE, CONDITIONID_DEFAULT, 4502)
-	local p1 = SpirePerks.get(player, 1)
-	if p1 == "thick_skin" then
-		local c = Condition(CONDITION_ATTRIBUTES)
-		c:setParameter(CONDITION_PARAM_SUBID, 4501)
-		c:setParameter(CONDITION_PARAM_TICKS, -1)
-		c:setParameter(CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT, 105)
-		player:addCondition(c)
-	elseif p1 == "light_step" then
-		local c = Condition(CONDITION_HASTE)
-		c:setParameter(CONDITION_PARAM_SUBID, 4502)
-		c:setParameter(CONDITION_PARAM_TICKS, -1)
-		c:setParameter(CONDITION_PARAM_SPEED, 10)
-		player:addCondition(c)
-	end
-end
+-- SpirePerks.apply lives in lib/spirebound/perks.lua (roadmap R12: every perk works)
 
 -- Shared NPC dialogue for quest givers. Returns true if it handled the message.
 local offered = {} -- playerId -> quest id
@@ -180,6 +188,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					player:setStorageValue(q.storage, 3)
 					if q.reward.gold then player:addMoney(q.reward.gold) end
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
+					if q.reward.gear then SpireGear.give(player, q.floor, "quest") end -- R12: a reward that isn't gold
 					npcHandler:say(q.thanks, npc, player)
 					if SpireQuests.floorStoryDone(player, q.floor) then
 						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")

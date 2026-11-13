@@ -222,6 +222,9 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	end
 	local now = os.time()
 	local credit = SpireBoss.credited(state, now)
+	SpireGear = SpireGear or {}
+	SpireGear.lastTopFighter = SpireGear.lastTopFighter or {}
+	SpireGear.lastTopFighter[creature:getName()] = credit[1] -- R12: the boss piece goes to the fiercest foe
 	local lastHit = nil
 	if killer then
 		local kp = killer:getPlayer() or (killer:getMaster() and killer:getMaster():getPlayer())

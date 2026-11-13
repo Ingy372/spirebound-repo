@@ -57,5 +57,15 @@ npcHandler:setMessage(MESSAGE_GREET, "Supplies, |PLAYERNAME|? Ask for a {trade}.
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
+npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireCraft and SpireCraft.talk(npc, npcHandler, player, msg, npcConfig.name) then
+		return false
+	end
+	if SpireHunt and MsgContains(msg, "hunt") then
+		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
+		return false
+	end
+	return true
+end)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
 npcType:register(npcConfig)

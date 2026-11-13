@@ -25,13 +25,13 @@ CATALOG = DP / "lib" / "core" / "quests" / "catalog"
 
 PERKS = {
     2: [("field_medic", "Field Medic", "+15% healing from potions"), ("deep_reserves", "Deep Reserves", "+10% maximum mana")],
-    3: [("fog_sense", "Fog Sense", "+1 light radius, +5% dodge in fog"), ("hunters_eye", "Hunter's Eye", "+3% critical chance")],
-    4: [("iron_will", "Iron Will", "-20% duration of slows and stuns"), ("second_wind_perk", "Second Wind", "heal 15% when dropping below 25% (every 5 min)")],
+    3: [("fog_sense", "Fog Sense", "5% chance to avoid a hit completely"), ("hunters_eye", "Hunter's Eye", "3% chance of a critical hit (+50% damage)")],
+    4: [("iron_will", "Iron Will", "-8% physical damage taken"), ("second_wind_perk", "Second Wind", "heal 15% when dropping below 25% (every 5 min)")],
     5: [("executioner", "Executioner", "+10% damage to targets under 30% health"), ("bulwark", "Bulwark", "+5% damage reduction")],
     6: [("ember_skin", "Ember Skin", "+10% fire protection"), ("forgehand", "Forgehand", "+5% melee and distance skill")],
-    7: [("marsh_walker", "Marsh Walker", "+15 speed in swamps"), ("toxin_ward", "Toxin Ward", "+10% earth protection")],
+    7: [("marsh_walker", "Marsh Walker", "+15 speed"), ("toxin_ward", "Toxin Ward", "+10% earth protection")],
     8: [("frost_blood", "Frost Blood", "+10% ice protection"), ("winter_vigor", "Winter Vigor", "+5% maximum health")],
-    9: [("haggler", "Haggler", "NPC prices 5% better"), ("lucky_find", "Lucky Find", "+3% loot chance")],
+    9: [("haggler", "Haggler", "+8% coins from monsters"), ("lucky_find", "Lucky Find", "+3% loot chance")],
     10: [("cobalt_heart", "Cobalt Heart", "+5% maximum health and mana"), ("ruinbreaker", "Ruinbreaker's Edge", "+5% damage to bosses")],
 }
 TIERS = ["large", "large", "medium", "medium", "small", "medium", "large", "medium", "small", "small", "small", "small"]

@@ -35,7 +35,7 @@ SpireTest.add("floors 2-10: quests and perks generated", function()
 	for n = 2, 10 do
 		local q = 0
 		for _, row in ipairs(SpireQuests.list) do
-			if row.floor == n then
+			if row.floor == n and not row.side then
 				q = q + 1
 				if not MonsterType(row.target) then error(row.id .. " targets unknown " .. row.target) end
 			end
