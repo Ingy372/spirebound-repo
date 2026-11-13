@@ -37,7 +37,7 @@ login:register()
 local loot = EventCallback("SpireCavebotLoot")
 function loot.monsterPostDropLoot(monster, corpse)
 	local player = Player(corpse:getCorpseOwner())
-	if not player or not SpireCavebot.active(player) then
+	if not player or not SpireCavebot.botting(player) then
 		return
 	end
 	for i = corpse:getSize() - 1, 0, -1 do
@@ -53,10 +53,49 @@ function loot.monsterPostDropLoot(monster, corpse)
 end
 loot:register()
 
+-- R15: kills and positions for the standing-still rule and the suspicion log
+local kills = CreatureEvent("SpireBotWatchKill")
+function kills.onKill(player, target)
+	if target and target:isMonster() and not target:getMaster() then
+		local guid = player:getGuid()
+		local rec = SpireCavebot.track[guid] or {}
+		SpireCavebot.track[guid] = rec
+		local now = os.time()
+		SpireCavebot.notePos(rec, player:getPosition(), now)
+		SpireCavebot.noteKill(rec, now)
+		if rec.huntStart and now - rec.huntStart >= SpireCavebot.LONG_HUNT and not rec.flagged then
+			rec.flagged = true
+			logger.info("[Spirebound] bot watch: {} has hunted for {} hours without a 15-minute break", player:getName(),
+				math.floor((now - rec.huntStart) / 3600))
+		end
+	end
+	return true
+end
+kills:register()
+
+local watchLogin = CreatureEvent("SpireBotWatchLogin")
+function watchLogin.onLogin(player)
+	player:registerEvent("SpireBotWatchKill")
+	return true
+end
+watchLogin:register()
+
 -- Boss rooms refuse cavebot users
 local tick = GlobalEvent("SpireCavebotTick")
 function tick.onThink(interval)
+	local now = os.time()
 	for _, p in ipairs(Game.getPlayers()) do
+		local rec = SpireCavebot.track[p:getGuid()]
+		if rec then
+			local was = SpireCavebot.standingBot(rec, now)
+			SpireCavebot.notePos(rec, p:getPosition(), now)
+			if not rec.warned and SpireCavebot.standingBot(rec, now) then
+				rec.warned = true
+				logger.info("[Spirebound] bot watch: {} has hunted for 10 minutes without moving", p:getName())
+			elseif was and not SpireCavebot.standingBot(rec, now) then
+				rec.warned = nil
+			end
+		end
 		if SpireCavebot.active(p) and SpirePvP.zoneAt(p:getPosition()) == "bossroom" then
 			local t = p:getTown()
 			p:teleportTo(t:getTemplePosition())

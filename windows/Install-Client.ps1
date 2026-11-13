@@ -78,6 +78,10 @@ if (Test-Path $botCfg) {
     $lt = [IO.File]::ReadAllText($loader)
     $lt = $lt.Replace('  "BotServer",' + "`n", '').Replace('  "BotServer",' + "`r`n", '')
     $lt = $lt.Replace('  "spy_level",' + "`n", '').Replace('  "spy_level",' + "`r`n", '')
+    # Q16 / roadmap R15: no automatic sword-skill or spell rotation, no combo helper, no script editor
+    foreach ($m in @('"AttackBot", -- last of major modules', '"combo",', '"ingame_editor",', '"pushmax",')) {
+        $lt = $lt.Replace('  ' + $m + "`n", '').Replace('  ' + $m + "`r`n", '')
+    }
     $lt = $lt.Replace('  "cavebot_control_panel"', '  "cavebot_control_panel",' + "`n" + '  "spirebound_report"')
     [IO.File]::WriteAllText($loader, $lt)
 }

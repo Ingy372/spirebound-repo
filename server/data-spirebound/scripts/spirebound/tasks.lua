@@ -10,6 +10,13 @@ function kill.onKill(player, target)
 		return true
 	end
 	local t = SpireTasks.get(active)
+	if t and t.monster == target:getName() and SpireCavebot.botting(player) then
+		local half = (s:get("botHalf") or 0) + 1 -- R15: while botting, only every second kill counts
+		s:set("botHalf", half % 2)
+		if half % 2 == 1 then
+			return true
+		end
+	end
 	if t and t.monster == target:getName() then
 		local n = (s:get("kills") or 0) + 1
 		s:set("kills", n)
