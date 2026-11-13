@@ -62,6 +62,9 @@ guide:register()
 
 local spells = TalkAction("!spells")
 function spells.onSay(player, words, param)
+	if SpireTutorial then
+		SpireTutorial.mark(player, "spells") -- the Arrival Yard's third gate (R11)
+	end
 	local base = player:getVocation():getBaseId()
 	if base == 0 then
 		player:sendTextMessage(MESSAGE_STATUS, "Speak to Registrar Maelis in the temple to choose a path first.")

@@ -87,7 +87,7 @@
 	<npc centerx="1276" centery="1347" centerz="7" radius="1">
 		<npc name="Guide Pell" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1304" centery="1348" centerz="7" radius="1">
+	<npc centerx="1328" centery="1348" centerz="7" radius="1">
 		<npc name="Registrar Maelis" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="2155" centery="1238" centerz="7" radius="1">

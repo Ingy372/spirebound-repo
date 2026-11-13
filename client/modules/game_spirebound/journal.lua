@@ -4,12 +4,12 @@ SpireJournalUi = {}
 local win = nil
 local TABS = {
   { 'secrets', 'Secrets' }, { 'fishing', 'Fishing' }, { 'quests', 'Quests' },
-  { 'task', 'Task' }, { 'top', 'Top' }, { 'memorial', 'Memorial' },
+  { 'task', 'Task' }, { 'top', 'Top' }, { 'memorial', 'Memorial' }, { 'howto', 'How do I' },
 }
 local current = 'secrets'
 local LABELS = {
-  pt = { secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', top = 'Top', memorial = 'Memorial', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
-  es = { secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', top = 'Top', memorial = 'Memorial', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
+  pt = { secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', top = 'Top', memorial = 'Memorial', howto = 'Como faço', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
+  es = { secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', top = 'Top', memorial = 'Memorial', howto = 'Cómo hago', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
 }
 SpireJournalUi.lang = 'en'
 local function label(key, english)

@@ -624,22 +624,38 @@ def build(m):
                 m.put(xx, yy, Z, 17232)
 
     # ------------------------------------------------ the Arrival Yard (town 50): where every new character starts
+    # Roadmap R11: a walled path with four gates; each opens after one small step (kill a rat, loot it, learn about
+    # skills and spells, drink a potion), and the Registrar waits at the end. Gate rules: scripts/spirebound/tutorial.lua.
+    YW, YH = 64, 24
     yx, yy = X0 + 270, Y0 + 336
-    m.fill(yx, yy, 40, 24, Z, "grass")
-    for xx in range(yx, yx + 40):
-        for y2 in range(yy, yy + 24):
+    m.fill(yx, yy, YW, YH, Z, "grass")
+    for xx in range(yx, yx + YW):
+        for y2 in range(yy, yy + YH):
             m.clear_items(xx, y2, Z)
-    m.fill(yx + 1, yy + 10, 38, 4, Z, "pave")  # the path, west to east
-    m.walls(yx, yy, 40, 24, Z, style="white")
+    m.fill(yx + 1, yy + 10, 52, 4, Z, "pave")  # the path, west to east
+    m.walls(yx, yy, YW, YH, Z, style="white")
     m.flag(yx + 1, yy + 9, 8, 6, Z, 0x0001)    # the arrival square is safe; the rat pen is not
     spawn = (yx + 4, yy + 11, Z)
     m.towns.append((50, "Arrival Yard", spawn))
     m.points["tutorial_spawn"] = spawn
-    m.sign(yx + 3, yy + 9, Z, "Welcome to the Spirebound tower. Click the ground to walk. Follow the stone path east: each stop teaches one thing. Guide Pell will help.")
+    m.sign(yx + 3, yy + 9, Z, "Welcome to the Spirebound tower. Click the ground to walk. Follow the stone path east: each "
+           "gate opens when you have learned one thing. Guide Pell will help.")
     m.npcs.append(("Guide Pell", (yx + 6, yy + 11, Z)))
-    S.sprinkle(m, yx + 1, yy + 1, 38, 8, Z, S.FLOWERS + S.BUSHES, 0.12, seed=40)
-    S.sprinkle(m, yx + 1, yy + 14, 38, 9, Z, S.FLOWERS + S.BUSHES, 0.12, seed=41)
-    for px in (yx + 10, yx + 20, yx + 26):
+    gates = [(26, "kill", "Gate 1: beat a rat in the pen."), (32, "loot", "Gate 2: open a rat's body and take what it carried."),
+             (38, "spells", "Gate 3: say !spells to see the sword skills and spells you will learn."),
+             (44, "potion", "Gate 4: drink the health potion in your backpack.")]
+    for gx, step, text in gates:                        # a timber fence right across the yard, an open door on the path
+        line = [(yx + gx, y2) for y2 in range(yy + 1, yy + YH - 1)]
+        m.autowall([t for t in line if t[1] not in (yy + 11, yy + 12)], Z, "timber")
+        for y2 in (yy + 11, yy + 12):
+            m.put(yx + gx, y2, Z, 1647)                 # timber's own open door (vertical wall)
+            m.points[f"tutorial_gate_{step}_{y2 - yy - 10}"] = (yx + gx, y2, Z)
+        m.sign(yx + gx - 1, yy + 9, Z, text)
+    m.points["tutorial_yard_nw"] = (yx, yy, Z)
+    m.points["tutorial_yard_se"] = (yx + YW - 1, yy + YH - 1, Z)
+    S.sprinkle(m, yx + 1, yy + 1, 52, 8, Z, S.FLOWERS + S.BUSHES, 0.12, seed=40)
+    S.sprinkle(m, yx + 1, yy + 14, 52, 9, Z, S.FLOWERS + S.BUSHES, 0.12, seed=41)
+    for px in (yx + 10, yx + 21, yx + 29, yx + 35, yx + 41, yx + 48):
         S.lamp(m, px, yy + 9, Z)
         S.lamp(m, px, yy + 14, Z)
     pen = (yx + 13, yy + 2, 11, 6)
@@ -648,15 +664,17 @@ def build(m):
     m.clear_items(pen[0] + 5, pen[1] + 5, Z)
     m.flag(pen[0] + 5, pen[1] + 5, 1, 1, Z, 0x0001)  # the pen's gap is a safe tile: rats can't cross it, players can
     m.fill(pen[0] + 5, pen[1] + 6, 1, 4, Z, "pave")  # little path from the gap down to the main path
+    for y2 in range(pen[1] + 6, pen[1] + 8):
+        m.clear_items(pen[0] + 5, y2, Z)
     m.monsters.append(("Pen Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
     m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
     m.sign(yx + 11, yy + 9, Z, "Stop 1: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
-    m.sign(yx + 21, yy + 9, Z, "Stop 2: Sword skills and spells. The bar on the right holds your skills (Shift+1..6). Say !spells to see what you will learn. Press J for your Journal.")
-    m.sign(yx + 27, yy + 9, Z, "Stop 3: The Registrar's hall is ahead. Choose your path and how hard you want to live. Then you are sent to Hearthgate.")
-    m.building(yx + 29, yy + 7, 10, 10, Z, floor="marble", door_side="w", style="white", doors=True)
-    S.carpet(m, yx + 31, yy + 9, 6, 6, Z, 2576)
-    m.npcs.append(("Registrar Maelis", (yx + 34, yy + 12, Z)))
-    m.points["tutorial_registrar"] = (yx + 34, yy + 12, Z)
+    m.sign(yx + 33, yy + 9, Z, "Stop 2: Sword skills and spells. Once you choose a path, the bar on the right holds your skills (Shift+1..6). Press J for your Journal: its 'How do I' page answers most questions.")
+    m.sign(yx + 45, yy + 9, Z, "Stop 3: The Registrar's hall is ahead. Choose your path and how hard you want to live. Then you are sent to Hearthgate.")
+    m.building(yx + 53, yy + 7, 10, 10, Z, floor="marble", door_side="w", style="white", doors=True)
+    S.carpet(m, yx + 55, yy + 9, 6, 6, Z, 2576)
+    m.npcs.append(("Registrar Maelis", (yx + 58, yy + 12, Z)))
+    m.points["tutorial_registrar"] = (yx + 58, yy + 12, Z)
     yard_x, yard_y = yx, yy                       # kept for the zones below (yx/yy are reused as loop names later)
 
     # ------------------------------------------------ apex spawn: the Old Watchtower (Contested from task 2.2)
@@ -805,7 +823,7 @@ def build(m):
             m.zone("guarded", X0 + c["x"] - 6, Y0 + c["y"] - 6, c["w"] + 12, c["h"] + 12, 7)
     m.zone("guarded", tx + 10, Y0 + 195, 70, 55, 7)                  # the gate road up to the Waspgrass Fields
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
-    m.zone("guarded", yard_x - 2, yard_y - 2, 44, 28, 7)              # the Arrival Yard
+    m.zone("guarded", yard_x - 2, yard_y - 2, 68, 28, 7)              # the Arrival Yard
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
     for c in CAMPS:                                                   # Open grounds are Open right up to their walls
         if c["zone"] == "open":

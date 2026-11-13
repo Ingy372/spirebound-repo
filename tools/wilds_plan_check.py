@@ -17,7 +17,7 @@ ROOT = Path(__file__).resolve().parent.parent
 # ---- things that already exist and stay where they are: name -> (x, y, w, h)
 FIXED = {
     "Hearthgate": (176, 236, 112, 96), "Millcross": (35, 195, 64, 44), "Fisher's Huts": (132, 188, 24, 48),
-    "West cabins": (130, 294, 45, 19), "East cabins": (291, 294, 45, 19), "Arrival Yard": (270, 336, 46, 30),
+    "West cabins": (130, 294, 45, 19), "East cabins": (291, 294, 45, 19), "Arrival Yard": (270, 336, 66, 30),
     "Pass + labyrinth": (205, 8, 52, 84), "Old Watchtower": (25, 25, 55, 55), "Lake": (308, 78, 44, 28),
     "West pond": (83, 121, 26, 18), "Ruined tower": (312, 125, 14, 11), "Ruined farm": (60, 150, 11, 9),
     "Toppled shrine": (300, 372, 10, 8),

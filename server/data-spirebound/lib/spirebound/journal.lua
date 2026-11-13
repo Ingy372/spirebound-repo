@@ -124,6 +124,31 @@ function SpireJournal.memorial()
 	return "The Memorial", lines
 end
 
+-- "How do I..." (R11): the questions new players ask most, answered in a line each
+SpireJournal.HOWTO = {
+	"How do I attack? Click a monster in the Battle List (Ctrl+B), or right-click it and choose Attack.",
+	"How do I loot? Right-click the body and drag what you want into your backpack. !autoloot can do it for you.",
+	"How do I heal? Drink a health potion, or use your path's healing spell (say !spells). Rest in town to regain health.",
+	"Where do I hunt? Say !hunt: it names the best ground for your level, and the signposts on the roads point the way.",
+	"How do sword skills work? Hold the right weapon and press Shift+1..6. Opener, then Link, then Finisher for a combo.",
+	"Where do I learn spells? Nobody sells them: you learn them on your own as you level. Say !spells for the list.",
+	"Where is my gold? At Banker Tolliver in the Hearth. Say balance, deposit or withdraw. The account vault is shared by your characters.",
+	"How do I sell loot? Trader Osric in the Hearth buys what monsters drop. Players pay more on the market (any depot locker).",
+	"What are hunting tasks? Taskmaster Ren gives one a day per kind: gold and task points. Spend points with !taskshop.",
+	"How do I get home fast? A temple teleport scroll (Runewright Mael, 300 gold) takes you to your temple outside a fight.",
+	"What is a secret? Hidden places on every floor. Find one and sell word of it to Vesper, the Info Broker, or keep it.",
+	"Why can't I attack that player? Players below level 50 are protected, and so are players far below your level.",
+	"How do floors open? When anyone beats a floor's boss, the way up opens for the whole server.",
+}
+
+function SpireJournal.howto()
+	local copy = {}
+	for i, l in ipairs(SpireJournal.HOWTO) do
+		copy[i] = l
+	end
+	return "How do I...", copy -- a copy: the reply is translated in place
+end
+
 -- Build the reply for a tab; nil if the tab is unknown.
 function SpireJournal.build(player, tab)
 	local title, lines
@@ -139,6 +164,8 @@ function SpireJournal.build(player, tab)
 		title, lines = SpireJournal.top()
 	elseif tab == "memorial" then
 		title, lines = SpireJournal.memorial()
+	elseif tab == "howto" then
+		title, lines = SpireJournal.howto()
 	else
 		return nil
 	end
