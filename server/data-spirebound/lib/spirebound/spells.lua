@@ -17,6 +17,9 @@ SpireSpells.list = {
 	{ name = "Beacon", words = "beacon", voc = "all", level = 20, mana = 60, cd = 2, kind = "light", lightLevel = 9, duration = 1200 },
 
 	-- Vanguard (4)
+	-- attack spells from level 8 (Jay's playtest, 2026-11-13); they grow with the melee skill, not magic level
+	{ name = "Heavy Strike", words = "heavy strike", voc = { 4 }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, min = 0.8, max = 1.5, skill = "melee", range = 1, effect = CONST_ME_HITAREA },
+	{ name = "Whirlwind", words = "whirlwind", voc = { 4 }, level = 16, mana = 45, cd = 4, kind = "attack_area", area = "ring1", element = COMBAT_PHYSICALDAMAGE, min = 0.7, max = 1.3, skill = "melee", effect = CONST_ME_HITAREA },
 	{ name = "Second Wind", words = "second wind", voc = { 4 }, level = 10, mana = 40, cd = 2, kind = "heal_self", min = 1.4, max = 2.2, base = 20 },
 	{ name = "Rally Cry", words = "rally cry", voc = { 4 }, level = 20, mana = 40, cd = 2, kind = "taunt", radius = 3 },
 	{ name = "Charge", words = "charge", voc = { 4 }, level = 25, mana = 70, cd = 12, kind = "dash", tiles = 3 },
@@ -26,6 +29,9 @@ SpireSpells.list = {
 	{ name = "Guardian Stance", words = "guardian stance", voc = { 4 }, level = 50, mana = 120, cd = 24, kind = "dr_adjacent", pct = 20, duration = 8 },
 
 	-- Ranger (3)
+	-- attack spells from level 8 (Jay's playtest, 2026-11-13); they grow with the distance skill, not magic level
+	{ name = "Piercing Shot", words = "piercing shot", voc = { 3 }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, min = 0.8, max = 1.5, skill = "distance", effect = CONST_ME_DRAWBLOOD, shoot = CONST_ANI_ARROW },
+	{ name = "Scatter Shot", words = "scatter shot", voc = { 3 }, level = 16, mana = 45, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_PHYSICALDAMAGE, min = 0.7, max = 1.3, skill = "distance", effect = CONST_ME_HITAREA },
 	{ name = "Keen Sight", words = "keen sight", voc = { 3 }, level = 13, mana = 40, cd = 10, kind = "reveal", radius = 6 },
 	{ name = "Field Dressing", words = "field dressing", voc = { 3 }, level = 15, mana = 60, cd = 2, kind = "heal_target", min = 1.2, max = 1.9, base = 15 },
 	{ name = "Tracker's Mark", words = "trackers mark", voc = { 3 }, level = 20, mana = 60, cd = 15, kind = "mark", pct = 10, duration = 15 },

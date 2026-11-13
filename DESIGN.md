@@ -189,6 +189,8 @@ Sword skills are the combo attacks. **Spells** are everything else: healing, sup
 
 | Spell | Type | Level | What it does |
 |---|---|---|---|
+| Heavy Strike | attack | 8 | a hard blow at your target; grows with your melee skill (Jay's playtest, 2026-11-13) |
+| Whirlwind | attack | 16 | hits everything around you; grows with your melee skill |
 | Second Wind | healing | 10 | heals a share of your max HP |
 | Rally Cry | support | 20 | pulls nearby monsters onto you (taunt) |
 | Charge | utility | 25 | dash up to 3 tiles toward your target |
@@ -206,6 +208,8 @@ Sword skills are the combo attacks. **Spells** are everything else: healing, sup
 
 | Spell | Type | Level | What it does |
 |---|---|---|---|
+| Piercing Shot | attack | 8 | a strong shot at your target; grows with your distance skill (Jay's playtest, 2026-11-13) |
+| Scatter Shot | attack | 16 | a spread of shots in front of you; grows with your distance skill |
 | Keen Sight | utility | 13 | see invisible creatures and hidden traps nearby for 1 minute |
 | Field Dressing | healing | 15 | heal yourself or one ally |
 | Tracker's Mark | support | 20 | marks one monster: your party deals 10% more damage to it for 15 seconds |

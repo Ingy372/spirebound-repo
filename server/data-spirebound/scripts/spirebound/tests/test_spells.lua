@@ -22,8 +22,8 @@ SpireTest.add("spells: each vocation gets 8 shared + its own, nothing from other
 			end
 		end
 	end
-	SpireTest.eq(per[4], 15, "vanguard spells to level 50")
-	SpireTest.eq(per[3], 16, "ranger spells to level 50")
+	SpireTest.eq(per[4], 17, "vanguard spells to level 50 (two attack spells added 2026-11-13)")
+	SpireTest.eq(per[3], 18, "ranger spells to level 50 (two attack spells added 2026-11-13)")
 	SpireTest.eq(per[1], 17, "arcanist spells to level 50")
 	SpireTest.eq(per[2], 18, "mystic spells to level 50")
 	local voc0 = 0

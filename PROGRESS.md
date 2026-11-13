@@ -470,3 +470,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 
 ### 2026-11-13: Playtest fix, the yard's loot gate
 - Jay's playtest: after killing several rats a gate stayed shut. The kill had counted; the stuck gate was the loot gate, because Pen Rats often had nothing to take and autoloot didn't count. Pen Rats now always drop a cheese, and carrying it (picked up by hand or by autoloot) opens the gate. Boot test 151 in-game tests, 0 errors.
+
+### 2026-11-13: Early attack spells for Rangers and Vanguards (Jay's playtest)
+- Jay: "there are no combat or attack spells in the beginning... so the players have something to attack with besides basic attacks once reaching level 8." Mages already had one at 8; now Rangers get Piercing Shot (level 8, one target) and Scatter Shot (16, a spread in front), and Vanguards get Heavy Strike (8, melee range) and Whirlwind (16, everything around you). Their damage grows with the distance or melee skill instead of magic level. DESIGN.md 5.3b updated; new in-game test; boot test 152 in-game tests, 0 errors.

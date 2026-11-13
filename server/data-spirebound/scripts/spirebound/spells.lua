@@ -12,10 +12,16 @@ local AREAS = {
 	wave = { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 3, 0 } },
 	beam = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 3 } },
 	ring2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
+	ring1 = { { 1, 1, 1 }, { 1, 2, 1 }, { 1, 1, 1 } },
 }
 
 local function formula(row, player)
 	local level, ml = player:getLevel(), player:getMagicLevel()
+	if row.skill == "distance" then -- Ranger and Vanguard attack spells grow with their weapon skill
+		ml = player:getEffectiveSkillLevel(SKILL_DISTANCE)
+	elseif row.skill == "melee" then
+		ml = math.max(player:getEffectiveSkillLevel(SKILL_SWORD), player:getEffectiveSkillLevel(SKILL_AXE), player:getEffectiveSkillLevel(SKILL_CLUB))
+	end
 	local base = row.base or 5
 	return math.floor(level / 5 + ml * row.min + base), math.floor(level / 5 + ml * row.max + base * 2)
 end
@@ -519,14 +525,14 @@ for i, row in ipairs(SpireSpells.list) do
 	spell:isAggressive(combat ~= nil or row.kind == "root" or row.kind == "mark")
 	if row.kind == "attack_target" or row.kind == "root" or row.kind == "mark" then
 		spell:needTarget(true)
-		spell:range(row.kind == "attack_target" and 5 or 7)
+		spell:range(row.range or (row.kind == "attack_target" and 5 or 7))
 	elseif row.kind == "heal_target" or row.kind == "hot_target" then
 		spell:needCasterTargetOrDirection(false)
 		spell:hasPlayerNameParam(true)
 		spell:hasParams(true)
 	elseif row.kind == "find_person" or row.kind == "levitate" then
 		spell:hasParams(true)
-	elseif row.area == "ring2" then
+	elseif row.area == "ring2" or row.area == "ring1" then
 		-- centred on the caster, no target needed
 	elseif row.area == "wave" or row.area == "beam" then
 		spell:needDirection(true)
