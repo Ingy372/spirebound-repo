@@ -30,7 +30,7 @@ SOLID = {
     "bushes": ("grass", [3681, 3681, 3699, 3700], TREES_ALL_BROAD + [3681], None),
     "broadleaf": ("grass", TREES_ALL_BROAD + [3751, 3754, 3681], TREES_ALL_BROAD, None),
     "ferns": ("grass", [3751, 3754, 3751, 3681], [3625, 3617, 3619, 3751, 3754], None),
-    "hedge": ("grass", [3681, 3699, 3700], [3681, 3699, 3700, 3619], None),
+    "hedge": ("grass", [3681, 3681, 3699, 3700, 3619, 3625], TREES_ALL_BROAD + [3681], None),
     "oaks": ("grass", TREES_ALL_BROAD + [3681], TREES_ALL_BROAD, None),
     "firs": ("grass", FIRS + [3751], FIRS, None),
     "thorns": ("grass", S.THORNS + [3698], S.THORNS + [3623, 3624], None),
@@ -38,7 +38,7 @@ SOLID = {
     "water": ("grass", REEDS + [3623, 3624, 958], [], "water"),
 }
 CORE = {
-    "mounds": ("dirt", [3681, 3699, 3681], [1783, 1772, 1843, 3681], None),
+    "mounds": ("grass", [3681, 3699, 3681, 1772, 1843], TREES_ALL_BROAD + [3681, 1783], None),
     "pond": ("mud", REEDS + [3681], [], "water"),
     "grove": ("grass", [3751, 3754, 3681, 3699], [3625, 3617, 3619, 3620], None),
     "flowerbed": ("grass", [3681, 3699, 3700], S.FLOWERS, None),          # flowers inside a hedge, a tree in the middle
@@ -244,7 +244,7 @@ def _interior(tiles, rect):
     return {t for t in tiles if all((t[0] + a, t[1] + b) in tiles or (t[0] + a, t[1] + b) not in rect for a, b in D8)}
 
 
-def _mass(m, tiles, rect, spec, rng, ground_key=None):
+def _mass(m, tiles, rect, spec, rng, ground_key=None, deep=False):
     """Fill a solid area: an edge kind paints rock/water inside and leaves its rim to the edge pieces; anything else puts
     one blocking thing on every tile (rim things on the rim, inside things inside)."""
     gkey, rim_items, inside_items, edge = spec
@@ -255,7 +255,7 @@ def _mass(m, tiles, rect, spec, rng, ground_key=None):
         m.clear_items(t[0], t[1], Z)
     if edge:
         # rock or water only where it has rock/water all round, so its edge pieces land on the rim (which blocks)
-        core = _interior(inner, rect) if edge == "water" else inner
+        core = _interior(inner, rect) if deep else inner          # thin water lines dry up when the coast is tidied
         for t in core:
             m.ground[(t[0], t[1], Z)] = MOUNTAIN if edge == "mountain" else m.pick("water")
         covered = {(t[0] + a, t[1] + b) for t in core for a, b in D8}
@@ -282,7 +282,7 @@ def build(m, c, extra_points=True):
     if L.get("wallow"):
         cores -= L["wallow"]["clear"] | L["wallow"]["gap"]
     walls = rect - opn - cores
-    _mass(m, walls, rect, SOLID[c["wall"]], rng)
+    _mass(m, walls, rect, SOLID[c["wall"]], rng, deep=SOLID[c["wall"]][3] == "water")
     for lp in L["loops"]:
         core = lp["core"] - (L["wallow"]["clear"] | L["wallow"]["gap"] if L.get("wallow") else set())
         spec = CORE[c["core"]]
@@ -320,8 +320,9 @@ def build(m, c, extra_points=True):
     patches = set().union(*[lp["patches"] for lp in L["loops"]])
     edge_open = [t for t in opn if any((t[0] + a, t[1] + b) not in opn for a, b in D4) and t not in patches
                  and t not in L["gate"] and t not in L["hub"]]
+    density = 0.3 if trail_key == "grass" else 0.07           # grass trails need their flowers to be seen at all
     for t in edge_open:
-        if rng.random() < 0.07:
+        if rng.random() < density:
             m.put(t[0], t[1], Z, rng.choice(WALKOVER[trail_key]))
     # the hub: a sign at the gate, a fire and a bench
     lo, hi = c["levels"]

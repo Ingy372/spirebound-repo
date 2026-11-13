@@ -14,7 +14,7 @@ import wilds  # noqa: E402
 from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 # hunting grounds already rebuilt as walled places with four loops (FLOOR1_WILDS_PLAN.md); the rest still use camp()
-REBUILT = {"boar_meadow"}
+REBUILT = {"boar_meadow", "starter_west", "starter_east", "starter_south", "wasp_fields"}
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
@@ -609,6 +609,9 @@ def build(m):
     m.road((X0 + 70, Y0 + 235), (X0 + 70, Y0 + 330), Z)                     # Millcross south to the Wolf Copse and Reedmarsh
     m.road((tx + tw // 2, Y0 + 110), (X0 + 160, Y0 + 110), Z)               # north road west to the Thornsnap Hollow
     m.road((X0 + 160, Y0 + 110), (X0 + 160, Y0 + 140), Z)
+    # gate trails (2 wide) from the roads to the hunting grounds' gates (FLOOR1_WILDS_PLAN.md 4.2)
+    for a, b in (((153, 284), (153, 282)), ((315, 284), (315, 282)), ((231, 335), (209, 337)), ((231, 211), (228, 211))):
+        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # Cabin Lane: from the west cabins' back lane down to the Boar Meadow gate (a 2-wide trail)
     m.road((X0 + 172, Y0 + 304), (X0 + 172, Y0 + 314), Z, width=2, wind=False)
     m.road((X0 + 172, Y0 + 314), (X0 + 159, Y0 + 337), Z, width=2, wind=False)
@@ -1015,7 +1018,7 @@ def build(m):
     S.ruin(m, X0 + 312, Y0 + 125, 14, 11, Z)                       # ruined watchtower by the lake
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
     S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
-    S.standing_stones(m, X0 + 305, Y0 + 240, Z)                    # a ring of standing stones east of the city
+    S.standing_stones(m, X0 + 356, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved for Toad Pond)
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS if c["id"] in REBUILT]
