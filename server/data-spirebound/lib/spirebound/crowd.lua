@@ -111,6 +111,10 @@ function SpireCrowd.update(g, now, count, near)
 	local rec = SpireCrowd.grounds[g.id] or { state = "quiet" }
 	SpireCrowd.grounds[g.id] = rec
 	local state = SpireCrowd.step(rec, count or SpireCrowd.countPlayers(g), g.guarded, now)
+	local rapid = SpireCrowd.rapidRespawn()
+	if rapid and state ~= "rush" then
+		state = "packed" -- R20: the Rapid Respawn weekend fills every ground
+	end
 	local isNear = near or SpireCrowd.playerNear
 	local spawned = 0
 	for _, s in ipairs(g.spots) do
@@ -120,7 +124,7 @@ function SpireCrowd.update(g, now, count, near)
 		local alive = aliveCount(sr)
 		if alive == 0 and #sr.alive > 0 then -- the whole group is dead: start its wait
 			sr.alive = {}
-			sr.ready = now + SpireCrowd.respawn(state, g.respawn)
+			sr.ready = now + math.floor(SpireCrowd.respawn(state, g.respawn) / (rapid and 2 or 1))
 		end
 		local pos = Position(s.x, s.y, s.z)
 		if alive == 0 and SpireCrowd.spotOn(state, s.n) and now >= sr.ready and not isNear(pos) then
@@ -136,6 +140,15 @@ function SpireCrowd.update(g, now, count, near)
 		end
 	end
 	return state, spawned
+end
+
+-- the weekend bonus (lib/spirebound/events.lua); a test can force it with SpireCrowd.forceRapid
+function SpireCrowd.rapidRespawn()
+	if SpireCrowd.forceRapid ~= nil then
+		return SpireCrowd.forceRapid
+	end
+	local w = SpireEvents and SpireEvents.currentWeekend and SpireEvents.currentWeekend()
+	return w ~= nil and w.id == "respawn"
 end
 
 function SpireCrowd.tick(now)

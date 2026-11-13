@@ -177,6 +177,7 @@ end
 
 -- Shared NPC dialogue for quest givers. Returns true if it handled the message.
 local offered = {} -- playerId -> quest id
+SpireCleanup.add(function(pid) offered[pid] = nil end)
 function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 	local lower = msg:lower()
 	local pid = player:getId()

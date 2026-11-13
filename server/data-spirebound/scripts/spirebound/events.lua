@@ -124,6 +124,17 @@ function login.onLogin(player)
 end
 login:register()
 
+-- R20: the winner is paid even after logging off (straight into the bank in the database; the title waits for login)
+function SpireEvents.payDerby(name)
+	local p = Player(name)
+	if p then
+		p:setBankBalance(p:getBankBalance() + 50000)
+	else
+		db.query("UPDATE `players` SET `balance` = `balance` + 50000 WHERE `name` = " .. db.escapeString(name))
+	end
+	SpireBoss.grantTitle(name, "Derby Champion")
+end
+
 -- Weekly Fishing Derby: Saturdays 20:00-21:00 server time. Biggest single catch wins.
 function SpireEvents.derbyCatch(player, fishName, kg)
 	local d = SpireEvents.derby
@@ -147,11 +158,7 @@ function derby.onTime(interval)
 		local d = SpireEvents.derby
 		SpireEvents.derby = nil
 		if d and d.best then
-			local p = Player(d.best.name)
-			if p then
-				p:setBankBalance(p:getBankBalance() + 50000)
-				p:kv():scoped("spirebound-titles"):set("Derby Champion", os.time())
-			end
+			SpireEvents.payDerby(d.best.name)
 			Game.broadcastMessage(string.format("The Fishing Derby is over! %s wins with a %.2f kg %s (50,000 gold and the Derby Champion title).", d.best.name, d.best.kg, d.best.fish), MESSAGE_EVENT_ADVANCE)
 		else
 			Game.broadcastMessage("The Fishing Derby is over. Nobody caught anything!", MESSAGE_EVENT_ADVANCE)

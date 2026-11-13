@@ -1,6 +1,7 @@
 -- Floor perks in combat and loot (roadmap R12). Rules: lib/spirebound/perks.lua.
 
 local lastWind = {} -- player id -> time Second Wind last fired
+SpireCleanup.add(function(pid) lastWind[pid] = nil end)
 
 local defence = CreatureEvent("SpirePerkDefence")
 function defence.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)

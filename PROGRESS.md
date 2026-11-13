@@ -458,3 +458,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Every chat command one click away (roadmap R19)
 - The Journal (J, or the new Journal button on the top bar) has a Commands tab: a button for each of the 24 player commands (`!hunt`, `!spells`, `!taskshop`, `!private`, `!openhouse`...). Commands that need more words (`!report`, `!summon`, `!dice`, `!fortune`) are put in the chat line for you to finish. The Journal window is wider so all eight tabs fit.
 - A new check (`tools/check_commands.py`, part of the boot test) fails if anyone adds a player command without a button. Checked in your client after a restart: the Commands tab shows every button and clicking `!hunt` sends it. Your installed client now has the updated module.
+
+### 2026-11-13: Small fixes (roadmap R20)
+- Memory: scripts that keep a note per player (combo chains, PvP damage, quest offers, bot watch, Second Wind...) now forget it when the player logs out, so the server no longer grows with every login.
+- The Fishing Derby pays a winner who logged off before the end: the 50,000 gold goes straight to the bank and the title waits for the next login.
+- The "Rapid Respawn" weekend bonus was promised but missing; it is now one of the five weekend bonuses: every hunting ground counts as packed (all extra groups out) and they come back twice as fast. "Faster respawn when a floor is busy" is the crowd system (W10). Three new in-game tests; boot test 150 in-game tests, 0 errors.

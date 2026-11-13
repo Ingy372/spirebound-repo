@@ -37,7 +37,7 @@ Open:
 - [x] **R17 Secret fixes** [3.10]: trigger on stepping on the tile, gold reward once per account, "night" uses the game's day/night, real hints for Floors 6–10.
 - [~] **R18 Tests that reach the real game** *(2026-11-13: end-to-end tests added and passing; the GitHub boot workflow is written but its first run is not checked yet)* [7.5]: boot test runs on GitHub; end-to-end tests per headline rule (reach Floor 2 without a kill, die as each difficulty, wait out a skull, Fortune Hall cut).
 - [x] **R19 Clickable routes for chat commands** [1.5]: every `!command` players need also has an NPC, sign or client button.
-- [ ] **R20 Small fixes** [3.12]: memory leaks at logout, Derby pays offline winners, rapid-respawn weekend bonus, faster respawn when a floor is busy.
+- [x] **R20 Small fixes** [3.12]: memory leaks at logout, Derby pays offline winners, rapid-respawn weekend bonus, faster respawn when a floor is busy.
 - [ ] **R21 Twin Fang rebalance** [2.5] (after Q18): one-handed swords only, combos must hit a real monster, solo trial room, smaller off-hand bonus.
 - [ ] **R22 Prove the art pipeline** = task 6.4, moved up [8.1]: one custom sprite in the client, then an estimate of the full art job.
 

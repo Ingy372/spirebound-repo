@@ -3,6 +3,12 @@
 local recentAttacks = {} -- victimGuid -> { [attackerGuid] = time }
 local lastSafe = {} -- playerId -> last position outside restricted zones
 local graceUntil = {} -- playerId -> time (after login / respawn, guards leave you alone briefly)
+SpireCleanup.add(function(pid, guid)
+	lastSafe[pid], graceUntil[pid] = nil, nil
+	recentAttacks[guid] = nil
+	SpirePvP.damage[guid] = nil
+	SpirePvP.aidUntil[guid] = nil
+end)
 
 local function guildId(p)
 	local g = p:getGuild()

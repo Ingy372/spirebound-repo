@@ -54,6 +54,7 @@ end
 loot:register()
 
 -- R15: kills and positions for the standing-still rule and the suspicion log
+SpireCleanup.add(function(pid, guid) SpireCavebot.track[guid] = nil end)
 local kills = CreatureEvent("SpireBotWatchKill")
 function kills.onKill(player, target)
 	if target and target:isMonster() and not target:getMaster() then

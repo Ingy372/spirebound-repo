@@ -19,6 +19,7 @@ local VOCATIONS = {
 
 local comboState = {} -- playerId -> combo state
 local activeMultiplier = {} -- playerId -> multiplier for the cast in progress
+SpireCleanup.add(function(pid) comboState[pid], activeMultiplier[pid] = nil, nil end)
 
 local function makeFormula(skillDef)
 	local fam = SwordSkills.families[skillDef.family]
