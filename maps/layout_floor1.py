@@ -277,7 +277,7 @@ def build(m):
     S.prop(m, hhx + 2, hhy + 1, Z, 2322)
     S.prop(m, hhx + 1, hhy + 1, Z, 2358)
     m.sign(hhx - 1, hhy + 5, Z, "Hunters' Hall. Hunting tasks, bounties and the trophy loft.")
-    m.npcs.append(("Taskmaster Ren", (hhx + 5, hhy + 4, Z)))
+    m.npcs.append(("Taskmaster Rhen", (hhx + 5, hhy + 4, Z)))
     m.npcs.append(("Bounty Warden Cass", (hhx + 10, hhy + 4, Z)))
     m.npcs.append(("Hunter Brannoch", (hhx + 14, hhy + 4, Z)))
     m.storey(hhx, hhy, 18, 14, Z - 1, floor="wood", style="stone")

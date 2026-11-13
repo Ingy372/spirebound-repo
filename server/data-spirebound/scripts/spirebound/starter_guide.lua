@@ -11,7 +11,7 @@ SpireGuide.TEXT = table.concat({
 	"",
 	"YOUR FIRST STEPS",
 	"1. Hunt rats and wolves in the fields just outside town. Press J at any time for your Journal.",
-	"2. Visit Banker Tolliver (your gold) and Quartermaster Bryn (potions). Taskmaster Ren hands out hunting tasks.",
+	"2. Visit Banker Tolliver (your gold) and Quartermaster Bryn (potions). Taskmaster Rhen hands out hunting tasks.",
 	"3. Speak to Miller Agna in Millcross: 'Bread for the Road' is your first story quest. Captain Dorrow, at the north gate, has the next.",
 	"4. At level 8 you learn your first spells on your own. No one sells spells. Type !spells to see them all.",
 	"5. Around level 20, face the Gate Hound at the Pass. Its fall opens the labyrinth beyond.",

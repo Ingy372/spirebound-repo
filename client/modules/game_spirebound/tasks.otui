@@ -1,0 +1,149 @@
+SpireTaskRow < Panel
+  height: 46
+  margin-bottom: 2
+  background-color: #22222288
+  border-width: 1
+  border-color: #3a3a3a
+
+  UICreature
+    id: look
+    size: 40 40
+    anchors.left: parent.left
+    anchors.verticalCenter: parent.verticalCenter
+    margin-left: 3
+    phantom: true
+
+  Label
+    id: name
+    anchors.left: look.right
+    anchors.top: parent.top
+    anchors.right: take.left
+    margin-left: 8
+    margin-top: 6
+    font: verdana-11px-rounded
+    color: #ffd27f
+    text-auto-resize: false
+
+  Label
+    id: info
+    anchors.left: name.left
+    anchors.top: name.bottom
+    anchors.right: take.left
+    margin-top: 4
+    font: verdana-11px-rounded
+    color: #cccccc
+
+  Button
+    id: take
+    width: 92
+    height: 22
+    anchors.right: parent.right
+    anchors.verticalCenter: parent.verticalCenter
+    margin-right: 6
+
+MainWindow
+  id: spireTasks
+  !text: 'Hunting Tasks'
+  size: 540 500
+  @onEscape: modules.game_spirebound.hideTasks()
+
+  Panel
+    id: activeBox
+    anchors.top: parent.top
+    anchors.left: parent.left
+    anchors.right: parent.right
+    height: 62
+    margin-top: 2
+    background-color: #1c2a1c88
+    border-width: 1
+    border-color: #4a6a4a
+
+    Label
+      id: activeText
+      anchors.top: parent.top
+      anchors.left: parent.left
+      anchors.right: report.left
+      margin-top: 6
+      margin-left: 8
+      font: verdana-11px-rounded
+      color: #9fe0a0
+
+    ProgressBar
+      id: activeBar
+      anchors.top: activeText.bottom
+      anchors.left: parent.left
+      anchors.right: report.left
+      margin-top: 6
+      margin-left: 8
+      margin-right: 8
+      height: 16
+      background-color: #3f7a3f
+
+    Button
+      id: report
+      !text: 'Report'
+      width: 80
+      anchors.top: parent.top
+      anchors.right: parent.right
+      margin-top: 6
+      margin-right: 6
+
+    Button
+      id: cancel
+      !text: 'Cancel task'
+      width: 80
+      anchors.top: report.bottom
+      anchors.right: parent.right
+      margin-top: 4
+      margin-right: 6
+
+  Label
+    id: points
+    anchors.top: activeBox.bottom
+    anchors.left: parent.left
+    anchors.right: parent.right
+    margin-top: 6
+    font: verdana-11px-rounded
+    color: #ffd27f
+
+  ScrollablePanel
+    id: list
+    anchors.top: points.bottom
+    anchors.left: parent.left
+    anchors.right: next.left
+    anchors.bottom: closeButton.top
+    margin-top: 6
+    margin-bottom: 6
+    margin-right: 4
+    vertical-scrollbar: listScroll
+    layout:
+      type: verticalBox
+    padding: 2
+
+  VerticalScrollBar
+    id: listScroll
+    anchors.top: points.bottom
+    anchors.right: parent.right
+    anchors.bottom: closeButton.top
+    margin-top: 6
+    margin-bottom: 6
+    step: 48
+    pixels-scroll: true
+
+  Label
+    id: hint
+    anchors.left: parent.left
+    anchors.right: closeButton.left
+    anchors.bottom: parent.bottom
+    margin-bottom: 4
+    font: verdana-11px-rounded
+    color: #999999
+    !text: 'One task at a time. Each task can be done once a day. Spend points with !taskshop.'
+
+  Button
+    id: closeButton
+    !text: 'Close'
+    width: 72
+    anchors.right: parent.right
+    anchors.bottom: parent.bottom
+    @onClick: modules.game_spirebound.hideTasks()

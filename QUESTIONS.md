@@ -13,6 +13,16 @@ Every ground is now a walled place with ring trails (see the playtest list in WE
 - Recommendation: keep the skeleton (it is what makes botting and sharing work) and let the end-of-project Cowork polish break up the outlines by hand.
 - Jay's answer:
 
+### Q34. Taskmaster names, and how the coins change (2026-11-13)
+Floors 2-10 needed taskmaster names: Doral, Ilsa, Varn, Kesh, Brenna, Otho, Sigra, Marlo, Quillan (Floor 2 to 10). Using a coin stack changes every full 100 up and leaves the rest; using a crystal coin breaks it into 100 platinum. A small platinum stack no longer breaks into gold (shops give change anyway).
+- Recommendation: keep both as built. Rename any taskmaster you like; it is a one-line change.
+- Jay's answer:
+
+### Q35. How many hunting tasks at once? (2026-11-13)
+The new task window lists every monster on the floor (25 on Floor 1, 8 on the others), but you can hold one task at a time, and each task comes back 20 hours after you finish it.
+- Recommendation: keep one at a time for now; if it feels slow in playtests, allow three.
+- Jay's answer:
+
 ### Q13. Calendar gate on floor bosses? [1.4]
 Nothing stops a big guild finishing all 10 floors in the first week or two, and then the season's story is over.
 - **Recommendation:** yes. Each floor boss room unseals on a date (Floor 2 no earlier than day 3, then one floor every 5–7 days). Every unlock becomes an event. Also drop the "25 floors per season" promise; say "10 floors, more if the season goes well".

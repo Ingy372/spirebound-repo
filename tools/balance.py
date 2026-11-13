@@ -4,7 +4,7 @@
 ONE place for the per-floor targets. tools/gen_monsters.py reads them (floor 2-10 experience and coin drops are scaled
 from them) and the hunting tasks are generated from them, so the game and the model can't disagree.
 
-    python tools/balance.py            -> writes BALANCE.md, data/balance_floors.csv and lib/spirebound/tasks_floors.lua
+    python tools/balance.py            -> writes BALANCE.md, data/balance_floors.csv and lib/spirebound/tasks_floors.lua (every floor's tasks)
     python tools/balance.py --check    -> the same, and exits with an error on any bad number (run on GitHub too)
     python tools/balance.py --selftest -> proves the check really fails on a bad price
 
@@ -158,7 +158,7 @@ def rows_and_problems(monsters, floors, prices, houses, tasks):
             problems.append(f"task {t['id']}: no monster called {t['monster']}")
             continue
         n = t.get("floor", 1)
-        cap = task_cap(n, m, t["count"], floors[n]["band"])
+        cap = t.get("cap") or task_cap(n, m, t["count"], floors[n]["band"])
         if t["gold"] > cap + 1:
             problems.append(f"task {t['id']}: pays {t['gold']} gold, more than {TASK_GOLD_SHARE:.0%} of what its hunting time earns ({cap:.0f})")
     for name, (buy, sell) in prices.get("_pairs", {}).items():
@@ -191,31 +191,76 @@ def load_game():
     xml = (ROOT / "server/data-spirebound/world/spirebound-house.xml").read_text()
     for town, size in re.findall(r'townid="(\d+)" size="(\d+)"', xml):
         houses.setdefault(int(town), []).append(int(size))
-    tasks = floor_tasks(monsters, floors) + floor1_tasks()
+    tasks = floor_tasks(monsters, floors)
     return monsters, floors, prices, houses, tasks
 
 
-def floor1_tasks():
-    text = (ROOT / "server/data-spirebound/lib/spirebound/tasks.lua").read_text(encoding="utf-8")
-    out = []
-    for tid, mon, count, gold in re.findall(r'id = "([^"]+)", floor = 1, monster = "([^"]+)", count = (\d+), gold = (\d+)', text):
-        out.append(dict(id=tid, floor=1, monster=mon, count=int(count), gold=int(gold)))
+NOT_TASKS = {"Pen Rat"}   # the Arrival Yard's tutorial rats (Claude's call, Jay can veto)
+
+
+def floor_of(x, y):
+    from floors import origin, SIZE
+    if 1000 <= x <= 1399 and 1000 <= y <= 1399:
+        return 1
+    for n in range(2, 11):
+        ox, oy = origin(n)
+        if ox <= x < ox + SIZE and oy <= y < oy + SIZE:
+            return n
+    return 0
+
+
+def spawn_counts():
+    """{floor: {monster: how many spawn on that floor}} from the real map's spawn file."""
+    xml = (ROOT / "server/data-spirebound/world/spirebound-monster.xml").read_text(encoding="utf-8")
+    out = {}
+    for x, y, body in re.findall(r'<monster centerx="(\d+)" centery="(\d+)"[^>]*>(.*?)</monster>\s*(?=<monster centerx|</monsters>)', xml, re.S):
+        n = floor_of(int(x), int(y))
+        for name in re.findall(r'name="([^"]+)"', body):
+            out.setdefault(n, {})
+            out[n][name] = out[n].get(name, 0) + 1
+    return out
+
+
+def floor1_camps():
+    """Floor 1 hunting grounds from the detailed economy (tools/gen_economy.py): monster -> (kills/h, gold/h, low level)."""
+    from floor1_plan import CAMPS
+    eco = {r["id"]: r for r in csv.DictReader(open(ROOT / "data/economy_floor1.csv")) if r["vocation"] == "Vanguard"}
+    out = {}
+    for c in CAMPS:
+        r = eco.get(c["id"])
+        if r and c["mix"][0][0] not in out:
+            out[c["mix"][0][0]] = (int(r["kills_h"]), int(r["gold_h"]), c["levels"][0])
     return out
 
 
 def floor_tasks(monsters, floors):
-    """Hunting tasks for floors 2-10: two camp monsters, the elite and the apex; gold = 25% of what the kills drop."""
+    """Every floor's full task list (Jay, 2026-11-13: each floor's taskmaster offers that floor's huntable monsters).
+    One task per monster that spawns on the floor (bosses and NOT_TASKS left out). A task takes about 15-20 minutes
+    of that monster and pays 80% of the most the check allows (TASK_GOLD_SHARE of what that hunting time earns)."""
     out = []
-    for n in sorted(floors):
-        if n < 2:
+    camps1 = floor1_camps()
+    for n, counts in sorted(spawn_counts().items()):
+        if n < 1:
             continue
         f = floors[n]
-        picks = [(f["camp"][0], "camp", 80), (f["camp"][2], "camp", 80), (f["elite"], "elite", 40), (f["apex"], "apex", 25)]
-        for name, kind, count in picks:
-            m = monsters[name]
-            gold = int(task_cap(n, m, count, f["band"]) * 0.8) // 100 * 100
-            out.append(dict(id=f"t{n}_{re.sub(r'[^a-z]', '', name.lower())}", floor=n, monster=name, count=count, gold=gold,
-                            points=TASK_POINTS[kind] + n // 3))
+        for name, spawns in sorted(counts.items(), key=lambda kv: (monsters.get(kv[0], {}).get("hp", 0), kv[0])):
+            m = monsters.get(name)
+            if not m or m.get("boss") or name in NOT_TASKS:
+                continue
+            if n == 1 and name in camps1:
+                kph, gph, low = camps1[name]
+                count = max(20, min(100, int(kph * 0.25) // 5 * 5))
+                cap = TASK_GOLD_SHARE * gph * count / kph
+                points = 1 if low < 15 else 2
+            else:
+                kind = "apex" if name == f.get("apex") else "elite" if (name == f.get("elite") or spawns <= 9) else "camp"
+                count = {"camp": 80, "elite": 40, "apex": 25}[kind] if n > 1 else {"camp": 50, "elite": 20, "apex": 20}[kind]
+                cap = task_cap(n, m, count, f["band"])
+                points = TASK_POINTS[kind] + n // 3 + (1 if n == 1 and kind == "camp" else 0)
+            step = 100 if cap >= 2000 else 10
+            gold = max(step, int(cap * 0.8) // step * step)
+            out.append(dict(id=f"t{n}_{re.sub(r'[^a-z]', '', name.lower())}", floor=n, monster=name, count=count,
+                            gold=gold, points=points, cap=cap))
     return out
 
 
@@ -226,10 +271,10 @@ def write(rows, problems, tasks):
         w.writeheader()
         w.writerows(rows)
     lua = ["-- GENERATED by tools/balance.py (roadmap R10). Do not edit by hand.",
-           "-- Hunting tasks for floors 2-10: each pays 80% of the most the balance check allows.",
+           "-- Every floor's hunting tasks: one per monster that spawns there; each pays 80% of the most the check allows.",
            "SpireTasks.floorList = {"]
     for t in tasks:
-        if t.get("floor", 1) >= 2:
+        if True:
             lua.append(f'\t{{ id = "{t["id"]}", floor = {t["floor"]}, monster = "{t["monster"]}", count = {t["count"]}, '
                        f'gold = {t["gold"]}, points = {t["points"]} }},')
     lua.append("}")

@@ -11,6 +11,10 @@ BIOME_KEYS = {"grass": "grass", "dried": "dried", "dirt": "dirt", "jungle": "jun
               "earth": "earth", "swamp": "swamp", "mud": "mud", "wood": "wood", "snow": "snow", "blackmarble": "blackmarble"}
 
 
+# each floor's taskmaster (Jay, 2026-11-13); keep in step with SpireTasks.MASTERS in lib/spirebound/tasks.lua
+TASKMASTERS = {2: "Taskmaster Doral", 3: "Taskmaster Ilsa", 4: "Taskmaster Varn", 5: "Taskmaster Kesh", 6: "Taskmaster Brenna",
+               7: "Taskmaster Otho", 8: "Taskmaster Sigra", 9: "Taskmaster Marlo", 10: "Taskmaster Quillan"}
+
 def build(m, n):
     spec = FLOORS[n]
     X0, Y0 = origin(n)
@@ -57,6 +61,7 @@ def build(m, n):
         m.depot(dx + 3 + i * 3, dy + 1, Z, town_id)
     m.put(dx + 14, dy + 8, Z, 3501)
     m.npcs.append((f"Quartermaster of {spec['town']}", (dx + 3, dy + 6, Z)))
+    m.npcs.append((TASKMASTERS[n], (dx + 11, dy + 6, Z)))  # task menu (server: lib/spirebound/tasks.lua MASTERS)
     for i, role in enumerate(["Banker", "Merchant", "Outfitter"]):
         sx = tx + 28 + i * 14
         m.building(sx, ty + 6, 12, 9, Z, floor="wood", door_side="s")

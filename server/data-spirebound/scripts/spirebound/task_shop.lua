@@ -1,5 +1,5 @@
 -- Something to spend task points on (roadmap R10, REVIEW 3.12). Task points come from hunting tasks
--- (Taskmaster Ren, Hearthgate). Say !taskshop to see the list, !taskshop <number> to buy.
+-- (Taskmaster Rhen, Hearthgate). Say !taskshop to see the list, !taskshop <number> to buy.
 
 SpireTasks.shop = {
 	{ name = "a temple teleport scroll", points = 3, give = function(p) return p:addItem(25718, 1) ~= nil end },

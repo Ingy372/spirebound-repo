@@ -1,12 +1,12 @@
 Module
   name: game_spirebound
-  description: Spirebound UI - floor indicator, sword-skill bar, cursor colors, difficulty icon, Journal window
+  description: Spirebound UI - floor indicator, sword-skill bar, cursor colors, difficulty icon, Journal window, task window
   author: Spirebound
   website: https://github.com/Ingy372/spirebound-repo
   sandboxed: true
   autoload: true
   autoload-priority: 1100
   dependencies: [ game_interface ]
-  scripts: [ journal, spirebound ]
+  scripts: [ journal, tasks, spirebound ]
   @onLoad: init()
   @onUnload: terminate()

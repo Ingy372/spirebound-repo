@@ -16,7 +16,7 @@ Gates face north, south, west and east. Streets run straight to the plaza.
 
 | Area | What is there |
 |---|---|
-| North wall (shop row) | General Store (Merchant Wenna), Weaponsmith (Garrick), Armorer (Hesta), Quartermaster's Stores (Bryn, potions and arrows), Bank (Banker Tolliver), Hunters' Hall (Taskmaster Ren, Bounty Warden Cass, Hunter Brannoch) |
+| North wall (shop row) | General Store (Merchant Wenna), Weaponsmith (Garrick), Armorer (Hesta), Quartermaster's Stores (Bryn, potions and arrows), Bank (Banker Tolliver), Hunters' Hall (Taskmaster Rhen, Bounty Warden Cass, Hunter Brannoch) |
 | Plaza | Fountain, the Monument (names of those who opened floors), Vesper the Info Broker, a signpost, Captain Dorrow at the north gate |
 | West of the plaza | The Ascendancy: Ascendant Veyra promotes you at level 20 for 20,000 gold |
 | East of the plaza | The Guild Hall: Guildwarden Sela |
@@ -76,7 +76,7 @@ The four starter grounds and the roads around the city are *Guarded* (players ca
 5. *Pelts for the Hall* (Hunter Brannoch): 20 Meadow Wolves.
 6. *Quarry Watch* (Hunter Brannoch, after Pelts): 10 Ruin Archers. Title: Quarrywatch.
 
-**Side quests** (good money, not needed for the perk): *Snapper Season* (Fisher Corwin), *Mole Hills* (Miller Agna), *The Alpha* (Brannoch), *Shard Hunt* (Brannoch). Hunting tasks from Taskmaster Ren stay as the daily money source.
+**Side quests** (good money, not needed for the perk): *Snapper Season* (Fisher Corwin), *Mole Hills* (Miller Agna), *The Alpha* (Brannoch), *Shard Hunt* (Brannoch). Hunting tasks from Taskmaster Rhen stay as the daily money source.
 
 ## Services at a glance
 - **Heal, bless:** Priest Odran (free healing below level 50).

@@ -104,11 +104,11 @@ function SpireJournal.task(player)
 	local id = s:get("active")
 	local t = id and SpireTasks.get(id)
 	if not t then
-		return "Hunting task", { "No active task. Ask Taskmaster Ren in Hearthgate." }
+		return "Hunting task", { "No active task. Ask Taskmaster Rhen in Hearthgate." }
 	end
 	local n = s:get("kills") or 0
 	local lines = { string.format("%s: %d of %d defeated.", t.monster, math.min(n, t.count), t.count) }
-	table.insert(lines, n >= t.count and "Report to Taskmaster Ren." or string.format("Reward: %d gold, %d task point%s.", t.gold, t.points, t.points == 1 and "" or "s"))
+	table.insert(lines, n >= t.count and "Report to Taskmaster Rhen." or string.format("Reward: %d gold, %d task point%s.", t.gold, t.points, t.points == 1 and "" or "s"))
 	return "Hunting task", lines
 end
 
@@ -135,7 +135,7 @@ SpireJournal.HOWTO = {
 	"Where do I learn spells? Nobody sells them: you learn them on your own as you level. Say !spells for the list.",
 	"Where is my gold? At Banker Tolliver in the Hearth. Say balance, deposit or withdraw. The account vault is shared by your characters.",
 	"How do I sell loot? Trader Osric in the Hearth buys what monsters drop. Players pay more on the market (any depot locker).",
-	"What are hunting tasks? Taskmaster Ren gives one a day per kind: gold and task points. Spend points with !taskshop.",
+	"What are hunting tasks? Every town has a taskmaster (Floor 1: Taskmaster Rhen) with a task menu of that floor's monsters. Each task pays gold and task points once a day. Spend points with !taskshop.",
 	"How do I get home fast? A temple teleport scroll (Runewright Mael, 300 gold) takes you to your temple outside a fight.",
 	"What is a secret? Hidden places on every floor. Find one and sell word of it to Vesper, the Info Broker, or keep it.",
 	"Why can't I attack that player? Players below level 50 are protected, and so are players far below your level.",

@@ -13,7 +13,7 @@ SpireTest.add("tasks: list, one at a time, daily repeat", function()
 		if not MonsterType(t.monster) then error(t.id .. " targets unknown " .. t.monster) end
 	end
 	SpireTest.eq((SpireTasks.canTake(nil, nil, 1000000)), true, "free to take")
-	SpireTest.eq((SpireTasks.canTake("t_wolves", nil, 1000000)), false, "one task at a time")
+	SpireTest.eq((SpireTasks.canTake("t1_meadowwolf", nil, 1000000)), false, "one task at a time")
 	SpireTest.eq((SpireTasks.canTake(nil, 1000000 - 3600, 1000000)), false, "done an hour ago")
 	SpireTest.eq((SpireTasks.canTake(nil, 1000000 - 21 * 3600, 1000000)), true, "done yesterday")
 	SpireTest.eq(configManager.getBoolean(configKeys.AUTOLOOT), true, "autoloot on")

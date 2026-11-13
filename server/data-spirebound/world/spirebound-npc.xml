@@ -58,7 +58,7 @@
 		<npc name="Banker Ansel" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1258" centery="1273" centerz="7" radius="1">
-		<npc name="Taskmaster Ren" x="0" y="0" z="7" spawntime="60" />
+		<npc name="Taskmaster Rhen" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1263" centery="1273" centerz="7" radius="1">
 		<npc name="Bounty Warden Cass" x="0" y="0" z="7" spawntime="60" />
@@ -96,6 +96,9 @@
 	<npc centerx="2114" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Highrest" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="2122" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Doral" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="2139" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Highrest" x="0" y="0" z="7" spawntime="60" />
 	</npc>
@@ -116,6 +119,9 @@
 	</npc>
 	<npc centerx="2514" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Rootwell" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="2522" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Ilsa" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="2539" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Rootwell" x="0" y="0" z="7" spawntime="60" />
@@ -138,6 +144,9 @@
 	<npc centerx="2914" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Lakehold" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="2922" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Varn" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="2939" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Lakehold" x="0" y="0" z="7" spawntime="60" />
 	</npc>
@@ -158,6 +167,9 @@
 	</npc>
 	<npc centerx="3314" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Ringhold" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="3322" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Kesh" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="3339" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Ringhold" x="0" y="0" z="7" spawntime="60" />
@@ -180,6 +192,9 @@
 	<npc centerx="3714" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Cinderhold" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="3722" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Brenna" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="3739" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Cinderhold" x="0" y="0" z="7" spawntime="60" />
 	</npc>
@@ -200,6 +215,9 @@
 	</npc>
 	<npc centerx="4114" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Reedhaven" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="4122" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Otho" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="4139" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Reedhaven" x="0" y="0" z="7" spawntime="60" />
@@ -222,6 +240,9 @@
 	<npc centerx="4514" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Rimewatch" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="4522" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Sigra" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="4539" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Rimewatch" x="0" y="0" z="7" spawntime="60" />
 	</npc>
@@ -243,6 +264,9 @@
 	<npc centerx="4914" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Last Market" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="4922" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Marlo" x="0" y="0" z="7" spawntime="60" />
+	</npc>
 	<npc centerx="4939" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Last Market" x="0" y="0" z="7" spawntime="60" />
 	</npc>
@@ -263,6 +287,9 @@
 	</npc>
 	<npc centerx="5314" centery="1222" centerz="7" radius="1">
 		<npc name="Quartermaster of Bluegate" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="5322" centery="1222" centerz="7" radius="1">
+		<npc name="Taskmaster Quillan" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="5339" centery="1220" centerz="7" radius="1">
 		<npc name="Banker of Bluegate" x="0" y="0" z="7" spawntime="60" />

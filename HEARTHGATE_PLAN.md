@@ -167,7 +167,7 @@ The hall's roof surrounds the tower, and the tower has its own. This needs one s
 | Fletcher | 60, 23, 13, 9 | timber | (61,31) south | Fletcher Tamsin | faces the Ring |
 | Runewright | 26, 37, 11, 10 | stone | (36,45) east | Runewright Mael | faces the Ring |
 | Inn "The Lantern & Lark" | 24, 52, 13, 15 | timber | (36,59) east | Innkeeper Roan | upstairs rooms; stairs `hearthgate_inn` |
-| Hunters' Hall | 77, 33, 18, 14 | stone | (77,40) west | Taskmaster Ren, Bounty Warden Cass, Hunter Brannoch | trophy loft; ladder `hunters_hall` |
+| Hunters' Hall | 77, 33, 18, 14 | stone | (77,40) west | Taskmaster Rhen, Bounty Warden Cass, Hunter Brannoch | trophy loft; ladder `hunters_hall` |
 | Quartermaster's Stores | 44, 2, 10, 9 | brick | (53,6) east | Quartermaster Bryn | last stop before the north gate |
 | Guardhouse | 60, 2, 10, 9 | stone | (60,6) west | Captain Dorrow stands outside at (59,8) | racks, a table, two beds |
 | Post Office | 44, 13, 10, 9 | sandstone | (53,17) east | Postmaster Hobb | two mailboxes inside |

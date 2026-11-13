@@ -21,7 +21,7 @@ SpireTest.add("balance: every floor has hunting tasks, and task points buy somet
 		SpireTest.eq(MonsterType(t.monster) ~= nil, true, "task " .. t.id .. " hunts a real monster")
 	end
 	for n = 1, 10 do
-		SpireTest.eq((floors[n] or 0) >= 4, true, "Floor " .. n .. " has tasks")
+		SpireTest.eq((floors[n] or 0) >= 8, true, "Floor " .. n .. " has a full task menu")
 	end
 	SpireTest.eq((SpireTasks.canBuy(1, 2)), false, "3 points needed for the scroll")
 	SpireTest.eq((SpireTasks.canBuy(1, 3)), true, "3 points buy it")

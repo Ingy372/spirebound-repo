@@ -115,6 +115,10 @@ local function onMessage(protocol, opcode, data)
     SpireJournalUi.lang = data.lang or 'en'
   elseif data.t == 'journal' then
     SpireJournalUi.show(data)
+  elseif data.t == 'tasks' then
+    SpireTasksUi.show(data)
+  elseif data.t == 'tasksclose' then
+    SpireTasksUi.hide()
   elseif data.t == 'cast' then
     cooldownUntil[data.name] = g_clock.millis() + (data.cd or 0)
   end
@@ -183,6 +187,7 @@ end
 
 local function onGameEnd()
   SpireJournalUi.hide()
+  SpireTasksUi.hide()
   removeEvent(tickEvent)
   removeEvent(cursorEvent)
   destroyUi()
@@ -213,6 +218,10 @@ end
 
 function hideJournal()
   SpireJournalUi.hide()
+end
+
+function hideTasks()
+  SpireTasksUi.hide()
 end
 
 function terminate()

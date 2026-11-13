@@ -22,7 +22,7 @@ function kill.onKill(player, target)
 		s:set("kills", n)
 		if n == t.count then
 			SpirePath.progress(player, "task", 1)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Task complete: " .. t.count .. " " .. t.monster .. "s. Report to Taskmaster Ren in Hearthgate.")
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Task complete: " .. t.count .. " " .. t.monster .. "s. Report to any taskmaster (Floor 1: Taskmaster Rhen in Hearthgate's Hunters' Hall).")
 		elseif n < t.count and n % 10 == 0 then
 			player:sendTextMessage(MESSAGE_STATUS, string.format("Task: %d of %d %ss.", n, t.count, t.monster))
 		end
@@ -31,9 +31,48 @@ function kill.onKill(player, target)
 end
 kill:register()
 
+-- Task window buttons (client: client/modules/game_spirebound/tasks.lua): {t="task", a="take"|"report"|"cancel"|"open", id}
+-- Every button only works next to a taskmaster; the window then shows that taskmaster's floor again.
+function SpireTasks.handleRequest(player, buffer)
+	if not buffer:find('"t"%s*:%s*"task"') then
+		return nil
+	end
+	local action = buffer:match('"a"%s*:%s*"(%a+)"')
+	local id = buffer:match('"id"%s*:%s*"([%w_]+)"')
+	local master, floor = SpireTasks.nearMaster(player)
+	if not master then
+		player:sendCancelMessage("Stand next to a taskmaster to use the task window.")
+		SpireClient.send(player, { t = "tasksclose" })
+		return false
+	end
+	local ok, text = true, nil
+	if action == "take" then
+		ok, text = SpireTasks.take(player, id)
+	elseif action == "report" then
+		ok, text = SpireTasks.report(player)
+	elseif action == "cancel" then
+		ok, text = SpireTasks.cancel(player)
+	end
+	if text then
+		player:sendTextMessage(ok and MESSAGE_EVENT_ADVANCE or MESSAGE_FAILURE, text)
+	end
+	SpireClient.send(player, SpireTasks.menu(player, floor))
+	return ok
+end
+
+local opcode = CreatureEvent("SpireTaskOpcode")
+function opcode.onExtendedOpcode(player, op, buffer)
+	if op == SpireClient.OPCODE then
+		SpireTasks.handleRequest(player, buffer)
+	end
+	return true
+end
+opcode:register()
+
 local login = CreatureEvent("SpireTaskLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireTaskKill")
+	player:registerEvent("SpireTaskOpcode")
 	return true
 end
 login:register()

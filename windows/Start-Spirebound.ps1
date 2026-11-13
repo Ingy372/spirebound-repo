@@ -33,6 +33,9 @@ if (Ready) {
     }
     Start-Sleep 5   # let the server finish loading its scripts
 }
+# Spirebound's own client windows (Journal, task window, skill bar) change often: copy the latest every start
+$Mods = Join-Path $Root "client\modules"
+if (Test-Path $Mods) { Copy-Item -Recurse -Force (Join-Path $Mods "*") (Join-Path (Split-Path $Client) "modules") }
 Say "Opening the game..."
 Start-Process $Client -WorkingDirectory (Split-Path $Client)
 Write-Host ""
