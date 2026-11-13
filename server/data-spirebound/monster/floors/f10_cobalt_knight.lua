@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Cobalt Knight")
 local monster = {}
 
 monster.description = "a cobalt knight"
-monster.experience = 1897
+monster.experience = 11586
 monster.outfit = {
 	lookType = 119, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 70000, maxCount = 5 },
+	{ id = 3035, chance = 100000, maxCount = 4 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3366, chance = 1500, maxCount = 1 },

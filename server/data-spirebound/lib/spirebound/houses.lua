@@ -71,6 +71,32 @@ function SpireHouses.portalChangesLeft(used)
 end
 
 -- Fortune Hall dice ------------------------------------------------------
+-- Roadmap R10: both sides put the bet in the pot; the winner takes the pot less 5%, and the 5% is destroyed
+-- (before, the host simply paid less when losing, so the cut stayed with the host). Each hall may take at most
+-- HALL_HOURLY gold of bets an hour, so a host can't run an unlimited gold-laundering table.
+SpireHouses.HALL_HOURLY = 500000
+
+-- Pure: who gets what. Returns player change, host change, gold destroyed.
+function SpireHouses.settleDice(bet, playerWins)
+	local pot = bet * 2
+	local cut = math.floor(pot * SpireHouses.DICE_CUT)
+	if playerWins then
+		return pot - cut - bet, -bet, cut
+	end
+	return -bet, pot - cut - bet, cut
+end
+
+-- Pure: may this hall take another bet of `amount`? taken = { {time, amount}, ... } in the last hour
+function SpireHouses.hallHasRoom(taken, amount, now)
+	local sum = 0
+	for _, t in ipairs(taken or {}) do
+		if now - t[1] < 3600 then
+			sum = sum + t[2]
+		end
+	end
+	return sum + amount <= SpireHouses.HALL_HOURLY, SpireHouses.HALL_HOURLY - sum
+end
+
 -- Pure: payout to a winning bettor and the destroyed cut
 function SpireHouses.dicePayout(bet)
 	local gross = bet * 2

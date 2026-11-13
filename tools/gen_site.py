@@ -140,8 +140,9 @@ in Hearthgate. Take daily hunting tasks from Taskmaster Ren. There is no level c
 def floors() -> str:
     out = ["<p>Ten floors at launch. Level bands are hunting targets, not doors. Floor 1 is open at the start; every other "
            "floor opens when the server beats the floor boss before it.</p>"]
-    mons = csv_rows("monsters.csv")
-    f1 = sorted({m["name"] for m in mons if m["tuned_floor"] == "1" and m["role"] in ("trash", "elite", "apex", "mini")})
+    sys.path.insert(0, str(ROOT / "maps"))
+    from floor1_plan import CAMPS
+    f1 = sorted({mon for c in CAMPS for mon, _g, _s in c["mix"]})
     rows = [[1, FLOOR1["name"], FLOOR1["town"], "1-35", ", ".join(f1[:8]), "Axe-Lord of the Stair"]]
     for n, f in sorted(FLOORS.items()):
         hunt = list(f["camp"]) + [f["elite"], f["apex"]]
@@ -150,7 +151,8 @@ def floors() -> str:
     out.append("<h2>Fish by floor</h2>")
     out.append(table(["Floor", "Fish to catch"], [[n, ", ".join(f["fish"])] for n, f in sorted(FLOORS.items())]))
     out.append("<h2>Secrets</h2>")
-    sec = csv_rows("secrets.csv")
+    with open(ROOT / "tools" / "secrets_src.csv", encoding="utf8", newline="") as fh:
+        sec = list(csv.DictReader(fh))
     by_floor: dict[str, int] = {}
     for s in sec:
         by_floor[s["floor"]] = by_floor.get(s["floor"], 0) + 1

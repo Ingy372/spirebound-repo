@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Dust Strider")
 local monster = {}
 
 monster.description = "a dust strider"
-monster.experience = 220
+monster.experience = 183
 monster.outfit = {
 	lookType = 119, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 40 },
-	{ id = 3035, chance = 30000, maxCount = 1 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 330, maxCount = 1 },
 	{ id = 236, chance = 8000, maxCount = 1 },
 	{ id = 237, chance = 8000, maxCount = 1 },
 	{ id = 3352, chance = 1500, maxCount = 1 },

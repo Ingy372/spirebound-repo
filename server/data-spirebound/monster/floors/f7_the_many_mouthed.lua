@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("The Many-Mouthed")
 local monster = {}
 
 monster.description = "The Many-Mouthed"
-monster.experience = 148230
+monster.experience = 486268
 monster.outfit = {
 	lookType = 129, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

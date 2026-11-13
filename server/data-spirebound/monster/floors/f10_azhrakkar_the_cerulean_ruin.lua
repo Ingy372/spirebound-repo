@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Azhrakkar, the Cerulean Ruin")
 local monster = {}
 
 monster.description = "Azhrakkar, the Cerulean Ruin"
-monster.experience = 291889
+monster.experience = 1782757
 monster.outfit = {
 	lookType = 61, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

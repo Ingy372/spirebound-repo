@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Raider Chieftain")
 local monster = {}
 
 monster.description = "a raider chieftain"
-monster.experience = 5294
+monster.experience = 18365
 monster.outfit = {
 	lookType = 240, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 60000, maxCount = 4 },
+	{ id = 3035, chance = 100000, maxCount = 7 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3392, chance = 4000, maxCount = 1 },

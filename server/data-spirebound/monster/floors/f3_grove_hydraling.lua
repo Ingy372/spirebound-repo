@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Grove Hydraling")
 local monster = {}
 
 monster.description = "a grove hydraling"
-monster.experience = 2103
+monster.experience = 887
 monster.outfit = {
 	lookType = 197, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 60 },
-	{ id = 3035, chance = 35000, maxCount = 1 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 100000, maxCount = 2 },
 	{ id = 236, chance = 8000, maxCount = 1 },
 	{ id = 237, chance = 8000, maxCount = 1 },
 	{ id = 3357, chance = 4000, maxCount = 1 },

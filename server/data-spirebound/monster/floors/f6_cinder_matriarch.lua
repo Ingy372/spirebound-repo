@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Cinder Matriarch")
 local monster = {}
 
 monster.description = "the Cinder Matriarch"
-monster.experience = 110569
+monster.experience = 191586
 monster.outfit = {
 	lookType = 53, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

@@ -169,8 +169,7 @@ function dice.onSay(player, words, param)
 		player:sendCancelMessage("You can't bet against yourself.")
 		return false
 	end
-	local win, cut = SpireHouses.dicePayout(amount)
-	if host:getBankBalance() < win then
+	if host:getBankBalance() < amount then
 		player:sendCancelMessage("The house can't cover that bet right now.")
 		return false
 	end
@@ -178,17 +177,34 @@ function dice.onSay(player, words, param)
 		player:sendCancelMessage("You don't have that much gold in the bank. (Bets are gold only.)")
 		return false
 	end
-	player:setBankBalance(player:getBankBalance() - amount)
-	host:setBankBalance(host:getBankBalance() + amount)
+	local hk = kv.scoped("spirebound-fortune")
+	local taken = hk:get("taken_" .. house:getId()) or {}
+	local now = os.time()
+	local room, left = SpireHouses.hallHasRoom(taken, amount, now)
+	if not room then
+		player:sendCancelMessage("This hall has taken all the bets it may this hour (" .. math.max(0, left) .. " gold left).")
+		return false
+	end
+	local kept = {}
+	for _, t in ipairs(taken) do
+		if now - t[1] < 3600 then
+			table.insert(kept, t)
+		end
+	end
+	table.insert(kept, { now, amount })
+	hk:set("taken_" .. house:getId(), kept)
 	local roll = math.random(6)
 	player:getPosition():sendMagicEffect(CONST_ME_CRAPS)
-	if SpireHouses.diceWins(call, roll) then
-		host:setBankBalance(host:getBankBalance() - win)
-		player:setBankBalance(player:getBankBalance() + win)
-		player:say(string.format("rolled a %d and wins %d gold!", roll, win), TALKTYPE_MONSTER_SAY)
+	local wins = SpireHouses.diceWins(call, roll)
+	local dp, dh, burned = SpireHouses.settleDice(amount, wins)
+	player:setBankBalance(player:getBankBalance() + dp)
+	host:setBankBalance(host:getBankBalance() + dh)
+	if wins then
+		player:say(string.format("rolled a %d and wins %d gold!", roll, dp + amount), TALKTYPE_MONSTER_SAY)
 	else
 		player:say(string.format("rolled a %d and loses %d gold.", roll, amount), TALKTYPE_MONSTER_SAY)
 	end
+	logger.info("[Spirebound] dice: {} gold destroyed by the hall's cut", burned)
 	logger.info("[Spirebound] dice: {} bet {} {} in {}'s hall, roll {}", player:getName(), amount, call, host:getName(), roll)
 	return false
 end

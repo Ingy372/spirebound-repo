@@ -12,7 +12,8 @@ function xp.playerOnGainExperience(player, target, exp, rawExp)
 		local s = player:kv():scoped("spirebound")
 		s:set("bonusXp", (s:get("bonusXp") or 0) + (withBonus - exp))
 	end
-	return math.floor(withBonus * SpireCavebot.xpFactor(player) * SpireSiege.factor(player))
+	local focus = SpireTasks.focusFactor and SpireTasks.focusFactor(player) or 1 -- Hunting Focus from the task shop
+	return math.floor(withBonus * SpireCavebot.xpFactor(player) * SpireSiege.factor(player) * focus)
 end
 xp:register()
 

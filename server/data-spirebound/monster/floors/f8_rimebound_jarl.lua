@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Rimebound Jarl")
 local monster = {}
 
 monster.description = "the Rimebound Jarl"
-monster.experience = 191035
+monster.experience = 662707
 monster.outfit = {
 	lookType = 197, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

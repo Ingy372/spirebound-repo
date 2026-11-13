@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Crowned Aurochs")
 local monster = {}
 
 monster.description = "the Crowned Aurochs"
-monster.experience = 13706
+monster.experience = 11392
 monster.outfit = {
 	lookType = 15, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

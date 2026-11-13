@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("The Auctioneer")
 local monster = {}
 
 monster.description = "The Auctioneer"
-monster.experience = 78293
+monster.experience = 464369
 monster.outfit = {
 	lookType = 27, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

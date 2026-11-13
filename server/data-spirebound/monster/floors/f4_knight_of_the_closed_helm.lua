@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Knight of the Closed Helm")
 local monster = {}
 
 monster.description = "the Knight of the Closed Helm"
-monster.experience = 51188
+monster.experience = 35225
 monster.outfit = {
 	lookType = 122, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

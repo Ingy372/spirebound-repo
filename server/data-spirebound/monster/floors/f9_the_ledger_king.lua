@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("The Ledger King")
 local monster = {}
 
 monster.description = "The Ledger King"
-monster.experience = 238955
+monster.experience = 1417284
 monster.outfit = {
 	lookType = 52, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

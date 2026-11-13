@@ -1,4 +1,4 @@
-name: design-tables
+name: balance
 on: [push, pull_request]
 jobs:
   check:
@@ -7,7 +7,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with: { python-version: "3.12" }
-      - name: Regenerate tables and run economy checks
-        run: python3 tools/gen_tables.py
-      - name: Fail if committed CSVs are stale
-        run: git diff --exit-code -- data/
+      - name: The balance check fails loudly on a bad price
+        run: python3 tools/balance.py --selftest
+      - name: Balance tables for all ten floors (fails on any bad number)
+        run: python3 tools/balance.py --check
+      - name: Floor 1 economy (fails if a vocation loses money)
+        run: python3 tools/gen_economy.py
+      - name: Fail if committed tables are stale
+        run: git diff --exit-code -- data/ BALANCE.md ECONOMY.md server/data-spirebound/lib/spirebound/tasks_floors.lua

@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Herd Bull")
 local monster = {}
 
 monster.description = "a herd bull"
-monster.experience = 661
+monster.experience = 549
 monster.outfit = {
 	lookType = 222, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 40 },
-	{ id = 3035, chance = 30000, maxCount = 1 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 51160, maxCount = 1 },
 	{ id = 236, chance = 8000, maxCount = 1 },
 	{ id = 237, chance = 8000, maxCount = 1 },
 	{ id = 3352, chance = 4000, maxCount = 1 },

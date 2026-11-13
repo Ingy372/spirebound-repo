@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Moss Elder")
 local monster = {}
 
 monster.description = "a moss elder"
-monster.experience = 1215
+monster.experience = 512
 monster.outfit = {
 	lookType = 121, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 60 },
-	{ id = 3035, chance = 35000, maxCount = 1 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 91449, maxCount = 1 },
 	{ id = 236, chance = 8000, maxCount = 1 },
 	{ id = 237, chance = 8000, maxCount = 1 },
 	{ id = 3357, chance = 4000, maxCount = 1 },

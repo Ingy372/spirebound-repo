@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Empty Colossus")
 local monster = {}
 
 monster.description = "the Empty Colossus"
-monster.experience = 78214
+monster.experience = 96976
 monster.outfit = {
 	lookType = 240, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

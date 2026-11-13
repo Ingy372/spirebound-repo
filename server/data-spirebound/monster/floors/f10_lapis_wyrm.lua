@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Lapis Wyrm")
 local monster = {}
 
 monster.description = "a lapis wyrm"
-monster.experience = 12805
+monster.experience = 78209
 monster.outfit = {
 	lookType = 15, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 70000, maxCount = 5 },
+	{ id = 3035, chance = 100000, maxCount = 16 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3366, chance = 4000, maxCount = 1 },

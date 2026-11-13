@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Avalanche Brute")
 local monster = {}
 
 monster.description = "the Avalanche Brute"
-monster.experience = 63334
+monster.experience = 219708
 monster.outfit = {
 	lookType = 291, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

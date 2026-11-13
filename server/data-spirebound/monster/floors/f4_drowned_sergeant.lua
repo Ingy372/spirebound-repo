@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Drowned Sergeant")
 local monster = {}
 
 monster.description = "a drowned sergeant"
-monster.experience = 1872
+monster.experience = 1288
 monster.outfit = {
 	lookType = 238, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 80 },
-	{ id = 3035, chance = 40000, maxCount = 2 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 100000, maxCount = 2 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3370, chance = 4000, maxCount = 1 },

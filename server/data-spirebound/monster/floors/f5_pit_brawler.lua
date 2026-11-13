@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Pit Brawler")
 local monster = {}
 
 monster.description = "a pit brawler"
-monster.experience = 972
+monster.experience = 1205
 monster.outfit = {
 	lookType = 129, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 45000, maxCount = 2 },
+	{ id = 3035, chance = 72384, maxCount = 1 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3381, chance = 1500, maxCount = 1 },

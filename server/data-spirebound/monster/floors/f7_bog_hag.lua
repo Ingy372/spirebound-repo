@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Bog Hag")
 local monster = {}
 
 monster.description = "a bog hag"
-monster.experience = 1444
+monster.experience = 4737
 monster.outfit = {
 	lookType = 27, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 55000, maxCount = 3 },
+	{ id = 3035, chance = 100000, maxCount = 2 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3280, chance = 1500, maxCount = 1 },

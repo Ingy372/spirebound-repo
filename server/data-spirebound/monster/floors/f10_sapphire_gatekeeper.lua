@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Sapphire Gatekeeper")
 local monster = {}
 
 monster.description = "the Sapphire Gatekeeper"
-monster.experience = 94635
+monster.experience = 577998
 monster.outfit = {
 	lookType = 22, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

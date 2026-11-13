@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Frost Wolf")
 local monster = {}
 
 monster.description = "a frost wolf"
-monster.experience = 1357
+monster.experience = 4707
 monster.outfit = {
 	lookType = 131, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 60000, maxCount = 4 },
+	{ id = 3035, chance = 100000, maxCount = 2 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3392, chance = 1500, maxCount = 1 },

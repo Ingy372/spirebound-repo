@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Bellows Giant")
 local monster = {}
 
 monster.description = "the Bellows Giant"
-monster.experience = 37727
+monster.experience = 65370
 monster.outfit = {
 	lookType = 139, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Arena Warden")
 local monster = {}
 
 monster.description = "the Arena Warden"
-monster.experience = 27178
+monster.experience = 33698
 monster.outfit = {
 	lookType = 55, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Mire Colossus")
 local monster = {}
 
 monster.description = "the Mire Colossus"
-monster.experience = 49803
+monster.experience = 163378
 monster.outfit = {
 	lookType = 28, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

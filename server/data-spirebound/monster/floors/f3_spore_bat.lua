@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Spore Bat")
 local monster = {}
 
 monster.description = "a spore bat"
-monster.experience = 311
+monster.experience = 131
 monster.outfit = {
 	lookType = 22, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -33,8 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 60 },
-	{ id = 3035, chance = 35000, maxCount = 1 },
+	{ id = 3031, chance = 100000, maxCount = 100 },
+	{ id = 3035, chance = 20475, maxCount = 1 },
 	{ id = 236, chance = 8000, maxCount = 1 },
 	{ id = 237, chance = 8000, maxCount = 1 },
 	{ id = 3357, chance = 1500, maxCount = 1 },

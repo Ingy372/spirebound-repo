@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Vault Guardian")
 local monster = {}
 
 monster.description = "a vault guardian"
-monster.experience = 3786
+monster.experience = 22455
 monster.outfit = {
 	lookType = 280, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 65000, maxCount = 4 },
+	{ id = 3035, chance = 100000, maxCount = 6 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3366, chance = 4000, maxCount = 1 },

@@ -317,6 +317,21 @@ def floor_monsters():
         out[f["apex"]] = row(f["apex"], 4.5, 0.6, 1.8, "apex")
         out[f["field_boss"]] = row(f["field_boss"], 25 * n ** 0.3, 0.4, 2.2, "field")
         out[f["floor_boss"]] = row(f["floor_boss"], 70 * n ** 0.4, 0.35, 2.8, "floor")
+        # roadmap R10: experience and coins come from the floor's targets in tools/balance.py
+        import balance
+        camp = [out[c] for c in f["camp"]]
+        hp = sum(m["hp"] for m in camp) / len(camp)
+        xp = sum(m["xp"] for m in camp) / len(camp)
+        scale = balance.xp_scale(n, xp, hp, f["band"])
+        coins = balance.floor_gold_per_kill(n, hp, f["band"])
+        mult = {"camp": 1.0, "labyrinth": 1.5, "elite": balance.ELITE_GOLD, "apex": balance.APEX_GOLD}
+        roles = [(c, "camp") for c in f["camp"]] + [(f["elite"], "elite"), (f["labyrinth"], "labyrinth"), (f["apex"], "apex"),
+                                                   (f["field_boss"], "field"), (f["floor_boss"], "floor")]
+        for name, role in roles:
+            m = out[name]
+            m["xp"] = max(1, int(round(m["xp"] * scale)))
+            if role in mult:
+                m["loot"] = balance.coin_loot(coins * mult[role]) + [l for l in m["loot"] if l[0] not in (GOLD, PLAT)]
     return out
 
 

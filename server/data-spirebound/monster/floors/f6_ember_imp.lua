@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Ember Imp")
 local monster = {}
 
 monster.description = "an ember imp"
-monster.experience = 1146
+monster.experience = 1986
 monster.outfit = {
 	lookType = 291, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,7 @@ monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
 	{ id = 3031, chance = 100000, maxCount = 100 },
-	{ id = 3035, chance = 50000, maxCount = 3 },
+	{ id = 3035, chance = 100000, maxCount = 1 },
 	{ id = 239, chance = 8000, maxCount = 1 },
 	{ id = 238, chance = 8000, maxCount = 1 },
 	{ id = 3364, chance = 1500, maxCount = 1 },
