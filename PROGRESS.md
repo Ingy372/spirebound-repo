@@ -398,3 +398,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Hardcore death drop fixed (roadmap R6)
 - The extra Hardcore item drop passed its values in the wrong order, so blessings were ignored and a skulled Hardcore death raised an error. Each value is now passed in its right place: no blessings gives the full 10% extra chance per item, each blessing removes a fifth, red and black skulls get no extra roll (they already drop everything).
 - New in-game test runs the real death handler with real items and a real corpse: items really fall in with no blessings, none with five, no error on a red skull, nothing for Normal. Boot test 112 in-game tests, 0 errors.
+
+### 2026-11-13: Fair PvP credit (roadmap R7)
+- Kills now credit everyone who did real damage (at least 10% of the victim's health in the last minute), not only the last hit: each can get the unjust kill and the skull, each of their guilds counts toward Sanctuary, and a bounty is split among them by damage. The "partied together in the last 24 hours" bounty rule now really works: joining a party records partners.
+- The outnumbered shield counts only outside attackers who did real damage. Healing a skulled player costs your own protection for 5 minutes. Murderers who die wake in the new Outlaw Camp (a palisade far west with a track to the Watch Road), not in town. DESIGN.md 6.4 has the numbers.
+- Five new in-game tests use the same damage records the real fight events write. Boot test 117 in-game tests, 0 errors.

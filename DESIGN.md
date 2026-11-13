@@ -355,6 +355,8 @@ The current zone is shown in the corner of the client (icon + color).
 
 8. **Bully multiplier:** an unjust kill on a player 30+ levels below you counts **double** toward skulls (except in Contested/Deadzone).
 
+**Fair credit (roadmap R7, 2026-11-13, Claude's call on the numbers):** everyone who did at least 10% of the victim's health in the last minute shares a kill: each of them can earn the unjust kill, each of their guilds counts toward Sanctuary, and a bounty is split among them by damage (never to the target's party, guild, same-IP or anyone who partied with the target in the last 24 hours). The outnumbered shield counts only outside attackers who did at least 5% in the last 10 seconds. Healing a white, red or black skulled player removes your own newbie and level-range protection for 5 minutes. Murderers who die wake in the **Outlaw Camp** in the far west, not in a temple.
+
 ### 6.5 New-player welcome
 - Guild recruitment board, a "looking for guild" flag and LFG chat channel (Jay: finding a clan was the hardest part).
 - Mentor mode for parties lets high-level guildmates bring new players along (from the old pack).

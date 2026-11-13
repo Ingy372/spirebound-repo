@@ -43,7 +43,7 @@ function target.creatureOnTargetCombat(creature, victim)
 	local ok, reason = SpirePvP.canAttack(
 		{ level = a:getLevel(), skull = a:getSkull(), sanctuaryVsTheirGuild = sanctuaryActive(a, guildId(v)) },
 		{ level = v:getLevel(), skull = v:getSkull(), attackedMeRecently = (ra[v:getGuid()] or 0) > os.time() - 60,
-			sanctuaryVsMyGuild = sanctuaryActive(v, guildId(a)) },
+			sanctuaryVsMyGuild = sanctuaryActive(v, guildId(a)), aidedSkull = SpirePvP.aiding(v:getGuid(), os.time()) },
 		zone)
 	if not ok then
 		if creature:isPlayer() then
@@ -60,17 +60,21 @@ local hits = CreatureEvent("SpirePvPHits")
 function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
 	local v = creature:getPlayer()
 	local a = attacker and (attacker:getPlayer() or (attacker:getMaster() and attacker:getMaster():getPlayer()))
+	if v and a and a ~= v and primaryType == COMBAT_HEALING and SpirePvP.isSkulled(v:getSkull()) and not SpirePvP.isSkulled(a:getSkull()) then
+		SpirePvP.noteAid(a:getGuid(), os.time()) -- healing a skulled player costs your own protection for 5 minutes
+		a:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are helping a marked player: for 5 minutes, anyone may attack you.")
+	end
 	if v and a and a ~= v and primaryType ~= COMBAT_HEALING and SpirePvP.zoneAt(v:getPosition()) ~= "arena" and SpirePvP.zoneAt(v:getPosition()) ~= "siege" then
 		local now = os.time()
 		local list = recentAttacks[v:getGuid()] or {}
 		list[a:getGuid()] = now
 		recentAttacks[v:getGuid()] = list
-		local n = 0
-		for _, t in pairs(list) do
-			if now - t <= SpirePvP.OUTNUMBER_WINDOW then
-				n = n + 1
-			end
-		end
+		SpirePvP.noteDamage(v:getGuid(), a:getGuid(), math.max(0, primaryDamage) + math.max(0, secondaryDamage), now)
+		local vinfo = Difficulty.playerInfo(v)
+		local n = SpirePvP.outnumberedCount(v:getGuid(), v:getMaxHealth(), now, function(g)
+			local other = Player(g)
+			return other ~= nil and Difficulty.countsAsOutsidePlayer(vinfo, Difficulty.playerInfo(other))
+		end)
 		local pct = SpirePvP.outnumberedReduction(n)
 		if pct > 0 then
 			primaryDamage = math.floor(primaryDamage * (1 - pct / 100))
@@ -91,21 +95,56 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 	end
 	local now = os.time()
 	local zone = SpirePvP.zoneAt(player:getPosition())
-	-- Bounty on the victim?
+	if SpirePvP.isMurderer(player) then
+		SpirePvP.scope(player):set("outlawRespawn", true) -- murderers wake in the Outlaw Camp, not in town
+	end
+	local parts = SpirePvP.participants(player:getGuid(), k:getGuid(), player:getMaxHealth(), now)
+	SpirePvP.damage[player:getGuid()] = nil
+	local target = Difficulty.playerInfo(player)
+	target.partiedRecently = SpirePvP.partnersOf(player:getGuid(), now)
+	-- Bounty on the victim: shared by everyone in the kill who may claim it, by damage
 	local bounty = SpireBounty.get(player:getGuid())
 	if (bounty.total or 0) > 0 then
-		local ok, why = SpireBounty.validClaimer(Difficulty.playerInfo(player), Difficulty.playerInfo(k))
-		if ok then
-			k:setBankBalance(k:getBankBalance() + bounty.total)
+		local shares = SpirePvP.bountyShares(bounty.total, parts, function(g)
+			local p = Player(g)
+			return p ~= nil and (SpireBounty.validClaimer(target, Difficulty.playerInfo(p)))
+		end)
+		local paid = false
+		for g, amount in pairs(shares) do
+			local p = Player(g)
+			if p and amount > 0 then
+				p:setBankBalance(p:getBankBalance() + amount)
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your share of the bounty on %s: %d gold (to your bank).", player:getName(), amount))
+				paid = true
+			end
+		end
+		if paid then
 			SpireBounty.clear(player:getGuid())
-			Game.broadcastMessage(string.format("%s collected the %d gold bounty on %s!", k:getName(), bounty.total, player:getName()), MESSAGE_EVENT_ADVANCE)
+			Game.broadcastMessage(string.format("The %d gold bounty on %s has been collected!", bounty.total, player:getName()), MESSAGE_EVENT_ADVANCE)
 		else
-			k:sendTextMessage(MESSAGE_EVENT_ADVANCE, "No bounty for you on " .. player:getName() .. " (" .. why .. ").")
+			local _, why = SpireBounty.validClaimer(target, Difficulty.playerInfo(k))
+			k:sendTextMessage(MESSAGE_EVENT_ADVANCE, "No bounty for you on " .. player:getName() .. " (" .. (why or "not allowed") .. ").")
 		end
 	end
-	-- Sanctuary against a guild that keeps killing you (outside wars)
-	local kg = guildId(k)
-	if kg ~= 0 and unjustified then
+	-- Unjust kills: everyone who took part, not only the killing blow
+	local victimClean = not SpirePvP.isSkulled(player:getSkull()) and not SpirePvP.aiding(player:getGuid(), now)
+	local guildsHit = {}
+	for _, part in ipairs(parts) do
+		local p = Player(part.guid)
+		if p then
+			local victimAttackedThem = ((recentAttacks[p:getGuid()] or {})[player:getGuid()] or 0) > now - 60
+			local atWar = guildId(p) ~= 0 and guildId(player) ~= 0 and SpireWar.active(guildId(p), guildId(player))
+			local unjust = (p == k and unjustified) or (p ~= k and victimClean and not victimAttackedThem and not atWar)
+			if unjust then
+				SpirePvP.creditUnjust(p, player, zone, now)
+				if guildId(p) ~= 0 then
+					guildsHit[guildId(p)] = p:getGuild():getName()
+				end
+			end
+		end
+	end
+	-- Sanctuary against a guild that keeps killing you (outside wars): every guild that took part counts
+	for kg, gname in pairs(guildsHit) do
 		local s = SpirePvP.scope(player)
 		local gk = s:get("guildKills") or {}
 		local list = gk[tostring(kg)] or {}
@@ -116,23 +155,24 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 			local sanct = s:get("sanctuary") or {}
 			sanct[tostring(kg)] = now + SpirePvP.SANCTUARY_TIME
 			s:set("sanctuary", sanct)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Sanctuary: " .. k:getGuild():getName() .. " can't attack you for 30 minutes.")
-			logger.info("[Spirebound] Sanctuary for {} against guild {}", player:getName(), k:getGuild():getName())
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Sanctuary: " .. gname .. " can't attack you for 30 minutes.")
+			logger.info("[Spirebound] Sanctuary for {} against guild {}", player:getName(), gname)
 		end
 	end
-	if not unjustified then
-		return true
-	end
+	return true
+end
+
+-- One unjust kill for player k: frags, guard mark, skull
+function SpirePvP.creditUnjust(k, player, zone, now)
 	local w = SpirePvP.unjustWeight(k:getLevel(), player:getLevel(), zone, Difficulty.get(player) == Difficulty.DEATHGAME)
 	if w <= 0 then
-		return true
+		return
 	end
 	local ks = SpirePvP.scope(k)
 	local frags = ks:get("frags") or {}
 	for _ = 1, w do
 		table.insert(frags, { t = now, w = 1 })
 	end
-	-- keep only the last 30 days
 	local kept = {}
 	for _, f in ipairs(frags) do
 		if now - f.t <= 30 * 86400 then
@@ -157,7 +197,6 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 	if skull and SpireBounty then
 		SpireBounty.onMurderer(k)
 	end
-	return true
 end
 death:register()
 
@@ -203,6 +242,15 @@ function party.partyOnJoin(p, player)
 		player:sendCancelMessage("Nobody will party with a black-marked murderer.")
 		return false
 	end
+	-- remember party partners for 24 hours: they can't collect bounties on each other (R7)
+	local guids = { player:getGuid() }
+	if p:getLeader() then
+		table.insert(guids, p:getLeader():getGuid())
+	end
+	for _, m in ipairs(p:getMembers()) do
+		table.insert(guids, m:getGuid())
+	end
+	SpirePvP.notePartners(guids, os.time())
 	return true
 end
 party:register()
@@ -212,6 +260,14 @@ function login.onLogin(player)
 	player:registerEvent("SpirePvPHits")
 	player:registerEvent("SpirePvPDeath")
 	graceUntil[player:getId()] = os.time() + 30
+	local s = SpirePvP.scope(player)
+	if s:get("outlawRespawn") then -- a murderer who died wakes in the Outlaw Camp, outside every town
+		s:remove("outlawRespawn")
+		if WorldPoints.outlaw_camp then
+			player:teleportTo(WorldPoints.outlaw_camp)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Murderers are not welcome in the temple. You wake in the Outlaw Camp.")
+		end
+	end
 	return true
 end
 login:register()

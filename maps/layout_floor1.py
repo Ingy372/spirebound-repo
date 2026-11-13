@@ -963,6 +963,21 @@ def build(m):
     DG.scatter(m, sx0 + 1, sy0 + 1, 58, 48, sz, S.BUSHES, 30, solid=True, avoid=siege_out)
     DG.scatter(m, sx0 + 1, sy0 + 1, 58, 48, sz, S.FLOWERS, 40, avoid=siege_out)
 
+    # ------------------------------------------------ the Outlaw Camp (roadmap R7): where murderers wake after death
+    ox, oy = X0 + 10, Y0 + 140
+    m.fill(ox, oy, 18, 13, Z, "dirt")
+    for yy in range(oy, oy + 13):
+        for xx in range(ox, ox + 18):
+            m.clear_items(xx, yy, Z)
+    m.walls(ox, oy, 18, 13, Z, gaps={(ox + 17, oy + 6), (ox + 17, oy + 7)}, style="timber")   # a timber palisade, gate east
+    S.prop(m, ox + 8, oy + 6, Z, 1996)                                 # the camp fire
+    for px_, py_, pid in ((2, 2, 5543), (4, 2, 116), (5, 2, 2519), (2, 10, 2523), (14, 2, 116), (14, 10, 2519), (6, 10, 2370)):
+        S.prop(m, ox + px_, oy + py_, Z, pid)
+    m.sign(ox + 18, oy + 5, Z, "The Outlaw Camp. Murderers wake here instead of in a temple. Nobody here will heal you.")
+    m.points["outlaw_camp"] = (ox + 10, oy + 7, Z)
+    m.road((ox + 18, oy + 7), (X0 + 76, oy + 7), Z, width=2, wind=False)   # a track east to the Watch Road
+    m.zone("open", ox, oy, 18, 13, 7)
+
     # ------------------------------------------------ landmarks, lakes and forests (the world between the camps)
     S.pond(m, X0 + 330, Y0 + 92, 20, 12, Z, ring="mud")           # a lake in the north-east
     S.pond(m, X0 + 96, Y0 + 130, 11, 7, Z, ring="mud")            # a pond across the river
