@@ -73,3 +73,22 @@ SpireTest.add("wilds: the Old Watchtower has its fixed groups (34 above ground, 
 	SpireTest.eq(top >= 32, true, "courtyard and inner room: " .. top .. " (want 34; the Frenzy event test may add 6)")
 	SpireTest.eq(cave >= 30 and cave <= 32, true, "cave: " .. cave .. " (want 32)")
 end)
+
+SpireTest.add("wilds: six party caves, each with working stairs and 32 monsters", function()
+	local n = 0
+	for k, _ in pairs(WorldPoints) do
+		local id = k:match("^den_(.+)_nw$")
+		if id then
+			n = n + 1
+			local s = WorldPoints["stairs_den_" .. id]
+			SpireTest.eq(Tile(s) ~= nil and Tile(s):hasFlag(TILESTATE_FLOORCHANGE), true, id .. ": cave stairs lead up")
+			local hole = Tile(Position(s.x, s.y, s.z - 1))
+			SpireTest.eq(hole ~= nil and hole:hasFlag(TILESTATE_FLOORCHANGE_DOWN), true, id .. ": the hole on the surface leads down")
+			SpireTest.eq(walkable(Position(s.x, s.y - 1, s.z - 1)), true, id .. ": surface landing is clear")
+			SpireTest.eq(walkable(Position(s.x, s.y + 1, s.z)), true, id .. ": cave landing is clear")
+			local c = monstersIn(WorldPoints[k], WorldPoints["den_" .. id .. "_se"])
+			SpireTest.eq(c >= 30 and c <= 32, true, id .. ": " .. c .. " monsters in the cave (want 32)")
+		end
+	end
+	SpireTest.eq(n, 6, "six caves")
+end)

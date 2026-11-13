@@ -222,8 +222,8 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 - [x] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
 - [x] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
 - [x] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
-- [ ] **W8 The six caves.**
+- [x] **W8 The six caves.**
 - [ ] **W9 Experience stages and the ladder** (Q30: Jay said yes, Floor 1 should last 11-15 hours).
 - [ ] **W10 The crowd system and the `!hunt` line** (Q31: yes; cavebot refused in caves, Q32: yes).
 - [ ] **W11 Regenerate documents and pictures; playtest list for Jay.**
-- [ ] **W12 Walk every rebuilt ground in the real client** (cut from W3-W8 on 2026-11-13: the client could not be driven this session). Done when: each ground's gate, hub signs, four loops and cave walked by Jay or by Claude in the client, notes fixed.
+- [ ] **W12 Walk every rebuilt ground in the real client** (cut from W3-W8 on 2026-11-13: the client could not be driven this session). Done when: each ground's gate, hub signs, four loops and cave walked by Jay or by Claude in the client, and one party-sized fight in a cave, notes fixed. (Done so far: Boar Meadow, Toad Pond's hub, the Molework down and up.)

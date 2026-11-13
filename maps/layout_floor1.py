@@ -535,7 +535,9 @@ def build(m):
 
     # ------------------------------------------------ the rebuilt hunting grounds (maps/wilds.py): walls, hub, four loops
     for c in CAMPS:
-        wilds.build(m, c)
+        L = wilds.build(m, c)
+        if c["den"]:
+            wilds.cave(m, L)                                  # the party cave below (z 8)
 
     # ------------------------------------------------ signposts at the junctions (FLOOR1_WILDS_PLAN.md 4.2)
     def lv(cid):

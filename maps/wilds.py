@@ -527,3 +527,128 @@ if __name__ == "__main__":
         print(f"{c['id']:18s} groups {len(m.monsters):3d} monsters {n:3d}  " + ("OK" if not probs else "; ".join(probs[:4])))
         fails += bool(probs)
     sys.exit(1 if fails else 0)
+
+
+# ------------------------------------------------------------------------------------------------ caves (plan Part 5.4)
+BUILT_CAVES = {"bandit_road", "old_quarry"}          # the Smugglers' Cellar and the Lower Works: built, stone walls
+
+
+def _ellipse(cx, cy, rx, ry):
+    return {(x, y) for x in range(cx - rx, cx + rx + 1) for y in range(cy - ry, cy + ry + 1)
+            if ((x - cx) / (rx + 0.5)) ** 2 + ((y - cy) / (ry + 0.5)) ** 2 <= 1.0}
+
+
+def _tunnel(a, b, rng, width=3, wiggle=True):
+    """A tunnel from a to b, a little crooked, `width` tiles wide."""
+    out = set()
+    x, y = a
+    while (x, y) != b:
+        h = width // 2
+        out |= {(x + i, y + j) for i in range(-h, width - h) for j in range(-h, width - h)}
+        dx, dy = b[0] - x, b[1] - y
+        if wiggle and rng.random() < 0.25:
+            if abs(dx) > abs(dy):
+                y += rng.choice((-1, 0, 1)) if abs(dy) < 3 else (1 if dy > 0 else -1)
+            else:
+                x += rng.choice((-1, 0, 1)) if abs(dx) < 3 else (1 if dx > 0 else -1)
+            continue
+        if abs(dx) >= abs(dy):
+            x += 1 if dx > 0 else -1
+        else:
+            y += 1 if dy > 0 else -1
+    return out
+
+
+def cave(m, L, z=8, w=36, h=26):
+    """A cave under a ground: an entry chamber under the stairs (no monsters), a ring of eight chambers round it, one
+    group of four in each. Natural caves use the dirt-wall pieces; the cellar and the works are built with stone walls."""
+    import dungeon as DG
+    from floor1_plan import CAVE_RESPAWN, den_level
+    c = L["c"]
+    rng = random.Random(sum(map(ord, c["id"])) * 15485863)
+    sx, sy = L["centre"]
+    x0, y0 = sx - w // 2, sy - h // 2
+    xs = [p[0] for p in L["rect"]]; ys = [p[1] for p in L["rect"]]
+    x0 = max(min(xs) + 1, min(x0, max(xs) - w)); y0 = max(min(ys) + 1, min(y0, max(ys) - h))
+    # nothing else may be dug within 6 tiles at this depth (the Underkeep's wings live under the city)
+    for (x, y, zz) in m.ground:
+        if zz == z and x0 - 6 <= x < x0 + w + 6 and y0 - 6 <= y < y0 + h + 6:
+            raise ValueError(f"{c['den']}: the cave under {c['id']} would touch something already dug at {(x, y, z)}")
+    built = c["id"] in BUILT_CAVES
+    cx, cy = sx, sy
+    entry = _ellipse(cx, cy + 1, 4, 3) if not built else {(x, y) for x in range(cx - 3, cx + 4) for y in range(cy - 2, cy + 4)}
+    rooms, centres = set(), []
+    for k in range(8):
+        import math
+        a = 2 * math.pi * (k + 0.5) / 8
+        px = int(round(x0 + w / 2 + (w / 2 - 6) * math.cos(a)))
+        py = int(round(y0 + h / 2 + (h / 2 - 5) * math.sin(a)))
+        centres.append((px, py))
+        if built:
+            rooms |= {(x, y) for x in range(px - 3, px + 4) for y in range(py - 2, py + 3)}
+        else:
+            rooms |= _ellipse(px, py, rng.randint(3, 4), rng.randint(2, 3))
+    cells = entry | rooms
+    for k in range(8):
+        cells |= _tunnel(centres[k], centres[(k + 1) % 8], rng, width=3, wiggle=not built)
+    near = min(centres, key=lambda p: (p[1] - cy) ** 2 * 0.5 + (p[0] - cx) ** 2)
+    cells |= _tunnel((cx, cy + 1), near, rng, width=3, wiggle=not built)
+    cells = {(x, y) for x, y in cells if x0 < x < x0 + w - 1 and y0 < y < y0 + h - 1}
+    if built:
+        for x, y in cells:
+            m.ground[(x, y, z)] = m.pick("stonefloor")
+        wall = {(x + a, y + b) for x, y in cells for a, b in D8} - cells
+        for x, y in wall:
+            m.ground[(x, y, z)] = m.pick("stonefloor")
+        m.autowall(sorted(wall), z, "stone")
+    else:
+        DG.cave(m, cells, z)
+    # the way down: stairs at z 8 make the hole on the surface, where the cross trails meet
+    m.stairs(sx, sy, z, floor="cavefloor", name=f"den_{c['id']}")
+    m.ground[(sx, sy + 1, z)] = m.pick("stonefloor" if built else "cavefloor")
+    m.ground[(sx, sy, Z)] = 385                               # outdoors the way down is a stone-rimmed hole (same "down" rule)
+    m.points[f"den_{c['id']}"] = (sx, sy, Z)
+    m.points[f"den_{c['id']}_nw"] = (x0, y0, z)
+    m.points[f"den_{c['id']}_se"] = (x0 + w - 1, y0 + h - 1, z)
+    lo = den_level(c)
+    sign_at = (sx + 1, sy + 1)
+    m.clear_items(*sign_at, Z)
+    m.sign(*sign_at, Z, f"{c['den']}. For a party. Levels {lo} and up. Bots are refused below.")
+    if c["id"] == "burrow_hills":                             # the Molework's mouth looks like a giant burrow
+        for a in range(-2, 3):
+            for b in range(-2, 3):
+                q = (sx + a, sy + b)
+                if q in L["open"] and q != (sx, sy):
+                    m.ground[(q[0], q[1], Z)] = m.pick("dirt")
+        for q in ((sx - 1, sy + 1), (sx + 1, sy - 1)):
+            if q in L["open"]:
+                m.put(q[0], q[1], Z, 3116)
+    # eight groups of four, one per chamber
+    for k, spot in enumerate(centres):
+        group(m, (spot[0], spot[1], z), c["den_groups"][k], CAVE_RESPAWN)
+    out = DG.keep_clear(m, z) | {(sx, sy), (sx, sy + 1), (sx, sy + 2)} | {(x, y) for x, y in entry}
+    if built:
+        DG.hang_maze(m, x0, y0, w, h, z, share=0.12, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+        props = [2519, 2523, 116, 117] if c["id"] == "bandit_road" else DG.RUBBLE + DG.PILLARS
+        DG.scatter(m, x0, y0, w, h, z, props, 14, solid=True, avoid=out)
+        DG.scatter(m, x0, y0, w, h, z, DG.COBWEBS + DG.BONES + DG.DEBRIS, 30, avoid=out)
+    else:
+        DG.scatter(m, x0, y0, w, h, z, DG.STALAGMITES, 18, solid=True, avoid=out)
+        if c["id"] == "shard_fields":
+            DG.scatter(m, x0, y0, w, h, z, DG.CRYSTALS, 14, solid=True, avoid=out)
+        DG.scatter(m, x0, y0, w, h, z, DG.BONES + DG.DEBRIS, 28, avoid=out)
+    if not hasattr(m, "caves"):
+        m.caves = []
+    m.caves.append(dict(id=c["id"], landing=(sx, sy + 1, z), groups=[(p[0], p[1], z) for p in centres], box=(x0, y0, w, h)))
+
+
+def check_caves(m):
+    block = blockers()
+    problems = []
+    for cv in getattr(m, "caves", []):
+        x0, y0, w, h = cv["box"]
+        reach = flood(m, [cv["landing"]], block, limit=(x0, y0, x0 + w, y0 + h))
+        for g in cv["groups"]:
+            if g not in reach:
+                problems.append(f"{cv['id']} cave: group at {g} cannot be reached from the stairs")
+    return problems
