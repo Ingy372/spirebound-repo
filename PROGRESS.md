@@ -441,3 +441,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Bot rules enforced on the server (roadmap R15)
 - Q16 (assumed): the server no longer only trusts the client's "cavebot on" report. Killing 5 or more monsters in 10 minutes without moving more than a tile now counts as botting (auto-target and auto-heal on one spot), with the usual 45% experience and half loot, until you walk again. A party member within 7 tiles of a botting member gets the same 45% experience. While botting, only every second kill counts for a hunting task. Hunts of 6 hours without a 15-minute break, and 10 minutes on one spot, are written to the server log for staff (no automatic bans).
 - The client installer now removes vBot's attack helper (automatic spell and skill rotation), its combo helper, push helper and script editor; I made the same change to your installed client. New in-game test. Boot test 138 in-game tests, 0 errors.
+
+### 2026-11-13: House fixes (roadmap R16)
+- Open House now saves the owner's real guest list and puts it back when the two hours are up, even across a restart (a minute-by-minute check reads the saved record), and each house can open once a day.
+- The Summoning Circle no longer drops the boss into the house (fights can't happen in a safe house): it opens onto a new small private arena, one summoned boss at a time, with a light to walk home to Hearthgate.
+- The House Portal can no longer be set inside a labyrinth or on Contested ground. Three new in-game tests. Boot test 141 in-game tests, 0 errors.

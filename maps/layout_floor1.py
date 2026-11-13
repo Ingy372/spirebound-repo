@@ -968,6 +968,23 @@ def build(m):
         S.prop(m, qx, qy, az, DG.COAL_BASIN)
     DG.hang(m, ax0, ay0, 40, 30, az, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
 
+    # ------------------------------------------------ the Summoning Circle arena (roadmap R16): z 11, reached only from a
+    # house's Summoning Circle. A small walled ring; a light in the south wall takes you back to Hearthgate.
+    cx0, cy0, cz0 = X0 + 140, Y0 + 10, 11
+    m.fill(cx0, cy0, 17, 17, cz0, "blackmarble")
+    m.walls(cx0, cy0, 17, 17, cz0, style="pale")
+    DG.flagstones(m, cx0 + 3, cy0 + 3, 11, 11, cz0, 351)
+    m.points["summon_circle"] = (cx0 + 8, cy0 + 6, cz0)
+    m.points["summon_circle_entry"] = (cx0 + 8, cy0 + 12, cz0)
+    m.points["summon_circle_nw"] = (cx0 + 1, cy0 + 1, cz0)
+    m.points["summon_circle_se"] = (cx0 + 15, cy0 + 15, cz0)
+    m.teleport((cx0 + 8, cy0 + 15, cz0), (X0 + 232, Y0 + 287, Z), "summon_circle_exit")
+    for qx, qy in ((cx0 + 2, cy0 + 2), (cx0 + 14, cy0 + 2), (cx0 + 2, cy0 + 14), (cx0 + 14, cy0 + 14)):
+        S.prop(m, qx, qy, cz0, DG.COAL_BASIN)
+    m.sign(cx0 + 7, cy0 + 15, cz0, "The Summoning Circle. When the fight is over, step on the light to go home.")
+    DG.hang(m, cx0, cy0, 17, 17, cz0, every=4, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+    m.zone("bossroom", cx0, cy0, 17, 17, cz0)
+
     # ------------------------------------------------ Spire Siege keep (DESIGN.md 15, roadmap 5.7d): z 11, event
     # teleport only. Courtyard with four guild gates and the throne room in the middle (PvP-zone flag).
     sx0, sy0, sz = X0 + 70, Y0 + 10, 11

@@ -50,9 +50,12 @@ end
 
 -- House portal ----------------------------------------------------------
 -- Pure: is this a legal portal target? zone = PvP zone tier; nearBoss = within PORTAL_BOSS_DISTANCE of a boss room
-function SpireHouses.portalTargetAllowed(zone, nearBoss, isSecretTile, isHouseTile)
-	if zone == "bossroom" or zone == "deadzone" then
-		return false, "The portal can't reach boss rooms or Deadzones."
+function SpireHouses.portalTargetAllowed(zone, nearBoss, isSecretTile, isHouseTile, inLabyrinth)
+	if zone == "bossroom" or zone == "deadzone" or zone == "contested" then
+		return false, "The portal can't reach boss rooms, Contested ground or Deadzones."
+	end
+	if inLabyrinth then -- R16: no skipping a labyrinth
+		return false, "The portal can't reach into a labyrinth."
 	end
 	if nearBoss then
 		return false, "Too close to a floor boss."
@@ -68,6 +71,28 @@ end
 
 function SpireHouses.portalChangesLeft(used)
 	return math.max(0, SpireHouses.PORTAL_CHANGES - (used or 0))
+end
+
+-- Open House (R16): the owner's real guest list is kept and put back, even across a restart; once a day per house
+SpireHouses.OPEN_HOUSE_COOLDOWN = 24 * 3600
+
+-- Pure: may this house open again? lastOpened = time it last opened (or nil)
+function SpireHouses.openHouseAllowed(lastOpened, now)
+	if lastOpened and now - lastOpened < SpireHouses.OPEN_HOUSE_COOLDOWN then
+		return false, math.ceil((SpireHouses.OPEN_HOUSE_COOLDOWN - (now - lastOpened)) / 3600)
+	end
+	return true
+end
+
+-- Pure: is a spot inside a labyrinth? labs = list of positions of labyrinth points
+SpireHouses.LABYRINTH_RADIUS = 30
+function SpireHouses.inLabyrinth(pos, labs)
+	for _, p in ipairs(labs) do
+		if p.z == pos.z and math.max(math.abs(p.x - pos.x), math.abs(p.y - pos.y)) <= SpireHouses.LABYRINTH_RADIUS then
+			return true
+		end
+	end
+	return false
 end
 
 -- Fortune Hall dice ------------------------------------------------------

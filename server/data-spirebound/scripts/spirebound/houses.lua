@@ -37,7 +37,14 @@ function portal.onSay(player, words, param)
 		local pos = player:getPosition()
 		local tile = Tile(pos)
 		local isSecret = SpireSecrets.byPos[pos.x .. ":" .. pos.y .. ":" .. pos.z] ~= nil
-		local ok, why = SpireHouses.portalTargetAllowed(SpirePvP.zoneAt(pos), nearBossRoom(pos), isSecret, tile and tile:getHouse() ~= nil)
+		local labs = {}
+		for name, p in pairs(WorldPoints) do
+			if name:find("lab%d_") then
+				table.insert(labs, p)
+			end
+		end
+		local ok, why = SpireHouses.portalTargetAllowed(SpirePvP.zoneAt(pos), nearBossRoom(pos), isSecret, tile and tile:getHouse() ~= nil,
+			SpireHouses.inLabyrinth(pos, labs))
 		if not ok then
 			player:sendCancelMessage(why)
 			return false
@@ -100,13 +107,26 @@ function summon.onSay(player, words, param)
 		player:sendCancelMessage("You have no " .. name .. " sigil. Sigils come from defeating bosses.")
 		return false
 	end
-	local m = Game.createMonster(name, player:getPosition(), true, true)
+	-- R16: a fight can't happen inside a safe house, so the circle opens onto a small private arena
+	local spot = WorldPoints.summon_circle
+	if not spot then
+		player:sendCancelMessage("The Summoning Circle is not ready.")
+		return false
+	end
+	if SpireHouses.circleBusy and Creature(SpireHouses.circleBusy) then
+		player:sendCancelMessage("Someone else's summoned boss is still in the circle arena. Try again soon.")
+		return false
+	end
+	local m = Game.createMonster(name, spot, true, true)
 	if not m then
-		player:sendCancelMessage("There isn't enough room here.")
+		player:sendCancelMessage("The circle arena is blocked. Try again soon.")
 		return false
 	end
 	-- a private copy: no first-clear credit (it never gets a fight record), normal loot
 	sigils:set(name, have - 1)
+	SpireHouses.circleBusy = m:getId()
+	player:teleportTo(WorldPoints.summon_circle_entry)
+	player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 	m:say("You summoned me? Foolish.", TALKTYPE_MONSTER_YELL)
 	logger.info("[Spirebound] {} summoned {} in house {}", player:getName(), name, house:getName())
 	return false
@@ -220,20 +240,49 @@ function openhouse.onSay(player, words, param)
 		player:sendCancelMessage("Stand in your own house.")
 		return false
 	end
+	local store = kv.scoped("spirebound-openhouse")
+	local key = tostring(house:getId())
+	local rec = store:get(key) or {}
+	local ok, hours = SpireHouses.openHouseAllowed(rec.opened, os.time())
+	if not ok then
+		player:sendCancelMessage("Your house was open recently. You can open it again in " .. hours .. " hours.")
+		return false
+	end
+	if not rec.closesAt or rec.closesAt < os.time() then
+		rec.guests = house:getAccessList(GUEST_LIST) or "" -- keep the owner's real guest list
+	end
+	rec.opened, rec.closesAt = os.time(), os.time() + SpireHouses.OPEN_HOUSE_TIME
+	store:set(key, rec)
 	house:setAccessList(GUEST_LIST, "*")
-	kv.scoped("spirebound-openhouse"):set(tostring(house:getId()), os.time() + SpireHouses.OPEN_HOUSE_TIME)
 	Game.broadcastMessage(string.format("%s's house \"%s\" is open to visitors for the next 2 hours!", player:getName(), house:getName()), MESSAGE_EVENT_ADVANCE)
-	local hid = house:getId()
-	addEvent(function()
-		local h = House(hid)
-		if h then
-			h:setAccessList(GUEST_LIST, "")
-		end
-	end, SpireHouses.OPEN_HOUSE_TIME * 1000)
 	return false
 end
 openhouse:groupType("normal")
 openhouse:register()
+
+-- every minute (and right after a restart) open houses whose time is up get their own guest list back
+function SpireHouses.closeOpenHouses(now)
+	local store = kv.scoped("spirebound-openhouse")
+	local closed = 0
+	for _, house in ipairs(Game.getHouses()) do
+		local key = tostring(house:getId())
+		local rec = store:get(key)
+		if type(rec) == "table" and rec.closesAt and rec.closesAt <= now and rec.guests ~= nil then
+			house:setAccessList(GUEST_LIST, rec.guests)
+			rec.guests = nil
+			store:set(key, rec)
+			closed = closed + 1
+		end
+	end
+	return closed
+end
+local closer = GlobalEvent("SpireOpenHouseClose")
+function closer.onThink(interval)
+	SpireHouses.closeOpenHouses(os.time())
+	return true
+end
+closer:interval(60000)
+closer:register()
 
 -- Boss sigils: every credited player of a boss kill earns one (bosses_floor1.lua calls this)
 function SpireHouses.awardSigil(name, bossName)

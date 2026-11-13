@@ -33,7 +33,7 @@ Open:
 - [ ] **R13b Floor 2 hand-tuned** (cut from R13, 2026-11-13): Floor 2's map is still the shared placeholder generator; give it its own layout (walled grounds with loops, as Floor 1) and an easy-to-hard camp ladder. Done when: rendered, walk test passes, walked in the client.
 - [x] **R14 Moderation basics** [§4]: `!report`, mute, GM action log, chat filter (en/pt/es), rules shown in game, written punishment ladder.
 - [x] **R15 Bots enforced on the server** [3.8] (after Q16): pattern logging that 2.12 promised; strip the vBot script editor/attack helper from the shipped client or accept them; task gold and follower XP rules.
-- [ ] **R16 House fixes** [3.7]: Open House keeps the real guest list and survives restarts, with a cooldown; Summoning Circle moved to a small private arena (it can't work inside a safe house); House Portal can't target labyrinths or Contested zones.
+- [x] **R16 House fixes** [3.7]: Open House keeps the real guest list and survives restarts, with a cooldown; Summoning Circle moved to a small private arena (it can't work inside a safe house); House Portal can't target labyrinths or Contested zones.
 - [ ] **R17 Secret fixes** [3.10]: trigger on stepping on the tile, gold reward once per account, "night" uses the game's day/night, real hints for Floors 6–10.
 - [ ] **R18 Tests that reach the real game** [7.5]: boot test runs on GitHub; end-to-end tests per headline rule (reach Floor 2 without a kill, die as each difficulty, wait out a skull, Fortune Hall cut).
 - [ ] **R19 Clickable routes for chat commands** [1.5]: every `!command` players need also has an NPC, sign or client button.
