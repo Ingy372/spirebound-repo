@@ -17,6 +17,7 @@ Usage: python tools/gen_economy.py
 from __future__ import annotations
 
 import csv
+ROLE = {"xp": "experience", "money": "money"}
 import re
 import sys
 from pathlib import Path
@@ -29,7 +30,16 @@ from floor1_plan import CAMPS  # noqa: E402
 from gen_monsters import MONSTERS, GOLD, PLAT  # noqa: E402
 from gen_npcs import NPCS  # noqa: E402
 
-STAGE = 25                                  # XP stage to level 50 (DESIGN.md 5.1)
+def stage(level):
+    """Experience stage (server/core-overrides/stages.lua; Q30, FLOOR1_WILDS_PLAN.md 3.1)."""
+    return 10 if level <= 8 else 4 if level <= 20 else 3
+
+
+# the ladder (FLOOR1_WILDS_PLAN.md 3.2): base experience per hour (before the stage) for a Vanguard at the middle level
+LADDER_TARGET = {"starter_west": 1800, "starter_east": 2500, "starter_south": 3500, "wasp_fields": 5000, "boar_meadow": 7500,
+                 "burrow_hills": 9000, "wolf_copse": 11000, "reed_marsh": 9000, "thornsnap_hollow": 13000, "shard_fields": 16000,
+                 "bandit_road": 14500, "old_quarry": 19000}
+WATCHTOWER_BASE = 26000                     # not modelled yet: the plan's target for the outer courtyard
 PRICE = {}                                  # item id -> cheapest NPC price (what a player pays)
 BUYBACK = {}                                # item id -> best NPC buy-back (what an NPC pays the player)
 for d in NPCS.values():
@@ -94,7 +104,8 @@ for c in CAMPS:
     lvl = (lo + hi) // 2
     mons = [(n, share) for n, _g, share in c["mix"]]
     hp = sum(MONSTERS[n]["hp"] * s for n, s in mons)
-    xp = sum(MONSTERS[n]["xp"] * s for n, s in mons) * STAGE
+    base_xp = sum(MONSTERS[n]["xp"] * s for n, s in mons)
+    xp = base_xp * stage(lvl)
     g = sum(drop_value(n)[0] * s for n, s in mons)
     npc = sum(drop_value(n)[1] * s for n, s in mons)
     mat = sum(drop_value(n)[2] * s for n, s in mons)
@@ -116,12 +127,36 @@ for c in CAMPS:
         else:
             cost = mp_pots * PRICE[MP_POT] + runes * PRICE[3147]
         gross = (g + npc) * kph
-        ROWS.append(dict(camp=c["title"], levels=f"{lo}-{hi}", role=c["role"], vocation=voc, kills_h=round(kph),
+        ROWS.append(dict(id=c["id"], base_xp_h=round(base_xp * kph), camp=c["title"], levels=f"{lo}-{hi}", role=c["role"], vocation=voc, kills_h=round(kph),
                          xp_h=round(xp * kph), gold_h=round(g * kph), loot_npc_h=round(npc * kph),
                          materials_market_h=round(mat * kph), supplies_h=round(cost), net_npc_h=round(gross - cost),
                          net_with_trading_h=round(gross + mat * kph - cost)))
 
 problems = []
+# the ladder: each target met within 10%, and experience grounds rise at every step
+ladder = []
+for c in CAMPS:
+    r = next(r for r in ROWS if r["id"] == c["id"])
+    t = LADDER_TARGET[c["id"]]
+    ladder.append((c, r["base_xp_h"], t))
+    if abs(r["base_xp_h"] - t) > 0.1 * t:
+        problems.append(f"{c['title']}: base experience {r['base_xp_h']}/h is not within 10% of the target {t}")
+xp_steps = [(c, b) for c, b, _t in ladder if c["role"] == "xp"]
+for (a, ba), (b, bb) in zip(xp_steps, xp_steps[1:]):
+    if bb <= ba:
+        problems.append(f"the ladder dips: {b['title']} ({bb}/h) is not better than {a['title']} ({ba}/h)")
+
+
+def exp_for(level):
+    return int(50 / 3 * (level ** 3 - 6 * level ** 2 + 17 * level - 12))
+
+
+# the timeline: at each level hunt the best ground whose level range covers it (the Watchtower from 28)
+timeline, hours = {}, 0.0
+for lvl in range(1, 41):
+    best = max([b for c, b, _t in ladder if c["levels"][0] <= lvl <= c["levels"][1]] + ([WATCHTOWER_BASE] if lvl >= 28 else []))
+    hours += (exp_for(lvl + 1) - exp_for(lvl)) / (best * stage(lvl))
+    timeline[lvl + 1] = hours
 for r in ROWS:
     if r["vocation"] == "Ranger (arrows)" and r["levels"].split("-")[0] in ("1", "3", "5"):
         continue                                   # nobody is expected to fire paid arrows at rats: spears are the early ammo
@@ -167,7 +202,17 @@ L += ["", "## The model (Claude's call, Jay can veto)",
       "- Damage taken: half the monster's best melee hit every 2 seconds, 60% of hits land, armour soaks 20%.",
       "- Vanguards and Rangers: regeneration and healing spells cover about 65% of it; health potions (about 100 each) the rest.",
       "- Arcanists and Mystics: heal with spells and refill half of that mana with potions; wand shots run on regeneration; from level 15 they conjure an attack rune for about every third kill (a blank rune each).",
-      "", "## Checks", ("All checks pass." if not problems else "**Problems:**\n" + "\n".join("- " + p for p in problems))]
+      "", "## The levelling ladder (FLOOR1_WILDS_PLAN.md Part 3)",
+      "Base experience per hour is before the stage (levels 1-8: 10x, 9-20: 4x, 21-50: 3x), for a Vanguard at the middle level.",
+      "", "| Ground | Levels | Role | Base XP/h | Target |", "|---|---|---|---|---|"]
+for c, b, t in ladder:
+    L.append(f"| {c['title']} | {c['levels'][0]}-{c['levels'][1]} | {ROLE[c['role']]} | {b:,} | {t:,} |")
+L.append(f"| The Old Watchtower | 28-40 | both | not modelled | {WATCHTOWER_BASE:,} |")
+L += ["", "Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):", "",
+      "| Level | Hours |", "|---|---|"]
+for lvl in (6, 9, 11, 14, 18, 21, 25, 30, 35, 40):
+    L.append(f"| {lvl} | {timeline[lvl]:.1f} |")
+L += ["", "## Checks", ("All checks pass." if not problems else "**Problems:**\n" + "\n".join("- " + p for p in problems))]
 (ROOT / "ECONOMY.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 print(f"wrote ECONOMY.md and data/economy_floor1.csv ({len(ROWS)} rows, {len(RECIPES)} recipes)")
 if problems:

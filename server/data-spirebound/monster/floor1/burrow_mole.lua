@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Burrow Mole")
 local monster = {}
 
 monster.description = "a burrow mole"
-monster.experience = 45
+monster.experience = 39
 monster.outfit = {
 	lookType = 26, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

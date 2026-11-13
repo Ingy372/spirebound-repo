@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Field Shardling")
 local monster = {}
 
 monster.description = "a field shardling"
-monster.experience = 55
+monster.experience = 58
 monster.outfit = {
 	lookType = 122, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

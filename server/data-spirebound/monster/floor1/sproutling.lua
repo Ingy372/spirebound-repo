@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Sproutling")
 local monster = {}
 
 monster.description = "a sproutling"
-monster.experience = 12
+monster.experience = 13
 monster.outfit = {
 	lookType = 19, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

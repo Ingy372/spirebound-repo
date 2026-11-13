@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Thornsnap")
 local monster = {}
 
 monster.description = "a thornsnap"
-monster.experience = 60
+monster.experience = 56
 monster.outfit = {
 	lookType = 28, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

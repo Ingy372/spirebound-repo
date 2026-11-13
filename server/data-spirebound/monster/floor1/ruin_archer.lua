@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Ruin Archer")
 local monster = {}
 
 monster.description = "a ruin archer"
-monster.experience = 120
+monster.experience = 83
 monster.outfit = {
 	lookType = 129, lookHead = 79, lookBody = 79, lookLegs = 79, lookFeet = 79, lookAddons = 0, lookMount = 0,
 }
@@ -33,7 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 40 },
+	{ id = 3031, chance = 100000, maxCount = 75 },
+	{ id = 3035, chance = 6000, maxCount = 1 },
 	{ id = 3447, chance = 30000, maxCount = 15 },
 	{ id = 3350, chance = 3000, maxCount = 1 },
 	{ id = 11492, chance = 8000, maxCount = 1 },

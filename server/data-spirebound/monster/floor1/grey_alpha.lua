@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Grey Alpha")
 local monster = {}
 
 monster.description = "a grey alpha"
-monster.experience = 150
+monster.experience = 107
 monster.outfit = {
 	lookType = 52, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

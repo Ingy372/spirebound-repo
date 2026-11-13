@@ -279,11 +279,13 @@ Bonus percentages are **(Claude's call, Jay can veto)**.
 - **Player killers can never delete a Death Game character.** See 6.6.
 
 ### 5.5 Experience, stages and money
-- Medium rates with stages (faster early, slower later), **no level cap**. Starting stages **(Claude's call, tuned after playtests)**:
+- Medium rates with stages (faster early, slower later), **no level cap**. Starting stages **(Claude's call, tuned after playtests)**. Levels 1-50 were changed by Jay's answer to Q30 (2026-11-12): Floor 1 should last about 11-15 hours (FLOOR1_WILDS_PLAN.md Part 3). Levels 51+ get the same check when Floor 2 is planned (R10):
 
 | Level | XP rate |
 |---|---|
-| 1–50 | 25× |
+| 1–8 | 10× |
+| 9–20 | 4× |
+| 21–50 | 3× |
 | 51–100 | 15× |
 | 101–150 | 10× |
 | 151–200 | 7× |

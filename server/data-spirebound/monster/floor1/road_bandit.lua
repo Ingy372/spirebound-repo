@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Road Bandit")
 local monster = {}
 
 monster.description = "a road bandit"
-monster.experience = 70
+monster.experience = 50
 monster.outfit = {
 	lookType = 129, lookHead = 58, lookBody = 59, lookLegs = 45, lookFeet = 114, lookAddons = 0, lookMount = 0,
 }
@@ -34,7 +34,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 90000, maxCount = 30 },
+	{ id = 3031, chance = 90000, maxCount = 60 },
+	{ id = 3035, chance = 6000, maxCount = 1 },
 	{ id = 3294, chance = 5000, maxCount = 1 },
 	{ id = 3361, chance = 4000, maxCount = 1 },
 	{ id = 3286, chance = 5000, maxCount = 1 },

@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Ruin Sentinel")
 local monster = {}
 
 monster.description = "a ruin sentinel"
-monster.experience = 140
+monster.experience = 96
 monster.outfit = {
 	lookType = 131, lookHead = 79, lookBody = 79, lookLegs = 79, lookFeet = 79, lookAddons = 0, lookMount = 0,
 }
@@ -33,7 +33,8 @@ monster.voices = {
 monster.events = { "SpireBuffDamage", "SpireTwinFangOffhand" }
 
 monster.loot = {
-	{ id = 3031, chance = 100000, maxCount = 45 },
+	{ id = 3031, chance = 100000, maxCount = 85 },
+	{ id = 3035, chance = 6000, maxCount = 1 },
 	{ id = 3352, chance = 6000, maxCount = 1 },
 	{ id = 3274, chance = 5000, maxCount = 1 },
 	{ id = 5880, chance = 8000, maxCount = 1 },

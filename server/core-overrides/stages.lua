@@ -3,7 +3,10 @@
 -- Medium rates: faster early, slower later. No level cap.
 
 experienceStages = {
-	{ minlevel = 1, maxlevel = 50, multiplier = 25 },
+	-- Floor 1 should last about 11-15 hours (Jay, Q30, 2026-11-12; FLOOR1_WILDS_PLAN.md 3.1)
+	{ minlevel = 1, maxlevel = 8, multiplier = 10 },
+	{ minlevel = 9, maxlevel = 20, multiplier = 4 },
+	{ minlevel = 21, maxlevel = 50, multiplier = 3 },
 	{ minlevel = 51, maxlevel = 100, multiplier = 15 },
 	{ minlevel = 101, maxlevel = 150, multiplier = 10 },
 	{ minlevel = 151, maxlevel = 200, multiplier = 7 },

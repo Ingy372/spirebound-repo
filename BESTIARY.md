@@ -78,7 +78,7 @@ Sproutlings spit a little poison-green magic. Still inside the Guarded ring arou
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Sproutling | 35 | 12 | 2 / 12 | gold (up to 7), meat (20%), item 3738 (rare, 14%) |
+| Sproutling | 35 | 13 | 2 / 11 | gold (up to 7), meat (20%), item 3738 (rare, 14%) |
 | Hopper Toad | 28 | 9 | 3 / 16 | gold (up to 6), item 9640 (rare, 12%) |
 
 - **Sproutling:** Spits an earth blast from a few tiles away; step up to it and it stops spitting.
@@ -91,7 +91,7 @@ Fast and stingy, little health. Just north of the city gate, beside the Pass roa
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Meadow Wasp | 45 | 20 | 3 / 11 | gold (up to 8), meat (25%), item 5902 (rare, 16%) |
+| Meadow Wasp | 45 | 17 | 4 / 13 | gold (up to 8), meat (25%), item 5902 (rare, 16%) |
 
 - **Meadow Wasp:** Fast, low health, poisons. Kill it quickly and let the poison wear off.
 
@@ -102,7 +102,7 @@ Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallo
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Bristle Boar | 90 | 40 | 3 / 9 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
+| Bristle Boar | 90 | 28 | 4 / 13 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
 
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
@@ -113,7 +113,7 @@ Sturdy diggers with plenty of health. Slow and steady experience.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Burrow Mole | 130 | 45 | 4 / 9 | gold (up to 26), meat (40%), health potions (rare, 4%), item 5880 (rare, 12%) |
+| Burrow Mole | 130 | 39 | 5 / 11 | gold (up to 26), meat (40%), health potions (rare, 4%), item 5880 (rare, 12%) |
 
 - **Burrow Mole:** Slow with lots of health. Safe, steady experience if you have patience.
 
@@ -124,8 +124,8 @@ Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Meadow Wolf | 85 | 50 | 4 / 11 | gold (up to 10), wolf paws (rare, 10%), meat (30%) |
-| Grey Alpha | 260 | 150 | 1 / 4 | gold (up to 40), wolf paws (50%), health potions (rare, 8%), item 3012 (rare, 6%) |
+| Meadow Wolf | 85 | 36 | 6 / 15 | gold (up to 10), wolf paws (rare, 10%), meat (30%) |
+| Grey Alpha | 260 | 107 | 2 / 5 | gold (up to 40), wolf paws (50%), health potions (rare, 8%), item 3012 (rare, 6%) |
 
 - **Meadow Wolf:** Comes in packs and fights in a crowd. Fight with your back to a wall.
 - **Grey Alpha:** Leads a wolf pack and calls two wolves when hurt. Worth killing first: the drops are better.
@@ -137,7 +137,7 @@ Snappers carry more coins than their level suggests. Good first money run; fishi
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Reed Snapper | 150 | 55 | 6 / 11 | gold (up to 30), ham (20%), health potions (rare, 8%), item 5899 (rare, 10%), item 30975 (rare, 18%) |
+| Reed Snapper | 150 | 39 | 8 / 16 | gold (up to 30), ham (20%), health potions (rare, 8%), item 5899 (rare, 10%), item 30975 (rare, 18%) |
 
 - **Reed Snapper:** Tough shell, slow. It carries more coins than anything else at this level.
 
@@ -148,8 +148,8 @@ Poison bites; bring antidotes or healing. Good experience for the effort.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Thornsnap | 140 | 60 | 5 / 11 | gold (up to 22), health potions (rare, 5%), item 5879 (rare, 13%) |
-| Bristle Boar | 90 | 40 | 8 / 17 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
+| Thornsnap | 140 | 56 | 6 / 12 | gold (up to 22), health potions (rare, 5%), item 5879 (rare, 13%) |
+| Bristle Boar | 90 | 28 | 11 / 25 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
 
 - **Thornsnap:** Poisons you. Carry a health potion or two, or the Cleanse spell.
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
@@ -161,7 +161,7 @@ Shardlings hit with energy and resist it; wands are weak here. Strong experience
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Field Shardling | 120 | 55 | 9 / 18 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
+| Field Shardling | 120 | 58 | 8 / 18 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
 
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
@@ -172,8 +172,8 @@ Bandits carry coins and gear you can sell. Captains lead them and drop platinum.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Road Bandit | 160 | 70 | 9 / 19 | gold (up to 30), short swords (rare, 5%), leather armor (rare, 4%), maces (rare, 5%), item 11492 (rare, 13%), item 5913 (rare, 6%) |
-| Bandit Captain | 450 | 280 | 2 / 5 | gold (up to 80), platinum coins (rare, 15%), brass armor (rare, 4%), chain helmets (rare, 5%), health potions (rare, 15%), item 5909 (rare, 12%) |
+| Road Bandit | 160 | 50 | 12 / 26 | gold (up to 60), platinum coins (rare, 6%), short swords (rare, 5%), leather armor (rare, 4%), maces (rare, 5%), item 11492 (rare, 13%), item 5913 (rare, 6%) |
+| Bandit Captain | 450 | 201 | 3 / 6 | gold (up to 80), platinum coins (rare, 15%), brass armor (rare, 4%), chain helmets (rare, 5%), health potions (rare, 15%), item 5909 (rare, 12%) |
 
 - **Road Bandit:** Carries coins and gear you can sell. Often in groups of three or four.
 - **Bandit Captain:** A tough leader who calls two bandits. Drops platinum coins. Take friends the first time.
@@ -185,9 +185,9 @@ Stone sentinels and archers guard the old works. Tough, but arrows and gear sell
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Ruin Sentinel | 300 | 140 | 7 / 12 | gold (up to 45), chain helmets (rare, 6%), axes (rare, 5%), item 5880 (rare, 8%) |
-| Ruin Archer | 220 | 120 | 8 / 14 | gold (up to 40), arrows (30%), bows (rare, 3%), item 11492 (rare, 8%) |
-| Field Shardling | 120 | 55 | 17 / 30 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
+| Ruin Sentinel | 300 | 96 | 10 / 17 | gold (up to 85), platinum coins (rare, 6%), chain helmets (rare, 6%), axes (rare, 5%), item 5880 (rare, 8%) |
+| Ruin Archer | 220 | 83 | 11 / 20 | gold (up to 75), platinum coins (rare, 6%), arrows (30%), bows (rare, 3%), item 11492 (rare, 8%) |
+| Field Shardling | 120 | 58 | 16 / 28 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
 
 - **Ruin Sentinel:** Slow, hits hard, takes little damage from plain weapons. Holy damage works best.
 - **Ruin Archer:** Keeps its distance and shoots. Close the gap or fight around corners.
@@ -217,19 +217,19 @@ The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden ro
 |---|---|---|---|
 | Field Rat | 20 | 6 | The Ratwarren, Toad Pond |
 | Hopper Toad | 28 | 9 | Toad Pond, Sproutling Glade |
-| Sproutling | 35 | 12 | Sproutling Glade |
-| Meadow Wasp | 45 | 20 | Waspgrass Fields |
-| Bristle Boar | 90 | 40 | Boar Meadow, Thornsnap Hollow |
-| Burrow Mole | 130 | 45 | Burrow Hills |
-| Meadow Wolf | 85 | 50 | Wolf Copse |
-| Grey Alpha | 260 | 150 | Wolf Copse |
-| Reed Snapper | 150 | 55 | Reedmarsh |
-| Thornsnap | 140 | 60 | Thornsnap Hollow |
-| Field Shardling | 120 | 55 | Shard Fields, The Old Quarry |
-| Road Bandit | 160 | 70 | The Bandit Road |
-| Bandit Captain | 450 | 280 | The Bandit Road |
-| Ruin Sentinel | 300 | 140 | The Old Quarry |
-| Ruin Archer | 220 | 120 | The Old Quarry |
+| Sproutling | 35 | 13 | Sproutling Glade |
+| Meadow Wasp | 45 | 17 | Waspgrass Fields |
+| Bristle Boar | 90 | 28 | Boar Meadow, Thornsnap Hollow |
+| Burrow Mole | 130 | 39 | Burrow Hills |
+| Meadow Wolf | 85 | 36 | Wolf Copse |
+| Grey Alpha | 260 | 107 | Wolf Copse |
+| Reed Snapper | 150 | 39 | Reedmarsh |
+| Thornsnap | 140 | 56 | Thornsnap Hollow |
+| Field Shardling | 120 | 58 | Shard Fields, The Old Quarry |
+| Road Bandit | 160 | 50 | The Bandit Road |
+| Bandit Captain | 450 | 201 | The Bandit Road |
+| Ruin Sentinel | 300 | 96 | The Old Quarry |
+| Ruin Archer | 220 | 83 | The Old Quarry |
 | Stonehorn Ram | 900 | 480 | The Old Watchtower |
 
 ## How the progression rules work (for the developers)

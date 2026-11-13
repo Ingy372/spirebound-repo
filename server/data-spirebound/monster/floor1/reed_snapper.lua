@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Reed Snapper")
 local monster = {}
 
 monster.description = "a reed snapper"
-monster.experience = 55
+monster.experience = 39
 monster.outfit = {
 	lookType = 112, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }

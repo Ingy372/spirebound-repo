@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Bandit Captain")
 local monster = {}
 
 monster.description = "a bandit captain"
-monster.experience = 280
+monster.experience = 201
 monster.outfit = {
 	lookType = 129, lookHead = 94, lookBody = 94, lookLegs = 94, lookFeet = 95, lookAddons = 1, lookMount = 0,
 }
