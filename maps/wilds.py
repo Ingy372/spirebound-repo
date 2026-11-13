@@ -169,7 +169,7 @@ def _attempt(c, rng, wobble):
                 problems.append("loop touches another open place")
                 break
         for gx, gy in lp["groups"]:
-            if max(abs(gx - W // 2), gy) < 9:
+            if min(max(abs(gx - u), abs(gy - v)) for u, v in gate) < 9:
                 problems.append("group within 8 tiles of the gate")
             if any(abs(gx - m[0]) <= 1 and abs(gy - m[1]) <= 1 for m in lp["mouth"]):
                 problems.append("group in a mouth")
@@ -491,6 +491,16 @@ def check(m, home):
                     problems.append(f"{gid}: {lp['name']} loop is not a closed ring")
         if outside & inside:
             problems.append(f"{gid}: the inside can be reached without the gate")
+    # plan Part 8.3: no monster group on a road or trail outside a ground, or within 8 tiles of a gate
+    gates = [g for L in getattr(m, "wilds", []) for g in L["gate"]]
+    inside_any = set().union(*[L["rect"] for L in getattr(m, "wilds", [])]) if getattr(m, "wilds", None) else set()
+    for _n, (x, y, z), *_r in m.monsters:
+        if z != Z or not (X0 <= x < X0 + 400 and Y0 <= y < Y0 + 400):
+            continue
+        if (x, y, z) in getattr(m, "road_tiles", ()) and (x, y) not in inside_any:
+            problems.append(f"a monster group stands on a road at {(x - X0, y - Y0)}")
+        if any(max(abs(x - gx), abs(y - gy)) < 9 for gx, gy in gates):
+            problems.append(f"a monster group is within 8 tiles of a gate at {(x - X0, y - Y0)}")
     return problems
 
 

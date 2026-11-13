@@ -13,9 +13,6 @@ import dungeon as DG  # noqa: E402
 import wilds  # noqa: E402
 from floor1_plan import APEX, CAMPS, MILLCROSS, TOWN  # noqa: E402
 
-# hunting grounds already rebuilt as walled places with four loops (FLOOR1_WILDS_PLAN.md); the rest still use camp()
-REBUILT = {"boar_meadow", "starter_west", "starter_east", "starter_south", "wasp_fields",
-           "burrow_hills", "wolf_copse", "reed_marsh", "thornsnap_hollow", "shard_fields", "bandit_road", "old_quarry"}
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
@@ -55,91 +52,6 @@ def build(m):
         m.fill(river_x + wobble, y, 5, 1, Z, "water")
         for x in range(river_x + wobble, river_x + wobble + 5):
             m.clear_items(x, y, Z)
-
-    # ------------------------------------------------ hunting camps first (roads and towns are drawn over them)
-    def theme(name, cx, cy, w, h):
-        sp = S.sprinkle
-        if name == "rats":                                  # the Ratwarren: dirt mounds, stones, a few bushes
-            for _ in range(7):
-                S.patch(m, cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5), rng.randint(2, 4), rng.randint(2, 3), Z, "dirt")
-            sp(m, cx, cy, w, h, Z, S.STONES, 0.04, seed=11)
-            sp(m, cx, cy, w, h, Z, S.BUSHES + S.FLOWERS, 0.03, seed=12)
-        elif name == "pond":                                # Toad Pond: a pond, ferns and flowers
-            S.pond(m, cx + w // 2, cy + h // 2 + 2, 7, 4, Z)
-            sp(m, cx, cy, w, h, Z, S.FERNS + S.FLOWERS, 0.12, seed=13)
-            sp(m, cx, cy, w, h, Z, S.BUSHES + S.TREES_BROAD, 0.03, seed=14, lo=0.5)
-        elif name == "glade":                               # Sproutling Glade: lush ferns, bushes, little trees
-            sp(m, cx, cy, w, h, Z, S.FERNS, 0.12, seed=15)
-            sp(m, cx, cy, w, h, Z, S.BUSHES + S.FLOWERS, 0.07, seed=16)
-            sp(m, cx, cy, w, h, Z, S.TREES_BROAD, 0.05, seed=17, lo=0.5)
-        elif name == "wasps":                               # Waspgrass Fields: a flower meadow
-            sp(m, cx, cy, w, h, Z, S.FLOWERS, 0.2, seed=18)
-            sp(m, cx, cy, w, h, Z, [3625, 957], 0.015, seed=19, lo=0.6)
-        elif name == "boars":                               # Boar Meadow: oak groves, bushes, mud wallows
-            for _ in range(4):
-                S.patch(m, cx + rng.randint(5, w - 6), cy + rng.randint(5, h - 6), rng.randint(2, 4), rng.randint(2, 3), Z, "mud")
-            sp(m, cx, cy, w, h, Z, S.TREES_BROAD, 0.2, seed=20, lo=0.55)
-            sp(m, cx, cy, w, h, Z, S.BUSHES + S.STONES, 0.04, seed=21)
-        elif name == "hills":                               # Burrow Hills: bare dirt, stones, boulders, a little wheat
-            for _ in range(10):
-                S.patch(m, cx + rng.randint(3, w - 4), cy + rng.randint(3, h - 4), rng.randint(2, 5), rng.randint(2, 4), Z, "dirt")
-            sp(m, cx, cy, w, h, Z, S.STONES + S.BOULDERS[:2], 0.06, seed=22, grass_only=True)
-            sp(m, cx, cy, w, h, Z, [3605], 0.03, seed=23)
-        elif name == "copse":                               # Wolf Copse: dark fir forest
-            sp(m, cx, cy, w, h, Z, S.TREES_FIR, 0.45, seed=24, lo=0.4)
-            sp(m, cx, cy, w, h, Z, S.FERNS + [7957], 0.05, seed=25)
-        elif name == "thorns":                              # Thornsnap Hollow: thicket of thorn bushes and dead trees
-            sp(m, cx, cy, w, h, Z, S.THORNS, 0.28, seed=26, lo=0.35)
-            sp(m, cx, cy, w, h, Z, S.TREES_DEAD + S.FERNS, 0.04, seed=27)
-        elif name == "marsh":                               # Reedmarsh: pools ringed with mud, ferns, dead trees
-            for _ in range(6):
-                S.pond(m, cx + rng.randint(6, w - 7), cy + rng.randint(6, h - 7), rng.randint(2, 4), rng.randint(2, 3), Z)
-            sp(m, cx, cy, w, h, Z, S.FERNS, 0.1, seed=28)
-            sp(m, cx, cy, w, h, Z, S.TREES_DEAD, 0.025, seed=29)
-        elif name == "shards":                              # Shard Fields: grey gravel, boulders
-            for _ in range(8):
-                S.patch(m, cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5), rng.randint(3, 6), rng.randint(3, 5), Z, "gravel")
-            sp(m, cx, cy, w, h, Z, S.BOULDERS, 0.018, seed=30, grass_only=False)  # each is a 2x2 rock
-            sp(m, cx, cy, w, h, Z, S.STONES, 0.05, seed=31, grass_only=False)
-        elif name == "bandits":                             # the Bandit Road: a ruined camp with carts, barrels, fires
-            sp(m, cx, cy, w, h, Z, S.BUSHES + S.STONES, 0.04, seed=32)
-            sp(m, cx, cy, w, h, Z, S.TREES_BROAD, 0.04, seed=33, lo=0.5)
-            for _ in range(5):
-                px, py = cx + rng.randint(6, w - 7), cy + rng.randint(6, h - 7)
-                S.prop(m, px, py, Z, 5543)
-                S.prop(m, px + 2, py + 1, Z, rng.choice([2519, 2523, 116, 118]))
-                S.prop(m, px - 2, py, Z, rng.choice([116, 2519]))
-                S.prop(m, px + 1, py + 3, Z, 1996)
-        elif name == "quarry":                              # the Old Quarry: bare rock, rubble, broken pillars
-            for _ in range(7):
-                S.patch(m, cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5), rng.randint(3, 6), rng.randint(3, 5), Z, "gravel")
-            sp(m, cx, cy, w, h, Z, S.BOULDERS + [1822, 1822], 0.1, seed=34, grass_only=False)
-            sp(m, cx, cy, w, h, Z, [2264, 2290, 2152], 0.012, seed=35, grass_only=False)
-        else:
-            sp(m, cx, cy, w, h, Z, S.FLOWERS + S.BUSHES, 0.04, seed=36)
-
-    def camp(c):
-        cx, cy, w, h = X0 + c["x"], Y0 + c["y"], c["w"], c["h"]
-        theme(c["decor"], cx, cy, w, h)
-        total = int(w * h / 30)  # about one monster per 30 tiles: room for 20 players, still monsters for 500
-        placed = []
-        for mon, size, share in c["mix"]:
-            for _ in range(max(1, round(total * share / size))):
-                for _try in range(60):
-                    sx, sy = cx + rng.randint(4, w - 5), cy + rng.randint(4, h - 5)
-                    if all(abs(sx - px) + abs(sy - py) >= 8 for px, py in placed):
-                        break
-                placed.append((sx, sy))
-                for p in [(sx + a, sy + b, Z) for a in (-1, 0, 1) for b in (-1, 0, 1)]:
-                    m.clear_items(*p)
-                    if p in m.ground and m.ground[p] in (4597, 4609, 4610):
-                        m.ground[p] = m.pick("grass")
-                m.monsters.append((mon, (sx, sy, Z), 3, size, c["respawn"]))
-        m.points["camp_" + c["id"]] = (cx + w // 2, cy + h // 2, Z)
-
-    for c in CAMPS:
-        if c["id"] not in REBUILT:
-            camp(c)
 
     # ------------------------------------------------ Hearthgate v3 (HEARTHGATE_PLAN.md, 2026-11-12): 112 x 96, walled.
     # The Hearth stands where the two main roads cross; four quarters around it; 30 houses; Spire Manor on the East High Road.
@@ -617,10 +529,36 @@ def build(m):
     m.road((X0 + 172, Y0 + 304), (X0 + 172, Y0 + 314), Z, width=2, wind=False)
     m.road((X0 + 172, Y0 + 314), (X0 + 159, Y0 + 337), Z, width=2, wind=False)
 
+    # Watch Road: from Millcross's north side up to the Old Watchtower's gate (the tower had no road before)
+    for a, b in (((76, 194), (76, 110)), ((76, 110), (52, 84)), ((52, 84), (52, 74))):
+        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
+
     # ------------------------------------------------ the rebuilt hunting grounds (maps/wilds.py): walls, hub, four loops
     for c in CAMPS:
-        if c["id"] in REBUILT:
-            wilds.build(m, c)
+        wilds.build(m, c)
+
+    # ------------------------------------------------ signposts at the junctions (FLOOR1_WILDS_PLAN.md 4.2)
+    def lv(cid):
+        c = next(c for c in CAMPS if c["id"] == cid)
+        return f"{c['title']}, levels {c['levels'][0]}-{c['levels'][1]}"
+    posts = [
+        ((233, 213), f"West: {lv('wasp_fields')}. East: {lv('burrow_hills')}. North: the Pass. South: Hearthgate."),
+        ((233, 148), f"West: {lv('thornsnap_hollow')}. East: {lv('old_quarry')}. North: the Pass and the Gate Hound."),
+        ((231, 338), f"West: {lv('starter_south')}. South: the shrine path. North: Hearthgate."),
+        ((153, 288), f"North: {lv('starter_west')}. South: the west cabins and {lv('boar_meadow')}. West: the river and Millcross."),
+        ((315, 288), f"North: {lv('starter_east')}. East: East Cross. West: Hearthgate."),
+        ((341, 288), f"North: {lv('bandit_road')}. South: {lv('shard_fields')}. West: Hearthgate."),
+        ((172, 302), f"South: {lv('boar_meadow')}. North: the Mill Road."),
+        ((95, 282), f"West: {lv('wolf_copse')}. South: {lv('reed_marsh')}. North: Millcross."),
+        ((73, 242), f"South: {lv('wolf_copse')} and {lv('reed_marsh')}. North: Millcross."),
+        ((79, 192), "North: The Old Watchtower, levels 28-40. Contested: other players can attack you there."),
+    ]
+    roads_ = getattr(m, "road_tiles", set())
+    for (sx_, sy_), text in posts:
+        spot = min(((X0 + sx_ + a, Y0 + sy_ + b) for a in range(-3, 4) for b in range(-3, 4)
+                    if S.free(m, X0 + sx_ + a, Y0 + sy_ + b, Z) and (X0 + sx_ + a, Y0 + sy_ + b, Z) not in roads_),
+                   key=lambda t: (abs(t[0] - X0 - sx_) + abs(t[1] - Y0 - sy_), t))
+        m.sign(*spot, Z, text)
 
     # ------------------------------------------------ Millcross village (town 2 on floor 1)
     mx, my = X0 + MILLCROSS["x"], Y0 + MILLCROSS["y"]
@@ -849,7 +787,7 @@ def build(m):
     m.zone("guarded", yard_x - 2, yard_y - 2, 44, 28, 7)              # the Arrival Yard
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
     for c in CAMPS:                                                   # Open grounds are Open right up to their walls
-        if c["id"] in REBUILT and c["zone"] == "open":
+        if c["zone"] == "open":
             m.zone("open", X0 + c["x"], Y0 + c["y"], c["w"], c["h"], 7)
     m.zone("contested", ax - 5, ay - 5, 54, 54, 7)                   # the Old Watchtower approach and outer layer
     m.zone("deadzone", ax + 12, ay + 12, 20, 20, 7)                  # the packed inner room
@@ -1032,5 +970,5 @@ def build(m):
     S.standing_stones(m, X0 + 356, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved for Toad Pond)
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
-    grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS if c["id"] in REBUILT]
+    grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS]
     S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep, avoid=grounds)

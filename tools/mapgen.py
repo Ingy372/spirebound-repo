@@ -117,6 +117,7 @@ class Map:
         self.monsters = []  # (name, (x,y,z), radius, count, interval)
         self.npcs = []  # (name, (x,y,z))
         self.points = {}  # name -> (x,y,z)
+        self.road_tiles = set()  # every tile a road or trail was laid on
         self.zones = []  # (tier, x1, y1, x2, y2, z or None for all levels); later entries win
         self.rng = random.Random(seed)
         self.buildings = []  # dict(rect=(x0, y0, w, h), z, style, top, roof): every building, for roofs and storeys
@@ -353,6 +354,7 @@ class Map:
             if p in self.ground:
                 self.ground[p] = 408 if self.ground[p] in (4597, 4609, 4610) else self.pick(key)
                 self.clear_items(*p)
+                self.road_tiles.add(p)
 
         def wob(length, t, seed):
             if not wind or length < 40:

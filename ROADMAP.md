@@ -221,7 +221,7 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 - [x] **W4 The four starter grounds.**
 - [x] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
 - [x] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
-- [ ] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
+- [x] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
 - [ ] **W8 The six caves.**
 - [ ] **W9 Experience stages and the ladder** (Q30: Jay said yes, Floor 1 should last 11-15 hours).
 - [ ] **W10 The crowd system and the `!hunt` line** (Q31: yes; cavebot refused in caves, Q32: yes).
