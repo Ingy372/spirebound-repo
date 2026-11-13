@@ -1,0 +1,26 @@
+name: boot test
+# Roadmap R18: the same boot test as on Jay's PC (tools/test_boot.sh): builds the pinned Canary server with our
+# datapack, starts it with a fresh database, runs every in-game test and fails on any error or failed test.
+on: [push, pull_request]
+jobs:
+  boot:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Install MariaDB and the server's libraries
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q mariadb-server mariadb-client rsync
+          sudo service mariadb start
+      - name: Boot test (in-game tests included)
+        run: sudo -E env "PATH=$PATH" SPIRE_SETUP_DB=1 bash tools/test_boot.sh 180
+      - name: Keep the server log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: boot-log
+          path: .build/boot.log
+          if-no-files-found: ignore

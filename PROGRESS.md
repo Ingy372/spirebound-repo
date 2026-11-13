@@ -450,3 +450,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Secret fixes (roadmap R17)
 - A secret now triggers the moment you step on its tile (before, a twice-a-second check could miss a fast walker). Its gold is paid once per account: a second character finding it gets the discovery but not the gold again. "Only at night" secrets follow the game's own night, the one you see in the client, not the server's clock.
 - The 60 secrets on Floors 6-10 had the same "somewhere on Floor N" hint; each kind now has its own clue in that floor's words (for example "Someone hid supplies where the marsh meets the woods, far from Reedhaven's walls."). Two new in-game tests. Boot test 143 in-game tests, 0 errors.
+
+### 2026-11-13: Tests that reach the real game (roadmap R18, part)
+- New GitHub workflow (`.github/workflows/boot.yml`) runs the full boot test on every push: it builds the pinned server, starts it on a fresh database and runs every in-game test. I can't read GitHub's results from your PC, so R18 stays marked "partly done" until a run is confirmed green (look under the repository's Actions tab: "boot test").
+- New end-to-end tests: nobody reaches Floor 2 before the Axe-Lord's first kill (and the boulder still seals the stair), dying costs what DESIGN.md says on each difficulty, a red skull wears off, the Fortune Hall destroys its cut. Boot test 147 in-game tests, 0 errors.

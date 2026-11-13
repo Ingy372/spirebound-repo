@@ -35,7 +35,7 @@ Open:
 - [x] **R15 Bots enforced on the server** [3.8] (after Q16): pattern logging that 2.12 promised; strip the vBot script editor/attack helper from the shipped client or accept them; task gold and follower XP rules.
 - [x] **R16 House fixes** [3.7]: Open House keeps the real guest list and survives restarts, with a cooldown; Summoning Circle moved to a small private arena (it can't work inside a safe house); House Portal can't target labyrinths or Contested zones.
 - [x] **R17 Secret fixes** [3.10]: trigger on stepping on the tile, gold reward once per account, "night" uses the game's day/night, real hints for Floors 6–10.
-- [ ] **R18 Tests that reach the real game** [7.5]: boot test runs on GitHub; end-to-end tests per headline rule (reach Floor 2 without a kill, die as each difficulty, wait out a skull, Fortune Hall cut).
+- [~] **R18 Tests that reach the real game** *(2026-11-13: end-to-end tests added and passing; the GitHub boot workflow is written but its first run is not checked yet)* [7.5]: boot test runs on GitHub; end-to-end tests per headline rule (reach Floor 2 without a kill, die as each difficulty, wait out a skull, Fortune Hall cut).
 - [ ] **R19 Clickable routes for chat commands** [1.5]: every `!command` players need also has an NPC, sign or client button.
 - [ ] **R20 Small fixes** [3.12]: memory leaks at logout, Derby pays offline winners, rapid-respawn weekend bonus, faster respawn when a floor is busy.
 - [ ] **R21 Twin Fang rebalance** [2.5] (after Q18): one-handed swords only, combos must hit a real monster, solo trial room, smaller off-hand bonus.
