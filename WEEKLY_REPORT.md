@@ -24,8 +24,30 @@ Log in as Jay (your GM character). Type `/pos x, y, 7` in chat to jump, then pre
 6. **`!hunt` (2 min):** say `!hunt` on a low-level character. You should get the advice and a busy line for your grounds.
 7. **Look and feel (3 min):** see Q33. Do the grounds look right to you, or too regular?
 
+## Also new since the wilds rebuild (Phase R, same day)
+- **Logging in is safer (R4):** the login hands out a random one-day token, never your password back; the login service only listens on this PC; there is a sign-up page at http://localhost:8080/signup; starting the server no longer resets the test account (use `windows\Make-Test-Accounts.bat` if you need it back).
+- **Death Game is fair (R5, R6):** only a real PvE death retires a character; a one-hit "tag" from another player no longer saves you, but real damage (15% of your health) does, and so does a monster dragged onto you. Retiring frees the house, guild, market offers and the slot. GMs can `/restore` after a server crash. The Hardcore item drop now respects blessings.
+- **Fair PvP (R7):** everyone who did real damage shares a kill (skulls, Sanctuary, bounties split by damage). Healing a murderer costs your protection for 5 minutes. Murderers wake in the new Outlaw Camp far west.
+- **Saves (R8):** the server saves at once after a first kill, a floor clear, a retirement, a shop buy or a secret sale, and every 10 minutes.
+- **Bosses (R9):** healers and tanks earn credit; token hits don't; offline players get their titles at next login; 20 players per room; hits that can kill give a full second of warning; after the floor is cleared, a party of 1-5 can say `!private` for its own Axe-Lord fight once a day. Each floor's hall can unseal on its day of the season (`/calendar start`).
+- **Balance for all ten floors (R10):** one table (`BALANCE.md`) that the monsters are built from; the climb now rises gently from 14 to 45 hours per floor. Floor 1 tasks paid far too much and now pay sanely; task points buy things (`!taskshop`). The Fortune Hall's 5% is really destroyed now.
+- **The Arrival Yard (R11):** four gates (beat a rat, loot it, `!spells`, drink a potion), then the Registrar. The Journal has a "How do I..." page.
+- **Things to earn (R12):** a named gear ladder for every path on Floors 1-2 (boss pieces for the top fighter), two quest lines that reward gear, and all twenty floor perks now really work.
+- **Friends-test scope (R13):** Floors 1-2 only; arena, siege, shop and Season Path off (`/scope test` or `/scope launch`). Floor 2's monsters each have a trick.
+- **Moderation (R14):** `!report`, `!rules`, GM `/mute`, `/reports`, `/gmlog`, and a chat filter in three languages. Rules and punishment ladder: `docs/RULES.md`.
+- **Bots (R15):** hunting on one spot for 10 minutes counts as botting; followers of a botter share the penalty; the client's attack helper and script editor are gone.
+
+## Extra playtest (about 15 minutes)
+1. Log in with a fresh account from http://localhost:8080/signup. Walk the Arrival Yard: each gate should stop you until you've done its step.
+2. As Jay, say `!rules`, `!report Jay, testing the report box`, then `/reports`.
+3. Say `!taskshop` and `!hunt` on any character.
+
+## Still open after this session
+R16-R22, R10b (repairs and travel fees), R10c (house prices per floor), R13b (Floor 2's own map), W12 (walk every ground in the client), and the direction-list jobs J5b, J5c, J6, J9, J10.
+
 ## Open questions (my recommendation is assumed until you answer)
 - **Q33 (new):** do the walled grounds look the way you want? I recommend keeping the layout and letting the Cowork polish soften the outlines.
+- **Assumed this session:** Q13 (season calendar), Q14 (stepping down costs the bonus), Q16 (bot rules), Q19 (warning time), Q22 (friends-test scope). Each is noted in QUESTIONS.md.
 - **Q26-Q29** (Spire Manor price, the forge, the account vault, the junk buyer) and **Q13-Q25** are still open. Nothing in this update depends on them.
 
 ## Art and map requests
