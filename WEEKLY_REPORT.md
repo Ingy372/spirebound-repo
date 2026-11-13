@@ -1,133 +1,33 @@
-# Update, 2026-11-12: your direction list
+# Update, 2026-11-13: Floor 1 outside the walls is rebuilt
 
 ## What's new
-- **Hearthgate is bigger and planned block by block** (112×96 tiles; it was 80×72). Nothing is wasted:
-  - ten shops along the north wall: the five old ones plus a Fletcher (arrows), Alchemist (potions), Runewright (blank runes, wands, temple scrolls), Tailor and Post Office;
-  - the Market Square, with free stalls for player trading;
-  - a Trade Hall with the market broker and market lockers;
-  - an inn with rooms upstairs, a Training Yard (the offline training statues moved here), and a Carriage Station (Coachman Ferro drives to Millcross and back for 20 gold);
-  - 22 houses, up from 14.
-- **Spire Manor:** four floors at the end of the avenue:
-  - a grand hall with display counters and an indoor fountain;
-  - a trophy gallery;
-  - private quarters;
-  - a rooftop garden with a telescope.
-  Only the shop can hand it out. `!buyhouse` refuses it. Price and resale are in Q26.
-- **Research:** `docs/RESEARCH_TOP_SERVERS_2026-11b.md` covers who is biggest now and what they all share: minigames, travel, PvP, gear, houses and premium.
-- **I played a brand-new character in your client** and fixed what I found:
-  - Guide Pell's quest offer never appeared: a client bug hides any line with keywords inside brackets.
-  - The tutorial yard showed Open PvP.
-  - New characters fought barehanded.
-  - Three tutorial rats killed my level-1 character, and they could walk out of the pen.
-  - Two confusing login lines.
-  - Wrong advice on how to attack.
-  - No healing before town.
-- **Economy:** every Floor 1 monster now drops a trade material.
-  - **Crafters:** Fletcher, Alchemist, Runewright and Tailor turn materials into things no shop sells, such as sniper arrows, piercing bolts, cheap strong potions and hunter outfit addons. So hunters need each other's loot.
-  - **Burn rates:** `ECONOMY.md` lists them for every hunting ground and vocation. The build fails if anyone loses money where they're meant to hunt.
-- **Also new:** a boosted creature of the day (+50% experience, extra loot), and the temple teleport scroll. Boot test: 93 in-game checks, all passing.
+- **Every hunting ground is now a proper place.** All twelve grounds were rebuilt from `FLOOR1_WILDS_PLAN.md`:
+  - a wall of trees, rock, thorns or swamp, with **one gate** off a road;
+  - a **hub** inside the gate with a sign, a fire and a bench;
+  - **four hunting loops**: ring trails round a grove, a pond, a rock pile or a bandit camp, with monster groups at fixed spots. One loop is one player's hunt (or two sharing), and one lap is a cavebot route.
+  - Each has its own look: thicket mounds (Ratwarren), four ponds (Toad Pond), fern groves (Sproutling Glade), hedged flower beds (Waspgrass), oak groves (Boar Meadow), rock hills (Burrow Hills), dark firs (Wolf Copse), a swamp with pools (Reedmarsh), thorns (Thornsnap Hollow), boulder fields (Shard Fields), fenced bandit camps (Bandit Road), rubble (Old Quarry).
+- **Old Tusk's wallow:** Boar Meadow's south-east grove is hollow, a mud clearing reached through a one-tile gap. Old Tusk and the secret moved in there.
+- **Six caves for parties** under the harder grounds, each a ring of eight chambers with 32 monsters. The cavebot is refused in them (your Q32).
+- **Tibia-style respawn:** fewer monsters, back after 2 to 3.5 minutes, so you walk your loop instead of standing still. I also found that our engine really waits about twice the number in the spawn file, so the files now hold half of it.
+- **Your crowd system (Q31):** 5 or more players in a ground bring out extra groups, 8 or more bring out all of them, and 12 or more on a starter ground makes them come back three times as fast. `!hunt` tells you how busy your grounds are, for example "Boar Meadow: busy (6 players, extra monsters are out)".
+- **Slower levels (Q30):** 10x to level 8, 4x to 20, 3x to 50 (was 25x). Monster experience was retuned so every step of the ladder is better than the last. By the model Floor 1 now takes about 9.5 hours to level 35 by hand, so roughly 13 hours in real play. Bandits and the Quarry pay more coins.
+- **Roads and signs:** no road runs through a ground any more. There are new trails to every gate, the Copse Road, the Watch Road to the Old Watchtower (it had none), and signposts at ten junctions naming each ground and its levels.
+- **Under the hood:** the map build now refuses to finish if any gate can't be reached from the Hearthstone, a loop isn't a closed ring, a wall has a hole, or a monster group stands on a road or near a gate. Rock walls use Tibia's real mountain tiles, learned from Canary's hand-made map. Boot test: 105 in-game checks, all passing.
 
-## Playtest checklist (about 40 minutes)
-1. Walk Hearthgate from the north gate to the south gate. Visit the new shops, the Trade Hall, the inn upstairs, the Training Yard and the Carriage Station. Say `hi`, then `millcross`, to Coachman Ferro.
-2. As GM, go to Spire Manor (`/pos 1233, 1294, 7`) and climb all four floors to the rooftop.
-3. Make a new character, or ask me to reset Climber. Do Guide Pell's quest in the rat pen, then reach the Registrar. To attack, right-click a monster and choose Attack, or click its name in the Battle List (Ctrl+B).
-4. Say `craft` to Fletcher Tamsin, Alchemist Ivo, Runewright Mael and Tailor Quill.
-5. Buy a temple teleport scroll from the Runewright, walk out of town and use it.
-6. Read `ECONOMY.md` and tell me if any number feels wrong to you as a Tibia player.
+## Playtest checklist (about 50 minutes)
+Log in as Jay (your GM character). Type `/pos x, y, 7` in chat to jump, then press Escape before walking. Make a normal character too for step 1.
+1. **New character, signs only (15 min):** from the Arrival Yard, go to Hearthgate and find the Ratwarren, Toad Pond, Sproutling Glade, Waspgrass Fields and Boar Meadow using only the signposts. Note any junction where you didn't know which way to go.
+2. **Boar Meadow (10 min):** jump to `/pos 1159, 1341, 7` (the hub). Walk each of the four loops once. Do they feel like places? Is one lap a good length? Walk into Old Tusk's wallow in the south-east grove.
+3. **Toad Pond and Waspgrass (5 min):** `/pos 1314, 1276, 7` and `/pos 1224, 1211, 7`. Can you see where the trails go on grass?
+4. **Reedmarsh and Wolf Copse (5 min):** the marsh hub is `/pos 1070, 1326, 7` and Wolf Copse's hub is `/pos 1083, 1282, 7`.
+5. **A cave (10 min):** `/pos 1273, 1206, 7`, walk south onto the hole into the Molework, go round the ring of chambers and back up the stairs. If a friend is around, try a fight down there together.
+6. **`!hunt` (2 min):** say `!hunt` on a low-level character. You should get the advice and a busy line for your grounds.
+7. **Look and feel (3 min):** see Q33. Do the grounds look right to you, or too regular?
 
-## Open questions
-Q26 (Spire Manor's price and resale) and Q27 (forge from Floor 3) are new. My recommendations are assumed until you answer.
+## Open questions (my recommendation is assumed until you answer)
+- **Q33 (new):** do the walled grounds look the way you want? I recommend keeping the layout and letting the Cowork polish soften the outlines.
+- **Q26-Q29** (Spire Manor price, the forge, the account vault, the junk buyer) and **Q13-Q25** are still open. Nothing in this update depends on them.
 
 ## Art and map requests
-Nothing new from you. The manor and the new shops use base sprites.
-
----
-
-# Update, 2026-11-11 — Floor 1's map is finished (end of the map phase)
-
-## What's new
-- **I'm the mapper now, with real tools.** I can draw the map with the game's own art and check it in your client. I learned Tibia's building rules from Canary's hand-made map, so they now apply automatically to every map, on every floor: wall corners, doors, whole objects, roofs, stairs, ladders, ground edges, shorelines and caves. The rules are written into `CLAUDE.md`.
-- **Hearthgate and Millcross:** clean wall corners, matching doors, roofs on every building, and whole fountains and benches. The Guild Hall, the Millcross Inn and four corner houses on Lantern Row have an upstairs (the corner houses now rent for 2,800). The Hunters' Hall has a ladder up to a trophy loft.
-- **The land:** soft grass edges on every road and patch, shorelines on the river, the lake and the ponds, and whole boulders.
-- **Dungeons:** each special area is furnished, with lamps and torches on the walls and nothing that blocks a spawn or an entrance:
-  - the Pass;
-  - the labyrinth (a different floor on each level);
-  - the Axe-Lord's throne hall;
-  - the Old Watchtower and its natural cave;
-  - the Underkeep;
-  - the Arena;
-  - the Siege keep.
-- **Tests:** 87 in-game checks pass. New ones walk a character up real stairs and check that every landing and entrance stays walkable.
-
-## Playtest checklist (about 30 minutes)
-1. Walk around Hearthgate. Look at the corners, the doors and the roofs (they vanish when you go inside), and the plaza fountain and benches.
-2. In the Guild Hall, walk up the stairs at the east end and back down. In the Hunters' Hall, right-click the ladder's own tile and choose Use to climb, then walk onto the trapdoor to come back down.
-3. Visit a corner house on Lantern Row and go upstairs.
-4. Walk along the river west of town and look at the shoreline and the bridge.
-5. As GM, jump to the special areas: `/pos 1230, 1080, 7` (the Pass), `/pos 1229, 1030, 4` (the Axe-Lord's hall), `/pos 1052, 1060, 7` (the Old Watchtower), `/pos 1040, 1040, 8` (its cave), `/pos 1194, 1264, 8` (the Underkeep).
-6. Tell me anything that looks unfinished or odd. A screenshot is perfect.
-
-## Open questions
-No new ones. Q13–Q25 in `QUESTIONS.md` still have my recommendations assumed.
-
-## Art and map requests
-- **Map:** none needed from you. Floors 2–10 are still placeholders, and I'll build them with the same tools when we get there. Cowork's finishing polish can come later.
-- **Art:** nothing new (see `ART_REQUESTS.md`).
-
----
-
-# Update, 2026-11-10 (overnight session)
-
-## What's new since the last report
-- **Journal window (press J):** secrets (hints until found), fishing log, quests, hunting task, top climbers and the Memorial in one window. The text is tested; the window itself has never run in a real client, so it is the first thing to try.
-- **Portuguese and Spanish:** `!language pt` or `!language es`. Server messages and the Journal switch language. NPC talk, quest text and item names are still English (new task 6.3b).
-- **Public website pages** (rules, the tower, vocations, difficulty, PvP, events), built from the game's own data. Not online anywhere; open `website\public\index.html` in a browser to see them.
-- **Donation shop (closed):** `!shop` says "opens at launch". Behind it: 11 cosmetic placeholder items; a test fails the build if anything in it has combat stats. Prices are placeholders (your call in QUESTIONS.md, 7.3).
-- **Backups:** `Backup-Spirebound.bat` / `Restore-Spirebound.bat`, and Start now backs up automatically. Never tried on a real install yet.
-- **Fixed:** a hidden file that stopped fresh copies of the repo from building, and a load-order bug that broke the in-game tests on some machines. Boot test: 71 in-game checks pass.
-
-## Quick extra checks (about 10 minutes)
-1. In game press **J** and click each tab. Say `!language pt`, then press J again: tab names and a few messages should be Portuguese.
-2. Open `website\public\index.html` and click through the pages.
-3. Run `windows\Backup-Spirebound.bat`; a zip should appear in the `backups` folder.
-4. Say `!shop`: it should say the shop opens at launch.
-
-## Art/map requests
-Nothing new tonight. (Shop outfits and the mount use placeholder looks; real ones are needed before launch: see ART_REQUESTS.md.)
-
----
-
-# Weekly report — week of 2026-11-08 (Phases 1–5 built, plus the season reset; ready for your playtest)
-
-## What's new
-- **Floor 1 is playable from start to finish (on the test server in my cloud workspace; not yet run on your PC).** You create a character, pick a vocation and difficulty, level on Floor 1, kill the Gate Hound to open the labyrinth, climb its 3 levels, kill the Axe-Lord, and the whole server gets the "Floor 1 cleared" announcement while the stair to Floor 2 opens.
-- **Map:** a script-made Floor 1 (Hearthgate, Millcross, river, 3 starter fields, 6 hunting camps, the Old Watchtower apex spawn with a hidden cave, the Pass, the labyrinth, the boss room, the Floor 2 landing). Preview: `docs/previews/floor1_z7.png`. Placeholder art and walls.
-- **People and monsters:** 7 NPCs in Hearthgate (Registrar, priest, banker, merchant, quartermaster, weaponsmith, armorer), 13 monsters + 2 bosses, 116 spawned at once.
-- **Fighting:** 24 sword skills (combos) + 42 spells that unlock by level (utility and support included), party XP bonus, difficulty bonuses, Death Game rules.
-- **Client:** floor name at the top, sword-skill bar at the bottom (Shift+1..6), SAO cursors, Hardcore/Death Game label.
-- **Design updates from your answers:** seasons confirmed; cavebot built in at 45% XP with no marker; spells by level; no conjured ammo; research on top servers added (DESIGN.md §15).
-- **Phase 2, also built overnight:** PvP zones (shown on screen), weighted skulls and murderer penalties, newbie protection to 50, the 70% level-range rule, the outnumbered shield, guild Sanctuary, the bounty board (Bounty Warden Cass), consent guild wars (Guildwarden Sela), 12 Floor 1 secrets + Vesper the Info Broker, fishing, the Underkeep's first wing, 3 story quests with quest-log steps + the Floor 1 perk, the cavebot rules (45% XP, reported by the client's built-in bot), autoloot with rare-drop alerts, daily hunting tasks (Taskmaster Ren), catch-up rules for new players.
-- **Phase 3 (houses):** `!buyhouse` with a one-hour head start for the players who cleared a new floor; House Portal (3 changes ever), Summoning Circle for private boss rematches with Boss Sigils, Fortune Hall gambling (gold only, bank to bank), Open House, guild bank, recruiting board, World/Mundo/Trade/Help/LFG chat.
-- **Phases 4–5 (all 10 launch floors, placeholder maps):** every floor has a town with 8 NPCs and 6 houses, camps, a lake, an apex spawn, the Pass and its field boss, a 3-level maze and the floor boss. Azhrakkar waits on Floor 10. 27 story quests, 108 secrets, 63 fish, 18 perks, 48 sword skills + 3 Twin Fang skills, 56 spells (Lost Arts after the Floor 5 and Floor 8 story quests), the Twin Fang trial on Floor 8, Underkeep Wings 2–6, world events, weekend bonuses, the Saturday Fishing Derby, offline training statues. 1,115 monsters and 76 NPCs in the world. Previews: `docs/previews/floor2_z7.png` … `floor10_z7.png`.
-- **Season reset (Phase 8):** `/season end <number>` archives everyone to the Hall of Seasons, keeps account titles, wipes the rest. Don't run it on the real server until we decide a season is over.
-- Every change passes the automatic boot test (server online, 0 errors, now 54 in-game checks).
-
-## Playtest checklist (about 45 minutes)
-1. **Install / update (10 min):** double-click `windows\Install-Spirebound.bat`, wait for **Done!**. Then `Start-Spirebound.bat`. Log in: `jay` / `spirebound`.
-2. **New character (10 min):** pick **Climber**. In the temple say `hi` to **Registrar Maelis** → pick a vocation → pick a difficulty (try Normal). Check the floor name at the top of the screen and the skill bar at the bottom.
-3. **Hunt (10 min):** leave town by any gate. Kill rats/toads in the fields. Try a sword skill with Shift+1 (or type its name). Reach level 8 and check you get "New spell" messages. Visit the shops (say `hi`, then `trade`).
-4. **Boss run as a GM (10 min):** log in as **Jay** (gamemaster). Go north up the road to the Pass (walled arena) and kill the **Gate Hound**: the boulders north of the arena should vanish with an announcement. Go through the maze (blue portals take you up), kill the **Axe-Lord**, watch for the gold "Floor 1 has been cleared" message, and step on the portal behind him to reach Floor 2's landing. (Shortcut if a fight is too hard: say `/floor field 1` or `/floor clear 1`; `/floor reset 1` puts it back.)
-5. **Higher floors as a GM (optional, 10 min):** as Jay, say `/floor clear 1` … `/floor clear 9`, then walk the stairs from each boss room to see Floors 2–10. Try `!buyhouse` facing a house door in Hearthgate, then `!openhouse`.
-6. **Phase 2 extras, if you have time (optional):** say `hi` to Vesper, Bounty Warden Cass, Guildwarden Sela and Taskmaster Ren near the Monument; fish in the river (buy a rod and worms from Merchant Wenna, use the rod on water, use it again when "Something is biting!"); step on the drain grate in the south-west corner of town.
-7. **Notes (5 min):** in `PLAYTEST.md` write what felt good, what felt bad, and any error text. Short is fine.
-
-## Open questions (my recommendation is in use until you answer; details in QUESTIONS.md)
-- **Q1 (please):** give Claude GitHub access to `spirebound-repo` or push from GitHub Desktop. All of tonight's work (about 25 commits) is only on your PC.
-- **Q11:** keep the 10-minute cavebot linger? (recommend yes)
-- **Q12:** features from the top-server research (recommend keep all; hunting tasks come back; no character bazaar).
-- Q2 stray Dojo-game branch · Q5 FYI · Q6 Twin Fang 3/season · Q7 newer Tibia systems off · Q8 difficulty bonuses · Q9 PvP protection numbers.
-
-## Art and map requests
-- **Art batch 1** (`ART_REQUESTS.md`): 4 vocation outfits, 13 Floor 1 monsters, Gate Hound, Axe-Lord (two forms), NPCs. **Batch 2**: cursors, floor badge, skill frames. Prompts ready for Grok.
-- **Art batches 3–4**: Floors 2–10 monsters and bosses, Twin Fang, house items.
-- **Maps** (`MAP_REQUESTS.md`): real Floor 1 (M1), Underkeep Wing 1 (M2), M3–M4 for the higher floors. The generated placeholder works in the meantime.
+- No new sprites were needed: everything uses existing Tibia pieces.
+- `MAP_REQUESTS.md` M1 (the real Floor 1) is now mostly built by me; what's left is the finishing polish you planned for Cowork near the end.

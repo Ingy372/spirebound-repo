@@ -9,7 +9,7 @@ Written for Jay. This is what Floor 1 is meant to be; the placeholder map in the
 ## The idea
 A new climber starts in a small walled yard, picks a path, and walks into **Hearthgate**: one compact walled city where every service is a short walk from the temple. Around it lies a ring of safe starter fields, then a spread of hunting grounds that get harder and richer the farther you walk, ending in the Old Quarry and the Old Watchtower. To the north, the Pass and the labyrinth lead to the Axe-Lord and Floor 2.
 
-**Small for 20, roomy for 500.** The city is 80 x 72 tiles and the walk from the temple to anything in town is about 30 steps. The land around it has about 1,000 monsters spread over twelve grounds at one monster per 30 tiles, with the same kind of monster in several grounds, so a crowd spreads out instead of queueing for one spawn. At 20 players the grounds feel empty; at 500 the monsters still last.
+**Small for 20, roomy for 500.** The walk from the Hearthstone to anything in town is short. Since the wilds rebuild (2026-11-13, `FLOOR1_WILDS_PLAN.md`) every hunting ground is a walled place with one gate, a hub and four hunting loops: about 1,000 monsters at rest across the twelve grounds, 66 in the Old Watchtower and 192 in six party caves. When a ground fills up, the crowd system adds extra groups (up to about 1,500 on a packed floor).
 
 ## Hearthgate (the walled city)
 Gates face north, south, west and east. Streets run straight to the plaza.
@@ -58,6 +58,14 @@ Twelve grounds plus the apex, in the order a climber meets them. Details in `BES
 | 28-40 | The Old Watchtower (apex) | experience and money |
 
 The four starter grounds and the roads around the city are *Guarded* (players cannot attack each other). Everything beyond is *Open*. The Old Watchtower is *Contested*.
+
+### How every hunting ground is built (2026-11-13)
+- **One gate** off a road or trail, 3 tiles wide, with a signpost at the junction. Inside: a **hub** with a sign naming the ground and its loops, a fire and a bench. No monsters within 8 tiles of the gate.
+- **Four loops** (north-west, north-east, south-west, south-east): a ring trail 2 tiles wide round a solid grove, pond, rock pile or camp. Monster groups stand at fixed spots on the ring (4 groups of 3 on a starter loop, 6 on the others). One loop feeds one player hunting flat out, or two sharing; a cavebot route is one lap.
+- **Return times** follow Tibia's rule: few monsters, back after 2 to 3.5 minutes (elites 15). Standing still does not pay: walk the loop.
+- **Caves** for parties of 2 to 4 under Burrow Hills (the Molework), Wolf Copse (the Alpha's Den), Thornsnap Hollow (the Rootcellar), Shard Fields (Shard Grotto), the Bandit Road (Smugglers' Cellar) and the Old Quarry (the Lower Works). The way down is a hole where the cross trails meet. No cavebot below.
+- **Crowd system:** 5+ players in a ground switch on half its extra groups, 8+ all of them, 12+ on a starter ground makes them return three times as fast. `!hunt` says how busy your grounds are.
+- **Levelling:** levels 1-8 at 10x, 9-20 at 4x, 21-50 at 3x; Floor 1 takes about 11 to 15 hours of real play (ECONOMY.md has the ladder).
 
 ## Quests on Floor 1
 **Story quests** (finish all six to earn the Floor 1 perk at the Registrar):
