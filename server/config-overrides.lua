@@ -59,3 +59,6 @@ houseOwnedByAccount = false
 
 -- Livestream ("cast", DESIGN.md 15): on, but no experience bonus for streaming (fairness)
 livestreamExperienceMultiplier = 1.0
+
+-- Roadmap R4: the client logs in with a random session token from tools/login_server.py, never the password
+authType = "session"

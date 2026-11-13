@@ -383,3 +383,9 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Wilds rebuild finished: documents, pictures and the report (wilds plan W11)
 - Regenerated BESTIARY.md, ECONOMY.md, the `!hunt` guide, `docs/FLOOR1_PLAN.png` and `docs/FLOOR1_WILDS_PLAN.png` (plan check: problems 0). FLOOR1.md now explains how every ground is built. Monster counts match the plan: 48 per starter ground, 72 per harder ground, 32 per cave, 66 in the Old Watchtower (in-game tests count them).
 - WEEKLY_REPORT.md has a 50-minute playtest list for the new wilds. New question Q33 (does the look suit you?); Q30-Q32 moved to Answered.
+
+### 2026-11-13: The front door is locked (roadmap R4)
+- Logging in now hands the client a random one-day token instead of sending the password back; the database keeps only the token's fingerprint, and the game server accepts tokens only. The login service listens on this PC only until the friend tunnel exists.
+- Starting the server no longer resets the GM test account. That is now a separate dev-only step (`windows\Make-Test-Accounts.bat`); a brand-new database still gets it once so the PC has a way in.
+- New sign-up page at http://localhost:8080/signup (name, e-mail, password twice, at most three accounts an hour from one address).
+- Checked: the login service's self-test proves the token is never the password and only its hash is stored; the boot test fails if a normal start touches the test accounts or the server takes passwords. Logged in through your client with a real token. Boot test 105 in-game tests, 0 errors.

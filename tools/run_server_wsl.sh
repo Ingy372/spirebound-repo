@@ -23,7 +23,9 @@ python3 tools/build_server.py --offline || python3 tools/build_server.py
 B="$SB/.build/server"
 MY=(mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DATABASE")
 if ! "${MY[@]}" -N -e "SHOW TABLES LIKE 'server_config'" | grep -q server_config; then "${MY[@]}" < "$B/schema.sql"; fi
-"${MY[@]}" < server/sql/dev_accounts.sql
+# The test accounts are NOT re-created here any more (roadmap R4): run windows\Make-Test-Accounts.bat when needed.
+# First start on a fresh database only: make them once so the PC has a way in.
+if [[ "$("${MY[@]}" -N -e "SELECT COUNT(*) FROM accounts")" == "0" ]]; then bash tools/dev_accounts_wsl.sh "$SB"; fi
 pkill -f login_server.py 2>/dev/null || true
 python3 tools/login_server.py 8080 &
 LOGIN_PID=$!

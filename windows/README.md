@@ -14,3 +14,7 @@ How it fits together
 - `tools/winui/*.ps1` are small helpers Claude uses to drive and screenshot the client for testing.
 
 If something fails, copy the red text into `PLAYTEST.md` and Claude will fix it next session.
+
+## Accounts (2026-11-13)
+- **Make an account:** while the server is running, open http://localhost:8080/signup in a browser on this PC.
+- **Test accounts:** starting the server no longer resets the test account "jay". If you ever need it back, double-click `Make-Test-Accounts.bat` (local testing only; its password is public).
