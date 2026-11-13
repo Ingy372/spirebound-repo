@@ -18,6 +18,9 @@ end
 SpireTutorial.CHEESE = 3607 -- every Pen Rat drops one
 
 function SpireTutorial.done(player, step)
+	if step == "potion" and scope(player):get(step) ~= true and SpireTutorial.potionDrunk(player) then
+		scope(player):set("potion", true)
+	end
 	if step == "loot" and scope(player):get(step) ~= true and player:getItemCount(SpireTutorial.CHEESE) > 0 then
 		scope(player):set("loot", true) -- carrying a rat's cheese counts as looting (autoloot too)
 	end
@@ -69,6 +72,7 @@ function gate.onStepIn(creature, item, position, fromPosition)
 				end)
 				if not open and fromPosition.x < position.x then
 					player:teleportTo(fromPosition, true)
+					position:sendMagicEffect(CONST_ME_ENERGYHIT)
 					player:sendCancelMessage(SpireTutorial.HELP[missing])
 					return true
 				end
@@ -108,23 +112,24 @@ function loot.playerOnMoveItem(player, item, count, fromPosition, toPosition, fr
 end
 loot:register()
 
--- step 4: drink a potion (in the yard nobody has a healing spell yet, so any heal on yourself is the potion)
-local heal = CreatureEvent("SpireTutorialHeal")
-function heal.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-	if primaryType == COMBAT_HEALING and creature:isPlayer() and (attacker == nil or attacker == creature) then
-		SpireTutorial.mark(creature:getPlayer(), "potion")
-	end
-	return primaryDamage, primaryType, secondaryDamage, secondaryType
+-- step 4: drink a potion. Counted by the potion really leaving your backpack (playtest 2026-11-13: counting any heal
+-- let ordinary health regeneration open the gate).
+local POTION = 266
+function SpireTutorial.potionDrunk(player)
+	local base = scope(player):get("potionBase")
+	return base ~= nil and player:getItemCount(POTION) < base
 end
-heal:register()
 
 local login = CreatureEvent("SpireTutorialLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireTutorialKill")
-	player:registerEvent("SpireTutorialHeal")
-	if player:getVocation():getId() == 0 and not scope(player):get("potionGiven") then
-		player:addItem(266, 1) -- a health potion for the last gate
+	if player:getVocation():getId() == 0 and not scope(player):get("potionBase") then
+		scope(player):remove("potion") -- the old check could count regeneration as the potion: check it again
+		if player:getItemCount(POTION) == 0 then
+			player:addItem(POTION, 1) -- a health potion for the last gate
+		end
 		scope(player):set("potionGiven", true)
+		scope(player):set("potionBase", player:getItemCount(POTION))
 	end
 	return true
 end
@@ -144,3 +149,20 @@ function guard.onThink(interval)
 end
 guard:interval(5000)
 guard:register()
+
+-- something to see at each gate (Jay, 2026-11-13: "a door, a gate, a wall of fire or energy, anything will do"):
+-- a shimmering wall of energy across each gap. It never hurts; the gate check above is what stops you.
+local shimmer = GlobalEvent("SpireTutorialShimmer")
+function shimmer.onThink(interval)
+	for _, step in ipairs(SpireTutorial.STEPS) do
+		for i = 1, 2 do
+			local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
+			if p and #Game.getSpectators(p, false, true, 9, 9, 7, 7) > 0 then
+				p:sendMagicEffect(CONST_ME_ENERGYAREA)
+			end
+		end
+	end
+	return true
+end
+shimmer:interval(1200)
+shimmer:register()
