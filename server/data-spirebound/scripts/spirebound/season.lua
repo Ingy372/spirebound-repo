@@ -77,6 +77,9 @@ function calendar.onSay(player, words, param)
 		return true
 	end
 	local s = kv.scoped("spirebound-season")
+	if param == "start" or param == "stop" then
+		SpireMod.log(player:getName(), "calendar", param)
+	end
 	if param == "start" then
 		s:set("startedAt", os.time())
 	elseif param == "stop" then
@@ -99,6 +102,9 @@ local scope = TalkAction("/scope")
 function scope.onSay(player, words, param)
 	if not player:getGroup():getAccess() then
 		return true
+	end
+	if param == "test" or param == "launch" then
+		SpireMod.log(player:getName(), "scope", param)
 	end
 	if param == "test" then
 		kv.scoped("spirebound-scope"):set("friendsTest", true)

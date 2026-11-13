@@ -432,3 +432,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Q22 (assumed yes): the server now runs in "friends test" scope. Floors 3-10 stay sealed even if Floor 2's boss falls, and the Arena, the Spire Siege, the shop and the Season Path are off. You can switch with `/scope test` or `/scope launch`.
 - Floor 2's five camp monsters now each have one trick: the Horned Grazer charges, the Ridge Cat pounces, the Dust Strider kicks sand from range, the Hill Cutthroat has a war cry that hurts everyone near, the Blight Wasp spits blight. Floor 1's ladder already runs easy to hard (W9).
 - Cut, now task R13b: Floor 2 still uses the shared placeholder map; it needs its own hand-built layout like Floor 1's. Two new in-game tests. Boot test 135 in-game tests, 0 errors.
+
+### 2026-11-13: Moderation basics (roadmap R14)
+- Players can `!report <name>, <what happened>`; online gamemasters see it at once and `/reports` lists them. GMs can `/mute <name>, <minutes>` and `/unmute`. Every GM action (mute, restore, calendar, scope) goes into a log you can read with `/gmlog`.
+- Public chat (World, Mundo, Trade, Help, Looking for Group) blocks the worst words in English, Portuguese and Spanish, including digits swapped for letters. `!rules` shows the rules in game, new characters are pointed to them on first login, and the punishment ladder (warning, mutes, character ban, account ban, permanent) is written in `docs/RULES.md` and on the website rules page.
+- Two new in-game tests. Boot test 137 in-game tests, 0 errors. Who moderates, in which languages, is still Q23.

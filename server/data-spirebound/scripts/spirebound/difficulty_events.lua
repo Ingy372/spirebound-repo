@@ -148,7 +148,7 @@ function restore.onSay(player, words, param)
 	end
 	local ok, why = SpireDeathGame.restore(param or "")
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, ok and (param .. " is restored and may log in again.") or ("Not restored: " .. why))
-	logger.info("[Spirebound] GM {} used /restore {}: {}", player:getName(), param, ok and "restored" or why)
+	SpireMod.log(player:getName(), "restore", param, ok and "restored" or why)
 	return false
 end
 restore:separator(" ")

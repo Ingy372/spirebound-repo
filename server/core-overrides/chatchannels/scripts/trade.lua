@@ -1,4 +1,8 @@
 function onSpeak(player, type, message)
+	if SpireMod and SpireMod.blocked(message) and player:getGroup():getId() < GROUP_TYPE_GAMEMASTER then
+		player:sendCancelMessage("That word isn't allowed in public chat. Say !rules for the rules.")
+		return false
+	end
 	local playerGroupType = player:getGroup():getId()
 	if player:getLevel() == 1 and playerGroupType < GROUP_TYPE_GAMEMASTER then
 		player:sendCancelMessage("You may not speak into channels as long as you are on level 1.")
