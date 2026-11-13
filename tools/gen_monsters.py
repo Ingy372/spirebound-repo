@@ -274,6 +274,16 @@ GEAR = {2: [3352, 3359, 3282], 3: [3357, 3351, 3279, 3065, 3068], 4: [3370, 3371
 RANGED_WORDS = ("Archer", "Witch", "Wisp", "Imp", "Hag", "Wraith", "Shade", "Ghost", "Bat", "Wasp")
 
 
+# Floor 2's camp monsters, one trick each (R13). Each returns an attack row from the floor's base damage.
+TRICKS = {
+    "Horned Grazer": lambda d: ("charge", -d // 2, -int(d * 1.1), 3),     # lowers its horns and charges the tiles around
+    "Ridge Cat": lambda d: ("cleave", -d // 3, -d, 1),                   # pounces: a swipe that hits next to it
+    "Dust Strider": lambda d: ("earth", -d // 4, -d // 2, 5),            # kicks up sand from range
+    "Hill Cutthroat": lambda d: ("howl", -d // 3, -int(d * 0.8), 2),     # a war cry that hurts everyone near
+    "Blight Wasp": lambda d: ("earth", -d // 3, -d, 4),                  # spits blight from range
+}
+
+
 def floor_monsters():
     out = {}
     look_i = 0
@@ -330,6 +340,10 @@ def floor_monsters():
         for name, role in roles:
             m = out[name]
             m["xp"] = max(1, int(round(m["xp"] * scale)))
+            trick = TRICKS.get(name)
+            if trick:                                        # R13: one trick each, so every hunt plays differently
+                m["attacks"] = [a for a in m["attacks"] if a[0] == "melee"] + [trick(dmg0 if False else int(40 * n ** 1.3))]
+                m["voices"] = m.get("voices") or []
             if role in mult:
                 m["loot"] = balance.coin_loot(coins * mult[role]) + [l for l in m["loot"] if l[0] not in (GOLD, PLAT)]
     return out

@@ -148,6 +148,9 @@ function SpireSiege.begin()
 end
 
 function SpireSiege.open()
+	if SpireScope.off("siege") then -- R13: off for the friends test
+		return false
+	end
 	if SpireSiege.current then
 		return false
 	end

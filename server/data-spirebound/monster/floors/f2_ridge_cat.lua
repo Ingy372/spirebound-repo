@@ -44,6 +44,7 @@ monster.loot = {
 
 monster.attacks = {
 	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -88 },
+	{ name = "combat", type = COMBAT_PHYSICALDAMAGE, interval = 2000, chance = 15, minDamage = -33, maxDamage = -98, length = 3, spread = 0, target = false, effect = CONST_ME_HITAREA },
 }
 
 monster.defenses = {

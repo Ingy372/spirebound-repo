@@ -93,3 +93,23 @@ end
 calendar:separator(" ")
 calendar:groupType("god")
 calendar:register()
+
+-- R13: /scope test | launch | show (owner). "test" = the friends test (Floors 1-2, no arena, siege, shop or Season Path).
+local scope = TalkAction("/scope")
+function scope.onSay(player, words, param)
+	if not player:getGroup():getAccess() then
+		return true
+	end
+	if param == "test" then
+		kv.scoped("spirebound-scope"):set("friendsTest", true)
+	elseif param == "launch" then
+		kv.scoped("spirebound-scope"):set("friendsTest", false)
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, SpireScope.active()
+		and "Friends test: Floors 1-" .. SpireScope.MAX_FLOOR .. " only; arena, siege, shop and Season Path are off."
+		or "Launch scope: every floor and feature is on.")
+	return false
+end
+scope:separator(" ")
+scope:groupType("god")
+scope:register()

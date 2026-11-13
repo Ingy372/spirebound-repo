@@ -167,6 +167,9 @@ function SpireArena.begin()
 end
 
 function SpireArena.open(kind)
+	if SpireScope.off("arena") then -- R13: off for the friends test
+		return false
+	end
 	if SpireArena.current then
 		return false
 	end

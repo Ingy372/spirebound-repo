@@ -32,6 +32,9 @@ function Floors.isOpen(n)
 	if n == 1 then
 		return true
 	end
+	if SpireScope and SpireScope.floorSealed(n) then -- R13: the friends test is Floors 1-2 only
+		return false
+	end
 	return Floors.get(n - 1).bossDeadAt ~= nil
 end
 

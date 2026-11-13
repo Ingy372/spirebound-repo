@@ -104,6 +104,9 @@ end
 
 -- Count progress for a player. Botting (built-in cavebot) never counts towards the Path.
 function SpirePath.progress(player, track, n)
+	if SpireScope and SpireScope.off("seasonpath") then -- R13: off for the friends test
+		return
+	end
 	if SpireCavebot and SpireCavebot.blocksRewards(player) then
 		return
 	end
