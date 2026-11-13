@@ -90,7 +90,19 @@ SwordSkills.list = {
 }
 
 -- Twin Fang -----------------------------------------------------------------
-SwordSkills.TWIN_FANG = { MAX_HOLDERS = 3, SWORD_SKILL = 80, COMBOS = 1000, OFFHAND = 0.5 }
+-- R21 (Q18 assumed "style with a small edge"): the off-hand strike is 22% (was 50%), one-handed swords only,
+-- combos count only when they hit a real monster, and the trial is fought alone.
+SwordSkills.TWIN_FANG = { MAX_HOLDERS = 3, SWORD_SKILL = 80, COMBOS = 1000, OFFHAND = 0.22, TRIAL_RADIUS = 8 }
+
+-- Pure: does this hit earn the off-hand strike? facts = { sword, twoHanded, freeHand }
+function SwordSkills.offhandAllowed(f)
+	return f.sword == true and not f.twoHanded and f.freeHand == true
+end
+
+-- Pure: does this combo count toward the trial? target = { isMonster, isSummon, experience }
+function SwordSkills.comboCounts(target)
+	return target ~= nil and target.isMonster == true and not target.isSummon and (target.experience or 0) > 0
+end
 
 function SwordSkills.hasTwinFang(player)
 	return player:kv():scoped("spirebound-twinfang"):get("holder") == true

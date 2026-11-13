@@ -41,6 +41,7 @@ Gold has a real-money price once shop items can be sold for gold, which makes a 
 ### Q18. Twin Fang: real power or style? [2.5]
 As built, it's +50% damage on every melee hit for three players: the strongest build in the game.
 - **Recommendation:** style with a small edge: off-hand hit at 20–25%, one-handed swords only, trial solo. Keep it rare and flashy.
+- *Built 2026-11-13 (R21) as recommended: 22%.*
 - Jay's answer:
 
 ### Q19. Boss warning time [3.9]

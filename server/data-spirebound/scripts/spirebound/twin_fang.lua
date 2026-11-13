@@ -14,6 +14,15 @@ function tick.onThink(interval)
 	if not tp then
 		return true
 	end
+	for _, guid in pairs(challenger) do -- R21: the trial is fought alone
+		for _, other in ipairs(Game.getSpectators(tp, false, true, SwordSkills.TWIN_FANG.TRIAL_RADIUS, SwordSkills.TWIN_FANG.TRIAL_RADIUS,
+			SwordSkills.TWIN_FANG.TRIAL_RADIUS, SwordSkills.TWIN_FANG.TRIAL_RADIUS)) do
+			if other:getGuid() ~= guid and not other:getGroup():getAccess() then
+				other:teleportTo(other:getTown():getTemplePosition())
+				other:sendCancelMessage("The Twin Fang trial is fought alone.")
+			end
+		end
+	end
 	local tile = Tile(tp)
 	local p = tile and tile:getTopCreature()
 	p = p and p:getPlayer()
@@ -77,9 +86,13 @@ function offhand.onHealthChange(creature, attacker, primaryDamage, primaryType, 
 	local p = attacker and attacker:getPlayer()
 	if p and origin == ORIGIN_MELEE and primaryDamage > 0 and SwordSkills.hasTwinFang(p) then
 		local left, right = p:getSlotItem(CONST_SLOT_LEFT), p:getSlotItem(CONST_SLOT_RIGHT)
-		local sword = (left and left:getType():getWeaponType() == WEAPON_SWORD) or (right and right:getType():getWeaponType() == WEAPON_SWORD)
-		local free = not left or not right
-		if sword and free then
+		local blade = (left and left:getType():getWeaponType() == WEAPON_SWORD and left) or (right and right:getType():getWeaponType() == WEAPON_SWORD and right)
+		local two = false
+		if blade then
+			local it = blade:getType()
+			two = bit.band(it:getSlotPosition(), SLOTP_TWO_HAND) ~= 0
+		end
+		if SwordSkills.offhandAllowed({ sword = blade ~= nil and blade ~= false, twoHanded = two, freeHand = not left or not right }) then
 			local dmg = math.max(1, math.floor(primaryDamage * SwordSkills.TWIN_FANG.OFFHAND))
 			local pid, cid = p:getId(), creature:getId()
 			addEvent(function()

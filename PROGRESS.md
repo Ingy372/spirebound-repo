@@ -463,3 +463,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Memory: scripts that keep a note per player (combo chains, PvP damage, quest offers, bot watch, Second Wind...) now forget it when the player logs out, so the server no longer grows with every login.
 - The Fishing Derby pays a winner who logged off before the end: the 50,000 gold goes straight to the bank and the title waits for the next login.
 - The "Rapid Respawn" weekend bonus was promised but missing; it is now one of the five weekend bonuses: every hunting ground counts as packed (all extra groups out) and they come back twice as fast. "Faster respawn when a floor is busy" is the crowd system (W10). Three new in-game tests; boot test 150 in-game tests, 0 errors.
+
+### 2026-11-13: Twin Fang rebalance (roadmap R21)
+- Q18 (assumed "style with a small edge"): the off-hand strike is now 22% of the hit (was 50%, the strongest build in the game), only with a one-handed sword and a free hand. Sword-skill combos count toward the trial only when they hit a real monster (not a summon or a training dummy). The trial on Floor 8 is fought alone: anyone else who walks in during a fight is sent home.
+- New in-game test, including that the game itself knows which swords are two-handed. Boot test 151 in-game tests, 0 errors.

@@ -1,0 +1,13 @@
+-- Roadmap R21: the Twin Fang rebalance (Q18 assumed: style with a small edge).
+SpireTest.add("twin fang: a small off-hand edge, one-handed swords only, combos on real monsters", function()
+	SpireTest.eq(SwordSkills.TWIN_FANG.OFFHAND, 0.22, "the off-hand strike is 22% (was 50%)")
+	SpireTest.eq(SwordSkills.offhandAllowed({ sword = true, twoHanded = false, freeHand = true }), true, "a one-handed sword with a free hand")
+	SpireTest.eq(SwordSkills.offhandAllowed({ sword = true, twoHanded = true, freeHand = true }), false, "not a two-handed sword")
+	SpireTest.eq(SwordSkills.offhandAllowed({ sword = true, twoHanded = false, freeHand = false }), false, "not with a shield")
+	SpireTest.eq(bit.band(ItemType(3281):getSlotPosition(), SLOTP_TWO_HAND) ~= 0, true, "the game knows a giant sword is two-handed")
+	SpireTest.eq(bit.band(ItemType(3264):getSlotPosition(), SLOTP_TWO_HAND) ~= 0, false, "and a plain sword is not")
+	SpireTest.eq(SwordSkills.comboCounts({ isMonster = true, isSummon = false, experience = 40 }), true, "a combo on a boar counts")
+	SpireTest.eq(SwordSkills.comboCounts({ isMonster = true, isSummon = true, experience = 40 }), false, "not on a summon")
+	SpireTest.eq(SwordSkills.comboCounts({ isMonster = true, isSummon = false, experience = 0 }), false, "not on a training dummy")
+	SpireTest.eq(SwordSkills.comboCounts(nil), false, "not on thin air")
+end)

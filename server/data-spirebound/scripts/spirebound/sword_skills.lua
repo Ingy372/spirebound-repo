@@ -87,7 +87,11 @@ for i, def in ipairs(SwordSkills.list) do
 		if ok and SpireClient then
 			SpireClient.send(player, { t = "cast", name = def.name, cd = def.cd, combo = mult > 1 })
 		end
-		if mult > 1 then
+		local tg = player:getTarget()
+		local mt = tg and tg:isMonster() and tg:getType()
+		local real = SwordSkills.comboCounts(tg and { isMonster = tg:isMonster(), isSummon = tg:getMaster() ~= nil,
+			experience = mt and mt:experience() or 0 })
+		if mult > 1 and real then
 			local kvs = player:kv():scoped("spirebound-twinfang")
 			kvs:set("combos", (kvs:get("combos") or 0) + 1)
 			SpirePath.progress(player, "combo", 1)
