@@ -230,28 +230,44 @@ prep:register()
 local AMULET_OF_LOSS = 3057
 local DROP_SLOTS = { CONST_SLOT_HEAD, CONST_SLOT_NECKLACE, CONST_SLOT_ARMOR, CONST_SLOT_RIGHT, CONST_SLOT_LEFT, CONST_SLOT_LEGS, CONST_SLOT_FEET, CONST_SLOT_RING, CONST_SLOT_AMMO }
 
-local drop = CreatureEvent("SpireHardcoreItemDrop")
-function drop.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
-	if not corpse or Difficulty.get(player) ~= Difficulty.HARDCORE then
-		return true
+-- Roadmap R6: the extra Hardcore item drop. Its arguments were in the wrong order (blessings were ignored and a
+-- skulled death raised an error); now each one is passed by name. Returns how many items fell into the corpse.
+function SpireHardcore.onDeath(player, corpse, mode)
+	if not corpse or (mode or Difficulty.get(player)) ~= Difficulty.HARDCORE then
+		return 0
 	end
 	local neck = player:getSlotItem(CONST_SLOT_NECKLACE)
 	if neck and neck:getId() == AMULET_OF_LOSS then
 		neck:remove() -- no amulet protects a Hardcore character (DESIGN.md 5.5)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your amulet of loss shatters. It cannot protect a Hardcore climber.")
 	end
+	local blessings = 0
+	for b = 1, 8 do
+		if player:hasBlessing(b) then
+			blessings = blessings + 1
+		end
+	end
 	local skull = player:getSkull()
 	local tile = Tile(player:getPosition())
-	local chance = Difficulty.extraItemDropChance(Difficulty.HARDCORE, skull == SKULL_RED or skull == SKULL_BLACK, tile and tile:hasFlag(TILESTATE_PVPZONE))
+	local chance = Difficulty.extraItemDropChance(Difficulty.HARDCORE, blessings, false, skull == SKULL_RED or skull == SKULL_BLACK,
+		tile ~= nil and tile:hasFlag(TILESTATE_PVPZONE))
 	if chance <= 0 then
-		return true
+		return 0
 	end
+	local dropped = 0
 	for _, slot in ipairs(DROP_SLOTS) do
 		local item = player:getSlotItem(slot)
 		if item and math.random(1, 1000) <= chance * 10 then
 			item:moveTo(corpse)
+			dropped = dropped + 1
 		end
 	end
+	return dropped
+end
+
+local drop = CreatureEvent("SpireHardcoreItemDrop")
+function drop.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
+	SpireHardcore.onDeath(player, corpse)
 	return true
 end
 drop:register()
