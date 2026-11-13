@@ -269,13 +269,12 @@ local function registerFloor(n, f)
 				SpireGates.open(P .. "gate_next")
 				Floors.announceClear(n, credit)
 				for _, name in ipairs(credit) do
-					local p = Player(name)
-					if p and Floors.titles[n] then
-						p:kv():scoped("spirebound-titles"):set(Floors.titles[n], os.time())
+					if Floors.titles[n] then
+						SpireBoss.grantTitle(name, Floors.titles[n])
 					end
 				end
-				if lastHit and Player(lastHit) then
-					Player(lastHit):kv():scoped("spirebound-titles"):set("Last Blow (Floor " .. n .. ")", os.time())
+				if lastHit then
+					SpireBoss.grantTitle(lastHit, "Last Blow (Floor " .. n .. ")")
 				end
 				local town = SpireHouses.floorTown[n + 1]
 				if town then

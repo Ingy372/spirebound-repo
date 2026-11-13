@@ -756,7 +756,8 @@ def build(m):
     m.points["boss_room_floor1"] = (bx + 15, by + 12, bz)
     m.points["boss_room_floor1_nw"] = (bx + 1, by + 1, bz)
     m.points["boss_room_floor1_se"] = (bx + 28, by + 22, bz)
-    m.sign(bx + 13, by + 21, bz, "Beyond this door the tower's protection ends.")
+    m.sign(bx + 13, by + 21, bz, "Beyond this door the tower's protection ends. Once this floor is cleared, a party of 1 to 5 "
+           "can say !private at the top of the labyrinth to face the Axe-Lord in a hall of its own (once a day).")
     # stair to floor 2 (sealed by a boulder until the first clear)
     m.put(bx + 15, by + 2, bz, 1772)
     m.points["gate_floor2"] = (bx + 15, by + 2, bz)
@@ -773,6 +774,24 @@ def build(m):
     S.prop(m, bx + 17, by + 5, bz, DG.THRONE)
     DG.scatter(m, bx + 2, by + 4, 26, 18, bz, DG.BONES, 18, avoid=hall_out)
     DG.hang(m, bx, by + 2, 30, 22, bz, every=4, h_item=DG.CHAINS_H, v_item=DG.TORCH_V)
+
+    # the private hall (roadmap R9): the same boss for one party at a time, once a day per character
+    qx, qy = bx, by + 30
+    m.fill(qx, qy, 30, 24, bz, "blackmarble")
+    m.walls(qx, qy, 30, 24, bz, style="stone")
+    m.points["boss_private_floor1"] = (qx + 15, qy + 10, bz)
+    m.points["boss_private_floor1_nw"] = (qx + 1, qy + 1, bz)
+    m.points["boss_private_floor1_se"] = (qx + 28, qy + 22, bz)
+    m.teleport((qx + 15, qy + 21, bz), (x3[0] + 1, x3[1], 5), "boss_private_floor1_exit")
+    m.sign(qx + 13, qy + 21, bz, "The private hall. When the fight is done, step on the light to leave.")
+    priv_out = DG.keep_clear(m, bz)
+    for qx_, qy_ in ((qx + 3, qy + 4), (qx + 26, qy + 4), (qx + 3, qy + 20), (qx + 26, qy + 20)):
+        S.prop(m, qx_, qy_, bz, DG.COAL_BASIN)
+    for yy_ in range(qy + 6, qy + 20, 4):
+        for xx_ in (qx + 7, qx + 22):
+            S.prop(m, xx_, yy_, bz, DG.PILLAR)
+    DG.hang(m, qx, qy, 30, 24, bz, every=4, h_item=DG.CHAINS_H, v_item=DG.TORCH_V)
+    private_hall = (qx, qy)
 
     # stair to floor 2: linked to Floor 2's landing by tools/mapgen.py (link_floors)
     m.points["stair_floor2_src"] = (bx + 15, by + 1, bz)
@@ -796,6 +815,7 @@ def build(m):
     m.zone("deadzone", cx, cy, 44, 44, 8)                            # the cliff caves below
     m.zone("bossroom", px, py, 24, 20, 7)                            # the Pass arena
     m.zone("bossroom", bx, by, 30, 24, 4)                            # the Axe-Lord's room
+    m.zone("bossroom", private_hall[0], private_hall[1], 30, 24, 4)    # the Axe-Lord's private hall (R9)
     for lvl in (7, 6, 5):                                             # the towns' upstairs rooms are town too
         m.zone("town", tx, ty, tw, th, lvl)
         m.zone("town", mx, my, mw, mh, lvl)

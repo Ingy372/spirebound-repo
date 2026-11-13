@@ -16,6 +16,7 @@ Every ground is now a walled place with ring trails (see the playtest list in WE
 ### Q13. Calendar gate on floor bosses? [1.4]
 Nothing stops a big guild finishing all 10 floors in the first week or two, and then the season's story is over.
 - **Recommendation:** yes. Each floor boss room unseals on a date (Floor 2 no earlier than day 3, then one floor every 5–7 days). Every unlock becomes an event. Also drop the "25 floors per season" promise; say "10 floors, more if the season goes well".
+- *Built 2026-11-13 (R9) as recommended, with 6 days between floors. It only runs after you start a season with `/calendar start`, so test boss runs on your PC are never blocked.*
 - Jay's answer:
 
 ### Q14. Death Game: what does stepping down cost, and what happens on a lag/crash death? [2.7, 3.4]
@@ -45,6 +46,7 @@ As built, it's +50% damage on every melee hit for three players: the strongest b
 ### Q19. Boss warning time [3.9]
 Big hits land 0.6 s after the warning; players far from the server have about a third of a second.
 - **Recommendation:** 1.0 s for hits that can kill, 0.6 s for the rest. Decide after one boss fight.
+- *Built 2026-11-13 (R9) as recommended: marked hits of 250 or more get 1.0 s.*
 - Jay's answer:
 
 ### Q20. Houses: many more, or rentable rooms? [3.7]

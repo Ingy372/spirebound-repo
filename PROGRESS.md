@@ -407,3 +407,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Saving at the big moments (roadmap R8)
 - The whole server now saves at once after a field boss's first kill, a floor clear, a Death Game retirement, a shop purchase and a secret sale, so a crash can't undo them. Moments a few seconds apart share one save.
 - Found that Canary's own "save interval" only runs once a day at the global save time; the server now also saves quietly every 10 minutes. New in-game test goes through the real floor-state calls and counts the saves. Boot test 118 in-game tests, 0 errors.
+
+### 2026-11-13: The boss system finished (roadmap R9)
+- Credit: healing the fighters and soaking the boss's hits now count (soaking at half), and you need at least 2% of the fight's total to be credited, so a token hit earns nothing. Titles for players who were offline at the kill wait for their next login. The enrage timer now follows the most players present at any time, and a boss room holds 20 at most (late arrivals are sent back out).
+- Q19 (assumed): marked hits that can kill (250 or more) wait 1.0 s, the rest 0.6 s. Q13 (assumed): each floor's boss hall unseals on its day of the season (Floor 1 on day 3, then every 6 days), once a season is started with `/calendar start`; until then nothing is sealed.
+- Private repeat kills: after Floor 1 is cleared, a party leader with 1 to 5 players says `!private` at the top of the labyrinth to fight the Axe-Lord in a new private hall, once per character every 20 hours, with no world-first actions. Six new in-game tests; boot test 124 in-game tests, 0 errors. A real boss fight in the client is still part of R0.

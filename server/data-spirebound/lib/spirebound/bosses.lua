@@ -9,6 +9,15 @@ SpireBoss = {
 	ENRAGE_STEP = 30, -- seconds between enrage damage steps
 	ENRAGE_BONUS = 0.5, -- +50% boss damage per step
 	REPEAT_RESPAWN = 30 * 60, -- floor boss respawn after a kill (repeat kills give no first-clear rewards)
+	-- roadmap R9 (REVIEW 3.9, 1.4)
+	MIN_SHARE = 0.02, -- you need at least 2% of the fight's total contribution to be credited
+	TAKEN_WEIGHT = 0.5, -- damage you soak from the boss counts half
+	ROOM_CAP = 20, -- players allowed in a boss room at once
+	LETHAL_HIT = 250, -- a marked hit this strong may kill: it gets the longer warning (Q19)
+	WARN_LETHAL_MS = 1000,
+	LOCKOUT = 20 * 3600, -- private repeat kill: once per character every 20 hours
+	PRIVATE_MAX = 5,
+	CALENDAR_FIRST_DAY = 2, CALENDAR_STEP_DAYS = 6, -- Q13: Floor 1's boss unseals on day 3, then one floor every 6 days
 	defs = {}, -- boss name -> definition (registered in scripts/spirebound/bosses_floor1.lua)
 	fights = {}, -- monster id -> live fight state
 }
@@ -26,15 +35,92 @@ function SpireBoss.recordHit(state, playerName, amount, now)
 	state.lastPlayerDamage = now
 end
 
--- Pure: credited names at kill time (hit within the credit window), top 20 by total contribution.
+-- Pure: credited names at kill time: took part within the credit window and did at least MIN_SHARE of everything
+-- (damage to the boss, healing of the fighters, half the damage soaked), top 20 by total contribution.
 function SpireBoss.credited(state, now)
-	local list = {}
+	local list, total = {}, 0
+	for _, h in pairs(state.hits) do
+		total = total + h.total
+	end
 	for name, h in pairs(state.hits) do
-		if now - h.last <= SpireBoss.CREDIT_WINDOW then
+		if now - h.last <= SpireBoss.CREDIT_WINDOW and h.total >= total * SpireBoss.MIN_SHARE then
 			table.insert(list, { name = name, amount = h.total })
 		end
 	end
 	return Floors.rankCredit(list)
+end
+
+-- Pure: how long a marked hit waits before it lands (Q19: longer for hits that can kill)
+function SpireBoss.warningMs(maxDamage)
+	return math.abs(maxDamage or 0) >= SpireBoss.LETHAL_HIT and SpireBoss.WARN_LETHAL_MS or SpireBoss.TELEGRAPH_MS
+end
+
+-- Pure-ish: when floor n's boss room unseals this season (Q13). nil = no season start set (no calendar gate).
+function SpireBoss.calendarOpensAt(n)
+	local start = kv.scoped("spirebound-season"):get("startedAt")
+	if not start then
+		return nil
+	end
+	return start + (SpireBoss.CALENDAR_FIRST_DAY + (n - 1) * SpireBoss.CALENDAR_STEP_DAYS) * 86400
+end
+
+function SpireBoss.calendarOpen(n, now)
+	local at = SpireBoss.calendarOpensAt(n)
+	return at == nil or now >= at, at
+end
+
+-- Pure: may this party start a private repeat kill? members = { { name, lockedAt } }, all = within reach of the leader
+function SpireBoss.privateCheck(members, allNear, floorCleared, roomBusy, now)
+	if not floorCleared then
+		return false, "The private hall opens only after this floor has been cleared."
+	end
+	if roomBusy then
+		return false, "Another party is in the private hall. Try again soon."
+	end
+	if #members < 1 or #members > SpireBoss.PRIVATE_MAX then
+		return false, "Bring a party of 1 to " .. SpireBoss.PRIVATE_MAX .. "."
+	end
+	if not allNear then
+		return false, "Your whole party must stand with you."
+	end
+	for _, m in ipairs(members) do
+		if m.lockedAt and now - m.lockedAt < SpireBoss.LOCKOUT then
+			local h = math.ceil((SpireBoss.LOCKOUT - (now - m.lockedAt)) / 3600)
+			return false, m.name .. " fought here less than 20 hours ago (" .. h .. " h left)."
+		end
+	end
+	return true
+end
+
+-- Titles and rewards for players who were offline at the kill wait for their next login (R9)
+local function pending()
+	return kv.scoped("spirebound-boss-pending")
+end
+
+function SpireBoss.grantTitle(name, title)
+	local p = Player(name)
+	if p then
+		p:kv():scoped("spirebound-titles"):set(title, os.time())
+		p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You earned the title " .. title .. ".")
+		return true
+	end
+	local list = pending():get(name) or {}
+	table.insert(list, title)
+	pending():set(name, list)
+	return false
+end
+
+function SpireBoss.applyPending(player)
+	local list = pending():get(player:getName())
+	if not list then
+		return 0
+	end
+	for _, title in ipairs(list) do
+		player:kv():scoped("spirebound-titles"):set(title, os.time())
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "While you were away, the tower remembered you: title " .. title .. ".")
+	end
+	pending():remove(player:getName())
+	return #list
 end
 
 -- Pure: should the boss reset?
@@ -85,7 +171,7 @@ function SpireBoss.playersInArea(nw, se)
 	return list
 end
 
--- Telegraphed hit: show a warning on the tiles, damage whoever still stands there TELEGRAPH_MS later.
+-- Telegraphed hit: show a warning on the tiles, damage whoever still stands there after the warning (warningMs).
 function SpireBoss.markTiles(bossId, tiles, minDmg, maxDmg)
 	for _, pos in ipairs(tiles) do
 		pos:sendMagicEffect(CONST_ME_REDSMOKE)
@@ -106,7 +192,7 @@ function SpireBoss.markTiles(bossId, tiles, minDmg, maxDmg)
 				end
 			end
 		end
-	end, SpireBoss.TELEGRAPH_MS)
+	end, SpireBoss.warningMs(math.max(math.abs(minDmg or 0), math.abs(maxDmg or 0))))
 end
 
 function SpireBoss.spawn(name)

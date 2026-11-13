@@ -4,7 +4,7 @@ SpireTest.add("bosses: credit needs a hit in the last 90 s, top contributors fir
 	SpireBoss.recordHit(s, "Early", 5000, 100) -- hit long ago only
 	SpireBoss.recordHit(s, "Tank", 800, 920)
 	SpireBoss.recordHit(s, "Mage", 3000, 950)
-	SpireBoss.recordHit(s, "Healer", 10, 990)
+	SpireBoss.recordHit(s, "Healer", 300, 990) -- healing counts toward credit (R9)
 	local credit = SpireBoss.credited(s, 1000)
 	SpireTest.eq(#credit, 3, "three credited")
 	SpireTest.eq(credit[1], "Mage", "biggest damage first")

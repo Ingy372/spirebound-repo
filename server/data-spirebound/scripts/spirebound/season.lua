@@ -69,3 +69,27 @@ function login.onLogin(player)
 	return true
 end
 login:register()
+
+-- Q13: /calendar start | stop | show (owner). The floor boss halls unseal on their day once a season has started.
+local calendar = TalkAction("/calendar")
+function calendar.onSay(player, words, param)
+	if not player:getGroup():getAccess() then
+		return true
+	end
+	local s = kv.scoped("spirebound-season")
+	if param == "start" then
+		s:set("startedAt", os.time())
+	elseif param == "stop" then
+		s:remove("startedAt")
+	end
+	local lines = {}
+	for n = 1, 10 do
+		local at = SpireBoss.calendarOpensAt(n)
+		table.insert(lines, "Floor " .. n .. ": " .. (at and os.date("%d %b %H:%M", at) or "no gate"))
+	end
+	player:showTextDialog(2821, "Boss hall calendar\n" .. table.concat(lines, "\n"))
+	return false
+end
+calendar:separator(" ")
+calendar:groupType("god")
+calendar:register()
