@@ -53,6 +53,7 @@ ID = {
     "rocksoil": [4394, 4395],
     "earth": [280],
     "swamp": [6352],
+    "deepswamp": [4680, 4740, 4741],     # deep swamp: cannot be walked on (Reedmarsh's walls)
     "snow": [799, 6594, 6595],
     "blackmarble": [410],
     "mountain": [1128],

@@ -14,7 +14,8 @@ import wilds  # noqa: E402
 from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 # hunting grounds already rebuilt as walled places with four loops (FLOOR1_WILDS_PLAN.md); the rest still use camp()
-REBUILT = {"boar_meadow", "starter_west", "starter_east", "starter_south", "wasp_fields"}
+REBUILT = {"boar_meadow", "starter_west", "starter_east", "starter_south", "wasp_fields",
+           "burrow_hills", "wolf_copse", "reed_marsh", "thornsnap_hollow"}
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
@@ -600,18 +601,17 @@ def build(m):
     m.road((tx + tw // 2 + 1, ty + th), (tx + tw // 2 + 1, Y0 + 372), Z)     # south road
     m.road((X0 + 60, Y0 + 220), (X0 + 130, Y0 + 220), Z)                    # Millcross to the river bank
     m.road((X0 + 130, Y0 + 220), (tx - 60, ty + th // 2 + 1), Z)            # river bank to the west road
-    m.road((tx + tw // 2, Y0 + 205), (X0 + 280, Y0 + 205), Z)               # north road east to the Burrow Hills
-    m.road((X0 + 280, Y0 + 205), (X0 + 280, Y0 + 150), Z)                   # ... and on to the quarry
     m.road((tx + tw + 60, ty + th // 2 + 1), (X0 + 345, ty + th // 2 + 1), Z) # east road on towards the bandits and shards
     m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 232), Z)
     m.road((tx + tw // 2, Y0 + 368), (X0 + 345, Y0 + 368), Z)               # south road east to the Shard Fields
     m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 368), Z)
-    m.road((X0 + 70, Y0 + 235), (X0 + 70, Y0 + 330), Z)                     # Millcross south to the Wolf Copse and Reedmarsh
-    m.road((tx + tw // 2, Y0 + 110), (X0 + 160, Y0 + 110), Z)               # north road west to the Thornsnap Hollow
-    m.road((X0 + 160, Y0 + 110), (X0 + 160, Y0 + 140), Z)
     # gate trails (2 wide) from the roads to the hunting grounds' gates (FLOOR1_WILDS_PLAN.md 4.2)
-    for a, b in (((153, 284), (153, 282)), ((315, 284), (315, 282)), ((231, 335), (209, 337)), ((231, 211), (228, 211))):
+    for a, b in (((153, 284), (153, 282)), ((315, 284), (315, 282)), ((231, 335), (209, 337)), ((231, 211), (228, 211)),
+                 ((234, 208), (239, 208)), ((230, 152), (218, 152)), ((92, 282), (88, 282))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
+    # Copse Road: Millcross's south side down past Wolf Copse to the Reedmarsh gate
+    for a, b in (((70, 239), (92, 250)), ((92, 250), (92, 310)), ((92, 310), (70, 318)), ((70, 318), (70, 321))):
+        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=3, wind=False)
     # Cabin Lane: from the west cabins' back lane down to the Boar Meadow gate (a 2-wide trail)
     m.road((X0 + 172, Y0 + 304), (X0 + 172, Y0 + 314), Z, width=2, wind=False)
     m.road((X0 + 172, Y0 + 314), (X0 + 159, Y0 + 337), Z, width=2, wind=False)
@@ -858,6 +858,11 @@ def build(m):
 
     # ------------------------------------------------ Floor 1 secrets (DESIGN.md 8.1). Trigger tiles only; no markers.
     def secret(sid, x, y, z=Z):
+        for L in getattr(m, "wilds", []):                 # inside a walled ground a secret must sit on its trails
+            if (x, y) in L["rect"] and (x, y) not in L["open"]:
+                nx, ny = min(L["open"], key=lambda t: (t[0] - x) ** 2 + (t[1] - y) ** 2)
+                print(f"secret {sid} moved from {(x - X0, y - Y0)} to {(nx - X0, ny - Y0)} (onto a trail in {L['id']})")
+                x, y = nx, ny
         if (x, y, z) not in m.ground:
             raise ValueError(f"secret {sid} has no ground at {(x, y, z)}")
         m.clear_items(x, y, z)  # trigger tiles must be walkable

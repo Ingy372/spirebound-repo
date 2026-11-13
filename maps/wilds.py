@@ -35,24 +35,24 @@ SOLID = {
     "firs": ("grass", FIRS + [3751], FIRS, None),
     "thorns": ("grass", S.THORNS + [3698], S.THORNS + [3623, 3624], None),
     "boulders": ("grass", ROCKS, [], "mountain"),
-    "water": ("grass", REEDS + [3623, 3624, 958], [], "water"),
+    "water": ("deepswamp", REEDS + [3623, 3624, 958], [], "water"),
 }
 CORE = {
     "mounds": ("grass", [3681, 3699, 3681, 1772, 1843], TREES_ALL_BROAD + [3681, 1783], None),
-    "pond": ("mud", REEDS + [3681], [], "water"),
+    "pond": ("grass", REEDS + [3681], [], "water"),
     "grove": ("grass", [3751, 3754, 3681, 3699], [3625, 3617, 3619, 3620], None),
     "flowerbed": ("grass", [3681, 3699, 3700], S.FLOWERS, None),          # flowers inside a hedge, a tree in the middle
     "oakgrove": ("grass", TREES_ALL_BROAD + [3681], TREES_ALL_BROAD, None),
     "hills": ("dirt", ROCKS, [], "mountain"),
     "firs": ("grass", FIRS, FIRS, None),
-    "pool": ("mud", REEDS + [958], [], "water"),
+    "pool": ("deepswamp", REEDS + [958], [], "water"),
     "thorns": ("grass", S.THORNS, S.THORNS, None),
     "gravelmound": ("gravel", ROCKS, [], "mountain"),
     "banditcamp": ("dirt", [17233], [5543, 116, 2519, 2523, 116], None),      # a fenced heap; the fence is set in build()
     "cutstone": ("gravel", [1822, 2264, 2290, 1859], [], "mountain"),
 }
-TRAIL_GROUND = {"dirt": "dirt", "grass": "grass", "mud": "mud", "gravel": "gravel"}
-WALKOVER = {"dirt": S.STONES + [3114, 3115], "grass": S.FLOWERS + [3737], "mud": [3737, 3115], "gravel": S.STONES + [6475]}
+TRAIL_GROUND = {"dirt": "dirt", "grass": "grass", "mud": "dirt", "gravel": "gravel"}   # outdoor "mud" = dirt
+WALKOVER = {"dirt": S.STONES + [3114, 3115], "grass": S.FLOWERS + [3737], "gravel": S.STONES + [6475]}
 SIDE_NAMES = {(0, 0): "nw", (1, 0): "ne", (0, 1): "sw", (1, 1): "se"}
 SIDE_WORDS = {"nw": "north-west", "ne": "north-east", "sw": "south-west", "se": "south-east"}
 D4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -260,7 +260,10 @@ def _mass(m, tiles, rect, spec, rng, ground_key=None, deep=False):
             m.ground[(t[0], t[1], Z)] = MOUNTAIN if edge == "mountain" else m.pick("water")
         covered = {(t[0] + a, t[1] + b) for t in core for a, b in D8}
         for t in tiles - core:
-            if t not in covered:                               # a thin bit with no rock/water beside it: a stone or reed
+            if gkey == "deepswamp":                            # deep swamp blocks by itself: reeds and dead trees here and there
+                if rng.random() < 0.35:
+                    m.put(t[0], t[1], Z, rng.choice(rim_items))
+            elif t not in covered:                             # a thin bit with no rock/water beside it: a stone or reed
                 m.put(t[0], t[1], Z, rng.choice(rim_items))
         return
     for t in tiles:

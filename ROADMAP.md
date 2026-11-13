@@ -219,7 +219,7 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 - [x] **W2 Builder pieces:** wall ring, loop, fixed groups, named points, the walk test.
 - [x] **W3 Pilot: Boar Meadow** with Old Tusk's wallow.
 - [x] **W4 The four starter grounds.**
-- [ ] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
+- [x] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
 - [ ] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
 - [ ] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
 - [ ] **W8 The six caves.**
