@@ -79,7 +79,7 @@ ID = {
 FAMILIES = {
     "brick":  dict(v=1270, h=1271, pole=1272, corner=1274, wh=1736, wv=1737, door_h=5099, door_v=5108),
     "stone":  dict(v=1294, h=1295, pole=1296, corner=1298, wh=1738, wv=1739, door_h=6253, door_v=6255),
-    "timber": dict(v=1281, h=1282, pole=1283, corner=1285, wh=1734, wv=1735, door_h=1649, door_v=1647),
+    "timber": dict(v=1281, h=1282, pole=1283, corner=1285, wh=1734, wv=1735, door_h=1641, door_v=1639),
     "sand":   dict(v=1305, h=1306, pole=1307, corner=1309, wh=1744, wv=1745, door_h=1655, door_v=1657),
     "white":  dict(v=1356, h=1357, pole=1358, corner=1360, wh=1740, wv=1741, door_h=1673, door_v=1670),
     "pale":   dict(v=1450, h=1451, pole=1452, corner=1454, wh=None, wv=None, door_h=1482, door_v=1484),
@@ -677,6 +677,16 @@ class Map:
         lua.append("WorldZones = {")
         for tier, x1, y1, x2, y2, z in self.zones:
             lua.append(f'\t{{ tier = "{tier}", x1 = {x1}, y1 = {y1}, x2 = {x2}, y2 = {y2}, z = {-1 if z is None else z} }},')
+        lua.append("}")
+        # House doors as the map has them. Canary saves house tiles (doors included) in the database and puts the
+        # saved door back on every start, so an older map's door would win; scripts/spirebound/house_doors.lua uses
+        # this list to put the map's door back (Jay's playtest 2026-11-13: shops kept a "gate of expertise").
+        door_ids = {f[k] for f in FAMILIES.values() for k in ("door_h", "door_v")}
+        lua.append("HouseDoors = {")
+        for p in sorted(self.house):
+            for iid, _ in self.items.get(p, []):
+                if iid in door_ids:
+                    lua.append(f"\t{{ {p[0]}, {p[1]}, {p[2]}, {iid} }},")
         lua.append("}")
         (LIB / "world_points.lua").write_text("\n".join(lua) + "\n")
         return out

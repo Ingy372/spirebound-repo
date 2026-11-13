@@ -479,3 +479,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 
 ### 2026-11-13: Spells unlock by level alone (Jay's playtest)
 - Jay: "all spells are still telling me 'you must learn this first' even if i have level required." Canary has a server-wide setting that makes every spell need learning and ignores each spell's own "no learning" flag; it was left on. It is now off, so reaching the level is enough. New in-game test checks the setting and every spell; boot test 154 in-game tests, 0 errors.
+
+### 2026-11-13: Shop and house doors open again (Jay's playtest)
+- Jay: "a gate of expertise is set up here instead of a regular door... it currently doesnt allow me to enter into the shops." Two causes: the timber wall style used the level-locked "gate of expertise" as its door (now the ordinary timber door), and the server saves house doors in the database and puts the saved one back on every start, so old gates kept returning even after a map fix. The map now lists every house door and the server puts the map's door back on start (furniture untouched; a door its owner closed stays closed). New test: no locked door anywhere in Hearthgate. Boot test 155 in-game tests, 0 errors.

@@ -27,3 +27,33 @@ SpireTest.add("house fixtures: kits, trophies, pond, mannequins, Housewright", f
 	local found = Npc("Housewright Orla") ~= nil
 	SpireTest.eq(found, true, "Housewright Orla stands in Hearthgate")
 end)
+
+-- Jay's playtest 2026-11-13: timber shops had a "gate of expertise" (level door) that refused everyone.
+-- No level or quest door may stand in Hearthgate unless a script gave it a level/quest number.
+SpireTest.add("hearthgate: every door is an ordinary door", function()
+	local locked = {}
+	for _, t in ipairs({ LevelDoorTable, QuestDoorTable }) do
+		for _, d in ipairs(t) do
+			if d.openDoor then locked[d.openDoor] = true end
+			if d.closedDoor then locked[d.closedDoor] = true end
+		end
+	end
+	local bad, doors = {}, 0
+	for z = 5, 7 do
+		for x = 1176, 1176 + 112 do
+			for y = 1236, 1236 + 96 do
+				local tile = Tile(Position(x, y, z))
+				if tile then
+					for _, item in ipairs(tile:getItems() or {}) do
+						if item:getType():isDoor() then doors = doors + 1 end
+						if locked[item:getId()] and item:getActionId() == 0 then
+							table.insert(bad, string.format("%d at %d,%d,%d", item:getId(), x, y, z))
+						end
+					end
+				end
+			end
+		end
+	end
+	if doors < 20 then error("only " .. doors .. " doors found in Hearthgate") end
+	if #bad > 0 then error("locked doors: " .. table.concat(bad, "; ", 1, math.min(#bad, 5))) end
+end)
