@@ -34,7 +34,7 @@ local VOCATIONS = {
 -- Starter kits (client item ids, Tibia 15.11)
 local KITS = {
 	[4] = { { 3264, 1 }, { 3412, 1 } }, -- sword, wooden shield
-	[3] = { { 3350, 1 }, { 3447, 100 }, { 3277, 2 } }, -- bow, arrows, spears
+	[3] = { { 3350, 1 }, { 3277, 2 } }, -- bow and spears; the arrows come inside a quiver (giveKit below)
 	[1] = { { 3074, 1 } }, -- wand of vortex
 	[2] = { { 3066, 1 } }, -- snakebite rod
 }
@@ -54,6 +54,9 @@ local function giveKit(player, vocId)
 		for _, entry in ipairs(list) do
 			player:addItem(entry[1], entry[2])
 		end
+	end
+	if vocId == 3 then
+		SpireQuiver.give(player, 100) -- a bow only fires from a quiver in the shield hand (Jay's playtest, 2026-11-13)
 	end
 	if SpireGuide then
 		SpireGuide.giveLetter(player) -- lore and first steps

@@ -473,3 +473,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 
 ### 2026-11-13: Early attack spells for Rangers and Vanguards (Jay's playtest)
 - Jay: "there are no combat or attack spells in the beginning... so the players have something to attack with besides basic attacks once reaching level 8." Mages already had one at 8; now Rangers get Piercing Shot (level 8, one target) and Scatter Shot (16, a spread in front), and Vanguards get Heavy Strike (8, melee range) and Whirlwind (16, everything around you). Their damage grows with the distance or melee skill instead of magic level. DESIGN.md 5.3b updated; new in-game test; boot test 152 in-game tests, 0 errors.
+
+### 2026-11-13: Quivers for Rangers (Jay's playtest)
+- Jay: "there is no way to equip arrows for the ranger". In this game version arrows don't fit the old arrow slot; a bow fires only from a quiver worn in the shield hand, and Rangers started with no quiver. New Rangers now get a quiver with their 100 arrows inside, Rangers made before this get an empty quiver at their next login, Fletcher Tamsin sells quivers for 150 gold, and the Journal's "How do I" page explains it. New in-game test; boot test 153 in-game tests, 0 errors.

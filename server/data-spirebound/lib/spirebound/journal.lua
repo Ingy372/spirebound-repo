@@ -130,6 +130,7 @@ SpireJournal.HOWTO = {
 	"How do I loot? Right-click the body and drag what you want into your backpack. !autoloot can do it for you.",
 	"How do I heal? Drink a health potion, or use your path's healing spell (say !spells). Rest in town to regain health.",
 	"Where do I hunt? Say !hunt: it names the best ground for your level, and the signposts on the roads point the way.",
+	"How do Rangers use arrows? Put them in a quiver and wear the quiver in your shield hand: the bow fires from it. Fletcher Tamsin sells both.",
 	"How do sword skills work? Hold the right weapon and press Shift+1..6. Opener, then Link, then Finisher for a combo.",
 	"Where do I learn spells? Nobody sells them: you learn them on your own as you level. Say !spells for the list.",
 	"Where is my gold? At Banker Tolliver in the Hearth. Say balance, deposit or withdraw. The account vault is shared by your characters.",

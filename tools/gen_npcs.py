@@ -63,7 +63,7 @@ NPCS = {
         name="Fletcher Tamsin", desc="the fletcher", look=(137, 59, 63, 58, 114, 0),
         greet="Arrows, bolts and spears, |PLAYERNAME|. Bring materials and I'll {craft} better ones. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
         voices=["Fresh-cut arrows!", "Bolts, a hundred at a time!"],
-        shop=[("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120)]),
+        shop=[("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("quiver", 35562, 150, None)]),
     "hearthgate_alchemist": dict(
         name="Alchemist Ivo", desc="the alchemist", look=(130, 0, 87, 87, 95, 0),
         greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them, or bring materials and I'll {craft} strong potions cheaply. Ask for a {trade}.",
