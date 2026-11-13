@@ -467,3 +467,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Twin Fang rebalance (roadmap R21)
 - Q18 (assumed "style with a small edge"): the off-hand strike is now 22% of the hit (was 50%, the strongest build in the game), only with a one-handed sword and a free hand. Sword-skill combos count toward the trial only when they hit a real monster (not a summon or a training dummy). The trial on Floor 8 is fought alone: anyone else who walks in during a fight is sent home.
 - New in-game test, including that the game itself knows which swords are two-handed. Boot test 151 in-game tests, 0 errors.
+
+### 2026-11-13: Playtest fix, the yard's loot gate
+- Jay's playtest: after killing several rats a gate stayed shut. The kill had counted; the stuck gate was the loot gate, because Pen Rats often had nothing to take and autoloot didn't count. Pen Rats now always drop a cheese, and carrying it (picked up by hand or by autoloot) opens the gate. Boot test 151 in-game tests, 0 errors.

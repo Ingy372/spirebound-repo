@@ -6,7 +6,7 @@
 SpireTutorial = { STEPS = { "kill", "loot", "spells", "potion" } }
 SpireTutorial.HELP = {
 	kill = "Beat a rat in the pen first: click it in the Battle List (Ctrl+B) or right-click it and choose Attack.",
-	loot = "Open a rat's body (right-click it) and take what it carried before you go on.",
+	loot = "Open a rat's body (right-click it) and take the cheese it carried before you go on.",
 	spells = "Say !spells to see the sword skills and spells your path will teach you.",
 	potion = "Drink the health potion in your backpack (right-click it, or drag it onto yourself).",
 }
@@ -15,7 +15,12 @@ local function scope(player)
 	return player:kv():scoped("spirebound-tutorial")
 end
 
+SpireTutorial.CHEESE = 3607 -- every Pen Rat drops one
+
 function SpireTutorial.done(player, step)
+	if step == "loot" and scope(player):get(step) ~= true and player:getItemCount(SpireTutorial.CHEESE) > 0 then
+		scope(player):set("loot", true) -- carrying a rat's cheese counts as looting (autoloot too)
+	end
 	return scope(player):get(step) == true
 end
 

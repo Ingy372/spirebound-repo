@@ -24,3 +24,6 @@ Template:
   - Arcanist is broken: the wand needs level 6, so the player fist-fights to get there.
   - Couldn't find the NPC who sells spells, so couldn't test spells.
 - Done the same day: mage starter wand and rod usable from level 1; base walking speed 110 → 170 for every vocation; starter letter (Registrar gives it; `!guide` re-reads it); `!spells` lists your spells (nobody sells them, they unlock by level); town compacted (depot beside the temple, shops just outside the temple door, monument closer). Still open: real quests and the Arrival Yard tutorial (ROADMAP R11, R12), more Hearthgate tightening in the real map.
+
+## 2026-11-13 (Jay, Arrival Yard on Climber)
+- Bug: killed 3-4 rats and still couldn't pass a gate. *Fixed the same day: the kill was counted (gate 1 was open); the gate that blocked was the loot gate. Pen Rats dropped only a few coins (nothing one time in five) and autoloot didn't count as looting, so it could be impossible. Pen Rats now always drop a cheese, and carrying it opens the loot gate.*

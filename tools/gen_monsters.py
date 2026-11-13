@@ -25,7 +25,7 @@ MONSTERS = {
     # (2026-11-12 playthrough: three Field Rats killed a new character in the pen)
     "Pen Rat": dict(desc="a pen rat", look=(56,), corpse=5964, hp=12, xp=6, speed=70, race="blood",
                     attacks=[("melee", 0, -3)], armor=0, defense=0,
-                    loot=[(GOLD, 80000, 3)], voices=["Squeak?"]),
+                    loot=[(3607, 100000, 1), (GOLD, 80000, 3)], voices=["Squeak?"]),  # cheese every time: the yard's loot gate needs something to take
     "Hopper Toad": dict(desc="a hopper toad", look=(222,), corpse=6077, hp=28, xp=9, speed=80, race="blood",
                         attacks=[("melee", 0, -10)], armor=2, defense=2,
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),
