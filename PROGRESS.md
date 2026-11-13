@@ -476,3 +476,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 
 ### 2026-11-13: Quivers for Rangers (Jay's playtest)
 - Jay: "there is no way to equip arrows for the ranger". In this game version arrows don't fit the old arrow slot; a bow fires only from a quiver worn in the shield hand, and Rangers started with no quiver. New Rangers now get a quiver with their 100 arrows inside, Rangers made before this get an empty quiver at their next login, Fletcher Tamsin sells quivers for 150 gold, and the Journal's "How do I" page explains it. New in-game test; boot test 153 in-game tests, 0 errors.
+
+### 2026-11-13: Spells unlock by level alone (Jay's playtest)
+- Jay: "all spells are still telling me 'you must learn this first' even if i have level required." Canary has a server-wide setting that makes every spell need learning and ignores each spell's own "no learning" flag; it was left on. It is now off, so reaching the level is enough. New in-game test checks the setting and every spell; boot test 154 in-game tests, 0 errors.
