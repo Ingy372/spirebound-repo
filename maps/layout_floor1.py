@@ -10,7 +10,11 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scenery as S  # noqa: E402
 import dungeon as DG  # noqa: E402
+import wilds  # noqa: E402
 from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
+
+# hunting grounds already rebuilt as walled places with four loops (FLOOR1_WILDS_PLAN.md); the rest still use camp()
+REBUILT = {"boar_meadow"}
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
@@ -133,7 +137,8 @@ def build(m):
         m.points["camp_" + c["id"]] = (cx + w // 2, cy + h // 2, Z)
 
     for c in CAMPS:
-        camp(c)
+        if c["id"] not in REBUILT:
+            camp(c)
 
     # ------------------------------------------------ Hearthgate v3 (HEARTHGATE_PLAN.md, 2026-11-12): 112 x 96, walled.
     # The Hearth stands where the two main roads cross; four quarters around it; 30 houses; Spire Manor on the East High Road.
@@ -599,12 +604,19 @@ def build(m):
     m.road((X0 + 280, Y0 + 205), (X0 + 280, Y0 + 150), Z)                   # ... and on to the quarry
     m.road((tx + tw + 60, ty + th // 2 + 1), (X0 + 345, ty + th // 2 + 1), Z) # east road on towards the bandits and shards
     m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 232), Z)
-    m.road((tx + tw // 2, Y0 + 368), (X0 + 175, Y0 + 368), Z)               # south road west to the Boar Meadow
     m.road((tx + tw // 2, Y0 + 368), (X0 + 345, Y0 + 368), Z)               # south road east to the Shard Fields
     m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 368), Z)
     m.road((X0 + 70, Y0 + 235), (X0 + 70, Y0 + 330), Z)                     # Millcross south to the Wolf Copse and Reedmarsh
     m.road((tx + tw // 2, Y0 + 110), (X0 + 160, Y0 + 110), Z)               # north road west to the Thornsnap Hollow
     m.road((X0 + 160, Y0 + 110), (X0 + 160, Y0 + 140), Z)
+    # Cabin Lane: from the west cabins' back lane down to the Boar Meadow gate (a 2-wide trail)
+    m.road((X0 + 172, Y0 + 304), (X0 + 172, Y0 + 314), Z, width=2, wind=False)
+    m.road((X0 + 172, Y0 + 314), (X0 + 159, Y0 + 337), Z, width=2, wind=False)
+
+    # ------------------------------------------------ the rebuilt hunting grounds (maps/wilds.py): walls, hub, four loops
+    for c in CAMPS:
+        if c["id"] in REBUILT:
+            wilds.build(m, c)
 
     # ------------------------------------------------ Millcross village (town 2 on floor 1)
     mx, my = X0 + MILLCROSS["x"], Y0 + MILLCROSS["y"]
@@ -720,6 +732,7 @@ def build(m):
             if not (ax + 12 <= xx < ax + 32 and ay + 12 <= yy < ay + 32) and not m.items.get((xx, yy, Z)):
                 m.ground[(xx, yy, Z)] = m.pick("grass")
     m.fill(ax + 21, ay + 32, 4, 11, Z, "stonefloor")                  # flagstone path from the gate to the keep
+    m.points["apex_watchtower"] = (ax + 22, ay + 40, Z)                # set first, so no decoration lands on it
     keep_out = DG.keep_clear(m, Z) | {(ax + 40, ay + 3), (ax + 39, ay + 4)}
     S.patch(m, ax + 10, ay + 8, 4, 3, Z, "dirt")
     S.patch(m, ax + 34, ay + 30, 4, 3, Z, "dirt")
@@ -742,7 +755,6 @@ def build(m):
     DG.scatter(m, cx, cy, 44, 44, cz, DG.STALAGMITES, 45, solid=True, avoid=cave_out)
     DG.scatter(m, cx, cy, 44, 44, cz, DG.CRYSTALS, 6, solid=True, avoid=cave_out)
     DG.scatter(m, cx, cy, 44, 44, cz, DG.BONES + DG.DEBRIS, 30, avoid=cave_out)
-    m.points["apex_watchtower"] = (ax + 22, ay + 40, Z)
 
     # ------------------------------------------------ the Pass (field boss arena) and the labyrinth
     px, py = gate_n[0] - 12, Y0 + 70
@@ -829,6 +841,9 @@ def build(m):
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
     m.zone("guarded", yard_x - 2, yard_y - 2, 44, 28, 7)              # the Arrival Yard
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
+    for c in CAMPS:                                                   # Open grounds are Open right up to their walls
+        if c["id"] in REBUILT and c["zone"] == "open":
+            m.zone("open", X0 + c["x"], Y0 + c["y"], c["w"], c["h"], 7)
     m.zone("contested", ax - 5, ay - 5, 54, 54, 7)                   # the Old Watchtower approach and outer layer
     m.zone("deadzone", ax + 12, ay + 12, 20, 20, 7)                  # the packed inner room
     m.zone("deadzone", cx, cy, 44, 44, 8)                            # the cliff caves below
@@ -845,9 +860,10 @@ def build(m):
         m.clear_items(x, y, z)  # trigger tiles must be walkable
         m.points["secret_" + sid] = (x, y, z)
     secret("s1", tx + 6, ty + 67)                       # beside the drain grate
-    bm = m.points["camp_boar_meadow"]
-    secret("s2", bm[0] + 18, bm[1] + 2)                 # mud wallow east of the boar meadow
-    m.points["old_tusk_spawn"] = (bm[0] + 15, bm[1] + 4, Z)
+    wallow = next(L for L in m.wilds if L["id"] == "boar_meadow")["wallow"]
+    wx_, wy_ = wallow["centre"]
+    m.points["old_tusk_spawn"] = (wx_, wy_, Z)          # Old Tusk's wallow: the hollow south-east core of Boar Meadow
+    secret("s2", *max(wallow["clear"], key=lambda t: (t[1], t[0])))   # the far corner of the wallow
     secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
     secret("s5", X0 + 225, Y0 + 132)                    # cracked wall in the old quarry
@@ -1002,4 +1018,5 @@ def build(m):
     S.standing_stones(m, X0 + 305, Y0 + 240, Z)                    # a ring of standing stones east of the city
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
-    S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep)
+    grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS if c["id"] in REBUILT]
+    S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep, avoid=grounds)

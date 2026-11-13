@@ -140,9 +140,10 @@ def standing_stones(m, cx, cy, z, n=8, radius=5):
     prop(m, cx, cy, z, 1996)
 
 
-def forest(m, x0, y0, w, h, z, keep=(), thresh=0.6, density=0.5, seed=7, cell=4):
+def forest(m, x0, y0, w, h, z, keep=(), thresh=0.6, density=0.5, seed=7, cell=4, avoid=()):
     """Forest masses between the places people go. Trees only where noise() is high, never near roads, buildings, camps,
-    NPCs or points of interest (a clear buffer of about 8 tiles)."""
+    NPCs or points of interest (a clear buffer of about 8 tiles), and never inside the rectangles in `avoid` (the walled
+    hunting grounds, which dress themselves)."""
     rng = m.rng
     blocked = set()
     for y in range(y0, y0 + h):
@@ -164,6 +165,8 @@ def forest(m, x0, y0, w, h, z, keep=(), thresh=0.6, density=0.5, seed=7, cell=4)
     for y in range(y0, y0 + h):
         for x in range(x0, x0 + w):
             if (x // cell, y // cell) in dilated or not free(m, x, y, z):
+                continue
+            if any(ax <= x < ax + aw and ay <= y < ay + ah for ax, ay, aw, ah in avoid):
                 continue
             if noise(x * 0.5, y * 0.5, seed) >= thresh and rng.random() < density:
                 m.put(x, y, z, rng.choice(kinds))

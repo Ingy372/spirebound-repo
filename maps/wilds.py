@@ -21,7 +21,7 @@ MOUNTAIN = 1128
 
 # ---- what solid things are made of. "edge" kinds (rock, water) paint their ground only where every neighbour is solid
 # too: the map tool then hangs rock faces / shorelines on the tiles round them, and those block walking as well.
-TREES_ALL_BROAD = [3615, 3616, 3617, 3618, 3619, 3620, 3621, 3622, 3625]
+TREES_ALL_BROAD = [3615, 3616, 3617, 3619, 3621, 3622, 3625] * 4 + [3618, 3620]   # mostly green, a few maples
 FIRS = [3614, 3682, 7024, 3614, 3682]
 ROCKS = [1772, 1843, 1851, 1853, 1859, 1860, 1822]  # single-tile stones that block (no multi-piece rocks here)
 REEDS = [3688, 3690, 3685]
@@ -347,6 +347,9 @@ def build(m, c, extra_points=True):
             m.points[f"crowd_{gid}_{lp['name']}_{n}"] = (cx_, cy_, Z)
         m.points[f"loop_{gid}_{lp['name']}"] = lp["mouth_pt"] + (Z,)
     m.points["camp_" + gid] = L["camp"] + (Z,)
+    xs = [p[0] for p in rect]; ys = [p[1] for p in rect]
+    m.points[f"ground_{gid}_nw"] = (min(xs), min(ys), Z)        # the ground's rectangle (crowd system, tests)
+    m.points[f"ground_{gid}_se"] = (max(xs), max(ys), Z)
     m.points[f"gate_{gid}"] = (sum(p[0] for p in L["gate"]) // len(L["gate"]), sum(p[1] for p in L["gate"]) // len(L["gate"]), Z)
     m.points[f"centre_{gid}"] = L["centre"] + (Z,)
     if not hasattr(m, "wilds"):
