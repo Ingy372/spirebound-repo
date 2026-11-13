@@ -648,7 +648,7 @@ def build(m):
         line = [(yx + gx, y2) for y2 in range(yy + 1, yy + YH - 1)]
         m.autowall([t for t in line if t[1] not in (yy + 11, yy + 12)], Z, "timber")
         for y2 in (yy + 11, yy + 12):
-            m.put(yx + gx, y2, Z, 1647)                 # timber's own open door (vertical wall)
+            # an open gap, not a door: the engine treats a lone fence door as a quest door ("Only the worthy may pass")
             m.points[f"tutorial_gate_{step}_{y2 - yy - 10}"] = (yx + gx, y2, Z)
         m.sign(yx + gx - 1, yy + 9, Z, text)
     m.points["tutorial_yard_nw"] = (yx, yy, Z)

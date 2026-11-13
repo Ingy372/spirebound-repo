@@ -27,3 +27,4 @@ Template:
 
 ## 2026-11-13 (Jay, Arrival Yard on Climber)
 - Bug: killed 3-4 rats and still couldn't pass a gate. *Fixed the same day: the kill was counted (gate 1 was open); the gate that blocked was the loot gate. Pen Rats dropped only a few coins (nothing one time in five) and autoloot didn't count as looting, so it could be impossible. Pen Rats now always drop a cheese, and carrying it opens the loot gate.*
+- Bug: "Only the worthy may pass" at the first gate. *Fixed the same day: the fence doors were the engine's own quest doors, which refuse everyone. The gates are now open gaps; the yard's own check stops you until the step is done.*
