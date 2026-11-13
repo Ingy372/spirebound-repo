@@ -313,6 +313,22 @@ def build(m, c, extra_points=True):
             if inner:
                 mid = sorted(inner)[len(inner) // 2]
                 m.clear_items(mid[0], mid[1], Z); m.put(mid[0], mid[1], Z, 1996)
+    if c.get("ruin_walls"):                                    # broken stone walls among the trees (the Bandit Road)
+        xs = [p[0] for p in rect]; ys = [p[1] for p in rect]
+        x0_, x1_, y0_, y1_ = min(xs), max(xs), min(ys), max(ys)
+        edge = [(x, y0_ + 1) for x in range(x0_ + 3, x1_ - 2)] + [(x, y1_ - 1) for x in range(x0_ + 3, x1_ - 2)]
+        edge += [(x0_ + 1, y) for y in range(y0_ + 3, y1_ - 2)] + [(x1_ - 1, y) for y in range(y0_ + 3, y1_ - 2)]
+        run, stretch = [], []
+        for t in edge:
+            if t in walls and rng.random() < 0.5 and len(stretch) < 5:
+                stretch.append(t)
+            else:
+                if len(stretch) >= 3:
+                    run += stretch
+                stretch = []
+        for t in run:
+            m.clear_items(t[0], t[1], Z)
+        m.autowall(run, Z, "stone")
     # the open places: trail ground, a little walk-over dressing at the edges
     for (x, y) in opn:
         m.ground[(x, y, Z)] = m.pick(trail_key)
@@ -360,6 +376,40 @@ def build(m, c, extra_points=True):
         m.wilds = []
     m.wilds.append(L)
     return L
+
+
+def group(m, centre, members, respawn, z=None):
+    """One fixed monster group outside the loop skeleton (the Old Watchtower, caves): its members stand on free tiles
+    round the centre, nearest first."""
+    x, y, z = centre
+    names = [mon for mon, n in members for _ in range(n)]
+    spots = sorted(((x + a, y + b) for a in range(-2, 3) for b in range(-2, 3)
+                    if (x + a, y + b, z) in m.ground and not m.items.get((x + a, y + b, z))
+                    and m.ground[(x + a, y + b, z)] not in (4597, 4609, 4610, MOUNTAIN, 101)),
+                   key=lambda t: (abs(t[0] - x) + abs(t[1] - y), t))
+    if len(spots) < len(names):
+        raise ValueError(f"no room for a group of {len(names)} at {centre}")
+    kids = [(mon, sx - x, sy - y, spawn_time(ELITE_RESPAWN if mon in ELITES else respawn)) for mon, (sx, sy) in zip(names, spots)]
+    m.monsters.append((kids, centre, 2, len(kids), spawn_time(respawn)))
+
+
+def spread(m, x0, y0, w, h, z, n, gap, avoid=()):
+    """n spots on open floor in a box, at least `gap` apart and away from `avoid`, picked the same way every build."""
+    floor = sorted((x, y) for x in range(x0, x0 + w) for y in range(y0, y0 + h)
+                   if all((x + a, y + b, z) in m.ground and not m.items.get((x + a, y + b, z))
+                          and m.ground[(x + a, y + b, z)] not in (4597, 4609, 4610, MOUNTAIN, 101)
+                          for a in (-1, 0, 1) for b in (-1, 0, 1)))
+    picked = []
+    far = list(avoid)
+    while len(picked) < n and floor:
+        best = max(floor, key=lambda t: min([max(abs(t[0] - p[0]), abs(t[1] - p[1])) for p in far] or [999]))
+        if far and min(max(abs(best[0] - p[0]), abs(best[1] - p[1])) for p in far) < gap:
+            break
+        picked.append(best)
+        far.append(best)
+    if len(picked) < n:
+        raise ValueError(f"only {len(picked)} of {n} group spots fit in the box at {(x0, y0, z)}")
+    return [(x, y, z) for x, y in picked]
 
 
 # ------------------------------------------------------------------------------------------------ walk test

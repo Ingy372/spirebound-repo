@@ -66,3 +66,10 @@ SpireTest.add("wilds: Old Tusk's wallow is inside Boar Meadow and walkable", fun
 	SpireTest.eq(p.x > nw.x and p.x < se.x and p.y > nw.y and p.y < se.y, true, "the wallow is inside Boar Meadow")
 	SpireTest.eq(walkable(WorldPoints.secret_s2), true, "secret s2 is walkable")
 end)
+
+SpireTest.add("wilds: the Old Watchtower has its fixed groups (34 above ground, 32 in the cave)", function()
+	local top = monstersIn(Position(1030, 1030, 7), Position(1073, 1073, 7))
+	local cave = monstersIn(Position(1030, 1030, 8), Position(1073, 1073, 8))
+	SpireTest.eq(top >= 32, true, "courtyard and inner room: " .. top .. " (want 34; the Frenzy event test may add 6)")
+	SpireTest.eq(cave >= 30 and cave <= 32, true, "cave: " .. cave .. " (want 32)")
+end)

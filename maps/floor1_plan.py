@@ -91,7 +91,7 @@ CAMPS = [
          note="Shardlings hit with energy and resist it; wands are weak here. Strong experience."),
     dict(id="bandit_road", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
          levels=(19, 27), role="money", wall="broadleaf", core="banditcamp", trail="dirt", decor="bandits",
-         groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=210,
+         groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=210, ruin_walls=True,
          den="Smugglers' Cellar", den_groups=same(6, "Road Bandit", 4) + [G(("Bandit Captain", 1), ("Road Bandit", 3))] * 2,
          note="Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money."),
     dict(id="old_quarry", title="The Old Quarry", x=240, y=124, w=60, h=40, gate="w", size="std", zone="open",

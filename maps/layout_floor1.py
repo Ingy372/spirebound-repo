@@ -11,11 +11,11 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scenery as S  # noqa: E402
 import dungeon as DG  # noqa: E402
 import wilds  # noqa: E402
-from floor1_plan import CAMPS, MILLCROSS, TOWN  # noqa: E402
+from floor1_plan import APEX, CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 # hunting grounds already rebuilt as walled places with four loops (FLOOR1_WILDS_PLAN.md); the rest still use camp()
 REBUILT = {"boar_meadow", "starter_west", "starter_east", "starter_south", "wasp_fields",
-           "burrow_hills", "wolf_copse", "reed_marsh", "thornsnap_hollow"}
+           "burrow_hills", "wolf_copse", "reed_marsh", "thornsnap_hollow", "shard_fields", "bandit_road", "old_quarry"}
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
@@ -596,15 +596,16 @@ def build(m):
 
     # ------------------------------------------------ roads
     m.road((tx - 60, ty + th // 2 + 1), (tx - 1, ty + th // 2 + 1), Z)      # west road (crosses the river: bridge)
-    m.road((tx + tw, ty + th // 2 + 1), (tx + tw + 60, ty + th // 2 + 1), Z) # east road
+    m.road((tx + tw, ty + th // 2 + 1), (X0 + 338, ty + th // 2 + 1), Z)     # East Road, gate to East Cross
     m.road((tx + tw // 2 + 1, Y0 + 90), (tx + tw // 2 + 1, ty - 1), Z)       # north road to the Pass (gate road)
     m.road((tx + tw // 2 + 1, ty + th), (tx + tw // 2 + 1, Y0 + 372), Z)     # south road
     m.road((X0 + 60, Y0 + 220), (X0 + 130, Y0 + 220), Z)                    # Millcross to the river bank
     m.road((X0 + 130, Y0 + 220), (tx - 60, ty + th // 2 + 1), Z)            # river bank to the west road
-    m.road((tx + tw + 60, ty + th // 2 + 1), (X0 + 345, ty + th // 2 + 1), Z) # east road on towards the bandits and shards
-    m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 232), Z)
-    m.road((tx + tw // 2, Y0 + 368), (X0 + 345, Y0 + 368), Z)               # south road east to the Shard Fields
-    m.road((X0 + 345, ty + th // 2 + 1), (X0 + 345, Y0 + 368), Z)
+    m.road((tx + tw // 2, Y0 + 368), (X0 + 300, Y0 + 368), Z)               # Shrine Path, to the toppled shrine
+    # from East Cross: the Bandit Track north and the Shard Track south (2-wide trails)
+    for a, b in (((338, 285), (338, 240)), ((338, 240), (354, 224)), ((354, 224), (354, 220)),
+                 ((338, 285), (338, 292)), ((338, 292), (366, 296)), ((366, 296), (366, 299)), ((234, 144), (239, 144))):
+        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # gate trails (2 wide) from the roads to the hunting grounds' gates (FLOOR1_WILDS_PLAN.md 4.2)
     for a, b in (((153, 284), (153, 282)), ((315, 284), (315, 282)), ((231, 335), (209, 337)), ((231, 211), (228, 211)),
                  ((234, 208), (239, 208)), ((230, 152), (218, 152)), ((92, 282), (88, 282))):
@@ -726,9 +727,11 @@ def build(m):
             m.clear_items(xx, yy, Z)
     m.walls(ax, ay, 44, 44, Z, gaps={(ax + 22, ay + 43), (ax + 23, ay + 43)}, style="stone")
     m.walls(ax + 12, ay + 12, 20, 20, Z, gaps={(ax + 22, ay + 31)}, style="stone")  # the packed inner room
-    m.monsters.append(("Stonehorn Ram", (ax + 8, ay + 36, Z), 3, 3, 90))
-    m.monsters.append(("Stonehorn Ram", (ax + 36, ay + 36, Z), 3, 3, 90))
-    m.monsters.append(("Stonehorn Ram", (ax + 22, ay + 22, Z), 4, 8, 90))
+    # fixed groups (FLOOR1_WILDS_PLAN.md Part 6): six of 3 round the courtyard, four of 4 in the inner room
+    for gx_, gy_ in ((6, 6), (37, 6), (6, 22), (37, 22), (8, 37), (36, 37)):
+        wilds.group(m, (ax + gx_, ay + gy_, Z), APEX["courtyard"]["groups"][0], APEX["courtyard"]["respawn"])
+    for gx_, gy_ in ((16, 16), (27, 16), (16, 27), (27, 27)):
+        wilds.group(m, (ax + gx_, ay + gy_, Z), APEX["inner"]["groups"][0], APEX["inner"]["respawn"])
     # dressing: an overgrown courtyard around a paved keep, broken masonry, braziers in the keep
     for yy in range(ay + 1, ay + 43):
         for xx in range(ax + 1, ax + 43):
@@ -753,7 +756,8 @@ def build(m):
     DG.cave(m, DG.blob(cx, cy, 44, 44, [(cx + 4, cy + 4), (cx + 3, cy + 3), (cx + 22, cy + 22)], m.rng, seed=3), cz)
     m.teleport((ax + 40, ay + 3, Z), (cx + 4, cy + 4, cz), "apex_rope_spot")
     m.teleport((cx + 3, cy + 3, cz), (ax + 39, ay + 4, Z), "apex_cave_exit")
-    m.monsters.append(("Stonehorn Ram", (cx + 22, cy + 22, cz), 5, 9, 90))
+    for spot in wilds.spread(m, cx, cy, 44, 44, cz, 8, 9, avoid=[(cx + 4, cy + 4), (cx + 3, cy + 3)]):   # eight groups of 4
+        wilds.group(m, spot, APEX["cave"]["groups"][0], APEX["cave"]["respawn"])
     cave_out = DG.keep_clear(m, cz)
     DG.scatter(m, cx, cy, 44, 44, cz, DG.STALAGMITES, 45, solid=True, avoid=cave_out)
     DG.scatter(m, cx, cy, 44, 44, cz, DG.CRYSTALS, 6, solid=True, avoid=cave_out)
@@ -874,7 +878,9 @@ def build(m):
     secret("s2", *max(wallow["clear"], key=lambda t: (t[1], t[0])))   # the far corner of the wallow
     secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
-    secret("s5", X0 + 225, Y0 + 132)                    # cracked wall in the old quarry
+    qne = next(lp for L in m.wilds if L["id"] == "old_quarry" for lp in L["loops"] if lp["name"] == "ne")
+    s5 = max(qne["ring"] - qne["patches"], key=lambda t: ((t[0] - qne["mouth_pt"][0]) ** 2 + (t[1] - qne["mouth_pt"][1]) ** 2, t))
+    secret("s5", *s5)                                   # a cracked stone on the far side of the Quarry's north-east loop
     m.points["north_crack_exit"] = (mx + 25, my + 20, Z)
     secret("s6", mx + 44, my + 2)                       # hollow behind the Millcross well (night only)
     secret("s7", X0 + 352, Y0 + 186)                    # ruined shrine on the bandit road

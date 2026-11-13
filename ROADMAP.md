@@ -220,7 +220,7 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 - [x] **W3 Pilot: Boar Meadow** with Old Tusk's wallow.
 - [x] **W4 The four starter grounds.**
 - [x] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
-- [ ] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
+- [x] **W6 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
 - [ ] **W7 Roads, trails, signposts, zones, secrets, forest pass.**
 - [ ] **W8 The six caves.**
 - [ ] **W9 Experience stages and the ladder** (Q30: Jay said yes, Floor 1 should last 11-15 hours).
