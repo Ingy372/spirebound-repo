@@ -23,6 +23,7 @@ python3 "$ROOT/tools/check_names.py" >/dev/null || { echo "FAIL: banned names"; 
 
 python3 "$ROOT/tools/gen_site.py" --check || { echo "FAIL: website build"; exit 1; }
 python3 "$ROOT/tools/login_server.py" --selftest || { echo "FAIL: login service safety checks"; exit 1; }
+python3 "$ROOT/tools/check_commands.py" || { echo "FAIL: a player command has no button (R19)"; exit 1; }
 # R4: a normal start must never touch the GM test account (only the dev-only step does)
 if grep -q "dev_accounts.sql" "$ROOT/tools/run_server_wsl.sh" "$ROOT/windows/Start-Spirebound.ps1"; then
   echo "FAIL: a normal start re-creates the test accounts"; exit 1; fi

@@ -454,3 +454,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 ### 2026-11-13: Tests that reach the real game (roadmap R18, part)
 - New GitHub workflow (`.github/workflows/boot.yml`) runs the full boot test on every push: it builds the pinned server, starts it on a fresh database and runs every in-game test. I can't read GitHub's results from your PC, so R18 stays marked "partly done" until a run is confirmed green (look under the repository's Actions tab: "boot test").
 - New end-to-end tests: nobody reaches Floor 2 before the Axe-Lord's first kill (and the boulder still seals the stair), dying costs what DESIGN.md says on each difficulty, a red skull wears off, the Fortune Hall destroys its cut. Boot test 147 in-game tests, 0 errors.
+
+### 2026-11-13: Every chat command one click away (roadmap R19)
+- The Journal (J, or the new Journal button on the top bar) has a Commands tab: a button for each of the 24 player commands (`!hunt`, `!spells`, `!taskshop`, `!private`, `!openhouse`...). Commands that need more words (`!report`, `!summon`, `!dice`, `!fortune`) are put in the chat line for you to finish. The Journal window is wider so all eight tabs fit.
+- A new check (`tools/check_commands.py`, part of the boot test) fails if anyone adds a player command without a button. Checked in your client after a restart: the Commands tab shows every button and clicking `!hunt` sends it. Your installed client now has the updated module.

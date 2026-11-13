@@ -200,6 +200,11 @@ function init()
     end
   end
   g_keyboard.bindKeyDown('J', SpireJournalUi.toggle)
+  -- R19: a top-bar button opens the Journal too (its Commands tab sends every chat command with a click)
+  pcall(function()
+    SpireJournalUi.button = modules.client_topmenu.addRightGameToggleButton('spireJournal', 'Journal (J): quests, secrets, commands',
+      '/images/topbuttons/questlog', SpireJournalUi.toggle)
+  end)
   connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd })
   if g_game.isOnline() then
     onGameStart()
@@ -212,6 +217,10 @@ end
 
 function terminate()
   g_keyboard.unbindKeyDown('J')
+  if SpireJournalUi.button then
+    SpireJournalUi.button:destroy()
+    SpireJournalUi.button = nil
+  end
   ProtocolGame.unregisterExtendedJSONOpcode(OPCODE)
   if originalOnSkullChange then
     Creature.onSkullChange = originalOnSkullChange

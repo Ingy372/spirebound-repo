@@ -1,13 +1,13 @@
 SpireTabButton < Button
   height: 22
-  width: 84
+  width: 80
   margin-right: 4
   font: verdana-11px-rounded
 
 MainWindow
   id: spireJournal
   !text: 'Journal'
-  size: 580 420
+  size: 720 460
   @onEscape: modules.game_spirebound.hideJournal()
 
   Panel
