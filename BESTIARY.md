@@ -20,17 +20,17 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 | # | Level | Ground | Role | Monsters | Where |
 |---|---|---|---|---|---|
 | 1 | 1-4 | **The Ratwarren** | experience | Field Rat | west, about 80 steps from the city centre |
-| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 90 steps from the city centre |
+| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 80 steps from the city centre |
 | 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 70 steps from the city centre |
 | 4 | 7-12 | **Waspgrass Fields** | experience | Meadow Wasp | north, about 70 steps from the city centre |
 | 5 | 9-15 | **Boar Meadow** | experience | Bristle Boar | south-west, about 80 steps from the city centre |
 | 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole | north-east, about 80 steps from the city centre |
-| 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | west, about 160 steps from the city centre |
-| 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | south-west, about 150 steps from the city centre |
-| 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | north-west, about 120 steps from the city centre |
+| 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | west, about 170 steps from the city centre |
+| 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | west, about 160 steps from the city centre |
+| 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | north, about 130 steps from the city centre |
 | 10 | 17-24 | **Shard Fields** | experience | Field Shardling | east, about 130 steps from the city centre |
 | 11 | 19-27 | **The Bandit Road** | money | Road Bandit, Bandit Captain | north-east, about 120 steps from the city centre |
-| 12 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | north, about 130 steps from the city centre |
+| 12 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | north, about 140 steps from the city centre |
 | 13 | 28-40 | **The Old Watchtower** | experience and money | Stonehorn Ram | north-west, about 230 steps from the city centre |
 
 ### The suggested route
@@ -54,19 +54,19 @@ Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you he
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Field Rat | 20 | 6 | 1 / 3 | gold (up to 4), cheese (30%) |
+| Field Rat | 20 | 6 | 1 / 3 | gold (up to 4), cheese (30%), item 9668 (rare, 15%) |
 
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Toad Pond  (levels 3-7, experience)
-*east, about 90 steps from the city centre. Safety: guarded.*
+*east, about 80 steps from the city centre. Safety: guarded.*
 
-Toads hit a little harder and give a little more. Leave when rats feel too easy.
+Toads hit a little harder and give a little more. Four ponds, four loops; fishing works here.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Hopper Toad | 28 | 9 | 1 / 7 | gold (up to 6) |
-| Field Rat | 20 | 6 | 1 / 11 | gold (up to 4), cheese (30%) |
+| Hopper Toad | 28 | 9 | 1 / 7 | gold (up to 6), item 9640 (rare, 12%) |
+| Field Rat | 20 | 6 | 1 / 11 | gold (up to 4), cheese (30%), item 9668 (rare, 15%) |
 
 - **Hopper Toad:** Hits a little harder than a rat. Still safe for a fresh climber.
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
@@ -78,8 +78,8 @@ Sproutlings spit a little poison-green magic. Still inside the Guarded ring arou
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Sproutling | 35 | 12 | 2 / 12 | gold (up to 7), meat (20%) |
-| Hopper Toad | 28 | 9 | 3 / 16 | gold (up to 6) |
+| Sproutling | 35 | 12 | 2 / 12 | gold (up to 7), meat (20%), item 3738 (rare, 14%) |
+| Hopper Toad | 28 | 9 | 3 / 16 | gold (up to 6), item 9640 (rare, 12%) |
 
 - **Sproutling:** Spits an earth blast from a few tiles away; step up to it and it stops spitting.
 - **Hopper Toad:** Hits a little harder than a rat. Still safe for a fresh climber.
@@ -91,18 +91,18 @@ Fast and stingy, little health. Just north of the city gate, beside the Pass roa
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Meadow Wasp | 45 | 20 | 3 / 11 | gold (up to 8), meat (25%) |
+| Meadow Wasp | 45 | 20 | 3 / 11 | gold (up to 8), meat (25%), item 5902 (rare, 16%) |
 
 - **Meadow Wasp:** Fast, low health, poisons. Kill it quickly and let the poison wear off.
 
 ### Boar Meadow  (levels 9-15, experience)
 *south-west, about 80 steps from the city centre. Safety: open.*
 
-Where most climbers spend their first real hours. Boars drop ham. Old Tusk hides here.
+Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallows somewhere in here.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Bristle Boar | 90 | 40 | 3 / 9 | gold (up to 15), meat (40%), ham (rare, 15%) |
+| Bristle Boar | 90 | 40 | 3 / 9 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
 
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
@@ -113,43 +113,43 @@ Sturdy diggers with plenty of health. Slow and steady experience.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Burrow Mole | 130 | 45 | 4 / 9 | gold (up to 14), meat (40%), health potions (rare, 4%) |
+| Burrow Mole | 130 | 45 | 4 / 9 | gold (up to 26), meat (40%), health potions (rare, 4%), item 5880 (rare, 12%) |
 
 - **Burrow Mole:** Slow with lots of health. Safe, steady experience if you have patience.
 
 ### Wolf Copse  (levels 12-18, experience)
-*west, about 160 steps from the city centre. Safety: open.*
+*west, about 170 steps from the city centre. Safety: open.*
 
-Wolves hunt in packs, and each pack has a Grey Alpha that calls for help. Across the river, beside Millcross.
+Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the river, south of Millcross.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
 | Meadow Wolf | 85 | 50 | 4 / 11 | gold (up to 10), wolf paws (rare, 10%), meat (30%) |
-| Grey Alpha | 260 | 150 | 1 / 4 | gold (up to 40), wolf paws (50%), health potions (rare, 8%) |
+| Grey Alpha | 260 | 150 | 1 / 4 | gold (up to 40), wolf paws (50%), health potions (rare, 8%), item 3012 (rare, 6%) |
 
 - **Meadow Wolf:** Comes in packs and fights in a crowd. Fight with your back to a wall.
 - **Grey Alpha:** Leads a wolf pack and calls two wolves when hurt. Worth killing first: the drops are better.
 
 ### Reedmarsh  (levels 14-19, money)
-*south-west, about 150 steps from the city centre. Safety: open.*
+*west, about 160 steps from the city centre. Safety: open.*
 
-Snappers carry more coins than their level suggests. Good first money run.
+Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Reed Snapper | 150 | 55 | 6 / 11 | gold (up to 30), ham (20%), health potions (rare, 8%) |
+| Reed Snapper | 150 | 55 | 6 / 11 | gold (up to 30), ham (20%), health potions (rare, 8%), item 5899 (rare, 10%), item 30975 (rare, 18%) |
 
 - **Reed Snapper:** Tough shell, slow. It carries more coins than anything else at this level.
 
 ### Thornsnap Hollow  (levels 14-20, experience)
-*north-west, about 120 steps from the city centre. Safety: open.*
+*north, about 130 steps from the city centre. Safety: open.*
 
 Poison bites; bring antidotes or healing. Good experience for the effort.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Thornsnap | 140 | 60 | 5 / 11 | gold (up to 22), health potions (rare, 5%) |
-| Bristle Boar | 90 | 40 | 8 / 17 | gold (up to 15), meat (40%), ham (rare, 15%) |
+| Thornsnap | 140 | 60 | 5 / 11 | gold (up to 22), health potions (rare, 5%), item 5879 (rare, 13%) |
+| Bristle Boar | 90 | 40 | 8 / 17 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
 
 - **Thornsnap:** Poisons you. Carry a health potion or two, or the Cleanse spell.
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
@@ -161,7 +161,7 @@ Shardlings hit with energy and resist it; wands are weak here. Strong experience
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Field Shardling | 120 | 55 | 9 / 18 | gold (up to 20), mana potions (rare, 6%) |
+| Field Shardling | 120 | 55 | 9 / 18 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
 
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
@@ -172,22 +172,22 @@ Bandits carry coins and gear you can sell. Captains lead them and drop platinum.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Road Bandit | 160 | 70 | 9 / 19 | gold (up to 30), short swords (rare, 5%), leather armor (rare, 4%), maces (rare, 5%) |
-| Bandit Captain | 450 | 280 | 2 / 5 | gold (up to 80), platinum coins (rare, 15%), brass armor (rare, 4%), chain helmets (rare, 5%), health potions (rare, 15%) |
+| Road Bandit | 160 | 70 | 9 / 19 | gold (up to 30), short swords (rare, 5%), leather armor (rare, 4%), maces (rare, 5%), item 11492 (rare, 13%), item 5913 (rare, 6%) |
+| Bandit Captain | 450 | 280 | 2 / 5 | gold (up to 80), platinum coins (rare, 15%), brass armor (rare, 4%), chain helmets (rare, 5%), health potions (rare, 15%), item 5909 (rare, 12%) |
 
 - **Road Bandit:** Carries coins and gear you can sell. Often in groups of three or four.
 - **Bandit Captain:** A tough leader who calls two bandits. Drops platinum coins. Take friends the first time.
 
 ### The Old Quarry  (levels 23-30, money)
-*north, about 130 steps from the city centre. Safety: open.*
+*north, about 140 steps from the city centre. Safety: open.*
 
 Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Ruin Sentinel | 300 | 140 | 7 / 12 | gold (up to 45), chain helmets (rare, 6%), axes (rare, 5%) |
-| Ruin Archer | 220 | 120 | 8 / 14 | gold (up to 40), arrows (30%), bows (rare, 3%) |
-| Field Shardling | 120 | 55 | 17 / 30 | gold (up to 20), mana potions (rare, 6%) |
+| Ruin Sentinel | 300 | 140 | 7 / 12 | gold (up to 45), chain helmets (rare, 6%), axes (rare, 5%), item 5880 (rare, 8%) |
+| Ruin Archer | 220 | 120 | 8 / 14 | gold (up to 40), arrows (30%), bows (rare, 3%), item 11492 (rare, 8%) |
+| Field Shardling | 120 | 55 | 17 / 30 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
 
 - **Ruin Sentinel:** Slow, hits hard, takes little damage from plain weapons. Holy damage works best.
 - **Ruin Archer:** Keeps its distance and shoots. Close the gap or fight around corners.
@@ -200,7 +200,7 @@ The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden ro
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
-| Stonehorn Ram | 900 | 480 | 3 / 6 | gold (up to 100), platinum coins (30%), health potions (20%), mana potions (20%) |
+| Stonehorn Ram | 900 | 480 | 3 / 6 | gold (up to 100), platinum coins (30%), health potions (20%), mana potions (20%), item 5880 (rare, 10%) |
 
 - **Stonehorn Ram:** Charges in a straight line: watch for the warning on the ground and step aside.
 

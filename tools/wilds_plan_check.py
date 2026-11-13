@@ -23,23 +23,15 @@ FIXED = {
     "Toppled shrine": (300, 372, 10, 8),
 }
 
-# ---- hunting grounds: id -> (title, x, y, w, h, hub side, size, levels, role, zone, den name or None)
+# ---- hunting grounds: read from maps/floor1_plan.py (the same table the map builder uses), so they can't drift apart.
+# id -> (title, x, y, w, h, hub side, size, levels, role, zone, den name or None)
 # size "small" = four small loops (18 x 16); "std" = four standard loops (24 x 18); "tall" = four standard loops
 # turned on end (18 x 24, hub 6 deep). Hub side = where the entrance is.
-GROUNDS = {
-    "starter_west": ("The Ratwarren", 134, 242, 38, 40, "s", "small", (1, 4), "xp", "guarded", None),
-    "starter_east": ("Toad Pond", 296, 242, 38, 40, "s", "small", (3, 7), "xp", "guarded", None),
-    "starter_south": ("Sproutling Glade", 190, 338, 38, 40, "n", "small", (5, 10), "xp", "guarded", None),
-    "wasp_fields": ("Waspgrass Fields", 184, 194, 44, 34, "e", "small", (7, 12), "xp", "guarded", None),
-    "boar_meadow": ("Boar Meadow", 140, 338, 39, 57, "n", "tall", (9, 15), "xp", "open", None),
-    "burrow_hills": ("Burrow Hills", 240, 188, 60, 40, "w", "std", (11, 16), "xp", "open", "The Molework"),
-    "wolf_copse": ("Wolf Copse", 28, 262, 60, 40, "e", "std", (12, 18), "xp", "open", "The Alpha's Den"),
-    "reed_marsh": ("Reedmarsh", 44, 322, 52, 48, "n", "std", (14, 19), "money", "open", None),
-    "thornsnap_hollow": ("Thornsnap Hollow", 158, 132, 60, 40, "e", "std", (14, 20), "xp", "open", "The Rootcellar"),
-    "shard_fields": ("Shard Fields", 340, 300, 52, 48, "n", "std", (17, 24), "xp", "open", "Shard Grotto"),
-    "bandit_road": ("The Bandit Road", 328, 172, 52, 48, "s", "std", (19, 27), "money", "open", "Smugglers' Cellar"),
-    "old_quarry": ("The Old Quarry", 240, 124, 60, 40, "w", "std", (23, 30), "money", "open", "The Lower Works"),
-}
+import sys as _sys
+_sys.path.insert(0, str(ROOT / "maps"))
+from floor1_plan import CAMPS  # noqa: E402
+GROUNDS = {c["id"]: (c["title"], c["x"], c["y"], c["w"], c["h"], c["gate"], c["size"], c["levels"], c["role"], c["zone"], c["den"])
+           for c in CAMPS}
 
 # ---- roads and trails: name -> list of points (straight legs between them); width 3 for roads, 2 for trails
 ROADS = {

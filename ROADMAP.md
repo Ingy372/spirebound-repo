@@ -215,7 +215,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 ## Floor 1 wilds rebuild (plan ready 2026-11-12: `FLOOR1_WILDS_PLAN.md`, picture `docs/FLOOR1_WILDS_PLAN.png`)
 Jay: "monster spawn areas are currently messy and need to have more of a dedicated area where a few players at a time will be able to bot or farm." Follow the plan exactly; one commit per task; details and "done when" are in its Part 9.
 - [x] **W0 Find out how the engine respawns** (three questions in Part 7).
-- [ ] **W1 Put the new ground table into `maps/floor1_plan.py`** (nothing on the map changes yet).
+- [x] **W1 Put the new ground table into `maps/floor1_plan.py`** (nothing on the map changes yet).
 - [ ] **W2 Builder pieces:** wall ring, loop, fixed groups, named points, the walk test.
 - [ ] **W3 Pilot: Boar Meadow** with Old Tusk's wallow.
 - [ ] **W4 The four starter grounds.**

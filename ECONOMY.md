@@ -19,10 +19,10 @@
 | The Ratwarren | 1-4 | Ranger (arrows) | 300 | 45,000 | 1,065 | 1,651 | -586 | -586 |
 | The Ratwarren | 1-4 | Ranger (spears) | 300 | 45,000 | 1,065 | 286 | 779 | 779 |
 | The Ratwarren | 1-4 | Arcanist/Mystic | 300 | 45,000 | 1,065 | 200 | 865 | 865 |
-| Toad Pond | 3-7 | Vanguard | 300 | 60,750 | 1,086 | 152 | 934 | 1,921 |
-| Toad Pond | 3-7 | Ranger (arrows) | 300 | 60,750 | 1,086 | 1,432 | -346 | 641 |
-| Toad Pond | 3-7 | Ranger (spears) | 300 | 60,750 | 1,086 | 267 | 819 | 1,806 |
-| Toad Pond | 3-7 | Arcanist/Mystic | 300 | 60,750 | 1,086 | 201 | 885 | 1,872 |
+| Toad Pond | 3-7 | Vanguard | 300 | 61,875 | 1,087 | 156 | 932 | 1,989 |
+| Toad Pond | 3-7 | Ranger (arrows) | 300 | 61,875 | 1,087 | 1,456 | -368 | 689 |
+| Toad Pond | 3-7 | Ranger (spears) | 300 | 61,875 | 1,087 | 273 | 815 | 1,872 |
+| Toad Pond | 3-7 | Arcanist/Mystic | 300 | 61,875 | 1,087 | 206 | 882 | 1,939 |
 | Sproutling Glade | 5-10 | Vanguard | 300 | 84,375 | 1,354 | 171 | 1,182 | 2,847 |
 | Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 84,375 | 1,354 | 1,532 | -178 | 1,487 |
 | Sproutling Glade | 5-10 | Ranger (spears) | 300 | 84,375 | 1,354 | 294 | 1,060 | 2,725 |
@@ -39,30 +39,30 @@
 | Burrow Hills | 11-16 | Ranger (arrows) | 230 | 258,835 | 3,402 | 3,703 | -300 | 914 |
 | Burrow Hills | 11-16 | Ranger (spears) | 230 | 258,835 | 3,402 | 1,302 | 2,101 | 3,316 |
 | Burrow Hills | 11-16 | Arcanist/Mystic | 230 | 258,835 | 3,402 | 1,408 | 1,995 | 3,210 |
-| Wolf Copse | 12-18 | Vanguard | 265 | 410,930 | 2,447 | 816 | 1,631 | 8,741 |
-| Wolf Copse | 12-18 | Ranger (arrows) | 265 | 410,930 | 2,447 | 3,035 | -587 | 6,523 |
-| Wolf Copse | 12-18 | Ranger (spears) | 265 | 410,930 | 2,447 | 1,016 | 1,432 | 8,542 |
-| Wolf Copse | 12-18 | Arcanist/Mystic | 265 | 410,930 | 2,447 | 1,875 | 572 | 7,683 |
-| Thornsnap Hollow | 14-20 | Vanguard | 254 | 355,168 | 2,798 | 1,009 | 1,789 | 3,603 |
-| Thornsnap Hollow | 14-20 | Ranger (arrows) | 254 | 355,168 | 2,798 | 3,365 | -567 | 1,247 |
-| Thornsnap Hollow | 14-20 | Ranger (spears) | 254 | 355,168 | 2,798 | 1,221 | 1,577 | 3,391 |
-| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 254 | 355,168 | 2,798 | 2,096 | 702 | 2,516 |
+| Wolf Copse | 12-18 | Vanguard | 277 | 385,048 | 2,026 | 704 | 1,322 | 6,750 |
+| Wolf Copse | 12-18 | Ranger (arrows) | 277 | 385,048 | 2,026 | 2,777 | -751 | 4,676 |
+| Wolf Copse | 12-18 | Ranger (spears) | 277 | 385,048 | 2,026 | 890 | 1,136 | 6,563 |
+| Wolf Copse | 12-18 | Arcanist/Mystic | 277 | 385,048 | 2,026 | 1,763 | 263 | 5,691 |
 | Reedmarsh | 14-19 | Vanguard | 232 | 319,355 | 4,747 | 1,251 | 3,496 | 15,088 |
 | Reedmarsh | 14-19 | Ranger (arrows) | 232 | 319,355 | 4,747 | 3,864 | 883 | 12,475 |
 | Reedmarsh | 14-19 | Ranger (spears) | 232 | 319,355 | 4,747 | 1,486 | 3,261 | 14,852 |
 | Reedmarsh | 14-19 | Arcanist/Mystic | 232 | 319,355 | 4,747 | 2,352 | 2,396 | 13,987 |
+| Thornsnap Hollow | 14-20 | Vanguard | 252 | 357,397 | 2,795 | 1,021 | 1,774 | 3,485 |
+| Thornsnap Hollow | 14-20 | Ranger (arrows) | 252 | 357,397 | 2,795 | 3,394 | -599 | 1,112 |
+| Thornsnap Hollow | 14-20 | Ranger (spears) | 252 | 357,397 | 2,795 | 1,235 | 1,560 | 3,271 |
+| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 252 | 357,397 | 2,795 | 2,108 | 687 | 2,398 |
 | Shard Fields | 17-24 | Vanguard | 277 | 380,769 | 5,795 | 523 | 5,271 | 6,517 |
 | Shard Fields | 17-24 | Ranger (arrows) | 277 | 380,769 | 5,795 | 2,600 | 3,194 | 4,440 |
 | Shard Fields | 17-24 | Ranger (spears) | 277 | 380,769 | 5,795 | 710 | 5,084 | 6,330 |
 | Shard Fields | 17-24 | Arcanist/Mystic | 277 | 380,769 | 5,795 | 1,523 | 4,272 | 5,518 |
-| The Bandit Road | 19-27 | Vanguard | 237 | 563,135 | 5,621 | 1,626 | 3,996 | 6,647 |
-| The Bandit Road | 19-27 | Ranger (arrows) | 237 | 563,135 | 5,621 | 4,187 | 1,435 | 4,086 |
-| The Bandit Road | 19-27 | Ranger (spears) | 237 | 563,135 | 5,621 | 1,857 | 3,765 | 6,416 |
-| The Bandit Road | 19-27 | Arcanist/Mystic | 237 | 563,135 | 5,621 | 2,861 | 2,761 | 5,412 |
-| The Old Quarry | 23-30 | Vanguard | 229 | 657,839 | 5,500 | 1,338 | 4,162 | 5,013 |
-| The Old Quarry | 23-30 | Ranger (arrows) | 229 | 657,839 | 5,500 | 3,992 | 1,508 | 2,358 |
-| The Old Quarry | 23-30 | Ranger (spears) | 229 | 657,839 | 5,500 | 1,577 | 3,923 | 4,774 |
-| The Old Quarry | 23-30 | Arcanist/Mystic | 229 | 657,839 | 5,500 | 2,456 | 3,044 | 3,894 |
+| The Bandit Road | 19-27 | Vanguard | 248 | 506,107 | 5,145 | 1,452 | 3,694 | 5,741 |
+| The Bandit Road | 19-27 | Ranger (arrows) | 248 | 506,107 | 5,145 | 3,877 | 1,269 | 3,316 |
+| The Bandit Road | 19-27 | Ranger (spears) | 248 | 506,107 | 5,145 | 1,670 | 3,476 | 5,523 |
+| The Bandit Road | 19-27 | Arcanist/Mystic | 248 | 506,107 | 5,145 | 2,664 | 2,482 | 4,529 |
+| The Old Quarry | 23-30 | Vanguard | 233 | 652,392 | 5,556 | 1,206 | 4,350 | 5,220 |
+| The Old Quarry | 23-30 | Ranger (arrows) | 233 | 652,392 | 5,556 | 3,815 | 1,741 | 2,610 |
+| The Old Quarry | 23-30 | Ranger (spears) | 233 | 652,392 | 5,556 | 1,440 | 4,116 | 4,985 |
+| The Old Quarry | 23-30 | Arcanist/Mystic | 233 | 652,392 | 5,556 | 2,292 | 3,264 | 4,133 |
 
 Net with trading counts what the materials are worth when sold to other players (the gold a crafted item saves).
 

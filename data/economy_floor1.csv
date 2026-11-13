@@ -3,10 +3,10 @@ The Ratwarren,1-4,xp,Vanguard,300,45000,525,540,0,151,914,914
 The Ratwarren,1-4,xp,Ranger (arrows),300,45000,525,540,0,1651,-586,-586
 The Ratwarren,1-4,xp,Ranger (spears),300,45000,525,540,0,286,779,779
 The Ratwarren,1-4,xp,Arcanist/Mystic,300,45000,525,540,0,200,865,865
-Toad Pond,3-7,xp,Vanguard,300,60750,672,414,987,152,934,1921
-Toad Pond,3-7,xp,Ranger (arrows),300,60750,672,414,987,1432,-346,641
-Toad Pond,3-7,xp,Ranger (spears),300,60750,672,414,987,267,819,1806
-Toad Pond,3-7,xp,Arcanist/Mystic,300,60750,672,414,987,201,885,1872
+Toad Pond,3-7,xp,Vanguard,300,61875,682,405,1057,156,932,1989
+Toad Pond,3-7,xp,Ranger (arrows),300,61875,682,405,1057,1456,-368,689
+Toad Pond,3-7,xp,Ranger (spears),300,61875,682,405,1057,273,815,1872
+Toad Pond,3-7,xp,Arcanist/Mystic,300,61875,682,405,1057,206,882,1939
 Sproutling Glade,5-10,xp,Vanguard,300,84375,859,495,1665,171,1182,2847
 Sproutling Glade,5-10,xp,Ranger (arrows),300,84375,859,495,1665,1532,-178,1487
 Sproutling Glade,5-10,xp,Ranger (spears),300,84375,859,495,1665,294,1060,2725
@@ -23,27 +23,27 @@ Burrow Hills,11-16,xp,Vanguard,230,258835,2795,607,1215,1064,2339,3554
 Burrow Hills,11-16,xp,Ranger (arrows),230,258835,2795,607,1215,3703,-300,914
 Burrow Hills,11-16,xp,Ranger (spears),230,258835,2795,607,1215,1302,2101,3316
 Burrow Hills,11-16,xp,Arcanist/Mystic,230,258835,2795,607,1215,1408,1995,3210
-Wolf Copse,12-18,xp,Vanguard,265,410930,1550,897,7110,816,1631,8741
-Wolf Copse,12-18,xp,Ranger (arrows),265,410930,1550,897,7110,3035,-587,6523
-Wolf Copse,12-18,xp,Ranger (spears),265,410930,1550,897,7110,1016,1432,8542
-Wolf Copse,12-18,xp,Arcanist/Mystic,265,410930,1550,897,7110,1875,572,7683
-Thornsnap Hollow,14-20,xp,Vanguard,254,355168,2329,469,1814,1009,1789,3603
-Thornsnap Hollow,14-20,xp,Ranger (arrows),254,355168,2329,469,1814,3365,-567,1247
-Thornsnap Hollow,14-20,xp,Ranger (spears),254,355168,2329,469,1814,1221,1577,3391
-Thornsnap Hollow,14-20,xp,Arcanist/Mystic,254,355168,2329,469,1814,2096,702,2516
+Wolf Copse,12-18,xp,Vanguard,277,385048,1324,702,5427,704,1322,6750
+Wolf Copse,12-18,xp,Ranger (arrows),277,385048,1324,702,5427,2777,-751,4676
+Wolf Copse,12-18,xp,Ranger (spears),277,385048,1324,702,5427,890,1136,6563
+Wolf Copse,12-18,xp,Arcanist/Mystic,277,385048,1324,702,5427,1763,263,5691
 Reedmarsh,14-19,money,Vanguard,232,319355,3948,799,11591,1251,3496,15088
 Reedmarsh,14-19,money,Ranger (arrows),232,319355,3948,799,11591,3864,883,12475
 Reedmarsh,14-19,money,Ranger (spears),232,319355,3948,799,11591,1486,3261,14852
 Reedmarsh,14-19,money,Arcanist/Mystic,232,319355,3948,799,11591,2352,2396,13987
+Thornsnap Hollow,14-20,xp,Vanguard,252,357397,2341,454,1711,1021,1774,3485
+Thornsnap Hollow,14-20,xp,Ranger (arrows),252,357397,2341,454,1711,3394,-599,1112
+Thornsnap Hollow,14-20,xp,Ranger (spears),252,357397,2341,454,1711,1235,1560,3271
+Thornsnap Hollow,14-20,xp,Arcanist/Mystic,252,357397,2341,454,1711,2108,687,2398
 Shard Fields,17-24,xp,Vanguard,277,380769,2472,3323,1246,523,5271,6517
 Shard Fields,17-24,xp,Ranger (arrows),277,380769,2472,3323,1246,2600,3194,4440
 Shard Fields,17-24,xp,Ranger (spears),277,380769,2472,3323,1246,710,5084,6330
 Shard Fields,17-24,xp,Arcanist/Mystic,277,380769,2472,3323,1246,1523,4272,5518
-The Bandit Road,19-27,money,Vanguard,237,563135,4480,1141,2651,1626,3996,6647
-The Bandit Road,19-27,money,Ranger (arrows),237,563135,4480,1141,2651,4187,1435,4086
-The Bandit Road,19-27,money,Ranger (spears),237,563135,4480,1141,2651,1857,3765,6416
-The Bandit Road,19-27,money,Arcanist/Mystic,237,563135,4480,1141,2651,2861,2761,5412
-The Old Quarry,23-30,money,Vanguard,229,657839,4390,1110,850,1338,4162,5013
-The Old Quarry,23-30,money,Ranger (arrows),229,657839,4390,1110,850,3992,1508,2358
-The Old Quarry,23-30,money,Ranger (spears),229,657839,4390,1110,850,1577,3923,4774
-The Old Quarry,23-30,money,Arcanist/Mystic,229,657839,4390,1110,850,2456,3044,3894
+The Bandit Road,19-27,money,Vanguard,248,506107,4030,1115,2047,1452,3694,5741
+The Bandit Road,19-27,money,Ranger (arrows),248,506107,4030,1115,2047,3877,1269,3316
+The Bandit Road,19-27,money,Ranger (spears),248,506107,4030,1115,2047,1670,3476,5523
+The Bandit Road,19-27,money,Arcanist/Mystic,248,506107,4030,1115,2047,2664,2482,4529
+The Old Quarry,23-30,money,Vanguard,233,652392,4363,1193,869,1206,4350,5220
+The Old Quarry,23-30,money,Ranger (arrows),233,652392,4363,1193,869,3815,1741,2610
+The Old Quarry,23-30,money,Ranger (spears),233,652392,4363,1193,869,1440,4116,4985
+The Old Quarry,23-30,money,Arcanist/Mystic,233,652392,4363,1193,869,2292,3264,4133
