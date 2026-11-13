@@ -57,7 +57,12 @@ local function giveReward(player, secret, first)
 		return
 	end
 	if r.gold then
-		player:addMoney(r.gold)
+		if SpireSecrets.goldPaid(player:getAccountId(), secret.id) then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Another of your characters already took this secret's gold.")
+		else
+			SpireSecrets.markGoldPaid(player:getAccountId(), secret.id)
+			player:addMoney(r.gold)
+		end
 	end
 	for _, it in ipairs(r.items or {}) do
 		player:addItem(it[1], it[2])
@@ -68,7 +73,7 @@ local function giveReward(player, secret, first)
 end
 
 local function trigger(player, secret)
-	if secret.night and not SpireSecrets.isNight(tonumber(os.date("%H"))) then
+	if secret.night and not SpireSecrets.isNight(SpireSecrets.gameHour()) then
 		return
 	end
 	local first = not SpireSecrets.hasFound(player, secret.id)
@@ -104,20 +109,31 @@ function startup.onStartup()
 end
 startup:register()
 
-local lastTile = {}
-local tick = GlobalEvent("SpireSecretsTick")
-function tick.onThink(interval)
-	for _, p in ipairs(Game.getPlayers()) do
-		local k = key(p:getPosition())
-		if lastTile[p:getId()] ~= k then
-			lastTile[p:getId()] = k
-			local s = SpireSecrets.byPos[k]
-			if s and not (SpireCavebot and SpireCavebot.blocksRewards(p)) then
-				trigger(p, s)
-			end
-		end
+-- R17: a secret triggers the moment you step on its tile (it used to be a twice-a-second check, which a fast walker or
+-- a cavebot could step over)
+SpireSecrets.onStep = function(player, pos)
+	local s = SpireSecrets.byPos[key(pos)]
+	if s and not (SpireCavebot and SpireCavebot.blocksRewards(player)) then
+		trigger(player, s)
+		return true
+	end
+	return false
+end
+local step = MoveEvent()
+function step.onStepIn(creature, item, position, fromPosition)
+	local player = creature:getPlayer()
+	if player then
+		SpireSecrets.onStep(player, position)
 	end
 	return true
 end
-tick:interval(500)
-tick:register()
+local registered = 0
+for name, pos in pairs(WorldPoints) do
+	if name:find("^secret_") or name:find("^f%d+_secret_") then
+		step:position(pos)
+		registered = registered + 1
+	end
+end
+step:type("stepin")
+step:register()
+SpireSecrets.stepTiles = registered

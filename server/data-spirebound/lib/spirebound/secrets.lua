@@ -58,6 +58,20 @@ function SpireSecrets.isNight(hour)
 	return hour >= 20 or hour < 5
 end
 
+-- R17: night is the game's own night (the client's light), not the server's clock
+function SpireSecrets.gameHour()
+	return math.floor((getWorldTime and getWorldTime() or (tonumber(os.date("%H")) * 60)) / 60) % 24
+end
+
+-- R17: a secret's gold is paid once per ACCOUNT (a second character finding it gets the discovery, not the gold)
+function SpireSecrets.goldPaid(accountId, id)
+	return kv.scoped("account"):scoped(tostring(accountId)):scoped("spirebound-secretgold"):get(id) ~= nil
+end
+
+function SpireSecrets.markGoldPaid(accountId, id)
+	kv.scoped("account"):scoped(tostring(accountId)):scoped("spirebound-secretgold"):set(id, os.time())
+end
+
 function SpireSecrets.get(id)
 	for _, s in ipairs(SpireSecrets.list) do
 		if s.id == id then

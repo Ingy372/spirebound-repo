@@ -39,6 +39,22 @@ SECRET_WORDS = ["Hidden Cache", "Whispering Stone", "Lost Shrine", "Old Camp", "
                 "Hollow Tree", "Broken Statue", "Smuggler's Nook", "Silent Pool", "Last Lookout"]
 
 
+HINTS = {
+    "Hidden Cache": "Someone hid supplies where the {land} meets the woods, far from {town}'s walls.",
+    "Whispering Stone": "A stone hums when you stand beside it. Listen along the edges of {name}.",
+    "Lost Shrine": "Pilgrims once walked from {town} to a shrine the {land} has since swallowed.",
+    "Old Camp": "Hunters camped near the best grounds of {name}, then left in a hurry.",
+    "Forgotten Ledge": "Look where the ground of {name} rises and nobody bothers to climb.",
+    "Sunken Box": "Something was dropped near water on {name} and never fetched.",
+    "Quiet Grove": "Where the monsters of {name} never seem to wander, the trees keep a secret.",
+    "Hollow Tree": "One tree on {name} is hollow. Knock on the old ones.",
+    "Broken Statue": "A statue of a forgotten climber lies broken somewhere in the {land}.",
+    "Smuggler's Nook": "Smugglers from {town} used a nook on the far side of the floor.",
+    "Silent Pool": "Monsters and birds alike avoid one pool on {name}.",
+    "Last Lookout": "From the highest corner of {name} you can see the whole floor.",
+}
+
+
 def lua_str(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
@@ -156,7 +172,10 @@ def main():
                 hint = trig[0].upper() + trig[1:] + "."
             else:
                 nm, tier = f"{f['town']} {SECRET_WORDS[k]}", TIERS[k]
-                hint = f"Somewhere on Floor {n}, off the beaten path."
+                land = {"grass": "grassland", "jungle": "fogwood", "sand": "lakeshore", "gravel": "gravel flats",
+                        "rocksoil": "ashlands", "swamp": "marsh", "snow": "snowfields", "cobble": "streets",
+                        "stonefloor": "halls"}.get(f["biome"][0], "wilds")
+                hint = HINTS[SECRET_WORDS[k]].format(land=land, town=f["town"], name=f["name"])
             reward_gold = {"small": 300, "medium": 900, "large": 2000}[tier] * n
             lua.append(f"table.insert(SpireSecrets.list, {{ id = \"f{n}s{k + 1}\", floor = {n}, tier = {lua_str(tier)}, name = {lua_str(nm)}, "
                        f"hint = {lua_str(hint)}, point = \"f{n}_secret_{k + 1}\", reward = {{ gold = {reward_gold} }} }})")

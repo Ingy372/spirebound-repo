@@ -446,3 +446,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Open House now saves the owner's real guest list and puts it back when the two hours are up, even across a restart (a minute-by-minute check reads the saved record), and each house can open once a day.
 - The Summoning Circle no longer drops the boss into the house (fights can't happen in a safe house): it opens onto a new small private arena, one summoned boss at a time, with a light to walk home to Hearthgate.
 - The House Portal can no longer be set inside a labyrinth or on Contested ground. Three new in-game tests. Boot test 141 in-game tests, 0 errors.
+
+### 2026-11-13: Secret fixes (roadmap R17)
+- A secret now triggers the moment you step on its tile (before, a twice-a-second check could miss a fast walker). Its gold is paid once per account: a second character finding it gets the discovery but not the gold again. "Only at night" secrets follow the game's own night, the one you see in the client, not the server's clock.
+- The 60 secrets on Floors 6-10 had the same "somewhere on Floor N" hint; each kind now has its own clue in that floor's words (for example "Someone hid supplies where the marsh meets the woods, far from Reedhaven's walls."). Two new in-game tests. Boot test 143 in-game tests, 0 errors.
