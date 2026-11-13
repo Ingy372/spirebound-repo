@@ -2,6 +2,7 @@
 -- Spirebound systems first (the quest catalog in lib/core reads SpireQuests)
 dofile(DATA_DIRECTORY .. "/lib/spirebound/test_api.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/difficulty.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/deathgame.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/floors.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/sword_skills.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/world_points.lua")

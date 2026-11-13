@@ -182,8 +182,13 @@ def modes() -> str:
             ["Exclusive", "-", "Hardcore title", "Deathbound title, exclusive outfit, own leaderboard"],
         ],
     ) + ("<p><b>Player killers can never delete a Death Game character.</b> If another player damaged you in the 60 seconds "
-         "before you died, it counts as a PvP death: you are not deleted and take the Hardcore penalty instead. "
-         "Party members, guildmates and same-IP characters do not count, so nobody can tag themselves immortal.</p>")
+         "before you died and did real damage (at least 15% of your health), or another player dragged the monster "
+         "that killed you onto you, it counts as a PvP death: you are not deleted and take the Hardcore penalty instead. "
+         "Party members, guildmates and same-IP characters do not count, so nobody can tag themselves immortal.</p>"
+         "<p><b>Unfair deaths.</b> A Death Game character killed by a server crash or by lag on the server is restored by "
+         "a gamemaster. Your own internet dropping is not unfair: the tower is cruel. Ask a gamemaster within a day.</p>"
+         "<p><b>Stepping down</b> to Hardcore or Normal is allowed in town at any time, but it costs the extra experience "
+         "the harder path gave you.</p>")
 
 
 def pvp() -> str:

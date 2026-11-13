@@ -96,6 +96,15 @@ function Difficulty.set(player, mode)
 	if current == Difficulty.DEATHGAME then
 		scope(player):set("steppedDownAtLevel", player:getLevel())
 	end
+	if current ~= Difficulty.NONE and SpireDeathGame then -- Q14: stepping down costs the harder mode's extra experience
+		local bonus = scope(player):get("bonusXp") or 0
+		local cost = SpireDeathGame.stepDownCost(bonus, current, mode)
+		if cost > 0 then
+			player:removeExperience(math.min(cost, player:getExperience()), true)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Stepping down costs the %d extra experience your harder path gave you.", cost))
+		end
+		scope(player):set("bonusXp", bonus - cost)
+	end
 	return true
 end
 

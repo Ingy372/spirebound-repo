@@ -389,3 +389,8 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Starting the server no longer resets the GM test account. That is now a separate dev-only step (`windows\Make-Test-Accounts.bat`); a brand-new database still gets it once so the PC has a way in.
 - New sign-up page at http://localhost:8080/signup (name, e-mail, password twice, at most three accounts an hour from one address).
 - Checked: the login service's self-test proves the token is never the password and only its hash is stored; the boot test fails if a normal start touches the test accounts or the server takes passwords. Logged in through your client with a real token. Boot test 105 in-game tests, 0 errors.
+
+### 2026-11-13: Death Game deaths are now fair (roadmap R5)
+- A Death Game character is retired only by a real PvE death. Another player's damage saves you only if it was real (at least 15% of your health in the last minute), so a one-hit "tag" no longer makes you immortal. A player's killing blow never deletes you, and a friend can't save you by landing the last hit. A monster that hit another outside player in the last 30 seconds counts as dragged in: not PvE.
+- Retiring now frees the house, hands guild leadership to the next member (or closes the guild), removes market offers, frees the character slot and saves at once. GMs can `/restore <name>` after a server crash or server lag; the policy is on the website rules. Stepping down costs the extra experience the harder path gave (Q14, my recommendation assumed). Deathbound needs level 50 alive on the Death Game.
+- Six new in-game tests drive the same rule code the real death event calls, and run the retirement clean-up and restore on the real database and houses. Boot test 111 in-game tests, 0 errors.

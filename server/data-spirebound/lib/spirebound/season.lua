@@ -45,7 +45,7 @@ function SpireSeason.archivePlayer(guid, accountId, name, level, vocationId, sea
 	for _, t in ipairs(titles) do
 		accTitles[t] = accTitles[t] or season
 	end
-	if difficulty == 3 then
+	if SpireDeathGame.earnsDeathbound(difficulty, level, retired) then
 		accTitles["Deathbound (Season " .. season .. ")"] = season
 	end
 	acc:set("titles", accTitles)

@@ -6,7 +6,13 @@ local lastOutsideHit = {}
 -- XP bonus
 local xp = EventCallback("SpireDifficultyXp")
 function xp.playerOnGainExperience(player, target, exp, rawExp)
-	return math.floor(Difficulty.applyXp(Difficulty.get(player), exp) * SpireCavebot.xpFactor(player) * SpireSiege.factor(player))
+	local mode = Difficulty.get(player)
+	local withBonus = Difficulty.applyXp(mode, exp)
+	if withBonus > exp then -- remember what the harder mode's bonus gave (stepping down takes it back, Q14)
+		local s = player:kv():scoped("spirebound")
+		s:set("bonusXp", (s:get("bonusXp") or 0) + (withBonus - exp))
+	end
+	return math.floor(withBonus * SpireCavebot.xpFactor(player) * SpireSiege.factor(player))
 end
 xp:register()
 
@@ -63,8 +69,14 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	if not hitter and attacker and attacker:getMaster() then
 		hitter = attacker:getMaster():getPlayer() -- summons count as their owner
 	end
-	if victim and hitter and (primaryDamage > 0 or secondaryDamage > 0) then
-		if Difficulty.countsAsOutsidePlayer(Difficulty.playerInfo(victim), Difficulty.playerInfo(hitter)) then
+	local amount = math.max(0, primaryDamage) + math.max(0, secondaryDamage)
+	if victim and amount > 0 and attacker and attacker:isMonster() and not attacker:getMaster() then
+		SpireDeathGame.noteMonsterHit(attacker:getId(), victim:getGuid(), os.time()) -- for the "dragged in" rule
+	end
+	if victim and hitter and hitter ~= victim and amount > 0 and Difficulty.get(victim) == Difficulty.DEATHGAME then
+		local outside = Difficulty.countsAsOutsidePlayer(Difficulty.playerInfo(victim), Difficulty.playerInfo(hitter))
+		SpireDeathGame.noteHit(victim:getGuid(), { guid = hitter:getGuid(), outside = outside }, amount, os.time())
+		if outside then
 			lastOutsideHit[victim:getGuid()] = os.time()
 		end
 	end
@@ -79,19 +91,67 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 		return true
 	end
 	local guid = player:getGuid()
-	if Difficulty.isPvPSavedDeath(lastOutsideHit[guid], os.time()) then
-		logger.info("[Spirebound] Death Game character {} died with recent PvP damage: saved (not retired)", player:getName())
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Another player struck you moments before your death. The tower spares your life this time.")
+	local victimInfo = Difficulty.playerInfo(player)
+	-- who struck the killing blow (summons count as their owner)
+	local k = nil
+	local kp = killer and (killer:getPlayer() or (killer:getMaster() and killer:getMaster():getPlayer()))
+	if kp and kp ~= player then
+		k = { guid = kp:getGuid(), outside = Difficulty.countsAsOutsidePlayer(victimInfo, Difficulty.playerInfo(kp)) }
+	elseif killer and killer:isMonster() then
+		k = { monsterId = killer:getId() }
+	end
+	local verdict, why = SpireDeathGame.judge(guid, player:getMaxHealth(), k, os.time(), function(otherGuid)
+		local other = Player(otherGuid)
+		return other ~= nil and Difficulty.countsAsOutsidePlayer(victimInfo, Difficulty.playerInfo(other))
+	end)
+	if verdict == "saved" then
+		logger.info("[Spirebound] Death Game character {} saved, not retired ({})", player:getName(), why)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "This was not the tower's doing (" .. why .. "). It spares your life this time.")
 	else
 		local cause = killer and killer:getName() or "the tower"
 		Difficulty.retire(player, cause)
+		SpireDeathGame.free(guid)
+		player:save()
 		Game.broadcastMessage(string.format("%s, a Death Game climber of level %d, has fallen to %s. Their name is carved on the Memorial.", player:getName(), player:getLevel(), cause), MESSAGE_EVENT_ADVANCE)
 		logger.info("[Spirebound] Death Game character {} retired (killed by {})", player:getName(), cause)
 	end
 	lastOutsideHit[guid] = nil
+	SpireDeathGame.forget(guid)
 	return true
 end
 death:register()
+
+-- The Deathbound title (account-wide): a Death Game character that reaches level 50 alive
+local bound = CreatureEvent("SpireDeathbound")
+function bound.onAdvance(player, skill, oldLevel, newLevel)
+	if skill == SKILL_LEVEL and SpireDeathGame.earnsDeathbound(Difficulty.get(player), newLevel, Difficulty.isRetired(player)) then
+		local acc = SpireSeason.accountKv(player:getAccountId())
+		local titles = acc:get("titles") or {}
+		local t = "Deathbound (Season " .. SpireSeason.current() .. ")"
+		if not titles[t] then
+			titles[t] = SpireSeason.current()
+			acc:set("titles", titles)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Level 50 on the Death Game: you have earned the title Deathbound.")
+		end
+	end
+	return true
+end
+bound:register()
+
+-- GM: /restore <name> brings back a character retired by an unfair death (server crash or server lag)
+local restore = TalkAction("/restore")
+function restore.onSay(player, words, param)
+	if not player:getGroup():getAccess() then
+		return true
+	end
+	local ok, why = SpireDeathGame.restore(param or "")
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, ok and (param .. " is restored and may log in again.") or ("Not restored: " .. why))
+	logger.info("[Spirebound] GM {} used /restore {}: {}", player:getName(), param, ok and "restored" or why)
+	return false
+end
+restore:separator(" ")
+restore:groupType("gamemaster")
+restore:register()
 
 -- Login: block retired characters, register per-player events
 local login = CreatureEvent("SpireDifficultyLogin")
@@ -102,6 +162,7 @@ function login.onLogin(player)
 	end
 	player:registerEvent("SpireDeathGameHits")
 	player:registerEvent("SpireDeathGameDeath")
+	player:registerEvent("SpireDeathbound")
 	player:registerEvent("SpireHardcorePrepareDeath")
 	player:registerEvent("SpireHardcoreItemDrop")
 	SpireHardcore.settleDeath(player)

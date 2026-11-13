@@ -361,8 +361,13 @@ The current zone is shown in the corner of the client (icon + color).
 
 ### 6.6 Death Game characters and player killers
 **Rule: a Death Game character is only deleted by PvE.** **(Claude's call on mechanism, Jay can veto)**
-- If **any other player** (not a party member, guildmate, or same-IP character) damaged the Death Game character in the 60 seconds before death, the death counts as a **PvP death**: the character is **not deleted**. It takes the Hardcore death penalty instead and respawns in the temple.
+- If **any other player** (not a party member, guildmate, or same-IP character) did **real damage** (at least 15% of max health) to the Death Game character in the 60 seconds before death, the death counts as a **PvP death**: the character is **not deleted**. It takes the Hardcore death penalty instead and respawns in the temple. (Roadmap R5, 2026-11-13.)
+- A player's killing blow never deletes the character. A friend's killing blow only counts if that friend really fought (15%), so a friend can't "save" you by landing the last hit on a character the monsters were killing.
+- **Dragged monsters:** if the monster that killed you hit another outside player in the last 30 seconds, it was dragged in: not PvE, not deleted.
 - Party members, guildmates and same-IP characters don't count, so a friend can't "tag" you with 1 damage to make you immortal.
+- **Retirement** frees the character's house, passes guild leadership to the next-highest member (or closes the guild), removes market offers, frees the character slot, and saves at once.
+- **Unfair deaths:** a server crash or server lag is put right by a GM with `/restore <name>`; a player's own internet dropping is not (Q14, assumed).
+- **Stepping down** costs the extra experience the harder mode's bonus gave (Q14, assumed). **Deathbound** is earned only by reaching level 50 alive on the Death Game.
 - Death Game characters are also covered by newbie and level-range protection like everyone, and killing an unskulled Death Game character counts as **two** unjust kills.
 - Every saved death is logged; staff can review patterns.
 
