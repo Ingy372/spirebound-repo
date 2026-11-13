@@ -50,6 +50,10 @@ forgeInfluencedLimit = 0
 forgeFiendishLimit = 0
 boostedBossSlot = false
 
+-- Spells unlock by level on their own (DESIGN.md). Canary's default makes every spell
+-- need learning first and ignores each spell's own "no learning" setting, so it is off.
+toggleLearnSpells = false
+
 -- Houses (DESIGN.md 7.3): listed price, no auction, one per character, weekly rent
 toggleCyclopediaHouseAuction = false
 housePriceEachSQM = 1000

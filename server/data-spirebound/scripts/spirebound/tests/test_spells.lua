@@ -82,3 +82,14 @@ SpireTest.add("spells: about 20 per vocation including Lost Arts", function()
 		if r.lostArt then error("Lost Arts must not unlock by level") end
 	end
 end)
+
+-- Jay's playtest 2026-11-13: spells said "you need to learn this spell first" even at the right level.
+-- Canary's toggleLearnSpells forces learning on every spell; it must be off so level alone unlocks them.
+SpireTest.add("spells: level alone unlocks spells, no learning step", function()
+	SpireTest.eq(configManager.getBoolean(configKeys.LEARN_SPELLS), false, "engine-wide learn-spells switch is off")
+	for _, row in ipairs(SpireSpells.list) do
+		if Spell(row.name):needLearn() then
+			error(row.name .. " still needs to be learned")
+		end
+	end
+end)
