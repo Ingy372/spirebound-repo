@@ -42,12 +42,23 @@ Log in as Jay (your GM character). Type `/pos x, y, 7` in chat to jump, then pre
 2. As Jay, say `!rules`, `!report Jay, testing the report box`, then `/reports`.
 3. Say `!taskshop` and `!hunt` on any character.
 
-## Still open after this session
-R16-R22, R10b (repairs and travel fees), R10c (house prices per floor), R13b (Floor 2's own map), W12 (walk every ground in the client), and the direction-list jobs J5b, J5c, J6, J9, J10.
+## Also done later the same day
+- **Houses (R16):** Open House puts your real guest list back afterwards (even after a restart), once a day; the Summoning Circle opens onto its own small arena; no portals into labyrinths or Contested ground.
+- **Secrets (R17):** trigger the moment you step on them; gold once per account; night secrets follow the game's night; real hints on Floors 6-10.
+- **Tests on GitHub (R18, part):** a GitHub workflow now runs the full boot test on every push (please glance at the repository's Actions tab once: I can't see it from here), plus end-to-end tests for the headline rules.
+- **Commands (R19):** the Journal (J, or the new top-bar button) has a Commands tab with a button for every player command. Your client was restarted to load it.
+- **Small fixes (R20):** memory freed at logout, offline Derby winners paid, the Rapid Respawn weekend added.
+- **Twin Fang (R21):** a 22% off-hand edge instead of 50%, one-handed swords only, combos on real monsters, a solo trial.
+
+## Still open
+- **R22** (prove the custom art pipeline: one of your sprites in the client) and **R18**'s first green GitHub run.
+- New tasks found on the way: **R10b** (repairs and floor travel fees), **R10c** (house prices per floor), **R13b** (Floor 2's own hand-built map), **W12** (walk every hunting ground in the client).
+- Your direction-list jobs **J5b, J5c, J6, J9, J10** (J10 still waits on Q27).
+- **R0** is yours: play the first hour.
 
 ## Open questions (my recommendation is assumed until you answer)
 - **Q33 (new):** do the walled grounds look the way you want? I recommend keeping the layout and letting the Cowork polish soften the outlines.
-- **Assumed this session:** Q13 (season calendar), Q14 (stepping down costs the bonus), Q16 (bot rules), Q19 (warning time), Q22 (friends-test scope). Each is noted in QUESTIONS.md.
+- **Assumed this session:** Q13 (season calendar), Q14 (stepping down costs the bonus), Q16 (bot rules), Q18 (Twin Fang 22%), Q19 (warning time), Q22 (friends-test scope). Each is noted in QUESTIONS.md.
 - **Q26-Q29** (Spire Manor price, the forge, the account vault, the junk buyer) and **Q13-Q25** are still open. Nothing in this update depends on them.
 
 ## Art and map requests
