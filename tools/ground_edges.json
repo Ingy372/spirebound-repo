@@ -1,5 +1,5 @@
 {
- "_about": "edge pieces where grounds meet; learned by tools/learn_ground_edges.py",
+ "_about": "edge pieces where grounds meet; learned by tools/learn_ground_edges.py (mountain: the rock-face pieces round mountain ground 1128)",
  "grass": {
   "dSE": 4538,
   "N": 4531,
@@ -27,5 +27,19 @@
   "dSW": 4643,
   "iSE": 4640,
   "dSE": 4644
+ },
+ "mountain": {
+  "N": 4460,
+  "E": 4457,
+  "S": 4458,
+  "W": 4461,
+  "dNE": 4463,
+  "dNW": 4464,
+  "dSE": 4459,
+  "dSW": 4462,
+  "iNE": 4467,
+  "iNW": 4465,
+  "iSE": 4468,
+  "iSW": 4466
  }
 }

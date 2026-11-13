@@ -5,7 +5,8 @@ a soft grass edge and water meets land with a shoreline, instead of hard square 
 
 Learned from Canary's hand-made map (unpacked into .local/scratch/ref on Jay's PC; never committed):
   * "grass": the grass edge pieces that sit on a dirt or sand tile next to grass;
-  * "water": the shoreline pieces that sit on a land tile next to water.
+  * "water": the shoreline pieces that sit on a land tile next to water;
+  * "mountain": the rock-face pieces that sit on a grass tile next to mountain ground (1128). They block walking.
 Each set has 12 pieces: a side (N, E, S, W: the overlay is on that side), an outer corner (dNW...: only that diagonal
 neighbour is overlay) and an inner corner (iNW...: both sides of that corner are overlay).
 Run: python tools/learn_ground_edges.py [path/to/map.otbm]
@@ -115,6 +116,10 @@ if __name__ == "__main__":
 
     walk(root)
     sets = {"grass": learn(ground, items, GRASS, LOWER), "water": learn(ground, items, WATER, GRASS)}
+    # rock faces round mountain ground (1128). Canary's map uses two piece sets about equally; 4445-4456 are grass
+    # overlays, 4457-4468 the solid rock faces, which is what we want (they block walking like the rock itself)
+    rock = {i: [j for j in v if 4457 <= j <= 4468] for i, v in items.items()}
+    sets["mountain"] = learn(ground, rock, {1128}, GRASS)
     for k, v in sets.items():
         print(k, len(v), dict(sorted(v.items())))
     out = ROOT / "tools" / "ground_edges.json"

@@ -55,6 +55,7 @@ ID = {
     "swamp": [6352],
     "snow": [799, 6594, 6595],
     "blackmarble": [410],
+    "mountain": [1128],
     "wall_v": 1270, "wall_h": 1271, "wall_c": 1272, "wall_p": 1273,  # brick wall family (orientation is a best guess)
     "tree": [3614],
     "bush": [3681],
@@ -97,6 +98,7 @@ ROOFS = {
 ROOF_IDS = {i for r in ROOFS.values() for i in r.values()}
 # the roof each wall style gets unless a building asks for another (checked by eye in tools/maprender.py)
 ROOF_FOR = {"brick": "shingle", "stone": "shingle", "timber": "straw", "sand": "straw", "white": "red", "pale": "red"}
+MOUNTAIN = 1128                         # mountain ground: solid rock; Map.edge_grounds adds its rock faces
 STAIRS_UP, STAIRS_DOWN = 5258, 413      # stairs item on the lower level (walk on: up and north); stair tile above it
 LADDER, TRAPDOOR = 1948, 369            # ladder on the lower level (use it: up); trapdoor tile above it (walk on: down)
 TILE_PZ = 0x0001
@@ -577,6 +579,10 @@ class Map:
                 nb = {d for d, (dx, dy) in d8.items() if self.ground.get((x + dx, y + dy, z)) in water}
                 if nb:
                     add += pieces(nb, sets["water"])
+            if "mountain" in sets and g not in water and g != MOUNTAIN:
+                nb = {d for d, (dx, dy) in d8.items() if self.ground.get((x + dx, y + dy, z)) == MOUNTAIN}
+                if nb:                       # rock faces round mountain ground: they block walking like the rock
+                    add += pieces(nb, sets["mountain"])
             if add:
                 self.items[(x, y, z)] = [(i, b"") for i in add] + list(here)
 
@@ -630,6 +636,11 @@ class Map:
         lines = ['<?xml version="1.0"?>', "<monsters>"]
         for name, (x, y, z), radius, count, interval in self.monsters:
             lines.append(f'\t<monster centerx="{x}" centery="{y}" centerz="{z}" radius="{radius}">')
+            if isinstance(name, list):       # a mixed group with fixed places: [(monster, dx, dy, spawn seconds), ...]
+                for mon, dx, dy, secs in name:
+                    lines.append(f'\t\t<monster name="{mon}" x="{dx}" y="{dy}" z="{z}" spawntime="{secs}" />')
+                lines.append("\t</monster>")
+                continue
             for i in range(count):
                 dx = (i % 3) - 1 if radius else 0
                 dy = (i // 3) - 1 if radius else 0
@@ -754,6 +765,13 @@ def main(argv):
     for n in BUILT_FLOORS:
         layout_floor.build(m, n)
     link_floors(m)
+    m.finish()
+    if getattr(m, "wilds", None):           # the walk test for the hunting grounds (FLOOR1_WILDS_PLAN.md 5.2.9)
+        import wilds
+        problems = wilds.check(m, m.points["temple_hearthgate"])
+        if problems:
+            sys.exit("FAIL: hunting-ground walk test:\n" + "\n".join(problems))
+        print(f"walk test: {len(m.wilds)} hunting grounds pass")
     out = m.write()
     m.preview()
     print(f"map: {len(m.ground)} tiles, {sum(len(v) for v in m.items.values())} items, {len(m.houses)} houses, "

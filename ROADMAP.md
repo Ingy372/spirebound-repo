@@ -216,7 +216,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 Jay: "monster spawn areas are currently messy and need to have more of a dedicated area where a few players at a time will be able to bot or farm." Follow the plan exactly; one commit per task; details and "done when" are in its Part 9.
 - [x] **W0 Find out how the engine respawns** (three questions in Part 7).
 - [x] **W1 Put the new ground table into `maps/floor1_plan.py`** (nothing on the map changes yet).
-- [ ] **W2 Builder pieces:** wall ring, loop, fixed groups, named points, the walk test.
+- [x] **W2 Builder pieces:** wall ring, loop, fixed groups, named points, the walk test.
 - [ ] **W3 Pilot: Boar Meadow** with Old Tusk's wallow.
 - [ ] **W4 The four starter grounds.**
 - [ ] **W5 Burrow Hills, Wolf Copse, Reedmarsh, Thornsnap Hollow.**

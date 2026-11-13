@@ -63,7 +63,7 @@ CAMPS = [
          note="Fast and stingy, little health. Just north of the city gate, beside the Pass road."),
     dict(id="boar_meadow", title="Boar Meadow", x=140, y=338, w=39, h=57, gate="n", size="tall", zone="open",
          levels=(9, 15), role="xp", wall="oaks", core="oakgrove", trail="dirt", decor="boars",
-         groups=same(6, "Bristle Boar"), respawn=190,
+         groups=same(6, "Bristle Boar"), respawn=190, wallow=(1, 1),   # Old Tusk's wallow in the south-east loop
          note="Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallows somewhere in here."),
     dict(id="burrow_hills", title="Burrow Hills", x=240, y=188, w=60, h=40, gate="w", size="std", zone="open",
          levels=(11, 16), role="xp", wall="boulders", core="hills", trail="dirt", decor="hills",
