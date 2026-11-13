@@ -3,6 +3,14 @@
 local hunt = TalkAction("!hunt")
 function hunt.onSay(player, words, param)
 	player:sendTextMessage(MESSAGE_STATUS, SpireHunt.advice(player:getLevel()))
+	-- how busy the grounds for your level are right now (the crowd system, FLOOR1_WILDS_PLAN.md Part 7)
+	local r = SpireHunt.recommend(player:getLevel())
+	for _, c in ipairs({ r.xp or false, r.money or false }) do
+		local line = c and SpireCrowd.statusLine(c.id)
+		if line then
+			player:sendTextMessage(MESSAGE_STATUS, line)
+		end
+	end
 	return false
 end
 hunt:separator(" ")

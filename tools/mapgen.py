@@ -775,6 +775,7 @@ def main(argv):
         if problems:
             sys.exit("FAIL: hunting-ground walk test:\n" + "\n".join(problems))
         print(f"walk test: {len(m.wilds)} hunting grounds pass")
+        wilds.lua_data(m, LIB / "wilds_data.lua")
     out = m.write()
     m.preview()
     print(f"map: {len(m.ground)} tiles, {sum(len(v) for v in m.items.values())} items, {len(m.houses)} houses, "

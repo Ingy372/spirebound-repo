@@ -61,6 +61,10 @@ function tick.onThink(interval)
 			local t = p:getTown()
 			p:teleportTo(t:getTemplePosition())
 			p:sendCancelMessage("The tower's guardians won't face a cavebot. Switch it off and wait 10 minutes.")
+		elseif SpireCavebot.active(p) and SpireCrowd.caveAt(p:getPosition()) then
+			-- the party caves are for teams at the keyboard (Q32): back up the stairs
+			p:teleportTo(SpireCrowd.caveAt(p:getPosition()).exit)
+			p:sendCancelMessage("The caves are for parties at the keyboard. Switch the cavebot off and wait 10 minutes.")
 		end
 	end
 	return true
