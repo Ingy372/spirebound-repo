@@ -15,8 +15,8 @@ Part 1 is for Jay. Parts 2 to 9 are the build instructions for the next model.
 2. **Monsters do not need to see you.** I read the engine's code: a monster picks you as a target as soon as you are in its range on the same level, walls or not. It only needs a clear line to *hit* you. So the rock in the middle of a loop hides nothing: the whole loop wakes up and walks round to you from both sides.
 3. **Every group is three.** There are no single monsters and no pairs anywhere. Real Tibia's early hunting grounds are mostly ones and twos.
 4. **The trails are 2 tiles wide.** There is nowhere to step back to and nowhere without monsters.
-5. **It is about seven times denser than Tibia.** A loop has roughly one monster for every 6 tiles you can walk on. Tibia's early caves are nearer one for every 40 to 60.
-6. **Possibly on top of that:** one of the five weekend bonuses ("Rapid Respawn") switches on every extra crowd group in every ground and halves the wait. If that was the bonus when you tested, it made things worse. The first build task checks.
+5. **It is three to four times denser than Tibia.** Measured on the map (H1): one monster for every 13 to 15 tiles you can walk on. Wherever you stand, on average 12 monsters can come at you, up to 26; the gate clearing itself has 4 to 6. Tibia's early caves are nearer one for every 40 to 60.
+6. **Not the weekend bonus.** Friday 13 November had no bonus and Saturday 14 is Double Experience. "Rapid Respawn" (which fills every crowd spot) was not on.
 
 ### What real Tibia and good servers do
 - **Ones and twos near the entrance, bigger groups deeper in.** The far end and the lower levels are where it gets busy. You choose how deep to go.
@@ -66,7 +66,7 @@ Part 1 is for Jay. Parts 2 to 9 are the build instructions for the next model.
 | A monster only targets a creature on its own level (`isTarget`: different z returns false) | `monster.cpp`, read 2026-11-14 | levels are separate fights; stairs are exits |
 | Line of sight is checked to attack, not to pick a target | `monster.cpp` (`canUseAttack` uses `isSightClear`; `onCreatureFound` does not) | walls do not hide players, so spacing is by distance only |
 | A monster that leaves its spawn range is sent home (`deSpawnRange = 2` levels, `deSpawnRadius = 50` tiles in config) | `config.lua.dist`, `onThink` | groups cannot be dragged across a ground |
-| How far a monster notices a player (the number `NOTICE`) | **not confirmed**: H0 measures it, both across and down the screen | every limit in Part 3. Until measured, use 10 |
+| How far a monster notices a player (the number `NOTICE`) | The engine lets a creature see 11 tiles each way (`MAP_MAX_VIEW_PORT_X/Y = 11` in `map_const.hpp`); the monster's own check may be smaller and was not readable. H0 confirms in the client | every limit in Part 3. Use 10 (`tools/hunt_check.py`) until measured |
 | Monsters return on top of a player; the real wait is about twice the spawn-file number | W0, `PROGRESS.md` 2026-11-13 | unchanged |
 
 ---

@@ -236,8 +236,8 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 
 ## Floor 1 hunting grounds, third pass (plan ready 2026-11-14: `FLOOR1_HUNTING_PLAN.md`). Do this next.
 Jay: "im feeling overhelmed when i walk into a zone with nonstop monsters flooding to me. i think the zones need to bigger... utilize multi height levels as well. layer the monsters throughout the spawn more like real tibia does." Follow the plan exactly; one commit per task; details and "done when" are in its Part 9. Never relax a limit in its Part 3 to make a ground pass.
-- [ ] **H0 Measure how monsters notice players** (range, walls, changing level, wandering) and check which weekend bonus was on during Jay's test.
-- [ ] **H1 The calm checker** (`tools/hunt_check.py`): pull limits, breathing room, spacing, density, heat-map pictures. Run it on today's map first.
+- [~] **H0 Measure how monsters notice players** (range, walls, changing level, wandering) and check which weekend bonus was on during Jay's test. *(2026-11-14: weekend bonus checked (none / Double Experience); the engine's view range is 11 tiles each way; the in-client measurement is still open because client control was declined this session.)*
+- [x] **H1 The calm checker** (`tools/hunt_check.py`): pull limits, breathing room, spacing, density, heat-map pictures. Run it on today's map first.
 - [ ] **H2 New ground table and moved roads** in `maps/floor1_plan.py` (nothing on the map changes yet).
 - [ ] **H3 Builder pieces:** hills, ramps, levels carved from a list of clearings and paths, bands.
 - [ ] **H4 Pilot 1: the Ratwarren** (the Yard above, the Warren below). 🧑 Jay tries it.
