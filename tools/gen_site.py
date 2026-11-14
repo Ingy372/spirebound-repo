@@ -170,7 +170,7 @@ def vocations() -> str:
             ["Arcanist", "Sorcerer", "Wand", "Area damage, big flashy spells"],
             ["Mystic", "Druid", "Rod", "Healer, support, nature damage"],
         ],
-    ) + ("<p>Every vocation unlocks about 20 spells by level, including utility and support spells. "
+    ) + ("<p>Every vocation unlocks 23 to 25 spells by level, each at its own pace, including utility and support spells. "
          "The rare <b>Twin Fang</b> trial (Vanguards only, three per season) unlocks a second-blade fighting style.</p>")
 
 

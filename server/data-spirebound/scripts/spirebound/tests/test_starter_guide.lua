@@ -14,5 +14,6 @@ SpireTest.add("guide: !spells lists only the vocation's own spells, marking what
 	SpireTest.eq(joined:find("Kindle", 1, true) ~= nil, true, "shared spell listed")
 	SpireTest.eq(joined:find("Kindle[^\n]*learned") ~= nil, true, "level 8 spell is learned at level 8")
 	SpireTest.eq(joined:find("Second Wind", 1, true) == nil, true, "a Vanguard spell is not listed for an Arcanist")
-	SpireTest.eq(joined:find("Beacon[^\n]*level 20") ~= nil, true, "level 20 spell is shown as locked at level 8")
+	SpireTest.eq(joined:find("Arc Beam[^\n]*level 23") ~= nil, true, "level 23 spell is shown as locked at level 8")
+	SpireTest.eq(joined:find("Wayfinder[^\n]*level 10") ~= nil, true, "shared spells show the Arcanist's own level")
 end)

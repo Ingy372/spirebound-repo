@@ -37,15 +37,18 @@ function SpireGuide.spellLines(baseVocation, level)
 			table.insert(rows, row)
 		end
 	end
+	local function lv(row)
+		return SpireSpells.levelFor(row, baseVocation)
+	end
 	table.sort(rows, function(a, b)
-		if a.level ~= b.level then
-			return a.level < b.level
+		if lv(a) ~= lv(b) then
+			return lv(a) < lv(b)
 		end
 		return a.name < b.name
 	end)
 	local lines = {}
 	for _, row in ipairs(rows) do
-		local state = level >= row.level and "learned" or ("level " .. row.level)
+		local state = level >= lv(row) and "learned" or ("level " .. lv(row))
 		table.insert(lines, string.format("%-18s say \"%s\"   (%s)", row.name, row.words, state))
 	end
 	return lines
