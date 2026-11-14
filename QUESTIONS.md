@@ -158,6 +158,21 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 - **Recommendation:** newbie protection below level 50; can't start a fight with anyone below 70% of your level (outside Contested zones and boss rooms); "outnumbered" damage reduction when 3+ players attack you. Details in DESIGN.md §6.4.
 - Jay's answer:
 
+### Q37. Cavebot on the new solo cave and hill levels? (2026-11-14, from FLOOR1_HUNTING_PLAN.md)
+You said yes to "no cavebot in caves" (Q32) when every cave was a party cave. The new plan gives most grounds extra levels meant for solo hunting (tunnels, hilltops), with the party cave as the deepest level.
+- **Recommendation:** allow the cavebot (with its usual penalty) on every solo level; keep refusing it in the party caves only.
+- Jay's answer:
+
+### Q38. Which hunting areas felt fine? (2026-11-14)
+You wrote "certain areas are fine but the whole spawn shouldn't be a massive swarm."
+- **Recommendation (assumed):** the party caves and the Old Watchtower's inner room stay packed; each route may end in one marked dead-end "nest" of 4 or 5; everything else calms down. Tell me if a particular ground already felt right and I will keep its feel.
+- Jay's answer:
+
+### Q39. Try two pilot grounds before the rest are rebuilt? (2026-11-14)
+The Ratwarren (a yard above, a warren below) and Burrow Hills (hills, a plateau, tunnels, a party cave) get rebuilt first.
+- **Recommendation:** yes, play those two and write notes in PLAYTEST.md. The builder carries on with the other ten meanwhile and applies your notes as they arrive.
+- Jay's answer:
+
 ---
 
 ## Answered

@@ -232,4 +232,21 @@ Jay: "monster spawn areas are currently messy and need to have more of a dedicat
 - [x] **W9 Experience stages and the ladder** (Q30: Jay said yes, Floor 1 should last 11-15 hours).
 - [x] **W10 The crowd system and the `!hunt` line** (Q31: yes; cavebot refused in caves, Q32: yes).
 - [x] **W11 Regenerate documents and pictures; playtest list for Jay.**
-- [ ] **W12 Walk every rebuilt ground in the real client** (cut from W3-W8 on 2026-11-13: the client could not be driven this session). Done when: each ground's gate, hub signs, four loops and cave walked by Jay or by Claude in the client, and one party-sized fight in a cave, notes fixed. (Done so far: Boar Meadow, Toad Pond's hub, the Molework down and up.)
+- [ ] **W12 (replaced by H13 below)** Walk every rebuilt ground in the real client (cut from W3-W8 on 2026-11-13: the client could not be driven this session). Done when: each ground's gate, hub signs, four loops and cave walked by Jay or by Claude in the client, and one party-sized fight in a cave, notes fixed. (Done so far: Boar Meadow, Toad Pond's hub, the Molework down and up.)
+
+## Floor 1 hunting grounds, third pass (plan ready 2026-11-14: `FLOOR1_HUNTING_PLAN.md`). Do this next.
+Jay: "im feeling overhelmed when i walk into a zone with nonstop monsters flooding to me. i think the zones need to bigger... utilize multi height levels as well. layer the monsters throughout the spawn more like real tibia does." Follow the plan exactly; one commit per task; details and "done when" are in its Part 9. Never relax a limit in its Part 3 to make a ground pass.
+- [ ] **H0 Measure how monsters notice players** (range, walls, changing level, wandering) and check which weekend bonus was on during Jay's test.
+- [ ] **H1 The calm checker** (`tools/hunt_check.py`): pull limits, breathing room, spacing, density, heat-map pictures. Run it on today's map first.
+- [ ] **H2 New ground table and moved roads** in `maps/floor1_plan.py` (nothing on the map changes yet).
+- [ ] **H3 Builder pieces:** hills, ramps, levels carved from a list of clearings and paths, bands.
+- [ ] **H4 Pilot 1: the Ratwarren** (the Yard above, the Warren below). 🧑 Jay tries it.
+- [ ] **H5 Pilot 2: Burrow Hills** (hills, the Crown, the Molework, the party cave). 🧑 Jay tries it.
+- [ ] **H6 Toad Pond, Sproutling Glade, Waspgrass Fields.**
+- [ ] **H7 Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow.**
+- [ ] **H8 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.**
+- [ ] **H9 Roads, trails, signposts, zones on every level, secrets, forest pass.**
+- [ ] **H10 Crowd pockets, the weekend-bonus change, cavebot rule, respawn times and the economy re-check.**
+- [ ] **H11 In-game tests on the real map** (monsters in range at each route's start, middle and end; monsters let go when you change level); regenerate documents and pictures.
+- [ ] **H12 The calm rules become a rule for every floor** (`CLAUDE.md`, and the Floors 2 to 10 generator obeys them). R13b (Floor 2) builds on this.
+- [ ] **H13 Walk every ground and level in the real client**; playtest list for Jay.
