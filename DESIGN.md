@@ -164,100 +164,26 @@ Every vocation gets sword skills: combo-style abilities with cooldowns, tied to 
 
 ### 5.3b Spells (Jay, 2026-11-08: "Each voc should have a decent amount of spells they can unlock. Make sure there are utility spells and support spells as well.")
 
-Sword skills are the combo attacks. **Spells** are everything else: healing, support, utility, and (for the two mage vocations) the big magic. Each vocation unlocks **about 20 spells**: 8 shared spells plus 12 of its own. Names, levels and words below are **(Claude's call, Jay can veto any of them)**; exact numbers live in the spell data file once built.
+Sword skills are the combo attacks. **Spells** are everything else: healing, support, utility, crowd control, runes, and (for the two mage vocations) the big magic. **The full design is `docs/design/spells.md`** (overhaul of 2026-11-13, Jay's brief: 15–25 original spells per vocation, a different unlock rhythm for each, roles kept, Tibia's solo curve with the Vanguard hardest and the Ranger easiest, a distinct look per vocation). Names, levels and numbers are **(Claude's call, Jay can veto any of them)**; exact numbers live in `server/data-spirebound/lib/spirebound/spells.lua`.
 
 **How spells unlock:**
-- Spells **unlock automatically when you reach their level** (Jay, 2026-11-08: "spells should be learned on level unlock, not gold"). No trainer, no cost. A message tells you what you just learned.
-- **2 per vocation are "Lost Arts"**: earned only by finishing every story quest on Floor 5 (first) and Floor 8 (second), never sold. Marked ★ below **(Claude's call)**.
-- **Ammunition can't be conjured** (Jay). Arrows, bolts and spears are bought from NPCs, alongside potions; together they are the main everyday gold sink.
-- Incantations are our own words (not Tibia's), short and easy to type, e.g. `spire mend`. Everything can also sit on a hotkey.
+- Spells **unlock automatically when you reach their level** (Jay, 2026-11-08: "spells should be learned on level unlock, not gold"). No trainer, no cost. A message tells you what you just learned; `!spells` lists them.
+- **2 per vocation are "Lost Arts"**: earned only by finishing every story quest on Floor 5 (level 120+) and Floor 8 (level 250+), never sold **(Claude's call)**.
+- **Ammunition can't be conjured** (Jay). Arrows, bolts and spears are bought from NPCs, alongside potions; together they are the main everyday gold sink. Rune spells use up a blank rune.
+- Incantations are our own words (not Tibia's), short and easy to type. Everything can also sit on a hotkey.
 
-**Shared by all four vocations (8)**
+**What each vocation gets** (6 shared utilities, each learned at that vocation's own level, plus its own spells):
 
-| Spell | Type | Level | What it does |
+| Vocation | Own spells | Rhythm | Highlights |
 |---|---|---|---|
-| Kindle | utility | 8 | small light around you |
-| Wayfinder | utility | 8 | tells you the direction and distance of a player |
-| First Aid | healing | 8 | small self-heal |
-| Cleanse | support | 10 | removes poison, burning, bleeding from yourself |
-| Skystep | utility | 12 | climb up or down one level where there is room (Tibia's levitate) |
-| Hearth Ration | utility | 14 | creates a piece of food |
-| Quickstep | utility | 14 | haste for 30 seconds |
-| Beacon | utility | 20 | strong light for a long time |
+| Vanguard | 17 (23 in all) | slow burn, defense first, late power | Heavy Strike 8, Rending Blow 16, Rally Cry 20, Iron Hide 30, Whirlwind 33 (its only, deliberately weak area attack), Skyrend 90, Undying Oath 200 |
+| Ranger | 18 (24) | steady, kiting tools early | Piercing Shot 8, Scatter Shot 16, Snare 20, Disengage 24, Sunburst Volley 45, Dawnpiercer 80, Lightrain 160 |
+| Arcanist | 19 (25) | front-loaded glass cannon | Ember Strike 8, Fireburst Wave 18, Arc Beam 23, Stormcall 55, Inferno Core 80, Cinder Lance 100, Arc Cataclysm 130 |
+| Mystic | 19 (25) | heals first, party tools mid-game | Frost Strike 8, Mend Other 16, Frost Wave 21, Mass Mend 36, Thornfield 55, Verdant Renewal 100, Mana Bloom 130 |
 
-**Vanguard (12)** — the protector
+Shared utilities: Kindle (light), Wayfinder (find a player), Cleanse, Skystep (climb a level), Hearth Ration (food), Quickstep (haste).
 
-| Spell | Type | Level | What it does |
-|---|---|---|---|
-| Heavy Strike | attack | 8 | a hard blow at your target; grows with your melee skill (Jay's playtest, 2026-11-13) |
-| Whirlwind | attack | 16 | hits everything around you; grows with your melee skill |
-| Second Wind | healing | 10 | heals a share of your max HP |
-| Rally Cry | support | 20 | pulls nearby monsters onto you (taunt) |
-| Charge | utility | 25 | dash up to 3 tiles toward your target |
-| Iron Hide | support | 30 | 30% less damage for 6 seconds |
-| Intimidate | utility | 35 | slows monsters around you |
-| Battle Hymn | support | 45 | party: melee skills up for 2 minutes |
-| Guardian Stance | support | 50 | take part of the damage meant for an adjacent ally |
-| Bulwark Aura | support | 60 | party: armor up for 2 minutes |
-| Recovery | healing | 70 | strong self-heal |
-| Iron Will | utility | 80 | break free of slows and paralysis |
-| ★ Last Bastion | healing | 100 | big heal that grows stronger the lower your HP |
-| ★ Unbroken Line | support | 150 | party: 15% less damage for 10 seconds |
-
-**Ranger (12)** — the scout
-
-| Spell | Type | Level | What it does |
-|---|---|---|---|
-| Piercing Shot | attack | 8 | a strong shot at your target; grows with your distance skill (Jay's playtest, 2026-11-13) |
-| Scatter Shot | attack | 16 | a spread of shots in front of you; grows with your distance skill |
-| Keen Sight | utility | 13 | see invisible creatures and hidden traps nearby for 1 minute |
-| Field Dressing | healing | 15 | heal yourself or one ally |
-| Tracker's Mark | support | 20 | marks one monster: your party deals 10% more damage to it for 15 seconds |
-| Disengage | utility | 25 | leap 2 tiles away from your target |
-| Swift Foot | utility | 30 | strong haste |
-| Snare | support | 35 | roots one monster in place (slows players) |
-| Radiant Shot | attack | 40 | holy-damage strike at range |
-| Camouflage | utility | 45 | monsters lose track of you for 10 seconds (players can still see you) |
-| Eagle Eye | support | 55 | party: critical-hit chance up for 2 minutes |
-| Sanctified Ground | support | 70 | small area that heals allies standing in it |
-| ★ Hawk's Path | utility | 100 | long dash in a straight line |
-| ★ Volley of Dawn | attack | 150 | huge holy area attack |
-
-**Arcanist (12)** — the destroyer
-
-| Spell | Type | Level | What it does |
-|---|---|---|---|
-| Ember Strike | attack | 8 | fire strike at range |
-| Volt Strike | attack | 12 | energy strike at range |
-| Mana Ward | support | 14 | damage comes out of your mana first (Tibia's magic shield) |
-| Fireburst Wave | attack | 23 | fire wave in front of you |
-| Conjure Fire Rune | utility | 27 | makes an area fire rune |
-| Arc Beam | attack | 35 | long energy line |
-| Blink | utility | 40 | teleport up to 3 tiles |
-| Summon Ember Sprite | support | 50 | a small fire spirit fights for you |
-| Arcane Empower | support | 60 | party: magic damage up for 2 minutes |
-| Conjure Strike Rune | utility | 45 | makes a strong single-target rune |
-| ★ Meteor Rain | attack | 100 | huge fire area around you |
-| ★ Mirror Image | utility | 150 | a decoy that monsters attack for 5 seconds |
-
-**Mystic (12)** — the healer
-
-| Spell | Type | Level | What it does |
-|---|---|---|---|
-| Frost Strike | attack | 8 | ice strike at range |
-| Mend Other | healing | 18 | heal another player |
-| Thorn Strike | attack | 14 | earth strike at range |
-| Purify | support | 20 | removes harmful conditions from your whole party nearby |
-| Conjure Healing Rune | utility | 24 | makes a healing rune anyone can use |
-| Barkskin | support | 30 | party: armor up for 2 minutes |
-| Rejuvenate | healing | 35 | heal over time on one player |
-| Mass Mend | healing | 36 | heals everyone in your party around you |
-| Entangle | support | 40 | conjures a paralysis rune |
-| Summon Wolf Companion | support | 50 | a wolf fights at your side |
-| ★ Wellspring | healing | 100 | large area heal-over-time zone |
-| ★ Winter's Breath | attack | 150 | huge ice area around you |
-
-Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and cooldowns.
+Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and group cooldowns (attack 2 s, healing 1 s, support 2 s; attack spells share the attack group with sword skills).
 
 ### 5.4 Difficulty modes
 Chosen at creation. You can move **down** a difficulty at the Registrar (Death Game → Hardcore → Normal), **never up**.

@@ -62,6 +62,21 @@ Base Tibia sprites stand in for all of these until your art arrives, so nothing 
 24 icons at 32×32, 1 frame each, file names `skill_<name>.png`: arc_slash, riposte_line, fourfold_rend, split_earth, hewing_turn, executioners_drop, bell_ringer, crushing_arc, tremor_blow, quickdraw, pinning_shot, arrow_storm, bolt_lance, ratchet_shot, siege_bolt, skewer, javelin_arc, comet_spear, spark_edge, flame_script, starfall_rite, thorn_edge, frost_script, verdant_burst.
 Prompt: *"A square fantasy skill icon showing <one-line description of the move>, bold readable silhouette, glowing effect, dark background."* (Claude will add per-icon descriptions when task 1.14 is built.)
 
+## Batch 5 — Spell effects (Priority: medium, added 2026-11-13)
+Every spell already uses the best existing effect, so none of these block anything. Effects are 32×32 per tile, transparent background; "frames" play once, left to right. Design and placeholders: docs/design/spells.md section 6.
+
+| ✓ | File names | Size / frames | Grok prompt (after the style lock) |
+|---|---|---|---|
+| [ ] | `fx_whirlwind_{0..5}.png` | 96×96, 6 | A spinning steel sword arc circling a 3×3 area seen from above, crimson edge glow, motion blur, ring shape with an empty centre. |
+| [ ] | `fx_skyrend_{0..6}.png` | 32×64, 7 | A tall golden-crimson sword slash coming down onto one tile, bright flash at the bottom on the last frames. |
+| [ ] | `fx_undying_oath_{0..7}.png` | 32×32, 8 (loop) | A thin golden halo and shield ring circling a character's feet, small sparkles rising. |
+| [ ] | `ani_dawn_arrow_{n,ne,e,se,s,sw,w,nw}.png` | 32×32, 1 per direction | A white-gold arrow made of light with a short glowing trail (distance/projectile sprite). |
+| [ ] | `fx_lightrain_{0..5}.png` | 32×32, 6 | Thin needles of white-gold light falling onto a tile and splashing into small sparks. |
+| [ ] | `fx_stormcall_{0..5}.png` | 32×64, 6 | A violet lightning bolt striking down onto a tile from a small dark cloud, purple sparks on impact. |
+| [ ] | `fx_arc_cataclysm_{h,v}_{0..3}.png` | 32×32, 4 per direction | A thick violet lightning beam segment, crackling edges; one horizontal and one vertical version that tile seamlessly. |
+| [ ] | `fx_thornfield_{0..5}.png` | 32×32, 6 | Green thorny vines bursting up out of the ground and pulling back, a few leaves flying. |
+| [ ] | `fx_lifeward_{0..7}.png` | 32×32, 8 (loop) | A translucent leaf-green bubble around a character, faint leaf pattern shimmering across it. |
+
 ## Batch 4 — Azhrakkar, the Cerulean Ruin (Priority: later, phase 5, but worth starting early)
 | ✓ | File names | Size / frames | Grok prompt |
 |---|---|---|---|

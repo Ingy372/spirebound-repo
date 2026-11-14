@@ -23,6 +23,14 @@ The new task window lists every monster on the floor (25 on Floor 1, 8 on the ot
 - Recommendation: keep one at a time for now; if it feels slow in playtests, allow three.
 - Jay's answer:
 
+### Q36. Spell overhaul: balance to check in playtests (2026-11-13)
+All four vocations have a new spell list (docs/design/spells.md). Things to judge while playing:
+1. Vanguard has no area spell until level 33 (Whirlwind, weak on purpose, like Tibia's knight). Recommendation: keep; if levelling feels too slow, move Whirlwind to 25 before raising its damage.
+2. The Ranger's Scatter Shot is the strongest early area spell (the Ranger is meant to be the easiest class to level alone). Recommendation: keep.
+3. Making runes now uses up a blank rune (10 gold), as the economy model always assumed. Recommendation: keep.
+4. The runes themselves still carry the engine's item names (for example "great fireball rune"). Recommendation: rename them to Spirebound names in a later task.
+- Jay's answer:
+
 ### Q13. Calendar gate on floor bosses? [1.4]
 Nothing stops a big guild finishing all 10 floors in the first week or two, and then the season's story is over.
 - **Recommendation:** yes. Each floor boss room unseals on a date (Floor 2 no earlier than day 3, then one floor every 5–7 days). Every unlock becomes an event. Also drop the "25 floors per season" promise; say "10 floors, more if the season goes well".
