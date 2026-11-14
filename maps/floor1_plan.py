@@ -46,8 +46,8 @@ def same(n, monster, count=3):
 # respawn = real seconds (plan Part 5.3), den = cave name, den_groups = the cave's 8 groups (plan Part 5.4).
 CAMPS = [
     dict(id="starter_west", title="The Ratwarren", x=134, y=242, w=38, h=40, gate="s", size="small", zone="guarded",
-         levels=(1, 4), role="xp", wall="bushes", core="mounds", trail="dirt", decor="rats",
-         groups=same(4, "Field Rat"), respawn=110,
+         levels=(1, 4), role="xp", wall="broadleaf", core="mounds", trail="dirt", decor="rats",
+         groups=same(4, "Field Rat"), respawn=110, design="RATWARREN",
          note="Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you here."),
     dict(id="starter_east", title="Toad Pond", x=296, y=242, w=38, h=40, gate="s", size="small", zone="guarded",
          levels=(3, 7), role="xp", wall="broadleaf", core="pond", trail="grass", decor="pond",
@@ -102,6 +102,65 @@ CAMPS = [
          + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2), ("Field Shardling", 1))] * 4,
          note="Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well."),
 ]
+
+# ---- Designed grounds (FLOOR1_HUNTING_PLAN.md Part 6): a ground drawn from a list of clearings and paths on several
+# levels, so monsters can be spread out and layered calm -> middle -> deep. Coordinates are local to the ground's corner
+# (c["x"], c["y"]); levels below the surface may reach outside the surface rectangle, up to their own "box".
+#   clearing: (name, x, y, radius, band, route, content). content: None, "rest", "hub", a group list (one or more groups:
+#             [(("Field Rat", 2),), (("Field Rat", 1),)] = a pair and a single 3 tiles apart), or "crowd" (a crowd spot:
+#             one group of the route's crowd group, switched on by the crowd system only).
+#   path: (from, to, width).   link: ("stairs", x, y, z_low) = stairs up at (x, y, z_low), the way down at (x, y, z_low - 1).
+#   band limits and the checker: tools/hunt_check.py.
+_P, _S = (("Field Rat", 2),), (("Field Rat", 1),)
+_T, _N = (("Field Rat", 3),), (("Field Rat", 4),)
+RATWARREN = dict(
+    gate=(19, 39), crowd_group=[("Field Rat", 1)],
+    routes={"a": "w2", "b": "A", "c": "B", "d": "E"},
+    route_names={"a": "The Yard", "b": "The Warren, west", "c": "The Warren, east", "d": "The Deep Warren"},
+    levels={
+        7: dict(name="The Yard", box=(0, 0, 38, 40), clearings=[
+            ("hub", 19, 34, 4, "approach", None, "hub"),
+            ("wa", 10, 28, 2, "calm", "a", None),
+            ("w2", 6, 18, 3, "calm", "a", [_S]),
+            ("w1", 5, 8, 4, "calm", "a", [_P]),
+            ("N", 17, 4, 3, "calm", "a", "rest"),
+            ("e1", 31, 7, 4, "calm", "a", [_P]),
+            ("e2", 31, 18, 3, "calm", "a", [_S]),
+            ("rest", 19, 15, 4, "calm", "a", "rest"),
+            ("ca1", 11, 3, 1, "calm", "a", "crowd"), ("ca2", 26, 25, 1, "calm", "a", "crowd"),
+            ("ca3", 4, 28, 1, "calm", "a", "crowd"),
+        ], paths=[("hub", "wa", 3), ("wa", "w2", 3), ("w2", "w1", 3), ("w1", "N", 3), ("N", "e1", 3), ("e1", "e2", 3),
+                  ("e2", "hub", 3), ("hub", "rest", 3), ("rest", "N", 3)]),
+        # The Warren (north half, middle band) and, past a long quiet tunnel, the Deep Warren (south half, deep band).
+        # Both are on level 8: level 9 below is the Underkeep's Wing 4. Chamber rows are 23 apart so no tile can
+        # notice two chambers at once (NOTICE 10, members spread one tile).
+        8: dict(name="The Warren", box=(-8, -6, 44, 101), clearings=[
+            ("A", 10, 30, 4, "middle", "b", "rest"),
+            ("B", 17, 7, 4, "middle", "c", "rest"),
+            ("D", 14, 33, 4, "middle", None, "rest"),
+            ("L0", -3, -2, 5, "middle", "b", [_P, _P]), ("L1", -3, 21, 5, "middle", "b", [_P, _P]),
+            ("L2", -3, 44, 5, "middle", "b", [_P, _P]),
+            ("R0", 30, -2, 5, "middle", "c", [_P, _P]), ("R1", 30, 21, 5, "middle", "c", [_P, _P]),
+            ("R2", 30, 44, 5, "middle", "c", [_P, _P]),
+            ("E", 14, 57, 5, "deep", "d", "rest"),
+            ("DL0", -3, 67, 5, "deep", "d", [_P, _T]), ("DR0", 30, 67, 5, "deep", "d", [_P, _T]),
+            ("DL1", -3, 90, 5, "deep", "d", [_P, _P]),
+            ("DR1", 30, 90, 5, "nest", "d", [_N]),
+            ("cb1", -3, 10, 1, "middle", "b", "crowd"), ("cb2", -3, 33, 1, "middle", "b", "crowd"),
+            ("cb3", 4, -3, 1, "middle", "b", "crowd"),
+            ("cc1", 30, 10, 1, "middle", "c", "crowd"), ("cc2", 30, 33, 1, "middle", "c", "crowd"),
+            ("cc3", 23, 46, 1, "middle", "c", "crowd"),
+            ("cd1", -3, 78, 1, "deep", "d", "crowd"), ("cd2", 14, 78, 1, "deep", "d", "crowd"),
+            ("cd3", 14, 92, 1, "deep", "d", "crowd"),
+        ], paths=[("L0", "L1", 3), ("L1", "L2", 3), ("R0", "R1", 3), ("R1", "R2", 3), ("L0", "B", 3), ("B", "R0", 3),
+                  ("L2", "D", 3), ("D", "R2", 3), ("A", "L1", 3), ("A", "D", 3), ("B", "D", 3),
+                  ("D", "E", 3), ("E", "DL0", 3), ("E", "DR0", 3), ("DL0", "DL1", 3), ("DL1", "cd3", 3),
+                  ("DR0", "DR1", 2)]),
+    },
+    links=[("stairs", 10, 28, 8), ("stairs", 17, 6, 8)],
+    nest_signs=[(29, 82, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN}
 
 APEX = dict(id="apex_watchtower", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

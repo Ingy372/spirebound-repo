@@ -665,9 +665,25 @@ def lua_data(m, path):
         c = L["c"]
         xs = [p[0] for p in L["rect"]]
         ys = [p[1] for p in L["rect"]]
-        out.append('\t{ id = "%s", title = "%s", guarded = %s, respawn = %d, lo = %d, hi = %d, x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d, spots = {'
+        zs = ""
+        if L.get("design"):                       # designed grounds: the head count covers every level's box too
+            allb = set().union(*L["boxes"].values()) | L["rect"]
+            xs = [p[0] for p in allb]
+            ys = [p[1] for p in allb]
+            zs = ", zs = { " + ", ".join("[%d] = true" % z for z in sorted(L["levels"])) + " }"
+        out.append('\t{ id = "%s", title = "%s", guarded = %s, respawn = %d, lo = %d, hi = %d, x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d%s, spots = {'
                    % (c["id"], c["title"], str(c["zone"] == "guarded").lower(), c["respawn"], c["levels"][0], c["levels"][1],
-                      min(xs), min(ys), max(xs), max(ys), Z))
+                      min(xs), min(ys), max(xs), max(ys), Z, zs))
+        if L.get("design"):
+            from floor1_plan import DESIGNS
+            g = DESIGNS[c["design"]]["crowd_group"]
+            n = 0
+            for r in sorted(L["routes"]):
+                for (x, y, z) in L["routes"][r]["crowd"]:
+                    n += 1
+                    out.append('\t\t{ n = %d, loop = "%s", x = %d, y = %d, z = %d, group = %s },' % (n, r, x, y, z, grp(g)))
+            out.append("\t} },")
+            continue
         sz = SIZES[c["size"]]
         n = 0
         for lp in L["loops"]:

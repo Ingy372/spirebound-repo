@@ -13,6 +13,9 @@ Template:
 
 ---
 
+## To try next (from Claude, 2026-11-14)
+- **The new Ratwarren** (levels 1-4, west of Hearthgate): walk in from the gate, hunt the Yard, take a hole down into the Warren, then follow the long tunnel south to the Deep Warren. Does it still feel like a flood? Too empty? Write what you think below.
+
 (no playtests yet: the first one comes at the end of Phase 1)
 
 ## 2026-11-11 (Jay, first look)

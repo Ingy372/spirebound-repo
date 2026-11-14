@@ -70,7 +70,8 @@ function SpireCrowd.ground(id)
 end
 
 function SpireCrowd.inside(g, pos)
-	return pos.z == g.z and pos.x >= g.x1 and pos.x <= g.x2 and pos.y >= g.y1 and pos.y <= g.y2
+	local onLevel = pos.z == g.z or (g.zs ~= nil and g.zs[pos.z] == true) -- designed grounds count every level
+	return onLevel and pos.x >= g.x1 and pos.x <= g.x2 and pos.y >= g.y1 and pos.y <= g.y2
 end
 
 -- Players that count: anyone inside the ground at ground level except staff (cavebot users count too)

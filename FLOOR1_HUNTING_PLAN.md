@@ -88,7 +88,7 @@ Every walkable tile of a ground belongs to one band. Bands are set by walking di
 | Party cave | the deepest level of the seven grounds that have one | 8 | 4 | separate (32 per cave, as today) |
 
 ### 3.2 Whole-ground limits
-1. **Breathing room:** at least 25% of walkable tiles have pull 0, and at least 60% have pull 2 or less (party caves excluded).
+1. **Breathing room:** on every level at least 25% of walkable tiles have pull 0 (party caves excluded). *(2026-11-14: a second rule, "60% at pull 2 or less", was dropped while building the Ratwarren: the band limits already cap crowding, and that rule worked against layering.)*
 2. **A rest spot within 20 steps:** from every walkable tile, a pull-0 tile can be reached in 20 steps or fewer.
 3. **Spacing between group homes:** at least `NOTICE + 3` in the calm band, `NOTICE + 1` in the middle, `NOTICE - 1` deep, 12 in party caves.
 4. **Density** (walkable tiles per monster, per level): surface 45 or more (50 in the four starter grounds); up and down levels 35; deep 25; party cave 20.

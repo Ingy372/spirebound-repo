@@ -38,14 +38,15 @@ SpireTest.add("wilds: every rebuilt ground has a walkable gate, hub, loop mouths
 		for _, key in ipairs({ "gate_" .. id, "camp_" .. id }) do
 			SpireTest.eq(walkable(WorldPoints[key]), true, key .. " is walkable")
 		end
-		for _, side in ipairs({ "nw", "ne", "sw", "se" }) do
+		local sides = WorldPoints["loop_" .. id .. "_a"] and { "a", "b", "c", "d" } or { "nw", "ne", "sw", "se" } -- designed grounds name routes a-d
+		for _, side in ipairs(sides) do
 			SpireTest.eq(walkable(WorldPoints["loop_" .. id .. "_" .. side]), true, id .. " " .. side .. " loop mouth is walkable")
 			local n = 1
 			while WorldPoints["crowd_" .. id .. "_" .. side .. "_" .. n] do
 				SpireTest.eq(walkable(WorldPoints["crowd_" .. id .. "_" .. side .. "_" .. n]), true, id .. " crowd spot is walkable")
 				n = n + 1
 			end
-			SpireTest.eq(n >= 4, true, id .. " " .. side .. " has at least three crowd spots")
+			SpireTest.eq(n >= 4, true, id .. " " .. side .. " has at least three crowd spots") -- crowd spots may be on any level
 		end
 	end
 	SpireTest.eq(count >= 1, true, "at least one rebuilt hunting ground")
@@ -55,6 +56,12 @@ SpireTest.add("wilds: the engine really spawned each rebuilt ground's monsters (
 	local want = { starter_west = 48, starter_east = 48, starter_south = 48, wasp_fields = 48 }
 	for id, r in pairs(grounds()) do
 		local n = monstersIn(r[1], r[2])
+		for z = 8, 10 do -- designed grounds (FLOOR1_HUNTING_PLAN.md): their lower levels count too
+			local nw, se = WorldPoints["level_" .. id .. "_" .. z .. "_nw"], WorldPoints["level_" .. id .. "_" .. z .. "_se"]
+			if nw then
+				n = n + monstersIn(nw, se)
+			end
+		end
 		local w = want[id] or 72
 		SpireTest.eq(n >= w - 2 and n <= w, true, id .. ": " .. n .. " monsters inside (want " .. w .. ")")
 	end
@@ -91,4 +98,34 @@ SpireTest.add("wilds: six party caves, each with working stairs and 32 monsters"
 		end
 	end
 	SpireTest.eq(n, 6, "six caves")
+end)
+
+-- FLOOR1_HUNTING_PLAN.md (H4): the Ratwarren is calm by the gate and layered below. Counts the monsters the engine really
+-- spawned near a player standing in each place (NOTICE = 10 tiles, same level).
+local function near(pos, r)
+	local n = 0
+	for _, c in ipairs(Game.getSpectators(pos, false, false, r, r, r, r)) do
+		if c:isMonster() and c:getPosition().z == pos.z and not c:getMaster() then
+			n = n + 1
+		end
+	end
+	return n
+end
+
+SpireTest.add("hunting plan: the Ratwarren gate is quiet, the yard calm, and the stairs lead to the Warren below", function()
+	SpireTest.eq(near(WorldPoints.camp_starter_west, 10), 0, "no rat can reach a player at the Ratwarren's entrance")
+	SpireTest.eq(near(WorldPoints.loop_starter_west_a, 10) <= 3, true, "at most 3 rats can reach a player in the yard")
+	SpireTest.eq(near(WorldPoints.loop_starter_west_b, 10) <= 4, true, "at most 4 rats near the Warren's west landing")
+	SpireTest.eq(near(WorldPoints.loop_starter_west_d, 10) <= 6, true, "at most 6 rats near the Deep Warren's entrance")
+	local downs = 0
+	for k, p in pairs(WorldPoints) do
+		if k:match("^stairs_starter_west_") then
+			downs = downs + 1
+			SpireTest.eq(Tile(p) ~= nil and Tile(p):hasFlag(TILESTATE_FLOORCHANGE), true, k .. ": the stairs lead up")
+			local hole = Tile(Position(p.x, p.y, p.z - 1))
+			SpireTest.eq(hole ~= nil and hole:hasFlag(TILESTATE_FLOORCHANGE_DOWN), true, k .. ": the way down leads down")
+		end
+	end
+	SpireTest.eq(downs >= 2, true, "two ways down into the Warren")
+	SpireTest.eq(SpirePvP.zoneAt(WorldPoints.loop_starter_west_b), "guarded", "the Warren is guarded like the yard")
 end)

@@ -61,9 +61,11 @@ SpireTest.add("crowd: 12 players is a Rush only on a Guarded ground", function()
 	SpireTest.eq((SpireCrowd.update(open, 2000000, 12, far)), "packed", "Open ground with 12: packed")
 	SpireTest.eq((SpireCrowd.update(guarded, 2000000, 12, far)), "rush", "Guarded ground with 12: rush")
 	SpireTest.eq(SpireCrowd.respawn("rush", guarded.respawn), math.floor(guarded.respawn / 3), "rush: three times as fast")
-	SpireTest.eq(#guarded.spots, 16, "a starter ground has 16 crowd spots (48 monsters at rest, 96 packed)")
+	local spots = #guarded.spots
 	reset(open)
 	reset(guarded)
+	-- the Ratwarren is a designed ground (FLOOR1_HUNTING_PLAN.md): 3 crowd pockets per route, spread over its levels
+	SpireTest.eq(spots, guarded.zs and 12 or 16, "a starter ground's crowd spots (12 on a designed ground, 16 on a loop ground)")
 end)
 
 SpireTest.add("crowd: no group appears within 7 tiles of a player", function()

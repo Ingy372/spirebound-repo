@@ -239,8 +239,8 @@ Jay: "im feeling overhelmed when i walk into a zone with nonstop monsters floodi
 - [~] **H0 Measure how monsters notice players** (range, walls, changing level, wandering) and check which weekend bonus was on during Jay's test. *(2026-11-14: weekend bonus checked (none / Double Experience); the engine's view range is 11 tiles each way; the in-client measurement is still open because client control was declined this session.)*
 - [x] **H1 The calm checker** (`tools/hunt_check.py`): pull limits, breathing room, spacing, density, heat-map pictures. Run it on today's map first.
 - [ ] **H2 New ground table and moved roads** in `maps/floor1_plan.py` (nothing on the map changes yet).
-- [ ] **H3 Builder pieces:** hills, ramps, levels carved from a list of clearings and paths, bands.
-- [ ] **H4 Pilot 1: the Ratwarren** (the Yard above, the Warren below). 🧑 Jay tries it.
+- [~] **H3 Builder pieces:** hills, ramps, levels carved from a list of clearings and paths, bands. *(2026-11-14: levels below ground, clearings, paths, stairs, bands and crowd pockets are done (`maps/designed.py`); hills and ramps for upper levels are still to do, needed from Burrow Hills on.)*
+- [~] **H4 Pilot 1: the Ratwarren** (the Yard above, the Warren below). 🧑 Jay tries it. *(2026-11-14: built, checker OK, boot test passes; still to walk it in the client.)*
 - [ ] **H5 Pilot 2: Burrow Hills** (hills, the Crown, the Molework, the party cave). 🧑 Jay tries it.
 - [ ] **H6 Toad Pond, Sproutling Glade, Waspgrass Fields.**
 - [ ] **H7 Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow.**

@@ -11,6 +11,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import scenery as S  # noqa: E402
 import dungeon as DG  # noqa: E402
 import wilds  # noqa: E402
+import designed  # noqa: E402
 from floor1_plan import APEX, CAMPS, MILLCROSS, TOWN  # noqa: E402
 
 
@@ -535,6 +536,9 @@ def build(m):
 
     # ------------------------------------------------ the rebuilt hunting grounds (maps/wilds.py): walls, hub, four loops
     for c in CAMPS:
+        if c.get("design"):                                   # FLOOR1_HUNTING_PLAN.md: drawn from clearings, several levels
+            designed.build(m, c)
+            continue
         L = wilds.build(m, c)
         if c["den"]:
             wilds.cave(m, L)                                  # the party cave below (z 8)
@@ -821,6 +825,10 @@ def build(m):
     for c in CAMPS:
         if c["zone"] == "guarded":
             m.zone("guarded", X0 + c["x"] - 6, Y0 + c["y"] - 6, c["w"] + 12, c["h"] + 12, 7)
+            for lz in (6, 8, 9):                                  # a designed ground's other levels are guarded too
+                nw, se = m.points.get(f"level_{c['id']}_{lz}_nw"), m.points.get(f"level_{c['id']}_{lz}_se")
+                if nw:
+                    m.zone("guarded", nw[0], nw[1], se[0] - nw[0] + 1, se[1] - nw[1] + 1, lz)
     m.zone("guarded", tx + 10, Y0 + 195, 70, 55, 7)                  # the gate road up to the Waspgrass Fields
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
     m.zone("guarded", yard_x - 2, yard_y - 2, 68, 28, 7)              # the Arrival Yard

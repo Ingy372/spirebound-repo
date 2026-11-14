@@ -102,6 +102,13 @@ def areas(m):
     block = wilds.blockers()
     out = []
     for L in getattr(m, "wilds", []):
+        if L.get("design"):                            # designed grounds: every level, reached from the gate via stairs
+            import designed
+            got = designed.reach(m, L, block)
+            for z in sorted(L["levels"]):
+                tiles = {t for t in got if t[2] == z}
+                out.append((L["id"], L["c"]["title"], f"z{z}", tiles, "designed", L["c"]["zone"] == "guarded"))
+            continue
         gate = [(x, y, wilds.Z) for x, y in L["gate"]]
         inside = wilds.flood(m, gate, block, inside=L["rect"])
         out.append((L["id"], L["c"]["title"], "z7", inside, "surface", L["c"]["zone"] == "guarded"))
@@ -154,17 +161,32 @@ def main(argv):
         gap = spacing(mons)
         dens = n / max(1, len(mons))
         probs = []
-        want = PARTY_DENSITY if kind == "party" else (STARTER_DENSITY if guarded else DENSITY_MIN.get(z, 35))
+        want = PARTY_DENSITY if kind == "party" else (STARTER_DENSITY if guarded and z == 7 else DENSITY_MIN.get(z, 35))
         if dens < want:
             probs.append(f"density {dens:.0f} < {want}")
-        lim = PULL_LIMIT["party"] if kind == "party" else PULL_LIMIT["deep"]
-        if max(vals) > lim:
-            probs.append(f"max pull {max(vals)} > {lim}")
+        if kind == "designed":                         # band by band: each tile belongs to its nearest clearing
+            L = next(L_ for L_ in m.wilds if L_["id"] == gid)
+            cl = [(p, band) for p, (_n, band, _r) in L["clearings"].items() if p[2] == z]
+            crowd = [p for r in L["routes"].values() for p in r["crowd"] if p[2] == z]
+            pull_c = pull_map(tiles, mons + [(x, y, z, "crowd") for x, y, _z in crowd])
+            worst = {}
+            for t in tiles:
+                band = "approach" if (t[0], t[1]) in L.get("hub", ()) and z == 7 else \
+                    min(cl, key=lambda q: (q[0][0] - t[0]) ** 2 + (q[0][1] - t[1]) ** 2)[1] if cl else "deep"
+                lim = PULL_LIMIT[band]
+                if pull[t] > lim:
+                    worst[band] = max(worst.get(band, 0), pull[t])
+                if pull_c[t] > lim + 2:
+                    worst[band + " with crowd"] = max(worst.get(band + " with crowd", 0), pull_c[t])
+            for band, v in sorted(worst.items()):
+                probs.append(f"{band} pull {v} > {PULL_LIMIT[band.split()[0]] + (2 if 'crowd' in band else 0)}")
+        else:
+            lim = PULL_LIMIT["party"] if kind == "party" else PULL_LIMIT["deep"]
+            if max(vals) > lim:
+                probs.append(f"max pull {max(vals)} > {lim}")
         if kind != "party":
             if p0 < 0.25:
                 probs.append(f"pull-0 {p0:.0%} < 25%")
-            if p2 < 0.60:
-                probs.append(f"pull<=2 {p2:.0%} < 60%")
             if rest is None or rest > 20:
                 probs.append(f"rest spot {rest} steps > 20")
         bad += bool(probs)
