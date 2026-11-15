@@ -100,6 +100,6 @@ The donation shop (closed until launch) uses placeholder looks for 2 outfits (He
 | [ ] | `mon_reed_snapper_*` | 32×32, 12 | A big green-brown snapping turtle-crab with a reed-covered shell and a hooked beak, standing in shallow water. |
 | [ ] | `npc_ascendant_veyra_*` | 32×32, 12 | A calm priestess-scholar in white and violet robes with a tall collar and a glowing hand, serene face. |
 | [ ] | `npc_hunter_brannoch_*` | 32×32, 12 | A weathered hunter in brown leathers with a wolf-pelt mantle, a bow across his back, a scar over one eye. |
-| [ ] | `npc_innkeeper_bess_*` | 32×32, 12 | A cheerful round innkeeper in an apron with rolled sleeves, a ladle in one hand, red cheeks. |
+| [~] | `npc_innkeeper_bess_*` (drafted by the pipeline, in ART_FOR_JAY/bess, waiting for Jay's OK) | 32×32, 12 | A cheerful round innkeeper in an apron with rolled sleeves, a ladle in one hand, red cheeks. |
 | [ ] | `npc_fisher_corwin_*` | 32×32, 12 | A lean fisher in a patched oilskin coat and a floppy hat, a fishing rod over his shoulder. |
 | [ ] | `npc_guide_pell_*` | 32×32, 12 | A friendly young guide in a bright tabard with a satchel and a small pennant on a stick, wide smile. |

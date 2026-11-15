@@ -531,3 +531,6 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - New builder pieces: ponds with automatic bridges and grass banks, tree rings, side gates, and `ring_level` (a cave laid out as a ring of tunnels with groups in twos and quiet stretches between). Trails moved to the new gates; the Bandit Track now goes round Toad Pond and the east standing stones moved to make room.
 - Autopilot (Pilot Warden) walked all three in about 10 minutes: gate clearings quiet, at most 3 monsters next to you anywhere. Found and fixed: the Glade's route start stood on its hole (the walk test now refuses that). Q41 asks Jay whether ~12 monsters on each surface feels right.
 
+
+### 2026-11-15: Innkeeper Bess made with the art pipeline (night art run)
+- `art/models/bess.py`: round innkeeper with apron, rolled sleeves, ladle out to the side, rosy cheeks, bun; 4 directions x stand + 8 walk. Results in `art/output/bess/` and Jay's review folder `ART_FOR_JAY/bess` (desktop shortcut "Spirebound Art"). Waiting for Jay's OK.
