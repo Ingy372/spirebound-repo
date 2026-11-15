@@ -44,3 +44,6 @@ backups/
 /art/output/*/compare/
 *.blend1
 client/modules/game_autopilot/run.json
+
+# local folder of finished art for Jay to review (copies of art/output plus Tibia comparisons)
+/ART_FOR_JAY/
