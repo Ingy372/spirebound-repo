@@ -551,3 +551,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Stonehorn Ram made (`art/models/ram.py`, on the boar): fleece, dark face, big curled stone horns. In `ART_FOR_JAY/ram`, waiting for Jay's OK.
 - Ruin Archer made (`art/models/archer.py`, on Brannoch's body): skull, bony limbs, rotted leather, bow. In `ART_FOR_JAY/archer`, waiting for Jay's OK.
 - Field Shardling made (`art/models/shardling.py`): glowing core with circling crystal shards. In `ART_FOR_JAY/shardling`, waiting for Jay's OK.
+- Thornsnap made (`art/models/thornsnap.py`): slithering vine, pod head snapping on a red mouth. In `ART_FOR_JAY/thornsnap`, waiting for Jay's OK.

@@ -1,0 +1,75 @@
+{
+ "name": "thornsnap",
+ "parts": [
+  "none",
+  "vine",
+  "jaw",
+  "mouth",
+  "thorn",
+  "leaf"
+ ],
+ "palette": "thornsnap",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "thorn": 3.0,
+   "mouth": 2.4,
+   "jaw": 1.6,
+   "leaf": 1.6
+  },
+  "thin": {
+   "thorn": 2,
+   "mouth": 3,
+   "leaf": 3
+  },
+  "soft": [
+   [
+    "vine",
+    "leaf"
+   ],
+   [
+    "jaw",
+    "mouth"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "jaw",
+   "vine",
+   "leaf"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  0,
+  0
+ ]
+}

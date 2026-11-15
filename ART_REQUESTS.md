@@ -35,7 +35,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 | [~] | `mon_field_shardling_*` (drafted by the pipeline, in ART_FOR_JAY/shardling, waiting for Jay's OK) | 32×32, 12 | A small creature made of floating pale-blue crystal shards around a glowing core. |
 | [~] | `mon_road_bandit_*` (drafted by the pipeline, in ART_FOR_JAY/bandit, waiting for Jay's OK) | 32×32, 12 | A human bandit with a brown hood, a face scarf and a short sword. |
 | [~] | `mon_bandit_captain_*` (drafted by the pipeline, in ART_FOR_JAY/captain, waiting for Jay's OK) | 32×32, 12 | A bandit leader with a red sash, a feathered hat and a curved sabre. |
-| [ ] | `mon_thornsnap_*` | 32×32, 12 | A snapping plant with a thorny jaw-like flower head on a crawling vine body. |
+| [~] | `mon_thornsnap_*` (drafted by the pipeline, in ART_FOR_JAY/thornsnap, waiting for Jay's OK) | 32×32, 12 | A snapping plant with a thorny jaw-like flower head on a crawling vine body. |
 | [~] | `mon_ruin_sentinel_*` (drafted by the pipeline, in ART_FOR_JAY/sentinel, waiting for Jay's OK) | 32×32, 12 | An old animated stone guard statue, cracked and mossy, holding a stone spear. |
 | [~] | `mon_ruin_archer_*` (drafted by the pipeline, in ART_FOR_JAY/archer, waiting for Jay's OK) | 32×32, 12 | A skeletal archer in rotted leather with a bow. |
 | [~] | `mon_stonehorn_ram_*` (drafted by the pipeline, in ART_FOR_JAY/ram, waiting for Jay's OK) | 32×32, 12 | A mountain ram with huge curled stone-grey horns and thick wool. |
