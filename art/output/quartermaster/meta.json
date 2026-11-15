@@ -1,0 +1,110 @@
+{
+ "name": "quartermaster",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "cheek",
+  "hair",
+  "bun",
+  "dress",
+  "apron",
+  "sleeve",
+  "legs",
+  "shoe",
+  "hand",
+  "ladle",
+  "arrow",
+  "potion_r",
+  "potion_b"
+ ],
+ "palette": "quartermaster",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "arrow": 2.6,
+   "potion_r": 3.0,
+   "potion_b": 3.0,
+   "eye": 9.0,
+   "cheek": 3.0,
+   "hand": 2.4,
+   "ladle": 3.2,
+   "sleeve": 2.2,
+   "shoe": 1.6,
+   "bun": 1.5,
+   "apron": 1.3
+  },
+  "thin": {
+   "arrow": 2,
+   "potion_r": 3,
+   "potion_b": 3,
+   "eye": 3,
+   "cheek": 3,
+   "hand": 3,
+   "ladle": 2,
+   "sleeve": 3,
+   "shoe": 3
+  },
+  "soft": [
+   [
+    "dress",
+    "apron",
+    "sleeve"
+   ],
+   [
+    "skin",
+    "cheek",
+    "hair",
+    "bun",
+    "eye"
+   ],
+   [
+    "hand",
+    "ladle"
+   ],
+   [
+    "shoe",
+    "legs"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "dress",
+   "apron",
+   "skin"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
