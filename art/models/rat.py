@@ -19,19 +19,19 @@ PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
 OX = 0.11                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
 
 # body ------------------------------------------------------------------
-HIP = Vector((-0.075, 0.0, 0.150)); HIP_R = (0.136, 0.110, 0.076)
-CHEST = Vector((0.045, 0.0, 0.138)); CHEST_R = (0.104, 0.092, 0.066)
-HEAD = Vector((0.128, 0.0, 0.134)); HEAD_R = (0.062, 0.064, 0.056)
+HIP = Vector((-0.075, 0.0, 0.146)); HIP_R = (0.136, 0.096, 0.070)
+CHEST = Vector((0.045, 0.0, 0.138)); CHEST_R = (0.104, 0.080, 0.061)
+HEAD = Vector((0.128, 0.0, 0.134)); HEAD_R = (0.070, 0.058, 0.056)
 SNOUT_TIP = Vector((0.262, 0.0, 0.094))
-EYE = Vector((0.150, 0.050, 0.156)); EYE_R = 0.012
-EAR = Vector((0.108, 0.060, 0.186)); EAR_R = (0.018, 0.032, 0.034)
+EYE = Vector((0.150, 0.045, 0.155)); EYE_R = 0.010
+EAR = Vector((0.104, 0.042, 0.198)); EAR_R = (0.018, 0.032, 0.034)
 
 # legs: name -> (hip position, gait phase offset, is_front)
 LEGS = {
-    "fl": (Vector((0.080, -0.060, 0.110)), 0.00, True),
-    "fr": (Vector((0.080, 0.060, 0.110)), 0.50, True),
-    "hl": (Vector((-0.085, -0.074, 0.118)), 0.57, False),
-    "hr": (Vector((-0.085, 0.074, 0.118)), 0.07, False),
+    "fl": (Vector((0.080, -0.052, 0.110)), 0.00, True),
+    "fr": (Vector((0.080, 0.052, 0.110)), 0.50, True),
+    "hl": (Vector((-0.085, -0.064, 0.116)), 0.57, False),
+    "hr": (Vector((-0.085, 0.064, 0.116)), 0.07, False),
 }
 UPPER, LOWER = 0.066, 0.066
 LEG_R = 0.022

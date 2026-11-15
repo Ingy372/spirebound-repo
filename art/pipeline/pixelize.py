@@ -15,7 +15,7 @@ The cleanup rules (same for every creature):
   2. Light every pixel from the surface direction and snap it to the part's palette ramp (3-4 clean steps).
   3. Remove lone speckles (a pixel whose step matches none of its neighbours), then add sparse fur tufts
      along the edges between light steps (rule-based, so they are tidy, not noise).
-  4. Dark 1-px outline around the whole silhouette; a dark line where a part sits behind another (legs read apart).
+  4. Dark 1-px outline around the whole silhouette (dark brown instead of near-black on the lit top/left edge); a dark line where a part sits behind another (legs read apart).
   5. The thin end of a tail is drawn as a dark line with no extra outline, like hand-made sprites.
 """
 from __future__ import annotations
@@ -32,7 +32,7 @@ ART = HERE.parent
 ROOT = ART.parent
 PALETTE = json.loads((HERE / "palette.json").read_text())
 SHEET_ROWS = ["S", "E", "N", "W"]            # contact sheet order Jay asked for
-BG = (86, 112, 64)                            # neutral grass green for our own sheets
+BG = (196, 194, 188)                          # plain light grey: the dark outline and legs read clearly on it
 GIF_MS = 110
 
 WEIGHT = {"eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
@@ -40,9 +40,11 @@ WEIGHT = {"eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near"
 MIN_COVER = 6                                 # of 16 sub-pixels, to count as filled
 MIN_COVER_THIN = {"eye": 3, "tail_tip": 2, "tail_base": 3, "nose": 3, "leg_near": 4, "leg_far": 4,
                   "paw_near": 3, "paw_far": 4, "ear": 4}
-SOFT_PARTS = {"body", "head", "snout", "nose"}   # no depth lines between these (one smooth animal)
+SOFT_PARTS = {"body", "head", "snout", "nose", "ear"}   # no depth lines between these (one smooth animal)
 NO_OUTLINE = {"tail_tip"}
 FUR_PARTS = ("body", "head")
+SELOUT_PARTS = {"body", "head", "snout", "ear"}
+SELOUT_STEP = 3
 DEPTH_LINE = 0.045                            # tiles; a bigger step between neighbours draws a dark line
 
 
@@ -142,11 +144,20 @@ class Creature:
                     c = outline if line[y, x] else ramp[min(step[y, x], len(ramp) - 1)]
                     out[y, x] = (*c, 255)
                     continue
+                lit = None
+                hit = False
                 for dy, dx in ((0, 1), (1, 0), (0, -1), (-1, 0)):
                     yy, xx = y + dy, x + dx
                     if 0 <= yy < h and 0 <= xx < w and part[yy, xx] and name(part[yy, xx]) not in NO_OUTLINE:
-                        out[y, x] = (*outline, 255)
-                        break
+                        hit = True
+                        # lit-side outline: on the top/left edge of a brightly lit fur area the outline is a
+                        # dark brown (the part's darkest step) instead of near-black, like hand-made sprites
+                        pn = name(part[yy, xx])
+                        if (dy, dx) in ((1, 0), (0, 1)) and pn in SELOUT_PARTS and step[yy, xx] >= SELOUT_STEP \
+                                and not line[yy, xx]:
+                            lit = self.ramps[pn][0]
+                if hit:
+                    out[y, x] = (*(lit or outline), 255)
         return out
 
     def fur(self, part, step):
@@ -264,6 +275,7 @@ class Creature:
         # side-by-side 1x and 3x walk loops: ours | reference, each direction
         for zoom in (1, 3):
             frames = []
+            ground = None                            # walk loops on a plain background: easier to see the legs
             for i in range(1, self.n_frames):
                 img = Image.new("RGBA", (4 * 2 * 34 * zoom, 34 * zoom), (40, 44, 40, 255))
                 for r, d in enumerate(SHEET_ROWS):
