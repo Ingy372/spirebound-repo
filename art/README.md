@@ -39,6 +39,21 @@ Copy `art/models/rat.py` (animals) or `art/models/vesper.py` (people), change th
 at 1× and 4×. Do **not** change `rig.py` or the shared palette rules for one creature: if they change, they change
 for every sprite and everything is re-rendered.
 
+## Monsters: compare with a real Tibia look-alike (Jay, 2026-11-15)
+
+Every monster is compared with the closest creature that already exists in Tibia, never the rat
+(`LOOKALIKES` in `tools/art_refs.py`; run it to pull them into `.local/artref/look_<id>.png`, local only).
+Match the look-alike's size on the canvas, its silhouette, how much detail shows and how the walk reads,
+while keeping our own design. Knobs in a model file:
+
+- `SIZE`: whole-creature size (the wolf is 1.7, the grey alpha 2.1).
+- `GROUND_STRETCH`: how long the body looks walking north/south (rat 0.75; Tibia-sized animals 1.4-1.6).
+- `CANVAS_OFFSET`: placement on the 64x64 canvas in pixels. It moves the camera, so nothing is clipped.
+  Tibia's sprites fill the tile to its right and bottom edges and spill up-left.
+- `PIXEL_RULES["texture"]`: part -> [fine, coarse] grain (fur, stone, skin). The grain sticks to the part,
+  so it does not crawl while walking.
+- `PIXEL_RULES["bands"]`: 7 light thresholds for 8-tone ramps (more shading tones, like hand-made sprites).
+
 ## Client sprite rules (Canary 3.6.1 + OTClient Redemption 4.2, client 15.11)
 
 - Asset format: the 15.x "appearances" protobuf file plus LZMA-compressed sprite sheets (`catalog-content.json`).
