@@ -1,8 +1,12 @@
-# Art requests (for Jay + Grok's pixel-art generator)
+# Art requests
 
-Base Tibia sprites stand in for all of these until your art arrives, so nothing here blocks the build. Make them in any order; the "Priority" column says what's most visible.
+Base Tibia sprites stand in for all of these until the real art arrives, so nothing here blocks the build.
 
-## How to use this file
+## Who makes what (new workflow, Jay 2026-11-14)
+- **Anything that moves or turns** (creatures, NPCs, outfits, mounts): **Claude makes it** with the Blender pipeline (`art/`), then sends Jay the sheet and walk loops to approve. Jay does not need to generate these; their Grok prompts below are kept only as design descriptions. Made so far: field rat, Vesper (both approved). Next: Innkeeper Bess (roadmap R22a).
+- **Single still images** (item and spell icons, UI, cursors, concept sketches, shop/website art): **Jay makes them with Grok** using the prompts below.
+
+## How to use this file (still images only)
 1. Copy a prompt into Grok's pixel-art generator.
 2. Save each frame as a PNG with the exact file name shown (one PNG per frame, or one sheet left-to-right in the frame order listed).
 3. Drop the PNGs in `assets/incoming/` in the repo folder (Claude picks them up next session) and tick the box.
