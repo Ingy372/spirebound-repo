@@ -22,20 +22,20 @@ PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (s
                "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
     "thin": {"eye": 3, "tail_tip": 2, "tail_base": 3, "nose": 3, "leg_near": 4, "leg_far": 4,
              "paw_near": 3, "paw_far": 4, "ear": 4},
-    "soft": [["body", "head", "snout", "nose", "ear"]],
+    "soft": [["body", "head", "snout", "nose", "ear", "belly"]],
     "no_outline": [],
     "fur": ["body", "head"],
     "selout": ["body", "head", "snout", "ear"],
 }
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
-         "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip"]
+         "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "belly"]
 
 OX = 0.07                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
 
 # body ------------------------------------------------------------------
-HIP = Vector((-0.085, 0.0, 0.215)); HIP_R = (0.125, 0.094, 0.076)
-CHEST = Vector((0.055, 0.0, 0.225)); CHEST_R = (0.112, 0.102, 0.088)
+HIP = Vector((-0.085, 0.0, 0.215)); HIP_R = (0.125, 0.104, 0.078)
+CHEST = Vector((0.055, 0.0, 0.225)); CHEST_R = (0.114, 0.114, 0.092)
 HEAD = Vector((0.170, 0.0, 0.275)); HEAD_R = (0.074, 0.072, 0.066)
 SNOUT_TIP = Vector((0.290, 0.0, 0.245))
 EYE = Vector((0.205, 0.036, 0.292)); EYE_R = 0.010
@@ -81,6 +81,8 @@ def build(model_cls, facing):
         m.capsule(f"{leg}_up", "leg_near")
         m.capsule(f"{leg}_lo", "leg_near")
         m.ellipsoid(f"{leg}_paw", "paw_near", radii=PAW_R, segments=8, rings=6)
+    m.ellipsoid("belly", "belly", radii=(0.170, 0.080, 0.050), segments=16, rings=8)
+    m.ellipsoid("ruff", "belly", radii=(0.050, 0.075, 0.060), segments=12, rings=8)
     m.tube("tail_a", "tail_base", points=(TAIL_N * 3) // 4 + 1)
     m.tube("tail_b", "tail_tip", points=TAIL_N - (TAIL_N * 3) // 4 + 1)
     return m
@@ -148,6 +150,8 @@ def pose(m, t):
         fx, fz = _foot(t, phase, hip_pt.x + (0.012 if front else -0.004))
         foot = Vector((fx + OX, hip_pt.y * 1.05, PAW_R[2] + fz))
         _leg(m, leg, hp, foot, front)
+    m.objects["belly"].location = (chest + hip) / 2 + Vector((0.010, 0, -0.050))
+    m.objects["ruff"].location = chest + Vector((0.085, 0, -0.010))
     # tail: leaves the rump, droops to the ground, curls slightly to one side, sways along its length
     base = hip + Vector((-HIP_R[0] * 0.80, 0, -0.035))
     pts, radii = [], []

@@ -13,7 +13,8 @@
   "paw_near",
   "paw_far",
   "tail_base",
-  "tail_tip"
+  "tail_tip",
+  "belly"
  ],
  "palette": "wolf",
  "walk_frames": 8,
@@ -74,7 +75,8 @@
     "head",
     "snout",
     "nose",
-    "ear"
+    "ear",
+    "belly"
    ]
   ],
   "no_outline": [],

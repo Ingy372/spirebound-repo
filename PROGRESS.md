@@ -563,3 +563,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Bounty Warden made (`art/models/warden.py`, a Vesper variant): dark red coat, black hat, wanted-poster scroll. In `ART_FOR_JAY/warden`.
 - Guildwarden made (`art/models/guildwarden.py`, on the priest): blue robe, banner staff. In `ART_FOR_JAY/guildwarden`.
 - Quartermaster made (`art/models/quartermaster.py`, a merchant variant): leather apron, crate of arrows and potions. Every town NPC in ART_REQUESTS now has a pipeline draft.
+- Grey Alpha made (`art/models/alpha.py`, from the wolf): silver coat, dark mane, scar. Wolf got a small second pass (pale belly). Every moving sprite on the Floor 1 and town request lists now has a pipeline draft.
