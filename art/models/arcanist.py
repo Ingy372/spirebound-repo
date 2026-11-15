@@ -58,6 +58,8 @@ def build(model_cls, facing):
     m.ellipsoid("glow", "glow", radii=(0.078, 0.078, 0.078), segments=12, rings=8)
     m.ellipsoid("torso", "robe", radii=TORSO_R)
     m.frustum("skirt", "robe", top_ratio=0.70)
+    m.frustum("hem", "stole", top_ratio=0.97)
+    m.frustum("sash", "stole", top_ratio=1.0)
     m.box("stole_f", "stole", size=(0.024, 0.070, 0.560))
     m.box("stole_b", "stole", size=(0.024, 0.090, 0.420))
     m.frustum("collar", "collar", top_ratio=1.25, segments=18)
@@ -107,6 +109,14 @@ def pose(m, t):
     sk.rotation_mode = "XYZ"
     sk.rotation_euler = Euler((sway, 0, 0))
     sk.scale = (SKIRT_R[0], SKIRT_R[1], SKIRT_TOP - SKIRT_BOTTOM)
+    hem = m.objects["hem"]
+    hem.location = Vector((0, 0, SKIRT_BOTTOM - 0.004)) + up
+    hem.rotation_mode = "XYZ"
+    hem.rotation_euler = sk.rotation_euler
+    hem.scale = (SKIRT_R[0] + 0.004, SKIRT_R[1] + 0.004, 0.034)
+    sa = m.objects["sash"]
+    sa.location = Vector((0, 0, 0.570)) + up
+    sa.scale = (TORSO_R[0] * 1.06, TORSO_R[1] * 1.02, 0.036)
     for side, x, z in (("f", 0.108, 0.520), ("b", -0.110, 0.600)):
         st = m.objects[f"stole_{side}"]
         st.rotation_mode = "XYZ"
