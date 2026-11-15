@@ -9,6 +9,7 @@ Passes: id (which part each pixel belongs to), normal (which way the surface fac
 from __future__ import annotations
 
 import importlib
+import math
 import os
 import sys
 import time
@@ -33,13 +34,24 @@ def main():
     out = ART / "output" / name / "passes"
     out.mkdir(parents=True, exist_ok=True)
 
+    gs = getattr(creature, "GROUND_STRETCH", None)      # how long north/south bodies look (tilt view only)
+    if gs is not None:
+        rig.Y_STRETCH = 1.0 + gs * (1.0 / math.sin(math.radians(rig.ELEVATION)) - 1.0)
     scene = rig.reset_scene()
     projection = getattr(creature, "PROJECTION", "tilt")
     cam = rig.add_camera(scene, projection)
     shear = getattr(creature, "HEIGHT_SHEAR", rig.HEIGHT_SHEAR)
     _root, facing = rig.add_world_root(scene, shear, projection)
-    model = creature.build(Model, facing)
-    mat_normal, mat_depth = rig.normal_material(), rig.depth_material()
+    size = getattr(creature, "SIZE", 1.0)             # whole-creature size, matched to its Tibia look-alike
+    holder = facing
+    if size != 1.0:
+        holder = bpy.data.objects.new("CreatureSize", None)
+        holder.parent = facing
+        holder.scale = (size, size, size)
+        scene.collection.objects.link(holder)
+    model = creature.build(Model, holder)
+    mat_normal, mat_depth, mat_tex = rig.normal_material(), rig.depth_material(), rig.texture_material()
+    meshes = [o for o in scene.objects if o.type == "MESH"]
     layer = scene.view_layers[0]
 
     cam_inv = None
@@ -58,7 +70,10 @@ def main():
             bpy.context.view_layer.update()
             cam_inv = cam.matrix_world.inverted()
             creature.assign_depth_parts(model, depth_of)
-            for pname, mat in (("id", None), ("normal", mat_normal), ("depth", mat_depth)):
+            for o in meshes:                           # real size of each part, for the grain pass
+                sc = (holder.matrix_world.inverted() @ o.matrix_world).to_scale()
+                o["tex_scale"] = (abs(sc.x) * size, abs(sc.y) * size, abs(sc.z) * size)
+            for pname, mat in (("id", None), ("normal", mat_normal), ("depth", mat_depth), ("tex", mat_tex)):
                 layer.material_override = mat
                 scene.render.filepath = str(out / f"{d}_{f}_{pname}.png")
                 bpy.ops.render.render(write_still=True)

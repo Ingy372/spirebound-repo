@@ -43,7 +43,11 @@ DEPTH_LINE = 0.045                            # tiles; a bigger step between nei
 #   thin     part -> sub-pixels (of 16) enough for that part alone to fill a pixel
 #   soft     groups of parts with no dark depth line between them (one smooth surface)
 #   no_outline, fur, selout   parts drawn without outline / with fur tufts / with the lit-side outline
-RULE_DEFAULTS = {"weight": {}, "thin": {}, "soft": [], "no_outline": [], "fur": [], "selout": []}
+#   texture  part -> [strength, strength] of the fine and coarse surface grain added to the light before it is
+#            snapped to the ramp (fur, stone, bark); it sticks to the part, so it does not crawl while walking
+#   bands    light thresholds for this creature (more thresholds = more tones; ramps need one colour more)
+RULE_DEFAULTS = {"weight": {}, "thin": {}, "soft": [], "no_outline": [], "fur": [], "selout": [], "texture": {},
+                 "bands": None}
 
 
 def srgb_to_lin(a):
@@ -64,6 +68,8 @@ class Creature:
         self.weight, self.thin = r["weight"], r["thin"]
         self.soft = [set(g) for g in r["soft"]]
         self.no_outline, self.fur_parts, self.selout = set(r["no_outline"]), set(r["fur"]), set(r["selout"])
+        self.texture = r["texture"]
+        self.bands = np.array(r["bands"] or PALETTE["light"]["bands"])
 
     def is_soft(self, a, b):
         return any(a in g and b in g for g in self.soft)
@@ -87,6 +93,14 @@ class Creature:
         lam = np.clip(n @ L, 0, 1)
         tb = light["top_bias"]
         value = (1 - tb) * lam + tb * (0.5 + 0.5 * n[..., 2])
+        tp = p / f"{d}_{f}_tex.png"
+        if self.texture and tp.exists():
+            tex = srgb_to_lin(np.array(Image.open(tp))[..., :2]) - 0.5
+            for k, pn in enumerate(self.parts):
+                if pn in self.texture:
+                    fine, coarse = (list(self.texture[pn]) + [0.0])[:2]
+                    sel = ids == k
+                    value[sel] += 2 * (fine * tex[..., 0][sel] + coarse * tex[..., 1][sel])
         return ids, value, depth
 
     def shrink(self, ids, value, depth):
@@ -112,7 +126,7 @@ class Creature:
 
     def paint(self, part, val, dep):
         h, w = part.shape
-        bands = np.array(PALETTE["light"]["bands"])
+        bands = self.bands
         step = (val[..., None] > bands).sum(-1)
         step = self.despeckle(part, step)
         step = self.fur(part, step)

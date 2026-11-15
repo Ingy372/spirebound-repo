@@ -125,6 +125,40 @@ def outfit_groups(outfit_id):
     raise SystemExit(f"outfit {outfit_id} not found")
 
 
+# Our monster -> the closest creature that already exists in Tibia (comparison only: size, silhouette, how much
+# detail fits, how the walk reads). Jay, 2026-11-15: compare monsters with a real Tibia look-alike, not the rat.
+LOOKALIKES = {
+    "mole": [(1048, "Mole"), (105, "Badger")],
+    "wasp": [(44, "Wasp")],
+    "snapper": [(198, "Thornback Tortoise"), (112, "Crab")],
+    "toad": [(222, "Toad"), (412, "Bog Frog")],
+    "wolf": [(27, "Wolf")],
+    "alpha": [(3, "War Wolf"), (52, "Winter Wolf")],
+    "sproutling": [(535, "Swampling"), (567, "Leaf Golem")],
+    "boar": [(380, "Boar")],
+    "sentinel": [(67, "Stone Golem"), (95, "Gargoyle")],
+    "ram": [(14, "Sheep"), (13, "Black Sheep")],
+    "archer": [(33, "Skeleton"), (298, "Skeleton Warrior")],
+    "shardling": [(294, "Wisp"), (263, "Crystal Spider")],
+    "thornsnap": [(120, "Carniphila"), (221, "Spit Nettle")],
+    "azhrakkar": [(55, "Behemoth"), (244, "Juggernaut")],
+}
+
+
+def dump_creature(sprites, outfit_id, out_name):
+    """A plain monster look: rows N/E/S/W, stand + 8 walk (shorter walk cycles are spread over the 8 columns)."""
+    groups = outfit_info(outfit_id)
+    sheet = Image.new("RGBA", (9 * 64, 4 * 64))
+    stand, walk = groups[0][1], groups[-1][1]
+    wph = max(1, len(walk) // 4)
+    for d in range(4):
+        cells = [stand[d]] + [walk[(c * wph // 8) * 4 + d] for c in range(8)]
+        for col, sid in enumerate(cells):
+            im = sprites.get(sid).convert("RGBA")
+            sheet.alpha_composite(im, (col * 64 + 64 - im.width, d * 64 + 64 - im.height))
+    sheet.save(OUT / out_name)
+
+
 def main():
     OUT.mkdir(parents=True, exist_ok=True)
     sprites = Sprites()
@@ -138,6 +172,9 @@ def main():
     for oid in (128, 133, 136):                 # citizen, summoner (Vesper's borrowed look), a female citizen
         dump_outfit(sprites, oid, f"outfit_{oid}.png")
     dump_outfit(sprites, 133, "vesper_current.png", colors=(95, 113, 114, 95))   # Vesper's look in-game today
+    for ours, refs in LOOKALIKES.items():
+        for oid, _label in refs:
+            dump_creature(sprites, oid, f"look_{oid}.png")
     grass = load_items()[4526]
     sprites.get(grass["sprites"][0]).save(OUT / "ground.png")
     print(f"wrote {OUT}")

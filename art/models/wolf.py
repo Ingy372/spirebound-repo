@@ -14,9 +14,11 @@ from mathutils import Vector
 NAME = "wolf"
 WALK_FRAMES = 8
 PALETTE = "wolf"            # ramp set in art/pipeline/palette.json
-HEIGHT_SHEAR = 0.0         # low animal: no up-left height lean (matches Tibia's rat and the approved look)
-LEAN = 8.0                 # degrees: north/south bodies run slightly diagonal, like hand-made rats
-REFERENCE = "rat_client.png"   # .local/artref file shown beside our sheets (comparison only)
+HEIGHT_SHEAR = 0.30        # a light up-left lean, like Tibia's wolf (its back sits a little left of its paws)
+LEAN = 18.0                # degrees: north/south bodies run slightly diagonal, like hand-made rats
+REFERENCE = "look_27.png"   # Tibia's Wolf, the closest look-alike (comparison only, never shipped)
+GROUND_STRETCH = 1.6       # Tibia shows its animals' full length walking north/south (rat: 0.75)
+SIZE = 1.7                 # matched to Tibia's wolf: about 45 px nose to tail
 PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (see the notes there)
     "weight": {"eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
                "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
@@ -26,39 +28,43 @@ PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (s
     "no_outline": [],
     "fur": ["body", "head"],
     "selout": ["body", "head", "snout", "ear"],
+    "texture": {"body": [1.60, 0.10], "head": [0.90, 0.06], "belly": [0.40, 0.0], "tail_base": [0.60, 0.0], "tail_tip": [0.5, 0.0],
+                "leg_near": [0.35, 0.0], "snout": [0.25, 0.0]},
+    "bands": [0.34, 0.45, 0.55, 0.64, 0.73, 0.82, 0.90],
 }
+CANVAS_OFFSET = (0, 3)       # sit like Tibia's wolf: spilling left of the tile, centred low on it
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "belly"]
 
-OX = 0.07                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
+OX = -0.05                 # nose-to-tail sits like Tibia's wolf: nose at the tile's right edge, tail spilling left
 
 # body ------------------------------------------------------------------
-HIP = Vector((-0.085, 0.0, 0.215)); HIP_R = (0.125, 0.122, 0.082)
-CHEST = Vector((0.055, 0.0, 0.225)); CHEST_R = (0.116, 0.132, 0.098)
-HEAD = Vector((0.170, 0.0, 0.275)); HEAD_R = (0.076, 0.082, 0.070)
-SNOUT_TIP = Vector((0.290, 0.0, 0.245))
-EYE = Vector((0.205, 0.036, 0.292)); EYE_R = 0.010
-EAR = Vector((0.150, 0.036, 0.335)); EAR_R = (0.018, 0.026, 0.048)
+HIP = Vector((-0.100, 0.0, 0.310)); HIP_R = (0.118, 0.088, 0.066)
+CHEST = Vector((0.050, 0.0, 0.320)); CHEST_R = (0.116, 0.104, 0.088)
+HEAD = Vector((0.205, 0.0, 0.345)); HEAD_R = (0.082, 0.080, 0.070)
+SNOUT_TIP = Vector((0.385, 0.0, 0.302))
+EYE = Vector((0.250, 0.046, 0.372)); EYE_R = 0.016
+EAR = Vector((0.180, 0.046, 0.420)); EAR_R = (0.020, 0.030, 0.062)
 
 # legs: name -> (hip position, gait phase offset, is_front)
 LEGS = {
-    "fl": (Vector((0.085, -0.050, 0.180)), 0.00, True),
-    "fr": (Vector((0.085, 0.050, 0.180)), 0.50, True),
-    "hl": (Vector((-0.110, -0.055, 0.180)), 0.57, False),
-    "hr": (Vector((-0.110, 0.055, 0.180)), 0.07, False),
+    "fl": (Vector((0.085, -0.055, 0.285)), 0.00, True),
+    "fr": (Vector((0.085, 0.055, 0.285)), 0.50, True),
+    "hl": (Vector((-0.125, -0.058, 0.285)), 0.57, False),
+    "hr": (Vector((-0.125, 0.058, 0.285)), 0.07, False),
 }
-UPPER, LOWER = 0.100, 0.100
-LEG_R = 0.024
-PAW_R = (0.026, 0.017, 0.013)
-STRIDE = 0.105             # foot travel either side of its rest spot (about 2.5 px)
+UPPER, LOWER = 0.150, 0.145
+LEG_R = 0.026
+PAW_R = (0.030, 0.020, 0.014)
+STRIDE = 0.110             # foot travel either side of its rest spot (about 2.5 px)
 LIFT = 0.060
 STANCE = 0.55              # share of the cycle a foot spends on the ground
 
 TAIL_N = 12
 
 
-SCALE = 1.06               # clearly bigger than the rat
+SCALE = 1.0                # overall size is SIZE (matched to Tibia's wolf)
 
 
 def build(model_cls, facing):
@@ -138,7 +144,7 @@ def pose(m, t):
     m.objects["head"].location = head
     hd = head - (HEAD + o)
     snout_base = head + Vector((0.010, 0, -0.006))
-    m.put_segment("snout", snout_base, SNOUT_TIP + o + hd, 0.048, 0.056)
+    m.put_segment("snout", snout_base, SNOUT_TIP + o + hd, 0.050, 0.030)
     m.objects["nose"].location = SNOUT_TIP + o + hd + Vector((-0.004, 0, 0.001))
     for s, k in ((1, "l"), (-1, "r")):
         m.objects[f"eye_{k}"].location = Vector((EYE.x, EYE.y * s, EYE.z)) + o + hd
@@ -157,12 +163,12 @@ def pose(m, t):
     pts, radii = [], []
     for i in range(TAIL_N + 1):
         u = i / TAIL_N
-        x = base.x - 0.24 * u
-        y = 0.050 * math.sin(math.pi * u * 0.9) + 0.060 * sway * math.sin(math.pi * u * 0.8) * u
-        z = (base.z - 0.010) * (1 - u) ** 2.4 + 0.010 + 0.022 * max(0.0, u - 0.75) / 0.25 \
+        x = base.x - 0.20 * u
+        y = 0.110 * math.sin(math.pi * u * 0.6) + 0.060 * sway * math.sin(math.pi * u * 0.8) * u
+        z = (base.z - 0.010) * (1 - u) ** 1.3 + 0.010 + 0.022 * max(0.0, u - 0.75) / 0.25 \
             + 0.018 * sway * math.sin(math.pi * u) * (t is not None)
         pts.append((x, y, z))
-        radii.append(0.022 + 0.014 * math.sin(math.pi * min(1.0, u * 1.1)))   # bushy
+        radii.append(0.020 + 0.016 * math.sin(math.pi * min(1.0, u * 1.1)))   # bushy
     half = (TAIL_N * 3) // 4
     m.set_tube("tail_a", pts[:half + 1], radii[:half + 1])
     m.set_tube("tail_b", pts[half:], radii[half:])

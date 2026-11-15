@@ -47,6 +47,9 @@ DEPTH_NEAR = CAM_DISTANCE - 1.5         # depth pass maps [DEPTH_NEAR, DEPTH_NEA
 DEPTH_RANGE = 3.0
 CAM_SHIFT_X = -0.25                     # moves the creature's tile into the right half of the canvas
 CAM_SHIFT_Y = 0.25 + 3.0 / 64.0         # ...and the bottom half, standing ~3 px below the tile centre
+TEX_FINE = 48.0                         # surface grain per tile: fine (fur strands, stone chips)...
+TEX_STREAK = 0.45                       # fine grain is stretched along each part's length (x), so fur reads as strokes
+TEX_COARSE = 5.0                        # ...and coarse (patches, mottling)
 
 # Facing: rotation of the model (which faces east) for each game direction. A creature may add a small "lean"
 # (LEAN in its model file): long low animals are drawn slightly diagonal when walking north/south.
@@ -190,6 +193,39 @@ def depth_material():
     nt.links.new(sub.outputs[0], div.inputs[0])
     comb = nt.nodes.new("ShaderNodeCombineColor")
     nt.links.new(div.outputs[0], comb.inputs[0])
+    nt.links.new(comb.outputs[0], em.inputs["Color"])
+    nt.links.new(em.outputs[0], out.inputs["Surface"])
+    return m
+
+
+def texture_material():
+    """Surface grain that sticks to each part as it moves (fur, stone, scales). Red = fine grain, green = coarse.
+    Coordinates are the part's own (object) space times its real size (the "tex_scale" property set per frame by
+    render_creature.py), so a grain step is about the same number of pixels on every part."""
+    m = bpy.data.materials.new("PassTex")
+    m.use_nodes = True
+    nt = m.node_tree
+    nt.nodes.clear()
+    out = nt.nodes.new("ShaderNodeOutputMaterial")
+    em = nt.nodes.new("ShaderNodeEmission")
+    tc = nt.nodes.new("ShaderNodeTexCoord")
+    at = nt.nodes.new("ShaderNodeAttribute"); at.attribute_type = "OBJECT"; at.attribute_name = "tex_scale"
+    mul = nt.nodes.new("ShaderNodeVectorMath"); mul.operation = "MULTIPLY"
+    nt.links.new(tc.outputs["Object"], mul.inputs[0])
+    nt.links.new(at.outputs["Vector"], mul.inputs[1])
+    comb = nt.nodes.new("ShaderNodeCombineColor")
+    for i, scale in enumerate((TEX_FINE, TEX_COARSE)):
+        nz = nt.nodes.new("ShaderNodeTexNoise")
+        nz.inputs["Scale"].default_value = scale
+        nz.inputs["Detail"].default_value = 1.0
+        src = mul.outputs[0]
+        if i == 0:
+            st = nt.nodes.new("ShaderNodeVectorMath"); st.operation = "MULTIPLY"
+            st.inputs[1].default_value = (TEX_STREAK, 1.0, 1.0)
+            nt.links.new(mul.outputs[0], st.inputs[0])
+            src = st.outputs[0]
+        nt.links.new(src, nz.inputs["Vector"])
+        nt.links.new(nz.outputs["Fac"], comb.inputs[i])
     nt.links.new(comb.outputs[0], em.inputs["Color"])
     nt.links.new(em.outputs[0], out.inputs["Surface"])
     return m
