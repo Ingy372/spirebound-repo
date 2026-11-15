@@ -16,13 +16,18 @@ WALK_FRAMES = 8
 PALETTE = "snapper"
 HEIGHT_SHEAR = 0.0
 LEAN = 0.0
-REFERENCE = "rat_client.png"       # size reference only
+REFERENCE = "look_198.png"   # Tibia's Thornback Tortoise, the closest look-alike (comparison only, never shipped)
+SIZE = 2.0
+GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
+CANVAS_OFFSET = (-10, -6)       # placed like its Tibia look-alike: filling the tile, spilling up-left
 PIXEL_RULES = {
     "weight": {"eye": 9.0, "beak": 3.0, "reed": 2.6, "claw": 2.0, "leg": 1.8, "rim": 1.3},
     "thin": {"eye": 3, "beak": 3, "reed": 2, "claw": 3, "leg": 3},
     "soft": [["shell", "rim"], ["head", "beak", "eye"], ["claw", "leg"]],
     "no_outline": [],
     "fur": ["shell"],
+    "texture": {"shell": [1.2, 0.3], "rim": [0.8, 0.0], "head": [0.6, 0.0], "claw": [0.5, 0.0], "leg": [0.5, 0.0], "reed": [0.6, 0.0]},
+    "bands": [0.42, 0.55, 0.66, 0.75, 0.83, 0.90, 0.96],
     "selout": ["shell", "head", "claw"],
 }
 

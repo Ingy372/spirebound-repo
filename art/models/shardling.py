@@ -16,13 +16,18 @@ WALK_FRAMES = 8
 PALETTE = "shardling"
 HEIGHT_SHEAR = 0.0
 LEAN = 0.0
-REFERENCE = "rat_client.png"       # size reference only
+REFERENCE = "look_294.png"   # Tibia's Wisp, the closest look-alike (comparison only, never shipped)
+SIZE = 1.5
+GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
+CANVAS_OFFSET = (3, 5)       # placed like its Tibia look-alike: filling the tile, spilling up-left
 PIXEL_RULES = {
     "weight": {"core": 4.0, "glow": 1.0, "shard": 1.8},
     "thin": {"core": 3, "shard": 3},
     "soft": [["core", "glow"]],
     "no_outline": [],
     "fur": [],
+    "texture": {"shard": [0.6, 0.0]},
+    "bands": [0.34, 0.45, 0.55, 0.64, 0.73, 0.82, 0.90],
     "selout": ["shard"],
 }
 

@@ -15,7 +15,10 @@ WALK_FRAMES = 8
 PALETTE = "wasp"
 HEIGHT_SHEAR = 0.0
 LEAN = 10.0
-REFERENCE = "rat_client.png"       # size reference only (comparison, never shipped)
+REFERENCE = "look_44.png"   # Tibia's Wasp, the closest look-alike (comparison only, never shipped)
+SIZE = 1.35
+GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
+CANVAS_OFFSET = (-6, -6)       # placed like its Tibia look-alike: filling the tile, spilling up-left
 PIXEL_RULES = {
     "weight": {"eye": 4.0, "stinger": 4.0, "leg": 2.4, "antenna": 3.0, "wing": 1.4, "stripe": 1.2, "head": 1.4},
     "thin": {"eye": 3, "stinger": 2, "leg": 2, "antenna": 2, "wing": 4},

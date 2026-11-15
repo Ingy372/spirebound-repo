@@ -14,15 +14,19 @@ from mathutils import Euler, Vector
 NAME = "sproutling"
 WALK_FRAMES = 8
 PALETTE = "sproutling"
-REFERENCE = "rat_client.png"       # size reference only
-PROJECTION = "oblique"
-CANVAS_OFFSET = (6, 6)
+REFERENCE = "look_535.png"   # Tibia's Swampling, the closest look-alike (comparison only, never shipped)
+SIZE = 1.7
+HEIGHT_SHEAR = 0.30        # tilted camera like the animals: an upright little plant, not a leaning one
+LEAN = 0.0
+CANVAS_OFFSET = (1, 3)
 PIXEL_RULES = {
     "weight": {"eye": 9.0, "leaf": 2.0, "sprout": 2.6, "root": 2.0},
     "thin": {"eye": 3, "leaf": 3, "sprout": 2, "root": 3},
     "soft": [["bulb", "base"], ["sprout", "leaf"]],
     "no_outline": [],
     "fur": [],
+    "texture": {"bulb": [0.7, 0.15], "base": [0.6, 0.0], "leaf": [0.6, 0.0]},
+    "bands": [0.34, 0.45, 0.55, 0.64, 0.73, 0.82, 0.90],
     "selout": ["bulb", "leaf"],
 }
 
@@ -31,11 +35,11 @@ PARTS = ["none", "bulb", "base", "eye", "leaf", "sprout", "root"]
 
 def build(model_cls, facing):
     m = model_cls(facing, PARTS)
-    m.ellipsoid("bulb", "bulb", radii=(0.150, 0.160, 0.120), segments=20, rings=12)
+    m.ellipsoid("bulb", "bulb", radii=(0.140, 0.150, 0.165), segments=20, rings=12)
     m.ellipsoid("base", "base", radii=(0.120, 0.130, 0.070), segments=18, rings=8)
     m.cone("tip", "bulb", segments=12)
     for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.016, 0.016, 0.024), segments=8, rings=6)
+        m.ellipsoid(f"eye_{k}", "eye", radii=(0.020, 0.020, 0.030), segments=8, rings=6)
         m.ellipsoid(f"arm_{k}", "leaf", radii=(0.125, 0.034, 0.062), segments=12, rings=6)
         m.capsule(f"foot_{k}", "root", segments=8)
     m.tube("stem", "sprout", points=6)
@@ -56,11 +60,12 @@ def pose(m, t):
         ob.location = loc
         ob.rotation_mode = "XYZ"
         ob.rotation_euler = Euler((rock, 0, 0))
-    m.put_segment("tip", bulb + Vector((0, 0, 0.095)), bulb + Vector((0, 0.020 * rock, 0.150)), 0.045)
+    m.put_segment("tip", bulb + Vector((0, 0, 0.130)), bulb + Vector((0, 0.020 * rock, 0.190)), 0.045)
     for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = bulb + Vector((0.135, 0.055 * s, 0.045 + 0.012 * rock * s))
+        m.objects[f"eye_{k}"].location = bulb + Vector((0.122, 0.058 * s, 0.075 + 0.012 * rock * s))
         flap = 0.6 * math.sin(a + (0 if s > 0 else math.pi)) if walking else 0.2
         arm = m.objects[f"arm_{k}"]
+        arm.scale = (0.100, 0.030, 0.052)
         arm.rotation_mode = "XYZ"
         arm.rotation_euler = Euler((0.5 * s + flap * 0.5 * s, 0.4 + flap * 0.3, 0.3 * s))
         arm.location = bulb + Vector((0.020, 0.205 * s, -0.010))
@@ -70,7 +75,7 @@ def pose(m, t):
         hip = bulb + Vector((0, 0.060 * s, -0.120))
         m.put_segment(f"foot_{k}", hip, Vector((fx + 0.020, 0.075 * s, 0.020 + fz)), 0.026)
     # the sprout: a curly stem from the top with two leaves, bobbing a little
-    top = bulb + Vector((0, 0, 0.140))
+    top = bulb + Vector((0, 0, 0.180))
     sway = 0.03 * math.sin(a + 0.8) if walking else 0.0
     pts = [top + Vector((sway * i / 5, 0.006 * i, 0.020 * i)) for i in range(6)]
     m.set_tube("stem", [tuple(p) for p in pts], [0.012] * 6)

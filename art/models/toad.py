@@ -15,13 +15,18 @@ WALK_FRAMES = 8
 PALETTE = "toad"
 HEIGHT_SHEAR = 0.0
 LEAN = 0.0
-REFERENCE = "rat_client.png"       # size reference only
+REFERENCE = "look_222.png"   # Tibia's Toad, the closest look-alike (comparison only, never shipped)
+SIZE = 1.9
+GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
+CANVAS_OFFSET = (-12, -6)       # placed like its Tibia look-alike: filling the tile, spilling up-left
 PIXEL_RULES = {
     "weight": {"eye": 4.0, "pupil": 9.0, "spot": 2.0, "leg": 1.8, "foot": 2.0, "belly": 1.2},
     "thin": {"pupil": 3, "eye": 3, "spot": 3, "leg": 3, "foot": 3},
     "soft": [["body", "belly", "spot"], ["eye", "pupil"]],
     "no_outline": [],
     "fur": [],
+    "texture": {"body": [1.0, 0.25], "belly": [0.5, 0.0], "leg": [0.5, 0.0]},
+    "bands": [0.42, 0.55, 0.66, 0.75, 0.83, 0.90, 0.96],
     "selout": ["body", "eye"],
 }
 
