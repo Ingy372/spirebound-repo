@@ -48,8 +48,21 @@ so when I switch to a less expensive model, it's still able to produce premium r
 - On grass, at game size, the animal should not disappear or look like a hole.
 - Jay judges feel and looks last; the checker passing is the entry ticket, not the finish line.
 
-## Still to do with these rules
+## Creatures built to these rules
 
-The wolf, grey alpha, mole and ram were reworked before these rules existed and still use their own copied leg
-code. Move each onto `quadruped.py` and run the checker when it is next touched (the wolf currently fails rule 9:
-it is the same grey as Tibia's wolf).
+| Creature | Coat (vs Tibia's) | Signature | Attitude |
+|---|---|---|---|
+| Bristle Boar | charcoal (Tibia: orange-brown) | ember-red spine crest, big ivory tusks | about to charge |
+| Meadow Wolf | tawny ochre (Tibia: grey) | charcoal saddle, black-tipped tail, amber eyes | prowling |
+| Grey Alpha | moonlit teal-silver (Tibia war wolf: grey) | near-black mane, cheek scars, ice-blue eyes | dominant |
+| Burrow Mole | mouse-grey (Tibia: near-black) | ivory spade-claws, pink snout | hunched digger |
+| Stonehorn Ram | russet fleece, charcoal face (Tibia sheep: white) | pale stone curled horns | ready to butt |
+
+## Lessons from the rollout
+
+- Grey and brown coats are risky: Tibia's sprites already use whole grey and brown ramps, so a plain grey or
+  brown animal fails rule 9. Give the coat a hue (ochre, russet, teal-silver) or a value Tibia's lacks.
+- Short-legged animals (moles, badgers) may lower the leg checks in `CHECK`; say why in a comment.
+- If a direction is too big for the canvas (pixelize warns "too big"), lower `SIZE` before `GROUND_STRETCH`.
+- Horns and tusks must contrast with the face behind them (pale horn on a dark face, or the reverse),
+  or they merge into one lump at game size.

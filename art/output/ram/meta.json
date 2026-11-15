@@ -3,6 +3,7 @@
  "parts": [
   "none",
   "body",
+  "belly",
   "head",
   "snout",
   "nose",
@@ -14,8 +15,8 @@
   "paw_far",
   "tail_base",
   "tail_tip",
-  "tusk",
-  "mane"
+  "horn",
+  "wool"
  ],
  "palette": "ram",
  "walk_frames": 8,
@@ -26,8 +27,8 @@
   "W"
  ],
  "supersample": 4,
- "view_tiles": 2.0,
- "y_stretch": 1.662741699796952,
+ "view_tiles": 4.0,
+ "y_stretch": 1.414213562373095,
  "world_linear": [
   [
    1.0,
@@ -36,7 +37,7 @@
   ],
   [
    0.0,
-   1.662741699796952,
+   1.414213562373095,
    0.0
   ],
   [
@@ -48,76 +49,100 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "tusk": 2.6,
-   "mane": 1.4,
    "eye": 9.0,
-   "nose": 4.0,
-   "tail_tip": 5.0,
-   "tail_base": 2.5,
+   "nose": 3.0,
+   "tail_tip": 3.0,
+   "tail_base": 2.0,
    "paw_near": 2.2,
    "paw_far": 1.6,
    "leg_near": 1.7,
    "leg_far": 1.2,
    "ear": 2.2,
-   "snout": 1.3
+   "snout": 1.3,
+   "horn": 2.4,
+   "wool": 1.2
   },
   "thin": {
-   "tusk": 3,
-   "mane": 4,
    "eye": 3,
-   "tail_tip": 2,
+   "tail_tip": 3,
    "tail_base": 3,
    "nose": 3,
    "leg_near": 4,
    "leg_far": 4,
    "paw_near": 3,
    "paw_far": 4,
-   "ear": 4
+   "ear": 4,
+   "horn": 3
   },
   "soft": [
    [
     "body",
+    "belly"
+   ],
+   [
     "head",
     "snout",
     "nose",
-    "ear",
-    "mane"
+    "ear"
+   ],
+   [
+    "leg_near",
+    "paw_near"
+   ],
+   [
+    "leg_far",
+    "paw_far"
+   ],
+   [
+    "tail_base",
+    "tail_tip"
+   ],
+   [
+    "body",
+    "wool",
+    "belly"
    ]
   ],
-  "no_outline": [
-   "tail_tip"
-  ],
+  "no_outline": [],
   "fur": [
    "body",
    "head"
   ],
   "texture": {
-   "tusk": [
-    1.3,
-    0.0
-   ],
    "body": [
-    1.4,
-    0.15
+    0.6,
+    0.45
+   ],
+   "belly": [
+    0.5,
+    0.1
    ],
    "head": [
-    0.9,
-    0.08
+    0.55,
+    0.12
    ],
    "snout": [
-    0.4,
-    0.0
-   ],
-   "tail_base": [
-    0.6,
+    0.3,
     0.0
    ],
    "leg_near": [
-    0.4,
+    0.35,
     0.0
    ],
    "leg_far": [
-    0.3,
+    0.25,
+    0.0
+   ],
+   "tail_base": [
+    0.5,
+    0.0
+   ],
+   "wool": [
+    0.6,
+    0.45
+   ],
+   "horn": [
+    1.3,
     0.0
    ]
   },
@@ -134,7 +159,9 @@
    "body",
    "head",
    "snout",
-   "ear"
+   "ear",
+   "horn",
+   "wool"
   ]
  },
  "ref": "look_14.png",
@@ -143,7 +170,11 @@
   0
  ],
  "placed": [
-  -5,
-  3
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
  ]
 }

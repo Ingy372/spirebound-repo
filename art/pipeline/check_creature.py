@@ -88,6 +88,7 @@ def main(name):
                f"{ours}px vs {theirs}px ({ratio:.2f}x)", f"change SIZE so the ratio is {lim['size'][0]}-{lim['size'][1]}")
         # 3. obviously our own colours
         mine = east[..., :3][east[..., 3] > 0].astype(float)
+        mine = mine[lum(mine) >= 50]          # near-black shadows and outlines are shared by every sprite
         other = np.unique(r[..., :3][r[..., 3] > 0], axis=0).astype(float)
         nearest = np.sqrt(((mine[:, None, :] - other[None, :, :]) ** 2).sum(-1)).min(1)
         own = float((nearest > 20).mean())
