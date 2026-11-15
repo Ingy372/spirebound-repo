@@ -84,7 +84,7 @@ Every spell already uses the best existing effect, so none of these block anythi
 ## Batch 4 — Azhrakkar, the Cerulean Ruin (Priority: later, phase 5, but worth starting early)
 | ✓ | File names | Size / frames | Grok prompt |
 |---|---|---|---|
-| [ ] | `boss_azhrakkar_{s,e,n,w}_{0,1,2}.png` | **64×64**, 12 | A giant muscular blue-skinned horned fiend with glowing pale-cyan eyes, dark ridged armor plates on the shoulders, wielding an enormous jagged greatsword taller than itself. Menacing, original design. |
+| [~] | `boss_azhrakkar_*` (walk: first draft by the pipeline, in ART_FOR_JAY/azhrakkar; attack swing not made yet) | **64×64**, 12 | A giant muscular blue-skinned horned fiend with glowing pale-cyan eyes, dark ridged armor plates on the shoulders, wielding an enormous jagged greatsword taller than itself. Menacing, original design. |
 | [ ] | `boss_azhrakkar_attack_{s,e,n,w}_{0,1,2}.png` | **64×64**, 12 | The same blue fiend mid-swing with the enormous greatsword, blue fire trailing the blade. |
 | [ ] | `fx_cerulean_sweep_{0..5}.png` | 32×32, 6 | A wide blue-fire sword-sweep slash effect, 6-frame animation, transparent background. |
 

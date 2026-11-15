@@ -1,0 +1,103 @@
+{
+ "name": "azhrakkar",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "scar",
+  "hair",
+  "beard",
+  "pelt",
+  "tunic",
+  "belt",
+  "pants",
+  "boot",
+  "hand",
+  "bow",
+  "string"
+ ],
+ "palette": "azhrakkar",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 2.5,
+   "scar": 3.0,
+   "hand": 2.0,
+   "bow": 2.0,
+   "string": 2.0,
+   "belt": 2.0,
+   "pelt": 1.4,
+   "boot": 1.4,
+   "beard": 1.6
+  },
+  "thin": {
+   "eye": 4,
+   "scar": 2,
+   "hand": 3,
+   "bow": 2,
+   "string": 2,
+   "belt": 3
+  },
+  "soft": [
+   [
+    "tunic",
+    "belt"
+   ],
+   [
+    "skin",
+    "hair",
+    "beard",
+    "eye"
+   ],
+   [
+    "hand",
+    "skin",
+    "pants"
+   ],
+   [
+    "bow",
+    "string"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "tunic",
+   "pelt",
+   "skin",
+   "hair"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  2,
+  2
+ ]
+}
