@@ -226,9 +226,21 @@ class Creature:
             shifted[max(dy, 0):img.shape[0] + min(dy, 0), max(dx, 0):img.shape[1] + min(dx, 0)] =                 img[max(-dy, 0):img.shape[0] - max(dy, 0), max(-dx, 0):img.shape[1] - max(dx, 0)]
             img = shifted
         a = img[..., 3]
-        if a[0].any() or a[:, 0].any() or a[-1].any() or a[:, -1].any():
+        if not self.meta.get("auto_place") and (a[0].any() or a[:, 0].any() or a[-1].any() or a[:, -1].any()):
             print(f"  warning: {d}{f} touches the edge of the 64x64 canvas")
         return Image.fromarray(img)
+
+    def place(self, d, raw):
+        """AUTO_PLACE: cut one 64x64 window for all of a direction's frames, so the creature (over its whole walk)
+        ends margin pixels from the right and bottom edges, like Tibia's sprites. Returns the cropped frames."""
+        mr, mb = self.meta["auto_place"]
+        boxes = [im.getbbox() for im in raw if im.getbbox()]
+        x0, y0 = min(b[0] for b in boxes), min(b[1] for b in boxes)
+        x1, y1 = max(b[2] for b in boxes), max(b[3] for b in boxes)
+        if x1 - x0 > 64 - mr or y1 - y0 > 64 - mb:
+            print(f"  warning: {d} is {x1 - x0}x{y1 - y0} px over its walk: too big for the 64x64 canvas")
+        left, top = x1 + mr - 64, y1 + mb - 64
+        return [im.crop((left, top, left + 64, top + 64)) for im in raw]
 
     # ------------------------------------------------------------ outputs
     def run(self):
@@ -236,8 +248,10 @@ class Creature:
         fdir.mkdir(exist_ok=True)
         self.frames = {}
         for d in self.meta["order"]:
-            for f in range(self.n_frames):
-                im = self.frame(d, f)
+            ims = [self.frame(d, f) for f in range(self.n_frames)]
+            if self.meta.get("auto_place"):
+                ims = self.place(d, ims)
+            for f, im in enumerate(ims):
                 im.save(fdir / f"{d}_{f}.png")
                 self.frames[d, f] = im
         # show just the creature's own tile when everything fits in it (small animals), else the whole canvas

@@ -37,6 +37,12 @@ def main():
     gs = getattr(creature, "GROUND_STRETCH", None)      # how long north/south bodies look (tilt view only)
     if gs is not None:
         rig.Y_STRETCH = 1.0 + gs * (1.0 / math.sin(math.radians(rig.ELEVATION)) - 1.0)
+    # AUTO_PLACE = (right margin, bottom margin): render on a bigger canvas, then pixelize.py cuts the 64x64
+    # frame for each direction so the creature sits against the tile's right and bottom edges, spilling up-left,
+    # the way Tibia's own bigger creatures are placed. Nothing can be clipped by the canvas edge.
+    auto_place = getattr(creature, "AUTO_PLACE", None)
+    if auto_place is not None:
+        rig.VIEW_TILES, rig.CAM_SHIFT_X, rig.CAM_SHIFT_Y = 4.0, 0.0, 0.0
     scene = rig.reset_scene()
     projection = getattr(creature, "PROJECTION", "tilt")
     cam = rig.add_camera(scene, projection)
@@ -89,7 +95,7 @@ def main():
             "order": rig.ORDER, "supersample": rig.SUPERSAMPLE, "view_tiles": rig.VIEW_TILES,
             "y_stretch": rig.Y_STRETCH, "world_linear": rig.world_linear(shear, projection), "depth_range": rig.DEPTH_RANGE,
             "rules": getattr(creature, "PIXEL_RULES", {}), "ref": getattr(creature, "REFERENCE", None),
-            "canvas_offset": [0, 0], "placed": off}
+            "canvas_offset": [0, 0], "placed": off, "auto_place": list(auto_place) if auto_place is not None else None}
     (out.parent / "meta.json").write_text(json.dumps(meta, indent=1))
 
     if not only:

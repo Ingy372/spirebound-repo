@@ -54,6 +54,12 @@ while keeping our own design. Knobs in a model file:
   so it does not crawl while walking.
 - `PIXEL_RULES["bands"]`: 7 light thresholds for 8-tone ramps (more shading tones, like hand-made sprites).
 
+## Four-legged creatures
+
+Follow `art/QUADRUPED_RULES.md` (recipe, 14 rules, worked example: the boar). Build on `art/models/quadruped.py`,
+then `python art/pipeline/check_creature.py <name>` must print ALL PASS before the sprite is shown to Jay.
+`AUTO_PLACE = (1, 1)` in a model file places each direction against the tile's right and bottom edges.
+
 ## Client sprite rules (Canary 3.6.1 + OTClient Redemption 4.2, client 15.11)
 
 - Asset format: the 15.x "appearances" protobuf file plus LZMA-compressed sprite sheets (`catalog-content.json`).

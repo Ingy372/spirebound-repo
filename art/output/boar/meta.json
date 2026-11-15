@@ -3,6 +3,7 @@
  "parts": [
   "none",
   "body",
+  "belly",
   "head",
   "snout",
   "nose",
@@ -15,7 +16,8 @@
   "tail_base",
   "tail_tip",
   "tusk",
-  "mane"
+  "crest",
+  "brow"
  ],
  "palette": "boar",
  "walk_frames": 8,
@@ -26,8 +28,8 @@
   "W"
  ],
  "supersample": 4,
- "view_tiles": 2.0,
- "y_stretch": 1.662741699796952,
+ "view_tiles": 4.0,
+ "y_stretch": 1.414213562373095,
  "world_linear": [
   [
    1.0,
@@ -36,7 +38,7 @@
   ],
   [
    0.0,
-   1.662741699796952,
+   1.414213562373095,
    0.0
   ],
   [
@@ -48,84 +50,108 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "tusk": 4.0,
-   "mane": 2.6,
    "eye": 9.0,
-   "nose": 4.0,
-   "tail_tip": 5.0,
-   "tail_base": 2.5,
+   "nose": 2.0,
+   "tail_tip": 3.0,
+   "tail_base": 2.0,
    "paw_near": 2.2,
    "paw_far": 1.6,
    "leg_near": 1.7,
    "leg_far": 1.2,
    "ear": 2.2,
-   "snout": 1.3
+   "snout": 1.3,
+   "tusk": 5.0,
+   "crest": 2.4,
+   "brow": 4.0
   },
   "thin": {
-   "tusk": 2,
-   "mane": 3,
    "eye": 3,
-   "tail_tip": 2,
+   "tail_tip": 3,
    "tail_base": 3,
    "nose": 3,
    "leg_near": 4,
    "leg_far": 4,
    "paw_near": 3,
    "paw_far": 4,
-   "ear": 4
+   "ear": 4,
+   "tusk": 2,
+   "crest": 3,
+   "brow": 3
   },
   "soft": [
    [
     "body",
+    "belly"
+   ],
+   [
     "head",
     "snout",
     "nose",
     "ear"
+   ],
+   [
+    "leg_near",
+    "paw_near"
+   ],
+   [
+    "leg_far",
+    "paw_far"
+   ],
+   [
+    "tail_base",
+    "tail_tip"
+   ],
+   [
+    "head",
+    "brow",
+    "eye"
    ]
   ],
-  "no_outline": [
-   "tail_tip"
-  ],
+  "no_outline": [],
   "fur": [
    "body",
    "head"
   ],
   "texture": {
-   "mane": [
-    1.2,
-    0.0
-   ],
    "body": [
-    1.4,
-    0.15
+    0.75,
+    0.22
+   ],
+   "belly": [
+    0.5,
+    0.1
    ],
    "head": [
-    0.9,
-    0.08
+    0.55,
+    0.12
    ],
    "snout": [
-    0.4,
-    0.0
-   ],
-   "tail_base": [
-    0.6,
+    0.3,
     0.0
    ],
    "leg_near": [
-    0.4,
+    0.35,
     0.0
    ],
    "leg_far": [
-    0.3,
+    0.25,
+    0.0
+   ],
+   "tail_base": [
+    0.5,
+    0.0
+   ],
+   "crest": [
+    0.5,
     0.0
    ]
   },
   "bands": [
-   0.4,
-   0.52,
-   0.62,
-   0.71,
-   0.79,
+   0.38,
+   0.5,
+   0.6,
+   0.69,
+   0.78,
    0.86,
    0.93
   ],
@@ -133,7 +159,8 @@
    "body",
    "head",
    "snout",
-   "ear"
+   "ear",
+   "crest"
   ]
  },
  "ref": "look_380.png",
@@ -142,7 +169,11 @@
   0
  ],
  "placed": [
-  -7,
-  2
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
  ]
 }
