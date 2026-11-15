@@ -557,3 +557,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Arcanist class outfit, first draft (`art/models/arcanist.py`): crimson robe, gold stole, collar, amber glow and runes. In `ART_FOR_JAY/arcanist`.
 - Mystic class outfit, first draft (`art/models/mystic.py`): white and green robes, leaf shoulders, beads, green glow. All four class outfits now drafted, in `ART_FOR_JAY/`.
 - Temple Priest made (`art/models/priest.py`, a Veyra variant): white robe, gold stole, blessing hand. In `ART_FOR_JAY/priest`.
+- Banker made (`art/models/banker.py`, on Vesper): navy coat, spectacles, ledger. In `ART_FOR_JAY/banker`.

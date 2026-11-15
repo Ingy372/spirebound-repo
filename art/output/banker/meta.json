@@ -1,0 +1,114 @@
+{
+ "name": "banker",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "hair",
+  "hat",
+  "band",
+  "feather",
+  "coat",
+  "trim",
+  "shirt",
+  "pants",
+  "boot",
+  "hand",
+  "book",
+  "page",
+  "glass"
+ ],
+ "palette": "banker",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "glass": 1.6,
+   "eye": 9.0,
+   "feather": 3.0,
+   "hand": 2.4,
+   "book": 3.0,
+   "page": 3.0,
+   "band": 2.0,
+   "shirt": 2.2,
+   "trim": 1.8,
+   "boot": 1.4,
+   "hair": 1.3
+  },
+  "thin": {
+   "glass": 4,
+   "eye": 3,
+   "feather": 3,
+   "hand": 3,
+   "book": 3,
+   "page": 2,
+   "band": 3,
+   "shirt": 3,
+   "trim": 3
+  },
+  "soft": [
+   [
+    "coat",
+    "trim",
+    "shirt"
+   ],
+   [
+    "skin",
+    "hair",
+    "eye"
+   ],
+   [
+    "hat",
+    "band"
+   ],
+   [
+    "book",
+    "page",
+    "hand"
+   ],
+   [
+    "pants",
+    "boot"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "coat",
+   "hat",
+   "skin",
+   "feather"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
