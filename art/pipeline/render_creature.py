@@ -34,8 +34,10 @@ def main():
     out.mkdir(parents=True, exist_ok=True)
 
     scene = rig.reset_scene()
-    cam = rig.add_camera(scene)
-    _root, facing = rig.add_world_root(scene)
+    projection = getattr(creature, "PROJECTION", "tilt")
+    cam = rig.add_camera(scene, projection)
+    shear = getattr(creature, "HEIGHT_SHEAR", rig.HEIGHT_SHEAR)
+    _root, facing = rig.add_world_root(scene, shear, projection)
     model = creature.build(Model, facing)
     mat_normal, mat_depth = rig.normal_material(), rig.depth_material()
     layer = scene.view_layers[0]
@@ -50,7 +52,7 @@ def main():
     for d in rig.ORDER:
         if only and d != only:
             continue
-        rig.set_direction(facing, d)
+        rig.set_direction(facing, d, getattr(creature, "LEAN", 0.0))
         for f, t in enumerate(frames):
             creature.pose(model, t)
             bpy.context.view_layer.update()
@@ -65,7 +67,9 @@ def main():
     import json
     meta = {"name": name, "parts": creature.PARTS, "palette": creature.PALETTE, "walk_frames": creature.WALK_FRAMES,
             "order": rig.ORDER, "supersample": rig.SUPERSAMPLE, "view_tiles": rig.VIEW_TILES,
-            "y_stretch": rig.Y_STRETCH, "depth_range": rig.DEPTH_RANGE}
+            "y_stretch": rig.Y_STRETCH, "world_linear": rig.world_linear(shear, projection), "depth_range": rig.DEPTH_RANGE,
+            "rules": getattr(creature, "PIXEL_RULES", {}), "ref": getattr(creature, "REFERENCE", None),
+            "canvas_offset": list(getattr(creature, "CANVAS_OFFSET", (0, 0)))}
     (out.parent / "meta.json").write_text(json.dumps(meta, indent=1))
 
     if not only:

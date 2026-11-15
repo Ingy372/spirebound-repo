@@ -12,6 +12,19 @@ from mathutils import Vector
 NAME = "rat"
 WALK_FRAMES = 8
 PALETTE = "rat"            # ramp set in art/pipeline/palette.json
+HEIGHT_SHEAR = 0.0         # low animal: no up-left height lean (matches Tibia's rat and the approved look)
+LEAN = 12.0                # degrees: north/south bodies run slightly diagonal, like hand-made rats
+REFERENCE = "rat_client.png"   # .local/artref file shown beside our sheets (comparison only)
+PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (see the notes there)
+    "weight": {"eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
+               "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
+    "thin": {"eye": 3, "tail_tip": 2, "tail_base": 3, "nose": 3, "leg_near": 4, "leg_far": 4,
+             "paw_near": 3, "paw_far": 4, "ear": 4},
+    "soft": [["body", "head", "snout", "nose", "ear"]],
+    "no_outline": ["tail_tip"],
+    "fur": ["body", "head"],
+    "selout": ["body", "head", "snout", "ear"],
+}
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip"]

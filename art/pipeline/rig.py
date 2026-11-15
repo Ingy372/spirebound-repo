@@ -11,6 +11,22 @@ Tibia creatures, their north/south bodies are shortened a little (about 0.9 of t
 use GROUND_STRETCH = 0.75, between the plain tilted camera (0) and the unshortened oblique map view (1)
 (the world is stretched along Y by 1/sin(ELEVATION) before rendering; pixelize.py un-stretches the normals);
 keep it for big objects such as buildings if they ever get rendered here.
+
+Height also leans LEFT: Tibia draws anything tall going up-and-left at 45 degrees (a standing person's head is
+up-left of their feet; TibiaWiki's citizen shows it). HEIGHT_SHEAR moves a point left by that much per unit of
+height, so on screen height runs diagonally, exactly like hand-made sprites. Standing figures use the full lean;
+low animals may use less (HEIGHT_SHEAR in the model file): Tibia's own rat is drawn almost without it, and our
+approved rat uses none.
+
+Two projections (PROJECTION in the model file):
+  "tilt"    the camera above for low animals (the approved rat): ORTHO camera tilted 45 deg + GROUND_STRETCH.
+  "oblique" Tibia's real drawing rule, for standing figures: the camera looks straight down at a slanted world
+            (x' = x - k*z, y' = y + k*z, k = HEIGHT_SHEAR). The ground stays full size, the front of a figure is
+            seen at full size (faces stay visible under hats), and height slides up-left at 45 degrees. It is the
+            same as viewing from the south-east and above, which is why the south and east sides show.
+
+Canvas: like the client, every frame is 64x64 and the creature's own tile is the bottom-right 32x32 quarter;
+tall creatures spill up and left into the rest.
 """
 from __future__ import annotations
 
@@ -23,16 +39,19 @@ HEIGHT_FACTOR = math.cos(math.radians(ELEVATION))
 GROUND_STRETCH = 0.75
 Y_STRETCH = 1.0 + GROUND_STRETCH * (1.0 / math.sin(math.radians(ELEVATION)) - 1.0)
 SUPERSAMPLE = 4                         # render at 4x, pixelize.py shrinks to 1x
-VIEW_TILES = 1.5                        # the render window is 1.5 x 1.5 tiles around the creature's tile
+HEIGHT_SHEAR = HEIGHT_FACTOR           # screen-left shift per unit of height = screen-up shift: a 45 degree lean
+VIEW_TILES = 2.0                        # 64x64 canvas; the creature's tile is its bottom-right quarter
 PIXELS_PER_TILE = 32
 CAM_DISTANCE = 10.0
-DEPTH_NEAR = CAM_DISTANCE - 1.0         # depth pass maps [DEPTH_NEAR, DEPTH_NEAR + DEPTH_RANGE] to 0..1
-DEPTH_RANGE = 2.0
-CAM_SHIFT_Y = 3.0 / 48.0               # creatures stand ~3 px below the tile centre, like hand-made sprites
+DEPTH_NEAR = CAM_DISTANCE - 1.5         # depth pass maps [DEPTH_NEAR, DEPTH_NEAR + DEPTH_RANGE] to 0..1
+DEPTH_RANGE = 3.0
+CAM_SHIFT_X = -0.25                     # moves the creature's tile into the right half of the canvas
+CAM_SHIFT_Y = 0.25 + 3.0 / 64.0         # ...and the bottom half, standing ~3 px below the tile centre
 
-# Facing: rotation of the model (which faces east) for each game direction, plus the small Tibia "lean":
-# north/south bodies are drawn slightly diagonal, never perfectly vertical.
-DIRECTIONS = {"S": 270.0 - 12.0, "E": 0.0, "N": 90.0 + 12.0, "W": 180.0}
+# Facing: rotation of the model (which faces east) for each game direction. A creature may add a small "lean"
+# (LEAN in its model file): long low animals are drawn slightly diagonal when walking north/south.
+DIRECTIONS = {"S": 270.0, "E": 0.0, "N": 90.0, "W": 180.0}
+LEAN_SIGN = {"S": -1.0, "E": 0.0, "N": 1.0, "W": 0.0}
 ORDER = ["N", "E", "S", "W"]           # the client's order (pattern x = 0..3)
 
 
@@ -67,35 +86,53 @@ def reset_scene():
     return scene
 
 
-def add_camera(scene):
+def add_camera(scene, projection="tilt"):
     cam_data = bpy.data.cameras.new("SpriteCam")
     cam_data.type = "ORTHO"
     cam_data.ortho_scale = VIEW_TILES
+    cam_data.shift_x = CAM_SHIFT_X
     cam_data.shift_y = CAM_SHIFT_Y
     cam_data.clip_start = 0.1
     cam_data.clip_end = 50.0
     cam = bpy.data.objects.new("SpriteCam", cam_data)
-    e = math.radians(ELEVATION)
-    cam.location = (0.0, -CAM_DISTANCE * math.cos(e), CAM_DISTANCE * math.sin(e))
-    cam.rotation_euler = (math.pi / 2 - e, 0.0, 0.0)
+    if projection == "oblique":
+        cam.location = (0.0, 0.0, CAM_DISTANCE)
+        cam.rotation_euler = (0.0, 0.0, 0.0)
+    else:
+        e = math.radians(ELEVATION)
+        cam.location = (0.0, -CAM_DISTANCE * math.cos(e), CAM_DISTANCE * math.sin(e))
+        cam.rotation_euler = (math.pi / 2 - e, 0.0, 0.0)
     scene.collection.objects.link(cam)
     scene.camera = cam
     return cam
 
 
-def add_world_root(scene):
-    """Everything a creature is made of hangs under this empty; it applies the oblique Y stretch."""
+def add_world_root(scene, shear=HEIGHT_SHEAR, projection="tilt"):
+    """Everything a creature is made of hangs under these empties: the root applies the Y stretch, and the
+    parent-inverse matrix of 'Facing' (a raw matrix, so it can hold a shear) applies the height lean."""
+    from mathutils import Matrix
     world_root = bpy.data.objects.new("WorldStretch", None)
-    world_root.scale = (1.0, Y_STRETCH, 1.0)
+    world_root.scale = (1.0, 1.0 if projection == "oblique" else Y_STRETCH, 1.0)
     scene.collection.objects.link(world_root)
     facing = bpy.data.objects.new("Facing", None)
     facing.parent = world_root
+    facing.matrix_parent_inverse = Matrix(((1, 0, -HEIGHT_SHEAR, 0), (0, 1, 0, 0), (0, 0, 1, 0), (0, 0, 0, 1)))
+    facing.matrix_parent_inverse[0][2] = -shear
+    if projection == "oblique":
+        facing.matrix_parent_inverse[1][2] = shear
     scene.collection.objects.link(facing)
     return world_root, facing
 
 
-def set_direction(facing, d: str):
-    facing.rotation_euler = (0.0, 0.0, math.radians(DIRECTIONS[d]))
+def world_linear(shear=HEIGHT_SHEAR, projection="tilt"):
+    """The 3x3 matrix applied after the creature is turned (stretch @ shear); pixelize.py undoes it for normals."""
+    if projection == "oblique":
+        return [[1.0, 0.0, -shear], [0.0, 1.0, shear], [0.0, 0.0, 1.0]]
+    return [[1.0, 0.0, -shear], [0.0, Y_STRETCH, 0.0], [0.0, 0.0, 1.0]]
+
+
+def set_direction(facing, d: str, lean: float = 0.0):
+    facing.rotation_euler = (0.0, 0.0, math.radians(DIRECTIONS[d] + LEAN_SIGN[d] * lean))
 
 
 # ---------------------------------------------------------------- pass materials

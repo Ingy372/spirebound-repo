@@ -24,7 +24,8 @@ All art here is original: built from simple 3D shapes in Blender. No Tibia sprit
 ## Render a creature
 
 ```bash
-python tools/art_refs.py              # once: reference sprites + a grass tile into .local/artref (local only)
+python tools/art_refs.py              # once: reference sprites (rat, human outfits tinted like the client)
+                                      #       + a grass tile into .local/artref (local only)
 sh art/pipeline/render.sh rat          # Blender render + pixel cleanup, about 5 seconds
 ```
 
@@ -33,7 +34,7 @@ with Pillow and numpy.
 
 ## A new creature
 
-Copy `art/models/rat.py`, change the shapes, sizes and walk, add a ramp set to `palette.json`, render, and compare
+Copy `art/models/rat.py` (animals) or `art/models/vesper.py` (people), change the shapes, sizes and walk, add a ramp set to `palette.json`, render, and compare
 at 1× and 4×. Do **not** change `rig.py` or the shared palette rules for one creature: if they change, they change
 for every sprite and everything is re-rendered.
 

@@ -4,7 +4,7 @@
   python art/pipeline/pixelize.py rat
 
 Reads  art/output/<name>/passes/*.png and meta.json (written by render_creature.py)
-Writes art/output/<name>/frames/<dir>_<frame>.png   32x32 tiles (frame 0 = standing, 1..8 = walk)
+Writes art/output/<name>/frames/<dir>_<frame>.png   64x64, client layout (frame 0 = standing, 1..8 = walk)
        art/output/<name>/<name>_sheet.png            all frames at 4x, rows S/E/N/W
        art/output/<name>/walk_<dir>.gif (1x) and walk_<dir>_4x.gif
        art/output/<name>/compare/...                 the same beside the reference sprites (git-ignored, never shipped)
@@ -35,17 +35,15 @@ SHEET_ROWS = ["S", "E", "N", "W"]            # contact sheet order Jay asked for
 BG = (196, 194, 188)                          # plain light grey: the dark outline and legs read clearly on it
 GIF_MS = 110
 
-WEIGHT = {"eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
-          "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3}
 MIN_COVER = 6                                 # of 16 sub-pixels, to count as filled
-MIN_COVER_THIN = {"eye": 3, "tail_tip": 2, "tail_base": 3, "nose": 3, "leg_near": 4, "leg_far": 4,
-                  "paw_near": 3, "paw_far": 4, "ear": 4}
-SOFT_PARTS = {"body", "head", "snout", "nose", "ear"}   # no depth lines between these (one smooth animal)
-NO_OUTLINE = {"tail_tip"}
-FUR_PARTS = ("body", "head")
-SELOUT_PARTS = {"body", "head", "snout", "ear"}
 SELOUT_STEP = 3
 DEPTH_LINE = 0.045                            # tiles; a bigger step between neighbours draws a dark line
+# Per-creature rules come from PIXEL_RULES in the model file (via meta.json):
+#   weight   part -> how strongly a small part wins a shared pixel (eyes, tails...)
+#   thin     part -> sub-pixels (of 16) enough for that part alone to fill a pixel
+#   soft     groups of parts with no dark depth line between them (one smooth surface)
+#   no_outline, fur, selout   parts drawn without outline / with fur tufts / with the lit-side outline
+RULE_DEFAULTS = {"weight": {}, "thin": {}, "soft": [], "no_outline": [], "fur": [], "selout": []}
 
 
 def srgb_to_lin(a):
@@ -62,6 +60,13 @@ class Creature:
         self.ramps = {k: [tuple(c) for c in v] for k, v in PALETTE["ramps"][self.meta["palette"]].items()}
         self.ss = self.meta["supersample"]
         self.n_frames = self.meta["walk_frames"] + 1
+        r = {**RULE_DEFAULTS, **self.meta.get("rules", {})}
+        self.weight, self.thin = r["weight"], r["thin"]
+        self.soft = [set(g) for g in r["soft"]]
+        self.no_outline, self.fur_parts, self.selout = set(r["no_outline"]), set(r["fur"]), set(r["selout"])
+
+    def is_soft(self, a, b):
+        return any(a in g and b in g for g in self.soft)
 
     # ------------------------------------------------------------ one frame
     def load(self, d, f):
@@ -73,7 +78,8 @@ class Creature:
         ids = np.rint(srgb_to_lin(idp[..., 0]) * 255 / 8).astype(int)
         ids[~alpha] = 0
         n = srgb_to_lin(nrm[..., :3]) * 2 - 1
-        n[..., 1] *= self.meta["y_stretch"]        # undo the oblique stretch so light hits the real shape
+        M = np.array(self.meta.get("world_linear", [[1, 0, 0], [0, self.meta["y_stretch"], 0], [0, 0, 1]]))
+        n = n @ M                                    # n_real ~ M^T n_seen: undo the stretch and lean for lighting
         n /= np.maximum(np.linalg.norm(n, axis=-1, keepdims=True), 1e-6)
         depth = srgb_to_lin(dep[..., 0]) * self.meta["depth_range"]
         light = PALETTE["light"]
@@ -90,11 +96,11 @@ class Creature:
         bid, bval, bdep = blocks(ids), blocks(value), blocks(depth)
         npart = len(self.parts)
         cnt = np.stack([(bid == k).sum(-1) for k in range(npart)], -1)
-        wts = np.array([0.0] + [WEIGHT.get(p, 1.0) for p in self.parts[1:]])
+        wts = np.array([0.0] + [self.weight.get(p, 1.0) for p in self.parts[1:]])
         score = cnt * wts
         part = score.argmax(-1)
         total = cnt[..., 1:].sum(-1)
-        need = np.array([99] + [MIN_COVER_THIN.get(p, MIN_COVER) for p in self.parts[1:]])
+        need = np.array([99] + [self.thin.get(p, MIN_COVER) for p in self.parts[1:]])
         own = np.take_along_axis(cnt, part[..., None], -1)[..., 0]
         filled = (total >= MIN_COVER) | (own >= need[part])
         part = np.where(filled & (score.max(-1) > 0), part, 0)
@@ -130,7 +136,7 @@ class Creature:
                     if not q or q == k:
                         continue
                     qn = name(q)
-                    if pn in SOFT_PARTS and qn in SOFT_PARTS:
+                    if self.is_soft(pn, qn):
                         continue
                     if pn == "tail_tip" or qn == "eye":
                         continue
@@ -148,12 +154,12 @@ class Creature:
                 hit = False
                 for dy, dx in ((0, 1), (1, 0), (0, -1), (-1, 0)):
                     yy, xx = y + dy, x + dx
-                    if 0 <= yy < h and 0 <= xx < w and part[yy, xx] and name(part[yy, xx]) not in NO_OUTLINE:
+                    if 0 <= yy < h and 0 <= xx < w and part[yy, xx] and name(part[yy, xx]) not in self.no_outline:
                         hit = True
                         # lit-side outline: on the top/left edge of a brightly lit fur area the outline is a
                         # dark brown (the part's darkest step) instead of near-black, like hand-made sprites
                         pn = name(part[yy, xx])
-                        if (dy, dx) in ((1, 0), (0, 1)) and pn in SELOUT_PARTS and step[yy, xx] >= SELOUT_STEP \
+                        if (dy, dx) in ((1, 0), (0, 1)) and pn in self.selout and step[yy, xx] >= SELOUT_STEP \
                                 and not line[yy, xx]:
                             lit = self.ramps[pn][0]
                 if hit:
@@ -165,7 +171,7 @@ class Creature:
         every fourth pixel along that edge pokes 1 px down into the darker area (a tuft), never isolated noise."""
         h, w = part.shape
         s2 = step.copy()
-        fur_ids = {self.parts.index(p) for p in FUR_PARTS if p in self.parts}
+        fur_ids = {self.parts.index(p) for p in self.fur_parts if p in self.parts}
         for y in range(1, h - 1):
             for x in range(w):
                 k = part[y, x]
@@ -198,14 +204,17 @@ class Creature:
         return s2
 
     def frame(self, d, f):
+        """A finished 64x64 frame in the client's layout (the creature's tile is the bottom-right quarter)."""
         img = self.paint(*self.shrink(*self.load(d, f)))
-        h = img.shape[0]
-        m = (h - 32) // 2                            # the render window is 1.5 tiles; keep the centre tile
-        outside = img[..., 3].copy()
-        outside[m:m + 32, m:m + 32] = 0
-        if outside.any():
-            print(f"  warning: {d}{f} draws outside its 32x32 tile")
-        return Image.fromarray(img[m:m + 32, m:m + 32])
+        dx, dy = self.meta.get("canvas_offset", [0, 0])
+        if dx or dy:                                  # standing figures sit low-right on the canvas, like Tibia's
+            shifted = np.zeros_like(img)
+            shifted[max(dy, 0):img.shape[0] + min(dy, 0), max(dx, 0):img.shape[1] + min(dx, 0)] =                 img[max(-dy, 0):img.shape[0] - max(dy, 0), max(-dx, 0):img.shape[1] - max(dx, 0)]
+            img = shifted
+        a = img[..., 3]
+        if a[0].any() or a[:, 0].any() or a[-1].any() or a[:, -1].any():
+            print(f"  warning: {d}{f} touches the edge of the 64x64 canvas")
+        return Image.fromarray(img)
 
     # ------------------------------------------------------------ outputs
     def run(self):
@@ -217,17 +226,39 @@ class Creature:
                 im = self.frame(d, f)
                 im.save(fdir / f"{d}_{f}.png")
                 self.frames[d, f] = im
+        # show just the creature's own tile when everything fits in it (small animals), else the whole canvas
+        boxes = [im.getbbox() for im in self.frames.values() if im.getbbox()]
+        fits = all(b[0] >= 32 and b[1] >= 32 for b in boxes)
+        self.view = (32, 32, 64, 64) if fits else (0, 0, 64, 64)
+        self.vsize = self.view[2] - self.view[0]
+        self.zoom = 4 if fits else 3
         self.sheet(self.dir / f"{self.name}_sheet.png")
         for d in SHEET_ROWS:
             self.gif(d, self.dir / f"walk_{d}.gif", 1)
             self.gif(d, self.dir / f"walk_{d}_4x.gif", 4)
-        refs = load_refs()
+        refs = load_refs(self.meta.get("ref"))
         if refs:
             self.compare(refs)
         print(f"wrote {self.dir}")
 
-    def sheet(self, path, refs=None, zoom=4, ground=None):
-        cell = 32 * zoom
+    def backdrop(self, ground=None):
+        n = self.vsize
+        if ground is None:
+            return Image.new("RGBA", (n, n), (*BG, 255))
+        bg = Image.new("RGBA", (n, n))
+        for x in range(0, n, 32):
+            for y in range(0, n, 32):
+                bg.paste(ground, (x, y))
+        return bg
+
+    def cell(self, sprite, zoom, ground=None):
+        bg = self.backdrop(ground)
+        bg.alpha_composite(sprite.crop(self.view))
+        return bg.resize((self.vsize * zoom, self.vsize * zoom), Image.NEAREST)
+
+    def sheet(self, path, refs=None, ground=None):
+        zoom = self.zoom
+        cell = self.vsize * zoom
         pad = 6
         cols = self.n_frames
         width = cols * (cell + pad) + 40
@@ -235,34 +266,21 @@ class Creature:
             width += 30 + refs["cols"] * (cell + pad)
         img = Image.new("RGB", (width, 4 * (cell + pad) + 34), (40, 44, 40))
         dr = ImageDraw.Draw(img)
-        dr.text((40, 6), f"{self.name}: stand + {cols - 1} walk frames, 4x", fill=(230, 230, 220))
+        dr.text((40, 6), f"{self.name}: stand + {cols - 1} walk frames, {zoom}x", fill=(230, 230, 220))
         if refs:
             dr.text((40 + cols * (cell + pad) + 30, 6), "REFERENCE ONLY (Tibia, not shipped)", fill=(255, 190, 120))
         for r, d in enumerate(SHEET_ROWS):
             y = 26 + r * (cell + pad)
             dr.text((12, y + cell // 2 - 6), d, fill=(230, 230, 220))
             for f in range(cols):
-                x = 40 + f * (cell + pad)
-                self._cell(img, (x, y), self.frames[d, f], zoom, ground)
+                img.paste(self.cell(self.frames[d, f], zoom, ground), (40 + f * (cell + pad), y))
             if refs:
                 for f, im in enumerate(refs[d]):
-                    x = 40 + cols * (cell + pad) + 30 + f * (cell + pad)
-                    self._cell(img, (x, y), im, zoom, ground)
+                    img.paste(self.cell(im, zoom, ground), (40 + cols * (cell + pad) + 30 + f * (cell + pad), y))
         img.save(path)
 
-    @staticmethod
-    def _cell(img, xy, sprite, zoom, ground=None):
-        cell = 32 * zoom
-        bg = Image.new("RGBA", (32, 32), (*BG, 255)) if ground is None else ground.copy()
-        bg.alpha_composite(sprite)
-        img.paste(bg.resize((cell, cell), Image.NEAREST), xy)
-
-    def gif(self, d, path, zoom, ground=None):
-        frames = []
-        for f in range(1, self.n_frames):
-            bg = Image.new("RGBA", (32, 32), (*BG, 255)) if ground is None else ground.copy()
-            bg.alpha_composite(self.frames[d, f])
-            frames.append(bg.resize((32 * zoom, 32 * zoom), Image.NEAREST).convert("RGB"))
+    def gif(self, d, path, zoom):
+        frames = [self.cell(self.frames[d, f], zoom).convert("RGB") for f in range(1, self.n_frames)]
         frames[0].save(path, save_all=True, append_images=frames[1:], duration=GIF_MS, loop=0)
 
     def compare(self, refs):
@@ -272,32 +290,32 @@ class Creature:
         self.sheet(cdir / f"{self.name}_vs_refs.png", refs)
         if ground is not None:
             self.sheet(cdir / f"{self.name}_vs_refs_ground.png", refs, ground=ground)
-        # side-by-side 1x and 3x walk loops: ours | reference, each direction
+        # side-by-side walk loops on plain grey: ours | reference, for each direction
+        n = self.vsize
         for zoom in (1, 3):
             frames = []
-            ground = None                            # walk loops on a plain background: easier to see the legs
             for i in range(1, self.n_frames):
-                img = Image.new("RGBA", (4 * 2 * 34 * zoom, 34 * zoom), (40, 44, 40, 255))
+                img = Image.new("RGBA", (4 * 2 * (n + 2) * zoom, (n + 2) * zoom), (40, 44, 40, 255))
                 for r, d in enumerate(SHEET_ROWS):
                     for j, spr in enumerate((self.frames[d, i], refs[d][min(i, len(refs[d]) - 1)])):
-                        bg = Image.new("RGBA", (32, 32), (*BG, 255)) if ground is None else ground.copy()
-                        bg.alpha_composite(spr)
-                        img.paste(bg.resize((32 * zoom, 32 * zoom), Image.NEAREST), ((r * 2 + j) * 34 * zoom, zoom))
+                        img.paste(self.cell(spr, zoom), ((r * 2 + j) * (n + 2) * zoom, zoom))
                 frames.append(img.convert("RGB"))
             frames[0].save(cdir / f"walk_ours_vs_ref_{zoom}x.gif", save_all=True, append_images=frames[1:],
                            duration=GIF_MS, loop=0)
 
 
-def load_refs():
-    """Reference rat frames pulled from the Tibia client files on this PC (tools/art_refs.py). Never committed."""
-    p = ROOT / ".local" / "artref" / "rat_client.png"
+def load_refs(name):
+    """Reference frames pulled from the Tibia client files on this PC (tools/art_refs.py): rows N/E/S/W,
+    columns stand + 8 walk, 64x64 cells. Comparison only; .local/ is never committed."""
+    if not name:
+        return None
+    p = ROOT / ".local" / "artref" / name
     if not p.exists():
         return None
     im = Image.open(p).convert("RGBA")
-    client_order = ["N", "E", "S", "W"]
     refs = {"cols": 9}
-    for r, d in enumerate(client_order):
-        refs[d] = [im.crop((f * 64 + 32, r * 64 + 32, f * 64 + 64, r * 64 + 64)) for f in range(9)]
+    for r, d in enumerate(["N", "E", "S", "W"]):
+        refs[d] = [im.crop((f * 64, r * 64, f * 64 + 64, r * 64 + 64)) for f in range(9)]
     g = ROOT / ".local" / "artref" / "ground.png"
     if g.exists():
         refs["ground"] = Image.open(g).convert("RGBA")

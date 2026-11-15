@@ -38,7 +38,7 @@ Base Tibia sprites stand in for all of these until your art arrives, so nothing 
 | [ ] | `boss_gate_hound_*` | **64×64**, 12 | A huge three-headed hound with black fur and ember-orange eyes, spiked collar on each neck. |
 | [ ] | `boss_axe_lord_*` | **64×64**, 12 | A towering armored warlord in rusted bronze plate with a horned helm and a giant double-bladed axe. |
 | [ ] | `boss_axe_lord_blade_*` | **64×64**, 12 | The same warlord (rusted bronze plate, horned helm) now holding a long curved blade instead of the axe, battle-damaged armor. |
-| [ ] | `npc_registrar.png`, `npc_priest.png`, `npc_vesper.png`, `npc_banker.png`, `npc_merchant.png` | 32×32, 1 frame each (facing south) | Town NPCs: a clerk with a ledger; a temple priest in white; a sly information broker in a dark purple coat with a feathered hat and a small notebook; a banker with spectacles; a merchant with an apron. |
+| [ ] | `npc_registrar.png`, `npc_priest.png`, `npc_vesper.png` (Vesper: first draft made by the Blender pipeline, `art/output/vesper/`, waiting for Jay's OK), `npc_banker.png`, `npc_merchant.png` | 32×32, 1 frame each (facing south) | Town NPCs: a clerk with a ledger; a temple priest in white; a sly information broker in a dark purple coat with a feathered hat and a small notebook; a banker with spectacles; a merchant with an apron. |
 
 ## Batch 1b — added overnight 2026-11-08 (Priority: medium)
 

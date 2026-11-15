@@ -82,6 +82,33 @@ class Model:
         obj = bpy.data.objects.new(name, mesh)
         return self._register(name, obj, part)
 
+    def frustum(self, name, part, top_ratio=0.7, segments=16):
+        """Unit cut cone: base radius 1 at z=0, radius top_ratio at z=1 (coat skirts, sleeves, hat crowns).
+        Place it by setting location / rotation / scale directly (scale = x radius, y radius, height)."""
+        import bmesh
+        mesh = bpy.data.meshes.new(name)
+        bm = bmesh.new()
+        bmesh.ops.create_cone(bm, cap_ends=True, segments=segments, radius1=1.0, radius2=top_ratio, depth=1.0)
+        bmesh.ops.translate(bm, verts=bm.verts, vec=(0, 0, 0.5))
+        bm.to_mesh(mesh)
+        bm.free()
+        for p in mesh.polygons:
+            p.use_smooth = True
+        obj = bpy.data.objects.new(name, mesh)
+        return self._register(name, obj, part)
+
+    def box(self, name, part, size=(1, 1, 1)):
+        """A flat box (books, buckles, crates); size is the full size along x, y, z."""
+        import bmesh
+        mesh = bpy.data.meshes.new(name)
+        bm = bmesh.new()
+        bmesh.ops.create_cube(bm, size=1.0)
+        bm.to_mesh(mesh)
+        bm.free()
+        obj = bpy.data.objects.new(name, mesh)
+        obj.scale = size
+        return self._register(name, obj, part)
+
     def tube(self, name, part, points: int = 10):
         """A bevelled poly curve (tails, whiskers). Shape it every frame with set_tube()."""
         cu = bpy.data.curves.new(name, "CURVE")

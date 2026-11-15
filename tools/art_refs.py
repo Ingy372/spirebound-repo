@@ -19,6 +19,90 @@ ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / ".local" / "artref"
 
 
+def outfit_info(outfit_id):
+    """[(sprite_info_fields, sprite_ids)] per frame group (0 = standing, 1 = walking)."""
+    path = next(THINGS.glob("appearances-*.dat"))
+    for num, _wt, v in fields(path.read_bytes()):
+        if num != 2:
+            continue
+        oid, groups = None, []
+        for n2, _w2, v2 in fields(v):
+            if n2 == 1:
+                oid = v2
+            elif n2 == 2:
+                for n3, _w3, v3 in fields(v2):
+                    if n3 == 3:
+                        info, spr = {}, []
+                        for n4, w4, v4 in fields(v3):
+                            if n4 == 5:
+                                spr += packed(v4) if w4 == 2 else [v4]
+                            elif w4 == 0:
+                                info[n4] = v4
+                        groups.append((info, spr))
+        if oid == outfit_id:
+            return groups
+    raise SystemExit(f"outfit {outfit_id} not found")
+
+
+def outfit_color(c):
+    """Tibia's 133-colour outfit table (hue/saturation/intensity steps), as the client computes it."""
+    steps, si = 19, 7
+    if c >= steps * si:
+        c = 0
+    if c % steps == 0:
+        v = int(255 * (1 - c / steps / si))
+        return v, v, v
+    h = (c % steps) / 18.0
+    s, i = [(0.25, 1.0), (0.25, 0.75), (0.5, 0.75), (0.667, 0.75), (1.0, 1.0), (1.0, 0.75), (1.0, 0.5)][c // steps]
+    lo = i * (1 - s)
+    if h < 1 / 6:
+        r, b = i, lo; g = b + (i - b) * 6 * h
+    elif h < 2 / 6:
+        g, b = i, lo; r = g - (i - b) * (6 * h - 1)
+    elif h < 3 / 6:
+        g, r = i, lo; b = r + (i - r) * (6 * h - 2)
+    elif h < 4 / 6:
+        b, r = i, lo; g = b - (i - r) * (6 * h - 3)
+    elif h < 5 / 6:
+        b, g = i, lo; r = g + (i - g) * (6 * h - 4)
+    else:
+        r, g = i, lo; b = r - (i - g) * (6 * h - 5)
+    return int(r * 255), int(g * 255), int(b * 255)
+
+
+def tint(base, mask, colors):
+    """Multiply the grey base by the outfit colours where the mask is yellow (head), red (body), green (legs),
+    blue (feet), the way the client does."""
+    import numpy as np
+    b = np.array(base.convert("RGBA")).astype(float)
+    m = np.array(mask.convert("RGBA"))
+    keys = {(255, 255, 0): 0, (255, 0, 0): 1, (0, 255, 0): 2, (0, 0, 255): 3}
+    for key, slot in keys.items():
+        sel = (m[..., 0] == key[0]) & (m[..., 1] == key[1]) & (m[..., 2] == key[2]) & (m[..., 3] > 0)
+        col = np.array(outfit_color(colors[slot])) / 255.0
+        b[sel, :3] *= col
+    return Image.fromarray(b.clip(0, 255).astype("uint8"))
+
+
+def dump_outfit(sprites, outfit_id, out_name, colors=None):
+    """Base look only (no addons, no mount): rows N/E/S/W, stand + 8 walk. With colors (head, body, legs, feet)
+    the grey sprite is tinted through its colour-mask layer, otherwise it stays grey."""
+    groups = outfit_info(outfit_id)
+    sheet = Image.new("RGBA", (9 * 64, 4 * 64))
+    for g, (info, spr) in enumerate(groups[:2]):
+        width, height, depth, layers = info.get(1, 1), info.get(2, 1), info.get(3, 1), info.get(4, 1)
+        phases = len(spr) // (width * height * depth * layers)
+        for d in range(4):
+            for p in range(phases if g else 1):
+                idx = ((((p * depth + 0) * height + 0) * width + d) * layers + 0)
+                col = 0 if g == 0 else p + 1
+                im = sprites.get(spr[idx]).convert("RGBA")
+                if colors and layers > 1:
+                    im = tint(im, sprites.get(spr[idx + 1]), colors)
+                sheet.alpha_composite(im, (col * 64, d * 64))
+    sheet.save(OUT / out_name)
+
+
 def outfit_groups(outfit_id):
     path = next(THINGS.glob("appearances-*.dat"))
     for num, _wt, v in fields(path.read_bytes()):
@@ -51,6 +135,9 @@ def main():
         for p in range(8):
             sheet.paste(sprites.get(walk[p * 4 + d]), ((p + 1) * 64, d * 64))
     sheet.save(OUT / "rat_client.png")
+    for oid in (128, 133, 136):                 # citizen, summoner (Vesper's borrowed look), a female citizen
+        dump_outfit(sprites, oid, f"outfit_{oid}.png")
+    dump_outfit(sprites, 133, "vesper_current.png", colors=(95, 113, 114, 95))   # Vesper's look in-game today
     grass = load_items()[4526]
     sprites.get(grass["sprites"][0]).save(OUT / "ground.png")
     print(f"wrote {OUT}")
