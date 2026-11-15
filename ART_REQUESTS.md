@@ -96,7 +96,7 @@ The donation shop (closed until launch) uses placeholder looks for 2 outfits (He
 | ✓ | File names | Size / frames | Grok prompt (after the style lock) |
 |---|---|---|---|
 | [ ] | `mon_meadow_wasp_*` | 32×32, 12 | A large striped wasp the size of a dog, yellow and black, translucent wings, a long stinger. |
-| [ ] | `mon_burrow_mole_*` | 32×32, 12 | A stocky grey-brown mole with huge pale digging claws, tiny eyes, a pink nose, a little dirt on its back. |
+| [~] | `mon_burrow_mole_*` (drafted by the pipeline, in ART_FOR_JAY/mole, waiting for Jay's OK) | 32×32, 12 | A stocky grey-brown mole with huge pale digging claws, tiny eyes, a pink nose, a little dirt on its back. |
 | [ ] | `mon_reed_snapper_*` | 32×32, 12 | A big green-brown snapping turtle-crab with a reed-covered shell and a hooked beak, standing in shallow water. |
 | [~] | `npc_ascendant_veyra_*` (drafted by the pipeline, in ART_FOR_JAY/veyra, waiting for Jay's OK) | 32×32, 12 | A calm priestess-scholar in white and violet robes with a tall collar and a glowing hand, serene face. |
 | [~] | `npc_hunter_brannoch_*` (drafted by the pipeline, in ART_FOR_JAY/brannoch, waiting for Jay's OK) | 32×32, 12 | A weathered hunter in brown leathers with a wolf-pelt mantle, a bow across his back, a scar over one eye. |

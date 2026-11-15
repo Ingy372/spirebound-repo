@@ -538,3 +538,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Fisher Corwin made the same way (`art/models/corwin.py`): patched oilskin coat, floppy hat, rod over the shoulder. In `ART_FOR_JAY/corwin`, waiting for Jay's OK.
 - Guide Pell made the same way (`art/models/pell.py`): red tabard, satchel, pennant on a stick, smile. In `ART_FOR_JAY/pell`, waiting for Jay's OK.
 - Ascendant Veyra made the same way (`art/models/veyra.py`): white robe, violet stole and tall collar, glowing hand. In `ART_FOR_JAY/veyra`, waiting for Jay's OK.
+- Burrow Mole made from the rat model (`art/models/mole.py`): stocky, pale digging claws, pink nose, dirt on the back. In `ART_FOR_JAY/mole`, waiting for Jay's OK.
