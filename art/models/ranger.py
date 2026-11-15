@@ -18,18 +18,18 @@ REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only
 PROJECTION = "oblique"
 CANVAS_OFFSET = (8, 8)
 PIXEL_RULES = {
-    "weight": {"quiver": 2.0, "fletch": 3.0, "bracer": 2.2, "eye": 9.0, "hand": 2.4, "blade": 3.0, "hilt": 2.6, "belt": 2.0, "pelt": 1.4, "boot": 1.4,
+    "weight": {"bow": 2.8, "string": 2.0, "quiver": 2.0, "fletch": 3.0, "bracer": 2.2, "eye": 9.0, "hand": 2.4, "blade": 3.0, "hilt": 2.6, "belt": 2.0, "pelt": 1.4, "boot": 1.4,
                "beard": 1.8},
-    "thin": {"quiver": 3, "fletch": 2, "bracer": 3, "eye": 3, "hand": 3, "blade": 2, "hilt": 2, "belt": 3},
+    "thin": {"bow": 2, "string": 2, "quiver": 3, "fletch": 2, "bracer": 3, "eye": 3, "hand": 3, "blade": 2, "hilt": 2, "belt": 3},
     "soft": [["tunic", "belt"], ["skin", "hair", "beard", "eye", "pelt"], ["hand", "skin"], ["pants", "boot"],
              ["blade", "hilt"]],
-    "no_outline": [],
+    "no_outline": ["string"],
     "fur": [],
     "selout": ["tunic", "pelt", "skin", "hair"],
 }
 
 PARTS = ["none", "skin", "eye", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand", "blade", "hilt",
-         "quiver", "fletch", "bracer"]
+         "quiver", "fletch", "bracer", "bow", "string"]
 
 HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
 HIP_Y = 0.074
@@ -69,6 +69,8 @@ def build(model_cls, facing):
     m.ellipsoid("hair", "hair", radii=(0.160, 0.160, 0.158))   # the hood
     m.ellipsoid("beard", "skin", radii=(0.060, 0.100, 0.050), segments=14, rings=8)   # chin (no scarf)
     m.frustum("quiver", "quiver", top_ratio=1.1, segments=10)
+    m.tube("bow", "bow", points=9)
+    m.capsule("string", "string")
     for i in range(3):
         m.cone(f"fletch{i}", "fletch", segments=5)
     for k in ("l", "r"):
@@ -154,6 +156,16 @@ def pose(m, t):
         d = (hand - elbow).normalized()
         m.objects[f"hand_{k}"].location = hand + d * 0.018
         m.put_segment(f"bracer_{k}", hand - d * 0.100, hand - d * 0.020, ARM_R * 1.15)
+        if k == "l":                                       # longbow held upright in the left hand
+            lo = hand + Vector((0.030, 0.020, -0.300))
+            hi = hand + Vector((0.030, 0.020, 0.330))
+            pts, radii = [], []
+            for i in range(9):
+                u = i / 8
+                pts.append(tuple(lo.lerp(hi, u) + Vector((0.075 * math.sin(math.pi * u), 0, 0))))
+                radii.append(0.016 if 0.2 < u < 0.8 else 0.012)
+            m.set_tube("bow", pts, radii)
+            m.put_segment("string", lo + Vector((-0.004, 0, 0)), hi + Vector((-0.004, 0, 0)), 0.005)
         if k == "r":
             grip = hand + d * 0.020
             fwd = Vector((0.75, -0.15, 0.65)).normalized()       # blade angled forward and up

@@ -16,7 +16,9 @@
   "hilt",
   "quiver",
   "fletch",
-  "bracer"
+  "bracer",
+  "bow",
+  "string"
  ],
  "palette": "ranger",
  "walk_frames": 8,
@@ -49,6 +51,8 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
+   "bow": 2.8,
+   "string": 2.0,
    "quiver": 2.0,
    "fletch": 3.0,
    "bracer": 2.2,
@@ -62,6 +66,8 @@
    "beard": 1.8
   },
   "thin": {
+   "bow": 2,
+   "string": 2,
    "quiver": 3,
    "fletch": 2,
    "bracer": 3,
@@ -96,7 +102,9 @@
     "hilt"
    ]
   ],
-  "no_outline": [],
+  "no_outline": [
+   "string"
+  ],
   "fur": [],
   "selout": [
    "tunic",
