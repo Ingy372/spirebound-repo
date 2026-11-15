@@ -62,7 +62,7 @@ def build(model_cls, facing):
     m.ellipsoid("bib", "apron", radii=(0.040, 0.105, 0.110), segments=14, rings=8)
     m.frustum("apron", "apron", top_ratio=0.80, segments=16)
     m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.130, 0.150, 0.135))
+    m.ellipsoid("hair", "hair", radii=(0.138, 0.154, 0.152))
     m.ellipsoid("bun", "bun", radii=(0.075, 0.115, 0.060), segments=14, rings=10)   # short beard
     for k in ("l", "r"):
         m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.018), segments=8, rings=6)
@@ -118,7 +118,7 @@ def pose(m, t):
     m.objects["bib"].location = Vector((0.098, 0, 0.640)) + up
     head = HEAD + up
     m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.055, 0, 0.045))
+    m.objects["hair"].location = head + Vector((-0.050, 0, 0.058))
     m.objects["bun"].location = head + Vector((0.085, 0, -0.085))
     for s, k in ((1, "l"), (-1, "r")):
         m.objects[f"eye_{k}"].location = head + Vector((0.136, 0.046 * s, 0.055))

@@ -68,7 +68,7 @@ def build(model_cls, facing):
     m.ellipsoid("cravat", "shirt", radii=(0.050, 0.060, 0.070), segments=10, rings=8)
     m.ellipsoid("collar", "trim", radii=(0.085, 0.140, 0.040), segments=14, rings=8)
     m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.150, 0.154, 0.150))
+    m.ellipsoid("hair", "hair", radii=(0.140, 0.154, 0.145))
     for k in ("l", "r"):
         m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.018), segments=8, rings=6)
     for k in ("l", "r"):
@@ -123,7 +123,7 @@ def pose(m, t):
     m.objects["collar"].location = Vector((-0.010, 0, 0.870)) + up
     head = HEAD + up
     m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.050, 0, 0.045))
+    m.objects["hair"].location = head + Vector((-0.062, 0, 0.040))
     for s, k in ((1, "l"), (-1, "r")):
         m.objects[f"eye_{k}"].location = head + Vector((0.140, 0.050 * s, 0.040))
     for s_, k in ((1, "l"), (-1, "r")):                # round spectacles: a pale rim just round each eye
