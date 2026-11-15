@@ -544,3 +544,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Hopper Toad made (`art/models/toad.py`): fat, spotted, big eyes, a hop for its walk. In `ART_FOR_JAY/toad`, waiting for Jay's OK. Field rat request marked done (approved 2026-11-14).
 - Road Bandit made (`art/models/bandit.py`, on Brannoch's body): hood, face scarf, short sword. In `ART_FOR_JAY/bandit`, waiting for Jay's OK.
 - Bandit Captain made (`art/models/captain.py`): feathered hat, red sash, beard, curved sabre. In `ART_FOR_JAY/captain`, waiting for Jay's OK.
+- Meadow Wolf drafted (`art/models/wolf.py`, from the rat): reads as a wolf from the side, still narrow from the front and missing the pale belly; marked for another pass. In `ART_FOR_JAY/wolf`.
