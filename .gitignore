@@ -38,3 +38,8 @@ Thumbs.db
 server/local.env
 .local/
 backups/
+
+# art pipeline: raw render passes and reference comparisons (Tibia art, local only)
+/art/output/*/passes/
+/art/output/*/compare/
+*.blend1

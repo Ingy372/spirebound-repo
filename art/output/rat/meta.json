@@ -1,0 +1,30 @@
+{
+ "name": "rat",
+ "parts": [
+  "none",
+  "body",
+  "head",
+  "snout",
+  "nose",
+  "ear",
+  "eye",
+  "leg_near",
+  "leg_far",
+  "paw_near",
+  "paw_far",
+  "tail_base",
+  "tail_tip"
+ ],
+ "palette": "rat",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 1.5,
+ "y_stretch": 1.3106601717798212,
+ "depth_range": 2.0
+}
