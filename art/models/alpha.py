@@ -33,9 +33,9 @@ PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
 OX = 0.09                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
 
 # body ------------------------------------------------------------------
-HIP = Vector((-0.085, 0.0, 0.215)); HIP_R = (0.125, 0.104, 0.078)
-CHEST = Vector((0.055, 0.0, 0.225)); CHEST_R = (0.114, 0.114, 0.092)
-HEAD = Vector((0.170, 0.0, 0.275)); HEAD_R = (0.074, 0.072, 0.066)
+HIP = Vector((-0.085, 0.0, 0.215)); HIP_R = (0.125, 0.122, 0.082)
+CHEST = Vector((0.055, 0.0, 0.225)); CHEST_R = (0.116, 0.132, 0.098)
+HEAD = Vector((0.170, 0.0, 0.275)); HEAD_R = (0.076, 0.082, 0.070)
 SNOUT_TIP = Vector((0.290, 0.0, 0.245))
 EYE = Vector((0.205, 0.036, 0.292)); EYE_R = 0.010
 EAR = Vector((0.150, 0.036, 0.335)); EAR_R = (0.018, 0.026, 0.048)
