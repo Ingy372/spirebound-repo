@@ -20,9 +20,9 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 | # | Level | Ground | Role | Monsters | Where |
 |---|---|---|---|---|---|
 | 1 | 1-4 | **The Ratwarren** | experience | Field Rat | west, about 80 steps from the city centre |
-| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 80 steps from the city centre |
-| 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 70 steps from the city centre |
-| 4 | 7-12 | **Waspgrass Fields** | experience | Meadow Wasp | north, about 70 steps from the city centre |
+| 2 | 3-7 | **Toad Pond** | experience | Hopper Toad, Field Rat | east, about 90 steps from the city centre |
+| 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 80 steps from the city centre |
+| 4 | 7-12 | **Waspgrass Fields** | experience | Meadow Wasp | north-west, about 80 steps from the city centre |
 | 5 | 9-15 | **Boar Meadow** | experience | Bristle Boar | south-west, about 80 steps from the city centre |
 | 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole, Bristle Boar | north-east, about 80 steps from the city centre |
 | 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | west, about 170 steps from the city centre |
@@ -59,7 +59,7 @@ Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you he
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Toad Pond  (levels 3-7, experience)
-*east, about 80 steps from the city centre. Safety: guarded.*
+*east, about 90 steps from the city centre. Safety: guarded.*
 
 Toads hit a little harder and give a little more. Four ponds, four loops; fishing works here.
 
@@ -72,7 +72,7 @@ Toads hit a little harder and give a little more. Four ponds, four loops; fishin
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Sproutling Glade  (levels 5-10, experience)
-*south, about 70 steps from the city centre. Safety: guarded.*
+*south, about 80 steps from the city centre. Safety: guarded.*
 
 Sproutlings spit a little poison-green magic. Still inside the Guarded ring around town.
 
@@ -85,7 +85,7 @@ Sproutlings spit a little poison-green magic. Still inside the Guarded ring arou
 - **Hopper Toad:** Hits a little harder than a rat. Still safe for a fresh climber.
 
 ### Waspgrass Fields  (levels 7-12, experience)
-*north, about 70 steps from the city centre. Safety: guarded.*
+*north-west, about 80 steps from the city centre. Safety: guarded.*
 
 Fast and stingy, little health. Just north of the city gate, beside the Pass road.
 

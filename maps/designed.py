@@ -59,7 +59,7 @@ def _ramp_tiles(d, ox, oy, z_low):
         wx, wy = ox + x, oy + y
         ramp = {(wx, wy), (wx + 1, wy)}
         foot = {(wx, wy + fdy), (wx + 1, wy + fdy)}
-        approach = {(wx + i, wy + fdy * k) for i in (0, 1) for k in range(1, 6)}
+        approach = {(wx + i, wy + fdy * k) for i in (0, 1) for k in range(1, 9)}
         landing = {(wx, wy - fdy), (wx + 1, wy - fdy)}
         out.append((ramp, foot, approach, landing))
     return out
@@ -151,6 +151,31 @@ def build(m, c):
                 and any((t[0] + a, t[1] + b) not in cells7 for a, b in D4) and rng.random() < 0.08:
             m.put(t[0], t[1], Z, rng.choice(WI.WALKOVER[trail]))
     L["open"] = cells7
+    # ---- ponds (plan Part 5, Toad Pond): water over the wall mass; where a path crosses a pond it becomes a bridge
+    inner7 = {(ox + u, oy + v) for u in range(2, c["w"] - 2) for v in range(2, c["h"] - 2)}
+    for (px, py, pr) in d["levels"][Z].get("ponds", []):
+        pond = _blobby(ox + px, oy + py, pr, rng) & inner7
+        island = set()                                 # a clearing in the middle of a pond stays dry land
+        for (_n, cx, cy, cr, _b, _r, _c) in d["levels"][Z]["clearings"]:
+            if (ox + cx, oy + cy) in pond:
+                island |= {(ox + cx + u, oy + cy + v) for u in range(-cr - 1, cr + 2) for v in range(-cr - 1, cr + 2) if u * u + v * v <= (cr + 1) ** 2}
+        for t in sorted(pond):
+            m.clear_items(t[0], t[1], Z)
+            deep_in = sum((t[0] + u, t[1] + v) in pond for u, v in D8) >= 6
+            if t in island or (t in cells7 and not deep_in):     # a path that only clips the edge stays on land
+                m.ground[(t[0], t[1], Z)] = m.pick(trail)
+            else:
+                m.ground[(t[0], t[1], Z)] = 408 if t in cells7 else m.pick("water")
+        banks = L.setdefault("banks", set())          # a grass bank round the water (painted after the groups stand)
+        banks |= {(x + u, y + v) for (x, y) in pond for u in (-1, 0, 1) for v in (-1, 0, 1)} - pond - cells7
+    # ---- a ring of old trees round a way down (Sproutling Glade's great tree), open to the south
+    for (tx, ty) in d["levels"][Z].get("tree_rings", []):
+        wx, wy = ox + tx, oy + ty
+        for a in range(-2, 3):
+            for b in range(-2, 3):
+                if max(abs(a), abs(b)) == 2 and not (b == 2 and abs(a) <= 1):
+                    m.clear_items(wx + a, wy + b, Z)
+                    m.put(wx + a, wy + b, Z, rng.choice(WI.TREES_ALL_BROAD))
     # ---- hill tops (z 6): mountain under them, grass on top, a few flowers and stones
     for z, (cells, named, box) in lv_cells.items():
         if z < Z:
@@ -217,6 +242,9 @@ def build(m, c):
                 if spot:
                     m.clear_items(spot[0], spot[1], z)
                     m.put(spot[0], spot[1], z, rng.choice([2370, 1996]))
+    for t in sorted(L.get("banks", set()) & inner7):
+        m.clear_items(t[0], t[1], Z)
+        m.ground[(t[0], t[1], Z)] = m.pick("grass")
     for route, start_name in d["routes"].items():
         start = next(lv_cells[z][1][start_name] + (z,) for z in sorted(d["levels"]) if start_name in lv_cells[z][1])
         routes[route]["start"] = start

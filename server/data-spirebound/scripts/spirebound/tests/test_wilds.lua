@@ -154,3 +154,32 @@ SpireTest.add("hunting plan: Burrow Hills is quiet at the gate, ramps lead up to
 	SpireTest.eq(ramps, 2, "two ramps up to the Crown")
 	SpireTest.eq(holes, 2, "two ways down into the Molework")
 end)
+
+-- FLOOR1_HUNTING_PLAN.md (H6): Toad Pond, Sproutling Glade and Waspgrass Fields are quiet inside the gate, every way
+-- down leads down, and Hive Knoll has two ramps.
+SpireTest.add("hunting plan: Toad Pond, Sproutling Glade and Waspgrass Fields are quiet at the gate and their stairs work", function()
+	for _, id in ipairs({ "starter_east", "starter_south", "wasp_fields" }) do
+		SpireTest.eq(near(WorldPoints["camp_" .. id], 10), 0, id .. ": no monster can reach a player inside the gate")
+		SpireTest.eq(near(WorldPoints["loop_" .. id .. "_a"], 10) <= 3, true, id .. ": at most 3 monsters at the start of route a")
+		SpireTest.eq(near(WorldPoints["loop_" .. id .. "_b"], 10) <= 3, true, id .. ": at most 3 monsters at the start of route b")
+		SpireTest.eq(SpirePvP.zoneAt(WorldPoints["loop_" .. id .. "_d"]), "guarded", id .. ": the level below is guarded too")
+		local downs = 0
+		for k, p in pairs(WorldPoints) do
+			if k:match("^stairs_" .. id .. "_") then
+				downs = downs + 1
+				SpireTest.eq(Tile(p) ~= nil and Tile(p):hasFlag(TILESTATE_FLOORCHANGE), true, k .. ": the stairs lead up")
+				local hole = Tile(Position(p.x, p.y, p.z - 1))
+				SpireTest.eq(hole ~= nil and hole:hasFlag(TILESTATE_FLOORCHANGE_DOWN), true, k .. ": the way down leads down")
+			end
+		end
+		SpireTest.eq(downs >= 2, true, id .. ": two ways down")
+	end
+	local ramps = 0
+	for k, p in pairs(WorldPoints) do
+		if k:match("^ramp_wasp_fields_") then
+			ramps = ramps + 1
+			SpireTest.eq(walkable(Position(p.x, p.y - 1, p.z - 1)), true, k .. ": Hive Knoll is walkable at the top")
+		end
+	end
+	SpireTest.eq(ramps, 2, "two ramps up Hive Knoll")
+end)
