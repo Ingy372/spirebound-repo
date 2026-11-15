@@ -1,0 +1,111 @@
+{
+ "name": "vanguard",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "mouth",
+  "hair",
+  "shirt",
+  "tabard",
+  "trim",
+  "strap",
+  "satchel",
+  "pants",
+  "boot",
+  "hand",
+  "stick",
+  "pennant"
+ ],
+ "palette": "vanguard",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "mouth": 5.0,
+   "hand": 2.4,
+   "stick": 3.0,
+   "pennant": 2.6,
+   "strap": 2.2,
+   "satchel": 1.6,
+   "trim": 2.0,
+   "boot": 1.4
+  },
+  "thin": {
+   "eye": 3,
+   "mouth": 2,
+   "hand": 3,
+   "stick": 2,
+   "pennant": 3,
+   "strap": 2,
+   "trim": 3
+  },
+  "soft": [
+   [
+    "shirt",
+    "tabard",
+    "trim",
+    "strap",
+    "satchel"
+   ],
+   [
+    "skin",
+    "hair",
+    "eye",
+    "mouth"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "pants",
+    "boot"
+   ],
+   [
+    "stick",
+    "pennant"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "tabard",
+   "shirt",
+   "skin",
+   "hair"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}

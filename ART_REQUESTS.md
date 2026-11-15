@@ -22,7 +22,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 
 | ✓ | File names | Size / frames | Grok prompt (after the style lock) |
 |---|---|---|---|
-| [ ] | `outfit_vanguard_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A sturdy armored sword knight in steel plate with a blue tabard and a kite shield, short cape, helmetless with short hair. Walking cycle, 4 directions. |
+| [~] | `outfit_vanguard_*` (first draft by the pipeline, in ART_FOR_JAY/vanguard; needs a second pass: shield blends into the tabard) | 32×32, 12 | A sturdy armored sword knight in steel plate with a blue tabard and a kite shield, short cape, helmetless with short hair. Walking cycle, 4 directions. |
 | [ ] | `outfit_ranger_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A nimble ranger in green leather and a hooded cloak, quiver on the back, bracers. Walking cycle, 4 directions. |
 | [ ] | `outfit_arcanist_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A battle mage in deep red robes with gold trim and a high collar, glowing runes on the sleeves. Walking cycle, 4 directions. |
 | [ ] | `outfit_mystic_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A nature mystic in pale green and white robes, leaf-shaped shoulder pieces, wooden beads. Walking cycle, 4 directions. |

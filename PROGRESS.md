@@ -552,3 +552,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Ruin Archer made (`art/models/archer.py`, on Brannoch's body): skull, bony limbs, rotted leather, bow. In `ART_FOR_JAY/archer`, waiting for Jay's OK.
 - Field Shardling made (`art/models/shardling.py`): glowing core with circling crystal shards. In `ART_FOR_JAY/shardling`, waiting for Jay's OK.
 - Thornsnap made (`art/models/thornsnap.py`): slithering vine, pod head snapping on a red mouth. In `ART_FOR_JAY/thornsnap`, waiting for Jay's OK.
+- Vanguard class outfit, first draft (`art/models/vanguard.py`): plate, blue tabard, cape, kite shield, sword. Needs a second pass (shield vs tabard contrast, more armour shape). In `ART_FOR_JAY/vanguard`.
