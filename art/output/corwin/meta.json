@@ -1,0 +1,101 @@
+{
+ "name": "corwin",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "hair",
+  "hat",
+  "coat",
+  "patch",
+  "pants",
+  "boot",
+  "hand",
+  "rod",
+  "line"
+ ],
+ "palette": "corwin",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "hand": 2.4,
+   "rod": 3.0,
+   "line": 2.5,
+   "patch": 2.0,
+   "boot": 1.4,
+   "hat": 1.2
+  },
+  "thin": {
+   "eye": 3,
+   "hand": 3,
+   "rod": 2,
+   "line": 2,
+   "patch": 3
+  },
+  "soft": [
+   [
+    "coat",
+    "patch"
+   ],
+   [
+    "skin",
+    "hair",
+    "eye"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "pants",
+    "boot"
+   ],
+   [
+    "rod",
+    "line"
+   ]
+  ],
+  "no_outline": [
+   "line"
+  ],
+  "fur": [],
+  "selout": [
+   "coat",
+   "hat",
+   "skin"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
