@@ -40,6 +40,7 @@ Open:
 - [x] **R20 Small fixes** [3.12]: memory leaks at logout, Derby pays offline winners, rapid-respawn weekend bonus, faster respawn when a floor is busy.
 - [x] **R21 Twin Fang rebalance** [2.5] (after Q18): one-handed swords only, combos must hit a real monster, solo trial room, smaller off-hand bonus.
 - [ ] **R22 Prove the art pipeline** = task 6.4, moved up [8.1]: one custom sprite in the client, then an estimate of the full art job.
+- [ ] **R22a Next pipeline NPC: Innkeeper Bess** (Jay, 2026-11-14: keep making art with the Blender pipeline). Copy `art/models/vesper.py` to `bess.py`: round build, apron over a dress, rolled sleeves, ladle in one hand, red cheeks (ART_REQUESTS batch 1b). Add a `bess` ramp set to `art/pipeline/palette.json`, `sh art/pipeline/render.sh bess`, compare on grey with a tinted female citizen (`outfit_136.png` from `python tools/art_refs.py`). Done when: 4 directions x stand + 8 walk, reviewed at 1x and 3x, sheet + grey walk GIFs sent to Jay.
 
 ---
 
