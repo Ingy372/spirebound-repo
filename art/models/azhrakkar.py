@@ -15,7 +15,7 @@ from mathutils import Euler, Vector
 NAME = "azhrakkar"
 WALK_FRAMES = 8
 PALETTE = "azhrakkar"
-REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only, never shipped)
+REFERENCE = "look_55.png"   # Tibia's Behemoth, the closest look-alike (comparison only, never shipped)
 PROJECTION = "oblique"
 CANVAS_OFFSET = (2, 2)             # a big boss uses almost the whole canvas
 PIXEL_RULES = {
@@ -26,6 +26,9 @@ PIXEL_RULES = {
     "no_outline": [],
     "fur": [],
     "selout": ["tunic", "pelt", "skin", "hair"],
+    "texture": {"skin": [1.54, 0.99], "tunic": [1.32, 0.66], "pelt": [1.32, 0.66], "pants": [1.32, 0.66], "boot": [1.10, 0.44],
+                "hand": [1.32, 0.66]},
+    "bands": [0.30, 0.42, 0.53, 0.63, 0.72, 0.81, 0.89],
 }
 
 PARTS = ["none", "skin", "eye", "scar", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand",

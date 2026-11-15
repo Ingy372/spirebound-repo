@@ -13,18 +13,20 @@ from mathutils import Euler, Vector
 NAME = "archer"
 WALK_FRAMES = 8
 PALETTE = "archer"
-REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only, never shipped)
+REFERENCE = "look_33.png"   # Tibia's Skeleton, the closest look-alike (comparison only, never shipped)
 PROJECTION = "oblique"
 CANVAS_OFFSET = (8, 8)
 PIXEL_RULES = {
-    "weight": {"eye": 9.0, "scar": 6.0, "hand": 2.4, "bow": 2.6, "string": 2.0, "belt": 2.0, "pelt": 1.4,
+    "weight": {"eye": 9.0, "rib": 2.0, "scar": 6.0, "hand": 2.4, "bow": 2.6, "string": 2.0, "belt": 2.0, "pelt": 1.4,
                "boot": 1.4, "beard": 1.6},
     "thin": {"eye": 3, "scar": 2, "hand": 3, "bow": 2, "string": 2, "belt": 3},
     "soft": [["tunic", "belt"], ["skin", "hair", "beard", "eye", "scar"], ["hand", "skin"], ["pants", "boot"],
              ["bow", "string"]],
     "no_outline": ["string"],
     "fur": ["tunic"],
-    "selout": ["tunic", "pelt", "skin", "hair"],
+    "selout": ["tunic", "pelt", "hair"],
+    "texture": {"tunic": [0.9, 0.3], "skin": [0.4, 0.0], "pants": [0.4, 0.0]},
+    "bands": [0.30, 0.42, 0.53, 0.63, 0.72, 0.81, 0.89],
 }
 
 PARTS = ["none", "skin", "eye", "scar", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand",
@@ -32,14 +34,14 @@ PARTS = ["none", "skin", "eye", "scar", "hair", "beard", "pelt", "tunic", "belt"
 
 HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
 HIP_Y = 0.074
-LEG_R = 0.030
-TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.090, 0.140, 0.180)
+LEG_R = 0.021
+TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.072, 0.118, 0.165)
 SKIRT_TOP, SKIRT_BOTTOM = 0.58, 0.40                      # short tunic: legs show
 SKIRT_R = (0.110, 0.150)
-HEAD = Vector((0.010, 0.0, 0.975)); HEAD_R = (0.148, 0.140, 0.158)
+HEAD = Vector((0.010, 0.0, 0.965)); HEAD_R = (0.128, 0.120, 0.138)
 SHOULDER = Vector((0.0, 0.172, 0.825))
 UPPER_ARM, FOREARM = 0.19, 0.18
-ARM_R = 0.030
+ARM_R = 0.020
 STRIDE, LIFT, STANCE = 0.13, 0.060, 0.5
 BODY_SCALE = (1.15, 1.22, 0.80)
 
@@ -54,21 +56,23 @@ def build(model_cls, facing):
     for k in ("l", "r"):
         m.capsule(f"thigh_{k}", "pants")
         m.capsule(f"shin_{k}", "pants")
-        m.capsule(f"bootleg_{k}", "boot")
-        m.ellipsoid(f"boot_{k}", "boot", radii=(0.072, 0.046, 0.050), segments=12, rings=8)
-        m.capsule(f"upper_{k}", "tunic")
-        m.capsule(f"fore_{k}", "tunic")
+        m.capsule(f"bootleg_{k}", "pants")
+        m.ellipsoid(f"boot_{k}", "pants", radii=(0.060, 0.032, 0.026), segments=12, rings=8)   # bony feet
+        m.capsule(f"upper_{k}", "hand")
+        m.capsule(f"fore_{k}", "hand")
         m.ellipsoid(f"hand_{k}", "hand", radii=(0.038, 0.032, 0.040), segments=10, rings=8)
     m.ellipsoid("torso", "tunic", radii=TORSO_R)
     m.frustum("skirt", "tunic", top_ratio=0.80)
     m.frustum("belt", "belt", top_ratio=1.0)
-    m.ellipsoid("pelt", "tunic", radii=(0.120, 0.180, 0.070), segments=18, rings=10)
+    m.ellipsoid("pelt", "tunic", radii=(0.085, 0.140, 0.045), segments=18, rings=10)
     m.ellipsoid("pelt_back", "tunic", radii=(0.050, 0.120, 0.120), segments=14, rings=8)
     m.ellipsoid("head", "skin", radii=HEAD_R)
     m.ellipsoid("hair", "skin", radii=(0.140, 0.132, 0.140))   # skull cap
     m.ellipsoid("beard", "beard", radii=(0.070, 0.090, 0.050), segments=14, rings=8)   # jaw
     for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.024, 0.024, 0.026), segments=8, rings=6)   # eye sockets
+        m.ellipsoid(f"eye_{k}", "eye", radii=(0.032, 0.030, 0.034), segments=8, rings=6)   # eye sockets
+    for i in range(4):
+        m.capsule(f"rib{i}", "skin")                    # ribs showing through the rotted jerkin
     m.tube("bow", "bow", points=9)
     m.capsule("string", "string")
     return m
@@ -121,7 +125,11 @@ def pose(m, t):
     m.objects["hair"].location = head + Vector((-0.020, 0, 0.030))
     m.objects["beard"].location = head + Vector((0.070, 0, -0.105))
     for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.122, 0.048 * s, 0.040))
+        m.objects[f"eye_{k}"].location = head + Vector((0.104, 0.046 * s, 0.035))
+    for i in range(4):
+        z = 0.775 - 0.055 * i
+        w = 0.105 - 0.010 * i
+        m.put_segment(f"rib{i}", Vector((0.080, -w, z)) + up, Vector((0.080, w, z)) + up, 0.016)
     # bow across the back, from the right hip up over the left shoulder; the string runs straight between the tips
     lo = Vector((-0.120, -0.150, 0.420)) + up
     hi = Vector((-0.110, 0.170, 1.000)) + up
@@ -140,7 +148,7 @@ def pose(m, t):
         knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
         m.put_segment(f"thigh_{k}", hip, knee, LEG_R)
         m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.11)), LEG_R * 1.12)
+        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.06)), LEG_R)
         m.objects[f"boot_{k}"].location = ankle + Vector((0.030, 0, -0.012))
     for s, k, phase in ((1, "l", 0.5), (-1, "r", 0.0)):       # arms swing against the legs
         sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up

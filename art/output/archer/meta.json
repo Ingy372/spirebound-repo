@@ -48,6 +48,7 @@
  "rules": {
   "weight": {
    "eye": 9.0,
+   "rib": 2.0,
    "scar": 6.0,
    "hand": 2.4,
    "bow": 2.6,
@@ -99,12 +100,38 @@
   "selout": [
    "tunic",
    "pelt",
-   "skin",
    "hair"
+  ],
+  "texture": {
+   "tunic": [
+    0.9,
+    0.3
+   ],
+   "skin": [
+    0.4,
+    0.0
+   ],
+   "pants": [
+    0.4,
+    0.0
+   ]
+  },
+  "bands": [
+   0.3,
+   0.42,
+   0.53,
+   0.63,
+   0.72,
+   0.81,
+   0.89
   ]
  },
- "ref": "outfit_128.png",
+ "ref": "look_33.png",
  "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
   8,
   8
  ]

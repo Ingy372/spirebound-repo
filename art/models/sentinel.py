@@ -13,9 +13,10 @@ from mathutils import Euler, Vector
 NAME = "sentinel"
 WALK_FRAMES = 8
 PALETTE = "sentinel"
-REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only, never shipped)
+REFERENCE = "look_67.png"   # Tibia's Stone Golem, the closest look-alike (comparison only, never shipped)
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
+SIZE = 1.35                 # a statue a head taller than a person, like Tibia's stone golem towers
+CANVAS_OFFSET = (4, 5)
 PIXEL_RULES = {
     "weight": {"moss": 2.0, "eye": 2.5, "hand": 2.4, "blade": 3.0, "hilt": 2.6, "belt": 2.0, "pelt": 1.4, "boot": 1.4,
                "beard": 1.8},
@@ -25,6 +26,9 @@ PIXEL_RULES = {
     "no_outline": [],
     "fur": ["tunic", "hair"],
     "selout": ["tunic", "pelt", "skin", "hair"],
+    "texture": {"tunic": [2.16, 0.90], "pelt": [1.80, 0.72], "skin": [1.80, 0.72], "pants": [1.98, 0.90], "boot": [1.62, 0.54],
+                "hand": [1.44, 0.36], "hair": [1.62, 0.54]},
+    "bands": [0.30, 0.42, 0.53, 0.63, 0.72, 0.81, 0.89],
 }
 
 PARTS = ["none", "skin", "eye", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand", "blade", "hilt",
@@ -36,8 +40,8 @@ LEG_R = 0.056
 TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.110, 0.170, 0.190)
 SKIRT_TOP, SKIRT_BOTTOM = 0.58, 0.40                      # short tunic: legs show
 SKIRT_R = (0.130, 0.175)
-HEAD = Vector((0.010, 0.0, 0.975)); HEAD_R = (0.148, 0.140, 0.158)
-SHOULDER = Vector((0.0, 0.172, 0.825))
+HEAD = Vector((0.010, 0.0, 0.950)); HEAD_R = (0.122, 0.116, 0.130)
+SHOULDER = Vector((0.0, 0.205, 0.825))
 UPPER_ARM, FOREARM = 0.19, 0.18
 ARM_R = 0.054
 STRIDE, LIFT, STANCE = 0.10, 0.040, 0.5            # stiff, heavy steps
@@ -62,7 +66,7 @@ def build(model_cls, facing):
     m.ellipsoid("torso", "tunic", radii=TORSO_R)
     m.frustum("skirt", "tunic", top_ratio=0.80)
     m.frustum("belt", "belt", top_ratio=1.0)
-    m.ellipsoid("pelt", "pelt", radii=(0.140, 0.200, 0.080), segments=18, rings=10)   # short hooded cape
+    m.ellipsoid("pelt", "pelt", radii=(0.150, 0.250, 0.090), segments=18, rings=10)   # short hooded cape
     m.ellipsoid("pelt_back", "pelt", radii=(0.060, 0.150, 0.150), segments=14, rings=8)
     m.ellipsoid("head", "skin", radii=HEAD_R)
     m.ellipsoid("hair", "hair", radii=(0.162, 0.160, 0.150))   # stone helmet
