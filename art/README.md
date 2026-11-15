@@ -15,8 +15,9 @@ All art here is original: built from simple 3D shapes in Blender. No Tibia sprit
    snaps it to the palette in `art/pipeline/palette.json`, removes speckles, adds a few fur tufts, a dark 1-px
    outline, and dark lines where a leg is behind the body. The rules are listed at the top of that file.
 4. **Output** — `art/output/<name>/`:
-   - `frames/<dir>_<n>.png` — 32×32 tiles; frame 0 = standing, 1–8 = walk; dir = N, E, S, W
-   - `<name>_sheet.png` — every frame at 4×, rows S / E / N / W
+   - `frames/<dir>_<n>.png` — 64×64 frames in the client's layout (the creature's own tile is the bottom-right
+     quarter); frame 0 = standing, 1–8 = walk; dir = N, E, S, W
+   - `<name>_sheet.png` — every frame, rows S / E / N / W (4× for small animals, 3× for tall figures)
    - `walk_<dir>.gif` (1×) and `walk_<dir>_4x.gif`
    - `compare/` — the same beside reference sprites on real grass. **Git-ignored, never shipped**: the references
      are Tibia's own art, pulled from the client files on Jay's PC by `tools/art_refs.py` for comparison only.
@@ -47,7 +48,12 @@ for every sprite and everything is re-rendered.
 
 ## Rig numbers (why they are what they are)
 
-- Camera tilted 45°, looking north; 1 tile = 1 Blender unit = 32 px.
+- 1 tile = 1 Blender unit = 32 px. Two projections, chosen in each model file (`PROJECTION`):
+  - **oblique** (standing figures, e.g. Vesper): Tibia's real drawing rule. The camera looks straight down at a
+    slanted world, so fronts and faces are seen at full size and height slides up-left at 45°, like hand-made
+    Tibia people. Figures use chunky Tibia proportions (big head, short wide body) and sit 8 px low-right on the
+    canvas (`CANVAS_OFFSET`), where Tibia's own outfits sit.
+  - **tilt** (low animals, the approved rat): camera tilted 45°, looking north. The rest of this list is for it.
 - `GROUND_STRETCH = 0.75`: measured against hand-made Tibia creatures, their N/S bodies are only a little shorter
   than E/W. N/S bodies lean 12° so they run slightly diagonal, like hand-made sprites.
 - Creatures stand 3 px below the tile centre (`CAM_SHIFT_Y`).
