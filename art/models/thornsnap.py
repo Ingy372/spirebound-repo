@@ -70,12 +70,12 @@ def pose(m, t):
     for sign in (1, -1):
         for i, (dx, dy) in enumerate(((0.110, 0.065), (0.150, 0.0), (0.110, -0.065))):
             base = head + Vector((dx, dy, sign * (0.024 + 0.056 * open_)))
-            tip = base + Vector((0.020, dy * 0.4, sign * 0.045))
-            m.put_segment(f"thorn{k}", base, tip, 0.014)
+            tip = base + Vector((0.030, dy * 0.5, sign * 0.070))
+            m.put_segment(f"thorn{k}", base, tip, 0.020)
             k += 1
     for i, u in enumerate((0.35, 0.65)):
         p = pts[int(u * (N - 1))]
-        m.put_segment(f"thorn{k}", p + Vector((0, 0, 0.026)), p + Vector((-0.012, 0, 0.060)), 0.012)
+        m.put_segment(f"thorn{k}", p + Vector((0, 0, 0.026)), p + Vector((-0.020, 0, 0.085)), 0.020)
         k += 1
     for s, kk in ((1, "l"), (-1, "r")):
         lf = m.objects[f"leaf_{kk}"]
