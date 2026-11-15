@@ -15,6 +15,7 @@ Template:
 
 ## To try next (from Claude, 2026-11-14)
 - **The new Ratwarren** (levels 1-4, west of Hearthgate): walk in from the gate, hunt the Yard, take a hole down into the Warren, then follow the long tunnel south to the Deep Warren. Does it still feel like a flood? Too empty? Write what you think below.
+- **The new Burrow Hills** (levels 11-16, north-east of Hearthgate, gate on the west side): walk the north hollow, climb a ramp onto the Crown (the hill in the middle), come down the other ramp, then take a hole down into the Molework. The far east end and the Crown's east side are meant to be the hard part. Use "Test Vanguard" or a character around level 14. Too calm? Too hard? Write it below.
 
 (no playtests yet: the first one comes at the end of Phase 1)
 
