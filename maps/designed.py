@@ -5,13 +5,18 @@ levels joined by stairs. Monsters stand in the clearings, spread out and layered
 so a player meets a few at a time. The surface keeps the walled ground of maps/wilds.py (outer wall, one gate); lower
 levels are natural caves. tools/hunt_check.py measures how many monsters can reach a player on every tile.
 
+Level kinds: the surface (z 7); a hill top above it (z 6: a raised plateau on mountain ground, reached by ramps,
+Map.hill / Map.ramp); caves below (z 8, 9); and at most one party cave (a level marked party=True: groups of four, the
+cavebot rule, the den_<id> points and tools/hunt_check.py's party limits).
+
 build(m, c) paints it; check(m) is its walk test (gate -> every level -> every group and crowd spot).
 """
 import random
 
 import dungeon as DG
 import wilds as WI
-from floor1_plan import DESIGNS
+from floor1_plan import CAVE_RESPAWN, DESIGNS, den_level
+from mapgen import RAMPS
 
 X0, Y0, Z = WI.X0, WI.Y0, WI.Z
 D4, D8 = WI.D4, WI.D8
@@ -29,8 +34,40 @@ def _blobby(cx, cy, r, rng):
     return out
 
 
-def _carve(c, d, z, lv, rng):
-    """The open tiles of one level, and its named clearing centres (world coordinates)."""
+def _gate(c, d):
+    """The 3-wide, 2-deep gap in the outer wall, and the tile just inside it, for a gate on any side."""
+    ox, oy = X0 + c["x"], Y0 + c["y"]
+    gx, gy = ox + d["gate"][0], oy + d["gate"][1]
+    side = c["gate"]
+    if side == "s":
+        return {(gx + a, oy + c["h"] - 1 - b) for a in (-1, 0, 1) for b in (0, 1)}, (gx, oy + c["h"] - 2)
+    if side == "n":
+        return {(gx + a, oy + b) for a in (-1, 0, 1) for b in (0, 1)}, (gx, oy + 1)
+    if side == "w":
+        return {(ox + b, gy + a) for a in (-1, 0, 1) for b in (0, 1)}, (ox + 1, gy)
+    return {(ox + c["w"] - 1 - b, gy + a) for a in (-1, 0, 1) for b in (0, 1)}, (ox + c["w"] - 2, gy)
+
+
+def _ramp_tiles(d, ox, oy, z_low):
+    """For each ramp up from level z_low: (ramp tiles, foot tiles, approach tiles, hill landing tiles), world coords."""
+    out = []
+    for link in d["links"]:
+        if link[0] != "ramp" or link[3] != z_low:
+            continue
+        _k, x, y, _z, facing = link
+        fdy = RAMPS[facing][2]
+        wx, wy = ox + x, oy + y
+        ramp = {(wx, wy), (wx + 1, wy)}
+        foot = {(wx, wy + fdy), (wx + 1, wy + fdy)}
+        approach = {(wx + i, wy + fdy * k) for i in (0, 1) for k in range(1, 6)}
+        landing = {(wx, wy - fdy), (wx + 1, wy - fdy)}
+        out.append((ramp, foot, approach, landing))
+    return out
+
+
+def _carve(c, d, z, lv, rng, below=None):
+    """The open tiles of one level, and its named clearing centres (world coordinates). `below`: the open tiles of the
+    surface, for a hill level (its top keeps clear of them, so the rock faces of the valleys stand under its rim)."""
     ox, oy = X0 + c["x"], Y0 + c["y"]
     bx, by, bw, bh = lv["box"]
     box = {(ox + bx + u, oy + by + v) for u in range(bw) for v in range(bh)}
@@ -56,10 +93,22 @@ def _carve(c, d, z, lv, rng):
             cells |= WI._tunnel(p, near, rng, width=2)
     gate = set()
     if z == Z:
-        gx, gy = ox + d["gate"][0], oy + c["h"] - 1
-        gate = {(gx + a, gy - b) for a in (-1, 0, 1) for b in (0, 1)}
-        cells |= WI._tunnel((gx, gy - 1), named["hub"], rng, width=3, wiggle=False)
+        gate, first = _gate(c, d)
+        cells |= WI._tunnel(first, named["hub"], rng, width=3, wiggle=False)
+        for ramp, _foot, approach, _land in _ramp_tiles(d, ox, oy, Z):
+            cells |= ramp | approach                 # a straight 2-wide way up to each ramp
     cells = (cells & inner) | gate
+    if z < Z and below is not None:
+        # a hill: fill its little bays so it reads as one raised mass, then keep its top 2 tiles clear of the valleys
+        # (one tile of rock face, then mountain under the rim), except at the ramps
+        for _ in range(2):
+            cells |= {t for t in inner if t not in cells and sum((t[0] + a, t[1] + b) in cells for a, b in D8) >= 5}
+        ramps = _ramp_tiles(d, ox, oy, z + 1)
+        rtiles = set().union(*[r for r, _f, _a, _l in ramps]) if ramps else set()
+        valley = below - rtiles
+        cells = {t for t in cells if t not in rtiles and not any((t[0] + a, t[1] + b) in valley for a, b in D8 + ((0, 0),))}
+        for _r, _f, _a, landing in ramps:
+            cells |= landing
     return cells, named, box, gate
 
 
@@ -71,8 +120,10 @@ def build(m, c):
     gid, (lo, hi) = c["id"], c["levels"]
     L = dict(id=gid, c=c, rect=rect, loops=[], routes={}, levels={}, boxes={}, clearings={}, landings=[], design=True)
     lv_cells = {}
-    for z, lv in d["levels"].items():
-        cells, named, box, gate = _carve(c, d, z, lv, rng)
+    order = sorted(d["levels"], key=lambda z: (z != Z, z))      # the surface first: a hill keeps clear of its valleys
+    for z in order:
+        lv = d["levels"][z]
+        cells, named, box, gate = _carve(c, d, z, lv, rng, below=lv_cells[Z][0] if z < Z else None)
         if z != Z:
             used = [t for t in box if (t[0], t[1], z) in m.ground]
             if used:
@@ -92,27 +143,51 @@ def build(m, c):
     for (x, y) in cells7:
         m.ground[(x, y, Z)] = m.pick(trail)
         m.clear_items(x, y, Z)
+    ramp_keep = set()
+    for r, f, _a, _l in _ramp_tiles(d, ox, oy, Z):
+        ramp_keep |= r | f
     for t in cells7:
-        if t not in L["hub"] and t not in L["gate"] and any((t[0] + a, t[1] + b) not in cells7 for a, b in D4) and rng.random() < 0.08:
+        if t not in L["hub"] and t not in L["gate"] and t not in ramp_keep \
+                and any((t[0] + a, t[1] + b) not in cells7 for a, b in D4) and rng.random() < 0.08:
             m.put(t[0], t[1], Z, rng.choice(WI.WALKOVER[trail]))
     L["open"] = cells7
+    # ---- hill tops (z 6): mountain under them, grass on top, a few flowers and stones
+    for z, (cells, named, box) in lv_cells.items():
+        if z < Z:
+            m.hill(sorted(cells), z, ground="grass")
     # ---- lower levels: natural caves (guarded like the surface where the ground is guarded)
     for z, (cells, named, box) in lv_cells.items():
-        if z == Z:
+        if z <= Z:
             continue
         DG.cave(m, cells, z)                                  # (zones for these levels: maps/layout_floor1.py)
     # ---- stairs between levels: stairs up at (x, y, z_low), the way down above it
-    for _kind, x, y, zl in d["links"]:
+    party_z = next((z for z, lv in d["levels"].items() if lv.get("party")), None)
+    L["party_z"] = party_z
+    den_done = False
+    for link in d["links"]:
+        kind, x, y, zl = link[:4]
         wx, wy = ox + x, oy + y
+        if kind == "ramp":
+            facing = link[4]
+            fdy = RAMPS[facing][2]
+            m.ramp(wx, wy, zl, facing=facing, width=2, name=f"{gid}_{x}_{y}_{zl}_{facing}")
+            for i in (0, 1):
+                L["landings"].append(((wx + i, wy - fdy, zl - 1), (wx + i, wy + fdy, zl)))
+            continue
         for (tx, ty, tz) in ((wx, wy, zl), (wx, wy + 1, zl), (wx, wy, zl - 1), (wx, wy - 1, zl - 1)):
             if (tx, ty) not in lv_cells[tz][0]:
                 raise ValueError(f"{gid}: the stairs at {(x, y, zl)} need open floor at {(tx - ox, ty - oy, tz)}")
-        m.stairs(wx, wy, zl, floor="cavefloor", name=f"{gid}_{x}_{y}_{zl}")
+        den = zl == party_z and not den_done
+        m.stairs(wx, wy, zl, floor="cavefloor", name=f"den_{gid}" if den else f"{gid}_{x}_{y}_{zl}")
         m.clear_items(wx, wy + 1, zl)
         m.clear_items(wx, wy - 1, zl - 1)
         if zl - 1 == Z:
             m.ground[(wx, wy, Z)] = HOLE
         L["landings"].append(((wx, wy - 1, zl - 1), (wx, wy + 1, zl)))
+        if den:                                    # the party cave: the cavebot rule and the cave tests read these
+            den_done = True
+            m.points[f"den_{gid}"] = (wx, wy, zl - 1)
+            L["den"] = ((wx, wy, zl - 1), (wx, wy + 1, zl))
     # ---- monsters, crowd spots, rest spots
     routes = {r: dict(name=r, groups=[], crowd=[]) for r in d["routes"]}
     offs = [(0, 0), (3, 0), (0, 3), (-3, 0)]
@@ -129,16 +204,19 @@ def build(m, c):
                     dx *= away
                     if (wx + dx, wy + dy) not in cells:
                         dx, dy = -dx, -dy
-                    WI.group(m, (wx + dx, wy + dy, z), list(members), c["respawn"])
-                    routes[route]["groups"].append((wx + dx, wy + dy, z))
+                    WI.group(m, (wx + dx, wy + dy, z), list(members), CAVE_RESPAWN if z == party_z else c["respawn"])
+                    if route in routes:
+                        routes[route]["groups"].append((wx + dx, wy + dy, z))
+                    else:                          # the party cave's groups belong to no hunting route
+                        L.setdefault("party_groups", []).append((wx + dx, wy + dy, z))
             elif content == "crowd":
                 routes[route]["crowd"].append((wx, wy, z))
                 m.points[f"crowd_{gid}_{route}_{len(routes[route]['crowd'])}"] = (wx, wy, z)
-            elif content == "rest" and z == Z:
+            elif content == "rest" and z <= Z:
                 spot = next(((wx + a, wy + b) for a, b in ((2, -1), (-2, -1), (1, -2), (-1, -2)) if (wx + a, wy + b) in cells), None)
                 if spot:
-                    m.clear_items(spot[0], spot[1], Z)
-                    m.put(spot[0], spot[1], Z, rng.choice([2370, 1996]))
+                    m.clear_items(spot[0], spot[1], z)
+                    m.put(spot[0], spot[1], z, rng.choice([2370, 1996]))
     for route, start_name in d["routes"].items():
         start = next(lv_cells[z][1][start_name] + (z,) for z in sorted(d["levels"]) if start_name in lv_cells[z][1])
         routes[route]["start"] = start
@@ -149,9 +227,27 @@ def build(m, c):
     names = ", ".join(d["route_names"][r] for r in sorted(d["route_names"]))
     m.sign(hx + 3, hy - 3, Z, f"{c['title']}. Levels {lo} to {hi}. Calm near the gate; the deeper you go, the more of them "
            f"there are. Hunting routes: {names}.")
-    for _kind, x, y, zl in d["links"]:
+    for link in d["links"]:
+        kind, x, y, zl = link[:4]
         wx, wy = ox + x, oy + y
         above, below = d["levels"][zl - 1]["name"], d["levels"][zl]["name"]
+        if kind == "ramp":                         # a sign beside the way up to the ramp, and one beside its top
+            fdy = RAMPS[link[4]][2]
+            for sx, sy, sz, text in ((wx - 1, wy + fdy * 3, zl, f"Up: {above}."), (wx + 2, wy + fdy * 3, zl, f"Up: {above}.")):
+                if (sx, sy) in lv_cells[sz][0] and not m.items.get((sx, sy, sz)):
+                    m.sign(sx, sy, sz, text)
+                    break
+            for sx, sy, sz, text in ((wx - 1, wy - fdy * 2, zl - 1, f"Down: {below}."), (wx + 2, wy - fdy * 2, zl - 1, f"Down: {below}.")):
+                if (sx, sy) in lv_cells[sz][0] and not m.items.get((sx, sy, sz)):
+                    m.sign(sx, sy, sz, text)
+                    break
+            continue
+        if zl == party_z and L.get("den") and L["den"][0][:2] == (wx, wy):
+            sx, sy = wx + 1, wy - 1
+            if (sx, sy) in lv_cells[zl - 1][0]:
+                m.clear_items(sx, sy, zl - 1)
+                m.sign(sx, sy, zl - 1, f"{below}. For a party. Levels {den_level(c)} and up. Bots are refused below.")
+            continue
         for sx, sy, sz, text in ((wx + 1, wy - 1, zl - 1, f"Down: {below}."), (wx - 1, wy - 1, zl - 1, f"Down: {below}."),
                                  (wx + 1, wy + 1, zl, f"Up: {above}."), (wx - 1, wy + 1, zl, f"Up: {above}.")):
             if (sx, sy) in lv_cells[sz][0] and not m.items.get((sx, sy, sz)) and (sx, sy) != (wx, wy):
@@ -163,8 +259,13 @@ def build(m, c):
     m.put(hx - 3, hy - 2, Z, 1996)
     m.put(hx + 3, hy + 2, Z, 2370)
     # ---- decoration below ground: stalagmites in open space only, bones and pebbles, never on a spawn, stair or sign
+    land = {(a[0] + i, a[1] + j, a[2]) for pair in L["landings"] for a in pair for i in (-1, 0, 1) for j in (-1, 0, 1)}
     for z, (cells, named, box) in lv_cells.items():
-        if z == Z:
+        if z < Z:
+            for t in sorted(cells):
+                if rng.random() < 0.04 and (t[0], t[1], z) not in land and not m.items.get((t[0], t[1], z)):
+                    m.put(t[0], t[1], z, rng.choice(WI.WALKOVER["grass"] + WI.WALKOVER["dirt"]))
+        if z <= Z:
             continue
         xs = [t[0] for t in box]; ys = [t[1] for t in box]
         x0_, y0_, w_, h_ = min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1
@@ -186,8 +287,16 @@ def build(m, c):
         L["boxes"][z] = box
         if z != Z:
             bxs = [t[0] for t in box]; bys = [t[1] for t in box]
-            m.points[f"level_{gid}_{z}_nw"] = (min(bxs), min(bys), z)
-            m.points[f"level_{gid}_{z}_se"] = (max(bxs), max(bys), z)
+            kind = "den" if z == party_z else "level"
+            pre = f"den_{gid}" if z == party_z else f"level_{gid}_{z}"
+            m.points[f"{pre}_nw"] = (min(bxs), min(bys), z)
+            m.points[f"{pre}_se"] = (max(bxs), max(bys), z)
+            if kind == "den":                      # read by the cavebot rule and the calm checker (party limits)
+                if not hasattr(m, "caves"):
+                    m.caves = []
+                groups = L.get("party_groups", [])
+                m.caves.append(dict(id=gid, landing=L["den"][1], groups=groups,
+                                    box=(min(bxs), min(bys), max(bxs) - min(bxs) + 1, max(bys) - min(bys) + 1)))
     m.points[f"gate_{gid}"] = (sum(p[0] for p in L["gate"]) // len(L["gate"]), max(p[1] for p in L["gate"]), Z)
     m.points[f"centre_{gid}"] = L["centre"] + (Z,)
     if not hasattr(m, "wilds"):
@@ -226,10 +335,13 @@ def check(m):
         for z in L["levels"]:
             if not any(t[2] == z for t in got):
                 problems.append(f"{L['id']}: level {z} cannot be reached from the gate")
-        for r in L["routes"].values():
-            for p in r["groups"] + r["crowd"] + [r["start"]]:
+        for r in list(L["routes"].values()) + [dict(name="party cave", groups=L.get("party_groups", []), crowd=[], start=None)]:
+            for p in r["groups"] + r["crowd"] + ([r["start"]] if r["start"] else []):
                 if not any((p[0] + a, p[1] + b, p[2]) in got for a, b in D8 + ((0, 0),)):
                     problems.append(f"{L['id']}: route {r['name']} spot {p} cannot be reached from the gate")
+            for p in r["crowd"] + ([r["start"]] if r["start"] else []):     # players and the tests stand on these
+                if p not in got:
+                    problems.append(f"{L['id']}: route {r['name']} spot {p} is not on open, walkable ground")
         xs = [p[0] for p in L["rect"]]; ys = [p[1] for p in L["rect"]]
         edge = {(x, y) for (x, y) in L["rect"] if x in (min(xs), max(xs)) or y in (min(ys), max(ys))}
         leak = [(x, y) for (x, y, z) in got if z == Z and (x, y) in edge and (x, y) not in L["gate"]]

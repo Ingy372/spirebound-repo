@@ -667,10 +667,11 @@ def lua_data(m, path):
         ys = [p[1] for p in L["rect"]]
         zs = ""
         if L.get("design"):                       # designed grounds: the head count covers every level's box too
-            allb = set().union(*L["boxes"].values()) | L["rect"]
+            lvls = [z for z in L["levels"] if z != L.get("party_z")]       # the party cave has its own head count rule
+            allb = set().union(*[L["boxes"][z] for z in lvls]) | L["rect"]
             xs = [p[0] for p in allb]
             ys = [p[1] for p in allb]
-            zs = ", zs = { " + ", ".join("[%d] = true" % z for z in sorted(L["levels"])) + " }"
+            zs = ", zs = { " + ", ".join("[%d] = true" % z for z in sorted(lvls)) + " }"
         out.append('\t{ id = "%s", title = "%s", guarded = %s, respawn = %d, lo = %d, hi = %d, x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d%s, spots = {'
                    % (c["id"], c["title"], str(c["zone"] == "guarded").lower(), c["respawn"], c["levels"][0], c["levels"][1],
                       min(xs), min(ys), max(xs), max(ys), Z, zs))

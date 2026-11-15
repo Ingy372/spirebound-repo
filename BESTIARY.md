@@ -24,7 +24,7 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 | 3 | 5-10 | **Sproutling Glade** | experience | Sproutling, Hopper Toad | south, about 70 steps from the city centre |
 | 4 | 7-12 | **Waspgrass Fields** | experience | Meadow Wasp | north, about 70 steps from the city centre |
 | 5 | 9-15 | **Boar Meadow** | experience | Bristle Boar | south-west, about 80 steps from the city centre |
-| 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole | north-east, about 80 steps from the city centre |
+| 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole, Bristle Boar | north-east, about 80 steps from the city centre |
 | 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | west, about 170 steps from the city centre |
 | 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | west, about 160 steps from the city centre |
 | 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | north, about 130 steps from the city centre |
@@ -109,13 +109,15 @@ Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallo
 ### Burrow Hills  (levels 11-16, experience)
 *north-east, about 80 steps from the city centre. Safety: open.*
 
-Sturdy diggers with plenty of health. Slow and steady experience.
+Sturdy diggers with plenty of health. Slow and steady experience. Climb the Crown or dig down into the Molework.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|
 | Burrow Mole | 130 | 39 | 5 / 11 | gold (up to 26), meat (40%), health potions (rare, 4%), item 5880 (rare, 12%) |
+| Bristle Boar | 90 | 28 | 7 / 15 | gold (up to 15), meat (40%), ham (rare, 15%), item 903 (rare, 12%) |
 
 - **Burrow Mole:** Slow with lots of health. Safe, steady experience if you have patience.
+- **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
 ### Wolf Copse  (levels 12-18, experience)
 *west, about 170 steps from the city centre. Safety: open.*
@@ -219,7 +221,7 @@ The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden ro
 | Hopper Toad | 28 | 9 | Toad Pond, Sproutling Glade |
 | Sproutling | 35 | 13 | Sproutling Glade |
 | Meadow Wasp | 45 | 17 | Waspgrass Fields |
-| Bristle Boar | 90 | 28 | Boar Meadow, Thornsnap Hollow |
+| Bristle Boar | 90 | 28 | Boar Meadow, Burrow Hills, Thornsnap Hollow |
 | Burrow Mole | 130 | 39 | Burrow Hills |
 | Meadow Wolf | 85 | 36 | Wolf Copse |
 | Grey Alpha | 260 | 107 | Wolf Copse |

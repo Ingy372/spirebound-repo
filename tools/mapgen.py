@@ -102,6 +102,17 @@ ROOF_FOR = {"brick": "shingle", "stone": "shingle", "timber": "straw", "sand": "
 MOUNTAIN = 1128                         # mountain ground: solid rock; Map.edge_grounds adds its rock faces
 STAIRS_UP, STAIRS_DOWN = 5258, 413      # stairs item on the lower level (walk on: up and north); stair tile above it
 LADDER, TRAPDOOR = 1948, 369            # ladder on the lower level (use it: up); trapdoor tile above it (walk on: down)
+# Outdoor hills (FLOOR1_HUNTING_PLAN.md 6.3), read from Canary's hand-made map (2026-11-14):
+#   a hill top on level z stands on mountain ground at z + 1; its edge tiles carry "rocks" pieces 1100-1111 (they do not
+#   block) by which sides look down; a ramp is an item on the lower level with floor change towards the hill, a second
+#   piece on the tile before it, a non-blocking rock face under it, and the "stairs" ground 469 on the tile above it.
+PLATEAU_EDGE = dict(N=1100, E=1101, S=1102, W=1103, dNW=1104, dNE=1105, dSE=1106, dSW=1107,
+                    iNW=1108, iNE=1109, iSE=1110, iSW=1111)
+RAMP_DOWN_TILE = 469
+RAMPS = {  # facing (the side the hill is on): (ramp item, foot piece, foot offset dy, rock face under the ramp)
+    "n": (1956, 1957, 1, 4445),
+    "s": (1954, 1955, -1, 4447),
+}
 TILE_PZ = 0x0001
 TILE_NOPVP = 0x0004
 
@@ -121,6 +132,8 @@ class Map:
         self.zones = []  # (tier, x1, y1, x2, y2, z or None for all levels); later entries win
         self.rng = random.Random(seed)
         self.buildings = []  # dict(rect=(x0, y0, w, h), z, style, top, roof): every building, for roofs and storeys
+        self.hilltops = set()  # (x, y, z) walkable hill-top tiles (edge pieces added by edge_grounds)
+        self.ramp_tiles = {}  # (x, y, z) -> rock face piece that goes under the ramp instead of a blocking one
 
     # -- basic painting
     def pick(self, key):
@@ -244,6 +257,37 @@ class Map:
         self.clear_items(x, y, z - 1)
         if (x, y - 1, z - 1) not in self.ground:
             self.ground[(x, y - 1, z - 1)] = self.pick(floor)
+
+    def hill(self, cells, z, ground="grass"):
+        """A hill top on level z over the tiles `cells` [(x, y)]: mountain ground under every tile at z + 1, walkable ground
+        on top. The way up is Map.ramp (or Map.stairs). Edge pieces and rock faces come from edge_grounds."""
+        for (x, y) in cells:
+            self.ground[(x, y, z + 1)] = MOUNTAIN
+            self.clear_items(x, y, z + 1)
+            self.ground[(x, y, z)] = self.pick(ground)
+            self.clear_items(x, y, z)
+            self.hilltops.add((x, y, z))
+
+    def ramp(self, x, y, z, facing="n", width=2, name=None):
+        """An outdoor ramp up a hill from level z, `width` tiles wide starting at x. facing "n": the hill top is north of the
+        ramp; walk onto (x, y, z) to arrive at (x, y - 1, z - 1), and walk onto (x, y, z - 1) from the hill to come back
+        down to (x, y + 1, z). facing "s" is the same turned round. The tile before the ramp holds its foot piece and must
+        stay walkable; the hill (Map.hill) must already be there."""
+        item, foot, fdy, face = RAMPS[facing]
+        top_dy = -1 if facing == "n" else 1
+        if name:
+            self.points["ramp_" + name] = (x, y, z)
+        for i in range(width):
+            tx = x + i
+            if (tx, y + top_dy, z - 1) not in self.hilltops:
+                raise ValueError(f"ramp at {(tx, y, z)}: no hill top at {(tx, y + top_dy, z - 1)}")
+            self.clear_items(tx, y, z)
+            self.put(tx, y, z, item)
+            self.ramp_tiles[(tx, y, z)] = face
+            self.clear_items(tx, y + fdy, z)
+            self.put(tx, y + fdy, z, foot)
+            self.ground[(tx, y, z - 1)] = RAMP_DOWN_TILE
+            self.clear_items(tx, y, z - 1)
 
     def ladder(self, x, y, z, floor="wood", name=None):
         """A ladder up from level z (use it to climb, arriving beside the trapdoor); the trapdoor above at
@@ -584,8 +628,15 @@ class Map:
                     add += pieces(nb, sets["water"])
             if "mountain" in sets and g not in water and g != MOUNTAIN:
                 nb = {d for d, (dx, dy) in d8.items() if self.ground.get((x + dx, y + dy, z)) == MOUNTAIN}
-                if nb:                       # rock faces round mountain ground: they block walking like the rock
+                if nb and (x, y, z) in self.ramp_tiles:
+                    add.append(self.ramp_tiles[(x, y, z)])     # the way up a hill: a rock face you can walk on
+                elif nb:                     # rock faces round mountain ground: they block walking like the rock
                     add += pieces(nb, sets["mountain"])
+            if (x, y, z) in self.hilltops and g != RAMP_DOWN_TILE:
+                nb = {d for d, (dx, dy) in d8.items()
+                      if self.ground.get((x + dx, y + dy, z)) in (None, RAMP_DOWN_TILE)}
+                if nb:                       # the rim of a hill top, by the sides that look down
+                    add += pieces(nb, PLATEAU_EDGE)
             if add:
                 self.items[(x, y, z)] = [(i, b"") for i in add] + list(here)
 

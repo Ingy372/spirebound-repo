@@ -49,7 +49,7 @@ TRAILS = {
     "Glade trail": [(231, 335), (209, 335), (209, 337)],
     "Wasp gate": [(230, 211), (228, 211)],
     "Cabin Lane": [(152, 313), (159, 326), (159, 337)],
-    "Burrow trail": [(234, 208), (239, 208)],
+    "Burrow trail": [(234, 199), (239, 199)],
     "Quarry trail": [(234, 144), (239, 144)],
     "Thornsnap trail": [(230, 152), (218, 152)],
     "Bandit Track": [(338, 285), (338, 240), (354, 224), (354, 220)],
@@ -102,6 +102,8 @@ def check():
             if x - 2 < rx + 7 and rx - 2 < x + w + 2:
                 print("IN THE RIVER", title, "at y", yy); bad += 1
                 break
+        if next(c for c in CAMPS if c["id"] == gid).get("design"):
+            continue                                   # designed grounds (FLOOR1_HUNTING_PLAN.md) have their own sizes
         want = {("small", True): (38, 40), ("small", False): (44, 34), ("std", True): (52, 48), ("std", False): (60, 40), ("tall", True): (39, 57)}[(_r[1], _r[0] in "ns")]
         if (w, h) != want:
             print("WRONG SIZE", title, (w, h), "should be", want); bad += 1

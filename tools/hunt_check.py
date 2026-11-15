@@ -106,6 +106,8 @@ def areas(m):
             import designed
             got = designed.reach(m, L, block)
             for z in sorted(L["levels"]):
+                if z == L.get("party_z"):              # the party cave is checked below, with the party limits
+                    continue
                 tiles = {t for t in got if t[2] == z}
                 out.append((L["id"], L["c"]["title"], f"z{z}", tiles, "designed", L["c"]["zone"] == "guarded"))
             continue

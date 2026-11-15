@@ -51,3 +51,15 @@ ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALU
  `skill_fist` = 10, `skill_fist_tries` = 0, `skill_club` = 10, `skill_club_tries` = 0, `skill_sword` = 10, `skill_sword_tries` = 0,
  `skill_axe` = 10, `skill_axe_tries` = 0, `skill_dist` = 10, `skill_dist_tries` = 0, `skill_shielding` = 10, `skill_shielding_tries` = 0,
  `posx` = 0, `posy` = 0, `posz` = 0;
+
+-- A middle-level autopilot character for the level 11-16 grounds (Burrow Hills, task H5): a level 14 vanguard with the
+-- skills a level 14 vanguard would have. Reset to exactly this on every run of this file, like the two above.
+-- Experience 29900 = level 14.
+INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
+VALUES
+ ('Pilot Warden', 1, @pilot, 14, 4, 335, 335, 29900, 68, 76, 78, 58, 128, 100, 100, @town, '', 530, 1)
+ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALUES(`level`), `experience` = VALUES(`experience`),
+ `health` = VALUES(`healthmax`), `healthmax` = VALUES(`healthmax`), `mana` = VALUES(`manamax`), `manamax` = VALUES(`manamax`),
+ `skill_fist` = 20, `skill_fist_tries` = 0, `skill_club` = 45, `skill_club_tries` = 0, `skill_sword` = 45, `skill_sword_tries` = 0,
+ `skill_axe` = 45, `skill_axe_tries` = 0, `skill_dist` = 15, `skill_dist_tries` = 0, `skill_shielding` = 40, `skill_shielding_tries` = 0,
+ `posx` = 0, `posy` = 0, `posz` = 0;

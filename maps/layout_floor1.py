@@ -521,7 +521,7 @@ def build(m):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # gate trails (2 wide) from the roads to the hunting grounds' gates (FLOOR1_WILDS_PLAN.md 4.2)
     for a, b in (((153, 284), (153, 282)), ((315, 284), (315, 282)), ((231, 335), (209, 337)), ((231, 211), (228, 211)),
-                 ((234, 208), (239, 208)), ((230, 152), (218, 152)), ((92, 282), (88, 282))):
+                 ((234, 199), (239, 199)), ((230, 152), (218, 152)), ((92, 282), (88, 282))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # Copse Road: Millcross's south side down past Wolf Copse to the Reedmarsh gate
     for a, b in (((70, 239), (92, 250)), ((92, 250), (92, 310)), ((92, 310), (70, 318)), ((70, 318), (70, 321))):

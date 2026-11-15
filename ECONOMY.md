@@ -35,10 +35,10 @@
 | Boar Meadow | 9-15 | Ranger (arrows) | 264 | 29,593 | 2,590 | 3,072 | -483 | 3,745 |
 | Boar Meadow | 9-15 | Ranger (spears) | 264 | 29,593 | 2,590 | 1,043 | 1,546 | 5,774 |
 | Boar Meadow | 9-15 | Arcanist/Mystic | 264 | 29,593 | 2,590 | 1,115 | 1,475 | 5,702 |
-| Burrow Hills | 11-16 | Vanguard | 230 | 35,892 | 3,402 | 1,064 | 2,339 | 3,554 |
-| Burrow Hills | 11-16 | Ranger (arrows) | 230 | 35,892 | 3,402 | 3,703 | -300 | 914 |
-| Burrow Hills | 11-16 | Ranger (spears) | 230 | 35,892 | 3,402 | 1,302 | 2,101 | 3,316 |
-| Burrow Hills | 11-16 | Arcanist/Mystic | 230 | 35,892 | 3,402 | 1,408 | 1,995 | 3,210 |
+| Burrow Hills | 11-16 | Vanguard | 232 | 35,627 | 3,367 | 1,051 | 2,316 | 3,679 |
+| Burrow Hills | 11-16 | Ranger (arrows) | 232 | 35,627 | 3,367 | 3,667 | -300 | 1,063 |
+| Burrow Hills | 11-16 | Ranger (spears) | 232 | 35,627 | 3,367 | 1,286 | 2,081 | 3,444 |
+| Burrow Hills | 11-16 | Arcanist/Mystic | 232 | 35,627 | 3,367 | 1,390 | 1,977 | 3,340 |
 | Wolf Copse | 12-18 | Vanguard | 277 | 44,296 | 2,026 | 704 | 1,322 | 6,750 |
 | Wolf Copse | 12-18 | Ranger (arrows) | 277 | 44,296 | 2,026 | 2,777 | -751 | 4,676 |
 | Wolf Copse | 12-18 | Ranger (spears) | 277 | 44,296 | 2,026 | 890 | 1,136 | 6,563 |
@@ -94,7 +94,7 @@ Base experience per hour is before the stage (levels 1-8: 10x, 9-20: 4x, 21-50: 
 | Sproutling Glade | 5-10 | experience | 3,600 | 3,500 |
 | Waspgrass Fields | 7-12 | experience | 5,100 | 5,000 |
 | Boar Meadow | 9-15 | experience | 7,398 | 7,500 |
-| Burrow Hills | 11-16 | experience | 8,973 | 9,000 |
+| Burrow Hills | 11-16 | experience | 8,907 | 9,000 |
 | Wolf Copse | 12-18 | experience | 11,074 | 11,000 |
 | Reedmarsh | 14-19 | money | 9,058 | 9,000 |
 | Thornsnap Hollow | 14-20 | experience | 12,950 | 13,000 |

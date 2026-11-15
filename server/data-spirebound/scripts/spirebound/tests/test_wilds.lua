@@ -56,7 +56,7 @@ SpireTest.add("wilds: the engine really spawned each rebuilt ground's monsters (
 	local want = { starter_west = 48, starter_east = 48, starter_south = 48, wasp_fields = 48 }
 	for id, r in pairs(grounds()) do
 		local n = monstersIn(r[1], r[2])
-		for z = 8, 10 do -- designed grounds (FLOOR1_HUNTING_PLAN.md): their lower levels count too
+		for _, z in ipairs({ 5, 6, 8, 9, 10 }) do -- designed grounds (FLOOR1_HUNTING_PLAN.md): their hill and lower levels count too
 			local nw, se = WorldPoints["level_" .. id .. "_" .. z .. "_nw"], WorldPoints["level_" .. id .. "_" .. z .. "_se"]
 			if nw then
 				n = n + monstersIn(nw, se)
@@ -128,4 +128,29 @@ SpireTest.add("hunting plan: the Ratwarren gate is quiet, the yard calm, and the
 	end
 	SpireTest.eq(downs >= 2, true, "two ways down into the Warren")
 	SpireTest.eq(SpirePvP.zoneAt(WorldPoints.loop_starter_west_b), "guarded", "the Warren is guarded like the yard")
+end)
+
+-- FLOOR1_HUNTING_PLAN.md (H5): Burrow Hills is quiet by the gate, calm in the hollows, and has two ramps up to the Crown
+-- and two holes down to the Molework.
+SpireTest.add("hunting plan: Burrow Hills is quiet at the gate, ramps lead up to the Crown and holes down to the Molework", function()
+	SpireTest.eq(near(WorldPoints.camp_burrow_hills, 10), 0, "no monster can reach a player inside the Burrow Hills gate")
+	SpireTest.eq(near(WorldPoints.loop_burrow_hills_a, 10) <= 3, true, "at most 3 monsters at the start of the North Hollow")
+	SpireTest.eq(near(WorldPoints.loop_burrow_hills_b, 10) <= 3, true, "at most 3 monsters at the start of the South Hollow")
+	SpireTest.eq(near(WorldPoints.loop_burrow_hills_c, 10) <= 4, true, "at most 4 monsters where you come up onto the Crown")
+	SpireTest.eq(near(WorldPoints.loop_burrow_hills_d, 10) <= 4, true, "at most 4 monsters under the west hole")
+	local ramps, holes = 0, 0
+	for k, p in pairs(WorldPoints) do
+		if k:match("^ramp_burrow_hills_") then
+			ramps = ramps + 1
+			SpireTest.eq(Tile(p) ~= nil and Tile(p):hasFlag(TILESTATE_FLOORCHANGE), true, k .. ": the ramp leads up")
+			local top = Tile(Position(p.x, p.y, p.z - 1))
+			SpireTest.eq(top ~= nil and top:hasFlag(TILESTATE_FLOORCHANGE_DOWN), true, k .. ": the top of the ramp leads down")
+			SpireTest.eq(walkable(Position(p.x, p.y - 1, p.z - 1)), true, k .. ": the Crown is walkable at the top")
+			SpireTest.eq(walkable(Position(p.x, p.y + 1, p.z)), true, k .. ": the foot of the ramp is walkable")
+		elseif k:match("^stairs_burrow_hills_") then
+			holes = holes + 1
+		end
+	end
+	SpireTest.eq(ramps, 2, "two ramps up to the Crown")
+	SpireTest.eq(holes, 2, "two ways down into the Molework")
 end)

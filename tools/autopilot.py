@@ -71,7 +71,8 @@ class Planner:
         # never path across stairs or holes by accident
         self.avoid = set()
         for k, (x, y, z) in wp.items():
-            if k.startswith("stairs_"):
+            if k.startswith(("stairs_", "ramp_")):     # a ramp is two tiles wide
+                self.avoid |= {(x + 1, y, z), (x + 1, y, z - 1)} if k.startswith("ramp_") else set()
                 self.avoid |= {(x, y, z), (x, y, z - 1)}
 
     def ok(self, p):
@@ -125,7 +126,9 @@ def plan_steps(route, wp, planner):
             if d == "walk":
                 goal, end_z, arrive = place(s["to"], wp), None, None
             else:
-                st = place(s["at"], wp)                 # the stairs-up tile on the lower level
+                st = place(s["at"], wp)                 # the stairs-up (or ramp) tile on the lower level; ramps facing
+                if isinstance(s["at"], str) and s["at"].endswith("_s"):   # south work the other way round
+                    sys.exit("autopilot: south-facing ramps are not planned yet")
                 if d == "down":
                     goal, end_z, arrive = (st[0], st[1], st[2] - 1), st[2], (st[0], st[1] + 1, st[2])
                 else:

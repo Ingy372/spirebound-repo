@@ -8,7 +8,7 @@ SpireTasks.floorList = {
 	{ id = "t1_meadowwolf", floor = 1, monster = "Meadow Wolf", count = 65, gold = 70, points = 1 },
 	{ id = "t1_bristleboar", floor = 1, monster = "Bristle Boar", count = 65, gold = 100, points = 1 },
 	{ id = "t1_fieldshardling", floor = 1, monster = "Field Shardling", count = 65, gold = 130, points = 2 },
-	{ id = "t1_burrowmole", floor = 1, monster = "Burrow Mole", count = 55, gold = 160, points = 1 },
+	{ id = "t1_burrowmole", floor = 1, monster = "Burrow Mole", count = 55, gold = 150, points = 1 },
 	{ id = "t1_thornsnap", floor = 1, monster = "Thornsnap", count = 60, gold = 130, points = 1 },
 	{ id = "t1_reedsnapper", floor = 1, monster = "Reed Snapper", count = 55, gold = 220, points = 1 },
 	{ id = "t1_roadbandit", floor = 1, monster = "Road Bandit", count = 60, gold = 490, points = 2 },
