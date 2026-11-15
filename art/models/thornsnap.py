@@ -1,6 +1,11 @@
 """Thornsnap (Floor 1, Thornsnap Hollow): model + crawl cycle.
 
 ART_REQUESTS.md: "a snapping plant with a thorny jaw-like flower head on a crawling vine body".
+
+Identity (art/CRAWLER_RULES.md step 1):
+  Coat:      a dark blue-green vine and leaves (Tibia's carniphila is bright grass green, and so is the meadow).
+  Signature: a crimson flower head whose jaws open on a glowing amber throat, ringed with ivory thorns.
+  Attitude:  a lunging snake: neck reared up, head thrust forward, jaws snapping twice per crawl.
 Original design: a thick green vine that slithers along the ground in an S-curve, a raised flower head made of
 two jaw petals (green outside, red inside) that snap open and shut, pale thorns along the jaws and the vine,
 two leaves near the head. Low creature: "tilt" projection like the rat. Faces +X; sizes in tiles.
@@ -14,12 +19,15 @@ from mathutils import Euler, Vector
 NAME = "thornsnap"
 WALK_FRAMES = 8
 PALETTE = "thornsnap"
-HEIGHT_SHEAR = 0.0
-LEAN = 0.0
+HEIGHT_SHEAR = 0.30
+LEAN = 10.0
 REFERENCE = "look_120.png"   # Tibia's Carniphila, the closest look-alike (comparison only, never shipped)
-SIZE = 1.75
-GROUND_STRETCH = 1.0       # longer north/south view, like Tibia's creatures
-CANVAS_OFFSET = (-10, -3)       # placed like its Tibia look-alike: filling the tile, spilling up-left
+SIZE = 2.1
+GROUND_STRETCH = 0.7       # longer north/south view, like Tibia's creatures
+AUTO_PLACE = (1, 1)
+SIGNATURE = ["jaw", "thorn"]
+HEAD_PARTS = ["jaw", "mouth", "thorn"]
+LEG_PARTS = []          # a vine: no legs
 PIXEL_RULES = {
     "weight": {"thorn": 3.0, "mouth": 3.0, "jaw": 1.6, "leaf": 1.2},
     "thin": {"thorn": 2, "mouth": 3, "leaf": 3},
@@ -40,9 +48,10 @@ LEAVES = {"l1": (0.95, 1, 0.3), "r1": (0.95, -1, 0.3), "l2": (0.55, 1, 0.5), "r2
 def build(model_cls, facing):
     m = model_cls(facing, PARTS)
     m.tube("vine", "vine", points=N)
-    m.ellipsoid("jaw_top", "jaw", radii=(0.150, 0.130, 0.050), segments=14, rings=8)
-    m.ellipsoid("jaw_bot", "jaw", radii=(0.140, 0.124, 0.046), segments=14, rings=8)
-    m.ellipsoid("mouth", "mouth", radii=(0.118, 0.100, 0.040), segments=12, rings=6)
+    # two jaw halves that open SIDEWAYS like a flytrap, so the camera above sees into the amber throat
+    m.ellipsoid("jaw_top", "jaw", radii=(0.150, 0.046, 0.110), segments=14, rings=8)
+    m.ellipsoid("jaw_bot", "jaw", radii=(0.150, 0.046, 0.110), segments=14, rings=8)
+    m.ellipsoid("mouth", "mouth", radii=(0.120, 0.070, 0.070), segments=12, rings=6)
     for i in range(8):
         m.cone(f"thorn{i}", "thorn", segments=5)
     for k in LEAVES:
@@ -59,25 +68,25 @@ def pose(m, t):
         u = i / (N - 1)                                     # 0 = tail end, 1 = neck
         x = -0.22 + 0.32 * u
         wave = 0.060 * math.sin(2.2 * math.pi * u - a) * (1 - u * 0.6) if moving else 0.035 * math.sin(2.2 * math.pi * u)
-        z = 0.025 + 0.16 * max(0.0, u - 0.60) / 0.40
+        z = 0.025 + 0.11 * max(0.0, u - 0.60) / 0.40
         pts.append(Vector((x, wave, z)))
         radii.append(0.040 + 0.018 * u)
     m.set_tube("vine", [tuple(p) for p in pts], radii)
     neck = pts[-1]
     head = neck + Vector((0.080, 0, 0.050 + (0.012 * math.sin(a) if moving else 0.0)))
-    open_ = 0.25 + 0.45 * max(0.0, math.sin(2 * a)) if moving else 0.70     # snaps twice per cycle
+    open_ = 0.40 + 0.40 * max(0.0, math.sin(2 * a)) if moving else 0.70     # snaps twice per cycle
     for name, sign in (("jaw_top", 1), ("jaw_bot", -1)):
         j = m.objects[name]
         j.rotation_mode = "XYZ"
-        j.rotation_euler = Euler((0, -sign * open_, 0))
-        j.location = head + Vector((0.065, 0, sign * (0.026 + 0.060 * open_)))
-    m.objects["mouth"].location = head + Vector((0.070, 0, 0.0))
-    # thorns: three along each jaw edge, two on the vine's back
+        j.rotation_euler = Euler((-sign * 0.25 * open_, 0, sign * 0.55 * open_))
+        j.location = head + Vector((0.060, sign * (0.030 + 0.060 * open_), 0.010))
+    m.objects["mouth"].location = head + Vector((0.050, 0, -0.010))
+    # thorns: teeth along the top rim of each jaw, pointing inward and up, two more on the vine's back
     k = 0
     for sign in (1, -1):
-        for i, (dx, dy) in enumerate(((0.140, 0.085), (0.190, 0.0), (0.140, -0.085))):
-            base = head + Vector((dx, dy, sign * (0.030 + 0.068 * open_)))
-            tip = base + Vector((0.040, dy * 0.6, sign * 0.085))
+        for i, dx in enumerate((0.090, 0.150, 0.200)):
+            base = head + Vector((dx, sign * (0.032 + 0.070 * open_ + 0.020 * (dx - 0.09) / 0.11), 0.095 - 0.020 * i))
+            tip = base + Vector((0.020, -sign * 0.045, 0.060))
             m.put_segment(f"thorn{k}", base, tip, 0.020)
             k += 1
     for i, u in enumerate((0.35, 0.65)):

@@ -8,7 +8,9 @@
   "eye",
   "pupil",
   "leg",
-  "foot"
+  "foot",
+  "head",
+  "stripe"
  ],
  "palette": "toad",
  "walk_frames": 8,
@@ -19,17 +21,17 @@
   "W"
  ],
  "supersample": 4,
- "view_tiles": 2.0,
- "y_stretch": 1.5798989873223328,
+ "view_tiles": 4.0,
+ "y_stretch": 1.4556349186104045,
  "world_linear": [
   [
    1.0,
    0.0,
-   -0.0
+   -0.3
   ],
   [
    0.0,
-   1.5798989873223328,
+   1.4556349186104045,
    0.0
   ],
   [
@@ -46,20 +48,24 @@
    "spot": 2.0,
    "leg": 1.8,
    "foot": 2.0,
-   "belly": 1.2
+   "belly": 1.2,
+   "stripe": 2.2
   },
   "thin": {
    "pupil": 3,
    "eye": 3,
    "spot": 3,
    "leg": 3,
-   "foot": 3
+   "foot": 3,
+   "stripe": 3
   },
   "soft": [
    [
     "body",
     "belly",
-    "spot"
+    "spot",
+    "stripe",
+    "head"
    ],
    [
     "eye",
@@ -73,12 +79,20 @@
     1.0,
     0.25
    ],
+   "head": [
+    0.7,
+    0.15
+   ],
    "belly": [
     0.5,
     0.0
    ],
    "leg": [
     0.5,
+    0.0
+   ],
+   "stripe": [
+    0.4,
     0.0
    ]
   },
@@ -102,7 +116,11 @@
   0
  ],
  "placed": [
-  -12,
-  -6
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
  ]
 }

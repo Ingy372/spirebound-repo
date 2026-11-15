@@ -58,6 +58,7 @@ while keeping our own design. Knobs in a model file:
 
 Follow `art/QUADRUPED_RULES.md` (recipe, 14 rules, worked example: the boar). Build on `art/models/quadruped.py`,
 then `python art/pipeline/check_creature.py <name>` must print ALL PASS before the sprite is shown to Jay.
+Insects, crawlers and plants follow `art/CRAWLER_RULES.md` as well.
 `AUTO_PLACE = (1, 1)` in a model file places each direction against the tile's right and bottom edges.
 
 ## Client sprite rules (Canary 3.6.1 + OTClient Redemption 4.2, client 15.11)

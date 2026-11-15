@@ -1,6 +1,12 @@
 """Reed snapper (Floor 1, Reedmarsh): model + walk cycle.
 
 ART_REQUESTS.md: "a big green-brown snapping turtle-crab with a reed-covered shell and a hooked beak".
+
+Identity (art/CRAWLER_RULES.md step 1):
+  Coat:      a dark bog-green shell (Tibia's thornback tortoise is tan-brown; the meadow grass is yellow-green),
+             mossy on top, with a pale khaki rim.
+  Signature: two big brick-red crab claws held forward, bright reeds sprouting from the shell, an ivory hooked beak.
+  Attitude:  low and wide, claws raised, scuttling side to side.
 Original design: a low domed shell with a rough rim, tufts of reeds growing from the top, a heavy head with a
 pale hooked beak, two crab claws in front, four stubby legs scuttling side to side. Low creature: "tilt"
 projection like the rat. Faces +X (east), +Y left, +Z up; sizes in tiles.
@@ -14,12 +20,15 @@ from mathutils import Euler, Vector
 NAME = "snapper"
 WALK_FRAMES = 8
 PALETTE = "snapper"
-HEIGHT_SHEAR = 0.0
-LEAN = 0.0
+HEIGHT_SHEAR = 0.30
+LEAN = 10.0
 REFERENCE = "look_198.png"   # Tibia's Thornback Tortoise, the closest look-alike (comparison only, never shipped)
-SIZE = 2.0
-GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
-CANVAS_OFFSET = (-10, -6)       # placed like its Tibia look-alike: filling the tile, spilling up-left
+SIZE = 2.25
+GROUND_STRETCH = 1.1       # longer north/south view, like Tibia's creatures
+AUTO_PLACE = (1, 1)
+SIGNATURE = ["claw", "reed"]
+HEAD_PARTS = ["head", "beak", "eye"]
+LEG_PARTS = ["leg", "claw"]
 PIXEL_RULES = {
     "weight": {"eye": 9.0, "beak": 3.0, "reed": 2.6, "claw": 2.0, "leg": 1.8, "rim": 1.3},
     "thin": {"eye": 3, "beak": 3, "reed": 2, "claw": 3, "leg": 3},

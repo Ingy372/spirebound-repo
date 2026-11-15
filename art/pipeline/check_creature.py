@@ -37,16 +37,19 @@ LIMITS = {
     "eye": 2,                  # eye pixels in the south, east and west views
     "signature": 5,            # pixels of each SIGNATURE part, in every direction
     "walk": 0.06,              # share of pixels that change between neighbouring walk frames
+    "grass": 0.60,             # share of the sprite whose colour is clearly unlike the grass it walks on
 }
 LEG_PARTS = {"leg_near", "leg_far", "paw_near", "paw_far", "leg", "foot", "claw"}
 HEAD_PARTS = {"head", "snout", "nose", "beak"}
+# A model file may set LEG_PARTS / HEAD_PARTS (lists of its own part names) when its parts are named differently;
+# LEG_PARTS = [] means it has no legs (a vine, a floating crystal) and skips the leg checks.
 
 
 def model_attrs(name):
     """Read SIGNATURE / CHECK from the model file without importing Blender."""
     src = (ROOT / "art" / "models" / f"{name}.py").read_text(encoding="utf-8")
     out = {}
-    for key in ("SIGNATURE", "CHECK"):
+    for key in ("SIGNATURE", "CHECK", "LEG_PARTS", "HEAD_PARTS"):
         for line in src.splitlines():
             if line.startswith(f"{key} ="):
                 out[key] = eval(line.split("=", 1)[1].split("#")[0].strip())   # noqa: S307 (our own file)
@@ -111,12 +114,14 @@ def main(name):
         part, _v, _dep = c.shrink(*c.load(d, 0))
         total = max(int((part > 0).sum()), 1)
         count = lambda names: int(sum((part == c.parts.index(n)).sum() for n in names if n in c.parts))
-        legs = count(LEG_PARTS) / total
-        need = lim["legs_side"] if d in "EW" else lim["legs_updown"]
-        report(legs >= need, f"legs show, facing {d}", f"{legs:.0%} of the sprite",
-               "plant the feet wider than the body (feet_y), raise the body, or thicken the legs")
+        leg_parts = attrs.get("LEG_PARTS", LEG_PARTS)
+        if leg_parts:
+            legs = count(leg_parts) / total
+            need = lim["legs_side"] if d in "EW" else lim["legs_updown"]
+            report(legs >= need, f"legs show, facing {d}", f"{legs:.0%} of the sprite",
+                   "plant the feet wider than the body (feet_y), raise the body, or thicken the legs")
         if d in "EW":
-            head = count(HEAD_PARTS) / total
+            head = count(attrs.get("HEAD_PARTS", HEAD_PARTS)) / total
             report(head >= lim["head"], f"head is big enough, facing {d}", f"{head:.0%}",
                    "enlarge the head and snout; a head under a tenth of the sprite reads as a blob")
         if d != "N" and "eye" in c.parts:
@@ -128,7 +133,18 @@ def main(name):
             report(n >= lim["signature"], f"signature '{s}' shows, facing {d}", f"{n}px",
                    "make it bigger or move it where the camera sees it (top or outer side)")
 
-    # 6. the walk actually moves
+    # 6. stands out on grass (green creatures vanish into the meadow)
+    gp = ROOT / ".local" / "artref" / "ground.png"
+    if gp.exists():
+        grass = np.unique(np.array(Image.open(gp).convert("RGB")).reshape(-1, 3), axis=0).astype(float)
+        for d in "SENW":
+            a = fr[d, 0]
+            px = a[..., :3][a[..., 3] > 0].astype(float)
+            apart = float((np.sqrt(((px[:, None, :] - grass[None, :, :]) ** 2).sum(-1)).min(1) > 30).mean())
+            report(apart >= lim["grass"], f"stands out on grass, facing {d}", f"{apart:.0%} unlike grass",
+                   "move the main colour away from mid green: darker, browner, bluer or yellower, or a bright accent")
+
+    # 7. the walk actually moves
     for d in "SE":
         ch = []
         for f in range(1, c.n_frames):

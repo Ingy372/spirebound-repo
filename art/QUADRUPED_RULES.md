@@ -22,6 +22,9 @@ so when I switch to a less expensive model, it's still able to produce premium r
 5. **Then look.** `python tools/art_review.py <name> 4` (all four directions, standing + walk) and view the
    creature on grass at game size. Fix what the eye catches, re-run the checker, and only then show Jay.
 
+Creatures that are not four-legged (insects, shells, hoppers, plants) also follow `art/CRAWLER_RULES.md`,
+which adds the grass-contrast rule and the body-plan settings for the checker.
+
 ## The rules, and why each exists
 
 | # | Rule | How it is enforced |

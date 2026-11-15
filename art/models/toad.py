@@ -1,6 +1,12 @@
 """Hopper toad (Floor 1, Toad Pond): model + hop cycle.
 
 ART_REQUESTS.md: "a fat green-and-yellow toad with big eyes, mid-hop pose for walking frames".
+
+Identity (art/CRAWLER_RULES.md step 1):
+  Coat:      deep emerald-teal back (Tibia's toad is orange-gold; the meadow grass is yellow-green) with dark
+             warts, a lemon-yellow throat and belly.
+  Signature: a bright yellow stripe down the spine and big golden eyes on top of the head (both show from above).
+  Attitude:  squat and coiled, head up, ready to spring.
 Its walk is one hop per cycle: crouch, push off with the long hind legs (body up, legs stretched back),
 land on the front legs, settle. Low creature: "tilt" projection like the rat. Faces +X; sizes in tiles.
 """
@@ -13,24 +19,27 @@ from mathutils import Euler, Vector
 NAME = "toad"
 WALK_FRAMES = 8
 PALETTE = "toad"
-HEIGHT_SHEAR = 0.0
-LEAN = 0.0
+HEIGHT_SHEAR = 0.30
+LEAN = 10.0
 REFERENCE = "look_222.png"   # Tibia's Toad, the closest look-alike (comparison only, never shipped)
 SIZE = 1.9
-GROUND_STRETCH = 1.4       # longer north/south view, like Tibia's creatures
-CANVAS_OFFSET = (-12, -6)       # placed like its Tibia look-alike: filling the tile, spilling up-left
+GROUND_STRETCH = 1.1       # longer north/south view, like Tibia's creatures
+AUTO_PLACE = (1, 1)
+SIGNATURE = ["stripe", "eye"]
+HEAD_PARTS = ["head", "eye", "pupil"]
+LEG_PARTS = ["leg", "foot"]
 PIXEL_RULES = {
-    "weight": {"eye": 4.0, "pupil": 9.0, "spot": 2.0, "leg": 1.8, "foot": 2.0, "belly": 1.2},
-    "thin": {"pupil": 3, "eye": 3, "spot": 3, "leg": 3, "foot": 3},
-    "soft": [["body", "belly", "spot"], ["eye", "pupil"]],
+    "weight": {"eye": 4.0, "pupil": 9.0, "spot": 2.0, "leg": 1.8, "foot": 2.0, "belly": 1.2, "stripe": 2.2},
+    "thin": {"pupil": 3, "eye": 3, "spot": 3, "leg": 3, "foot": 3, "stripe": 3},
+    "soft": [["body", "belly", "spot", "stripe", "head"], ["eye", "pupil"]],
     "no_outline": [],
     "fur": [],
-    "texture": {"body": [1.0, 0.25], "belly": [0.5, 0.0], "leg": [0.5, 0.0]},
+    "texture": {"body": [1.0, 0.25], "head": [0.7, 0.15], "belly": [0.5, 0.0], "leg": [0.5, 0.0], "stripe": [0.4, 0.0]},
     "bands": [0.42, 0.55, 0.66, 0.75, 0.83, 0.90, 0.96],
     "selout": ["body", "eye"],
 }
 
-PARTS = ["none", "body", "belly", "spot", "eye", "pupil", "leg", "foot"]
+PARTS = ["none", "body", "belly", "spot", "eye", "pupil", "leg", "foot", "head", "stripe"]
 
 OX = 0.0
 
@@ -46,8 +55,9 @@ def build(model_cls, facing):
     bpy.context.scene.collection.objects.link(body)
     m = model_cls(body, PARTS)
     m.ellipsoid("body", "body", radii=(0.165, 0.150, 0.100), segments=20, rings=10)
-    m.ellipsoid("head", "body", radii=(0.090, 0.120, 0.070), segments=16, rings=8)
+    m.ellipsoid("head", "head", radii=(0.090, 0.120, 0.070), segments=16, rings=8)
     m.ellipsoid("belly", "belly", radii=(0.150, 0.130, 0.060), segments=16, rings=8)
+    m.ellipsoid("stripe", "stripe", radii=(0.150, 0.026, 0.020), segments=14, rings=6)
     for i in range(4):
         m.ellipsoid(f"spot{i}", "spot", radii=(0.030, 0.026, 0.012), segments=10, rings=6)
     for k in ("l", "r"):
@@ -85,6 +95,10 @@ def pose(m, t):
         ob.scale = sc
     head = body + Vector((0.130, 0, 0.020 + 0.040 * (-pitch)))
     m.objects["head"].location = head
+    st = m.objects["stripe"]
+    st.location = body + Vector((0.010, 0, 0.088 * squash))
+    st.rotation_mode = "XYZ"
+    st.rotation_euler = Euler((0, pitch, 0))
     for i, (x, y) in enumerate(SPOTS):
         m.objects[f"spot{i}"].location = body + Vector((x, y, 0.092 * squash))
     for s, k in ((1, "l"), (-1, "r")):
