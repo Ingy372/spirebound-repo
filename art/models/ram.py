@@ -13,9 +13,11 @@ from mathutils import Vector
 NAME = "ram"
 WALK_FRAMES = 8
 PALETTE = "ram"             # ramp set in art/pipeline/palette.json
-HEIGHT_SHEAR = 0.0         # low animal: no up-left height lean (matches Tibia's rat and the approved look)
-LEAN = 8.0                 # degrees: north/south bodies run slightly diagonal, like hand-made rats
-REFERENCE = "rat_client.png"   # .local/artref file shown beside our sheets (comparison only)
+HEIGHT_SHEAR = 0.30        # a light up-left lean, like Tibia's own animals
+LEAN = 18.0                 # degrees: north/south bodies run slightly diagonal, like hand-made rats
+REFERENCE = "look_14.png"   # Tibia's Sheep, the closest look-alike (comparison only, never shipped)
+SIZE = 1.6
+GROUND_STRETCH = 1.6       # full body length walking north/south, like Tibia's animals
 PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (see the notes there)
     "weight": {"tusk": 2.6, "mane": 1.4, "eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
                "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
@@ -24,13 +26,17 @@ PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (s
     "soft": [["body", "head", "snout", "nose", "ear", "mane"]],
     "no_outline": ["tail_tip"],
     "fur": ["body", "head"],
+    "texture": {"tusk": [1.3, 0.0], "body": [1.4, 0.15], "head": [0.9, 0.08], "snout": [0.4, 0.0], "tail_base": [0.6, 0.0],
+                "leg_near": [0.4, 0.0], "leg_far": [0.3, 0.0]},
+    "bands": [0.34, 0.45, 0.55, 0.64, 0.73, 0.82, 0.90],
     "selout": ["body", "head", "snout", "ear"],
 }
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "tusk", "mane"]
 
-OX = 0.05                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
+OX = 0.0
+CANVAS_OFFSET = (-5, 3)       # spill left of the tile like Tibia's bigger animals
 
 # body ------------------------------------------------------------------
 HIP = Vector((-0.075, 0.0, 0.205)); HIP_R = (0.135, 0.135, 0.110)
@@ -152,14 +158,14 @@ def pose(m, t):
         foot = Vector((fx + OX, hip_pt.y * 1.05, PAW_R[2] + fz))
         _leg(m, leg, hp, foot, front)
     for s_, k in ((1, "l"), (-1, "r")):                # big horns curling back, down and forward round the ear
-        root = HEAD + o + hd + Vector((-0.010, 0.040 * s_, 0.050))
+        root = HEAD + o + hd + Vector((-0.020, 0.048 * s_, 0.055))
         pts, radii = [], []
         for i in range(12):
             u = i / 11
-            ang = 1.6 * math.pi * u
-            r = 0.075 * (1 - 0.45 * u)
+            ang = 1.45 * math.pi * u
+            r = 0.120 * (1 - 0.40 * u)
             pts.append(tuple(root + Vector((-r * math.sin(ang) * 1.0, s_ * (0.020 + 0.050 * u), r * (math.cos(ang) - 1) * -1 * 0.9 - 0.0))))
-            radii.append(0.030 * (1 - 0.65 * u) + 0.006)
+            radii.append(0.026 * (1 - 0.75 * u) + 0.006)
         m.set_tube(f"tusk_{k}", pts, radii)
     for i in range(5):                                  # a ridge of bristles from neck to rump
         u = i / 4

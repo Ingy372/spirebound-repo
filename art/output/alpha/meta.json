@@ -145,6 +145,10 @@
  "ref": "look_3.png",
  "canvas_offset": [
   0,
+  0
+ ],
+ "placed": [
+  -8,
   2
  ]
 }

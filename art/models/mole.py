@@ -15,9 +15,11 @@ from mathutils import Vector
 NAME = "mole"
 WALK_FRAMES = 8
 PALETTE = "mole"            # ramp set in art/pipeline/palette.json
-HEIGHT_SHEAR = 0.0         # low animal: no up-left height lean (matches Tibia's rat and the approved look)
-LEAN = 12.0                # degrees: north/south bodies run slightly diagonal, like hand-made rats
-REFERENCE = "rat_client.png"   # .local/artref file shown beside our sheets (comparison only)
+HEIGHT_SHEAR = 0.30        # a light up-left lean, like Tibia's own animals
+LEAN = 18.0                # degrees: north/south bodies run slightly diagonal, like hand-made rats
+REFERENCE = "look_1048.png"   # Tibia's Mole, the closest look-alike (comparison only, never shipped)
+SIZE = 2.0
+GROUND_STRETCH = 1.6       # full body length walking north/south, like Tibia's animals
 PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (see the notes there)
     "weight": {"dirt": 2.0, "eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
                "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
@@ -26,33 +28,37 @@ PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (s
     "soft": [["body", "head", "snout", "nose", "ear", "dirt"]],
     "no_outline": ["tail_tip"],
     "fur": ["body", "head"],
+    "texture": {"body": [1.4, 0.15], "head": [0.9, 0.08], "snout": [0.4, 0.0], "tail_base": [0.6, 0.0],
+                "leg_near": [0.4, 0.0], "leg_far": [0.3, 0.0]},
+    "bands": [0.42, 0.55, 0.66, 0.75, 0.83, 0.90, 0.96],
     "selout": ["body", "head", "snout", "ear"],
 }
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "dirt"]
 
-OX = 0.11                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
+OX = 0.0
+CANVAS_OFFSET = (-7, -3)       # spill left of the tile like Tibia's bigger animals
 
 # body ------------------------------------------------------------------
 HIP = Vector((-0.070, 0.0, 0.124)); HIP_R = (0.140, 0.122, 0.088)
 CHEST = Vector((0.045, 0.0, 0.118)); CHEST_R = (0.112, 0.112, 0.080)
-HEAD = Vector((0.132, 0.0, 0.108)); HEAD_R = (0.066, 0.074, 0.060)
-SNOUT_TIP = Vector((0.236, 0.0, 0.084))
-EYE = Vector((0.158, 0.048, 0.128)); EYE_R = 0.008
+HEAD = Vector((0.150, 0.0, 0.112)); HEAD_R = (0.076, 0.080, 0.066)
+SNOUT_TIP = Vector((0.272, 0.0, 0.088))
+EYE = Vector((0.188, 0.056, 0.138)); EYE_R = 0.009
 EAR = Vector((0.100, 0.030, 0.120)); EAR_R = (0.010, 0.010, 0.010)   # moles have no visible ears: hidden inside the head
 
 # legs: name -> (hip position, gait phase offset, is_front)
 LEGS = {
-    "fl": (Vector((0.085, -0.090, 0.085)), 0.00, True),
-    "fr": (Vector((0.085, 0.090, 0.085)), 0.50, True),
+    "fl": (Vector((0.100, -0.110, 0.085)), 0.00, True),
+    "fr": (Vector((0.100, 0.110, 0.085)), 0.50, True),
     "hl": (Vector((-0.080, -0.085, 0.085)), 0.57, False),
     "hr": (Vector((-0.080, 0.085, 0.085)), 0.07, False),
 }
 UPPER, LOWER = 0.046, 0.046
 LEG_R = 0.026
 PAW_R = (0.026, 0.020, 0.014)
-PAW_R_FRONT = (0.046, 0.036, 0.016)   # huge flat digging claws
+PAW_R_FRONT = (0.042, 0.044, 0.016)   # huge flat digging claws
 STRIDE = 0.062             # foot travel either side of its rest spot (about 2.5 px)
 LIFT = 0.040
 STANCE = 0.55              # share of the cycle a foot spends on the ground
@@ -83,7 +89,10 @@ def build(model_cls, facing):
         m.capsule(f"{leg}_up", "leg_near")
         m.capsule(f"{leg}_lo", "leg_near")
         m.ellipsoid(f"{leg}_paw", "paw_near", radii=PAW_R_FRONT if LEGS[leg][2] else PAW_R, segments=8, rings=6)
-    m.ellipsoid("dirt", "dirt", radii=(0.050, 0.040, 0.016), segments=10, rings=6)
+        if LEGS[leg][2]:
+            for j in range(3):
+                m.cone(f"{leg}_claw{j}", "paw_near", segments=5)
+    m.ellipsoid("dirt", "dirt", radii=(0.020, 0.018, 0.008), segments=10, rings=6)
     m.tube("tail_a", "tail_base", points=TAIL_N // 3 + 1)
     m.tube("tail_b", "tail_tip", points=TAIL_N - TAIL_N // 3 + 1)
     return m
@@ -117,7 +126,14 @@ def _leg(m, leg, hip, foot, front):
     m.put_segment(f"{leg}_up", hip, knee, LEG_R)
     m.put_segment(f"{leg}_lo", knee, foot, LEG_R * 0.85)
     paw = m.objects[f"{leg}_paw"]
-    paw.location = foot + Vector((0.012, 0, 0))
+    side = 1.0 if foot.y > 0 else -1.0
+    # the big digging claws sit forward and out to the sides, so they show from above in every direction
+    paw.location = foot + (Vector((0.045, 0.035 * side, 0.010)) if front else Vector((0.012, 0, 0)))
+    if front:
+        for j in range(3):                     # three long pale claws fanning forward
+            sp = (j - 1) * 0.030
+            root = paw.location + Vector((0.025, sp, 0.004))
+            m.put_segment(f"{leg}_claw{j}", root, root + Vector((0.065, sp * 0.8 + 0.010 * side, -0.006)), 0.013)
 
 
 def pose(m, t):
@@ -178,3 +194,6 @@ def assign_depth_parts(m, depth_of):
         for piece in ("up", "lo"):
             m.set_part(f"{leg}_{piece}", "leg_far" if far else "leg_near")
         m.set_part(f"{leg}_paw", "paw_far" if far else "paw_near")
+        for j in range(3):
+            if f"{leg}_claw{j}" in m.objects:
+                m.set_part(f"{leg}_claw{j}", "paw_far" if far else "paw_near")

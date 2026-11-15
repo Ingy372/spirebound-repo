@@ -32,12 +32,12 @@ PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (s
                 "leg_near": [0.35, 0.0], "snout": [0.25, 0.0]},
     "bands": [0.34, 0.45, 0.55, 0.64, 0.73, 0.82, 0.90],
 }
-CANVAS_OFFSET = (0, 3)       # sit like Tibia's wolf: spilling left of the tile, centred low on it
+CANVAS_OFFSET = (-8, 3)       # sit like Tibia's wolf: spilling left of the tile, low on it
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "belly"]
 
-OX = -0.05                 # nose-to-tail sits like Tibia's wolf: nose at the tile's right edge, tail spilling left
+OX = 0.0
 
 # body ------------------------------------------------------------------
 HIP = Vector((-0.100, 0.0, 0.310)); HIP_R = (0.118, 0.088, 0.066)

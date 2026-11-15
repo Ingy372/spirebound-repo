@@ -16,41 +16,47 @@ from mathutils import Vector
 NAME = "boar"
 WALK_FRAMES = 8
 PALETTE = "boar"            # ramp set in art/pipeline/palette.json
-HEIGHT_SHEAR = 0.0         # low animal: no up-left height lean (matches Tibia's rat and the approved look)
-LEAN = 8.0                 # degrees: north/south bodies run slightly diagonal, like hand-made rats
-REFERENCE = "rat_client.png"   # .local/artref file shown beside our sheets (comparison only)
+HEIGHT_SHEAR = 0.30        # a light up-left lean, like Tibia's own animals
+LEAN = 18.0                 # degrees: north/south bodies run slightly diagonal, like hand-made rats
+REFERENCE = "look_380.png"   # Tibia's Boar, the closest look-alike (comparison only, never shipped)
+SIZE = 2.2
+GROUND_STRETCH = 1.6       # full body length walking north/south, like Tibia's animals
 PIXEL_RULES = {               # how art/pipeline/pixelize.py treats each part (see the notes there)
-    "weight": {"tusk": 4.0, "mane": 1.8, "eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
+    "weight": {"tusk": 4.0, "mane": 2.6, "eye": 9.0, "nose": 4.0, "tail_tip": 5.0, "tail_base": 2.5, "paw_near": 2.2, "paw_far": 1.6,
                "leg_near": 1.7, "leg_far": 1.2, "ear": 2.2, "snout": 1.3},
     "thin": {"tusk": 2, "mane": 3, "eye": 3, "tail_tip": 2, "tail_base": 3, "nose": 3, "leg_near": 4, "leg_far": 4,
              "paw_near": 3, "paw_far": 4, "ear": 4},
-    "soft": [["body", "head", "snout", "nose", "ear", "mane"]],
+    "soft": [["body", "head", "snout", "nose", "ear"]],
     "no_outline": ["tail_tip"],
     "fur": ["body", "head"],
+    "texture": {"mane": [1.2, 0.0], "body": [1.4, 0.15], "head": [0.9, 0.08], "snout": [0.4, 0.0], "tail_base": [0.6, 0.0],
+                "leg_near": [0.4, 0.0], "leg_far": [0.3, 0.0]},
+    "bands": [0.40, 0.52, 0.62, 0.71, 0.79, 0.86, 0.93],
     "selout": ["body", "head", "snout", "ear"],
 }
 
 PARTS = ["none", "body", "head", "snout", "nose", "ear", "eye",
          "leg_near", "leg_far", "paw_near", "paw_far", "tail_base", "tail_tip", "tusk", "mane"]
 
-OX = 0.05                  # shifts the whole rat forward so nose-to-tail sits centred on the tile
+OX = 0.0
+CANVAS_OFFSET = (-7, 2)       # spill left of the tile like Tibia's bigger animals
 
 # body ------------------------------------------------------------------
-HIP = Vector((-0.080, 0.0, 0.180)); HIP_R = (0.130, 0.128, 0.098)
-CHEST = Vector((0.050, 0.0, 0.190)); CHEST_R = (0.125, 0.132, 0.110)
-HEAD = Vector((0.165, 0.0, 0.170)); HEAD_R = (0.078, 0.085, 0.074)
-SNOUT_TIP = Vector((0.275, 0.0, 0.130))
-EYE = Vector((0.212, 0.055, 0.188)); EYE_R = 0.011
-EAR = Vector((0.140, 0.055, 0.245)); EAR_R = (0.016, 0.028, 0.036)
+HIP = Vector((-0.085, 0.0, 0.240)); HIP_R = (0.122, 0.108, 0.095)
+CHEST = Vector((0.055, 0.0, 0.258)); CHEST_R = (0.135, 0.122, 0.122)
+HEAD = Vector((0.205, 0.0, 0.230)); HEAD_R = (0.100, 0.092, 0.092)
+SNOUT_TIP = Vector((0.360, 0.0, 0.165))
+EYE = Vector((0.272, 0.064, 0.268)); EYE_R = 0.014
+EAR = Vector((0.170, 0.062, 0.305)); EAR_R = (0.020, 0.032, 0.052)
 
 # legs: name -> (hip position, gait phase offset, is_front)
 LEGS = {
-    "fl": (Vector((0.080, -0.065, 0.130)), 0.00, True),
-    "fr": (Vector((0.080, 0.065, 0.130)), 0.50, True),
-    "hl": (Vector((-0.100, -0.065, 0.130)), 0.57, False),
-    "hr": (Vector((-0.100, 0.065, 0.130)), 0.07, False),
+    "fl": (Vector((0.085, -0.062, 0.200)), 0.00, True),
+    "fr": (Vector((0.085, 0.062, 0.200)), 0.50, True),
+    "hl": (Vector((-0.105, -0.062, 0.200)), 0.57, False),
+    "hr": (Vector((-0.105, 0.062, 0.200)), 0.07, False),
 }
-UPPER, LOWER = 0.070, 0.070
+UPPER, LOWER = 0.105, 0.100
 LEG_R = 0.028
 PAW_R = (0.024, 0.020, 0.016)
 STRIDE = 0.092             # foot travel either side of its rest spot (about 2.5 px)
@@ -58,6 +64,7 @@ LIFT = 0.060
 STANCE = 0.55              # share of the cycle a foot spends on the ground
 
 TAIL_N = 12
+BRISTLES = 11
 
 
 def build(model_cls, facing):
@@ -77,8 +84,8 @@ def build(model_cls, facing):
         m.ellipsoid(f"{leg}_paw", "paw_near", radii=PAW_R, segments=8, rings=6)
     for k in ("l", "r"):
         m.cone(f"tusk_{k}", "tusk", segments=6)
-    for i in range(5):
-        m.ellipsoid(f"mane{i}", "mane", radii=(0.030, 0.030, 0.030), segments=8, rings=6)
+    for i in range(BRISTLES):
+        m.cone(f"mane{i}", "mane", segments=5)
     m.tube("tail_a", "tail_base", points=TAIL_N // 3 + 1)
     m.tube("tail_b", "tail_tip", points=TAIL_N - TAIL_N // 3 + 1)
     return m
@@ -134,7 +141,7 @@ def pose(m, t):
     m.objects["head"].location = head
     hd = head - (HEAD + o)
     snout_base = head + Vector((0.010, 0, -0.006))
-    m.put_segment("snout", snout_base, SNOUT_TIP + o + hd, 0.062, 0.070)
+    m.put_segment("snout", snout_base, SNOUT_TIP + o + hd, 0.064, 0.050)
     m.objects["nose"].location = SNOUT_TIP + o + hd + Vector((-0.004, 0, 0.001))
     for s, k in ((1, "l"), (-1, "r")):
         m.objects[f"eye_{k}"].location = Vector((EYE.x, EYE.y * s, EYE.z)) + o + hd
@@ -149,11 +156,15 @@ def pose(m, t):
     for s_, k in ((1, "l"), (-1, "r")):
         root = SNOUT_TIP + o + hd + Vector((-0.040, 0.040 * s_, -0.020))
         m.put_segment(f"tusk_{k}", root, root + Vector((0.030, 0.012 * s_, 0.045)), 0.012)
-    for i in range(5):                                  # a ridge of bristles from neck to rump
-        u = i / 4
-        p = (chest + Vector((0.030, 0, CHEST_R[2] * 0.95))).lerp(hip + Vector((0, 0, HIP_R[2] * 0.95)), u)
-        m.objects[f"mane{i}"].location = p
-        m.objects[f"mane{i}"].scale = (0.040, 0.026, 0.034 - 0.008 * u)
+    for i in range(BRISTLES):                           # a spiky ridge of bristles from the neck to the rump
+        u = i / (BRISTLES - 1)
+        neck = head + Vector((-0.040, 0, HEAD_R[2] * 0.7))
+        top_c = chest + Vector((0, 0, CHEST_R[2] * 0.95))
+        top_h = hip + Vector((0, 0, HIP_R[2] * 0.95))
+        p = neck.lerp(top_c, min(1.0, u * 2.2)) if u < 0.45 else top_c.lerp(top_h, (u - 0.45) / 0.55)
+        tall = 0.170 * (1.0 - 0.40 * u) * (1.0 if i % 2 else 0.75)
+        side = 0.022 * (1 if i % 3 == 0 else -1 if i % 3 == 1 else 0)
+        m.put_segment(f"mane{i}", p - Vector((0, 0, 0.02)), p + Vector((-0.050, side, tall)), 0.018)
     # tail: leaves the rump, droops to the ground, curls slightly to one side, sways along its length
     base = hip + Vector((-HIP_R[0] * 0.80, 0, -0.035))
     pts, radii = [], []

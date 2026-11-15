@@ -18,8 +18,8 @@ HEIGHT_SHEAR = wolf.HEIGHT_SHEAR
 LEAN = wolf.LEAN
 REFERENCE = "look_3.png"     # Tibia's War Wolf (comparison only, never shipped)
 GROUND_STRETCH = wolf.GROUND_STRETCH
-SIZE = 2.25                  # a head taller than the meadow wolf, like Tibia's war wolf next to its wolf
-CANVAS_OFFSET = (0, 2)
+SIZE = 2.10                  # a head taller than the meadow wolf, like Tibia's war wolf next to its wolf
+CANVAS_OFFSET = (-8, 2)
 PIXEL_RULES = {
     **wolf.PIXEL_RULES,
     "weight": {**wolf.PIXEL_RULES["weight"], "scar": 2.5, "mane": 1.3},
@@ -28,13 +28,13 @@ PIXEL_RULES = {
     "soft": [wolf.PIXEL_RULES["soft"][0] + ["mane", "scar"]],
 }
 PARTS = wolf.PARTS + ["mane", "scar"]
-OX = -0.09
+OX = 0.0
 
 
 def build(model_cls, facing):
     wolf.PARTS, wolf.OX = PARTS, OX
     m = wolf.build(model_cls, facing)
-    m.facing.scale = (1.18, 1.0, 0.88)          # longer and lower than the meadow wolf, like a war wolf
+    m.facing.scale = (1.10, 1.0, 0.90)          # longer and lower than the meadow wolf, like a war wolf
     m.set_part("ruff", "mane")
     m.objects["ruff"].scale = (0.095, 0.112, 0.088)
     m.capsule("scar", "scar")

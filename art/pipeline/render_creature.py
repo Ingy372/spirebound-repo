@@ -40,6 +40,11 @@ def main():
     scene = rig.reset_scene()
     projection = getattr(creature, "PROJECTION", "tilt")
     cam = rig.add_camera(scene, projection)
+    # placement on the 64x64 canvas (in pixels): move the camera, so nothing is cut off at the canvas edge
+    off = list(getattr(creature, "CANVAS_OFFSET", (0, 0)))
+    px = 1.0 / (rig.VIEW_TILES * rig.PIXELS_PER_TILE)
+    cam.data.shift_x -= off[0] * px
+    cam.data.shift_y += off[1] * px
     shear = getattr(creature, "HEIGHT_SHEAR", rig.HEIGHT_SHEAR)
     _root, facing = rig.add_world_root(scene, shear, projection)
     size = getattr(creature, "SIZE", 1.0)             # whole-creature size, matched to its Tibia look-alike
@@ -84,7 +89,7 @@ def main():
             "order": rig.ORDER, "supersample": rig.SUPERSAMPLE, "view_tiles": rig.VIEW_TILES,
             "y_stretch": rig.Y_STRETCH, "world_linear": rig.world_linear(shear, projection), "depth_range": rig.DEPTH_RANGE,
             "rules": getattr(creature, "PIXEL_RULES", {}), "ref": getattr(creature, "REFERENCE", None),
-            "canvas_offset": list(getattr(creature, "CANVAS_OFFSET", (0, 0)))}
+            "canvas_offset": [0, 0], "placed": off}
     (out.parent / "meta.json").write_text(json.dumps(meta, indent=1))
 
     if not only:

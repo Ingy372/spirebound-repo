@@ -27,16 +27,16 @@
  ],
  "supersample": 4,
  "view_tiles": 2.0,
- "y_stretch": 1.3106601717798212,
+ "y_stretch": 1.662741699796952,
  "world_linear": [
   [
    1.0,
    0.0,
-   -0.0
+   -0.3
   ],
   [
    0.0,
-   1.3106601717798212,
+   1.662741699796952,
    0.0
   ],
   [
@@ -49,7 +49,7 @@
  "rules": {
   "weight": {
    "tusk": 4.0,
-   "mane": 1.8,
+   "mane": 2.6,
    "eye": 9.0,
    "nose": 4.0,
    "tail_tip": 5.0,
@@ -80,8 +80,7 @@
     "head",
     "snout",
     "nose",
-    "ear",
-    "mane"
+    "ear"
    ]
   ],
   "no_outline": [
@@ -91,6 +90,45 @@
    "body",
    "head"
   ],
+  "texture": {
+   "mane": [
+    1.2,
+    0.0
+   ],
+   "body": [
+    1.4,
+    0.15
+   ],
+   "head": [
+    0.9,
+    0.08
+   ],
+   "snout": [
+    0.4,
+    0.0
+   ],
+   "tail_base": [
+    0.6,
+    0.0
+   ],
+   "leg_near": [
+    0.4,
+    0.0
+   ],
+   "leg_far": [
+    0.3,
+    0.0
+   ]
+  },
+  "bands": [
+   0.4,
+   0.52,
+   0.62,
+   0.71,
+   0.79,
+   0.86,
+   0.93
+  ],
   "selout": [
    "body",
    "head",
@@ -98,9 +136,13 @@
    "ear"
   ]
  },
- "ref": "rat_client.png",
+ "ref": "look_380.png",
  "canvas_offset": [
   0,
   0
+ ],
+ "placed": [
+  -7,
+  2
  ]
 }
