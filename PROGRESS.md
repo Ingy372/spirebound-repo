@@ -548,3 +548,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Sproutling made (`art/models/sproutling.py`): bulb body, leaf arms, sprout, waddle. In `ART_FOR_JAY/sproutling`, waiting for Jay's OK.
 - Bristle Boar made (`art/models/boar.py`, from the rat): bristle ridge, tusks, red eyes. In `ART_FOR_JAY/boar`, waiting for Jay's OK.
 - Ruin Sentinel made (`art/models/sentinel.py`): stone guard, moss, glowing eyes, stone spear. In `ART_FOR_JAY/sentinel`, waiting for Jay's OK.
+- Stonehorn Ram made (`art/models/ram.py`, on the boar): fleece, dark face, big curled stone horns. In `ART_FOR_JAY/ram`, waiting for Jay's OK.
