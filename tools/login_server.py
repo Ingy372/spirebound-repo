@@ -117,8 +117,18 @@ EMAIL_RULE = re.compile(r"^[A-Za-z0-9._+\-]{1,60}@[A-Za-z0-9.\-]{1,60}\.[A-Za-z]
 _signups = {}
 
 
-def signup(name, email, password, password2, addr, now=None):
-    """Make a new account. Returns (ok, message)."""
+# A character name: 1-3 capitalised words of letters, 3-20 characters in all (e.g. "Mira", "Tom Reed")
+CHAR_RULE = re.compile(r"^[A-Z][a-z]+( [A-Z][a-z]+){0,2}\Z")
+# A fresh character, the same as the dev account's "Climber": level 1, no vocation yet (picked at the Registrar),
+# in Hearthgate (town 1). Outfit 128 = male citizen, 136 = female citizen.
+NEW_CHAR = ("INSERT INTO players (name, group_id, account_id, level, vocation, health, healthmax, experience, lookbody, "
+            "lookfeet, lookhead, looklegs, looktype, mana, manamax, town_id, conditions, cap, sex) VALUES "
+            "({name}, 1, {acc}, 1, 0, 150, 150, 0, 68, 76, 78, 58, {look}, 55, 55, 1, '', 400, {sex})")
+
+
+def signup(name, email, password, password2, addr, now=None, character="", sex="1"):
+    """Make a new account with its first character (a new account had no way to make one: the client has no
+    create-character button). Returns (ok, message)."""
     now = now or time.time()
     recent = [t for t in _signups.get(addr, []) if now - t < 3600]
     if len(recent) >= 3:
@@ -133,12 +143,21 @@ def signup(name, email, password, password2, addr, now=None):
         return False, "The two passwords are not the same."
     if password.lower() in (name.lower(), email.lower()):
         return False, "The password must not be your account name or e-mail."
+    character = " ".join((character or "").split())
+    if not (3 <= len(character) <= 20 and CHAR_RULE.match(character)):
+        return False, "The character name must be 3 to 20 letters, each word starting with a capital (e.g. Mira or Tom Reed)."
+    if sex not in ("0", "1"):
+        return False, "Please pick male or female."
     if sql(f"SELECT id FROM accounts WHERE name={hexlit(name)} OR email={hexlit(email)} LIMIT 1"):
         return False, "That account name or e-mail is already taken."
+    if sql(f"SELECT id FROM players WHERE name={hexlit(character)} LIMIT 1"):
+        return False, "That character name is already taken."
     sql("INSERT INTO accounts (name, email, password, type, creation) VALUES "
         f"({hexlit(name)}, {hexlit(email)}, {hexlit(hashlib.sha1(password.encode()).hexdigest())}, 1, {int(now)})")
+    acc = sql(f"SELECT id FROM accounts WHERE name={hexlit(name)} LIMIT 1")
+    sql(NEW_CHAR.format(name=hexlit(character), acc=int(acc[0][0]) if acc else 0, look=128 if sex == "1" else 136, sex=int(sex)))
     _signups.setdefault(addr, []).append(now)
-    return True, f"Account {name} is ready. Log in with it in the game client and make your first character."
+    return True, f"Account {name} is ready with your character {character}. Log in with it in the game client."
 
 
 SIGNUP_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
@@ -147,12 +166,16 @@ background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;b
 .msg{{padding:10px;background:#333;border-left:4px solid #c9a227}}</style></head><body><h1>Spirebound</h1><h2>Make an account</h2>
 {msg}<form method="post" action="/signup"><label>Account name (3-20 letters or digits)<input name="name" value="{name}"></label>
 <label>E-mail<input name="email" type="email" value="{email}"></label><label>Password (at least 8 characters)<input name="password" type="password"></label>
-<label>Password again<input name="password2" type="password"></label><button>Make account</button></form></body></html>"""
+<label>Password again<input name="password2" type="password"></label>
+<label>Character name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
+<label><input name="sex" type="radio" value="1" style="width:auto" checked> Male</label>
+<label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
+<button>Make account</button></form></body></html>"""
 
 
-def signup_page(msg="", name="", email=""):
+def signup_page(msg="", name="", email="", character=""):
     box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
-    return SIGNUP_PAGE.format(msg=box, name=html.escape(name), email=html.escape(email))
+    return SIGNUP_PAGE.format(msg=box, name=html.escape(name), email=html.escape(email), character=html.escape(character))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -183,8 +206,10 @@ class Handler(BaseHTTPRequestHandler):
                 if size < 0 or size > MAX_BODY:
                     return self.page(signup_page("That request was too large."))
                 form = {k: v[0] for k, v in parse_qs(self.rfile.read(size).decode("utf-8", "replace")).items()}
-                ok, msg = signup(form.get("name", ""), form.get("email", ""), form.get("password", ""), form.get("password2", ""), addr)
-                return self.page(signup_page(msg, "" if ok else form.get("name", ""), "" if ok else form.get("email", "")))
+                ok, msg = signup(form.get("name", ""), form.get("email", ""), form.get("password", ""), form.get("password2", ""), addr,
+                                 character=form.get("character", ""), sex=form.get("sex", "1"))
+                keep = (lambda k: "" if ok else form.get(k, ""))
+                return self.page(signup_page(msg, keep("name"), keep("email"), keep("character")))
             except Exception as e:
                 print("signup error:", e, flush=True)
                 return self.page(signup_page("Something went wrong. Please try again."))
@@ -248,7 +273,13 @@ def selftest():
         assert not signup("ab", "a@b.cd", "longenough", "longenough", "x")[0]
         assert not signup("friend1", "a@b.cd", "short", "short", "x")[0]
         assert not signup("friend1", "a@b.cd", "longenough", "different", "x")[0]
-        assert signup("friend1", "a@b.cd", "longenough", "longenough", "y")[0]
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="")[0], "a character name is needed"
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="x'; DROP")[0]
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="Mira", sex="2")[0]
+        seen.clear()
+        assert signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="Tom  Reed", sex="0")[0]
+        made = [q for q in seen if q.startswith("INSERT INTO players")]
+        assert made and hexlit("Tom Reed") in made[0] and ", 136, " in made[0], "the first character is made with the account"
         assert "<script>" not in signup_page("<script>x</script>")
     finally:
         sql = real
