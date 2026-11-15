@@ -536,3 +536,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - `art/models/bess.py`: round innkeeper with apron, rolled sleeves, ladle out to the side, rosy cheeks, bun; 4 directions x stand + 8 walk. Results in `art/output/bess/` and Jay's review folder `ART_FOR_JAY/bess` (desktop shortcut "Spirebound Art"). Waiting for Jay's OK.
 - Hunter Brannoch made the same way (`art/models/brannoch.py`): leathers, wolf-pelt mantle, bow on the back, beard, scar. In `ART_FOR_JAY/brannoch`, waiting for Jay's OK.
 - Fisher Corwin made the same way (`art/models/corwin.py`): patched oilskin coat, floppy hat, rod over the shoulder. In `ART_FOR_JAY/corwin`, waiting for Jay's OK.
+- Guide Pell made the same way (`art/models/pell.py`): red tabard, satchel, pennant on a stick, smile. In `ART_FOR_JAY/pell`, waiting for Jay's OK.
