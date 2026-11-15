@@ -1,0 +1,94 @@
+{
+ "name": "veyra",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "hair",
+  "robe",
+  "stole",
+  "collar",
+  "shoe",
+  "hand",
+  "glow"
+ ],
+ "palette": "veyra",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "glow": 3.5,
+   "hand": 2.4,
+   "stole": 1.8,
+   "collar": 1.6,
+   "shoe": 1.6,
+   "hair": 1.2
+  },
+  "thin": {
+   "eye": 3,
+   "glow": 3,
+   "hand": 3,
+   "stole": 3,
+   "shoe": 3
+  },
+  "soft": [
+   [
+    "robe",
+    "stole"
+   ],
+   [
+    "skin",
+    "hair",
+    "eye"
+   ],
+   [
+    "hand",
+    "glow"
+   ],
+   [
+    "collar",
+    "stole"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "robe",
+   "collar",
+   "skin",
+   "hair"
+  ]
+ },
+ "ref": "outfit_136.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
