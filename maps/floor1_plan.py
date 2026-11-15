@@ -338,7 +338,7 @@ _SS, _SP = (("Sproutling", 1),), (("Sproutling", 2),)
 _HS = (("Hopper Toad", 1),)
 GLADE = dict(
     gate=(22, 0), crowd_group=[("Sproutling", 1)],
-    routes={"a": "a1", "b": "b1", "c": "cr", "d": "rt"},
+    routes={"a": "a1", "b": "b1", "c": "c1", "d": "rt"},
     route_names={"a": "The West Grove", "b": "The East Grove", "c": "The Great Tree", "d": "The Root Hollow"},
     levels={
         7: dict(name="Sproutling Glade", box=(0, 0, 44, 56), tree_rings=[(22, 31)], clearings=[

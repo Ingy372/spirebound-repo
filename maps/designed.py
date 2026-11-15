@@ -370,6 +370,8 @@ def check(m):
             for p in r["crowd"] + ([r["start"]] if r["start"] else []):     # players and the tests stand on these
                 if p not in got:
                     problems.append(f"{L['id']}: route {r['name']} spot {p} is not on open, walkable ground")
+                elif m.ground.get(p) in (HOLE, 413, 469) or any(i in (5258, 1956, 1954) for i, _a in m.items.get(p, [])):
+                    problems.append(f"{L['id']}: route {r['name']} spot {p} is on a way up or down")
         xs = [p[0] for p in L["rect"]]; ys = [p[1] for p in L["rect"]]
         edge = {(x, y) for (x, y) in L["rect"] if x in (min(xs), max(xs)) or y in (min(ys), max(ys))}
         leak = [(x, y) for (x, y, z) in got if z == Z and (x, y) in edge and (x, y) not in L["gate"]]

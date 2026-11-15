@@ -8,6 +8,9 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
 
+### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)
+To meet the calm rules (at most 3 monsters able to reach you near the gate, 4 further in), the open-air part of Toad Pond, Sproutling Glade and Waspgrass Fields now holds about 12 monsters each, spread out with quiet stretches between. The other ~36 of each ground are in the cave (or on the hill) below, where they come in pairs and threes. The Ratwarren already works this way. Recommendation: keep it. The surface is the gentle, safe part for new players, and you choose to go down when you want more. If the surface feels too empty when you try it, I can add a few more singles there.
+
 ### Q33. Do the walled hunting grounds look the way you want? (2026-11-13)
 Every ground is now a walled place with ring trails (see the playtest list in WEEKLY_REPORT.md). Up close they read like a wood or a rocky field; from far away they look a little like a hedge maze, because the loops are regular.
 - Recommendation: keep the skeleton (it is what makes botting and sharing work) and let the end-of-project Cowork polish break up the outlines by hand.
