@@ -18,15 +18,15 @@ REFERENCE = "outfit_136.png"
 PROJECTION = "oblique"
 CANVAS_OFFSET = (8, 8)
 PIXEL_RULES = {
-    "weight": {"leaf": 2.2, "bead": 3.0, "eye": 9.0, "glow": 3.5, "hand": 2.4, "stole": 1.8, "collar": 1.6, "shoe": 1.6, "hair": 1.2},
-    "thin": {"leaf": 3, "bead": 2, "eye": 3, "glow": 3, "hand": 3, "stole": 3, "shoe": 3},
+    "weight": {"staff": 3.0, "leaf": 2.2, "bead": 3.0, "eye": 9.0, "glow": 3.5, "hand": 2.4, "stole": 1.8, "collar": 1.6, "shoe": 1.6, "hair": 1.2},
+    "thin": {"staff": 2, "leaf": 3, "bead": 2, "eye": 3, "glow": 3, "hand": 3, "stole": 3, "shoe": 3},
     "soft": [["robe", "stole"], ["skin", "hair", "eye"], ["hand", "glow"], ["collar", "stole"]],
     "no_outline": [],
     "fur": [],
     "selout": ["robe", "collar", "skin", "hair"],
 }
 
-PARTS = ["none", "skin", "eye", "hair", "robe", "stole", "collar", "shoe", "hand", "glow", "leaf", "bead"]
+PARTS = ["none", "skin", "eye", "hair", "robe", "stole", "collar", "shoe", "hand", "glow", "leaf", "bead", "staff"]
 
 HIP_Z, KNEE_LEN, SHIN_LEN = 0.48, 0.24, 0.24
 HIP_Y = 0.066
@@ -64,7 +64,9 @@ def build(model_cls, facing):
     for k in ("l", "r"):
         m.ellipsoid(f"leaf_{k}", "leaf", radii=(0.090, 0.060, 0.018), segments=12, rings=6)
     for i in range(6):
-        m.ellipsoid(f"bead{i}", "bead", radii=(0.016, 0.016, 0.016), segments=8, rings=6)
+        m.ellipsoid(f"bead{i}", "bead", radii=(0.022, 0.022, 0.022), segments=8, rings=6)
+    m.tube("staff", "staff", points=7)
+    m.ellipsoid("staff_leaves", "leaf", radii=(0.060, 0.060, 0.045), segments=12, rings=8)
     m.ellipsoid("head", "skin", radii=HEAD_R)
     m.ellipsoid("hair", "hair", radii=(0.150, 0.150, 0.150))
     m.ellipsoid("hair_long", "hair", radii=(0.070, 0.120, 0.170), segments=12, rings=8)
@@ -154,6 +156,12 @@ def pose(m, t):
         slv = m.objects[f"sleeve_{k}"]
         m.put_segment(f"sleeve_{k}", hand - d * 0.010, elbow, ARM_R * 1.6)
         m.objects[f"hand_{k}"].location = hand + d * 0.020
+        if k == "r":                                       # gnarled staff tilted out from the body
+            lo = hand + Vector((0.080, 0.030, -0.300))
+            hi = hand + Vector((-0.020, -0.200, 0.380))
+            pts = [tuple(lo.lerp(hi, i / 6) + Vector((0.012 * math.sin(i * 2.1), 0, 0))) for i in range(7)]
+            m.set_tube("staff", pts, [0.016, 0.015, 0.016, 0.014, 0.015, 0.016, 0.018])
+            m.objects["staff_leaves"].location = hi + Vector((0, 0, 0.030))
         if k == "l":
             m.objects["glow"].location = hand + d * 0.040 + Vector((0, 0, 0.020))
 

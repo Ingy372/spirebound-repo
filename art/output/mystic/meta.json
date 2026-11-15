@@ -12,7 +12,8 @@
   "hand",
   "glow",
   "leaf",
-  "bead"
+  "bead",
+  "staff"
  ],
  "palette": "mystic",
  "walk_frames": 8,
@@ -45,6 +46,7 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
+   "staff": 3.0,
    "leaf": 2.2,
    "bead": 3.0,
    "eye": 9.0,
@@ -56,6 +58,7 @@
    "hair": 1.2
   },
   "thin": {
+   "staff": 2,
    "leaf": 3,
    "bead": 2,
    "eye": 3,
