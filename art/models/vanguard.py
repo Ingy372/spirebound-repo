@@ -18,9 +18,9 @@ REFERENCE = "outfit_128.png"
 PROJECTION = "oblique"
 CANVAS_OFFSET = (8, 8)
 PIXEL_RULES = {
-    "weight": {"eye": 9.0, "mouth": 5.0, "hand": 2.4, "stick": 3.0, "pennant": 2.6, "strap": 2.2, "satchel": 1.6,
+    "weight": {"belt": 2.0, "buckle": 4.0, "crest": 3.0, "eye": 9.0, "mouth": 5.0, "hand": 2.4, "stick": 3.0, "pennant": 2.6, "strap": 2.2, "satchel": 1.6,
                "trim": 2.0, "boot": 1.4},
-    "thin": {"eye": 3, "mouth": 2, "hand": 3, "stick": 2, "pennant": 3, "strap": 2, "trim": 3},
+    "thin": {"belt": 3, "buckle": 2, "crest": 3, "eye": 3, "mouth": 2, "hand": 3, "stick": 2, "pennant": 3, "strap": 2, "trim": 3},
     "soft": [["shirt", "tabard", "trim", "strap", "satchel"], ["skin", "hair", "eye", "mouth"], ["hand", "skin"],
              ["pants", "boot"], ["stick", "pennant"]],
     "no_outline": [],
@@ -29,7 +29,7 @@ PIXEL_RULES = {
 }
 
 PARTS = ["none", "skin", "eye", "mouth", "hair", "shirt", "tabard", "trim", "strap", "satchel", "pants", "boot",
-         "hand", "stick", "pennant"]
+         "hand", "stick", "pennant", "belt", "buckle", "crest"]
 
 HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
 HIP_Y = 0.068
@@ -67,6 +67,10 @@ def build(model_cls, facing):
     m.ellipsoid("satchel", "satchel", radii=(0.120, 0.022, 0.150), segments=16, rings=8)   # kite shield
     for k in ("l", "r"):
         m.ellipsoid(f"pauldron_{k}", "shirt", radii=(0.070, 0.070, 0.055), segments=12, rings=8)
+    m.frustum("belt", "belt", top_ratio=1.0, segments=18)
+    m.ellipsoid("buckle", "buckle", radii=(0.014, 0.026, 0.020), segments=8, rings=6)
+    m.ellipsoid("gorget", "shirt", radii=(0.085, 0.120, 0.040), segments=14, rings=8)
+    m.ellipsoid("crest", "crest", radii=(0.008, 0.050, 0.070), segments=10, rings=8)
     m.ellipsoid("head", "skin", radii=HEAD_R)
     m.ellipsoid("hair", "hair", radii=(0.152, 0.152, 0.142))
     m.ellipsoid("tuft", "hair", radii=(0.050, 0.060, 0.040), segments=10, rings=6)
@@ -124,6 +128,11 @@ def pose(m, t):
     cape.location = Vector((-0.125, 0, 0.680)) + up
     for s_, k in ((1, "l"), (-1, "r")):
         m.objects[f"pauldron_{k}"].location = Vector((0.0, 0.165 * s_, 0.835)) + up
+    bl = m.objects["belt"]
+    bl.location = Vector((0, 0, 0.555)) + up
+    bl.scale = (TORSO_R[0] * 1.10, TORSO_R[1] * 1.04, 0.040)
+    m.objects["buckle"].location = Vector((0.130, 0, 0.575)) + up
+    m.objects["gorget"].location = Vector((0.010, 0, 0.860)) + up
     head = HEAD + up
     m.objects["head"].location = head
     m.objects["hair"].location = head + Vector((-0.050, 0, 0.045))
@@ -158,6 +167,10 @@ def pose(m, t):
             sh_.rotation_mode = "XYZ"
             sh_.rotation_euler = Euler((0.0, 0.10, 0.25))
             sh_.location = hand + Vector((0.050, 0.050, -0.010))
+            cr = m.objects["crest"]
+            cr.rotation_mode = "XYZ"
+            cr.rotation_euler = sh_.rotation_euler
+            cr.location = sh_.location + Vector((0.004, 0.024, 0.0))
         if k == "r":
             fwd = Vector((0.70, -0.10, 0.70)).normalized()
             m.put_segment("pennant", hand - fwd * 0.040, hand + fwd * 0.030, 0.016)
