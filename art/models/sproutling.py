@@ -36,11 +36,11 @@ def build(model_cls, facing):
     m.cone("tip", "bulb", segments=12)
     for k in ("l", "r"):
         m.ellipsoid(f"eye_{k}", "eye", radii=(0.016, 0.016, 0.024), segments=8, rings=6)
-        m.ellipsoid(f"arm_{k}", "leaf", radii=(0.100, 0.028, 0.050), segments=12, rings=6)
+        m.ellipsoid(f"arm_{k}", "leaf", radii=(0.125, 0.034, 0.062), segments=12, rings=6)
         m.capsule(f"foot_{k}", "root", segments=8)
     m.tube("stem", "sprout", points=6)
-    m.ellipsoid("sleaf_a", "leaf", radii=(0.060, 0.026, 0.012), segments=10, rings=6)
-    m.ellipsoid("sleaf_b", "leaf", radii=(0.052, 0.022, 0.012), segments=10, rings=6)
+    m.ellipsoid("sleaf_a", "leaf", radii=(0.085, 0.036, 0.016), segments=10, rings=6)
+    m.ellipsoid("sleaf_b", "leaf", radii=(0.075, 0.032, 0.016), segments=10, rings=6)
     return m
 
 
@@ -63,7 +63,7 @@ def pose(m, t):
         arm = m.objects[f"arm_{k}"]
         arm.rotation_mode = "XYZ"
         arm.rotation_euler = Euler((0.5 * s + flap * 0.5 * s, 0.4 + flap * 0.3, 0.3 * s))
-        arm.location = bulb + Vector((0.020, 0.185 * s, -0.020))
+        arm.location = bulb + Vector((0.020, 0.205 * s, -0.010))
         ph = a + (0 if s > 0 else math.pi)
         fx = 0.045 * math.cos(ph) if walking else 0.0
         fz = 0.025 * max(0.0, math.sin(ph)) if walking else 0.0
