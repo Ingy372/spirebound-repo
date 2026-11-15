@@ -81,6 +81,27 @@ def hang(m, x0, y0, w, h, z, every=5, h_item=LAMP_H, v_item=LAMP_V, offset=2):
             m.put(x0, y, z, v_item)
 
 
+def hang_cave(m, x0, y0, w, h, z, spacing=7, h_item=TORCH_H, v_item=TORCH_V):
+    """Torches on natural cave walls that face the cave: on a north wall (floor south of it) or a west wall (floor east
+    of it), so they are seen from inside, at least `spacing` tiles apart. Caves are pitch dark for a player without a
+    light; these let a new player see the room."""
+    north, west = CAVE_STRAIGHT["S"], CAVE_STRAIGHT["E"]
+    placed = []
+    for y in range(y0, y0 + h):
+        for x in range(x0, x0 + w):
+            ids = [i for i, _a in m.items.get((x, y, z), [])]
+            if len(ids) != 1 or ids[0] not in (north, west):
+                continue
+            face = (x, y + 1) if ids[0] == north else (x + 1, y)
+            if not floor_free(m, face[0], face[1], z) and (face[0], face[1], z) not in m.ground:
+                continue
+            if any(max(abs(x - a), abs(y - b)) < spacing for a, b in placed):
+                continue
+            m.put(x, y, z, h_item if ids[0] == north else v_item)
+            placed.append((x, y))
+    return len(placed)
+
+
 def hang_maze(m, x0, y0, w, h, z, share=0.08, h_item=LAMP_H, v_item=LAMP_V):
     """Lamps on maze walls that face a corridor (a horizontal piece with floor south of it, a vertical one with floor
     east of it)."""

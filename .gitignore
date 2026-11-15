@@ -43,3 +43,4 @@ backups/
 /art/output/*/passes/
 /art/output/*/compare/
 *.blend1
+client/modules/game_autopilot/run.json

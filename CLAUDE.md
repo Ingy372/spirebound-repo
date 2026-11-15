@@ -43,6 +43,7 @@ Repo: GitHub `Ingy372/spirebound-repo` (private). Jay's local copy: `C:\Users\Mu
 - **Pins:** Canary v3.6.1 (protocol 15.11), OTClient Redemption 4.2. Change a pin only on purpose, and log why.
 - **Git:** work on `main` and push directly (Jay is new to pull requests; keep it simple). Commit messages are plain English, e.g. `Add the Floor 1 boss and the Floor 2 unlock`.
 - **Testing:** Claude's cloud workspace runs the Linux build of the same server for automated tests. Jay's PC runs the Windows build for playtests.
+- **Play-testing in the client (Jay, 2026-11-14: clicking through the client was "not the best use of our time"):** don't drive the client by hand with screenshots. Use the autopilot: `python tools/autopilot.py <route>` (routes in `tools/autopilot_routes/`, client module `client/modules/game_autopilot`). It logs in a Pilot test character, plays the route, and prints a report by place (monsters in sight, next to you, damage, kills) plus screenshots. Needs the server running. Feel and looks are Jay's to judge.
 - **Ticking tasks (from REVIEW.md 9.4):** tick a roadmap task only when a test goes through the real game path (the actual event, NPC or map), not just a pure rule. Anything cut from a task becomes a new open task, never just a note.
 - **Jay's preferences:** short, plain updates; turn technical work into clear steps he can act on; no code-level instructions.
 

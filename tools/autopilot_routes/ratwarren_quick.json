@@ -1,0 +1,21 @@
+{
+  "name": "ratwarren_quick",
+  "about": "Two-minute check of the Ratwarren: a look at the Yard, the Warren landing and the nest, with a short hunt in each.",
+  "character": "Pilot Vanguard",
+  "timeout": 400,
+  "steps": [
+    {"do": "jump", "to": "loop_starter_west_a", "note": "Yard"},
+    {"do": "heal"},
+    {"do": "hunt", "seconds": 20},
+    {"do": "shot", "name": "rwq_yard"},
+    {"do": "jump", "to": [1144, 1271, 8], "note": "Warren landing"},
+    {"do": "wait", "seconds": 2},
+    {"do": "shot", "name": "rwq_landing"},
+    {"do": "hunt", "seconds": 25},
+    {"do": "jump", "to": [1164, 1330, 8], "note": "the nest"},
+    {"do": "wait", "seconds": 2},
+    {"do": "shot", "name": "rwq_nest"},
+    {"do": "hunt", "seconds": 30},
+    {"do": "shot", "name": "rwq_nest_after"}
+  ]
+}

@@ -170,8 +170,11 @@ def build(m, c):
         x0_, y0_, w_, h_ = min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1
         avoid = DG.keep_clear(m, z) | {(a[0] + i, a[1] + j) for pair in L["landings"] for a in pair if a[2] == z
                                        for i in (-1, 0, 1) for j in (-1, 0, 1)}
-        DG.scatter(m, x0_, y0_, w_, h_, z, DG.STALAGMITES, len(cells) // 45, solid=True, avoid=avoid)
-        DG.scatter(m, x0_, y0_, w_, h_, z, DG.BONES + DG.DEBRIS, len(cells) // 30, avoid=avoid)
+        # fewer than at first: the client walk showed the Warren landing cluttered (2026-11-14)
+        DG.scatter(m, x0_, y0_, w_, h_, z, DG.STALAGMITES, len(cells) // 80, solid=True, avoid=avoid)
+        DG.scatter(m, x0_, y0_, w_, h_, z, DG.BONES + DG.DEBRIS, len(cells) // 50, avoid=avoid)
+        # wall torches: the autopilot showed a new player sees only 2-3 tiles in the dark Warren (2026-11-14)
+        DG.hang_cave(m, x0_, y0_, w_, h_, z, spacing=5)
     # ---- named points used by the game (crowd system, tests, guide)
     L["camp"], L["centre"] = (hx, hy), (hx, hy - 6)
     m.points["camp_" + gid] = (hx, hy, Z)

@@ -32,3 +32,22 @@ VALUES
  ('Test Mystic', 1, @acc, 30, 2, 320, 320, 368300, 68, 76, 78, 58, 131, 600, 600, @town, '', 550, 1),
  ('Test Hardcore', 1, @acc, 30, 4, 560, 560, 368300, 113, 115, 95, 39, 128, 150, 150, @town, '', 700, 1)
 ON DUPLICATE KEY UPDATE `account_id` = @acc, `town_id` = @town;
+
+-- The test autopilot's characters (tools/autopilot.py): level 2, a new player in the Ratwarren (made for levels 1-4).
+-- Experience 100 = level 2. Running this file again puts them back to a fresh level 2 with starting skills (a test must
+-- not get easier as the test characters train). Their own NORMAL account (type 1), like a real player's.
+-- /pilot only works for the account whose e-mail is autopilot@localhost; the sign-up page never accepts an e-mail
+-- without a real domain, so no player can make that account.
+INSERT INTO `accounts` (`name`, `email`, `password`, `type`, `creation`)
+VALUES ('autopilot', 'autopilot@localhost', '581b7c21c14889b414d7c1cb77e8deb69f7292b6', 1, UNIX_TIMESTAMP())
+ON DUPLICATE KEY UPDATE `password` = VALUES(`password`), `type` = 1;
+SET @pilot = (SELECT `id` FROM `accounts` WHERE `name` = 'autopilot');
+INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
+VALUES
+ ('Pilot Vanguard', 1, @pilot, 2, 4, 165, 165, 100, 68, 76, 78, 58, 128, 60, 60, @town, '', 425, 1),
+ ('Pilot Ranger', 1, @pilot, 2, 3, 160, 160, 100, 68, 76, 78, 58, 129, 70, 70, @town, '', 420, 1)
+ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALUES(`level`), `experience` = VALUES(`experience`),
+ `health` = VALUES(`healthmax`), `healthmax` = VALUES(`healthmax`), `mana` = VALUES(`manamax`), `manamax` = VALUES(`manamax`),
+ `skill_fist` = 10, `skill_fist_tries` = 0, `skill_club` = 10, `skill_club_tries` = 0, `skill_sword` = 10, `skill_sword_tries` = 0,
+ `skill_axe` = 10, `skill_axe_tries` = 0, `skill_dist` = 10, `skill_dist_tries` = 0, `skill_shielding` = 10, `skill_shielding_tries` = 0,
+ `posx` = 0, `posy` = 0, `posz` = 0;

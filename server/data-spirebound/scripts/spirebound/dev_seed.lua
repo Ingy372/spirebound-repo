@@ -5,6 +5,8 @@ local SEEDED = {
 	["Test Ranger"] = { mode = Difficulty.NORMAL, kit = { { 3350, 1 }, { 3447, 200 }, { 3277, 2 } } },
 	["Test Arcanist"] = { mode = Difficulty.NORMAL, kit = { { 3074, 1 } } },
 	["Test Mystic"] = { mode = Difficulty.NORMAL, kit = { { 3066, 1 } } },
+	["Pilot Vanguard"] = { mode = Difficulty.NORMAL, kit = { { 3264, 1 }, { 3412, 1 } } }, -- the test autopilot (tools/autopilot.py)
+	["Pilot Ranger"] = { mode = Difficulty.NORMAL, kit = { { 3350, 1 }, { 3447, 200 }, { 3277, 2 } } },
 	["Test Hardcore"] = { mode = Difficulty.HARDCORE, kit = { { 3264, 1 }, { 3412, 1 } } },
 }
 local COMMON = { { 3361, 1 }, { 3355, 1 }, { 3559, 1 }, { 3552, 1 }, { 3582, 5 }, { 266, 20 }, { 268, 20 }, { 3003, 1 }, { 3457, 1 } }

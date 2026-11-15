@@ -1,0 +1,12 @@
+Module
+  name: game_autopilot
+  description: Spirebound test autopilot - plays a test route on its own and writes a log (tools/autopilot.py). Does nothing unless a run file is present.
+  author: Spirebound
+  website: https://github.com/Ingy372/spirebound-repo
+  sandboxed: false
+  autoload: true
+  autoload-priority: 1200
+  dependencies: [ client_entergame, game_interface ]
+  scripts: [ autopilot ]
+  @onLoad: Autopilot.init()
+  @onUnload: Autopilot.terminate()

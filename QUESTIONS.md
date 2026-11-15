@@ -160,6 +160,9 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 
 ---
 
+### Q40. Should Field Rats be able to hurt a brand-new vanguard? (2026-11-14)
+The test autopilot played the Ratwarren with a fresh level 2 vanguard (sword and the starting wooden shield). Four rats stood next to it for half a minute and it never lost a single hit point: the shield blocked every bite. Rangers, arcanists and mystics have no shield and will take some damage. Recommendation: keep it. It's the very first ground, and in the original game rats barely scratch a knight too. The danger starts at Toad Pond. If you'd like rats to bite a little, I'd raise their bite slightly rather than add more rats.
+
 ## Answered
 
 ### Q37. Cavebot on the new solo cave and hill levels? (2026-11-14, from FLOOR1_HUNTING_PLAN.md)
