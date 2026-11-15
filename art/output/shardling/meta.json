@@ -1,0 +1,65 @@
+{
+ "name": "shardling",
+ "parts": [
+  "none",
+  "core",
+  "glow",
+  "shard"
+ ],
+ "palette": "shardling",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "core": 4.0,
+   "glow": 1.0,
+   "shard": 1.8
+  },
+  "thin": {
+   "core": 3,
+   "shard": 3
+  },
+  "soft": [
+   [
+    "core",
+    "glow"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "shard"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  0,
+  0
+ ]
+}

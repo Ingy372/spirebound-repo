@@ -32,7 +32,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 | [~] | `mon_bristle_boar_*` (drafted by the pipeline, in ART_FOR_JAY/boar, waiting for Jay's OK) | 32×32, 12 | A wild boar with dark bristly fur, short tusks, angry red eyes. |
 | [~] | `mon_meadow_wolf_*` (drafted by the pipeline, in ART_FOR_JAY/wolf, needs another pass: narrow from the front, no pale belly yet) | 32×32, 12 | A lean grey-brown wolf with a pale belly. |
 | [ ] | `mon_grey_alpha_*` | 32×32, 12 | A bigger silver-grey wolf with a scarred face and a darker mane (elite version of the wolf). |
-| [ ] | `mon_field_shardling_*` | 32×32, 12 | A small creature made of floating pale-blue crystal shards around a glowing core. |
+| [~] | `mon_field_shardling_*` (drafted by the pipeline, in ART_FOR_JAY/shardling, waiting for Jay's OK) | 32×32, 12 | A small creature made of floating pale-blue crystal shards around a glowing core. |
 | [~] | `mon_road_bandit_*` (drafted by the pipeline, in ART_FOR_JAY/bandit, waiting for Jay's OK) | 32×32, 12 | A human bandit with a brown hood, a face scarf and a short sword. |
 | [~] | `mon_bandit_captain_*` (drafted by the pipeline, in ART_FOR_JAY/captain, waiting for Jay's OK) | 32×32, 12 | A bandit leader with a red sash, a feathered hat and a curved sabre. |
 | [ ] | `mon_thornsnap_*` | 32×32, 12 | A snapping plant with a thorny jaw-like flower head on a crawling vine body. |
