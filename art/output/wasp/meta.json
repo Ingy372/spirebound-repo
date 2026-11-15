@@ -1,0 +1,92 @@
+{
+ "name": "wasp",
+ "parts": [
+  "none",
+  "thorax",
+  "abdomen",
+  "stripe",
+  "head",
+  "face",
+  "eye",
+  "stinger",
+  "wing",
+  "leg",
+  "antenna"
+ ],
+ "palette": "wasp",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 4.0,
+   "stinger": 4.0,
+   "leg": 2.4,
+   "antenna": 3.0,
+   "wing": 1.4,
+   "stripe": 1.2,
+   "head": 1.4
+  },
+  "thin": {
+   "eye": 3,
+   "stinger": 2,
+   "leg": 2,
+   "antenna": 2,
+   "wing": 4
+  },
+  "soft": [
+   [
+    "thorax",
+    "abdomen",
+    "stripe",
+    "head",
+    "face"
+   ],
+   [
+    "head",
+    "eye",
+    "face"
+   ]
+  ],
+  "no_outline": [
+   "antenna"
+  ],
+  "fur": [
+   "thorax"
+  ],
+  "selout": [
+   "abdomen",
+   "thorax"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  0,
+  0
+ ]
+}
