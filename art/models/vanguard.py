@@ -66,7 +66,7 @@ def build(model_cls, facing):
     m.box("strap", "strap", size=(0.030, 0.230, 0.300))          # short cape (behind)
     m.ellipsoid("satchel", "satchel", radii=(0.120, 0.022, 0.150), segments=16, rings=8)   # kite shield
     for k in ("l", "r"):
-        m.ellipsoid(f"pauldron_{k}", "shirt", radii=(0.070, 0.070, 0.055), segments=12, rings=8)
+        m.ellipsoid(f"pauldron_{k}", "shirt", radii=(0.088, 0.085, 0.064), segments=12, rings=8)
     m.frustum("belt", "belt", top_ratio=1.0, segments=18)
     m.ellipsoid("buckle", "buckle", radii=(0.014, 0.026, 0.020), segments=8, rings=6)
     m.ellipsoid("gorget", "shirt", radii=(0.085, 0.120, 0.040), segments=14, rings=8)
@@ -127,7 +127,7 @@ def pose(m, t):
     cape.rotation_euler = Euler((0.0, 0.18 + (0.06 * abs(math.sin(a)) if walking else 0.0), 0.0))
     cape.location = Vector((-0.125, 0, 0.680)) + up
     for s_, k in ((1, "l"), (-1, "r")):
-        m.objects[f"pauldron_{k}"].location = Vector((0.0, 0.165 * s_, 0.835)) + up
+        m.objects[f"pauldron_{k}"].location = Vector((0.0, 0.180 * s_, 0.845)) + up
     bl = m.objects["belt"]
     bl.location = Vector((0, 0, 0.555)) + up
     bl.scale = (TORSO_R[0] * 1.10, TORSO_R[1] * 1.04, 0.040)
@@ -172,7 +172,7 @@ def pose(m, t):
             cr.rotation_euler = sh_.rotation_euler
             cr.location = sh_.location + Vector((0.004, 0.024, 0.0))
         if k == "r":
-            fwd = Vector((0.70, -0.10, 0.70)).normalized()
+            fwd = Vector((0.60, -0.55, 0.60)).normalized()      # angled forward and out from the body
             m.put_segment("pennant", hand - fwd * 0.040, hand + fwd * 0.030, 0.016)
             m.put_segment("stick", hand + fwd * 0.030, hand + fwd * 0.300, 0.020)
 
