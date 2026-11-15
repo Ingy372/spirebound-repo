@@ -560,3 +560,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Banker made (`art/models/banker.py`, on Vesper): navy coat, spectacles, ledger. In `ART_FOR_JAY/banker`.
 - Merchant made (`art/models/merchant.py`, a Bess variant): brown tunic, leather apron, coin pouch. In `ART_FOR_JAY/merchant`.
 - Registrar made (`art/models/registrar.py`, a banker variant): clerk coat, ledger. In `ART_FOR_JAY/registrar`.
+- Bounty Warden made (`art/models/warden.py`, a Vesper variant): dark red coat, black hat, wanted-poster scroll. In `ART_FOR_JAY/warden`.

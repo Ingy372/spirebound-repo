@@ -49,7 +49,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 | ✓ | File names | Size / frames | Grok prompt (after the style lock) |
 |---|---|---|---|
 | [ ] | `mon_old_tusk_*` | 32×32, 12 | A huge old wild boar with one broken tusk, grey-streaked bristles and scars, angry and battle-worn (secret mini-boss). |
-| [ ] | `npc_bounty_warden.png`, `npc_guildwarden.png`, `npc_quartermaster.png` | 32×32, 1 frame each (facing south) | Town NPCs: a stern bounty warden in a dark red coat with a wanted-poster scroll; a guild official in blue robes holding a banner staff; a quartermaster in a leather apron with a crate of arrows and potions. |
+| [ ] | `npc_bounty_warden.png` (drafted by the pipeline, in ART_FOR_JAY/warden, waiting for Jay's OK), `npc_guildwarden.png`, `npc_quartermaster.png` | 32×32, 1 frame each (facing south) | Town NPCs: a stern bounty warden in a dark red coat with a wanted-poster scroll; a guild official in blue robes holding a banner staff; a quartermaster in a leather apron with a crate of arrows and potions. |
 | [ ] | `mon_mire_toad_*`, `mon_black_crawler_*` | 32×32, 12 each | A bloated dark-green swamp toad dripping slime; a black, many-legged cave crawler with a shiny carapace (Underkeep monsters). |
 | [ ] | `summon_ember_sprite_*`, `summon_wolf_companion_*` | 32×32, 12 each | A small floating fire spirit with a bright core; a loyal grey wolf with a green leaf collar (friendly spell summons). |
 
