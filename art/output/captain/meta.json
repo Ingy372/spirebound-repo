@@ -1,0 +1,116 @@
+{
+ "name": "captain",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "hair",
+  "beard",
+  "pelt",
+  "tunic",
+  "belt",
+  "pants",
+  "boot",
+  "hand",
+  "blade",
+  "hilt",
+  "hat",
+  "feather",
+  "sash"
+ ],
+ "palette": "captain",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "hat": 1.2,
+   "feather": 3.0,
+   "sash": 2.0,
+   "eye": 9.0,
+   "hand": 2.4,
+   "blade": 3.0,
+   "hilt": 2.6,
+   "belt": 2.0,
+   "pelt": 1.4,
+   "boot": 1.4,
+   "beard": 1.8
+  },
+  "thin": {
+   "feather": 3,
+   "sash": 3,
+   "eye": 3,
+   "hand": 3,
+   "blade": 2,
+   "hilt": 2,
+   "belt": 3
+  },
+  "soft": [
+   [
+    "tunic",
+    "belt",
+    "sash"
+   ],
+   [
+    "skin",
+    "hair",
+    "beard",
+    "eye"
+   ],
+   [
+    "hat",
+    "feather"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "pants",
+    "boot"
+   ],
+   [
+    "blade",
+    "hilt"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "tunic",
+   "pelt",
+   "skin",
+   "hair"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
