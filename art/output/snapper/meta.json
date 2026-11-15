@@ -1,0 +1,89 @@
+{
+ "name": "snapper",
+ "parts": [
+  "none",
+  "shell",
+  "rim",
+  "reed",
+  "head",
+  "beak",
+  "eye",
+  "claw",
+  "leg"
+ ],
+ "palette": "snapper",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "beak": 3.0,
+   "reed": 2.6,
+   "claw": 2.0,
+   "leg": 1.8,
+   "rim": 1.3
+  },
+  "thin": {
+   "eye": 3,
+   "beak": 3,
+   "reed": 2,
+   "claw": 3,
+   "leg": 3
+  },
+  "soft": [
+   [
+    "shell",
+    "rim"
+   ],
+   [
+    "head",
+    "beak",
+    "eye"
+   ],
+   [
+    "claw",
+    "leg"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [
+   "shell"
+  ],
+  "selout": [
+   "shell",
+   "head",
+   "claw"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  0,
+  0
+ ]
+}
