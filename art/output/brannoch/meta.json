@@ -1,0 +1,111 @@
+{
+ "name": "brannoch",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "scar",
+  "hair",
+  "beard",
+  "pelt",
+  "tunic",
+  "belt",
+  "pants",
+  "boot",
+  "hand",
+  "bow",
+  "string"
+ ],
+ "palette": "brannoch",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "scar": 6.0,
+   "hand": 2.4,
+   "bow": 2.6,
+   "string": 2.0,
+   "belt": 2.0,
+   "pelt": 1.4,
+   "boot": 1.4,
+   "beard": 1.6
+  },
+  "thin": {
+   "eye": 3,
+   "scar": 2,
+   "hand": 3,
+   "bow": 2,
+   "string": 2,
+   "belt": 3
+  },
+  "soft": [
+   [
+    "tunic",
+    "belt"
+   ],
+   [
+    "skin",
+    "hair",
+    "beard",
+    "eye",
+    "scar"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "pants",
+    "boot"
+   ],
+   [
+    "bow",
+    "string"
+   ]
+  ],
+  "no_outline": [
+   "string"
+  ],
+  "fur": [
+   "pelt"
+  ],
+  "selout": [
+   "tunic",
+   "pelt",
+   "skin",
+   "hair"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  8,
+  8
+ ]
+}
