@@ -157,8 +157,8 @@ def pose(m, t):
         m.objects[f"hand_{k}"].location = hand + d * 0.018
         m.put_segment(f"bracer_{k}", hand - d * 0.100, hand - d * 0.020, ARM_R * 1.15)
         if k == "l":                                       # longbow held upright in the left hand
-            lo = hand + Vector((0.030, 0.020, -0.300))
-            hi = hand + Vector((0.030, 0.020, 0.330))
+            lo = hand + Vector((0.080, -0.040, -0.260))      # tilted forward and out, away from the body
+            hi = hand + Vector((-0.020, 0.200, 0.300))
             pts, radii = [], []
             for i in range(9):
                 u = i / 8
