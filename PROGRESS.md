@@ -545,3 +545,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Road Bandit made (`art/models/bandit.py`, on Brannoch's body): hood, face scarf, short sword. In `ART_FOR_JAY/bandit`, waiting for Jay's OK.
 - Bandit Captain made (`art/models/captain.py`): feathered hat, red sash, beard, curved sabre. In `ART_FOR_JAY/captain`, waiting for Jay's OK.
 - Meadow Wolf drafted (`art/models/wolf.py`, from the rat): reads as a wolf from the side, still narrow from the front and missing the pale belly; marked for another pass. In `ART_FOR_JAY/wolf`.
+- Sproutling made (`art/models/sproutling.py`): bulb body, leaf arms, sprout, waddle. In `ART_FOR_JAY/sproutling`, waiting for Jay's OK.

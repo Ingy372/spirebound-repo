@@ -1,0 +1,76 @@
+{
+ "name": "sproutling",
+ "parts": [
+  "none",
+  "bulb",
+  "base",
+  "eye",
+  "leaf",
+  "sprout",
+  "root"
+ ],
+ "palette": "sproutling",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "leaf": 2.0,
+   "sprout": 2.6,
+   "root": 2.0
+  },
+  "thin": {
+   "eye": 3,
+   "leaf": 3,
+   "sprout": 2,
+   "root": 3
+  },
+  "soft": [
+   [
+    "bulb",
+    "base"
+   ],
+   [
+    "sprout",
+    "leaf"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "bulb",
+   "leaf"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  6,
+  6
+ ]
+}
