@@ -24,7 +24,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 |---|---|---|---|
 | [~] | `outfit_vanguard_*` (first draft by the pipeline, in ART_FOR_JAY/vanguard; needs a second pass for more armour detail) | 32×32, 12 | A sturdy armored sword knight in steel plate with a blue tabard and a kite shield, short cape, helmetless with short hair. Walking cycle, 4 directions. |
 | [~] | `outfit_ranger_*` (first draft by the pipeline, in ART_FOR_JAY/ranger; needs a second pass) | 32×32, 12 | A nimble ranger in green leather and a hooded cloak, quiver on the back, bracers. Walking cycle, 4 directions. |
-| [ ] | `outfit_arcanist_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A battle mage in deep red robes with gold trim and a high collar, glowing runes on the sleeves. Walking cycle, 4 directions. |
+| [~] | `outfit_arcanist_*` (first draft by the pipeline, in ART_FOR_JAY/arcanist; needs a second pass) | 32×32, 12 | A battle mage in deep red robes with gold trim and a high collar, glowing runes on the sleeves. Walking cycle, 4 directions. |
 | [ ] | `outfit_mystic_{s,e,n,w}_{0,1,2}.png` | 32×32, 12 | A nature mystic in pale green and white robes, leaf-shaped shoulder pieces, wooden beads. Walking cycle, 4 directions. |
 | [x] | `mon_field_rat_*` (made by the pipeline, approved by Jay 2026-11-14) | 32×32, 12 | A plump brown field rat with a pink tail, harmless-looking. |
 | [~] | `mon_hopper_toad_*` (drafted by the pipeline, in ART_FOR_JAY/toad, waiting for Jay's OK) | 32×32, 12 | A fat green-and-yellow toad with big eyes, mid-hop pose for walking frames. |
