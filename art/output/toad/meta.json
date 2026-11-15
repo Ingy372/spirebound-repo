@@ -1,0 +1,81 @@
+{
+ "name": "toad",
+ "parts": [
+  "none",
+  "body",
+  "belly",
+  "spot",
+  "eye",
+  "pupil",
+  "leg",
+  "foot"
+ ],
+ "palette": "toad",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 4.0,
+   "pupil": 9.0,
+   "spot": 2.0,
+   "leg": 1.8,
+   "foot": 2.0,
+   "belly": 1.2
+  },
+  "thin": {
+   "pupil": 3,
+   "eye": 3,
+   "spot": 3,
+   "leg": 3,
+   "foot": 3
+  },
+  "soft": [
+   [
+    "body",
+    "belly",
+    "spot"
+   ],
+   [
+    "eye",
+    "pupil"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "selout": [
+   "body",
+   "eye"
+  ]
+ },
+ "ref": "rat_client.png",
+ "canvas_offset": [
+  0,
+  0
+ ]
+}
