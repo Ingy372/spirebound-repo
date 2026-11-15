@@ -29,7 +29,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 | [x] | `mon_field_rat_*` (made by the pipeline, approved by Jay 2026-11-14) | 32×32, 12 | A plump brown field rat with a pink tail, harmless-looking. |
 | [~] | `mon_hopper_toad_*` (drafted by the pipeline, in ART_FOR_JAY/toad, waiting for Jay's OK) | 32×32, 12 | A fat green-and-yellow toad with big eyes, mid-hop pose for walking frames. |
 | [~] | `mon_sproutling_*` (drafted by the pipeline, in ART_FOR_JAY/sproutling, waiting for Jay's OK) | 32×32, 12 | A small walking plant creature, a bulb body with two leaf arms and a sprout on its head. |
-| [ ] | `mon_bristle_boar_*` | 32×32, 12 | A wild boar with dark bristly fur, short tusks, angry red eyes. |
+| [~] | `mon_bristle_boar_*` (drafted by the pipeline, in ART_FOR_JAY/boar, waiting for Jay's OK) | 32×32, 12 | A wild boar with dark bristly fur, short tusks, angry red eyes. |
 | [~] | `mon_meadow_wolf_*` (drafted by the pipeline, in ART_FOR_JAY/wolf, needs another pass: narrow from the front, no pale belly yet) | 32×32, 12 | A lean grey-brown wolf with a pale belly. |
 | [ ] | `mon_grey_alpha_*` | 32×32, 12 | A bigger silver-grey wolf with a scarred face and a darker mane (elite version of the wolf). |
 | [ ] | `mon_field_shardling_*` | 32×32, 12 | A small creature made of floating pale-blue crystal shards around a glowing core. |

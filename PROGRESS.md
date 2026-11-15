@@ -546,3 +546,4 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Bandit Captain made (`art/models/captain.py`): feathered hat, red sash, beard, curved sabre. In `ART_FOR_JAY/captain`, waiting for Jay's OK.
 - Meadow Wolf drafted (`art/models/wolf.py`, from the rat): reads as a wolf from the side, still narrow from the front and missing the pale belly; marked for another pass. In `ART_FOR_JAY/wolf`.
 - Sproutling made (`art/models/sproutling.py`): bulb body, leaf arms, sprout, waddle. In `ART_FOR_JAY/sproutling`, waiting for Jay's OK.
+- Bristle Boar made (`art/models/boar.py`, from the rat): bristle ridge, tusks, red eyes. In `ART_FOR_JAY/boar`, waiting for Jay's OK.
