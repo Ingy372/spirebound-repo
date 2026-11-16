@@ -15,6 +15,10 @@
   "paw_far",
   "tail_base",
   "tail_tip",
+  "saddle",
+  "bib",
+  "brow",
+  "line",
   "mane",
   "scar"
  ],
@@ -59,11 +63,15 @@
    "leg_far": 1.2,
    "ear": 2.2,
    "snout": 1.3,
-   "mane": 1.5,
+   "saddle": 1.7,
+   "bib": 1.5,
+   "brow": 4.0,
+   "line": 3.0,
+   "mane": 1.6,
    "scar": 4.0
   },
   "thin": {
-   "eye": 3,
+   "eye": 2,
    "tail_tip": 3,
    "tail_base": 3,
    "nose": 3,
@@ -72,7 +80,11 @@
    "paw_near": 3,
    "paw_far": 4,
    "ear": 4,
-   "mane": 4,
+   "saddle": 3,
+   "bib": 3,
+   "brow": 2,
+   "line": 2,
+   "mane": 3,
    "scar": 2
   },
   "soft": [
@@ -99,12 +111,27 @@
     "tail_tip"
    ],
    [
+    "body",
+    "saddle",
+    "bib",
+    "belly"
+   ],
+   [
+    "head",
+    "bib",
+    "brow",
+    "line",
+    "eye",
+    "saddle"
+   ],
+   [
     "head",
     "scar"
    ],
    [
     "body",
-    "mane"
+    "mane",
+    "saddle"
    ]
   ],
   "no_outline": [],
@@ -114,16 +141,16 @@
   ],
   "texture": {
    "body": [
-    0.75,
-    0.22
+    1.0,
+    0.25
    ],
    "belly": [
     0.5,
     0.1
    ],
    "head": [
-    0.55,
-    0.12
+    0.7,
+    0.15
    ],
    "snout": [
     0.3,
@@ -138,6 +165,14 @@
     0.0
    ],
    "tail_base": [
+    0.5,
+    0.0
+   ],
+   "saddle": [
+    0.8,
+    0.2
+   ],
+   "bib": [
     0.5,
     0.0
    ],
@@ -160,6 +195,7 @@
    "head",
    "snout",
    "ear",
+   "saddle",
    "mane"
   ]
  },
