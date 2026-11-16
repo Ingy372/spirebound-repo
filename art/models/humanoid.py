@@ -36,6 +36,7 @@ DEFAULTS = {
     "boot_h": 0.13, "boot_r": 0.058, "foot_r": (0.074, 0.046, 0.044),
     "stride": 0.13, "lift": 0.060, "stance": 0.5, "bob": 0.016, "arm_swing": 0.12,
     "belt_z": 0.555,
+    "beast": False,          # True for monsters built on this figure: allows a big beast head (never for outfits)
 }
 
 
@@ -44,7 +45,7 @@ def spec(**overrides):
     if unknown:
         raise KeyError(f"unknown humanoid setting(s): {sorted(unknown)}")
     s = {**DEFAULTS, **overrides}
-    if s["head_r"][2] > 0.140:
+    if s["head_r"][2] > 0.140 and not s["beast"]:
         raise ValueError("head_r is too big: outfit heads stay under 0.140 tall (no bobble-heads; art/OUTFIT_RULES.md)")
     return s
 

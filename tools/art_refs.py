@@ -141,7 +141,7 @@ LOOKALIKES = {
     "archer": [(33, "Skeleton"), (298, "Skeleton Warrior")],
     "shardling": [(294, "Wisp"), (263, "Crystal Spider")],
     "thornsnap": [(120, "Carniphila"), (221, "Spit Nettle")],
-    "azhrakkar": [(55, "Behemoth"), (244, "Juggernaut")],
+    "azhrakkar": [(35, "Demon"), (55, "Behemoth")],
 }
 
 

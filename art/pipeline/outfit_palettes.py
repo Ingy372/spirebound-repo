@@ -56,6 +56,26 @@ OUTFITS = {
     },
 }
 
+# The Floor 10 boss uses the same figure, so its colours live here too.
+HIDE = ((6, 16, 46), (120, 176, 236), (30, 70, 150))            # cerulean hide
+HIDE_LIT = ((14, 34, 84), (160, 208, 250), (54, 106, 190))      # the paler raised muscle
+IRON = ((8, 8, 14), (120, 124, 140), (44, 46, 58))
+BONE = ((110, 100, 84), (252, 248, 236), (206, 196, 172))
+CYAN_FIRE = ((40, 150, 230), (240, 255, 255), (130, 230, 255))
+OUTFITS["azhrakkar"] = {
+    **base(hair=((120, 130, 150), (250, 252, 255), (200, 208, 224)), arms=HIDE, legs=HIDE, boots=((6, 6, 10), (84, 86, 100)),
+           torso=HIDE, cuff=IRON, belt=IRON, buckle=BONE, skin=ramp((4, 8, 28), (70, 110, 180), (16, 36, 92))),   # a dark face, so the eyes burn
+    "muscle": ramp(*HIDE_LIT), "line": [[4, 10, 32]] * 8, "jaw": ramp((4, 8, 28), (70, 110, 180), (16, 36, 92)),
+    "tusk": ramp(*BONE), "horn": ramp((20, 18, 24), (176, 168, 160), (84, 78, 80)), "flame": ramp(*CYAN_FIRE),
+    "iron": ramp(*IRON), "spike": ramp((30, 30, 40), (190, 194, 208), (96, 100, 116)), "knee": ramp(*IRON),
+    "claw": ramp(*BONE), "blade": ramp((16, 18, 30), (150, 158, 180), (60, 66, 86)),
+    "edge": ramp((90, 100, 124), (250, 252, 255), (190, 200, 220)), "rune": [[150, 240, 255]] * 8,
+    "hilt": ramp((30, 22, 16), (150, 120, 84)), "tail": ramp(*HIDE),
+}
+OUTFITS["azhrakkar"]["eye"] = [[190, 250, 255]] * 8
+OUTFITS["azhrakkar"]["brow"] = ramp(*BONE)
+OUTFITS["azhrakkar"]["nose"] = ramp((4, 8, 28), (70, 110, 180), (16, 36, 92))
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())
