@@ -11,7 +11,9 @@
   "stinger",
   "wing",
   "leg",
-  "antenna"
+  "antenna",
+  "vein",
+  "waist"
  ],
  "palette": "wasp",
  "walk_frames": 8,
@@ -23,7 +25,7 @@
  ],
  "supersample": 4,
  "view_tiles": 4.0,
- "y_stretch": 1.5798989873223328,
+ "y_stretch": 1.4970562748477139,
  "world_linear": [
   [
    1.0,
@@ -32,7 +34,7 @@
   ],
   [
    0.0,
-   1.5798989873223328,
+   1.4970562748477139,
    0.0
   ],
   [
@@ -44,33 +46,46 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "eye": 4.0,
+   "eye": 4.5,
    "stinger": 4.0,
    "leg": 2.4,
    "antenna": 3.0,
    "wing": 0.35,
+   "vein": 0.9,
    "stripe": 1.2,
-   "head": 1.4
+   "head": 1.4,
+   "face": 2.0,
+   "waist": 2.0
   },
   "thin": {
    "eye": 3,
    "stinger": 2,
    "leg": 2,
    "antenna": 2,
-   "wing": 4
+   "wing": 4,
+   "vein": 3,
+   "waist": 3,
+   "face": 3
   },
   "soft": [
    [
     "thorax",
+    "waist"
+   ],
+   [
     "abdomen",
     "stripe",
-    "head",
-    "face"
+    "waist",
+    "stinger"
    ],
    [
     "head",
     "eye",
     "face"
+   ],
+   [
+    "wing",
+    "vein"
    ]
   ],
   "no_outline": [
@@ -99,6 +114,10 @@
    "head": [
     0.5,
     0.0
+   ],
+   "wing": [
+    0.5,
+    0.3
    ]
   },
   "bands": [

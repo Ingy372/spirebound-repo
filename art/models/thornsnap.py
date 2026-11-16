@@ -6,6 +6,9 @@ Identity (art/CRAWLER_RULES.md step 1):
   Coat:      a dark blue-green vine and leaves (Tibia's carniphila is bright grass green, and so is the meadow).
   Signature: a crimson flower head whose jaws open on a glowing amber throat, ringed with ivory thorns.
   Attitude:  a lunging snake: neck reared up, head thrust forward, jaws snapping twice per crawl.
+
+Detail (art/DETAIL_RULES.md): a pale midrib on every leaf, a collar of sepals behind the head, a pale lip along
+each jaw rim, thorn teeth, a glowing throat.
 Original design: a thick green vine that slithers along the ground in an S-curve, a raised flower head made of
 two jaw petals (green outside, red inside) that snap open and shut, pale thorns along the jaws and the vine,
 two leaves near the head. Low creature: "tilt" projection like the rat. Faces +X; sizes in tiles.
@@ -29,9 +32,9 @@ SIGNATURE = ["jaw", "thorn"]
 HEAD_PARTS = ["jaw", "mouth", "thorn"]
 LEG_PARTS = []          # a vine: no legs
 PIXEL_RULES = {
-    "weight": {"thorn": 3.0, "mouth": 3.0, "jaw": 1.6, "leaf": 1.2},
-    "thin": {"thorn": 2, "mouth": 3, "leaf": 3},
-    "soft": [["jaw", "mouth"]],
+    "weight": {"thorn": 3.0, "mouth": 3.0, "jaw": 1.6, "leaf": 1.2, "rib": 2.4, "lip": 2.6},
+    "thin": {"thorn": 2, "mouth": 3, "leaf": 3, "rib": 2, "lip": 2},
+    "soft": [["jaw", "mouth", "lip"], ["leaf", "rib"]],
     "no_outline": [],
     "fur": [],
     "texture": {"vine": [0.9, 0.2], "jaw": [0.7, 0.1], "leaf": [0.6, 0.0]},
@@ -39,7 +42,7 @@ PIXEL_RULES = {
     "selout": ["jaw", "vine", "leaf"],
 }
 
-PARTS = ["none", "vine", "jaw", "mouth", "thorn", "leaf"]
+PARTS = ["none", "vine", "jaw", "mouth", "thorn", "leaf", "rib", "lip"]
 N = 10
 LEAVES = {"l1": (0.95, 1, 0.3), "r1": (0.95, -1, 0.3), "l2": (0.55, 1, 0.5), "r2": (0.60, -1, 0.5),
           "l3": (0.20, 1, 0.6), "r3": (0.25, -1, 0.6)}
@@ -56,6 +59,11 @@ def build(model_cls, facing):
         m.cone(f"thorn{i}", "thorn", segments=5)
     for k in LEAVES:
         m.ellipsoid(f"leaf_{k}", "leaf", radii=(0.110, 0.042, 0.012), segments=12, rings=6)
+        m.ellipsoid(f"rib_{k}", "rib", radii=(0.104, 0.007, 0.016), segments=8, rings=6)      # the leaf's midrib
+    for i in range(5):
+        m.cone(f"sepal{i}", "leaf", segments=5)                                              # collar behind the head
+    for k in ("top", "bot"):
+        m.tube(f"lip_{k}", "lip", points=6)
     return m
 
 
@@ -100,6 +108,25 @@ def pose(m, t):
         lf.rotation_mode = "XYZ"
         lf.rotation_euler = Euler((tilt * s + flap, -0.25, (0.9 + 0.3 * u) * s))
         lf.location = p + Vector((-0.020, 0.075 * s, -0.005))
+        rb = m.objects[f"rib_{kk}"]
+        rb.rotation_mode = "XYZ"
+        rb.rotation_euler = lf.rotation_euler
+        rb.location = lf.location
+    # a collar of pointed sepals where the head joins the neck
+    for i in range(5):
+        th = 2 * math.pi * i / 5 + 0.3
+        root = head + Vector((-0.060, 0.040 * math.cos(th), 0.040 * math.sin(th)))
+        m.put_segment(f"sepal{i}", root, root + Vector((-0.030, 0.105 * math.cos(th), 0.090 * math.sin(th))), 0.030, 0.014)
+    # a pale lip along the rim of each jaw
+    for name, k in (("jaw_top", "top"), ("jaw_bot", "bot")):
+        j = m.objects[name]
+        rot = j.rotation_euler.to_matrix()
+        pts = []
+        for q in range(6):
+            x = -0.090 + 0.235 * q / 5
+            z = 0.110 * math.sqrt(max(0.02, 1 - (x / 0.150) ** 2))
+            pts.append(tuple(j.location + rot @ Vector((x, 0, z))))
+        m.set_tube(f"lip_{k}", pts, [0.008] * 6)
 
 
 def assign_depth_parts(m, depth_of):

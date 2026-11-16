@@ -6,7 +6,9 @@
   "jaw",
   "mouth",
   "thorn",
-  "leaf"
+  "leaf",
+  "rib",
+  "lip"
  ],
  "palette": "thornsnap",
  "walk_frames": 8,
@@ -42,17 +44,26 @@
    "thorn": 3.0,
    "mouth": 3.0,
    "jaw": 1.6,
-   "leaf": 1.2
+   "leaf": 1.2,
+   "rib": 2.4,
+   "lip": 2.6
   },
   "thin": {
    "thorn": 2,
    "mouth": 3,
-   "leaf": 3
+   "leaf": 3,
+   "rib": 2,
+   "lip": 2
   },
   "soft": [
    [
     "jaw",
-    "mouth"
+    "mouth",
+    "lip"
+   ],
+   [
+    "leaf",
+    "rib"
    ]
   ],
   "no_outline": [],
