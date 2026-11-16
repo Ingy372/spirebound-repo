@@ -1,0 +1,19 @@
+# Sprites Jay has approved (he moves them into ART_FOR_JAY/approved). One name per line.
+# art/pipeline/render.sh refuses to re-render these: an approved sprite is FROZEN.
+# To change one on purpose (only when Jay asks), run:  FORCE=1 sh art/pipeline/render.sh <name>
+# Keep this list in step with the folder: python tools/art_approved.py
+bess
+boar
+corwin
+merchant
+mole
+pell
+ram
+ranger
+rat
+shardling
+snapper
+thornsnap
+toad
+vesper
+wasp
