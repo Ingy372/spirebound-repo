@@ -37,6 +37,9 @@ DEFAULTS = {
     "stride": 0.13, "lift": 0.060, "stance": 0.5, "bob": 0.016, "arm_swing": 0.12,
     "belt_z": 0.555,
     "beast": False,          # True for monsters built on this figure: allows a big beast head (never for outfits)
+    # Robes: None, or (cloth part, hem part, hem radius). The robe is cloth draped over EACH leg from the waist to
+    # the ankle, so it swings with the stride like Tibia's robed outfits. Never a rigid cone the legs walk through.
+    "robe": None,
 }
 
 
@@ -117,6 +120,12 @@ def build(model_cls, facing, s, parts):
         m.capsule(f"fore_{k}", f"arm_{ab}")
         m.frustum(f"cuff_{k}", "cuff", top_ratio=1.0, segments=10)
         m.ellipsoid(f"hand_{k}", "hand", radii=(0.036, 0.030, 0.038), segments=10, rings=8)
+    if s["robe"]:
+        cloth, hem, _r = s["robe"]
+        for k in ("l", "r"):
+            m.frustum(f"drape_{k}", cloth, top_ratio=0.62, segments=16)
+            m.frustum(f"hem_{k}", hem, top_ratio=1.0, segments=16)
+        m.ellipsoid("lap", cloth, radii=(s["torso_r"][0] * 1.10, s["torso_r"][1] * 1.02, 0.120), segments=16, rings=8)
     m.ellipsoid("torso", "torso", radii=s["torso_r"], segments=20, rings=12)
     m.ellipsoid("hips", "torso", radii=(s["torso_r"][0] * 0.95, s["torso_r"][1] * 0.92, 0.075), segments=16, rings=8)
     m.frustum("belt", "belt", top_ratio=1.0, segments=18)
@@ -160,6 +169,8 @@ def pose(m, t, hands=None):
     m.objects["torso"].rotation_mode = "XYZ"
     m.objects["torso"].rotation_euler = Euler((0, 0, twist))
     m.objects["hips"].location = Vector((0, 0, s["hip_z"] + 0.045)) + up
+    if s["robe"]:
+        m.objects["lap"].location = Vector((0, 0, s["hip_z"] + 0.030)) + up
     frustum(m, "belt", Vector((0, 0, s["belt_z"])) + up, (s["torso_r"][0] * 1.06, s["torso_r"][1] * 1.00), 0.038)
     m.objects["buckle"].location = Vector((s["torso_r"][0] * 1.08, 0, s["belt_z"] + 0.019)) + up
     head = Vector((0.012, 0, s["head_z"])) + up
@@ -184,10 +195,17 @@ def pose(m, t, hands=None):
         fx, fz = _foot(s, t, phase)
         ankle = Vector((fx, s["hip_y"] * sign * 1.12, 0.058 + fz))
         knee, ankle = two_bone(hip, ankle, s["thigh"], s["shin"], Vector((1, 0, 0)))
-        m.put_segment(f"thigh_{k}", hip, knee, s["leg_r"] * 1.08)
-        m.put_segment(f"shin_{k}", knee, ankle, s["leg_r"] * 0.88)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, s["boot_h"])), s["boot_r"])
-        frustum(m, f"bootcuff_{k}", ankle + Vector((0, 0, s["boot_h"] - 0.012)), (s["boot_r"] * 1.14, s["boot_r"] * 1.14), 0.030)
+        hide = 0.02 if s["robe"] else 1.0                  # under a robe the legs are not drawn at all
+        m.put_segment(f"thigh_{k}", hip, knee, s["leg_r"] * 1.08 * hide)
+        m.put_segment(f"shin_{k}", knee, ankle, s["leg_r"] * 0.88 * hide)
+        if s["robe"]:
+            r = s["robe"][2]
+            waist = Vector((0.0, s["hip_y"] * sign * 0.55, s["belt_z"] + 0.02)) + up
+            low = Vector((ankle.x * 1.10, ankle.y * 1.25, 0.075 + fz * 0.5))      # the hem follows the foot
+            m.put_segment(f"drape_{k}", low, waist, r, r * 1.05)
+            m.put_segment(f"hem_{k}", low, low + (waist - low).normalized() * 0.040, r * 1.06, r * 1.11)
+        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, s["boot_h"])), s["boot_r"] * hide)
+        frustum(m, f"bootcuff_{k}", ankle + Vector((0, 0, s["boot_h"] - 0.012)), (s["boot_r"] * 1.14 * hide, s["boot_r"] * 1.14 * hide), 0.030)
         m.objects[f"foot_{k}"].location = ankle + Vector((0.032, 0, -0.014))
         m.objects[f"sole_{k}"].location = ankle + Vector((0.032, 0, -0.050))
         out[f"hip_{k}"], out[f"knee_{k}"], out[f"ankle_{k}"] = hip, knee, ankle

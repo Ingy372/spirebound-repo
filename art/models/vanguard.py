@@ -81,7 +81,8 @@ def pose(m, t):
     m.objects["fringe"].location = head + Vector((0.050, 0, 0.116))
     m.objects["tuft"].location = head + Vector((0.030, 0.034, 0.128))
     m.objects["nape"].location = head + Vector((-0.085, 0, -0.030))
-    flap = 0.09 * math.sin(a) if walking else 0.0
+    flap = 0.26 * abs(math.sin(a)) if walking else 0.0     # the tabard is pushed out by whichever leg is forward,
+                                                           # so a knee never pokes through the cloth
     for side, x in (("f", 0.100), ("b", -0.100)):
         rot = Euler((0.0, flap if side == "f" else -flap, 0.0))
         for name, z, xs in ((f"tabard_{side}", 0.635, 1.0), (f"hem_{side}", 0.430, 1.03)):

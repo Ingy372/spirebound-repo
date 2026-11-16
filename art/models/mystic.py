@@ -39,7 +39,7 @@ PIXEL_RULES = H.pixel_rules(
     no_outline=["bud"],
 )
 
-SPEC = H.spec(torso_r=(0.094, 0.142, 0.182), arm_r=0.050, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
+SPEC = H.spec(robe=("robe", "over", 0.105), torso_r=(0.094, 0.142, 0.182), arm_r=0.050, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
               arm_swing=0.08, strands=(-1.2, -0.1, 1.0))
 BEADS = 7
 BRAID_N = 6
@@ -51,10 +51,8 @@ def build(model_cls, facing):
     m.ellipsoid("backhair", "hair", radii=(0.055, 0.100, 0.110), segments=14, rings=10)
     m.tube("braid", "hair", points=BRAID_N)
     m.frustum("circlet", "circlet", top_ratio=1.0, segments=16)
-    m.frustum("robe", "robe", top_ratio=0.66, segments=20)
-    m.frustum("hem", "over", top_ratio=1.0, segments=20)
     for side in ("f", "b"):
-        m.box(f"over_{side}", "over", size=(0.030, 0.150, 0.560))
+        m.box(f"over_{side}", "over", size=(0.030, 0.150, 0.330))
     m.ellipsoid("mantle", "over", radii=(0.105, 0.170, 0.050), segments=16, rings=8)
     for k in ("l", "r"):
         for j in range(2):
@@ -84,13 +82,12 @@ def pose(m, t):
     pts = [head + Vector((-0.120 - 0.020 * math.sin(i * 0.6), swing * i / 5, -0.110 - 0.075 * i)) for i in range(BRAID_N)]
     m.set_tube("braid", [tuple(q) for q in pts], [0.036 - 0.004 * i for i in range(BRAID_N)])
     H.frustum(m, "circlet", head + Vector((-0.010, 0, 0.060)), (0.122, 0.118), 0.022, (0, -0.25, 0))
-    H.frustum(m, "robe", Vector((0, 0, 0.060)), (0.148, 0.176), 0.520, (sway, 0, 0))
-    H.frustum(m, "hem", Vector((0, 0, 0.060)), (0.153, 0.181), 0.045, (sway, 0, 0))
-    for side, x, lean in (("f", 0.120, 0.20), ("b", -0.120, -0.20)):
+    step = 0.22 * abs(math.sin(a)) if walking else 0.0     # the green panels are pushed out by the striding legs
+    for side, x, lean in (("f", 0.108, 0.10), ("b", -0.108, -0.10)):
         o = m.objects[f"over_{side}"]
         o.rotation_mode = "XYZ"
-        o.rotation_euler = Euler((0, lean, 0))
-        o.location = Vector((x, 0, 0.560)) + up
+        o.rotation_euler = Euler((0, lean + (step if side == "f" else -step), 0))
+        o.location = Vector((x * (1 + step), 0, 0.640)) + up
     m.objects["mantle"].location = Vector((0.0, 0, 0.848)) + up
     # two leaves fanning out and up from each shoulder
     flutter = 0.10 * math.sin(2 * a) if walking else 0.0

@@ -39,7 +39,7 @@ PIXEL_RULES = H.pixel_rules(
     no_outline=["ember"],
 )
 
-SPEC = H.spec(torso_r=(0.096, 0.146, 0.182), arm_r=0.054, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
+SPEC = H.spec(robe=("robe", "trim", 0.105), torso_r=(0.096, 0.146, 0.182), arm_r=0.054, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
               arm_swing=0.08, strands=(-1.3, -0.3, 0.8))
 
 
@@ -51,9 +51,7 @@ def build(model_cls, facing):
         m.ellipsoid(f"lock_{k}", "hair", radii=(0.040, 0.030, 0.110), segments=10, rings=8)
         for j in range(2):
             m.ellipsoid(f"rune{j}_{k}", "rune", radii=(0.016, 0.016, 0.016), segments=8, rings=6)
-    m.frustum("robe", "robe", top_ratio=0.66, segments=20)
-    m.frustum("hem", "trim", top_ratio=1.0, segments=20)
-    m.box("seam", "trim", size=(0.026, 0.040, 0.560))
+    m.box("seam", "trim", size=(0.026, 0.040, 0.300))
     m.frustum("collar", "collar", top_ratio=1.45, segments=16)
     m.tube("collar_edge", "trim", points=7)
     m.ellipsoid("ember", "ember", radii=(0.040, 0.040, 0.050), segments=10, rings=8)
@@ -77,11 +75,9 @@ def pose(m, t):
         out = Vector((0.0, sign, 0.2)).normalized() * 0.052
         for j in range(2):
             m.objects[f"rune{j}_{k}"].location = elbow + d * (0.040 + 0.065 * j) + out
-    H.frustum(m, "robe", Vector((0, 0, 0.060)), (0.150, 0.178), 0.520, (sway, 0, 0))
-    H.frustum(m, "hem", Vector((0, 0, 0.060)), (0.155, 0.183), 0.040, (sway, 0, 0))
-    m.objects["seam"].location = Vector((0.118, 0, 0.560)) + up
+    m.objects["seam"].location = Vector((0.100, 0, 0.700)) + up
     m.objects["seam"].rotation_mode = "XYZ"
-    m.objects["seam"].rotation_euler = Euler((0, 0.20, 0))
+    m.objects["seam"].rotation_euler = Euler((0, 0.0, 0))
     # a tall collar standing BEHIND the head (tilted well back, so it never rings the face)
     tilt = -0.55
     base = Vector((-0.060, 0, 0.850)) + up
