@@ -4,21 +4,30 @@
   "none",
   "skin",
   "eye",
+  "brow",
+  "nose",
   "hair",
-  "beard",
-  "pelt",
-  "tunic",
-  "belt",
-  "pants",
-  "boot",
+  "strand",
   "hand",
-  "blade",
-  "hilt",
+  "torso",
+  "arm_a",
+  "arm_b",
+  "cuff",
+  "leg_a",
+  "leg_b",
+  "boot_a",
+  "boot_b",
+  "sole",
+  "belt",
+  "buckle",
+  "hood",
+  "cloak",
   "quiver",
   "fletch",
-  "bracer",
   "bow",
-  "string"
+  "string",
+  "pouch",
+  "clasp"
  ],
  "palette": "ranger",
  "walk_frames": 8,
@@ -51,71 +60,162 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "bow": 2.8,
-   "string": 2.0,
-   "quiver": 2.0,
-   "fletch": 3.0,
-   "bracer": 2.2,
    "eye": 9.0,
-   "hand": 2.4,
-   "blade": 3.0,
-   "hilt": 2.6,
+   "brow": 3.0,
+   "nose": 2.0,
+   "hand": 2.6,
+   "strand": 1.3,
+   "cuff": 2.2,
+   "buckle": 4.0,
    "belt": 2.0,
-   "pelt": 1.4,
-   "boot": 1.4,
-   "beard": 1.8
+   "sole": 1.6,
+   "boot_a": 1.4,
+   "boot_b": 1.4,
+   "hood": 1.3,
+   "fletch": 4.0,
+   "bow": 3.0,
+   "string": 1.6,
+   "pouch": 2.0,
+   "clasp": 5.0,
+   "quiver": 1.8
   },
   "thin": {
+   "eye": 3,
+   "brow": 2,
+   "nose": 3,
+   "hand": 3,
+   "strand": 2,
+   "cuff": 3,
+   "buckle": 2,
+   "belt": 3,
+   "sole": 3,
+   "fletch": 2,
    "bow": 2,
    "string": 2,
-   "quiver": 3,
-   "fletch": 2,
-   "bracer": 3,
-   "eye": 3,
-   "hand": 3,
-   "blade": 2,
-   "hilt": 2,
-   "belt": 3
+   "pouch": 3,
+   "clasp": 2
   },
   "soft": [
    [
-    "tunic",
-    "belt"
+    "skin",
+    "eye",
+    "brow",
+    "nose"
    ],
    [
-    "skin",
     "hair",
-    "beard",
-    "eye",
-    "pelt"
+    "strand"
    ],
    [
     "hand",
     "skin"
    ],
    [
-    "pants",
-    "boot"
+    "torso",
+    "belt",
+    "buckle"
    ],
    [
-    "blade",
-    "hilt"
+    "boot_a",
+    "sole"
+   ],
+   [
+    "boot_b",
+    "sole"
+   ],
+   [
+    "hood",
+    "cloak",
+    "clasp"
+   ],
+   [
+    "bow",
+    "string"
+   ],
+   [
+    "quiver",
+    "fletch"
+   ],
+   [
+    "belt",
+    "pouch"
    ]
   ],
   "no_outline": [
    "string"
   ],
   "fur": [],
+  "texture": {
+   "torso": [
+    0.4,
+    0.18
+   ],
+   "arm_a": [
+    0.35,
+    0.12
+   ],
+   "arm_b": [
+    0.35,
+    0.12
+   ],
+   "leg_a": [
+    0.35,
+    0.12
+   ],
+   "leg_b": [
+    0.35,
+    0.12
+   ],
+   "hair": [
+    0.3,
+    0.1
+   ],
+   "boot_a": [
+    0.3,
+    0.0
+   ],
+   "boot_b": [
+    0.3,
+    0.0
+   ],
+   "hood": [
+    0.4,
+    0.2
+   ],
+   "cloak": [
+    0.45,
+    0.25
+   ],
+   "quiver": [
+    0.4,
+    0.0
+   ]
+  },
+  "bands": [
+   0.38,
+   0.5,
+   0.6,
+   0.69,
+   0.78,
+   0.86,
+   0.93
+  ],
   "selout": [
-   "tunic",
-   "pelt",
+   "torso",
    "skin",
-   "hair"
+   "hair",
+   "hood",
+   "cloak"
   ]
  },
  "ref": "outfit_128.png",
  "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
   8,
   8
- ]
+ ],
+ "auto_place": null
 }

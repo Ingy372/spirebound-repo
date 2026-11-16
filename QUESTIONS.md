@@ -6,6 +6,11 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q42. Reed Snapper: a snapping turtle, not a turtle-crab? (2026-11-15)
+You said the Reed Snapper "looks like a mix between a crab and a turtle". The original request asked for a "turtle-crab", which is why it had crab pincers. I rebuilt it as one animal: a spiked snapping turtle with a reed-covered shell and a hooked beak, no pincers. It keeps a low, wide, sideways scuttle as its only crab trait.
+- **Recommendation:** keep it as a snapping turtle. If you want a crab instead, I would make it a full crab with a mossy shell rather than mixing the two again.
+- Assumed until you answer: snapping turtle.
+
 *Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
 
 ### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)

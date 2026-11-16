@@ -1,0 +1,49 @@
+# Rules for player outfits (and any detailed person)
+
+Written after Jay's review of the four class outfits (2026-11-15: "they don't look bad but they are also lacking
+a detail refine"). Player outfits are what players look at all day and may pay for, so they get the highest bar.
+Worked examples: `art/models/vanguard.py`, `ranger.py`, `arcanist.py`, `mystic.py`, all built on
+`art/models/humanoid.py`. Colours live in `art/pipeline/outfit_palettes.py`.
+
+## What was wrong with the first versions (measured against Tibia's own outfits)
+
+- **Bobble-heads:** the head was a third of the figure and a smooth dome. Tibia's is about a fifth, with a hair shape.
+- **Sausage bodies:** arms, legs and torso melted together. Tibia draws a dark line wherever a limb crosses the body.
+- **No costume:** one colour per garment, no belt, cuffs, hems, clasps or trim.
+- **Small:** about 30 px tall against Tibia's 36-38.
+
+## The recipe
+
+1. **Identity in the docstring**, three lines: *Silhouette* (the outline that tells this class from the others at
+   a glance: gear, hood, robe shape), *Colours* (2 main colours + 1 metal or accent + hair), *Details* (at least six
+   named small things: hem, buckle, cuffs, clasp, emblem...).
+2. **Build on `humanoid.py`.** The outfit file is a `SPEC` plus its own garments and gear. Never copy the body code.
+3. **Colours as anchors** in `outfit_palettes.py`: each colour is (dark, light, mid); run
+   `python art/pipeline/outfit_palettes.py` to rebuild the ramps.
+4. **Render, check, look:** `sh art/pipeline/render.sh <name>`, `python art/pipeline/check_creature.py <name>` (ALL PASS),
+   then `python tools/art_outfits.py vanguard ranger arcanist mystic` (close-up beside Tibia's outfits) and
+   `python tools/art_lineup.py ...` (on grass at game size).
+
+## The rules
+
+| # | Rule | How it is enforced |
+|---|---|---|
+| O1 | **Head about a fifth of the figure.** `head_r` height stays under 0.140. | `humanoid.spec()` refuses bigger |
+| O2 | **Limbs are separate parts** (`arm_a`/`arm_b`, `leg_a`/`leg_b`, `boot_a`/`boot_b`) and are never "soft" with the torso, so dark lines separate them. | built into `humanoid.py` |
+| O3 | **Skin shows:** a face with eyes on the surface, a nose highlight and brows; skin-coloured hands below a cuff. A face must not be covered by hair or a hood from the front: keep fringes above the brow. | built in; look at the south view |
+| O4 | **Hair has a shape:** the cap plus at least two outfit pieces (fringe, nape, locks, back hair, braid, hood) and 2-3 drawn strand lines. Never a bare dome. Strand lines use the hair's second-darkest tone, not black. | per outfit; `outfit_palette.base()` |
+| O5 | **Each class owns a silhouette.** Hold gear OUT from the body and at an angle that is not the figure's lean (a sword forward-and-out, a bow or staff upright at the side). Two classes must never share an outline. | look at the lineup |
+| O6 | **Six named details minimum**, in three kinds: edges (hem, cuffs, collar piping, shield rim), fastenings (belt, buckle, clasp, straps), and marks (emblem, runes, beads, fletchings). | docstring "Details:" line |
+| O7 | **Trim is a line, never a disc.** Piping, hems and collar edges are thin rings or tubes. A capped ring seen from above becomes a plate or a halo. | lesson from the arcanist's collar |
+| O8 | **Tall things go BEHIND the head** (collars, hoods' points, quivers, staff tops), tilted back, so nothing rings or hides the face. | lesson from the arcanist's collar |
+| O9 | **Metal, cloth and leather look different.** Metal: widest ramp, near-white top tone, little grain. Cloth: medium ramp, grain 0.3-0.45. Leather: warm, narrow ramp. Light cloth needs a light shadow tone too or it turns grey. | `outfit_palettes.py` anchors |
+| O10 | **Robes:** bell shape narrower than the canvas (base radii about 0.15 x 0.18), a contrasting hem, shoes peeking out; the legs check is set to 0 with a comment. | `CHECK` in the model |
+| O11 | **Fixed placement.** Every outfit uses `humanoid.CANVAS_OFFSET` (not AUTO_PLACE), so outfits, add-ons and mounts line up. | `CANVAS_OFFSET = H.CANVAS_OFFSET` |
+| O12 | **Eyes are small** (about 2 px, dark brown, not black). Jay will judge eyes in the game before more changes. | `humanoid.DEFAULTS["eye_r"]` |
+| O13 | **Plan for colour zones.** In the game a player recolours head, body, legs and feet. Keep hair in "hair"; the main garment in torso/arms (or robe); trousers or the second colour in legs; boots in boots. Gear and metal are never recoloured. | part names |
+
+## Still to do
+
+- The town NPCs, bandits, sentinel, archer and the boss still use the old copied body; move each onto `humanoid.py`
+  when it is next touched.
+- The colour-mask layer for player recolouring (rule O13) is not generated yet (roadmap R22 / 6.4).

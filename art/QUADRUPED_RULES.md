@@ -19,7 +19,8 @@ so when I switch to a less expensive model, it's still able to produce premium r
 4. **Render, then run the checker until every line passes:**
    `sh art/pipeline/render.sh <name>` then `python art/pipeline/check_creature.py <name>`.
    Each FAIL line says what to change.
-5. **Then look.** `python tools/art_review.py <name> 4` (all four directions, standing + walk) and view the
+5. **Do the refinement pass** in `art/DETAIL_RULES.md` (real anatomy, no plain balls, drawn lines, marks, rims).
+6. **Then look.** `python tools/art_review.py <name> 4` (all four directions, standing + walk) and view the
    creature on grass at game size. Fix what the eye catches, re-run the checker, and only then show Jay.
 
 Creatures that are not four-legged (insects, shells, hoppers, plants) also follow `art/CRAWLER_RULES.md`,

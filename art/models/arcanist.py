@@ -1,9 +1,13 @@
-"""Arcanist (player class outfit): model + walk cycle, built on Veyra's robe.
+"""Arcanist (player class outfit), built on art/models/humanoid.py.
 
-ART_REQUESTS.md: "a battle mage in deep red robes with gold trim and a high collar, glowing runes on the
-sleeves". Original design: deep crimson floor-length robe, gold stole down the front and back, a tall red
-collar, wide sleeves with glowing amber rune marks, one hand crackling with a small amber glow, short dark
-hair. Faces +X; sizes in tiles.
+ART_REQUESTS.md: "a battle mage in deep red robes with gold trim and a high collar, glowing runes on the sleeves".
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: a long bell-shaped robe, wide sleeves, a tall flared collar behind the head, long dark hair down
+              the back, a small ember burning over the raised right hand.
+  Colours:    deep crimson robe, gold trim, pale glowing runes; black-brown hair.
+  Details:    a gold hem, front seam and collar edge, a gold sash with a buckle, two glowing runes on each
+              sleeve, gold cuffs, dark shoes peeking from under the hem.
 """
 from __future__ import annotations
 
@@ -11,154 +15,89 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "arcanist"
 WALK_FRAMES = 8
 PALETTE = "arcanist"
 REFERENCE = "outfit_136.png"
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
-PIXEL_RULES = {
-    "weight": {"rune": 3.5, "eye": 9.0, "glow": 3.5, "hand": 2.4, "stole": 1.8, "collar": 1.6, "shoe": 1.6, "hair": 1.2},
-    "thin": {"rune": 2, "eye": 3, "glow": 3, "hand": 3, "stole": 3, "shoe": 3},
-    "soft": [["robe", "stole"], ["skin", "hair", "eye"], ["hand", "glow"], ["collar", "stole"]],
-    "no_outline": [],
-    "fur": [],
-    "selout": ["robe", "collar", "skin", "hair"],
-}
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["collar", "trim"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose"]
+LEG_PARTS = ["boot_a", "boot_b", "sole"]
+# a floor-length robe hides the legs: only the shoes show; a face turned away shows one eye pixel
+CHECK = {"size": (0.85, 1.45), "head": 0.08, "legs_side": 0.0, "legs_updown": 0.0, "eye": 1}
 
-PARTS = ["none", "skin", "eye", "hair", "robe", "stole", "collar", "shoe", "hand", "glow", "rune"]
+PARTS = H.PARTS + ["robe", "trim", "collar", "rune", "ember"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"trim": 2.6, "rune": 6.0, "ember": 4.0, "collar": 1.3},
+    thin={"trim": 2, "rune": 2, "ember": 3},
+    soft=[["robe", "trim", "torso"], ["collar", "trim"], ["arm_a", "rune"], ["arm_b", "rune"]],
+    texture={"robe": [0.4, 0.22], "collar": [0.3, 0.1]},
+    selout=["robe", "collar"],
+    no_outline=["ember"],
+)
 
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.48, 0.24, 0.24
-HIP_Y = 0.066
-LEG_R = 0.048
-TORSO = Vector((0.0, 0.0, 0.69)); TORSO_R = (0.100, 0.150, 0.190)
-SKIRT_TOP, SKIRT_BOTTOM = 0.62, 0.16
-SKIRT_R = (0.150, 0.180)
-HEAD = Vector((0.010, 0.0, 0.965)); HEAD_R = (0.142, 0.134, 0.156)
-SHOULDER = Vector((0.0, 0.158, 0.815))
-UPPER_ARM, FOREARM = 0.18, 0.17
-ARM_R = 0.052
-STRIDE, LIFT, STANCE = 0.13, 0.050, 0.5             # purposeful steps
-BODY_SCALE = (1.15, 1.18, 0.80)
+SPEC = H.spec(torso_r=(0.096, 0.146, 0.182), arm_r=0.054, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
+              arm_swing=0.08, strands=(-1.3, -0.3, 0.8))
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("fringe", "hair", radii=(0.034, 0.084, 0.024), segments=12, rings=6)
+    m.ellipsoid("backhair", "hair", radii=(0.060, 0.105, 0.175), segments=14, rings=10)   # long hair down the back
     for k in ("l", "r"):
-        m.capsule(f"shin_{k}", "robe")
-        m.ellipsoid(f"shoe_{k}", "shoe", radii=(0.066, 0.042, 0.040), segments=12, rings=8)
-        m.capsule(f"upper_{k}", "robe")
-        m.frustum(f"sleeve_{k}", "robe", top_ratio=0.55, segments=12)   # wide bell sleeves
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.036, 0.030, 0.038), segments=10, rings=8)
-    m.ellipsoid("glow", "glow", radii=(0.078, 0.078, 0.078), segments=12, rings=8)
-    m.ellipsoid("torso", "robe", radii=TORSO_R)
-    m.frustum("skirt", "robe", top_ratio=0.70)
-    m.frustum("hem", "stole", top_ratio=0.97)
-    m.frustum("sash", "stole", top_ratio=1.0)
-    m.box("stole_f", "stole", size=(0.024, 0.070, 0.560))
-    m.box("stole_b", "stole", size=(0.024, 0.090, 0.420))
-    m.frustum("collar", "collar", top_ratio=1.25, segments=18)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.150, 0.150, 0.150))
-    m.ellipsoid("hair_long", "hair", radii=(0.050, 0.100, 0.080), segments=12, rings=8)
-    for i in range(4):
-        m.ellipsoid(f"rune{i}", "rune", radii=(0.016, 0.016, 0.016), segments=8, rings=6)
-    for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.016), segments=8, rings=6)
+        m.ellipsoid(f"lock_{k}", "hair", radii=(0.040, 0.030, 0.110), segments=10, rings=8)
+        for j in range(2):
+            m.ellipsoid(f"rune{j}_{k}", "rune", radii=(0.016, 0.016, 0.016), segments=8, rings=6)
+    m.frustum("robe", "robe", top_ratio=0.66, segments=20)
+    m.frustum("hem", "trim", top_ratio=1.0, segments=20)
+    m.box("seam", "trim", size=(0.026, 0.040, 0.560))
+    m.frustum("collar", "collar", top_ratio=1.45, segments=16)
+    m.tube("collar_edge", "trim", points=7)
+    m.ellipsoid("ember", "ember", radii=(0.040, 0.040, 0.050), segments=10, rings=8)
+    m.cone("flame", "ember", segments=6)
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
-
-
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
+def _cast_hand(sh, a, walking):
+    return sh + Vector((0.170, -0.050, -0.130 + (0.012 * math.sin(2 * a) if walking else 0.0)))
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.008 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    sway = 0.07 * math.sin(a) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    sk = m.objects["skirt"]
-    sk.location = Vector((0, 0, SKIRT_BOTTOM)) + up
-    sk.rotation_mode = "XYZ"
-    sk.rotation_euler = Euler((sway, 0, 0))
-    sk.scale = (SKIRT_R[0], SKIRT_R[1], SKIRT_TOP - SKIRT_BOTTOM)
-    hem = m.objects["hem"]
-    hem.location = Vector((0, 0, SKIRT_BOTTOM - 0.004)) + up
-    hem.rotation_mode = "XYZ"
-    hem.rotation_euler = sk.rotation_euler
-    hem.scale = (SKIRT_R[0] + 0.004, SKIRT_R[1] + 0.004, 0.034)
-    sa = m.objects["sash"]
-    sa.location = Vector((0, 0, 0.570)) + up
-    sa.scale = (TORSO_R[0] * 1.06, TORSO_R[1] * 1.02, 0.036)
-    for side, x, z in (("f", 0.108, 0.520), ("b", -0.110, 0.600)):
-        st = m.objects[f"stole_{side}"]
-        st.rotation_mode = "XYZ"
-        st.rotation_euler = Euler((sway * 0.5, 0.10 if side == "f" else -0.10, 0.0))
-        st.location = Vector((x, 0, z)) + up
-    col = m.objects["collar"]
-    col.location = Vector((-0.040, 0, 0.790)) + up
-    col.rotation_mode = "XYZ"
-    col.rotation_euler = Euler((0, -0.20, 0))
-    col.scale = (0.105, 0.135, 0.230)
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.045, 0, 0.040))
-    m.objects["hair_long"].location = head + Vector((-0.110, 0, -0.120))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.126, 0.044 * s, 0.080))
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.050 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.objects[f"shoe_{k}"].location = ankle + Vector((0.030, 0, -0.010))
-    # right arm hangs and sways a little; left hand raised in front at chest height, glowing
-    for s, k in ((1, "l"), (-1, "r")):
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        if k == "l":
-            hand = Vector((0.170, 0.110, 0.690 + 0.010 * math.sin(2 * a))) + up
-        else:
-            swing = 0.06 * math.sin(a) if walking else 0.0
-            hand = sh + Vector((swing, -0.030, -0.32))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, Vector((-1, 0.3 * s, 0)))
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        d = (hand - elbow).normalized()
-        slv = m.objects[f"sleeve_{k}"]
-        m.put_segment(f"sleeve_{k}", hand - d * 0.010, elbow, ARM_R * 1.6)
-        m.objects[f"hand_{k}"].location = hand + d * 0.020
-        for j in range(2):                                # two glowing rune marks on each sleeve
-            idx = j + (0 if k == "l" else 2)
-            m.objects[f"rune{idx}"].location = elbow.lerp(hand, 0.30 + 0.35 * j) + Vector((0.020, 0.040 * s, 0.020))
-        if k == "l":
-            m.objects["glow"].location = hand + d * 0.040 + Vector((0, 0, 0.020))
+    p = H.pose(m, t, hands={"r": _cast_hand})
+    up, head, a, walking = p["up"], p["head"], p["a"], p["walking"]
+    sway = 0.05 * math.sin(a) if walking else 0.0
+    m.objects["fringe"].location = head + Vector((0.050, 0, 0.114))
+    m.objects["backhair"].location = head + Vector((-0.105, 0, -0.110))
+    for sign, k in ((1, "l"), (-1, "r")):
+        m.objects[f"lock_{k}"].location = head + Vector((0.010, 0.104 * sign, -0.060))
+        elbow, d = p[f"elbow_{k}"], p[f"arm_dir_{k}"]
+        out = Vector((0.0, sign, 0.2)).normalized() * 0.052
+        for j in range(2):
+            m.objects[f"rune{j}_{k}"].location = elbow + d * (0.040 + 0.065 * j) + out
+    H.frustum(m, "robe", Vector((0, 0, 0.060)), (0.150, 0.178), 0.520, (sway, 0, 0))
+    H.frustum(m, "hem", Vector((0, 0, 0.060)), (0.155, 0.183), 0.040, (sway, 0, 0))
+    m.objects["seam"].location = Vector((0.118, 0, 0.560)) + up
+    m.objects["seam"].rotation_mode = "XYZ"
+    m.objects["seam"].rotation_euler = Euler((0, 0.20, 0))
+    # a tall collar standing BEHIND the head (tilted well back, so it never rings the face)
+    tilt = -0.55
+    base = Vector((-0.060, 0, 0.850)) + up
+    H.frustum(m, "collar", base, (0.070, 0.105), 0.170, (0, tilt, 0))
+    # gold piping along the back half of the collar's top edge (a line, not a disc)
+    pts = []
+    for i in range(7):
+        th = math.pi * (0.5 + i / 6)                       # from the left side, round the back, to the right side
+        v = Vector((0.070 * 1.45 * math.cos(th), 0.105 * 1.45 * math.sin(th), 0.170))
+        v.rotate(Euler((0, tilt, 0)))
+        pts.append(tuple(base + v))
+    m.set_tube("collar_edge", pts, [0.010] * 7)
+    hand = p["hand_r"]
+    flick = 0.012 * math.sin(4 * a) if walking else 0.0
+    m.objects["ember"].location = hand + Vector((0.020, 0, 0.075))
+    m.put_segment("flame", hand + Vector((0.020, 0, 0.095)), hand + Vector((0.020 + flick, flick, 0.200)), 0.030)
 
 
 def assign_depth_parts(m, depth_of):

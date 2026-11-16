@@ -1,9 +1,13 @@
-"""Mystic (player class outfit): model + walk cycle, built on Veyra's robe.
+"""Mystic (player class outfit), built on art/models/humanoid.py.
 
 ART_REQUESTS.md: "a nature mystic in pale green and white robes, leaf-shaped shoulder pieces, wooden beads".
-Original design: white robe with a pale green overrobe down the front and back, big green leaf shapes on
-both shoulders, a string of wooden beads across the chest, a soft green glow in the raised hand, long brown
-hair, simple sandals. Faces +X; sizes in tiles.
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: a soft robe with two big leaves standing out from each shoulder, a tall wooden staff with a leafy
+              crook in the right hand, a long braid down the back.
+  Colours:    cream-white robe, a pale green overrobe, deep green leaves, warm brown wood and beads; honey hair.
+  Details:    midribs on the leaves, a string of wooden beads across the chest, a leaf circlet in the hair,
+              a green hem, sandals, a crystal bud glowing in the crook of the staff.
 """
 from __future__ import annotations
 
@@ -11,159 +15,119 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "mystic"
 WALK_FRAMES = 8
 PALETTE = "mystic"
 REFERENCE = "outfit_136.png"
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
-PIXEL_RULES = {
-    "weight": {"staff": 3.0, "leaf": 2.2, "bead": 3.0, "eye": 9.0, "glow": 3.5, "hand": 2.4, "stole": 1.8, "collar": 1.6, "shoe": 1.6, "hair": 1.2},
-    "thin": {"staff": 2, "leaf": 3, "bead": 2, "eye": 3, "glow": 3, "hand": 3, "stole": 3, "shoe": 3},
-    "soft": [["robe", "stole"], ["skin", "hair", "eye"], ["hand", "glow"], ["collar", "stole"]],
-    "no_outline": [],
-    "fur": [],
-    "selout": ["robe", "collar", "skin", "hair"],
-}
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["leaf", "staff"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose"]
+LEG_PARTS = ["boot_a", "boot_b", "sole"]
+# a floor-length robe hides the legs: only the sandals show; a face turned away shows one eye pixel
+CHECK = {"size": (0.85, 1.55), "head": 0.08, "legs_side": 0.0, "legs_updown": 0.0, "eye": 1}
 
-PARTS = ["none", "skin", "eye", "hair", "robe", "stole", "collar", "shoe", "hand", "glow", "leaf", "bead", "staff"]
+PARTS = H.PARTS + ["robe", "over", "leaf", "rib", "bead", "staff", "bud", "circlet"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"leaf": 1.8, "rib": 2.6, "bead": 5.0, "staff": 3.0, "bud": 5.0, "circlet": 3.0, "over": 1.3},
+    thin={"rib": 2, "bead": 2, "staff": 2, "bud": 3, "circlet": 2},
+    soft=[["robe", "over", "torso"], ["leaf", "rib"], ["staff", "bud"], ["hair", "circlet"]],
+    texture={"robe": [0.3, 0.15], "over": [0.35, 0.15], "leaf": [0.4, 0.0], "staff": [0.5, 0.0]},
+    selout=["robe", "over", "leaf"],
+    no_outline=["bud"],
+)
 
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.48, 0.24, 0.24
-HIP_Y = 0.066
-LEG_R = 0.048
-TORSO = Vector((0.0, 0.0, 0.69)); TORSO_R = (0.100, 0.150, 0.190)
-SKIRT_TOP, SKIRT_BOTTOM = 0.62, 0.16
-SKIRT_R = (0.150, 0.180)
-HEAD = Vector((0.010, 0.0, 0.965)); HEAD_R = (0.142, 0.134, 0.156)
-SHOULDER = Vector((0.0, 0.158, 0.815))
-UPPER_ARM, FOREARM = 0.18, 0.17
-ARM_R = 0.052
-STRIDE, LIFT, STANCE = 0.13, 0.050, 0.5             # calm, gliding steps
-BODY_SCALE = (1.15, 1.18, 0.80)
+SPEC = H.spec(torso_r=(0.094, 0.142, 0.182), arm_r=0.050, leg_r=0.044, stride=0.10, lift=0.045, bob=0.012,
+              arm_swing=0.08, strands=(-1.2, -0.1, 1.0))
+BEADS = 7
+BRAID_N = 6
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("fringe", "hair", radii=(0.034, 0.084, 0.024), segments=12, rings=6)
+    m.ellipsoid("backhair", "hair", radii=(0.055, 0.100, 0.110), segments=14, rings=10)
+    m.tube("braid", "hair", points=BRAID_N)
+    m.frustum("circlet", "circlet", top_ratio=1.0, segments=16)
+    m.frustum("robe", "robe", top_ratio=0.66, segments=20)
+    m.frustum("hem", "over", top_ratio=1.0, segments=20)
+    for side in ("f", "b"):
+        m.box(f"over_{side}", "over", size=(0.030, 0.150, 0.560))
+    m.ellipsoid("mantle", "over", radii=(0.105, 0.170, 0.050), segments=16, rings=8)
     for k in ("l", "r"):
-        m.capsule(f"shin_{k}", "robe")
-        m.ellipsoid(f"shoe_{k}", "shoe", radii=(0.066, 0.042, 0.040), segments=12, rings=8)
-        m.capsule(f"upper_{k}", "robe")
-        m.frustum(f"sleeve_{k}", "robe", top_ratio=0.55, segments=12)   # wide bell sleeves
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.036, 0.030, 0.038), segments=10, rings=8)
-    m.ellipsoid("glow", "glow", radii=(0.078, 0.078, 0.078), segments=12, rings=8)
-    m.ellipsoid("torso", "robe", radii=TORSO_R)
-    m.frustum("skirt", "robe", top_ratio=0.70)
-    m.box("stole_f", "stole", size=(0.024, 0.070, 0.560))
-    m.box("stole_b", "stole", size=(0.024, 0.090, 0.420))
-    m.frustum("collar", "collar", top_ratio=1.25, segments=18)
-    for k in ("l", "r"):
-        m.ellipsoid(f"leaf_{k}", "leaf", radii=(0.090, 0.060, 0.018), segments=12, rings=6)
-    for i in range(6):
-        m.ellipsoid(f"bead{i}", "bead", radii=(0.022, 0.022, 0.022), segments=8, rings=6)
-    m.tube("staff", "staff", points=7)
-    m.ellipsoid("staff_leaves", "leaf", radii=(0.060, 0.060, 0.045), segments=12, rings=8)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.150, 0.150, 0.150))
-    m.ellipsoid("hair_long", "hair", radii=(0.070, 0.120, 0.170), segments=12, rings=8)
-    for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.016), segments=8, rings=6)
+        for j in range(2):
+            m.ellipsoid(f"leaf{j}_{k}", "leaf", radii=(0.100, 0.046, 0.014), segments=12, rings=6)
+            m.ellipsoid(f"rib{j}_{k}", "rib", radii=(0.094, 0.008, 0.018), segments=8, rings=6)
+    for i in range(BEADS):
+        m.ellipsoid(f"bead{i}", "bead", radii=(0.020, 0.020, 0.020), segments=8, rings=6)
+    m.tube("staff", "staff", points=8)
+    m.ellipsoid("bud", "bud", radii=(0.036, 0.036, 0.046), segments=10, rings=8)
+    for j in range(2):
+        m.ellipsoid(f"staffleaf{j}", "leaf", radii=(0.060, 0.026, 0.010), segments=10, rings=6)
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
-
-
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
+def _staff_hand(sh, a, walking):
+    swing = 0.04 * math.sin(a) if walking else 0.0
+    return sh + Vector((0.110 + swing, -0.060, -0.230))
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.008 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    sway = 0.07 * math.sin(a) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    sk = m.objects["skirt"]
-    sk.location = Vector((0, 0, SKIRT_BOTTOM)) + up
-    sk.rotation_mode = "XYZ"
-    sk.rotation_euler = Euler((sway, 0, 0))
-    sk.scale = (SKIRT_R[0], SKIRT_R[1], SKIRT_TOP - SKIRT_BOTTOM)
-    for side, x, z in (("f", 0.108, 0.520), ("b", -0.110, 0.600)):
-        st = m.objects[f"stole_{side}"]
-        st.rotation_mode = "XYZ"
-        st.rotation_euler = Euler((sway * 0.5, 0.10 if side == "f" else -0.10, 0.0))
-        st.location = Vector((x, 0, z)) + up
-    col = m.objects["collar"]
-    col.location = Vector((-0.040, 0, 0.790)) + up
-    col.rotation_mode = "XYZ"
-    col.rotation_euler = Euler((0, -0.20, 0))
-    col.scale = (0.105, 0.135, 0.090)
-    for s_, k in ((1, "l"), (-1, "r")):                # big leaf shapes on the shoulders
-        lf = m.objects[f"leaf_{k}"]
-        lf.rotation_mode = "XYZ"
-        lf.rotation_euler = Euler((0.55 * s_, -0.15, 0.25 * s_))
-        lf.location = Vector((-0.010, 0.165 * s_, 0.850)) + up
-    for i in range(6):                                  # a string of wooden beads across the chest
-        u = i / 5
-        m.objects[f"bead{i}"].location = Vector((0.110, -0.100 + 0.200 * u, 0.800 - 0.090 * math.sin(math.pi * u))) + up
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.045, 0, 0.040))
-    m.objects["hair_long"].location = head + Vector((-0.110, 0, -0.120))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.126, 0.044 * s, 0.080))
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.050 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.objects[f"shoe_{k}"].location = ankle + Vector((0.030, 0, -0.010))
-    # right arm hangs and sways a little; left hand raised in front at chest height, glowing
-    for s, k in ((1, "l"), (-1, "r")):
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        if k == "l":
-            hand = Vector((0.170, 0.110, 0.690 + 0.010 * math.sin(2 * a))) + up
-        else:
-            swing = 0.06 * math.sin(a) if walking else 0.0
-            hand = sh + Vector((swing, -0.030, -0.32))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, Vector((-1, 0.3 * s, 0)))
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        d = (hand - elbow).normalized()
-        slv = m.objects[f"sleeve_{k}"]
-        m.put_segment(f"sleeve_{k}", hand - d * 0.010, elbow, ARM_R * 1.6)
-        m.objects[f"hand_{k}"].location = hand + d * 0.020
-        if k == "r":                                       # gnarled staff tilted out from the body
-            lo = hand + Vector((0.080, 0.030, -0.300))
-            hi = hand + Vector((-0.020, -0.200, 0.380))
-            pts = [tuple(lo.lerp(hi, i / 6) + Vector((0.012 * math.sin(i * 2.1), 0, 0))) for i in range(7)]
-            m.set_tube("staff", pts, [0.016, 0.015, 0.016, 0.014, 0.015, 0.016, 0.018])
-            m.objects["staff_leaves"].location = hi + Vector((0, 0, 0.030))
-        if k == "l":
-            m.objects["glow"].location = hand + d * 0.040 + Vector((0, 0, 0.020))
+    p = H.pose(m, t, hands={"r": _staff_hand})
+    up, head, a, walking = p["up"], p["head"], p["a"], p["walking"]
+    sway = 0.05 * math.sin(a) if walking else 0.0
+    m.objects["fringe"].location = head + Vector((0.050, 0, 0.114))
+    m.objects["backhair"].location = head + Vector((-0.100, 0, -0.050))
+    swing = 0.040 * math.sin(a) if walking else 0.0
+    pts = [head + Vector((-0.120 - 0.020 * math.sin(i * 0.6), swing * i / 5, -0.110 - 0.075 * i)) for i in range(BRAID_N)]
+    m.set_tube("braid", [tuple(q) for q in pts], [0.036 - 0.004 * i for i in range(BRAID_N)])
+    H.frustum(m, "circlet", head + Vector((-0.010, 0, 0.060)), (0.122, 0.118), 0.022, (0, -0.25, 0))
+    H.frustum(m, "robe", Vector((0, 0, 0.060)), (0.148, 0.176), 0.520, (sway, 0, 0))
+    H.frustum(m, "hem", Vector((0, 0, 0.060)), (0.153, 0.181), 0.045, (sway, 0, 0))
+    for side, x, lean in (("f", 0.120, 0.20), ("b", -0.120, -0.20)):
+        o = m.objects[f"over_{side}"]
+        o.rotation_mode = "XYZ"
+        o.rotation_euler = Euler((0, lean, 0))
+        o.location = Vector((x, 0, 0.560)) + up
+    m.objects["mantle"].location = Vector((0.0, 0, 0.848)) + up
+    # two leaves fanning out and up from each shoulder
+    flutter = 0.10 * math.sin(2 * a) if walking else 0.0
+    for sign, k in ((1, "l"), (-1, "r")):
+        sh = p[f"shoulder_{k}"]
+        for j, (yaw, roll, dx) in enumerate(((1.25, 0.45, 0.030), (1.85, 0.30, -0.040))):
+            rot = Euler((roll * sign + flutter * sign * (1 if j else -1), -0.35, yaw * sign))
+            d = Vector((1, 0, 0))
+            d.rotate(rot)
+            for name in (f"leaf{j}_{k}", f"rib{j}_{k}"):
+                o = m.objects[name]
+                o.rotation_mode = "XYZ"
+                o.rotation_euler = rot
+                o.location = sh + Vector((dx, 0.020 * sign, 0.040)) + d * 0.078
+    # wooden beads hanging in an arc across the chest
+    for i in range(BEADS):
+        u = i / (BEADS - 1)
+        y = -0.105 + 0.210 * u
+        z = 0.800 - 0.085 * math.sin(math.pi * u)
+        x = 0.102 * math.sqrt(max(0.1, 1 - (y / 0.150) ** 2)) + 0.012
+        m.objects[f"bead{i}"].location = Vector((x, y, z)) + up
+    # staff: upright in the right hand, tilted out, its top curling into a crook that holds a glowing bud
+    hand = p["hand_r"]
+    foot = hand + Vector((0.030, -0.030, -0.400))
+    top = hand + Vector((-0.060, -0.070, 0.520))
+    pts = [foot, hand, hand.lerp(top, 0.5), top, top + Vector((0.050, 0, 0.070)), top + Vector((0.115, 0, 0.060)),
+           top + Vector((0.140, 0, 0.000)), top + Vector((0.105, 0, -0.040))]
+    m.set_tube("staff", [tuple(q) for q in pts], [0.020, 0.020, 0.019, 0.018, 0.017, 0.015, 0.013, 0.011])
+    glow = 1.0 + (0.12 * math.sin(2 * a) if walking else 0.0)
+    bud = m.objects["bud"]
+    bud.location = top + Vector((0.075, 0, 0.010))
+    bud.scale = (0.036 * glow, 0.036 * glow, 0.046 * glow)
+    for j, sgn in enumerate((1, -1)):
+        o = m.objects[f"staffleaf{j}"]
+        o.rotation_mode = "XYZ"
+        o.rotation_euler = Euler((0.4 * sgn, -0.6, 1.2 * sgn))
+        o.location = top + Vector((0.010, 0.050 * sgn, 0.050))
 
 
 def assign_depth_parts(m, depth_of):
