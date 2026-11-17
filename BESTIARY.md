@@ -48,7 +48,7 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 ## Hunting grounds in detail
 
 ### The Ratwarren  (levels 1-4, experience)
-*west, about 80 steps from the city centre. Safety: guarded.*
+*west, about 80 steps from the city centre. Safety: guarded. Who it is for: training ground, good for every class alone.*
 
 Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you here.
 
@@ -59,7 +59,7 @@ Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you he
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Toad Pond  (levels 3-7, experience)
-*east, about 90 steps from the city centre. Safety: guarded.*
+*east, about 90 steps from the city centre. Safety: guarded. Who it is for: training ground, good for every class alone.*
 
 Toads hit a little harder and give a little more. Four ponds, four loops; fishing works here.
 
@@ -72,7 +72,7 @@ Toads hit a little harder and give a little more. Four ponds, four loops; fishin
 - **Field Rat:** Weakest thing in the tower. Perfect for your first three levels.
 
 ### Sproutling Glade  (levels 5-10, experience)
-*south, about 80 steps from the city centre. Safety: guarded.*
+*south, about 80 steps from the city centre. Safety: guarded. Who it is for: training ground, good for every class alone.*
 
 Sproutlings spit a little poison-green magic. Still inside the Guarded ring around town.
 
@@ -85,7 +85,7 @@ Sproutlings spit a little poison-green magic. Still inside the Guarded ring arou
 - **Hopper Toad:** Hits a little harder than a rat. Still safe for a fresh climber.
 
 ### Waspgrass Fields  (levels 7-12, experience)
-*north-west, about 80 steps from the city centre. Safety: guarded.*
+*north-west, about 80 steps from the city centre. Safety: guarded. Who it is for: best for an Arcanist; other classes can hunt it, just slower.*
 
 Fast and stingy, little health. Just north of the city gate, beside the Pass road.
 
@@ -96,7 +96,7 @@ Fast and stingy, little health. Just north of the city gate, beside the Pass roa
 - **Meadow Wasp:** Fast, low health, poisons. Kill it quickly and let the poison wear off.
 
 ### Boar Meadow  (levels 9-15, experience)
-*south-west, about 80 steps from the city centre. Safety: open.*
+*south-west, about 80 steps from the city centre. Safety: open. Who it is for: best for a Vanguard; other classes can hunt it, just slower.*
 
 Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallows somewhere in here.
 
@@ -107,7 +107,9 @@ Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallo
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
 ### Burrow Hills  (levels 11-16, experience)
-*north-east, about 80 steps from the city centre. Safety: open.*
+*north-east, about 80 steps from the city centre. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Its party cave, The Molework, is a group ground: bring 3 or 4 players.
 
 Sturdy diggers with plenty of health. Slow and steady experience. Climb the Crown or dig down into the Molework.
 
@@ -120,7 +122,9 @@ Sturdy diggers with plenty of health. Slow and steady experience. Climb the Crow
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
 ### Wolf Copse  (levels 12-18, experience)
-*west, about 170 steps from the city centre. Safety: open.*
+*west, about 170 steps from the city centre. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Its party cave, The Alpha's Den, is a group ground: bring 3 or 4 players.
 
 Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the river, south of Millcross.
 
@@ -133,7 +137,7 @@ Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the
 - **Grey Alpha:** Leads a wolf pack and calls two wolves when hurt. Worth killing first: the drops are better.
 
 ### Reedmarsh  (levels 14-19, money)
-*west, about 160 steps from the city centre. Safety: open.*
+*west, about 160 steps from the city centre. Safety: open. Who it is for: best for a Ranger; other classes can hunt it, just slower.*
 
 Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool.
 
@@ -144,7 +148,9 @@ Snappers carry more coins than their level suggests. Good first money run; fishi
 - **Reed Snapper:** Tough shell, slow. It carries more coins than anything else at this level.
 
 ### Thornsnap Hollow  (levels 14-20, experience)
-*north, about 130 steps from the city centre. Safety: open.*
+*north, about 130 steps from the city centre. Safety: open. Who it is for: best for a Mystic; other classes can hunt it, just slower.*
+
+Its party cave, The Rootcellar, is a group ground: bring 3 or 4 players.
 
 Poison bites; bring antidotes or healing. Good experience for the effort.
 
@@ -157,7 +163,9 @@ Poison bites; bring antidotes or healing. Good experience for the effort.
 - **Bristle Boar:** Straight melee, no tricks. The classic early experience stop. Drops ham: free healing food.
 
 ### Shard Fields  (levels 17-24, experience)
-*east, about 130 steps from the city centre. Safety: open.*
+*east, about 130 steps from the city centre. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Its party cave, Shard Grotto, is a group ground: bring 3 or 4 players.
 
 Shardlings hit with energy and resist it; wands are weak here. Strong experience.
 
@@ -168,7 +176,9 @@ Shardlings hit with energy and resist it; wands are weak here. Strong experience
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
 ### The Bandit Road  (levels 19-27, money)
-*north-east, about 120 steps from the city centre. Safety: open.*
+*north-east, about 120 steps from the city centre. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Its party cave, Smugglers' Cellar, is a group ground: bring 3 or 4 players.
 
 Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money.
 
@@ -181,7 +191,9 @@ Bandits carry coins and gear you can sell. Captains lead them and drop platinum.
 - **Bandit Captain:** A tough leader who calls two bandits. Drops platinum coins. Take friends the first time.
 
 ### The Old Quarry  (levels 23-30, money)
-*north, about 140 steps from the city centre. Safety: open.*
+*north, about 140 steps from the city centre. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Its party cave, The Lower Works, is a group ground: bring 3 or 4 players.
 
 Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well.
 
@@ -196,7 +208,7 @@ Stone sentinels and archers guard the old works. Tough, but arrows and gear sell
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
 ### The Old Watchtower  (levels 28-40, experience and money)
-*north-west, about 230 steps from the city centre. Safety: contested.*
+*north-west, about 230 steps from the city centre. Safety: contested. Who it is for: a big group of 4 to 8 players.*
 
 The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden rope to a cave. Contested: players can fight here.
 

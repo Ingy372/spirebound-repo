@@ -17,6 +17,7 @@ Template:
 - **The new Ratwarren** (levels 1-4, west of Hearthgate): walk in from the gate, hunt the Yard, take a hole down into the Warren, then follow the long tunnel south to the Deep Warren. Does it still feel like a flood? Too empty? Write what you think below.
 - **The new Burrow Hills** (levels 11-16, north-east of Hearthgate, gate on the west side): walk the north hollow, climb a ramp onto the Crown (the hill in the middle), come down the other ramp, then take a hole down into the Molework. The far east end and the Crown's east side are meant to be the hard part. Use "Test Vanguard" or a character around level 14. Too calm? Too hard? Write it below.
 - **Toad Pond, Sproutling Glade, Waspgrass Fields** (levels 3-12): Toad Pond has four ponds and an island you reach by bridges; the Glade has a ring of old trees with a hole down in the middle; Waspgrass has Hive Knoll, a hill you climb by ramps from the south meadow. Each has a cave below with more monsters. Calm enough? Too empty on top? Write it below.
+- **The new spawn habits** (all five rebuilt grounds, 2026-11-16): rats now come in clumps of 5 to 8 below the Ratwarren, toads in pairs, wasps in clumps with a cloud of 9 at the hive, sproutlings thick round a nest in the Root Hollow, boars alone. Does each ground feel different from the others? Is any clump too much for its level? Write it below.
 
 (no playtests yet: the first one comes at the end of Phase 1)
 

@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""The calm checker for hunting grounds (FLOOR1_HUNTING_PLAN.md Part 3).
+"""The calm checker for hunting grounds (FLOOR1_HUNTING_PLAN.md Parts 3 and 10, DESIGN.md 9.4).
 
 For every hunting ground and every level of it, measures how crowded it is from a player's point of view:
-  pull of a tile = monsters whose home is on the same level within NOTICE tiles (no walls considered: the engine picks
-  targets without line of sight, it only needs a clear line to hit).
+  pull of a tile = the danger that can come at a player standing there: the summed weight (tools/balance.py HABITS) of
+  the monsters whose home is on the same level within NOTICE tiles (no walls considered: the engine picks targets
+  without line of sight, it only needs a clear line to hit). Each band's limit is the danger budget of the ground's
+  own type (training, class, mixed, group, large; tools/balance.py GROUND_TYPES).
 Prints one line per ground and level and draws a heat map per ground and level into docs/previews/hunt_<id>_z<z>.png
 (white = pull 0, green 1-2, yellow 3-4, orange 5-6, red 7+; black dots = monster homes).
 
@@ -26,11 +28,26 @@ sys.path.insert(0, str(ROOT / "maps"))
 NOTICE = 10
 D8 = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
 
-# plan Part 3: limits by band (pull, density = walkable tiles per monster)
-PULL_LIMIT = {"approach": 0, "calm": 3, "middle": 4, "deep": 6, "nest": 8, "party": 8}
+from balance import budget, weight  # noqa: E402
+
+# density = walkable tiles per unit of weight (one weight-1 monster), per level
 DENSITY_MIN = {7: 45, 6: 35, 5: 35, 8: 35, 9: 25}
 STARTER_DENSITY = 50
 PARTY_DENSITY = 20
+CROWD_EXTRA = 2                                   # with every crowd spot on, a band may go this much over its budget
+SOLO_TYPES = ("training", "class", "mixed")       # breathing room and rest spots are checked for these
+
+
+def W(name):
+    """A monster's weight; anything not in the habit table counts as 1."""
+    try:
+        return weight(name)
+    except KeyError:
+        return 1.0
+
+
+def limit(gtype, band):
+    return budget(gtype, band)
 
 
 def build_map():
@@ -55,13 +72,13 @@ def homes(m):
 
 
 def pull_map(tiles, mons, notice=NOTICE):
-    """tile -> number of monsters within notice (Chebyshev) on the same level."""
+    """tile -> summed weight of the monsters within notice (Chebyshev) on the same level (rounded to 0.1)."""
     by_z = {}
-    for x, y, z, _n in mons:
-        by_z.setdefault(z, []).append((x, y))
+    for x, y, z, n in mons:
+        by_z.setdefault(z, []).append((x, y, W(n)))
     out = {}
     for (x, y, z) in tiles:
-        out[(x, y, z)] = sum(1 for mx, my in by_z.get(z, ()) if abs(mx - x) <= notice and abs(my - y) <= notice)
+        out[(x, y, z)] = round(sum(w for mx, my, w in by_z.get(z, ()) if abs(mx - x) <= notice and abs(my - y) <= notice), 1)
     return out
 
 
@@ -97,7 +114,7 @@ def spacing(mons):
 
 
 def areas(m):
-    """(id, title, level label, walkable tiles, monsters, kind) for every ground level and party cave on Floor 1."""
+    """(id, title, level label, walkable tiles, kind, guarded, type) for every ground level and party cave on Floor 1."""
     import wilds
     block = wilds.blockers()
     out = []
@@ -109,15 +126,15 @@ def areas(m):
                 if z == L.get("party_z"):              # the party cave is checked below, with the party limits
                     continue
                 tiles = {t for t in got if t[2] == z}
-                out.append((L["id"], L["c"]["title"], f"z{z}", tiles, "designed", L["c"]["zone"] == "guarded"))
+                out.append((L["id"], L["c"]["title"], f"z{z}", tiles, "designed", L["c"]["zone"] == "guarded", L["c"]["type"]))
             continue
         gate = [(x, y, wilds.Z) for x, y in L["gate"]]
         inside = wilds.flood(m, gate, block, inside=L["rect"])
-        out.append((L["id"], L["c"]["title"], "z7", inside, "surface", L["c"]["zone"] == "guarded"))
+        out.append((L["id"], L["c"]["title"], "z7", inside, "surface", L["c"]["zone"] == "guarded", L["c"]["type"]))
     for cv in getattr(m, "caves", []):
         x0, y0, w, h = cv["box"]
         reach = wilds.flood(m, [cv["landing"]], block, limit=(x0, y0, x0 + w, y0 + h))
-        out.append((cv["id"], cv["id"] + " cave", f"z{cv['landing'][2]}", reach, "party", False))
+        out.append((cv["id"], cv["id"] + " cave", f"z{cv['landing'][2]}", reach, "party", False, "group"))
     return out
 
 
@@ -146,10 +163,10 @@ def main(argv):
     m = build_map()
     mons_all = homes(m)
     bad = 0
-    print(f"NOTICE = {NOTICE} tiles. pull = monsters that can come at a player standing on a tile.")
-    print(f"{'ground':18s} {'lvl':4s} {'tiles':>6s} {'mons':>5s} {'tiles/mon':>9s} {'maxpull':>7s} {'avgpull':>7s} "
+    print(f"NOTICE = {NOTICE} tiles. pull = the danger (summed monster weight) that can come at a player standing on a tile.")
+    print(f"{'ground':18s} {'lvl':4s} {'tiles':>6s} {'mons':>5s} {'tiles/wt':>9s} {'maxpull':>7s} {'avgpull':>7s} "
           f"{'pull0':>6s} {'pull<=2':>7s} {'rest':>5s} {'gap':>4s}  verdict")
-    for gid, title, lvl, tiles, kind, guarded in areas(m):
+    for gid, title, lvl, tiles, kind, guarded, gtype in areas(m):
         if only and gid not in only:
             continue
         z = next(iter(tiles))[2] if tiles else 7
@@ -161,7 +178,7 @@ def main(argv):
         p2 = sum(1 for v in vals if v <= 2) / max(1, n)
         rest = rest_distance(tiles, pull)
         gap = spacing(mons)
-        dens = n / max(1, len(mons))
+        dens = n / max(0.1, sum(W(mm[3]) for mm in mons))
         probs = []
         want = PARTY_DENSITY if kind == "party" else (STARTER_DENSITY if guarded and z == 7 else DENSITY_MIN.get(z, 35))
         if dens < want:
@@ -170,29 +187,31 @@ def main(argv):
             L = next(L_ for L_ in m.wilds if L_["id"] == gid)
             cl = [(p, band) for p, (_n, band, _r) in L["clearings"].items() if p[2] == z]
             crowd = [p for r in L["routes"].values() for p in r["crowd"] if p[2] == z]
-            pull_c = pull_map(tiles, mons + [(x, y, z, "crowd") for x, y, _z in crowd])
+            from floor1_plan import DESIGNS
+            cg = DESIGNS[L["c"]["design"]]["crowd_group"]
+            pull_c = pull_map(tiles, mons + [(x, y, z, mon) for x, y, _z in crowd for mon, k in cg for _ in range(k)])
             worst = {}
             for t in tiles:
                 band = "approach" if (t[0], t[1]) in L.get("hub", ()) and z == 7 else \
                     min(cl, key=lambda q: (q[0][0] - t[0]) ** 2 + (q[0][1] - t[1]) ** 2)[1] if cl else "deep"
-                lim = PULL_LIMIT[band]
+                lim = limit(gtype, band)
                 if pull[t] > lim:
                     worst[band] = max(worst.get(band, 0), pull[t])
-                if pull_c[t] > lim + 2:
+                if pull_c[t] > lim + CROWD_EXTRA:
                     worst[band + " with crowd"] = max(worst.get(band + " with crowd", 0), pull_c[t])
             for band, v in sorted(worst.items()):
-                probs.append(f"{band} pull {v} > {PULL_LIMIT[band.split()[0]] + (2 if 'crowd' in band else 0)}")
+                probs.append(f"{band} pull {v} > {limit(gtype, band.split()[0]) + (CROWD_EXTRA if 'crowd' in band else 0)}")
         else:
-            lim = PULL_LIMIT["party"] if kind == "party" else PULL_LIMIT["deep"]
+            lim = limit("group", "deep") if kind == "party" else limit(gtype, "deep")
             if max(vals) > lim:
                 probs.append(f"max pull {max(vals)} > {lim}")
-        if kind != "party":
+        if kind != "party" and gtype in SOLO_TYPES:
             if p0 < 0.25:
                 probs.append(f"pull-0 {p0:.0%} < 25%")
             if rest is None or rest > 20:
                 probs.append(f"rest spot {rest} steps > 20")
         bad += bool(probs)
-        print(f"{gid:18s} {lvl:4s} {n:6d} {len(mons):5d} {dens:9.1f} {max(vals):7d} {sum(vals) / max(1, n):7.1f} "
+        print(f"{gid:18s} {lvl:4s} {n:6d} {len(mons):5d} {dens:9.1f} {max(vals):7.1f} {sum(vals) / max(1, n):7.1f} "
               f"{p0:6.0%} {p2:7.0%} {str(rest):>5s} {str(gap):>4s}  " + ("OK" if not probs else "; ".join(probs)))
         if pictures and tiles:
             heatmap(ROOT / "docs" / "previews" / f"hunt_{gid}_{lvl}.png", tiles, pull, mons)

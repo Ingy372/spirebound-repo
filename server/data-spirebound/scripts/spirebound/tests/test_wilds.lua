@@ -52,8 +52,11 @@ SpireTest.add("wilds: every rebuilt ground has a walkable gate, hub, loop mouths
 	SpireTest.eq(count >= 1, true, "at least one rebuilt hunting ground")
 end)
 
-SpireTest.add("wilds: the engine really spawned each rebuilt ground's monsters (48 small, 72 standard)", function()
-	local want = { starter_west = 48, starter_east = 48, starter_south = 48, wasp_fields = 48 }
+SpireTest.add("wilds: the engine really spawned each rebuilt ground's monsters (as many as the map places)", function()
+	local want = {}
+	for _, g in ipairs(SpireWilds.grounds) do
+		want[g.id] = g.want
+	end
 	for id, r in pairs(grounds()) do
 		local n = monstersIn(r[1], r[2])
 		for _, z in ipairs({ 5, 6, 8, 9, 10 }) do -- designed grounds (FLOOR1_HUNTING_PLAN.md): their hill and lower levels count too
@@ -62,8 +65,8 @@ SpireTest.add("wilds: the engine really spawned each rebuilt ground's monsters (
 				n = n + monstersIn(nw, se)
 			end
 		end
-		local w = want[id] or 72
-		SpireTest.eq(n >= w - 2 and n <= w, true, id .. ": " .. n .. " monsters inside (want " .. w .. ")")
+		local w = want[id]
+		SpireTest.eq(w ~= nil and n >= w - 2 and n <= w, true, id .. ": " .. n .. " monsters inside (want " .. tostring(w) .. ")")
 	end
 end)
 
@@ -112,11 +115,44 @@ local function near(pos, r)
 	return n
 end
 
+-- DESIGN.md 9.4: the danger that can reach a player = the summed weight of the monsters within 10 tiles on the same level
+local function danger(pos)
+	local w = 0
+	for _, c in ipairs(Game.getSpectators(pos, false, false, 10, 10, 10, 10)) do
+		if c:isMonster() and c:getPosition().z == pos.z and not c:getMaster() then
+			w = w + (SpireWilds.weights[c:getName()] or 1)
+		end
+	end
+	return math.floor(w * 10 + 0.5) / 10
+end
+
+local function groundById(id)
+	for _, g in ipairs(SpireWilds.grounds) do
+		if g.id == id then
+			return g
+		end
+	end
+end
+
+SpireTest.add("spawn rules: every rebuilt ground is quiet at the gate and each route starts within its type's danger budget", function()
+	local n = 0
+	for _, g in ipairs(SpireWilds.grounds) do
+		if g.starts then
+			n = n + 1
+			SpireTest.eq(danger(WorldPoints["camp_" .. g.id]), 0, g.id .. ": nothing can reach a player inside the gate")
+			for r, band in pairs(g.starts) do
+				local lim = band == "party" and SpireWilds.budgets.group.deep or SpireWilds.budgets[g.type][band]
+				local d = danger(WorldPoints["loop_" .. g.id .. "_" .. r])
+				SpireTest.eq(d <= lim, true, g.id .. " route " .. r .. ": danger " .. d .. " at the start (budget " .. lim .. ", " .. g.type .. " " .. band .. ")")
+			end
+		end
+	end
+	SpireTest.eq(n >= 5, true, "the five rebuilt grounds have route starts")
+	SpireTest.eq(groundById("wasp_fields").type, "class", "Waspgrass Fields is a class ground")
+end)
+
 SpireTest.add("hunting plan: the Ratwarren gate is quiet, the yard calm, and the stairs lead to the Warren below", function()
 	SpireTest.eq(near(WorldPoints.camp_starter_west, 10), 0, "no rat can reach a player at the Ratwarren's entrance")
-	SpireTest.eq(near(WorldPoints.loop_starter_west_a, 10) <= 3, true, "at most 3 rats can reach a player in the yard")
-	SpireTest.eq(near(WorldPoints.loop_starter_west_b, 10) <= 4, true, "at most 4 rats near the Warren's west landing")
-	SpireTest.eq(near(WorldPoints.loop_starter_west_d, 10) <= 6, true, "at most 6 rats near the Deep Warren's entrance")
 	local downs = 0
 	for k, p in pairs(WorldPoints) do
 		if k:match("^stairs_starter_west_") then
@@ -134,10 +170,6 @@ end)
 -- and two holes down to the Molework.
 SpireTest.add("hunting plan: Burrow Hills is quiet at the gate, ramps lead up to the Crown and holes down to the Molework", function()
 	SpireTest.eq(near(WorldPoints.camp_burrow_hills, 10), 0, "no monster can reach a player inside the Burrow Hills gate")
-	SpireTest.eq(near(WorldPoints.loop_burrow_hills_a, 10) <= 3, true, "at most 3 monsters at the start of the North Hollow")
-	SpireTest.eq(near(WorldPoints.loop_burrow_hills_b, 10) <= 3, true, "at most 3 monsters at the start of the South Hollow")
-	SpireTest.eq(near(WorldPoints.loop_burrow_hills_c, 10) <= 4, true, "at most 4 monsters where you come up onto the Crown")
-	SpireTest.eq(near(WorldPoints.loop_burrow_hills_d, 10) <= 4, true, "at most 4 monsters under the west hole")
 	local ramps, holes = 0, 0
 	for k, p in pairs(WorldPoints) do
 		if k:match("^ramp_burrow_hills_") then
@@ -160,8 +192,6 @@ end)
 SpireTest.add("hunting plan: Toad Pond, Sproutling Glade and Waspgrass Fields are quiet at the gate and their stairs work", function()
 	for _, id in ipairs({ "starter_east", "starter_south", "wasp_fields" }) do
 		SpireTest.eq(near(WorldPoints["camp_" .. id], 10), 0, id .. ": no monster can reach a player inside the gate")
-		SpireTest.eq(near(WorldPoints["loop_" .. id .. "_a"], 10) <= 3, true, id .. ": at most 3 monsters at the start of route a")
-		SpireTest.eq(near(WorldPoints["loop_" .. id .. "_b"], 10) <= 3, true, id .. ": at most 3 monsters at the start of route b")
 		SpireTest.eq(SpirePvP.zoneAt(WorldPoints["loop_" .. id .. "_d"]), "guarded", id .. ": the level below is guarded too")
 		local downs = 0
 		for k, p in pairs(WorldPoints) do

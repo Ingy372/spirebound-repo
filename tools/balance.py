@@ -42,6 +42,86 @@ TOWN_OF_FLOOR = {1: 1}        # floor -> town id (floors 2-10: town n + 1, see m
 ELITE_GOLD, APEX_GOLD = 2.0, 3.0   # elites and apex monsters carry this many times a camp monster's coins
 GOLD, PLAT = 3031, 3035
 
+# ---------------------------------------------------------------- spawn rules (DESIGN.md 9.4, Jay 2026-11-16)
+# Every monster has a habit (how it spawns: its group shape) and a weight (how much it counts towards the danger
+# budget: 1 = the floor's ordinary monster). First guesses from each monster's health, hit and speed (Claude's call).
+HABIT_KINDS = ("loner", "pair", "pack", "swarm", "colony", "sentry")
+HABITS = {
+    "Field Rat": ("swarm", 0.4), "Hopper Toad": ("pair", 1.0), "Sproutling": ("colony", 0.7),
+    "Meadow Wasp": ("colony", 0.5), "Burrow Mole": ("colony", 1.0), "Bristle Boar": ("loner", 1.5),
+    "Meadow Wolf": ("pack", 1.0), "Grey Alpha": ("pack", 2.0), "Reed Snapper": ("pair", 1.0),
+    "Thornsnap": ("sentry", 1.3), "Field Shardling": ("pair", 1.0), "Road Bandit": ("sentry", 1.0),
+    "Bandit Captain": ("sentry", 2.5), "Ruin Sentinel": ("sentry", 1.3), "Ruin Archer": ("sentry", 1.0),
+    "Stonehorn Ram": ("pack", 2.0),
+}
+# Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
+HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}
+# Every hunting ground has a type. budget = the most weight that may come at one player at once, by band;
+# reward = target experience/gold per person per hour against the floor's training baseline; players = who it is for.
+GROUND_TYPES = {
+    "training": dict(budget=dict(approach=0, calm=2, middle=3, deep=4, nest=6), reward=1.0, players=(1, 1)),
+    "class": dict(budget=dict(approach=0, calm=3, middle=4, deep=6, nest=8), reward=1.2, players=(1, 1)),
+    "mixed": dict(budget=dict(approach=0, calm=3, middle=4, deep=6, nest=8), reward=1.1, players=(1, 2)),
+    "group": dict(budget=dict(approach=0, calm=6, middle=9, deep=12, nest=14), reward=1.5, players=(3, 4)),
+    "large": dict(budget=dict(approach=0, calm=10, middle=16, deep=22, nest=26), reward=1.75, players=(4, 8)),
+}
+CLASSES = ("Vanguard", "Ranger", "Arcanist", "Mystic")
+PARTY_MAX = 8                                   # DESIGN.md 7.1: a large-group ground fits in one party
+
+
+def weight(name):
+    return HABITS[name][1]
+
+
+def budget(gtype, band):
+    """The danger budget of a band in a ground of this type. A party level is a group ground inside any ground."""
+    if band == "party":
+        return GROUND_TYPES["group"]["budget"]["deep"]
+    return GROUND_TYPES[gtype]["budget"][band]
+
+
+def spawn_rule_problems():
+    """DESIGN.md 9.4 as checks: every ground has a type, every class a ground, every monster a habit."""
+    sys.path.insert(0, str(ROOT / "maps"))
+    from floor1_plan import CAMPS, DESIGNS, APEX
+    out = []
+    for h, w in HABITS.values():
+        if h not in HABIT_KINDS or w <= 0:
+            out.append(f"bad habit or weight: {h} {w}")
+    for t, d in GROUND_TYPES.items():
+        b = [d["budget"][k] for k in ("approach", "calm", "middle", "deep", "nest")]
+        if b[0] != 0 or b != sorted(b):
+            out.append(f"ground type {t}: the budget must be 0 at the gate and rise inward ({b})")
+    grounds = CAMPS + [APEX]
+    classes = {}
+    for c in grounds:
+        t = c.get("type")
+        if t not in GROUND_TYPES:
+            out.append(f"{c['title']}: no ground type (one of {', '.join(GROUND_TYPES)})")
+        if t == "class":
+            if c.get("cls") not in CLASSES:
+                out.append(f"{c['title']}: a class ground must name its class")
+            classes.setdefault(c.get("cls"), []).append(c["title"])
+        mons = {m for g in c.get("groups", []) + c.get("den_groups", []) for m, _n in g}
+        if c.get("design"):
+            for lv in DESIGNS[c["design"]]["levels"].values():
+                for cl in lv["clearings"]:
+                    if isinstance(cl[6], list):
+                        mons |= {m for grp in cl[6] for m, _n in grp}
+        for part in ("courtyard", "inner", "cave"):
+            mons |= {m for g in c.get(part, {}).get("groups", []) for m, _n in g}
+        for mname in sorted(mons):
+            if mname not in HABITS:
+                out.append(f"{c['title']}: {mname} has no habit")
+    for k in CLASSES:
+        if k not in classes:
+            out.append(f"Floor 1 has no class ground for the {k}")
+    if sum(1 for c in grounds if c.get("type") == "large") > 1:
+        out.append("Floor 1 has more than one large-group ground (Jay: occasional)")
+    if not any(c.get("type") == "group" or c.get("den") for c in grounds):
+        out.append("Floor 1 has no group ground")
+    return out
+
 
 def stage(level):
     """Experience stage for a level, read from the real stages file."""
@@ -313,6 +393,7 @@ def main(argv):
         print("balance selftest: OK (a bad price and an overpaid task both fail the check)")
         return 0
     rows, problems = rows_and_problems(monsters, floors, prices, houses, tasks)
+    problems += spawn_rule_problems()
     write(rows, problems, tasks)
     print(f"wrote BALANCE.md, data/balance_floors.csv and tasks_floors.lua ({len(rows)} floors, {len(tasks)} tasks)")
     if problems:

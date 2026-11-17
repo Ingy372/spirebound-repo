@@ -88,11 +88,28 @@ def build_ladder() -> list[dict]:
         monsters = [m for m, _, _ in c["mix"]]
         cx, cy = c["x"] + c["w"] // 2, c["y"] + c["h"] // 2
         rows.append(dict(id=c["id"], title=c["title"], lo=c["levels"][0], hi=c["levels"][1], role=c["role"], monsters=monsters,
-                         where=direction(cx, cy), note=c["note"], zone=c["zone"], area=c["w"] * c["h"]))
+                         where=direction(cx, cy), note=c["note"], zone=c["zone"], area=c["w"] * c["h"], kind=kind_text(c),
+                         den=c.get("den")))
     ax, ay = 30 + 22, 30 + 22
     rows.append(dict(id=APEX["id"], title=APEX["title"], lo=APEX["levels"][0], hi=APEX["levels"][1], role="xp+money",
-                     monsters=["Stonehorn Ram"], where=direction(ax, ay), note=APEX["note"], zone="contested", area=44 * 44))
+                     monsters=["Stonehorn Ram"], where=direction(ax, ay), note=APEX["note"], zone="contested", area=44 * 44,
+                     kind=kind_text(APEX)))
     return sorted(rows, key=lambda r: (r["lo"], r["hi"]))
+
+
+def kind_text(c):
+    """Who the ground is for (DESIGN.md 9.4), in a player's words."""
+    t = c["type"]
+    if t == "training":
+        return "training ground, good for every class alone"
+    if t == "class":
+        an = "an" if c["cls"][0] in "AEIOU" else "a"
+        return f"best for {an} {c['cls']}; other classes can hunt it, just slower"
+    if t == "mixed":
+        return "mixed, fine alone and better as a pair"
+    if t == "group":
+        return "group ground, bring 3 or 4 players"
+    return "a big group of 4 to 8 players"
 
 
 def lua_string(s: str) -> str:
@@ -106,7 +123,7 @@ def write_lua(ladder: list[dict]) -> None:
     for r in ladder:
         mons = ", ".join(lua_string(m) for m in r["monsters"])
         out.append(f"\t{{ id = {lua_string(r['id'])}, title = {lua_string(r['title'])}, lo = {r['lo']}, hi = {r['hi']}, role = {lua_string(r['role'])}, "
-                   f"zone = {lua_string(r['zone'])}, monsters = {{ {mons} }}, where = {lua_string(r['where'])}, note = {lua_string(r['note'])} }},")
+                   f"zone = {lua_string(r['zone'])}, kind = {lua_string(r['kind'])}, monsters = {{ {mons} }}, where = {lua_string(r['where'])}, note = {lua_string(r['note'])} }},")
     out.append("} }")
     out.append(LUA_RULES)
     (ROOT / "server" / "data-spirebound" / "lib" / "spirebound" / "hunting_guide.lua").write_text("\n".join(out) + "\n", encoding="utf-8", newline="\n")
@@ -207,7 +224,9 @@ def write_md(ladder: list[dict]) -> None:
     L.append("## Hunting grounds in detail\n")
     for r in ladder:
         L.append(f"### {r['title']}  (levels {r['lo']}-{r['hi']}, {ROLE_TEXT[r['role']]})")
-        L.append(f"*{r['where']}. Safety: {r['zone']}.*\n")
+        L.append(f"*{r['where']}. Safety: {r['zone']}. Who it is for: {r['kind']}.*\n")
+        if r.get("den"):
+            L.append(f"Its party cave, {r['den']}, is a group ground: bring 3 or 4 players.\n")
         L.append(r["note"] + "\n")
         L.append("| Monster | Health | Experience | Kills per level (start / end) | Drops |")
         L.append("|---|---|---|---|---|")

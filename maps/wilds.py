@@ -666,15 +666,30 @@ def lua_data(m, path):
         xs = [p[0] for p in L["rect"]]
         ys = [p[1] for p in L["rect"]]
         zs = ""
+        lvls = [Z]
         if L.get("design"):                       # designed grounds: the head count covers every level's box too
             lvls = [z for z in L["levels"] if z != L.get("party_z")]       # the party cave has its own head count rule
             allb = set().union(*[L["boxes"][z] for z in lvls]) | L["rect"]
             xs = [p[0] for p in allb]
             ys = [p[1] for p in allb]
             zs = ", zs = { " + ", ".join("[%d] = true" % z for z in sorted(lvls)) + " }"
-        out.append('\t{ id = "%s", title = "%s", guarded = %s, respawn = %d, lo = %d, hi = %d, x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d%s, spots = {'
-                   % (c["id"], c["title"], str(c["zone"] == "guarded").lower(), c["respawn"], c["levels"][0], c["levels"][1],
-                      min(xs), min(ys), max(xs), max(ys), Z, zs))
+        # how many monsters the map places in the ground (the surface rectangle and every level's box, not the party cave)
+        boxes = [(L["rect"], Z)]
+        if L.get("design"):
+            boxes += [(L["boxes"][z], z) for z in lvls if z != Z]
+        want = 0
+        for kids, (mx, my, mz), _r, count, *_x in m.monsters:
+            homes = [(mx, my)] * count if isinstance(kids, str) else [(mx + k[1], my + k[2]) for k in kids]
+            want += sum(1 for h in homes if any(mz == bz and h in b for b, bz in boxes))
+        starts = ""
+        if L.get("design"):
+            from floor1_plan import DESIGNS
+            d = DESIGNS[c["design"]]
+            band = {cl[0]: cl[4] for lv in d["levels"].values() for cl in lv["clearings"]}
+            starts = ", starts = { " + ", ".join('%s = "%s"' % (r, band[n]) for r, n in sorted(d["routes"].items())) + " }"
+        out.append('\t{ id = "%s", title = "%s", type = "%s", want = %d, guarded = %s, respawn = %d, lo = %d, hi = %d, x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d%s%s, spots = {'
+                   % (c["id"], c["title"], c["type"], want, str(c["zone"] == "guarded").lower(), c["respawn"], c["levels"][0], c["levels"][1],
+                      min(xs), min(ys), max(xs), max(ys), Z, zs, starts))
         if L.get("design"):
             from floor1_plan import DESIGNS
             g = DESIGNS[c["design"]]["crowd_group"]
@@ -699,5 +714,11 @@ def lua_data(m, path):
         e = m.points["den_" + cv["id"]]
         out.append('\t{ id = "%s", x1 = %d, y1 = %d, x2 = %d, y2 = %d, z = %d, exit = Position(%d, %d, %d) },'
                    % (cv["id"], x0, y0, x0 + w - 1, y0 + h - 1, cv["landing"][2], e[0], e[1] - 1, e[2]))
+    from balance import HABITS, GROUND_TYPES
+    out.append("}, weights = {")
+    out += ['\t["%s"] = %s,' % (n, w) for n, (_h, w) in sorted(HABITS.items())]
+    out.append("}, budgets = {")
+    for t, d in GROUND_TYPES.items():
+        out.append("\t%s = { %s }," % (t, ", ".join("%s = %s" % (k, v) for k, v in d["budget"].items())))
     out.append("} }")
     path.write_text("\n".join(out) + "\n")

@@ -579,3 +579,7 @@ Read the engine's spawn code for our pinned version (Canary 3.6.1, `spawn_monste
 - Jay: "there shouldn't be one uniform rule across the board for how many monsters to a spawn... the best hunting grounds should have to be hunted as a group", and "we should also create an occasional hunting ground that can support 4-8 players". Agreed: every monster has a habit, every ground a type, every floor the same recipe with its own twist; a danger budget replaces the head count (`DESIGN.md` 9.4, `FLOOR1_HUNTING_PLAN.md` Part 10, a rule in `CLAUDE.md`).
 - Party size 6 to 8 (Claude's call). New tasks S1 to S6 come before H7; the five rebuilt grounds keep their maps and get regrouped (S3). Q42 lists my class picks for Floor 1.
 
+### 2026-11-16: Spawn habits in the game (S1, S2, S3)
+- Every Floor 1 monster now has a habit and a weight, and every ground a type (`tools/balance.py`, `maps/floor1_plan.py`); `balance.py --check` refuses a ground without a type or a monster without a habit. The calm checker and the in-game tests now add up danger by weight against each type's budget instead of counting heads. The bestiary and the in-game hunting guide say who each ground is for.
+- The five rebuilt grounds are regrouped (maps unchanged): Ratwarren 69 rats in swarms, Toad Pond 33 in pairs, Sproutling Glade 43 with a nest of 7, Waspgrass 85 wasps in clumps with a cloud of 9, Burrow Hills 70 with lone boars and a nest of 6. Checker OK on every level; boot test passes (163 in-game tests); autopilot walked all five. Cut: checking the reward targets per type (new task S1b).
+

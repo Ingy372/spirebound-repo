@@ -275,7 +275,7 @@ The rules are in `DESIGN.md` 9.4. This part applies them to Floor 1. Everything 
 | Sproutling | Colony | 0.7 | a few on the paths, thick round the great tree's roots |
 | Meadow Wasp | Colony | 0.5 | scouts in the meadows, a cloud at the hive |
 | Burrow Mole | Colony | 1 | singles on the hills, thick in the Molework |
-| Bristle Boar | Loner | 1.8 | always alone, far apart |
+| Bristle Boar | Loner | 1.5 | always alone, far apart |
 | Meadow Wolf | Pack | 1 (Grey Alpha 2) | 3 to 5 together; the larger packs have a Grey Alpha |
 | Field Shardling | Pair | 1 | twos among the crystals |
 | Thornsnap | Sentry | 1.3 | rooted in place at bends and doorways |
@@ -283,7 +283,7 @@ The rules are in `DESIGN.md` 9.4. This part applies them to Floor 1. Everything 
 | Ruin Sentinel, Ruin Archer | Sentry | 1.3, 1 | a Sentinel in front with Archers behind |
 | Stonehorn Ram | Pack | 2 | a herd; the apex spawn |
 
-Reedmarsh's monster gets its habit when H7 reaches it. Weights are first guesses; S1 sets them from each monster's real numbers in `tools/balance.py`.
+Reed Snapper is a pair (weight 1) until H7 settles it. The weights live in `tools/balance.py` (`HABITS`); the checker and the in-game tests read them from there. They are first guesses from each monster's health, hit and speed (the boar went from 1.8 to 1.5: it hits about as hard as a mole but has less health).
 
 ### 10.2 Ground types
 
@@ -311,7 +311,17 @@ Breathing room, rest spots and room to fight (3.2) stay as they are for training
 
 ### 10.4 The five grounds already rebuilt
 
-Their maps stay. Their monsters are regrouped by habit (task S3): the Ratwarren's lower level in swarms, Waspgrass as a colony round the hive, Burrow Hills as a colony with loner boars on top, Toad Pond in pairs, the Glade as a colony round the great tree. Totals per ground may change; the economy generator is rerun after.
+Their maps stay. Their monsters are regrouped by habit (task S3, done 2026-11-16):
+
+| Ground | Type | How they stand now | Monsters (was) |
+|---|---|---|---|
+| The Ratwarren | training | ones and twos in the Yard; clumps of 5 or 6 in the Warren, 7 or 8 deep, a nest of 8 | 69 (48) |
+| Toad Pond | training | pairs and singles everywhere, a pair of rats by each side of the gate | 33 (48) |
+| Sproutling Glade | training | singles on the paths; pairs and threes below, a nest of 7 in the Root Hollow's middle | 43 (48) |
+| Waspgrass Fields | class (Arcanist) | ones to threes in the meadows, fours further in; clumps of 4 to 6 in the Under-Hive; a cloud of 9 at the hive | 85 (48) |
+| Burrow Hills | mixed | lone boars and single moles near the gate, pairs and threes further in, a nest of 6; the party cave unchanged | 70 + 32 (71 + 32) |
+
+The counts change because danger is now counted by weight: 69 rats weigh about 28, 85 wasps about 42, against 48 before. Each ground's total is written into `wilds_data.lua` and the in-game test checks the engine spawned all of them.
 
 ---
 

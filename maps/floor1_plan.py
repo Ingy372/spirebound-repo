@@ -41,60 +41,62 @@ def same(n, monster, count=3):
     return [G((monster, count)) for _ in range(n)]
 
 
+# type (DESIGN.md 9.4): training / class (cls = the class it suits) / mixed / group / large; every party cave (den)
+# is a group ground inside its ground. Habits, weights and budgets: tools/balance.py.
 # id, title, x, y, w, h, gate side, loop size, zone, levels, role, note,
 # wall / core / trail = how the ground is dressed (plan Part 6), groups = the groups on EACH loop,
 # respawn = real seconds (plan Part 5.3), den = cave name, den_groups = the cave's 8 groups (plan Part 5.4).
 CAMPS = [
-    dict(id="starter_west", title="The Ratwarren", x=134, y=242, w=38, h=40, gate="s", size="small", zone="guarded",
+    dict(id="starter_west", type="training", title="The Ratwarren", x=134, y=242, w=38, h=40, gate="s", size="small", zone="guarded",
          levels=(1, 4), role="xp", wall="broadleaf", core="mounds", trail="dirt", decor="rats",
          groups=same(4, "Field Rat"), respawn=110, design="RATWARREN",
          note="Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you here."),
-    dict(id="starter_east", title="Toad Pond", x=294, y=230, w=58, h=52, gate="s", size="small", zone="guarded", design="TOADPOND",
+    dict(id="starter_east", type="training", title="Toad Pond", x=294, y=230, w=58, h=52, gate="s", size="small", zone="guarded", design="TOADPOND",
          levels=(3, 7), role="xp", wall="broadleaf", core="pond", trail="grass", decor="pond",
          groups=same(3, "Hopper Toad") + same(1, "Field Rat"), respawn=110,
          note="Toads hit a little harder and give a little more. Four ponds, four loops; fishing works here."),
-    dict(id="starter_south", title="Sproutling Glade", x=184, y=338, w=44, h=56, gate="n", size="small", zone="guarded", design="GLADE",
+    dict(id="starter_south", type="training", title="Sproutling Glade", x=184, y=338, w=44, h=56, gate="n", size="small", zone="guarded", design="GLADE",
          levels=(5, 10), role="xp", wall="ferns", core="grove", trail="grass", decor="glade",
          groups=same(3, "Sproutling") + same(1, "Hopper Toad"), respawn=110,
          note="Sproutlings spit a little poison-green magic. Still inside the Guarded ring around town."),
-    dict(id="wasp_fields", title="Waspgrass Fields", x=160, y=180, w=68, h=50, gate="e", size="small", zone="guarded", design="WASPS",
+    dict(id="wasp_fields", type="class", cls="Arcanist", title="Waspgrass Fields", x=160, y=180, w=68, h=50, gate="e", size="small", zone="guarded", design="WASPS",
          levels=(7, 12), role="xp", wall="hedge", core="flowerbed", trail="grass", decor="wasps",
          groups=same(4, "Meadow Wasp"), respawn=110,
          note="Fast and stingy, little health. Just north of the city gate, beside the Pass road."),
-    dict(id="boar_meadow", title="Boar Meadow", x=140, y=338, w=39, h=57, gate="n", size="tall", zone="open",
+    dict(id="boar_meadow", type="class", cls="Vanguard", title="Boar Meadow", x=140, y=338, w=39, h=57, gate="n", size="tall", zone="open",
          levels=(9, 15), role="xp", wall="oaks", core="oakgrove", trail="dirt", decor="boars",
          groups=same(6, "Bristle Boar"), respawn=190, wallow=(1, 1),   # Old Tusk's wallow in the south-east loop
          note="Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallows somewhere in here."),
-    dict(id="burrow_hills", title="Burrow Hills", x=240, y=170, w=84, h=58, gate="w", size="std", zone="open",
+    dict(id="burrow_hills", type="mixed", title="Burrow Hills", x=240, y=170, w=84, h=58, gate="w", size="std", zone="open",
          levels=(11, 16), role="xp", wall="boulders", core="hills", trail="dirt", decor="hills",
          groups=same(5, "Burrow Mole") + [G(("Bristle Boar", 1), ("Burrow Mole", 2))], respawn=215, design="BURROW",
          den="The Molework", den_groups=same(8, "Burrow Mole", 4),
          note="Sturdy diggers with plenty of health. Slow and steady experience. Climb the Crown or dig down into the Molework."),
-    dict(id="wolf_copse", title="Wolf Copse", x=28, y=262, w=60, h=40, gate="e", size="std", zone="open",
+    dict(id="wolf_copse", type="mixed", title="Wolf Copse", x=28, y=262, w=60, h=40, gate="e", size="std", zone="open",
          levels=(12, 18), role="xp", wall="firs", core="firs", trail="grass", decor="copse",
          groups=same(5, "Meadow Wolf") + [G(("Grey Alpha", 1), ("Meadow Wolf", 2))], respawn=190,
          den="The Alpha's Den", den_groups=same(6, "Meadow Wolf", 4) + [G(("Grey Alpha", 1), ("Meadow Wolf", 3))] * 2,
          note="Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the river, south of Millcross."),
-    dict(id="reed_marsh", title="Reedmarsh", x=44, y=322, w=52, h=48, gate="n", size="std", zone="open",
+    dict(id="reed_marsh", type="class", cls="Ranger", title="Reedmarsh", x=44, y=322, w=52, h=48, gate="n", size="std", zone="open",
          levels=(14, 19), role="money", wall="water", core="pool", trail="mud", decor="marsh",
          groups=same(6, "Reed Snapper"), respawn=215,
          note="Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool."),
-    dict(id="thornsnap_hollow", title="Thornsnap Hollow", x=158, y=132, w=60, h=40, gate="e", size="std", zone="open",
+    dict(id="thornsnap_hollow", type="class", cls="Mystic", title="Thornsnap Hollow", x=158, y=132, w=60, h=40, gate="e", size="std", zone="open",
          levels=(14, 20), role="xp", wall="thorns", core="thorns", trail="dirt", decor="thorns",
          groups=same(5, "Thornsnap") + same(1, "Bristle Boar"), respawn=195,
          den="The Rootcellar", den_groups=same(8, "Thornsnap", 4),
          note="Poison bites; bring antidotes or healing. Good experience for the effort."),
-    dict(id="shard_fields", title="Shard Fields", x=340, y=300, w=52, h=48, gate="n", size="std", zone="open",
+    dict(id="shard_fields", type="mixed", title="Shard Fields", x=340, y=300, w=52, h=48, gate="n", size="std", zone="open",
          levels=(17, 24), role="xp", wall="boulders", core="gravelmound", trail="gravel", decor="shards",
          groups=same(6, "Field Shardling"), respawn=180,
          den="Shard Grotto", den_groups=same(8, "Field Shardling", 4),
          note="Shardlings hit with energy and resist it; wands are weak here. Strong experience."),
-    dict(id="bandit_road", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
+    dict(id="bandit_road", type="mixed", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
          levels=(19, 27), role="money", wall="broadleaf", core="banditcamp", trail="dirt", decor="bandits",
          groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=210, ruin_walls=True,
          den="Smugglers' Cellar", den_groups=same(6, "Road Bandit", 4) + [G(("Bandit Captain", 1), ("Road Bandit", 3))] * 2,
          note="Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money."),
-    dict(id="old_quarry", title="The Old Quarry", x=240, y=124, w=60, h=40, gate="w", size="std", zone="open",
+    dict(id="old_quarry", type="mixed", title="The Old Quarry", x=240, y=124, w=60, h=40, gate="w", size="std", zone="open",
          levels=(23, 30), role="money", wall="boulders", core="cutstone", trail="gravel", decor="quarry",
          groups=[G(("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Field Shardling", 1))] * 4
          + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2))] * 2, respawn=220,
@@ -112,7 +114,7 @@ CAMPS = [
 #   path: (from, to, width).   link: ("stairs", x, y, z_low) = stairs up at (x, y, z_low), the way down at (x, y, z_low - 1).
 #   band limits and the checker: tools/hunt_check.py.
 _P, _S = (("Field Rat", 2),), (("Field Rat", 1),)
-_T, _N = (("Field Rat", 3),), (("Field Rat", 4),)
+_R = {n: (("Field Rat", n),) for n in range(3, 13)}           # Field Rats are a swarm (DESIGN.md 9.4): clumps of 5 to 8
 RATWARREN = dict(
     gate=(19, 39), crowd_group=[("Field Rat", 1)],
     routes={"a": "w2", "b": "A", "c": "B", "d": "E"},
@@ -134,23 +136,23 @@ RATWARREN = dict(
         # The Warren (north half, middle band) and, past a long quiet tunnel, the Deep Warren (south half, deep band).
         # Both are on level 8: level 9 below is the Underkeep's Wing 4. Chamber rows are 23 apart so no tile can
         # notice two chambers at once (NOTICE 10, members spread one tile).
-        8: dict(name="The Warren", box=(-8, -6, 44, 101), clearings=[
+        8: dict(name="The Warren", box=(-8, -6, 44, 104), clearings=[
             ("A", 10, 30, 4, "middle", "b", "rest"),
             ("B", 17, 7, 4, "middle", "c", "rest"),
             ("D", 14, 33, 4, "middle", None, "rest"),
-            ("L0", -3, -2, 5, "middle", "b", [_P, _P]), ("L1", -3, 21, 5, "middle", "b", [_P, _P]),
-            ("L2", -3, 44, 5, "middle", "b", [_P, _P]),
-            ("R0", 30, -2, 5, "middle", "c", [_P, _P]), ("R1", 30, 21, 5, "middle", "c", [_P, _P]),
-            ("R2", 30, 44, 5, "middle", "c", [_P, _P]),
+            ("L0", -3, -3, 5, "middle", "b", [_R[5]]), ("L1", -3, 21, 5, "middle", "b", [_R[6]]),
+            ("L2", -3, 45, 5, "middle", "b", [_R[5]]),
+            ("R0", 30, -3, 5, "middle", "c", [_R[6]]), ("R1", 30, 21, 5, "middle", "c", [_R[5]]),
+            ("R2", 30, 45, 5, "middle", "c", [_R[6]]),
             ("E", 14, 57, 5, "deep", "d", "rest"),
-            ("DL0", -3, 67, 5, "deep", "d", [_P, _T]), ("DR0", 30, 67, 5, "deep", "d", [_P, _T]),
-            ("DL1", -3, 90, 5, "deep", "d", [_P, _P]),
-            ("DR1", 30, 90, 5, "nest", "d", [_N]),
+            ("DL0", -3, 69, 5, "deep", "d", [_R[7]]), ("DR0", 30, 69, 5, "deep", "d", [_R[8]]),
+            ("DL1", -3, 93, 5, "deep", "d", [_R[7]]),
+            ("DR1", 30, 93, 5, "nest", "d", [_R[8]]),
             ("cb1", -3, 10, 1, "middle", "b", "crowd"), ("cb2", -3, 33, 1, "middle", "b", "crowd"),
             ("cb3", 4, -3, 1, "middle", "b", "crowd"),
             ("cc1", 30, 10, 1, "middle", "c", "crowd"), ("cc2", 30, 33, 1, "middle", "c", "crowd"),
             ("cc3", 23, 46, 1, "middle", "c", "crowd"),
-            ("cd1", -3, 78, 1, "deep", "d", "crowd"), ("cd2", 14, 78, 1, "deep", "d", "crowd"),
+            ("cd1", -3, 81, 1, "deep", "d", "crowd"), ("cd2", 14, 80, 1, "deep", "d", "crowd"),
             ("cd3", 14, 92, 1, "deep", "d", "crowd"),
         ], paths=[("L0", "L1", 3), ("L1", "L2", 3), ("R0", "R1", 3), ("R1", "R2", 3), ("L0", "B", 3), ("B", "R0", 3),
                   ("L2", "D", 3), ("D", "R2", 3), ("A", "L1", 3), ("A", "D", 3), ("B", "D", 3),
@@ -158,16 +160,20 @@ RATWARREN = dict(
                   ("DR0", "DR1", 2)]),
     },
     links=[("stairs", 10, 28, 8), ("stairs", 17, 6, 8)],
-    nest_signs=[(29, 82, 8)],
+    nest_signs=[(29, 84, 8)],
 )
 def ring_level(name, box, rect, halls, links, monster, mid_clusters, route="d", start=0, crowd=3, inner=10, gap=25,
-               mid_band="middle", party=False, extra=(), extra_paths=()):
+               mid_band="middle", party=False, extra=(), extra_paths=(), mid=None, deep=None):
     """A lower level laid out as a ring of tunnels round a rectangle (x0, y0, x1, y1), groups in twos along it with a quiet
     stretch between each two (FLOOR1_HUNTING_PLAN.md Part 3: no tile can notice the group after next), and quiet halls
     inside the ring under the ways down. The first `mid_clusters` twos are pairs (middle band), the rest threes (deep).
     halls: [(name, x, y, r)]; links: [(hall, "q<n>" or hall, width)] (q<n> = the n-th quiet stretch on the ring).
-    `start` = how far along the ring (clockwise from the top-left corner) the first group stands."""
+    `start` = how far along the ring (clockwise from the top-left corner) the first group stands.
+    mid / deep: what stands at each spot (a clearing's content list), by default a pair / a three of `monster`; a list
+    of contents is used in turn, so the groups differ along the ring."""
     x0, y0, x1, y1 = rect
+    mid_c = mid or [[((monster, 2),)]]
+    deep_c = deep or [[((monster, 3),)]]
     ring = [(x, y0) for x in range(x0, x1)] + [(x1, y) for y in range(y0, y1)] +            [(x, y1) for x in range(x1, x0, -1)] + [(x0, y) for y in range(y1, y0, -1)]
     ring = ring[start:] + ring[:start]
     cheb = lambda a, b: max(abs(a[0] - b[0]), abs(a[1] - b[1]))
@@ -191,7 +197,8 @@ def ring_level(name, box, rect, halls, links, monster, mid_clusters, route="d", 
     for k, cl in enumerate(clusters):
         deep = k >= mid_clusters
         for j, (i, (x, y)) in enumerate(cl):
-            grp = [((monster, 3),)] if deep else [((monster, 2),)]
+            want = (deep_c if deep else mid_c)
+            grp = want[(2 * k + j) % len(want)]
             nm = f"r{k}{j}"
             clearings.append((nm, x, y, 4, "deep" if deep else mid_band, route, grp))
             order.append((i, nm))
@@ -224,7 +231,7 @@ def ring_level(name, box, rect, halls, links, monster, mid_clusters, route="d", 
 # Molework (the party cave at z 9). Groups along each route are spaced so no tile can notice more than the band allows:
 # neighbours along a route may both be in reach, the one after next never (21+ tiles apart).
 _M1, _M2, _M3, _M5 = (("Burrow Mole", 1),), (("Burrow Mole", 2),), (("Burrow Mole", 3),), (("Burrow Mole", 5),)
-_M4 = (("Burrow Mole", 4),)
+_M4, _M8 = (("Burrow Mole", 4),), (("Burrow Mole", 8),)
 _B1 = (("Bristle Boar", 1),)                       # the soft monster for the low end of the level range, calm band only
 BURROW = dict(
     gate=(0, 29), crowd_group=[("Burrow Mole", 2)],
@@ -237,11 +244,11 @@ BURROW = dict(
             ("hub", 8, 29, 4, "approach", None, "hub"),
             ("m0", 18, 29, 6, "calm", None, "rest"), ("w1", 17, 21, 5, "calm", None, None), ("w2", 17, 37, 5, "calm", None, None),
             ("w3", 7, 21, 3, "calm", None, None), ("w4", 7, 37, 3, "calm", None, None),
-            ("a1", 14, 9, 3, "calm", "a", [_B1]), ("a2", 24, 5, 3, "calm", "a", [_M2]), ("q1", 36, 6, 3, "calm", "a", "rest"),
+            ("a1", 14, 9, 3, "calm", "a", [_B1]), ("a2", 24, 5, 3, "calm", "a", [_M1]), ("q1", 36, 6, 3, "calm", "a", "rest"),
             ("a3", 48, 5, 3, "middle", "a", [_M2]), ("a4", 57, 7, 3, "middle", "a", [_M1]), ("q2", 68, 5, 3, "deep", "a", "rest"),
             ("a6", 80, 7, 3, "deep", "a", [_M3]), ("a7", 78, 16, 3, "deep", "a", [_M3]),
             ("ej", 76, 29, 5, "deep", None, "rest"),
-            ("b1", 14, 49, 3, "calm", "b", [_B1]), ("b2", 24, 53, 3, "calm", "b", [_M2]), ("q3", 35, 52, 3, "calm", "b", "rest"),
+            ("b1", 14, 49, 3, "calm", "b", [_B1]), ("b2", 24, 53, 3, "calm", "b", [_M1]), ("q3", 35, 52, 3, "calm", "b", "rest"),
             ("b3", 48, 53, 3, "middle", "b", [_M2]), ("b4", 57, 51, 3, "middle", "b", [_M1]), ("q4", 68, 53, 3, "deep", "b", "rest"),
             ("b6", 80, 51, 3, "deep", "b", [_M3]), ("b7", 78, 42, 3, "deep", "b", [_M3]),
             ("ca1", 5, 12, 1, "calm", "a", "crowd"), ("ca2", 42, 2, 1, "calm", "a", "crowd"), ("ca3", 64, 2, 1, "middle", "a", "crowd"),
@@ -272,7 +279,7 @@ BURROW = dict(
             ("d6", 63, -2, 4, "deep", "d", [_M3]), ("d7", 73, 3, 4, "deep", "d", [_M3]),
             ("d10", 84, 46, 4, "deep", "d", [_M3]), ("d11", 77, 58, 4, "deep", "d", [_M3]), ("q7", 63, 57, 3, "deep", "d", "rest"),
             ("d12", 50, 54, 4, "deep", "d", [_M3]), ("q8", 37, 59, 4, "deep", "d", "rest"),
-            ("nest", 24, 59, 4, "nest", "d", [_M5]),
+            ("nest", 24, 59, 4, "nest", "d", [(("Burrow Mole", 6),)]),
             ("d14", 2, 44, 4, "deep", "d", [_M3]), ("d16", 47, 45, 4, "deep", "d", [_M3]),
             ("cd1", -3, 9, 1, "middle", "d", "crowd"), ("cd2", 33, 8, 1, "middle", "d", "crowd"),
             ("cd3", 65, 8, 1, "deep", "d", "crowd"),
@@ -298,7 +305,7 @@ BURROW = dict(
 # the Sunken Grotto below (route D), a ring of wet tunnels with quiet halls under the two holes.
 _TS, _TP = (("Hopper Toad", 1),), (("Hopper Toad", 2),)
 _TT = (("Hopper Toad", 3),)
-_RS = (("Field Rat", 1),)
+_RS, _RP = (("Field Rat", 1),), (("Field Rat", 2),)
 TOADPOND = dict(
     gate=(29, 51), crowd_group=[("Hopper Toad", 1)],
     routes={"a": "a1", "b": "b1", "c": "cs", "d": "gn"},
@@ -309,14 +316,14 @@ TOADPOND = dict(
                 clearings=[
             ("hub", 29, 46, 4, "approach", None, "hub"),
             ("w0", 16, 43, 3, "calm", None, "rest"), ("e0", 42, 44, 3, "calm", None, "rest"),
-            ("a1", 6, 40, 3, "calm", "a", [_RS]), ("a2", 6, 30, 3, "calm", "a", [_TP]), ("q1", 7, 17, 3, "calm", "a", "rest"),
+            ("a1", 6, 40, 3, "calm", "a", [_RP]), ("a2", 6, 30, 3, "calm", "a", [_TS]), ("q1", 7, 17, 3, "calm", "a", "rest"),
             ("a3", 7, 4, 3, "middle", "a", [_TP]), ("a4", 18, 4, 3, "middle", "a", "rest"),
-            ("b1", 52, 40, 3, "calm", "b", [_RS]), ("b2", 52, 30, 3, "calm", "b", [_TP]), ("q2", 51, 17, 3, "calm", "b", "rest"),
+            ("b1", 52, 40, 3, "calm", "b", [_RP]), ("b2", 52, 30, 3, "calm", "b", [_TS]), ("q2", 51, 17, 3, "calm", "b", "rest"),
             ("b3", 51, 4, 3, "middle", "b", [_TP]), ("b4", 40, 4, 3, "middle", "b", "rest"),
-            ("cs", 29, 36, 3, "calm", "c", "rest"), ("c1", 29, 25, 2, "middle", "c", [_TT]),
+            ("cs", 29, 36, 3, "calm", "c", "rest"), ("c1", 29, 25, 2, "middle", "c", [_TP]),
             ("cn", 29, 15, 3, "deep", "c", "rest"), ("c2", 29, 4, 3, "middle", "c", "rest"),
-            ("ca1", 3, 22, 1, "calm", "a", "crowd"), ("ca2", 3, 11, 1, "calm", "a", "crowd"), ("ca3", 15, 5, 1, "middle", "a", "crowd"),
-            ("cb1", 54, 22, 1, "calm", "b", "crowd"), ("cb2", 54, 11, 1, "calm", "b", "crowd"), ("cb3", 47, 10, 1, "middle", "b", "crowd"),
+            ("ca1", 3, 22, 1, "calm", "a", "crowd"), ("ca2", 11, 46, 1, "calm", "a", "crowd"), ("ca3", 15, 5, 1, "middle", "a", "crowd"),
+            ("cb1", 54, 22, 1, "calm", "b", "crowd"), ("cb2", 47, 46, 1, "calm", "b", "crowd"), ("cb3", 47, 10, 1, "middle", "b", "crowd"),
             ("cc1", 22, 38, 1, "calm", "c", "crowd"), ("cc2", 36, 38, 1, "calm", "c", "crowd"), ("cc3", 36, 9, 1, "deep", "c", "crowd"),
         ], paths=[("hub", "w0", 4), ("w0", "a1", 4), ("a1", "a2", 4), ("a2", "q1", 4), ("q1", "a3", 4), ("a3", "a4", 4),
                   ("a4", "c2", 4), ("c2", "b4", 4), ("b4", "b3", 4), ("b3", "q2", 4), ("q2", "b2", 4), ("b2", "b1", 4),
@@ -325,8 +332,8 @@ TOADPOND = dict(
         8: ring_level("The Sunken Grotto", (13, 4, 70, 72), (17, 8, 79, 72),
                       [("gn", 29, 16, 4), ("ge", 42, 42, 4)],
                       [("gn", "ge", 3), ("gn", "q4", 3), ("ge", "q3", 3)],
-                      "Hopper Toad", 0, gap=23, start=50,
-                      extra=[("x1", 58, 30, 4, "deep", "d", [_TT]), ("x2", 56, 54, 4, "deep", "d", [_TP])],
+                      "Hopper Toad", 0, gap=23, start=50, deep=[[_TP], [_TP], [_TS], [_TP]],
+                      extra=[("x1", 58, 30, 4, "deep", "d", [_TP]), ("x2", 56, 54, 4, "deep", "d", [_TS])],
                       extra_paths=[("ge", "x1", 3), ("ge", "x2", 3)]),
     },
     links=[("stairs", 29, 14, 8), ("stairs", 42, 42, 8)],
@@ -343,9 +350,9 @@ GLADE = dict(
     levels={
         7: dict(name="Sproutling Glade", box=(0, 0, 44, 56), tree_rings=[(22, 31)], clearings=[
             ("hub", 22, 5, 4, "approach", None, "hub"), ("nw", 8, 8, 3, "calm", None, None), ("ne", 36, 8, 3, "calm", None, None),
-            ("a1", 3, 21, 3, "calm", "a", [_HS]), ("a2", 6, 28, 3, "calm", "a", [_SP]), ("q1", 6, 39, 3, "calm", "a", "rest"),
+            ("a1", 3, 21, 3, "calm", "a", [_HS]), ("a2", 6, 28, 3, "calm", "a", [_SS]), ("q1", 6, 39, 3, "calm", "a", "rest"),
             ("a3", 6, 50, 3, "middle", "a", [_SP]),
-            ("b1", 40, 21, 3, "calm", "b", [_HS]), ("b2", 37, 28, 3, "calm", "b", [_SP]), ("q2", 37, 39, 3, "calm", "b", "rest"),
+            ("b1", 40, 21, 3, "calm", "b", [_HS]), ("b2", 37, 28, 3, "calm", "b", [_SS]), ("q2", 37, 39, 3, "calm", "b", "rest"),
             ("b3", 37, 50, 3, "middle", "b", [_SP]),
             ("m0", 22, 13, 2, "calm", None, None), ("c1", 22, 24, 3, "calm", "c", [_SS]), ("cr", 22, 31, 4, "calm", "c", "rest"), ("c2", 22, 47, 3, "middle", "c", [_SS]),
             ("ca1", 2, 23, 1, "calm", "a", "crowd"), ("ca2", 11, 44, 1, "middle", "a", "crowd"), ("ca3", 12, 53, 1, "middle", "a", "crowd"),
@@ -355,10 +362,10 @@ GLADE = dict(
                   ("b3", "q2", 4), ("q2", "b2", 4), ("b2", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4), ("hub", "m0", 4), ("m0", "c1", 4), ("c1", "cr", 4),
                   ("cr", "c2", 3)]),
         8: ring_level("The Root Hollow", (-4, 2, 80, 56), (0, 6, 72, 54),
-                      [("rt", 22, 32, 4), ("re", 37, 37, 3), ("rm", 52, 28, 4, "deep")],
+                      [("rt", 22, 32, 4), ("re", 37, 37, 3), ("rm", 52, 28, 4, "nest")],
                       [("rt", "re", 3), ("re", "rm", 3), ("rm", "q1", 3), ("rt", "q4", 3)],
-                      "Sproutling", 0, gap=24,
-                      extra=[("x1", 37, 23, 4, "deep", "d", [(("Sproutling", 3),)]), ("x2", 52, 38, 4, "deep", "d", [(("Sproutling", 3),)])],
+                      "Sproutling", 0, gap=24, deep=[[_SP], [(("Sproutling", 3),)]],
+                      extra=[("x1", 41, 22, 4, "nest", "d", [(("Sproutling", 7),)]), ("x2", 52, 38, 4, "deep", "d", [_SS])],
                       extra_paths=[("rm", "x1", 3), ("rm", "x2", 3)]),
     },
     links=[("stairs", 22, 31, 8), ("stairs", 37, 37, 8)],
@@ -368,7 +375,8 @@ GLADE = dict(
 # south meadow, the hive as its nest), and the Under-Hive below (z 8: tunnels of ground-nesting wasps; Claude's call, so
 # the ground can hold its monsters without breaking the calm rules).
 _WS, _WP, _WT = (("Meadow Wasp", 1),), (("Meadow Wasp", 2),), (("Meadow Wasp", 3),)
-_WN = (("Meadow Wasp", 4),)
+_WN = (("Meadow Wasp", 9),)
+_W4, _W6 = (("Meadow Wasp", 4),), (("Meadow Wasp", 6),)
 WASPS = dict(
     gate=(67, 25), crowd_group=[("Meadow Wasp", 1)],
     routes={"a": "a1", "b": "b1", "c": "kl", "d": "uw"},
@@ -376,10 +384,10 @@ WASPS = dict(
     levels={
         7: dict(name="Waspgrass Fields", box=(0, 0, 68, 50), clearings=[
             ("hub", 61, 25, 4, "approach", None, "hub"), ("n0", 55, 14, 2, "calm", None, None), ("s0", 55, 36, 2, "calm", None, None),
-            ("a1", 47, 7, 3, "calm", "a", [_WS]), ("a2", 42, 5, 3, "calm", "a", [_WP]), ("q1", 28, 6, 3, "calm", "a", "rest"),
-            ("a3", 14, 5, 3, "middle", "a", [_WP]), ("a4", 6, 10, 3, "middle", "a", [_WS]),
-            ("b1", 47, 43, 3, "calm", "b", [_WS]), ("b2", 42, 45, 3, "calm", "b", [_WP]), ("q2", 28, 44, 3, "calm", "b", "rest"),
-            ("b3", 14, 45, 3, "middle", "b", [_WP]), ("b4", 6, 40, 3, "middle", "b", [_WS]),
+            ("a1", 47, 7, 3, "calm", "a", [_WS]), ("a2", 42, 5, 3, "calm", "a", [_WT]), ("q1", 28, 6, 3, "calm", "a", "rest"),
+            ("a3", 14, 5, 3, "middle", "a", [_W4]), ("a4", 6, 10, 3, "middle", "a", [_WP]),
+            ("b1", 47, 43, 3, "calm", "b", [_WS]), ("b2", 42, 45, 3, "calm", "b", [_WT]), ("q2", 28, 44, 3, "calm", "b", "rest"),
+            ("b3", 14, 45, 3, "middle", "b", [_W4]), ("b4", 6, 40, 3, "middle", "b", [_WP]),
             ("cw", 4, 25, 3, "middle", None, "rest"), ("w0", 54, 24, 3, "calm", None, "rest"),
             ("ca1", 56, 3, 1, "calm", "a", "crowd"), ("ca2", 34, 2, 1, "calm", "a", "crowd"), ("ca3", 10, 3, 1, "middle", "a", "crowd"),
             ("cb1", 56, 47, 1, "calm", "b", "crowd"), ("cb2", 34, 47, 1, "calm", "b", "crowd"), ("cb3", 10, 47, 1, "middle", "b", "crowd"),
@@ -387,21 +395,21 @@ WASPS = dict(
                   ("cw", "b4", 4), ("b4", "b3", 4), ("b3", "q2", 4), ("q2", "b2", 4), ("b2", "b1", 4), ("b1", "s0", 4), ("s0", "hub", 4), ("hub", "w0", 4)]),
         6: dict(name="Hive Knoll", box=(19, 12, 32, 27), clearings=[
             ("kl", 24, 33, 4, "middle", "c", "rest"), ("kr", 46, 33, 4, "middle", "c", "rest"),
-            ("k1", 24, 22, 3, "middle", "c", [_WP]), ("k2", 24, 14, 3, "middle", "c", [_WP]), ("kt", 45, 26, 2, "nest", "c", None),
+            ("k1", 24, 21, 3, "middle", "c", [_W4]), ("k2", 24, 14, 3, "middle", "c", [_W4]), ("kt", 45, 26, 2, "nest", "c", None),
             ("kn", 45, 16, 4, "nest", "c", [_WN]),
             ("kc1", 35, 29, 1, "middle", "c", "crowd"), ("kc2", 30, 31, 1, "middle", "c", "crowd"), ("kc3", 38, 33, 1, "middle", "c", "crowd"),
         ], paths=[("kl", "k1", 4), ("k1", "k2", 4), ("kr", "kt", 3), ("kt", "kn", 2), ("kl", "kr", 4)]),
         8: ring_level("The Under-Hive", (-6, -6, 80, 62), (-2, -2, 70, 51),
                       [("uw", 54, 25, 4), ("um", 34, 24, 4), ("us", 28, 43, 3)],
                       [("uw", "um", 3), ("um", "q0", 3), ("uw", "q2", 3), ("um", "us", 3)],
-                      "Meadow Wasp", 1, gap=23),
+                      "Meadow Wasp", 1, gap=25, mid=[[_W4]], deep=[[_W6], [_W4]]),
     },
     links=[("ramp", 23, 37, 7, "n"), ("ramp", 45, 37, 7, "n"), ("stairs", 54, 23, 8), ("stairs", 28, 43, 8)],
     nest_signs=[(47, 27, 6)],
 )
 DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS}
 
-APEX = dict(id="apex_watchtower", title="The Old Watchtower", levels=(28, 40), role="xp+money",
+APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,
             # plan Part 6: fixed groups instead of four big spawn areas (real respawn seconds)
             courtyard=dict(groups=same(6, "Stonehorn Ram"), respawn=150),
