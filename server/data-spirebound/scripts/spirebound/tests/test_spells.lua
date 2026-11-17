@@ -368,3 +368,32 @@ SpireTest.add("spells: ally spells can be cast with no name (on yourself)", func
 	end
 	SpireTest.eq(n >= 7, true, "ally spells checked: " .. n)
 end)
+
+-- Jay's playtest (2026-11-17): "the last time I tested the haste spell it actually made my character slower".
+-- The engine's speed formula gives the new speed, not the change; checked here on a real monster.
+SpireTest.add("spells: haste makes you faster and slows slow (they don't freeze)", function()
+	SpireTest.eq(SpireSpells.speedAfter(200, 0.3), 260, "Quickstep at base speed 200")
+	SpireTest.eq(SpireSpells.speedAfter(200, -0.45), 110, "a 45% slow at base speed 200")
+	SpireTest.eq(SpireSpells.speedAfter(200, -0.99), 40, "never below walking speed 40")
+	local m = Game.createMonster("Field Rat", WorldPoints.centre_boar_meadow, true, true)
+	if not m then error("could not place a test monster") end
+	local base = m:getSpeed()
+	local haste = Condition(CONDITION_HASTE)
+	haste:setParameter(CONDITION_PARAM_TICKS, 5000)
+	m:addCondition(SpireSpells.setSpeed(haste, 0.3))
+	local fast = m:getSpeed()
+	m:removeCondition(CONDITION_HASTE)
+	local slow = Condition(CONDITION_PARALYZE)
+	slow:setParameter(CONDITION_PARAM_TICKS, 5000)
+	m:addCondition(SpireSpells.setSpeed(slow, -0.45))
+	local slowed = m:getSpeed()
+	m:remove()
+	SpireTest.eq(fast > base * 1.2, true, "haste: base " .. base .. ", hasted " .. fast)
+	SpireTest.eq(slowed < base * 0.7 and slowed > base * 0.4, true, "slow: base " .. base .. ", slowed " .. slowed)
+	-- and every haste spell in the table really is faster
+	for _, row in ipairs(SpireSpells.list) do
+		if row.speed then
+			SpireTest.eq(SpireSpells.speedAfter(250, row.speed) > 250, true, row.name .. " is faster")
+		end
+	end
+end)

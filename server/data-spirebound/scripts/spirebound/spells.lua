@@ -243,7 +243,7 @@ end
 KINDS.haste = function(row, player)
 	local c = Condition(CONDITION_HASTE)
 	c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
-	c:setFormula(row.speed, -40, row.speed, 40)
+	SpireSpells.setSpeed(c, row.speed)
 	player:addCondition(c)
 	fx(player:getPosition(), row.effect)
 	return true
@@ -408,7 +408,7 @@ KINDS.slow_area = function(row, player)
 		if c:isMonster() and not c:getMaster() then
 			local cond = Condition(CONDITION_PARALYZE)
 			cond:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
-			cond:setFormula(-0.4, 0, -0.5, 0)
+			SpireSpells.setSpeed(cond, -0.45)
 			c:addCondition(cond)
 			fx(c:getPosition(), row.effect)
 		end
@@ -426,7 +426,7 @@ KINDS.root = function(row, player)
 	-- players are only slowed (DESIGN: crowd control on players is weaker)
 	local secs = target:isPlayer() and math.floor(row.duration / 2) or row.duration
 	cond:setParameter(CONDITION_PARAM_TICKS, secs * 1000)
-	cond:setFormula(-0.9, 0, -0.95, 0)
+	SpireSpells.setSpeed(cond, -0.9)
 	target:addCondition(cond)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
@@ -616,7 +616,7 @@ local function pin(c, seconds, strength)
 	-- players are held half as long (DESIGN: crowd control on players is weaker)
 	local secs = c:isPlayer() and math.max(1, math.floor(seconds / 2)) or seconds
 	cond:setParameter(CONDITION_PARAM_TICKS, secs * 1000)
-	cond:setFormula(-strength, 0, -strength - 0.05, 0)
+	SpireSpells.setSpeed(cond, -strength)
 	c:addCondition(cond)
 end
 
@@ -1143,7 +1143,7 @@ KINDS.form = function(row, player)
 	if row.speed then
 		local c = Condition(CONDITION_HASTE)
 		c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
-		c:setFormula(row.speed, -40, row.speed, 40)
+		SpireSpells.setSpeed(c, row.speed)
 		player:addCondition(c)
 	end
 	local every = row.pulse and row.pulse.every or 1

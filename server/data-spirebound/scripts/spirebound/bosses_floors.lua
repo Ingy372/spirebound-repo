@@ -99,7 +99,7 @@ PATTERNS.root = function(boss, state, now, def)
 		local p = ps[math.random(#ps)]
 		local c = Condition(CONDITION_PARALYZE)
 		c:setParameter(CONDITION_PARAM_TICKS, 1500)
-		c:setFormula(-0.95, 0, -0.95, 0)
+		SpireSpells.setSpeed(c, -0.95)
 		p:addCondition(c)
 		p:getPosition():sendMagicEffect(CONST_ME_SMALLPLANTS)
 	end
@@ -131,7 +131,7 @@ PATTERNS.stances = function(boss, state, now, def)
 		if #ps > 0 then
 			local c = Condition(CONDITION_PARALYZE)
 			c:setParameter(CONDITION_PARAM_TICKS, 2000)
-			c:setFormula(-0.95, 0, -0.95, 0)
+			SpireSpells.setSpeed(c, -0.95)
 			ps[math.random(#ps)]:addCondition(c)
 		end
 	end

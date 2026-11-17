@@ -56,7 +56,7 @@ for i, def in ipairs(SwordSkills.list) do
 	if def.slow then
 		local condition = Condition(CONDITION_PARALYZE)
 		condition:setParameter(CONDITION_PARAM_TICKS, 3000)
-		condition:setFormula(-0.4, 0, -0.4, 0)
+		SpireSpells.setSpeed(condition, -0.4)
 		combat:addCondition(condition)
 	end
 	local cbType, cbName = makeFormula(def)

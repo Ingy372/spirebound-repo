@@ -396,6 +396,27 @@ function SpireClash.resolve(mark, el)
 	return 0, el, nil
 end
 
+-- Speed changes (haste, slows, roots). Canary's speed formula gives the NEW speed, not the change:
+--   new speed = a * (base speed - 40) + b,   and the engine never lets a creature go below speed 40.
+-- So "pct faster" (0.3 = 30% faster, -0.4 = 40% slower) is a = b / 40 = 1 + pct. Writing the change instead
+-- (a = 0.3) made Quickstep leave you at a third of your speed and every slow freeze its target (fixed 2026-11-17).
+function SpireSpells.speedFormula(pct)
+	local m = 1 + pct
+	return m, 40 * m, m, 40 * m
+end
+
+-- Pure: the speed a creature with this base speed ends up with (what the engine will compute), for tests
+function SpireSpells.speedAfter(base, pct)
+	local m = 1 + pct
+	return math.max(40, math.floor(m * (base - 40) + 40 * m))
+end
+
+-- set a speed condition (CONDITION_HASTE or CONDITION_PARALYZE) to pct faster or slower
+function SpireSpells.setSpeed(condition, pct)
+	condition:setFormula(SpireSpells.speedFormula(pct))
+	return condition
+end
+
 -- Pure: Skystep needs a real gap. gapHasFloor = the tile you would pass through (above your head when going up,
 -- in front of you when going down) has a floor.
 function SpireSpells.levitateGapFree(gapHasFloor)
