@@ -11,6 +11,8 @@
 --   { "do": "wait", "seconds": 5 }
 --   { "do": "shot", "name": "yard" }              screenshot
 --   { "do": "say", "text": "!hunt" }
+--   { "do": "rune", "id": 3180, "ahead": 2 }        (PvP tests) use a rune on the tile ahead
+--   { "do": "react", "text": "quickstep", "seconds": 40 }  (PvP tests) say it whenever you get held
 --   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
 --                                                 (spell tests) target the nearest monster without chasing it if
 --                                                 "target", say the words, take screenshots that many seconds after,
@@ -200,7 +202,7 @@ function handlers.cast(player)
             g_game.turn(({ north = North, east = East, south = South, west = West })[step.dir])
         end
         if step.face then -- "target": turn toward the nearest monster (waves, beams); "away": turn away (dashes)
-            local list = monsters(player)
+            local list = step.target == 'player' and players(player) or monsters(player)
             if list[1] then
                 local a, b = player:getPosition(), list[1].c:getPosition()
                 local dx, dy = b.x - a.x, b.y - a.y
@@ -224,6 +226,39 @@ function handlers.cast(player)
     elseif not due and now() - stepData.sent >= (step.gap or 2.2) then
         nextStep()
     end
+end
+
+-- (PvP tests) use a rune from the backpack on the tile `ahead` tiles in front of you
+function handlers.rune(player)
+    if not stepData.sent then
+        local pos = player:getPosition()
+        local d = player:getDirection()
+        local dx = (d == East and 1) or (d == West and -1) or 0
+        local dy = (d == South and 1) or (d == North and -1) or 0
+        local to = { x = pos.x + dx * (step.ahead or 2), y = pos.y + dy * (step.ahead or 2), z = pos.z }
+        local tile = g_map.getTile(to)
+        local thing = tile and tile:getTopUseThing()
+        if thing then
+            g_game.useInventoryItemWith(step.id, thing)
+            log('rune ' .. step.id .. ' used at ' .. fmtPos(to))
+        else
+            log('rune: no tile at ' .. fmtPos(to))
+        end
+        stepData.sent = now()
+    elseif now() - stepData.sent > (step.gap or 2) then
+        nextStep()
+    end
+end
+
+-- (PvP tests) for `seconds`, say `text` the moment you are held (paralysed or rooted): how a player counters a root
+function handlers.react(player)
+    stepData.last = stepData.last or 0
+    if PlayerStates and bit.band(player:getStates(), PlayerStates.Paralyze) > 0 and now() - stepData.last > 2.2 then
+        g_game.talk(step.text)
+        stepData.last = now()
+        log('held: said ' .. step.text)
+    end
+    if now() - stepT >= (step.seconds or 30) then nextStep() end
 end
 
 function handlers.wait()
@@ -298,7 +333,7 @@ local function sample(player)
         log(string.format('   at %s  health %d%%  in sight %d  next to you %d%s', fmtPos(player:getPosition()), hp, #list, nextTo,
             g_game.isAttacking() and '  fighting' or ''))
     end
-    if hp < 45 and now() - lastPotion > 2 then
+    if hp < 45 and not plan.noPotions and now() - lastPotion > 2 then -- PvP tests of killing blows turn this off
         lastPotion = now()
         local ok = pcall(function() g_game.useInventoryItemWith(POTION, player) end)
         st.potions, total.potions = st.potions + 1, total.potions + 1

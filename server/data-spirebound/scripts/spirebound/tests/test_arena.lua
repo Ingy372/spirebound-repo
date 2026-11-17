@@ -68,3 +68,21 @@ SpireTest.add("arena: equal numbers and the map", function()
 	SpireTest.eq(type(CONST_ME_FIREWORK_YELLOW), "number", "firework effect")
 	SpireTest.eq(tile:getCreatureCount(), 0, "tile API works")
 end)
+
+-- Found by the bot PvP test (2026-11-17): Wild PvP has no teams but was scored as a team event, so it ended as a
+-- draw one second after it began. Every free-for-all now plays like Last Man Standing.
+SpireTest.add("arena: Wild PvP is a free-for-all that runs until one fighter is left", function()
+	local st = SpireArena.new("wild", 1000)
+	SpireArena.join(st, 1, "A", 100)
+	SpireArena.join(st, 2, "B", 100)
+	local keep = SpireArena.MIN_PLAYERS
+	SpireArena.MIN_PLAYERS = 2
+	local ok = SpireArena.start(st, 1000)
+	SpireArena.MIN_PLAYERS = keep
+	SpireTest.eq(ok, true, "starts with two fighters (test only)")
+	SpireTest.eq(st.players[1].team, nil, "no teams")
+	SpireTest.eq(SpireArena.result(st, 1001), nil, "still running with both standing")
+	SpireTest.eq(SpireArena.down(st, 2, 1), "out", "a fighter who goes down is out")
+	local w = SpireArena.result(st, 1002)
+	SpireTest.eq(w and w[1], 1, "the last one standing wins")
+end)

@@ -8,6 +8,9 @@
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
 --   /pilot give id, n      items into the backpack
+--   /pilot hp n            set your health (PvP tests)
+--   /pilot pardon          clear skulls and unjust kills from test fights
+--   /pilot arena join|go|stop   a Wild PvP arena event with just the test characters
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
@@ -83,6 +86,40 @@ function pilot.onSay(player, words, param)
 		local id, n = rest:match("(%d+)%D+(%d+)")
 		player:addItem(tonumber(id), tonumber(n))
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: given")
+	elseif cmd == "hp" then
+		-- (PvP tests) set your health, to test what saves you from a killing blow
+		local n = tonumber(rest:match("(%d+)")) or player:getMaxHealth()
+		player:addHealth(n - player:getHealth())
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: health " .. player:getHealth())
+	elseif cmd == "pardon" then
+		-- (PvP tests) forget skulls and unjust kills from the test fights
+		player:setSkull(SKULL_NONE)
+		player:setSkullTime(0)
+		SpirePvP.scope(player):remove("frags")
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: pardoned")
+	elseif cmd == "arena" then
+		-- (PvP tests) a Wild PvP arena event with just the test characters: "join", then "go" from the last one in
+		local what = rest:match("(%a+)")
+		if what == "join" then
+			if not SpireArena.current then
+				SpireArena.current = SpireArena.new("wild", os.time())
+			end
+			local ok, why = SpireArena.join(SpireArena.current, player:getGuid(), player:getName(), player:getLevel())
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena " .. (ok and "joined" or tostring(why)))
+		elseif what == "go" and SpireArena.current then
+			local keep = SpireArena.MIN_PLAYERS
+			SpireArena.MIN_PLAYERS = 2
+			SpireArena.begin()
+			SpireArena.MIN_PLAYERS = keep
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena " .. tostring(SpireArena.current and SpireArena.current.phase))
+		elseif what == "stop" and SpireArena.current then
+			if SpireArena.current.phase == "running" then
+				SpireArena.finish(SpireArena.current, {})
+			else
+				SpireArena.current = nil
+			end
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena stopped")
+		end
 	elseif cmd == "wall" then
 		-- (PvP spell tests) put a wall item (vine 2130, barrier 2128) this many tiles ahead of you
 		local id, n = rest:match("(%d+)%D+(%d+)")

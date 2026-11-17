@@ -1,0 +1,56 @@
+{
+ "character": "Spell Vanguard",
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1366,
+    7
+   ],
+   "note": "target"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 9
+  },
+  {
+   "do": "say",
+   "text": "undying oath"
+  },
+  {
+   "do": "say",
+   "text": "/pilot hp 60"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_6_undying_target",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

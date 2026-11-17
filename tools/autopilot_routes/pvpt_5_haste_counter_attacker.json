@@ -1,0 +1,93 @@
+{
+ "character": "Spell Ranger",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 10.5,
+   "name": "pvpt_snare_0",
+   "note": "snare"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 10.5,
+   "name": "pvpt_snare_1",
+   "note": "snare"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 10.5,
+   "name": "pvpt_snare_2",
+   "note": "snare"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 10.5,
+   "name": "pvpt_snare_3",
+   "note": "snare"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_5_haste_counter_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

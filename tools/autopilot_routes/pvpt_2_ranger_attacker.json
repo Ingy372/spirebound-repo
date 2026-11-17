@@ -1,0 +1,296 @@
+{
+ "character": "Spell Ranger",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "piercing shot",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_piercing_shot",
+   "note": "piercing shot"
+  },
+  {
+   "do": "cast",
+   "text": "double nock",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_double_nock",
+   "note": "double nock"
+  },
+  {
+   "do": "cast",
+   "text": "scatter shot",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_scatter_shot",
+   "note": "scatter shot"
+  },
+  {
+   "do": "cast",
+   "text": "recoil shot",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_recoil_shot",
+   "note": "recoil shot"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_snare",
+   "note": "snare"
+  },
+  {
+   "do": "cast",
+   "text": "ambush shot",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_ambush_shot",
+   "note": "ambush shot"
+  },
+  {
+   "do": "cast",
+   "text": "ricochet",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_ricochet",
+   "note": "ricochet"
+  },
+  {
+   "do": "cast",
+   "text": "radiant shot",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_radiant_shot",
+   "note": "radiant shot"
+  },
+  {
+   "do": "cast",
+   "text": "mercy shot",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_mercy_shot",
+   "note": "mercy shot"
+  },
+  {
+   "do": "cast",
+   "text": "sunburst volley",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_sunburst_volley",
+   "note": "sunburst volley"
+  },
+  {
+   "do": "cast",
+   "text": "rapid volley",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_rapid_volley",
+   "note": "rapid volley"
+  },
+  {
+   "do": "cast",
+   "text": "falling star",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_falling_star",
+   "note": "falling star"
+  },
+  {
+   "do": "cast",
+   "text": "dawnpiercer",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_dawnpiercer",
+   "note": "dawnpiercer"
+  },
+  {
+   "do": "cast",
+   "text": "pinning volley",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_pinning_volley",
+   "note": "pinning volley"
+  },
+  {
+   "do": "cast",
+   "text": "lightrain",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_lightrain",
+   "note": "lightrain"
+  },
+  {
+   "do": "cast",
+   "text": "constellation",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_constellation",
+   "note": "constellation"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1367,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "cast",
+   "text": "scatterwind",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_scatterwind",
+   "note": "Scatterwind must not move a player"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3180, 1"
+  },
+  {
+   "do": "cast",
+   "text": "turn",
+   "dir": "south",
+   "shots": [],
+   "gap": 0.5,
+   "name": "turn",
+   "note": "face south"
+  },
+  {
+   "do": "rune",
+   "id": 3180,
+   "ahead": 2,
+   "note": "a Ranger may not use the barrier rune"
+  },
+  {
+   "do": "shot",
+   "name": "pvpt_barrier_ranger"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_2_ranger_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

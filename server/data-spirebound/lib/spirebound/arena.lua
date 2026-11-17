@@ -94,7 +94,7 @@ function SpireArena.down(st, vId, kId)
 	if k and kId ~= vId then
 		k.kills = k.kills + 1
 	end
-	if st.kind == "lms" then
+	if not SpireArena.KINDS[st.kind].teams then -- every free-for-all (Last Man Standing, Wild PvP)
 		v.alive = false
 		return "out"
 	end
@@ -129,7 +129,7 @@ function SpireArena.result(st, now)
 		return nil
 	end
 	local timeUp = now - st.started >= SpireArena.MAX_TIME
-	if st.kind == "lms" then
+	if not SpireArena.KINDS[st.kind].teams then -- every free-for-all (Last Man Standing, Wild PvP)
 		local alive = {}
 		for _, id in ipairs(st.order) do
 			if st.players[id].alive then

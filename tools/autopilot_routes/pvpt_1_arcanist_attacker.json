@@ -1,0 +1,320 @@
+{
+ "character": "Spell Arcanist",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_ember_strike",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "volt strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_volt_strike",
+   "note": "volt strike"
+  },
+  {
+   "do": "cast",
+   "text": "forked arc",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_forked_arc",
+   "note": "forked arc"
+  },
+  {
+   "do": "cast",
+   "text": "fireburst wave",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_fireburst_wave",
+   "note": "fireburst wave"
+  },
+  {
+   "do": "cast",
+   "text": "ember barrage",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_ember_barrage",
+   "note": "ember barrage"
+  },
+  {
+   "do": "cast",
+   "text": "arc beam",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_arc_beam",
+   "note": "arc beam"
+  },
+  {
+   "do": "cast",
+   "text": "emberfield",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_emberfield",
+   "note": "emberfield"
+  },
+  {
+   "do": "cast",
+   "text": "searing brand",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_searing_brand",
+   "note": "searing brand"
+  },
+  {
+   "do": "cast",
+   "text": "gravity well",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_gravity_well",
+   "note": "gravity well"
+  },
+  {
+   "do": "cast",
+   "text": "stormcall",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_stormcall",
+   "note": "stormcall"
+  },
+  {
+   "do": "cast",
+   "text": "skybrand",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_skybrand",
+   "note": "skybrand"
+  },
+  {
+   "do": "cast",
+   "text": "inferno core",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_inferno_core",
+   "note": "inferno core"
+  },
+  {
+   "do": "cast",
+   "text": "cinder lance",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_cinder_lance",
+   "note": "cinder lance"
+  },
+  {
+   "do": "cast",
+   "text": "meteor rain",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_meteor_rain",
+   "note": "meteor rain"
+  },
+  {
+   "do": "cast",
+   "text": "arc cataclysm",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_arc_cataclysm",
+   "note": "arc cataclysm"
+  },
+  {
+   "do": "cast",
+   "text": "storm lash",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_storm_lash",
+   "note": "storm lash"
+  },
+  {
+   "do": "cast",
+   "text": "worldfire",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_worldfire",
+   "note": "worldfire"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1367,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "cast",
+   "text": "repulse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_repulse",
+   "note": "Repulse must not move a player"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 2"
+  },
+  {
+   "do": "cast",
+   "text": "conjure barrier rune",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_conjure_barrier",
+   "note": "conjure barrier rune"
+  },
+  {
+   "do": "cast",
+   "text": "turn",
+   "dir": "south",
+   "shots": [],
+   "gap": 0.5,
+   "name": "turn",
+   "note": "face south"
+  },
+  {
+   "do": "rune",
+   "id": 3180,
+   "ahead": 2,
+   "note": "Arcanist uses the barrier rune"
+  },
+  {
+   "do": "shot",
+   "name": "pvpt_barrier_arcanist"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_1_arcanist_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

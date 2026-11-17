@@ -1,0 +1,106 @@
+{
+ "character": "Spell Ranger",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1366,
+    7
+   ],
+   "note": "target"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 10
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_4_vanguard_target",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

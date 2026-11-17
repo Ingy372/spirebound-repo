@@ -1,0 +1,201 @@
+{
+ "character": "Spell Mystic",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_frost_strike",
+   "note": "frost strike"
+  },
+  {
+   "do": "cast",
+   "text": "sapdrain",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_sapdrain",
+   "note": "sapdrain"
+  },
+  {
+   "do": "cast",
+   "text": "thorn strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_thorn_strike",
+   "note": "thorn strike"
+  },
+  {
+   "do": "cast",
+   "text": "hailshards",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_hailshards",
+   "note": "hailshards"
+  },
+  {
+   "do": "cast",
+   "text": "frost wave",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_frost_wave",
+   "note": "frost wave"
+  },
+  {
+   "do": "cast",
+   "text": "bramble patch",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_bramble_patch",
+   "note": "bramble patch"
+  },
+  {
+   "do": "cast",
+   "text": "rimebind",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.3,
+   "name": "pvpt_rimebind",
+   "note": "Rimebind: root a player (about 1 s)"
+  },
+  {
+   "do": "cast",
+   "text": "overgrowth",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_overgrowth",
+   "note": "Overgrowth right after: the player is immune"
+  },
+  {
+   "do": "cast",
+   "text": "tidecrash",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_tidecrash",
+   "note": "tidecrash"
+  },
+  {
+   "do": "cast",
+   "text": "thornfield",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_thornfield",
+   "note": "thornfield"
+  },
+  {
+   "do": "cast",
+   "text": "glacier core",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_glacier_core",
+   "note": "glacier core"
+  },
+  {
+   "do": "cast",
+   "text": "icefall",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_icefall",
+   "note": "icefall"
+  },
+  {
+   "do": "cast",
+   "text": "winters breath",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_winters_breath",
+   "note": "winters breath"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_3_mystic_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

@@ -1,0 +1,189 @@
+{
+ "character": "Spell Arcanist",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_0",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_1",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_2",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_3",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_4",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_5",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_6",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_7",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_8",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_9",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_10",
+   "note": "ember strike"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.2,
+   "name": "pvpt_undying_11",
+   "note": "ember strike"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_6_undying_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

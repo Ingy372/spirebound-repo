@@ -1,0 +1,56 @@
+{
+ "character": "Spell Mystic",
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1366,
+    7
+   ],
+   "note": "target"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 9
+  },
+  {
+   "do": "say",
+   "text": "lifeseed"
+  },
+  {
+   "do": "say",
+   "text": "/pilot hp 60"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_7_lifeseed_target",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

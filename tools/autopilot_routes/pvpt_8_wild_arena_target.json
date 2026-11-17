@@ -1,0 +1,48 @@
+{
+ "character": "Spell Vanguard",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1366,
+    7
+   ],
+   "note": "target"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot arena join"
+  },
+  {
+   "do": "wait",
+   "seconds": 14
+  },
+  {
+   "do": "jump",
+   "to": [
+    1030,
+    1022,
+    11
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 40
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_8_wild_arena_target",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

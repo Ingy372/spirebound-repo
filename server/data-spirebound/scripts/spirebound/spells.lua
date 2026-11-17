@@ -1253,14 +1253,30 @@ end
 SpireSpells.TRACE = {}
 local function traceCast(row, player, var, cast)
 	local pid = player:getId()
-	local before = {}
+	local before, others = {}, {}
 	for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 7, 7)) do
 		if c:isMonster() then
 			before[c:getId()] = { hp = c:getHealth(), pos = c:getPosition() }
+		elseif c:isPlayer() and c:getId() ~= pid then
+			others[c:getId()] = { name = c:getName(), hp = c:getHealth(), pos = c:getPosition(), held = c:getCondition(CONDITION_PARALYZE) ~= nil }
 		end
 	end
 	local hp0, pos0 = player:getHealth(), player:getPosition()
+	local heldBefore = player:getCondition(CONDITION_PARALYZE) ~= nil
 	local ok = cast(player, var)
+	local early = {}
+	addEvent(function() -- 0.4 s later: who is held or has moved (holds on players last about a second)
+		for id, o in pairs(others) do
+			local c = Creature(id)
+			if c then
+				early[id] = { held = c:getCondition(CONDITION_PARALYZE) ~= nil, moved = c:getPosition():getDistance(o.pos) }
+			end
+		end
+		local p = Player(pid)
+		if p and heldBefore then
+			early.self = p:getCondition(CONDITION_PARALYZE) == nil and " (this freed you from a hold)" or " (you are still held)"
+		end
+	end, 400)
 	addEvent(function()
 		local p = Player(pid)
 		if not p then
@@ -1281,8 +1297,29 @@ local function traceCast(row, player, var, cast)
 			end
 		end
 		local stepped = p:getPosition() ~= pos0 and (" moved you " .. pos0:getDistance(p:getPosition()) .. " tiles") or ""
-		logger.info(string.format("[SPELLTRACE] %s | %s | %s: hit %d monsters for %d, %d gone, %d moved, your health %+d%s",
-			p:getName(), row.name, ok and "CAST" or "REFUSED", hit, dmg, died, moved, p:getHealth() - hp0, stepped))
+		local pv = {}
+		for id, o in pairs(others) do
+			local c = Creature(id)
+			local e = early[id] or {}
+			if not c then
+				table.insert(pv, o.name .. " DIED")
+			else
+				local lost = o.hp - c:getHealth()
+				local bits = {}
+				if lost ~= 0 then table.insert(bits, "lost " .. lost) end
+				if e.held and not o.held then table.insert(bits, "HELD") end
+				if (e.moved or 0) > 0 then table.insert(bits, "MOVED " .. e.moved) end
+				if #bits > 0 then table.insert(pv, o.name .. " " .. table.concat(bits, ", ")) end
+			end
+		end
+		local expect = ""
+		if row.kind == "attack_target" and #pv > 0 then
+			local mn, mx = formula(row, p)
+			expect = string.format(" [a full hit is %d-%d, a player should take about half]", mn, mx)
+		end
+		logger.info(string.format("[SPELLTRACE] %s | %s | %s: hit %d monsters for %d, %d gone, %d moved, your health %+d%s%s%s%s",
+			p:getName(), row.name, ok and "CAST" or "REFUSED", hit, dmg, died, moved, p:getHealth() - hp0, stepped, early.self or "",
+			#pv > 0 and (" | PLAYERS: " .. table.concat(pv, "; ")) or "", expect))
 		p:addHealth(p:getMaxHealth())
 		p:addMana(p:getMaxMana())
 	end, 2500)

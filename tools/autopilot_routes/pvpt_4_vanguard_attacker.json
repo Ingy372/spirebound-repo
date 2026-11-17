@@ -1,0 +1,189 @@
+{
+ "character": "Spell Vanguard",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "iron reach",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_iron_reach",
+   "note": "iron reach"
+  },
+  {
+   "do": "cast",
+   "text": "heavy strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_heavy_strike",
+   "note": "heavy strike"
+  },
+  {
+   "do": "cast",
+   "text": "rending blow",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_rending_blow",
+   "note": "rending blow"
+  },
+  {
+   "do": "cast",
+   "text": "bloodoath strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_bloodoath_strike",
+   "note": "bloodoath strike"
+  },
+  {
+   "do": "cast",
+   "text": "sunder",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_sunder",
+   "note": "sunder"
+  },
+  {
+   "do": "cast",
+   "text": "final verdict",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_final_verdict",
+   "note": "final verdict"
+  },
+  {
+   "do": "cast",
+   "text": "skyrend",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_skyrend",
+   "note": "skyrend"
+  },
+  {
+   "do": "cast",
+   "text": "whirlwind",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_whirlwind",
+   "note": "whirlwind"
+  },
+  {
+   "do": "cast",
+   "text": "faultline",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_faultline",
+   "note": "faultline"
+  },
+  {
+   "do": "cast",
+   "text": "shield bash",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_shield_bash",
+   "note": "shield bash"
+  },
+  {
+   "do": "cast",
+   "text": "vault strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_vault_strike",
+   "note": "vault strike"
+  },
+  {
+   "do": "cast",
+   "text": "mountainbreaker",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_mountainbreaker",
+   "note": "mountainbreaker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_4_vanguard_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}

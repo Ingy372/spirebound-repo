@@ -1,0 +1,116 @@
+{
+ "character": "Spell Mystic",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1368,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot arena join"
+  },
+  {
+   "do": "say",
+   "text": "/pilot arena go"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": [
+    1030,
+    1024,
+    11
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "cast",
+   "text": "rimebind",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 2.3,
+   "name": "pvpt_wild_rimebind",
+   "note": "Wild PvP: Rimebind holds the full 3 s"
+  },
+  {
+   "do": "cast",
+   "text": "overgrowth",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_wild_overgrowth",
+   "note": "Wild PvP: no immunity, held again"
+  },
+  {
+   "do": "cast",
+   "text": "tidecrash",
+   "target": "player",
+   "face": "target",
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_wild_tidecrash",
+   "note": "Wild PvP: the wave pushes a player"
+  },
+  {
+   "do": "cast",
+   "text": "bramble patch",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "pvpt_wild_bramble",
+   "note": "Wild PvP: thorns slow a player"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot arena stop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ],
+ "name": "pvpt_8_wild_arena_attacker",
+ "about": "Bot-vs-bot PvP test (tools/pvp_routes.py)",
+ "timeout": 300
+}
