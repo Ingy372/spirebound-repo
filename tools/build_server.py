@@ -129,6 +129,10 @@ def patch_core(build: Path) -> None:
             f.write_text(rename_vocations(f.read_text(encoding="utf-8"), r"vocation\([^)]*\)"), encoding="utf-8")
     # Tibia's spells (and their incantations) are replaced by Spirebound's own (data-spirebound/scripts/spirebound/spells)
     shutil.rmtree(build / "data" / "scripts" / "spells", ignore_errors=True)
+    # Spirebound's own spell effects (art/effects): the server only sends effects listed in its appearances file
+    import install_effects
+    n = install_effects.patch_server(build / "data" / "items" / "appearances.dat")
+    print(f"spell effects: {n} Spirebound effects registered")
 
 
 def main(argv: list[str]) -> None:

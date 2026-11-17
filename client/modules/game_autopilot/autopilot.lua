@@ -11,6 +11,10 @@
 --   { "do": "wait", "seconds": 5 }
 --   { "do": "shot", "name": "yard" }              screenshot
 --   { "do": "say", "text": "!hunt" }
+--   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
+--                                                 (spell tests) target the nearest monster without chasing it if
+--                                                 "target", say the words, take screenshots that many seconds after,
+--                                                 move on after "gap" seconds; every server message is logged
 -- The log (autopilot_log.txt in the client's settings folder) has a line per event, a sample every 2 seconds and a
 -- summary per step: monsters in sight, monsters next to you, damage taken, kills, potions.
 
@@ -165,6 +169,47 @@ function handlers.say()
     end
 end
 
+function handlers.cast(player)
+    if not stepData.sent then
+        if step.target then
+            local list = monsters(player)
+            if list[1] then
+                g_game.setChaseMode(DontChase)
+                if g_game.getAttackingCreature() ~= list[1].c then g_game.attack(list[1].c) end
+            else
+                log('cast: no monster to target')
+            end
+        end
+        if step.dir then -- face a fixed way first: "north", "east", "south", "west"
+            g_game.turn(({ north = North, east = East, south = South, west = West })[step.dir])
+        end
+        if step.face then -- "target": turn toward the nearest monster (waves, beams); "away": turn away (dashes)
+            local list = monsters(player)
+            if list[1] then
+                local a, b = player:getPosition(), list[1].c:getPosition()
+                local dx, dy = b.x - a.x, b.y - a.y
+                if step.face == 'away' then dx, dy = -dx, -dy end
+                local dir
+                if math.abs(dx) > math.abs(dy) then dir = dx > 0 and East or West else dir = dy > 0 and South or North end
+                g_game.turn(dir)
+            end
+        end
+        stepData.sent, stepData.shot = now(), 1
+        g_game.talk(step.text)
+        return
+    end
+    local shots = step.shots or {}
+    local due = shots[stepData.shot]
+    if due and now() - stepData.sent >= due then
+        local name = 'autopilot_' .. (step.name or idx) .. '_' .. stepData.shot .. '.png'
+        g_app.doScreenshot(name)
+        log('screenshot ' .. name)
+        stepData.shot = stepData.shot + 1
+    elseif not due and now() - stepData.sent >= (step.gap or 2.2) then
+        nextStep()
+    end
+end
+
 function handlers.wait()
     if now() - stepT >= (step.seconds or 1) then nextStep() end
 end
@@ -275,7 +320,7 @@ local function onText(mode, text)
     if not st then return end
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
-    elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') then
+    elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') or (step and step['do'] == 'cast') then
         log('message: ' .. text)
     end
 end

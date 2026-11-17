@@ -1,0 +1,333 @@
+{
+ "about": "Spirebound spell effects, made by art/effects/make_fx.py; installed by tools/install_effects.py",
+ "sheets": [
+  {
+   "file": "sheet_0.bmp.lzma",
+   "count": 36
+  },
+  {
+   "file": "sheet_1.bmp.lzma",
+   "count": 36
+  },
+  {
+   "file": "sheet_2.bmp.lzma",
+   "count": 36
+  },
+  {
+   "file": "sheet_3.bmp.lzma",
+   "count": 36
+  },
+  {
+   "file": "sheet_4.bmp.lzma",
+   "count": 6
+  }
+ ],
+ "effects": [
+  {
+   "name": "steel_arc",
+   "id": 401,
+   "first": 0,
+   "frames": 6,
+   "ms": 60,
+   "box": [
+    31,
+    29,
+    33,
+    35
+   ],
+   "light": [
+    2,
+    215
+   ]
+  },
+  {
+   "name": "skyrend",
+   "id": 402,
+   "first": 6,
+   "frames": 9,
+   "ms": 65,
+   "box": [
+    20,
+    0,
+    44,
+    64
+   ],
+   "light": [
+    5,
+    205
+   ]
+  },
+  {
+   "name": "oath_halo",
+   "id": 403,
+   "first": 15,
+   "frames": 8,
+   "ms": 90,
+   "box": [
+    15,
+    13,
+    48,
+    44
+   ],
+   "light": [
+    3,
+    205
+   ]
+  },
+  {
+   "name": "ground_crack",
+   "id": 404,
+   "first": 23,
+   "frames": 8,
+   "ms": 70,
+   "box": [
+    23,
+    14,
+    41,
+    50
+   ],
+   "light": [
+    0,
+    0
+   ]
+  },
+  {
+   "name": "war_banner",
+   "id": 405,
+   "first": 31,
+   "frames": 8,
+   "ms": 125,
+   "box": [
+    19,
+    0,
+    44,
+    63
+   ],
+   "light": [
+    2,
+    186
+   ]
+  },
+  {
+   "name": "light_needles",
+   "id": 406,
+   "first": 39,
+   "frames": 9,
+   "ms": 60,
+   "box": [
+    16,
+    0,
+    48,
+    61
+   ],
+   "light": [
+    4,
+    213
+   ]
+  },
+  {
+   "name": "sun_sigil",
+   "id": 407,
+   "first": 48,
+   "frames": 10,
+   "ms": 110,
+   "box": [
+    33,
+    33,
+    30,
+    30
+   ],
+   "light": [
+    3,
+    213
+   ]
+  },
+  {
+   "name": "violet_bolt",
+   "id": 408,
+   "first": 58,
+   "frames": 6,
+   "ms": 60,
+   "box": [
+    15,
+    0,
+    49,
+    64
+   ],
+   "light": [
+    5,
+    119
+   ]
+  },
+  {
+   "name": "meteor",
+   "id": 409,
+   "first": 64,
+   "frames": 10,
+   "ms": 65,
+   "box": [
+    18,
+    0,
+    46,
+    64
+   ],
+   "light": [
+    6,
+    198
+   ]
+  },
+  {
+   "name": "ember_pillar",
+   "id": 410,
+   "first": 74,
+   "frames": 8,
+   "ms": 75,
+   "box": [
+    23,
+    5,
+    40,
+    58
+   ],
+   "light": [
+    5,
+    198
+   ]
+  },
+  {
+   "name": "thorn_burst",
+   "id": 411,
+   "first": 82,
+   "frames": 8,
+   "ms": 80,
+   "box": [
+    26,
+    21,
+    38,
+    43
+   ],
+   "light": [
+    2,
+    103
+   ]
+  },
+  {
+   "name": "leaf_ward",
+   "id": 412,
+   "first": 90,
+   "frames": 8,
+   "ms": 95,
+   "box": [
+    23,
+    19,
+    40,
+    40
+   ],
+   "light": [
+    3,
+    103
+   ]
+  },
+  {
+   "name": "ice_spires",
+   "id": 413,
+   "first": 98,
+   "frames": 9,
+   "ms": 75,
+   "box": [
+    25,
+    18,
+    39,
+    46
+   ],
+   "light": [
+    3,
+    101
+   ]
+  },
+  {
+   "name": "bloom",
+   "id": 414,
+   "first": 107,
+   "frames": 9,
+   "ms": 85,
+   "box": [
+    20,
+    10,
+    43,
+    51
+   ],
+   "light": [
+    3,
+    103
+   ]
+  },
+  {
+   "name": "clash",
+   "id": 415,
+   "first": 116,
+   "frames": 6,
+   "ms": 60,
+   "box": [
+    23,
+    18,
+    41,
+    44
+   ],
+   "light": [
+    4,
+    215
+   ]
+  },
+  {
+   "name": "void_pull",
+   "id": 416,
+   "first": 122,
+   "frames": 8,
+   "ms": 70,
+   "box": [
+    27,
+    23,
+    37,
+    39
+   ],
+   "light": [
+    3,
+    119
+   ]
+  },
+  {
+   "name": "ember_sigil",
+   "id": 417,
+   "first": 130,
+   "frames": 10,
+   "ms": 110,
+   "box": [
+    29,
+    29,
+    35,
+    35
+   ],
+   "light": [
+    3,
+    198
+   ]
+  },
+  {
+   "name": "frost_sigil",
+   "id": 418,
+   "first": 140,
+   "frames": 10,
+   "ms": 100,
+   "box": [
+    33,
+    33,
+    30,
+    30
+   ],
+   "light": [
+    3,
+    101
+   ]
+  }
+ ]
+}

@@ -1,0 +1,530 @@
+{
+ "name": "spells_vanguard",
+ "about": "Casts every vanguard spell (34) in the real client with screenshots; read the result with: python tools/spell_routes.py --report",
+ "character": "Spell Vanguard",
+ "timeout": 237,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 10"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "spells_vanguard_start"
+  },
+  {
+   "do": "cast",
+   "text": "heavy strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_heavy_strike",
+   "note": "Heavy Strike"
+  },
+  {
+   "do": "cast",
+   "text": "wayfinder \"Spell Vanguard\"",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_wayfinder",
+   "note": "Wayfinder"
+  },
+  {
+   "do": "cast",
+   "text": "second wind",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_second_wind",
+   "note": "Second Wind"
+  },
+  {
+   "do": "cast",
+   "text": "kindle",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_kindle",
+   "note": "Kindle"
+  },
+  {
+   "do": "cast",
+   "text": "cleanse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_cleanse",
+   "note": "Cleanse"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Shield Bash"
+  },
+  {
+   "do": "cast",
+   "text": "shield bash",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_shield_bash",
+   "note": "Shield Bash"
+  },
+  {
+   "do": "cast",
+   "text": "hearth ration",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hearth_ration",
+   "note": "Hearth Ration"
+  },
+  {
+   "do": "cast",
+   "text": "skystep up",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_skystep",
+   "note": "Skystep"
+  },
+  {
+   "do": "cast",
+   "text": "quickstep",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_quickstep",
+   "note": "Quickstep"
+  },
+  {
+   "do": "cast",
+   "text": "rending blow",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_rending_blow",
+   "note": "Rending Blow"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Rally Cry"
+  },
+  {
+   "do": "cast",
+   "text": "rally cry",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_rally_cry",
+   "note": "Rally Cry"
+  },
+  {
+   "do": "cast",
+   "text": "iron reach",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_iron_reach",
+   "note": "Iron Reach"
+  },
+  {
+   "do": "cast",
+   "text": "charge",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_charge",
+   "note": "Charge"
+  },
+  {
+   "do": "cast",
+   "text": "bloodoath strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_bloodoath_strike",
+   "note": "Bloodoath Strike"
+  },
+  {
+   "do": "cast",
+   "text": "iron hide",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_iron_hide",
+   "note": "Iron Hide"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Whirlwind"
+  },
+  {
+   "do": "cast",
+   "text": "whirlwind",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_whirlwind",
+   "note": "Whirlwind"
+  },
+  {
+   "do": "cast",
+   "text": "counterguard",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_counterguard",
+   "note": "Counterguard"
+  },
+  {
+   "do": "cast",
+   "text": "intimidate",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_intimidate",
+   "note": "Intimidate"
+  },
+  {
+   "do": "cast",
+   "text": "sunder",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_sunder",
+   "note": "Sunder"
+  },
+  {
+   "do": "cast",
+   "text": "battle hymn",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_battle_hymn",
+   "note": "Battle Hymn"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Standard of Defiance"
+  },
+  {
+   "do": "cast",
+   "text": "standard of defiance",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_standard_of_defiance",
+   "note": "Standard of Defiance"
+  },
+  {
+   "do": "cast",
+   "text": "guardian stance",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_guardian_stance",
+   "note": "Guardian Stance"
+  },
+  {
+   "do": "cast",
+   "text": "recovery",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_recovery",
+   "note": "Recovery"
+  },
+  {
+   "do": "cast",
+   "text": "vault strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_vault_strike",
+   "note": "Vault Strike"
+  },
+  {
+   "do": "cast",
+   "text": "skyrend",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_skyrend",
+   "note": "Skyrend"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Iron Will"
+  },
+  {
+   "do": "cast",
+   "text": "iron will",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_iron_will",
+   "note": "Iron Will"
+  },
+  {
+   "do": "cast",
+   "text": "last bastion",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_last_bastion",
+   "note": "Last Bastion"
+  },
+  {
+   "do": "cast",
+   "text": "final verdict",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_final_verdict",
+   "note": "Final Verdict"
+  },
+  {
+   "do": "cast",
+   "text": "bulwark aura",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_bulwark_aura",
+   "note": "Bulwark Aura"
+  },
+  {
+   "do": "cast",
+   "text": "faultline",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_faultline",
+   "note": "Faultline"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Undying Oath"
+  },
+  {
+   "do": "cast",
+   "text": "undying oath",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_undying_oath",
+   "note": "Undying Oath"
+  },
+  {
+   "do": "cast",
+   "text": "aegis ascendant",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_aegis_ascendant",
+   "note": "Aegis Ascendant"
+  },
+  {
+   "do": "cast",
+   "text": "unbroken line",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_unbroken_line",
+   "note": "Unbroken Line"
+  },
+  {
+   "do": "cast",
+   "text": "mountainbreaker",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mountainbreaker",
+   "note": "Mountainbreaker"
+  },
+  {
+   "do": "wait",
+   "seconds": 3,
+   "note": "end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

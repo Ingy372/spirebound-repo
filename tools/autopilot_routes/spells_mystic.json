@@ -1,0 +1,588 @@
+{
+ "name": "spells_mystic",
+ "about": "Casts every mystic spell (37) in the real client with screenshots; read the result with: python tools/spell_routes.py --report",
+ "character": "Spell Mystic",
+ "timeout": 251,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 10"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "spells_mystic_start"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_frost_strike",
+   "note": "Frost Strike"
+  },
+  {
+   "do": "cast",
+   "text": "kindle",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_kindle",
+   "note": "Kindle"
+  },
+  {
+   "do": "cast",
+   "text": "dewfall",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_dewfall",
+   "note": "Dewfall"
+  },
+  {
+   "do": "cast",
+   "text": "cleanse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_cleanse",
+   "note": "Cleanse"
+  },
+  {
+   "do": "cast",
+   "text": "wayfinder \"Spell Mystic\"",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_wayfinder",
+   "note": "Wayfinder"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Hearth Ration"
+  },
+  {
+   "do": "cast",
+   "text": "hearth ration",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hearth_ration",
+   "note": "Hearth Ration"
+  },
+  {
+   "do": "cast",
+   "text": "sapdrain",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_sapdrain",
+   "note": "Sapdrain"
+  },
+  {
+   "do": "cast",
+   "text": "skystep up",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_skystep",
+   "note": "Skystep"
+  },
+  {
+   "do": "cast",
+   "text": "thorn strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_thorn_strike",
+   "note": "Thorn Strike"
+  },
+  {
+   "do": "cast",
+   "text": "quickstep",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_quickstep",
+   "note": "Quickstep"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Mend Other"
+  },
+  {
+   "do": "cast",
+   "text": "mend other",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mend_other",
+   "note": "Mend Other"
+  },
+  {
+   "do": "cast",
+   "text": "hailshards",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hailshards",
+   "note": "Hailshards"
+  },
+  {
+   "do": "cast",
+   "text": "frost wave",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_frost_wave",
+   "note": "Frost Wave"
+  },
+  {
+   "do": "cast",
+   "text": "conjure healing rune",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_conjure_healing_rune",
+   "note": "Conjure Healing Rune"
+  },
+  {
+   "do": "cast",
+   "text": "bramble patch",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_bramble_patch",
+   "note": "Bramble Patch"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Purify"
+  },
+  {
+   "do": "cast",
+   "text": "purify",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_purify",
+   "note": "Purify"
+  },
+  {
+   "do": "cast",
+   "text": "bloomburst",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_bloomburst",
+   "note": "Bloomburst"
+  },
+  {
+   "do": "cast",
+   "text": "barkskin",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_barkskin",
+   "note": "Barkskin"
+  },
+  {
+   "do": "cast",
+   "text": "mass mend",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mass_mend",
+   "note": "Mass Mend"
+  },
+  {
+   "do": "cast",
+   "text": "rimebind",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_rimebind",
+   "note": "Rimebind"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Rejuvenate"
+  },
+  {
+   "do": "cast",
+   "text": "rejuvenate",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_rejuvenate",
+   "note": "Rejuvenate"
+  },
+  {
+   "do": "cast",
+   "text": "tidecrash",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_tidecrash",
+   "note": "Tidecrash"
+  },
+  {
+   "do": "cast",
+   "text": "conjure binding rune",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_conjure_binding_rune",
+   "note": "Conjure Binding Rune"
+  },
+  {
+   "do": "cast",
+   "text": "summon wolf companion",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_summon_wolf_companion",
+   "note": "Summon Wolf Companion"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot unsummon"
+  },
+  {
+   "do": "cast",
+   "text": "thornfield",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_thornfield",
+   "note": "Thornfield"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Linked Mend"
+  },
+  {
+   "do": "cast",
+   "text": "linked mend",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_linked_mend",
+   "note": "Linked Mend"
+  },
+  {
+   "do": "cast",
+   "text": "lifeward",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_lifeward",
+   "note": "Lifeward"
+  },
+  {
+   "do": "cast",
+   "text": "lifeseed",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_lifeseed",
+   "note": "Lifeseed"
+  },
+  {
+   "do": "cast",
+   "text": "glacier core",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_glacier_core",
+   "note": "Glacier Core"
+  },
+  {
+   "do": "cast",
+   "text": "icefall",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_icefall",
+   "note": "Icefall"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Verdant Renewal"
+  },
+  {
+   "do": "cast",
+   "text": "verdant renewal",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_verdant_renewal",
+   "note": "Verdant Renewal"
+  },
+  {
+   "do": "cast",
+   "text": "wellspring",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_wellspring",
+   "note": "Wellspring"
+  },
+  {
+   "do": "cast",
+   "text": "mana bloom",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mana_bloom",
+   "note": "Mana Bloom"
+  },
+  {
+   "do": "cast",
+   "text": "overgrowth",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_overgrowth",
+   "note": "Overgrowth"
+  },
+  {
+   "do": "cast",
+   "text": "wildheart",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_wildheart",
+   "note": "Wildheart"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Winter's Breath"
+  },
+  {
+   "do": "cast",
+   "text": "winters breath",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_winter_s_breath",
+   "note": "Winter's Breath"
+  },
+  {
+   "do": "cast",
+   "text": "worldroot",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_worldroot",
+   "note": "Worldroot"
+  },
+  {
+   "do": "wait",
+   "seconds": 3,
+   "note": "end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -1,0 +1,78 @@
+{
+ "name": "spells_dashes",
+ "about": "The forward dashes (Blink, Firewake) cast straight up the open road north of the spell-test spot, where the main spell routes face into trees. Read with: python tools/spell_routes.py --report",
+ "character": "Spell Arcanist",
+ "timeout": 120,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "cast",
+   "text": "blink",
+   "dir": "north",
+   "shots": [
+    0.0,
+    0.4
+   ],
+   "gap": 2.5,
+   "name": "dash_blink",
+   "note": "Blink"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "cast",
+   "text": "firewake",
+   "dir": "north",
+   "shots": [
+    0.1,
+    1.0,
+    2.5
+   ],
+   "gap": 3.0,
+   "name": "dash_firewake",
+   "note": "Firewake"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

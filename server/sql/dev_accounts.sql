@@ -63,3 +63,17 @@ ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALU
  `skill_fist` = 20, `skill_fist_tries` = 0, `skill_club` = 45, `skill_club_tries` = 0, `skill_sword` = 45, `skill_sword_tries` = 0,
  `skill_axe` = 45, `skill_axe_tries` = 0, `skill_dist` = 15, `skill_dist_tries` = 0, `skill_shielding` = 40, `skill_shielding_tries` = 0,
  `posx` = 0, `posy` = 0, `posz` = 0;
+
+-- Spell testers for the autopilot (tools/spell_routes.py, task J13b): one level 300 character per vocation with the
+-- skills of a well-trained player, so every spell up to the level 300 capstones can be cast in the real client.
+-- Experience 441084800 = level 300. Reset to exactly this on every run of this file.
+INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`, `maglevel`, `skill_sword`, `skill_axe`, `skill_club`, `skill_dist`, `skill_shielding`)
+VALUES
+ ('Spell Arcanist', 1, @pilot, 300, 1, 1655, 1655, 441084800, 68, 76, 78, 58, 130, 8835, 8835, @town, '', 3000, 1, 90, 20, 20, 20, 20, 30),
+ ('Spell Mystic', 1, @pilot, 300, 2, 1655, 1655, 441084800, 68, 76, 78, 58, 131, 8835, 8835, @town, '', 3000, 1, 90, 20, 20, 20, 20, 30),
+ ('Spell Ranger', 1, @pilot, 300, 3, 3135, 3135, 441084800, 68, 76, 78, 58, 129, 4395, 4395, @town, '', 6000, 1, 30, 30, 30, 30, 110, 80),
+ ('Spell Vanguard', 1, @pilot, 300, 4, 4615, 4615, 441084800, 68, 76, 78, 58, 128, 1495, 1495, @town, '', 7500, 1, 12, 110, 110, 110, 30, 105)
+ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALUES(`level`), `experience` = VALUES(`experience`),
+ `health` = VALUES(`healthmax`), `healthmax` = VALUES(`healthmax`), `mana` = VALUES(`manamax`), `manamax` = VALUES(`manamax`),
+ `maglevel` = VALUES(`maglevel`), `skill_sword` = VALUES(`skill_sword`), `skill_axe` = VALUES(`skill_axe`), `skill_club` = VALUES(`skill_club`),
+ `skill_dist` = VALUES(`skill_dist`), `skill_shielding` = VALUES(`skill_shielding`), `posx` = 0, `posy` = 0, `posz` = 0;

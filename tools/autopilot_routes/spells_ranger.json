@@ -1,0 +1,569 @@
+{
+ "name": "spells_ranger",
+ "about": "Casts every ranger spell (36) in the real client with screenshots; read the result with: python tools/spell_routes.py --report",
+ "character": "Spell Ranger",
+ "timeout": 245,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 10"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "spells_ranger_start"
+  },
+  {
+   "do": "cast",
+   "text": "piercing shot",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_piercing_shot",
+   "note": "Piercing Shot"
+  },
+  {
+   "do": "cast",
+   "text": "wayfinder \"Spell Ranger\"",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_wayfinder",
+   "note": "Wayfinder"
+  },
+  {
+   "do": "cast",
+   "text": "kindle",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_kindle",
+   "note": "Kindle"
+  },
+  {
+   "do": "cast",
+   "text": "field dressing",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_field_dressing",
+   "note": "Field Dressing"
+  },
+  {
+   "do": "cast",
+   "text": "quickstep",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_quickstep",
+   "note": "Quickstep"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Cleanse"
+  },
+  {
+   "do": "cast",
+   "text": "cleanse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_cleanse",
+   "note": "Cleanse"
+  },
+  {
+   "do": "cast",
+   "text": "double nock",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_double_nock",
+   "note": "Double Nock"
+  },
+  {
+   "do": "cast",
+   "text": "skystep up",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_skystep",
+   "note": "Skystep"
+  },
+  {
+   "do": "cast",
+   "text": "keen sight",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_keen_sight",
+   "note": "Keen Sight"
+  },
+  {
+   "do": "cast",
+   "text": "hearth ration",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hearth_ration",
+   "note": "Hearth Ration"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Scatter Shot"
+  },
+  {
+   "do": "cast",
+   "text": "scatter shot",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_scatter_shot",
+   "note": "Scatter Shot"
+  },
+  {
+   "do": "cast",
+   "text": "recoil shot",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_recoil_shot",
+   "note": "Recoil Shot"
+  },
+  {
+   "do": "cast",
+   "text": "snare",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_snare",
+   "note": "Snare"
+  },
+  {
+   "do": "cast",
+   "text": "ambush shot",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_ambush_shot",
+   "note": "Ambush Shot"
+  },
+  {
+   "do": "cast",
+   "text": "disengage",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_disengage",
+   "note": "Disengage"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Tracker's Mark"
+  },
+  {
+   "do": "cast",
+   "text": "trackers mark",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_tracker_s_mark",
+   "note": "Tracker's Mark"
+  },
+  {
+   "do": "cast",
+   "text": "caltrops",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_caltrops",
+   "note": "Caltrops"
+  },
+  {
+   "do": "cast",
+   "text": "swift foot",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_swift_foot",
+   "note": "Swift Foot"
+  },
+  {
+   "do": "cast",
+   "text": "ricochet",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_ricochet",
+   "note": "Ricochet"
+  },
+  {
+   "do": "cast",
+   "text": "radiant shot",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_radiant_shot",
+   "note": "Radiant Shot"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Mercy Shot"
+  },
+  {
+   "do": "cast",
+   "text": "mercy shot",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mercy_shot",
+   "note": "Mercy Shot"
+  },
+  {
+   "do": "cast",
+   "text": "sunburst volley",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_sunburst_volley",
+   "note": "Sunburst Volley"
+  },
+  {
+   "do": "cast",
+   "text": "camouflage",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_camouflage",
+   "note": "Camouflage"
+  },
+  {
+   "do": "cast",
+   "text": "eagle eye",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_eagle_eye",
+   "note": "Eagle Eye"
+  },
+  {
+   "do": "cast",
+   "text": "rapid volley",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_rapid_volley",
+   "note": "Rapid Volley"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Sanctified Ground"
+  },
+  {
+   "do": "cast",
+   "text": "sanctified ground",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_sanctified_ground",
+   "note": "Sanctified Ground"
+  },
+  {
+   "do": "cast",
+   "text": "falling star",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_falling_star",
+   "note": "Falling Star"
+  },
+  {
+   "do": "cast",
+   "text": "dawnpiercer",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_dawnpiercer",
+   "note": "Dawnpiercer"
+  },
+  {
+   "do": "cast",
+   "text": "scatterwind",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_scatterwind",
+   "note": "Scatterwind"
+  },
+  {
+   "do": "cast",
+   "text": "hunters focus",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hunter_s_focus",
+   "note": "Hunter's Focus"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Hawk's Path"
+  },
+  {
+   "do": "cast",
+   "text": "hawks path",
+   "target": false,
+   "face": "away",
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hawk_s_path",
+   "note": "Hawk's Path"
+  },
+  {
+   "do": "cast",
+   "text": "pinning volley",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_pinning_volley",
+   "note": "Pinning Volley"
+  },
+  {
+   "do": "cast",
+   "text": "lightrain",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_lightrain",
+   "note": "Lightrain"
+  },
+  {
+   "do": "cast",
+   "text": "dawnstrider",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_dawnstrider",
+   "note": "Dawnstrider"
+  },
+  {
+   "do": "cast",
+   "text": "volley of dawn",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_volley_of_dawn",
+   "note": "Volley of Dawn"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Constellation"
+  },
+  {
+   "do": "cast",
+   "text": "constellation",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_constellation",
+   "note": "Constellation"
+  },
+  {
+   "do": "wait",
+   "seconds": 3,
+   "note": "end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

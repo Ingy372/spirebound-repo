@@ -1,0 +1,567 @@
+{
+ "name": "spells_arcanist",
+ "about": "Casts every arcanist spell (35) in the real client with screenshots; read the result with: python tools/spell_routes.py --report",
+ "character": "Spell Arcanist",
+ "timeout": 249,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 10"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "spells_arcanist_start"
+  },
+  {
+   "do": "cast",
+   "text": "ember strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_ember_strike",
+   "note": "Ember Strike"
+  },
+  {
+   "do": "cast",
+   "text": "kindle",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_kindle",
+   "note": "Kindle"
+  },
+  {
+   "do": "cast",
+   "text": "mending spark",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mending_spark",
+   "note": "Mending Spark"
+  },
+  {
+   "do": "cast",
+   "text": "wayfinder \"Spell Arcanist\"",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_wayfinder",
+   "note": "Wayfinder"
+  },
+  {
+   "do": "cast",
+   "text": "cleanse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_cleanse",
+   "note": "Cleanse"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Skystep"
+  },
+  {
+   "do": "cast",
+   "text": "skystep up",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_skystep",
+   "note": "Skystep"
+  },
+  {
+   "do": "cast",
+   "text": "volt strike",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_volt_strike",
+   "note": "Volt Strike"
+  },
+  {
+   "do": "cast",
+   "text": "hearth ration",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_hearth_ration",
+   "note": "Hearth Ration"
+  },
+  {
+   "do": "cast",
+   "text": "mana ward",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mana_ward",
+   "note": "Mana Ward"
+  },
+  {
+   "do": "cast",
+   "text": "quickstep",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_quickstep",
+   "note": "Quickstep"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Forked Arc"
+  },
+  {
+   "do": "cast",
+   "text": "forked arc",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_forked_arc",
+   "note": "Forked Arc"
+  },
+  {
+   "do": "cast",
+   "text": "fireburst wave",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_fireburst_wave",
+   "note": "Fireburst Wave"
+  },
+  {
+   "do": "cast",
+   "text": "ember barrage",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_ember_barrage",
+   "note": "Ember Barrage"
+  },
+  {
+   "do": "cast",
+   "text": "arc beam",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_arc_beam",
+   "note": "Arc Beam"
+  },
+  {
+   "do": "cast",
+   "text": "gale step",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_gale_step",
+   "note": "Gale Step"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Conjure Fire Rune"
+  },
+  {
+   "do": "cast",
+   "text": "conjure fire rune",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_conjure_fire_rune",
+   "note": "Conjure Fire Rune"
+  },
+  {
+   "do": "cast",
+   "text": "blink",
+   "target": false,
+   "face": "away",
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_blink",
+   "note": "Blink"
+  },
+  {
+   "do": "cast",
+   "text": "emberfield",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_emberfield",
+   "note": "Emberfield"
+  },
+  {
+   "do": "cast",
+   "text": "searing brand",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_searing_brand",
+   "note": "Searing Brand"
+  },
+  {
+   "do": "cast",
+   "text": "repulse",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_repulse",
+   "note": "Repulse"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Gravity Well"
+  },
+  {
+   "do": "cast",
+   "text": "gravity well",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_gravity_well",
+   "note": "Gravity Well"
+  },
+  {
+   "do": "cast",
+   "text": "conjure strike rune",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_conjure_strike_rune",
+   "note": "Conjure Strike Rune"
+  },
+  {
+   "do": "cast",
+   "text": "summon ember sprite",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_summon_ember_sprite",
+   "note": "Summon Ember Sprite"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot unsummon"
+  },
+  {
+   "do": "cast",
+   "text": "stormcall",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_stormcall",
+   "note": "Stormcall"
+  },
+  {
+   "do": "cast",
+   "text": "arcane empower",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_arcane_empower",
+   "note": "Arcane Empower"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Skybrand"
+  },
+  {
+   "do": "cast",
+   "text": "skybrand",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_skybrand",
+   "note": "Skybrand"
+  },
+  {
+   "do": "cast",
+   "text": "inferno core",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_inferno_core",
+   "note": "Inferno Core"
+  },
+  {
+   "do": "cast",
+   "text": "firewake",
+   "target": false,
+   "face": "away",
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_firewake",
+   "note": "Firewake"
+  },
+  {
+   "do": "cast",
+   "text": "cinder lance",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_cinder_lance",
+   "note": "Cinder Lance"
+  },
+  {
+   "do": "cast",
+   "text": "meteor rain",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_meteor_rain",
+   "note": "Meteor Rain"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 6, 60000",
+   "note": "Arc Cataclysm"
+  },
+  {
+   "do": "cast",
+   "text": "arc cataclysm",
+   "target": false,
+   "face": "target",
+   "shots": [
+    0.0,
+    0.3,
+    0.7
+   ],
+   "gap": 2.4,
+   "name": "spell_arc_cataclysm",
+   "note": "Arc Cataclysm"
+  },
+  {
+   "do": "cast",
+   "text": "storm lash",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_storm_lash",
+   "note": "Storm Lash"
+  },
+  {
+   "do": "cast",
+   "text": "stormheart",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.25,
+    1.5,
+    3.0
+   ],
+   "gap": 3.4,
+   "name": "spell_stormheart",
+   "note": "Stormheart"
+  },
+  {
+   "do": "cast",
+   "text": "mirror image",
+   "target": false,
+   "face": null,
+   "shots": [
+    0.0,
+    0.35
+   ],
+   "gap": 2.4,
+   "name": "spell_mirror_image",
+   "note": "Mirror Image"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot unsummon"
+  },
+  {
+   "do": "cast",
+   "text": "worldfire",
+   "target": true,
+   "face": null,
+   "shots": [
+    0.25,
+    1.2,
+    1.6
+   ],
+   "gap": 2.4,
+   "name": "spell_worldfire",
+   "note": "Worldfire"
+  },
+  {
+   "do": "wait",
+   "seconds": 3,
+   "note": "end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

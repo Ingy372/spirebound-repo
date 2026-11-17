@@ -54,14 +54,27 @@ local function partyAround(player, radius)
 	return out
 end
 
--- the ally a targeted support spell lands on: a named player, the creature id from a hotkey, or yourself
+-- The ally a targeted support spell lands on: nobody named = yourself; a name = that player, who must be within 7
+-- tiles, on your floor and in sight (otherwise the spell is refused with a message and costs nothing).
+-- Names with a space go in quotes, as in Tibia: mend other "Some Name".
 local function allyTarget(player, var)
-	local target = Creature(var:getNumber()) or Player(var:getString()) or player
-	if not target:isPlayer() then
-		target = player
+	local c = Creature(var:getNumber())
+	if c and c:isPlayer() then
+		return c
 	end
-	return target
+	local name = var:getString()
+	if not name or name == "" then
+		return player
+	end
+	local t = Player(name)
+	local a = player:getPosition()
+	if not t or t:getPosition().z ~= a.z or a:getDistance(t:getPosition()) > 7 or not a:isSightClear(t:getPosition()) then
+		player:sendCancelMessage(name .. " is not close enough to reach.")
+		return nil
+	end
+	return t
 end
+SpireSpells.allyTarget = allyTarget
 
 local BAD_CONDITIONS = { CONDITION_POISON, CONDITION_FIRE, CONDITION_ENERGY, CONDITION_BLEEDING, CONDITION_PARALYZE, CONDITION_DROWN, CONDITION_FREEZING, CONDITION_DAZZLED, CONDITION_CURSED }
 
@@ -94,7 +107,7 @@ end
 KINDS.find_person = function(row, player, var)
 	local target = Player(var:getString())
 	if not target then
-		player:sendCancelMessage("Say: wayfinder <name>. That player is not online.")
+		player:sendCancelMessage('Say: wayfinder name (in quotes if it has a space: wayfinder "Some Name"). That player is not online.')
 		return false
 	end
 	local a, b = player:getPosition(), target:getPosition()
@@ -118,6 +131,9 @@ end
 
 KINDS.heal_target = function(row, player, var)
 	local target = allyTarget(player, var)
+	if not target then
+		return false
+	end
 	local mn, mx = formula(row, player)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	target:addHealth(math.random(mn, mx))
@@ -144,6 +160,9 @@ end
 
 KINDS.hot_target = function(row, player, var)
 	local target = allyTarget(player, var)
+	if not target then
+		return false
+	end
 	local c = Condition(CONDITION_REGENERATION)
 	c:setParameter(CONDITION_PARAM_SUBID, 77)
 	c:setParameter(CONDITION_PARAM_HEALTHGAIN, math.floor(player:getLevel() / 5 + player:getMagicLevel() * 1.2 + 10))
@@ -247,6 +266,10 @@ KINDS.dash = function(row, player)
 		player:sendCancelMessage("You need a target to charge.")
 		return false
 	end
+	if player:getPosition():getDistance(target:getPosition()) <= 1 then
+		player:sendCancelMessage("You are already next to your target.")
+		return false
+	end
 	local pos = player:getPosition()
 	for _ = 1, row.tiles do
 		local dx, dy = stepToward(pos, target:getPosition())
@@ -324,6 +347,9 @@ end
 
 KINDS.dr_target = function(row, player, var)
 	local target = allyTarget(player, var)
+	if not target then
+		return false
+	end
 	SpireBuffs.addReduction(target:getId(), row.pct, row.duration)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
@@ -846,6 +872,12 @@ local function runZone(player, row, combat, tiles)
 				end
 			end
 		end)
+		-- the picture is refreshed between damage ticks too, so burning or thorny ground never blinks out
+		later(tick * 1000 + 500, pid, function()
+			for _, pos in ipairs(tiles) do
+				fx(pos, vis.effect)
+			end
+		end)
 	end
 end
 
@@ -989,6 +1021,9 @@ end
 -- Lifeseed: the next blow that would kill this player leaves them alive, and the seed heals them
 KINDS.seed = function(row, player, var)
 	local target = allyTarget(player, var)
+	if not target then
+		return false
+	end
 	SpireBuffs.seed[target:getId()] = { pct = row.pct, untilTime = os.time() + row.duration }
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
@@ -998,6 +1033,9 @@ end
 -- Linked Mend: the heal jumps on to the most wounded party members nearby
 KINDS.heal_chain = function(row, player, var)
 	local first = allyTarget(player, var)
+	if not first then
+		return false
+	end
 	local mn, mx = formula(row, player)
 	local pid = player:getId()
 	local done = { [first:getId()] = true }
@@ -1034,6 +1072,9 @@ end
 -- Bloomburst: heal an ally; the bloom bursts and hurts the monsters next to them
 KINDS.heal_burst = function(row, player, var)
 	local target = allyTarget(player, var)
+	if not target then
+		return false
+	end
 	local mn, mx = formula(row, player)
 	local centre = target:getPosition()
 	shootFx(player:getPosition(), centre, row.shoot)
@@ -1117,6 +1158,47 @@ KINDS.form = function(row, player)
 	return true
 end
 
+-- Spell tests (autopilot spell routes after "/pilot trace on", dev account only): log what each cast really did
+-- 2.5 s later (after staged and delayed parts have landed), then refill the caster for the next spell.
+SpireSpells.TRACE = {}
+local function traceCast(row, player, var, cast)
+	local pid = player:getId()
+	local before = {}
+	for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 7, 7)) do
+		if c:isMonster() then
+			before[c:getId()] = { hp = c:getHealth(), pos = c:getPosition() }
+		end
+	end
+	local hp0, pos0 = player:getHealth(), player:getPosition()
+	local ok = cast(player, var)
+	addEvent(function()
+		local p = Player(pid)
+		if not p then
+			return
+		end
+		local hit, dmg, moved, died = 0, 0, 0, 0
+		for id, b in pairs(before) do
+			local c = Creature(id)
+			if not c then
+				died = died + 1
+			else
+				if c:getHealth() < b.hp then
+					hit, dmg = hit + 1, dmg + b.hp - c:getHealth()
+				end
+				if c:getPosition() ~= b.pos then
+					moved = moved + 1
+				end
+			end
+		end
+		local stepped = p:getPosition() ~= pos0 and (" moved you " .. pos0:getDistance(p:getPosition()) .. " tiles") or ""
+		logger.info(string.format("[SPELLTRACE] %s | %s | %s: hit %d monsters for %d, %d gone, %d moved, your health %+d%s",
+			p:getName(), row.name, ok and "CAST" or "REFUSED", hit, dmg, died, moved, p:getHealth() - hp0, stepped))
+		p:addHealth(p:getMaxHealth())
+		p:addMana(p:getMaxMana())
+	end, 2500)
+	return ok
+end
+
 local VOC_ALL = { "arcanist;true", "high arcanist;true", "mystic;true", "elder mystic;true", "ranger;true", "far warden;true", "vanguard;true", "blade warden;true" }
 
 local NEEDS_TARGET = { attack_target = true, root = true, mark = true, pull_target = true, gravity = true }
@@ -1135,17 +1217,13 @@ for i, row in ipairs(SpireSpells.list) do
 	elseif row.pulse then
 		row.pulse.scale = row.scale
 	end
-	function spell.onCastSpell(creature, var)
-		local player = creature:getPlayer()
-		if not player then
-			return false
-		end
+	local function cast(player, var)
 		local need = SpireSpells.levelFor(row, player:getVocation():getBaseId())
 		if player:getLevel() < need then -- shared spells: each vocation has its own level
 			player:sendCancelMessage(string.format("You learn %s at level %d.", row.name, need))
 			return false
 		end
-		if row.lostArt and not SpireSpells.knowsLostArt(row, function(f) return SpireQuests.floorStoryDone(player, f) end) then
+		if row.lostArt and not SpireSpells.TRACE[player:getId()] and not SpireSpells.knowsLostArt(row, function(f) return SpireQuests.floorStoryDone(player, f) end) then
 			player:sendCancelMessage(row.name .. " is a Lost Art. Finish every story quest on Floor " .. row.lostArt .. " to learn it.")
 			return false
 		end
@@ -1161,6 +1239,16 @@ for i, row in ipairs(SpireSpells.list) do
 			fx(player:getPosition(), vis.cast)
 		end
 		return KINDS[row.kind](row, player, var)
+	end
+	function spell.onCastSpell(creature, var)
+		local player = creature:getPlayer()
+		if not player then
+			return false
+		end
+		if not SpireSpells.TRACE[player:getId()] then
+			return cast(player, var)
+		end
+		return traceCast(row, player, var, cast)
 	end
 	local group = SpireSpells.group(row)
 	spell:name(row.name)
@@ -1178,8 +1266,8 @@ for i, row in ipairs(SpireSpells.list) do
 		spell:needTarget(true)
 		spell:range(row.range or (row.kind == "attack_target" and 5 or 7))
 	elseif ALLY_PARAM[row.kind] then
-		spell:needCasterTargetOrDirection(false)
-		spell:hasPlayerNameParam(true)
+		-- the name is optional (no name = yourself), so it is a plain parameter: the engine's "player name" parameter
+		-- refuses the spell when no name is given
 		spell:hasParams(true)
 	elseif row.kind == "find_person" or row.kind == "levitate" then
 		spell:hasParams(true)

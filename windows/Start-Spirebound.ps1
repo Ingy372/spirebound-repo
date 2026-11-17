@@ -36,6 +36,9 @@ if (Ready) {
 # Spirebound's own client windows (Journal, task window, skill bar) change often: copy the latest every start
 $Mods = Join-Path $Root "client\modules"
 if (Test-Path $Mods) { Copy-Item -Recurse -Force (Join-Path $Mods "*") (Join-Path (Split-Path $Client) "modules") }
+# Spirebound's own spell effects go into the client files (safe to repeat; needs the client closed to take effect)
+$wslRootFx = "/mnt/" + $Root.Substring(0,1).ToLower() + $Root.Substring(2).Replace("\", "/")
+wsl.exe -d Ubuntu -u root -- python3 "$wslRootFx/tools/install_effects.py" client "$wslRootFx/.local/client"
 Say "Opening the game..."
 Start-Process $Client -WorkingDirectory (Split-Path $Client)
 Write-Host ""

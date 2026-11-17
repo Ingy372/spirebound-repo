@@ -1,8 +1,13 @@
-# Spirebound spells: design (2026-11-13 overhaul)
+# Spirebound spells: design (2026-11-13 overhaul, second pass 2026-11-17)
 
 This is the design behind the spell table in `server/data-spirebound/lib/spirebound/spells.lua`. The table is the
 source of truth for numbers; this page explains them. Everything here is **(Claude's call, Jay can veto)** except the
 rules marked (Jay).
+
+**Second pass (Jay, 2026-11-16: "make sure there are enough spells, that we've utilized its mechanic to its fullest...
+spice up the spells as much as you can... use blender if you want to try any custom effects"):** 45 new spells, new
+mechanics, area spells that play out over time, Elemental Clash, and 18 effects of our own. Everything new is in
+section 3.5 and the "Second pass" tables; the counts below are updated.
 
 Rules kept from Jay:
 - Spells unlock by level on their own, no trainer, no gold (Jay, 2026-11-08).
@@ -94,10 +99,10 @@ unlocks continue to level 200+, and each vocation's curve has its own rhythm ins
 
 | Vocation | Shape | Own spells before 30 / 30–100 / after 100 (not counting Lost Arts) | Power-spike levels |
 |---|---|---|---|
-| **Vanguard** | Slow burn. Few early spells, big gaps, defense first; the late game is where it shines. | 5 / 7 / 3 (+2 Lost Arts) | 33 (Whirlwind), 90 (Skyrend), 200 (Undying Oath) |
-| **Ranger** | Steady. Something new every 4–8 levels from 8 to 65, then slower; kiting tools early. | 7 / 8 / 1 (+2) | 16 (Scatter Shot), 45 (Sunburst Volley), 80 (Dawnpiercer) |
-| **Arcanist** | Front-loaded glass cannon. Most attacks by 30, then big jumps. | 8 / 8 / 1 (+2) | 18 (Fireburst Wave), 55 (Stormcall), 80 (Inferno Core), 100 (Cinder Lance) |
-| **Mystic** | Healer's rhythm. Heals first, party tools in the 30s–60s, damage a step behind the Arcanist. | 7 / 9 / 1 (+2) | 16 (Mend Other), 36 (Mass Mend), 55 (Thornfield), 100 (Verdant Renewal) |
+| **Vanguard** | Slow burn. Few early spells, big gaps, defense first; the late game is where it shines. | 8 / 11 / 7 (+2 Lost Arts) | 33 (Whirlwind), 90 (Skyrend), 200 (Undying Oath), 300 (Mountainbreaker) |
+| **Ranger** | Steady. Something new every 2–8 levels from 8 to 65, then slower; kiting tools early. | 11 / 13 / 4 (+2) | 16 (Scatter Shot), 45 (Sunburst Volley), 80 (Dawnpiercer), 300 (Constellation) |
+| **Arcanist** | Front-loaded glass cannon. Most attacks by 30, then big jumps. | 11 / 11 / 5 (+2) | 18 (Fireburst Wave), 55 (Stormcall), 80 (Inferno Core), 100 (Cinder Lance), 300 (Worldfire) |
+| **Mystic** | Healer's rhythm. Heals first, party tools in the 30s–60s, damage a step behind the Arcanist. | 11 / 13 / 5 (+2) | 16 (Mend Other), 36 (Mass Mend), 55 (Thornfield), 100 (Verdant Renewal), 300 (Worldroot) |
 
 Shared utilities still exist, but **each vocation learns them at its own level** (the Ranger finds people and runs
 earlier, the Mystic cleanses and makes food earlier, the Vanguard gets light and haste last).
@@ -147,6 +152,44 @@ Shared utilities use neutral effects (sparkles, white smoke, teleport) so they n
   **ML** magic level (mages, Ranger heals), **Melee** best of sword/axe/club (Vanguard attacks), **Dist** distance
   skill (Ranger attacks). Vanguard heals use **Lvl**: `level × a + base` to `level × b + 2 × base`. Shown below as
   `S a–b +base`.
+
+### 3.5 The second pass: what makes a spell feel good (2026-11-17)
+
+The first overhaul had the right *number* of spells but most were "one hit, one sparkle". The second pass gives
+every vocation tools that change how a fight plays, and makes the big spells look like events.
+
+**New mechanics (all in `scripts/spirebound/spells.lua`, all tested in the real client):**
+
+| Mechanic | What the player sees | Spells |
+|---|---|---|
+| Staged areas | Areas play out instead of popping at once: rings burst outward, waves and beams sweep away from you, Whirlwind goes round you, storms rain down tile by tile | Whirlwind, Scatter Shot, Fireburst Wave, Arc Beam, Stormcall, Inferno Core, Thornfield, Glacier Core... |
+| Telegraphed strikes | A glowing circle marks the ground, then the strike lands a second later | Meteor Rain, Skybrand, Worldfire, Falling Star, Constellation, Icefall |
+| Chains | The hit jumps from monster to monster | Forked Arc, Storm Lash, Ricochet, Linked Mend (heals) |
+| Volleys | Several shots in a row at one target | Double Nock, Rapid Volley, Ember Barrage, Hailshards |
+| Knock-back, pull, gather | Monsters are shoved away, dragged to you, or sucked together (bosses are too heavy) | Shield Bash, Recoil Shot, Repulse, Tidecrash, Scatterwind, Iron Reach, Gravity Well |
+| Roots | The monster is pinned in place | Shield Bash, Rimebind, Pinning Volley, Faultline, Overgrowth, Mountainbreaker |
+| Ground zones | Tiles keep burning, slowing or hurting for a few seconds | Emberfield, Bramble Patch, Caltrops, Firewake (a burning trail behind your dash) |
+| Riders | Life-steal (Bloodoath Strike, Sapdrain), armour break (Sunder), finishers that hit harder on wounded targets (Final Verdict, Mercy Shot), an opener that hits harder on untouched ones (Ambush Shot) | |
+| Leaps | Jump next to your target as you strike | Vault Strike, Mountainbreaker |
+| Reflect and cheat death | Counterguard throws part of every blow back; Lifeseed saves an ally from one killing blow and heals them | Counterguard, Lifeseed |
+| Forms (level 230) | Fifteen seconds as something more, with an aura and a pulse every second or two | Aegis Ascendant (taunts), Dawnstrider (light strikes), Stormheart (lightning), Wildheart (party heals) |
+| Spells grow with you | The basic strikes get a bigger look at levels 50 and 120 | Heavy Strike, Piercing Shot, Ember Strike, Volt Strike, Frost Strike, Thorn Strike |
+| Next unlock | Every level-up that teaches a spell also says which spell comes next and when | everyone |
+
+**Elemental Clash (Claude's call, Jay can veto).** A spell leaves its element on a monster for 8 seconds. The next
+spell of a *different* element (from anyone) clashes with it: +25% damage, a burst of light, and the monster shouts
+the clash's name (fire + energy = Flashfire, fire + ice = Steamburst, ice + earth = Rimethorn, and so on, ten in all).
+Weapon spells and arts never leave a mark but do set one off ("Breaker"). It rewards mixed groups and gives mages
+a reason to weave two elements; it never stacks with itself.
+
+**Capstones.** Every vocation now has something to reach for at levels 160, 230 and 300: no gap between unlocks is
+longer than 70 levels (a test checks this).
+
+**The Vanguard stays the hardest solo class.** Its new spells are single-target, control and defence; its only
+second area attack is Faultline at 170, a line, still under half the strength of the other classes' first area spell
+(the test from 3.2 now checks every Vanguard area spell, not just Whirlwind).
+
+**Names with a space** go in quotes, as in Tibia: `mend other "Some Name"`. With no name, ally spells land on you.
 
 ## 4. Spell lists
 
@@ -257,6 +300,78 @@ impact; "—" means that layer is not used.
 | ★120 | Wellspring | wellspring | healing | 400 | 45 s (healing) | ML 1.0–1.6 +40 each second, 8 s | radius 3 | healing spring (Floor 5 Lost Art) | water splash → — → green pulse |
 | ★250 | Winter's Breath | winters breath | attack | 600 | 40 s (attack) | ML 3.2–5.0 +30, ice | ring of 21 tiles | huge ice area (Floor 8 Lost Art) | giant ice → — → ice area |
 
+### 4.6 Second pass: the new spells (2026-11-17)
+
+Numbers use the same notation as above. "Look" names our own effects (section 6) where they are used.
+
+**Vanguard (+11)**
+
+| Lvl | Spell | What it does | Look |
+|---|---|---|---|
+| 12 | Shield Bash | light hit, knocks the target back a tile and pins it 2 s | block sparks, stun |
+| 22 | Iron Reach | drags a monster to your side and makes it fight you (not bosses) | thrown club, ground shake |
+| 28 | Bloodoath Strike | Melee 0.9–1.5; you heal 40% of the damage | big scratch, blood |
+| 36 | Counterguard | 6 s: 35% of every blow a monster lands on you goes back at it | yellow rings, block sparks |
+| 45 | Sunder | Melee 0.8–1.3; the target takes 10% more from everyone for 10 s | orange hit, stones |
+| 55 | Standard of Defiance | plant a banner: for 8 s it keeps calling the monsters around it onto you | **war banner** |
+| 80 | Vault Strike | leap up to 4 tiles to your target and strike | **ground crack** |
+| 125 | Final Verdict | Melee 1.6–2.4, +60% on a target under 30% health | fatal, critical |
+| 170 | Faultline | a 5-tile line of breaking earth that roots for 1 s (the second, still weak, area attack) | **ground crack**, sweeping |
+| 230 | Aegis Ascendant | form, 15 s: 25% less damage, +15% melee, taunts every second | **oath halo** |
+| 300 | Mountainbreaker | leap 5 tiles, Melee 3.0–4.6, roots 3 s | **falling sword** + **ground crack** |
+
+**Ranger (+12)**
+
+| Lvl | Spell | What it does | Look |
+|---|---|---|---|
+| 12 | Double Nock | two arrows in quick succession | arrows, green hits |
+| 18 | Recoil Shot | knocks the target back 2 tiles (kiting) | burst arrow, green blow |
+| 22 | Ambush Shot | Dist 1.0–1.6, +60% on an untouched target | onyx arrow, green claw |
+| 30 | Caltrops | the 3×3 around you slows monsters for 8 s | wooden stakes |
+| 35 | Ricochet | the arrow jumps to 3 more monsters | crystal arrow |
+| 42 | Mercy Shot | +75% on a target under 30% health | fatal |
+| 60 | Rapid Volley | five arrows in a row | arrows |
+| 72 | Falling Star | a sun circle marks the target's 3×3; a star falls on it 1.2 s later | **sun sigil**, **light needles** |
+| 90 | Scatterwind | shoves everything next to you 3 tiles away (escape) | green blows |
+| 130 | Pinning Volley | a wave that roots for 2 s | wooden stakes, sweeping |
+| 230 | Dawnstrider | form, 15 s: +15% distance, +50% speed, a light strike every second | **sun sigil**, **light needles** |
+| 300 | Constellation | a 37-tile rain of light around the target | **sun sigil**, **light needles** |
+
+**Arcanist (+10)**
+
+| Lvl | Spell | What it does | Look |
+|---|---|---|---|
+| 16 | Forked Arc | lightning that jumps to 3 more monsters | energy, violet sparks |
+| 20 | Ember Barrage | four fire bolts in a row | fire |
+| 32 | Emberfield | the target's 3×3 burns for 6 s | **fire column** |
+| 38 | Repulse | blasts everything next to you 2 tiles away | violet energy |
+| 42 | Gravity Well | pulls every monster near the target together and slows them | **violet swirl** |
+| 70 | Skybrand | an ember circle marks the target's 3×3; a meteor lands 1.2 s later | **ember sigil**, **meteor** |
+| 90 | Firewake | dash 4 tiles, leaving a burning trail | **fire column** |
+| 160 | Storm Lash | lightning that jumps to 6 more monsters without weakening | **lightning strike** |
+| 230 | Stormheart | form, 15 s: +15% magic, two lightning strikes a second | **lightning strike** |
+| 300 | Worldfire | meteors on a 37-tile area | **ember sigil**, **meteor** |
+
+**Mystic (+12)**
+
+| Lvl | Spell | What it does | Look |
+|---|---|---|---|
+| 11 | Sapdrain | earth bolt; you heal 50% of the damage | small plants |
+| 18 | Hailshards | three ice shards in a row | small ice |
+| 26 | Bramble Patch | the target's 3×3 hurts and slows for 8 s | **thorn burst** |
+| 30 | Bloomburst | heal an ally (or you); the bloom bursts and hurts the monsters next to them | **bloom** |
+| 38 | Rimebind | ice bolt that roots for 3 s | ice, giant ice |
+| 45 | Tidecrash | a wave that knocks monsters back | water splashes, sweeping |
+| 60 | Linked Mend | a heal that jumps to the 3 most wounded party members nearby | **bloom** |
+| 75 | Lifeseed | for 20 s, the next killing blow leaves the ally alive and heals them 35% | **leaf ward** |
+| 90 | Icefall | a frost circle marks the target's 5×5; ice erupts a second later | **frost sigil**, **ice spires** |
+| 160 | Overgrowth | thorns over 37 tiles around you, rooting 2 s | **thorn burst** |
+| 230 | Wildheart | form, 16 s: 10% less damage, heals the party every 2 s | **bloom** |
+| 300 | Worldroot | big party heal + 30% damage shield for 6 s + cleanse | **bloom** |
+
+Renamed before release so no spell shares a sword skill's name: Twin Shot → Double Nock, Titanfall → Mountainbreaker,
+Starfall → Constellation, Earthsplitter → Faultline, Riposte → Counterguard.
+
 ## 5. Retired or changed
 
 | Old | What happened | Why |
@@ -273,22 +388,34 @@ impact; "—" means that layer is not used.
 Characters who had hotkeys for First Aid or Beacon will see "unknown spell"; nothing else is lost (spells are not
 stored per character).
 
-## 6. Art requests
+## 6. Our own effects (made 2026-11-17)
 
-None of these block anything: each spell already uses the best existing effect (marked "placeholder" below). They are
-also copied to `ART_REQUESTS.md`.
+Made with the Blender pipeline in `art/effects/` (solid parts such as the sword, rocks, thorns, crystals, meteor and
+banner are 3D; the light is painted on top; everything is pixelized to the game's 64×64 effect size). Ids 401–418
+(`SpireFx` in `lib/spirebound/spells.lua`); `tools/install_effects.py` puts them into the client (at every start of the
+game) and the server (at every build). Each effect also lights up the ground around it in its vocation's colour.
+Preview of all of them: `art/effects/output/all_effects.png`.
 
-| For | What | Placeholder now |
+| Effect | For | |
 |---|---|---|
-| Whirlwind (Vanguard) | A single 3×3 spinning steel arc, crimson edge, 6 frames, 32×32 per tile (or one 96×96) | white whirl + red hits |
-| Skyrend (Vanguard) | A tall golden-crimson downward sword slash on one tile, 7 frames | orange hit + explosion |
-| Undying Oath (Vanguard) | Gold halo/shield ring that loops around the character, 8 frames | golden empowerment |
-| Dawnpiercer (Ranger) | A white-gold light arrow projectile (distance effect), 8 directions | none (beam of holy hits) |
-| Lightrain (Ranger) | Falling light-needles on a tile, 6 frames | holy area |
-| Stormcall (Arcanist) | Violet lightning strike from above on a tile, 6 frames | storm cloud + energy area |
-| Arc Cataclysm (Arcanist) | Thick violet lightning beam segment (horizontal and vertical), 4 frames | purple lightning |
-| Thornfield (Mystic) | Green thorn spikes bursting out of the ground, 6 frames | plant attack |
-| Lifeward (Mystic) | Translucent leaf-green bubble around a character, 8 frames | green rings |
+| steel arc | Whirlwind, Heavy Strike (level 120 look) | crimson-edged steel crescent sweeping round |
+| falling sword | Skyrend, Mountainbreaker | a golden sword falls point-first, stands in the ground through a gold flash and a crimson ring |
+| oath halo | Undying Oath, Aegis Ascendant | a golden ring turning around the character, motes rising |
+| ground crack | Vault Strike, Faultline, Mountainbreaker | slabs of rock punch out of cracked ground |
+| war banner | Standard of Defiance | a crimson banner on a pole, cloth moving, a ring at its foot |
+| light needles | Lightrain, Falling Star, Dawnstrider, Constellation | needles of daylight falling and flashing |
+| sun / ember / frost sigil | the warning circles of telegraphed strikes, Sanctified Ground | turning magic circles on the ground |
+| lightning strike | Stormcall, Arc Cataclysm, Storm Lash, Stormheart | violet lightning from above, two flickers |
+| meteor | Meteor Rain, Skybrand, Worldfire | a burning rock comes down, then the blast |
+| fire column | Inferno Core, Emberfield, Firewake, Ember Strike (level 120 look) | a roaring column of flame |
+| thorn burst | Thornfield, Bramble Patch, Overgrowth | hooked thorns shooting out of torn earth |
+| leaf ward | Lifeward, Lifeseed | a leaf-green bubble with circling leaves |
+| ice spires | Glacier Core, Icefall, Winter's Breath | a cluster of ice crystals erupting and breaking |
+| bloom | Verdant Renewal, Bloomburst, Linked Mend, Wildheart, Worldroot | a flower of light opening |
+| violet swirl | Gravity Well | violet arms spiralling inward |
+| clash | Elemental Clash | a white star bursting into three colours |
+
+Still open (no custom art yet, a placeholder is used): the Dawnpiercer light arrow (a projectile, not an effect).
 
 ## 7. Balance questions for playtesting
 
@@ -297,6 +424,5 @@ These are assumed as written until Jay says otherwise (also in `QUESTIONS.md`):
    damage.
 2. Ranger Scatter Shot is the strongest early area spell. Good ("easiest class"), or too strong?
 3. Conjuring now costs a blank rune (10 gold). Does rune-making still feel worth it?
-4. Are the big ring spells (Stormcall, Thornfield, Inferno Core, Glacier Core) flashy enough, or do they need the
-   custom art in section 6 first?
+4. Are the big spells flashy enough now that they use our own effects (section 6)?
 5. Should the rune items get Spirebound names (they still use the engine's item names)?

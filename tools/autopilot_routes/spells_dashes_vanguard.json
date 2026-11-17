@@ -1,0 +1,17 @@
+{
+ "name": "spells_dashes_vanguard",
+ "about": "Charge needs a target a few tiles away: one boar is placed 2-4 tiles off and the Vanguard charges it at once.",
+ "character": "Spell Vanguard",
+ "timeout": 90,
+ "steps": [
+  {"do": "jump", "to": "centre_boar_meadow", "note": "setup"},
+  {"do": "say", "text": "/pilot trace on"},
+  {"do": "say", "text": "/pilot clear"},
+  {"do": "say", "text": "/pilot spawn Bristle Boar, 1, 60000"},
+  {"do": "cast", "text": "charge", "target": true, "shots": [0.0, 0.4], "gap": 3.0, "name": "dash_charge", "note": "Charge"},
+  {"do": "wait", "seconds": 3},
+  {"do": "say", "text": "/pilot clear"},
+  {"do": "say", "text": "/pilot trace off"},
+  {"do": "say", "text": "/pilot logout"}
+ ]
+}

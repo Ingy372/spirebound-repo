@@ -10,11 +10,13 @@ Output, per effect, in art/effects/output/<name>/:
   <name>_sheet.png     every frame in a row at 4x on plain grey (top) and on dark grey (bottom)
   <name>.gif           the animation at 4x on plain grey
 and art/effects/output/all_effects.png, one row per effect.
-tools/install_effects.py then puts the frames into the game.
+It then packs every frame into the game's own format in art/effects/game/ (committed: these are our own pictures):
+sprite sheets (sheet_<n>.bmp.lzma) and effects.json, which tools/install_effects.py puts into the client and server.
 Needs Blender 5.3 (BLENDER= to point elsewhere), Pillow and numpy.
 """
 from __future__ import annotations
 
+import json
 import os
 import subprocess
 import sys
@@ -127,12 +129,82 @@ def overview():
     sheet.save(OUT / "all_effects.png")
 
 
+# ------------------------------------------------------------------------------------------- packing for the game
+GAME = HERE / "game"
+SHEET = 384                    # the client's sheet size
+PER_SHEET = (SHEET // 64) ** 2  # 36 frames of 64x64 per sheet
+# light around each effect: Tibia's 216-colour index (r*36 + g*6 + b, each 0..5) and a brightness
+LIGHT = {"steel_arc": (215, 2), "skyrend": (205, 5), "oath_halo": (205, 3), "ground_crack": (0, 0),
+         "war_banner": (186, 2), "light_needles": (213, 4), "sun_sigil": (213, 3), "violet_bolt": (119, 5),
+         "meteor": (198, 6), "ember_pillar": (198, 5), "thorn_burst": (103, 2), "leaf_ward": (103, 3),
+         "ice_spires": (101, 3), "bloom": (103, 3), "clash": (215, 4), "void_pull": (119, 3),
+         "ember_sigil": (198, 3), "frost_sigil": (101, 3)}
+
+
+def cip_sheet(img: Image.Image) -> bytes:
+    """One 384x384 sheet in the client's file format: a 32-byte header, then LZMA ("alone" form, with its end marker)
+    holding a 32-bit bottom-up BMP (BITMAPV4 header, BGRA)."""
+    import lzma
+    import struct
+    px = np.asarray(img.convert("RGBA"), np.uint8)[::-1]          # bottom-up
+    bgra = px[..., [2, 1, 0, 3]].tobytes()
+    dib = struct.pack("<IiiHHIIiiII", 108, SHEET, SHEET, 1, 32, 3, len(bgra), 3780, 3780, 0, 0)
+    dib += struct.pack("<IIII", 0x00FF0000, 0x0000FF00, 0x000000FF, 0xFF000000) + b"BGRs" + bytes(36) + bytes(12)
+    bmp = b"BM" + struct.pack("<IHHI", 14 + len(dib) + len(bgra), 0, 0, 14 + len(dib)) + dib + bgra
+    assert len(bmp) == 122 + SHEET * SHEET * 4
+    comp = lzma.compress(bmp, format=lzma.FORMAT_ALONE, filters=[{"id": lzma.FILTER_LZMA1, "dict_size": 1 << 25, "lc": 3, "lp": 0, "pb": 2}])
+    size = len(comp)
+    vb = bytearray()
+    while True:
+        b = size & 0x7F
+        size >>= 7
+        vb.append(b | (0x80 if size else 0))
+        if not size:
+            break
+    head = bytes([0x70, 0x0A, 0xFA, 0x80, 0x24]) + bytes(vb)
+    return bytes(32 - len(head)) + head + comp
+
+
+def pack():
+    """every effect's frames -> art/effects/game/sheet_<n>.bmp.lzma + effects.json"""
+    GAME.mkdir(exist_ok=True)
+    for old in GAME.glob("sheet_*.bmp.lzma"):
+        old.unlink()
+    frames, manifest = [], []
+    for name, eid, n, ms, has_solid in paints.EFFECTS:
+        fs = [Image.open(f).convert("RGBA") for f in sorted((OUT / name).glob("frame_*.png"))]
+        assert len(fs) == n, f"{name}: expected {n} frames, found {len(fs)} (run make_fx.py {name})"
+        box = None
+        for f in fs:
+            b = f.getbbox()
+            if b:
+                box = b if box is None else (min(box[0], b[0]), min(box[1], b[1]), max(box[2], b[2]), max(box[3], b[3]))
+        box = box or (32, 32, 64, 64)
+        color, level = LIGHT.get(name, (215, 2))
+        manifest.append({"name": name, "id": eid, "first": len(frames), "frames": n, "ms": ms,
+                         "box": [box[0], box[1], box[2] - box[0], box[3] - box[1]], "light": [level, color]})
+        frames += fs
+    cols = SHEET // 64
+    sheets = []
+    for s0 in range(0, len(frames), PER_SHEET):
+        img = Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0))
+        for k, f in enumerate(frames[s0:s0 + PER_SHEET]):
+            img.paste(f, ((k % cols) * 64, (k // cols) * 64))
+        fname = f"sheet_{len(sheets)}.bmp.lzma"
+        (GAME / fname).write_bytes(cip_sheet(img))
+        sheets.append({"file": fname, "count": min(PER_SHEET, len(frames) - s0)})
+    (GAME / "effects.json").write_text(json.dumps({"about": "Spirebound spell effects, made by art/effects/make_fx.py; installed by tools/install_effects.py",
+                                                    "sheets": sheets, "effects": manifest}, indent=1))
+    print(f"packed {len(frames)} frames into {len(sheets)} sheets")
+
+
 def main(argv):
     wanted = set(argv)
     for name, eid, frames, ms, has_solid in paints.EFFECTS:
         if not wanted or name in wanted:
             make(name, eid, frames, ms, has_solid)
     overview()
+    pack()
 
 
 if __name__ == "__main__":

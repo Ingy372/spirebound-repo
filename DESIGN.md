@@ -176,12 +176,14 @@ Sword skills are the combo attacks. **Spells** are everything else: healing, sup
 
 | Vocation | Own spells | Rhythm | Highlights |
 |---|---|---|---|
-| Vanguard | 17 (23 in all) | slow burn, defense first, late power | Heavy Strike 8, Rending Blow 16, Rally Cry 20, Iron Hide 30, Whirlwind 33 (its only, deliberately weak area attack), Skyrend 90, Undying Oath 200 |
-| Ranger | 18 (24) | steady, kiting tools early | Piercing Shot 8, Scatter Shot 16, Snare 20, Disengage 24, Sunburst Volley 45, Dawnpiercer 80, Lightrain 160 |
-| Arcanist | 19 (25) | front-loaded glass cannon | Ember Strike 8, Fireburst Wave 18, Arc Beam 23, Stormcall 55, Inferno Core 80, Cinder Lance 100, Arc Cataclysm 130 |
-| Mystic | 19 (25) | heals first, party tools mid-game | Frost Strike 8, Mend Other 16, Frost Wave 21, Mass Mend 36, Thornfield 55, Verdant Renewal 100, Mana Bloom 130 |
+| Vanguard | 28 (34 in all) | slow burn, defense first, late power | Heavy Strike 8, Shield Bash 12, Iron Reach 22, Iron Hide 30, Whirlwind 33 (deliberately weak), Standard of Defiance 55, Skyrend 90, Undying Oath 200, Aegis Ascendant 230, Mountainbreaker 300 |
+| Ranger | 30 (36) | steady, kiting tools early | Piercing Shot 8, Scatter Shot 16, Recoil Shot 18, Snare 20, Ricochet 35, Sunburst Volley 45, Falling Star 72, Dawnpiercer 80, Dawnstrider 230, Constellation 300 |
+| Arcanist | 29 (35) | front-loaded glass cannon | Ember Strike 8, Forked Arc 16, Fireburst Wave 18, Gravity Well 42, Stormcall 55, Skybrand 70, Inferno Core 80, Cinder Lance 100, Stormheart 230, Worldfire 300 |
+| Mystic | 31 (37) | heals first, party tools mid-game | Frost Strike 8, Mend Other 16, Bloomburst 30, Mass Mend 36, Thornfield 55, Linked Mend 60, Lifeseed 75, Verdant Renewal 100, Wildheart 230, Worldroot 300 |
 
 Shared utilities: Kindle (light), Wayfinder (find a player), Cleanse, Skystep (climb a level), Hearth Ration (food), Quickstep (haste).
+
+Second pass (2026-11-17, Jay's brief to "spice up the spells"): area spells play out over time, telegraphed strikes, chains, knock-backs, roots, ground zones, forms at 230, capstones at 300, spells that look bigger as you level, **Elemental Clash** (two different elements in a row on one monster: +25% and a named burst), and 18 effects of our own. Details: `docs/design/spells.md` 3.5 and 6.
 
 Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and group cooldowns (attack 2 s, healing 1 s, support 2 s; attack spells share the attack group with sword skills).
 

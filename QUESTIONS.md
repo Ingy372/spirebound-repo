@@ -6,6 +6,17 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q43. The new spells: Elemental Clash, and spells that move monsters (2026-11-17)
+Every class now has 28 to 31 of its own spells (was 17 to 19), with new kinds: chains, knock-backs and pulls, roots,
+burning ground, meteors that are marked on the ground a second before they land, and a 15-second "form" at level 230.
+Two things to judge while playing:
+1. **Elemental Clash**: hitting a monster with two different elements in a row (say fire, then lightning) does 25% more
+   and the monster shouts the clash's name ("Flashfire!"). Recommendation: keep; it makes mixed groups stronger.
+2. **Pushing and pulling monsters** (Shield Bash, Iron Reach, Repulse, Gravity Well, Recoil Shot...). Bosses can't be
+   moved. Recommendation: keep; if it makes hunting too easy, the first fix is longer cooldowns.
+- Assumed until you answer: keep both.
+- Jay's answer:
+
 ### Q42. Reed Snapper: a snapping turtle, not a turtle-crab? (2026-11-15)
 You said the Reed Snapper "looks like a mix between a crab and a turtle". The original request asked for a "turtle-crab", which is why it had crab pincers. I rebuilt it as one animal: a spiked snapping turtle with a reed-covered shell and a hooked beak, no pincers. It keeps a low, wide, sideways scuttle as its only crab trait.
 - **Recommendation:** keep it as a snapping turtle. If you want a crab instead, I would make it a full crab with a mossy shell rather than mixing the two again.

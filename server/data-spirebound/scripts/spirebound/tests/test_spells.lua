@@ -351,3 +351,20 @@ SpireTest.add("spells: Undying Oath and damage reduction work on a real creature
 		alive:remove()
 	end
 end)
+
+-- Playtest-sized bug found by the in-client spell test (2026-11-17): ally spells were registered with the engine's
+-- "player name" parameter, which refuses the spell when no name is given, so "mend other" or "field dressing" on
+-- yourself never ran. The name is optional: no name = yourself.
+SpireTest.add("spells: ally spells can be cast with no name (on yourself)", function()
+	local ally = { heal_target = true, hot_target = true, dr_target = true, seed = true, heal_chain = true, heal_burst = true }
+	local n = 0
+	for _, row in ipairs(SpireSpells.list) do
+		if ally[row.kind] then
+			local s = Spell(row.name)
+			SpireTest.eq(s:hasPlayerNameParam(), false, row.name .. " must not demand a player name")
+			SpireTest.eq(s:hasParams(), true, row.name .. " still takes an optional name")
+			n = n + 1
+		end
+	end
+	SpireTest.eq(n >= 7, true, "ally spells checked: " .. n)
+end)

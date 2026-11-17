@@ -5,6 +5,13 @@
 -- are ordinary chat.
 --   /pilot jump x, y, z    go there
 --   /pilot heal            full health and mana
+--   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
+--   /pilot clear           remove every monster within 9 tiles
+--   /pilot give id, n      items into the backpack
+--   /pilot unsummon        send your summons away
+--   /pilot logout          leave the game at once (even right after a fight)
+--   /pilot trace on|off    log what every spell you cast did (server log, [SPELLTRACE]); refills you after each
+--                          cast and lets you cast Lost Arts, so a test can try every spell
 local pilot = TalkAction("/pilot")
 
 function pilot.onSay(player, words, param)
@@ -30,8 +37,69 @@ function pilot.onSay(player, words, param)
 		player:addHealth(player:getMaxHealth())
 		player:addMana(player:getMaxMana())
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: healed")
+	elseif cmd == "spawn" then
+		local name, n, hp = rest:match("^([^,]+),%s*(%d+),%s*(%d+)")
+		n, hp = tonumber(n), tonumber(hp)
+		if not name then
+			player:sendCancelMessage("pilot: spawn name, count, health")
+			return true
+		end
+		local here = player:getPosition()
+		local have = {}
+		for _, c in ipairs(Game.getSpectators(here, false, false, 5, 5, 5, 5)) do
+			if c:isMonster() and c:getName():lower() == name:lower() then
+				table.insert(have, c)
+			end
+		end
+		for _, c in ipairs(have) do
+			c:setMaxHealth(hp)
+			c:addHealth(hp)
+		end
+		local made, tries = #have, 0
+		while made < n and tries < 60 do
+			tries = tries + 1
+			local a = math.random() * 2 * math.pi
+			local d = 2 + math.random(0, 2)
+			local pos = Position(here.x + math.floor(math.cos(a) * d + 0.5), here.y + math.floor(math.sin(a) * d + 0.5), here.z)
+			local m = Tile(pos) and Game.createMonster(name, pos, false, false)
+			if m then
+				m:setMaxHealth(hp)
+				m:addHealth(hp)
+				made = made + 1
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: " .. made .. " " .. name)
+	elseif cmd == "clear" then
+		local n = 0
+		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 9, 9)) do
+			if c:isMonster() then
+				c:remove()
+				n = n + 1
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: cleared " .. n)
+	elseif cmd == "give" then
+		local id, n = rest:match("(%d+)%D+(%d+)")
+		player:addItem(tonumber(id), tonumber(n))
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: given")
+	elseif cmd == "unsummon" then
+		for _, m in ipairs(player:getSummons()) do
+			m:remove()
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: summons gone")
+	elseif cmd == "logout" then
+		-- end of a test: leave at once, summons and all, so the next tester on this account can log in
+		for _, m in ipairs(player:getSummons()) do
+			m:remove()
+		end
+		SpireSpells.TRACE[player:getId()] = nil
+		player:remove()
+		return true
+	elseif cmd == "trace" then
+		SpireSpells.TRACE[player:getId()] = rest:find("on") and true or nil
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: trace " .. (SpireSpells.TRACE[player:getId()] and "on" or "off"))
 	else
-		player:sendCancelMessage("pilot: jump x, y, z | heal")
+		player:sendCancelMessage("pilot: jump x, y, z | heal | spawn name, n, hp | clear | give id, n | trace on|off")
 	end
 	return true -- handled: the client showed "/pilot ..." as normal chat when this returned false
 end
