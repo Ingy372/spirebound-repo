@@ -1,0 +1,89 @@
+{
+ "name": "pvp_terrain_arcanist",
+ "about": "PvP spell check (DESIGN 6.7). Read with: python tools/spell_routes.py --report",
+ "character": "Spell Arcanist",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3147, 2"
+  },
+  {
+   "do": "cast",
+   "text": "turn",
+   "dir": "north",
+   "shots": [],
+   "gap": 0.5,
+   "name": "turn",
+   "note": "face north"
+  },
+  {
+   "do": "say",
+   "text": "/pilot wall 2130, 2"
+  },
+  {
+   "do": "cast",
+   "text": "fireburst wave",
+   "shots": [
+    0.0,
+    0.5,
+    1.2
+   ],
+   "gap": 3.0,
+   "name": "pvp_fire_burns_vine",
+   "note": "Fireburst Wave burns a vine wall",
+   "dir": "north"
+  },
+  {
+   "do": "cast",
+   "text": "tailwind",
+   "shots": [
+    0.0,
+    0.4
+   ],
+   "gap": 3.0,
+   "name": "pvp_tailwind",
+   "note": "Tailwind"
+  },
+  {
+   "do": "cast",
+   "text": "conjure barrier rune",
+   "shots": [
+    0.0,
+    0.4
+   ],
+   "gap": 3.0,
+   "name": "pvp_barrier_rune",
+   "note": "Conjure Barrier Rune"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

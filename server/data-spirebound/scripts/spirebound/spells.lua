@@ -240,12 +240,27 @@ KINDS.food = function(row, player)
 	return true
 end
 
+-- Haste also breaks slows and roots (as in Tibia): the everyday counter to a Mystic's roots (DESIGN 6.7)
 KINDS.haste = function(row, player)
+	player:removeCondition(CONDITION_PARALYZE)
 	local c = Condition(CONDITION_HASTE)
 	c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
 	SpireSpells.setSpeed(c, row.speed)
 	player:addCondition(c)
 	fx(player:getPosition(), row.effect)
+	return true
+end
+
+-- Tailwind: haste for the whole party nearby, which also frees them from slows and roots
+KINDS.party_haste = function(row, player)
+	for _, m in ipairs(partyAround(player, row.radius)) do
+		m:removeCondition(CONDITION_PARALYZE)
+		local c = Condition(CONDITION_HASTE)
+		c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
+		SpireSpells.setSpeed(c, row.speed)
+		m:addCondition(c)
+		fx(m:getPosition(), row.effect)
+	end
 	return true
 end
 
@@ -405,11 +420,7 @@ end
 KINDS.slow_area = function(row, player)
 	local pos = player:getPosition()
 	for _, c in ipairs(Game.getSpectators(pos, false, false, row.radius, row.radius, row.radius, row.radius)) do
-		if c:isMonster() and not c:getMaster() then
-			local cond = Condition(CONDITION_PARALYZE)
-			cond:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
-			SpireSpells.setSpeed(cond, -0.45)
-			c:addCondition(cond)
+		if SpireSpells.affects(c, player) and SpireSpells.pin(c, row.duration, 0.45) then
 			fx(c:getPosition(), row.effect)
 		end
 	end
@@ -422,12 +433,7 @@ KINDS.root = function(row, player)
 		player:sendCancelMessage("You need a target.")
 		return false
 	end
-	local cond = Condition(CONDITION_PARALYZE)
-	-- players are only slowed (DESIGN: crowd control on players is weaker)
-	local secs = target:isPlayer() and math.floor(row.duration / 2) or row.duration
-	cond:setParameter(CONDITION_PARAM_TICKS, secs * 1000)
-	SpireSpells.setSpeed(cond, -0.9)
-	target:addCondition(cond)
+	SpireSpells.pin(target, row.duration, 0.9)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
 	return true
@@ -591,9 +597,26 @@ local function wild(c)
 	return c:isMonster() and not c:getMaster()
 end
 
+-- Who a slow, pull or zone may affect: wild monsters, and other players only during a Wild PvP arena event
+function SpireSpells.affects(c, caster)
+	return wild(c) or (c:isPlayer() and c ~= caster and SpireSpells.wildAt(c:getPosition()))
+end
+
+-- May this spell move this creature? Monsters (not bosses) always; players only by the Vanguard's spells or in
+-- Wild PvP. Damaging spells only get here after the hit landed, so the PvP rules already allowed the attack.
+local function canMove(c, row, caster)
+	if c:isMonster() then
+		return movable(c)
+	end
+	return c:isPlayer() and c ~= caster and (row.pvpMove == true or SpireSpells.wildAt(c:getPosition()))
+end
+
 -- Slide a creature up to `tiles` steps in a direction; stops at walls and other creatures. Returns steps moved.
-local function shove(c, dx, dy, tiles)
-	if not movable(c) or (dx == 0 and dy == 0) then
+local function shove(c, dx, dy, tiles, allowed)
+	if allowed == nil then
+		allowed = movable(c)
+	end
+	if not allowed or (dx == 0 and dy == 0) then
 		return 0
 	end
 	local pos, moved = c:getPosition(), 0
@@ -611,14 +634,42 @@ local function shove(c, dx, dy, tiles)
 end
 SpireSpells.shove = shove
 
+-- move a creature onto a free tile next to the caster (Iron Reach)
+local function pullNextTo(player, target)
+	local ppos, tpos = player:getPosition(), target:getPosition()
+	if ppos:getDistance(tpos) <= 1 then
+		return true
+	end
+	local dx, dy = stepToward(ppos, tpos)
+	local spots = { { dx, dy }, { dx, 0 }, { 0, dy }, { dx, -dy }, { -dx, dy }, { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 }, { -1, -1 }, { 1, -1 }, { -1, 1 } }
+	for _, sp in ipairs(spots) do
+		local pos = Position(ppos.x + sp[1], ppos.y + sp[2], ppos.z)
+		if (sp[1] ~= 0 or sp[2] ~= 0) and walkable(pos) then
+			target:teleportTo(pos, true)
+			fx(pos, CONST_ME_GROUNDSHAKER)
+			return true
+		end
+	end
+	return false
+end
+
 local function pin(c, seconds, strength)
+	-- players: half as long, then a few seconds when they can't be held again (DESIGN 6.7); full in Wild PvP
+	local now = os.time()
+	local secs, heldUntil = SpireSpells.holdSeconds(c:isPlayer(), seconds, SpireBuffs.held[c:getId()], now, SpireSpells.wildAt(c:getPosition()))
+	if secs <= 0 then
+		return false
+	end
+	if heldUntil then
+		SpireBuffs.held[c:getId()] = heldUntil
+	end
 	local cond = Condition(CONDITION_PARALYZE)
-	-- players are held half as long (DESIGN: crowd control on players is weaker)
-	local secs = c:isPlayer() and math.max(1, math.floor(seconds / 2)) or seconds
 	cond:setParameter(CONDITION_PARAM_TICKS, secs * 1000)
 	SpireSpells.setSpeed(cond, -strength)
 	c:addCondition(cond)
+	return true
 end
+SpireSpells.pin = pin
 
 -- Bleeding / burning after the hit (Rending Blow, Searing Brand): each tick is a share of the spell's average hit
 local function applyDot(row, player, target)
@@ -627,6 +678,9 @@ local function applyDot(row, player, target)
 	end
 	local mn, mx = formula(row, player)
 	local per = math.max(1, math.floor((mn + mx) / 2 * row.dot.pct))
+	if target:isPlayer() then -- the engine halves every hit between players (as Tibia does); ticks too
+		per = math.max(1, math.floor(per / 2))
+	end
 	local cond = Condition(row.dot.type)
 	cond:setParameter(CONDITION_PARAM_DELAYED, true)
 	cond:setParameter(CONDITION_PARAM_OWNER, player:getId())
@@ -649,13 +703,18 @@ local function riders(player, row, target, dealt, from)
 	end
 	if row.push and from then
 		local dx, dy = stepToward(from, target:getPosition())
-		shove(target, dx, dy, row.push)
+		shove(target, dx, dy, row.push, canMove(target, row, player))
 	end
-	if row.root then
-		pin(target, row.root, 0.9)
+	if row.pull and canMove(target, row, player) then
+		pullNextTo(player, target)
+		if target:isMonster() then
+			target:setTarget(player)
+		end
+	end
+	if row.root and pin(target, row.root, 0.9) then
 		fx(target:getPosition(), CONST_ME_ROOTS)
 	end
-	if row.slow and wild(target) then
+	if row.slow and SpireSpells.affects(target, player) then
 		pin(target, 2, 0.3)
 	end
 end
@@ -688,6 +747,9 @@ local function hitTile(player, row, combat, pos, mult, vis, from)
 		if c ~= player then
 			table.insert(seen, { id = c:getId(), hp = c:getHealth() })
 		end
+	end
+	if row.element == COMBAT_FIREDAMAGE then
+		SpireSpells.burnVines(pos) -- fire burns the Mystic's vine walls (DESIGN 6.7)
 	end
 	local mn, mx = formula(row, player)
 	cast.mn, cast.mx = math.floor(mn * mult), math.floor(mx * mult)
@@ -805,7 +867,7 @@ local function castTarget(player, row, combat, var)
 	if row.dashTo then
 		dashNextTo(player, target, row.range or 4)
 	end
-	local bonus = SpireSpells.riderBonus(row, target:getHealth() / math.max(1, target:getMaxHealth()))
+	local bonus = SpireSpells.pvpBonus(SpireSpells.riderBonus(row, target:getHealth() / math.max(1, target:getMaxHealth())), target:isPlayer())
 	local mult = 1 + bonus
 	local pid, tid = player:getId(), target:getId()
 	shootFx(player:getPosition(), target:getPosition(), vis.shoot)
@@ -865,7 +927,7 @@ local function runZone(player, row, combat, tiles)
 				if row.slowZone then
 					local tile = Tile(pos)
 					for _, c in ipairs(tile and tile:getCreatures() or {}) do
-						if wild(c) then
+						if SpireSpells.affects(c, caster) then
 							pin(c, 2, 0.5)
 						end
 					end
@@ -941,23 +1003,51 @@ KINDS.pull_target = function(row, player, var)
 		player:sendCancelMessage("It is too heavy to drag.")
 		return false
 	end
-	local ppos, tpos = player:getPosition(), target:getPosition()
-	shootFx(ppos, tpos, row.shoot)
-	local dx, dy = stepToward(ppos, tpos)
-	local spots = { { dx, dy }, { dx, 0 }, { 0, dy }, { dx, -dy }, { -dx, dy }, { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 }, { -1, -1 }, { 1, -1 }, { -1, 1 } }
-	for _, s in ipairs(spots) do
-		local pos = Position(ppos.x + s[1], ppos.y + s[2], ppos.z)
-		if (s[1] ~= 0 or s[2] ~= 0) and (pos == tpos or walkable(pos)) then
-			if pos ~= tpos then
-				target:teleportTo(pos, true)
-			end
-			target:setTarget(player)
-			fx(pos, row.effect)
-			return true
-		end
+	shootFx(player:getPosition(), target:getPosition(), row.shoot)
+	if pullNextTo(player, target) then
+		target:setTarget(player)
+		return true
 	end
 	player:sendCancelMessage(RETURNVALUE_NOTENOUGHROOM)
 	return false
+end
+
+-- Vinewall (Mystic): a row of vines across your path, 2 tiles ahead; lasts 20 s; fire burns it, Breach Arrow breaks it
+KINDS.vine_wall = function(row, player)
+	local here = player:getPosition()
+	local made = 0
+	for _, t in ipairs(SpireSpells.wallTiles(here.x, here.y, player:getDirection(), row.width, row.ahead)) do
+		local pos = Position(t.x, t.y, here.z)
+		local tile = Tile(pos)
+		if tile and walkable(pos) and not tile:hasFlag(TILESTATE_PROTECTIONZONE) and here:isSightClear(pos) then
+			local it = Game.createItem(ITEM_WILDGROWTH, 1, pos)
+			if it then
+				it:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "Grown by " .. player:getName() .. ".")
+				it:decay()
+				fx(pos, row.effect)
+				made = made + 1
+			end
+		end
+	end
+	if made == 0 then
+		player:sendCancelMessage("There is no room for vines there.")
+		return false
+	end
+	return true
+end
+
+-- Breach Arrow (Ranger): breaks the first vine wall or barrier straight ahead, up to 6 tiles
+KINDS.breach = function(row, player)
+	local here = player:getPosition()
+	local hit = SpireSpells.breakFirstWall(here, player:getDirection(), row.tiles)
+	if not hit then
+		player:sendCancelMessage("There is no wall ahead to break.")
+		return false
+	end
+	shootFx(here, hit, row.shoot)
+	fx(hit, row.effect)
+	fx(hit, CONST_ME_BLOCKHIT)
+	return true
 end
 
 -- Gravity Well: everything near the target is dragged toward it and slowed, ready for an area spell
@@ -977,10 +1067,10 @@ KINDS.gravity = function(row, player, var)
 		return centre:getDistance(a:getPosition()) < centre:getDistance(b:getPosition())
 	end)
 	for _, c in ipairs(list) do
-		if wild(c) and centre:isSightClear(c:getPosition()) then
+		if SpireSpells.affects(c, player) and centre:isSightClear(c:getPosition()) then
 			for _ = 1, row.tiles do
 				local dx, dy = stepToward(c:getPosition(), centre)
-				if shove(c, dx, dy, 1) == 0 then
+				if shove(c, dx, dy, 1, c:isPlayer() or movable(c)) == 0 then
 					break
 				end
 			end
@@ -1357,7 +1447,8 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	end
 	local held
 	local seed = SpireBuffs.seed[cid]
-	if seed and seed.untilTime >= now then
+	local byPlayer = attacker and (attacker:isPlayer() or (attacker:getMaster() and attacker:getMaster():isPlayer()))
+	if seed and seed.untilTime >= now and not byPlayer then -- Lifeseed saves from monsters only (DESIGN 6.7)
 		primaryDamage, secondaryDamage, held = holdAtOne(creature, primaryDamage, secondaryDamage)
 		if held then
 			SpireBuffs.seed[cid] = nil
@@ -1419,4 +1510,5 @@ login:register()
 SpireCleanup.add(function(cid)
 	SpireBuffs.reduce[cid], SpireBuffs.mark[cid], SpireBuffs.undying[cid] = nil, nil, nil
 	SpireBuffs.reflect[cid], SpireBuffs.seed[cid], SpireClash.state[cid] = nil, nil, nil
+	SpireBuffs.held[cid] = nil
 end)

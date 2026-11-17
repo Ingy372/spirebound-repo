@@ -8,6 +8,7 @@
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
 --   /pilot give id, n      items into the backpack
+--   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
 --   /pilot trace on|off    log what every spell you cast did (server log, [SPELLTRACE]); refills you after each
@@ -82,6 +83,18 @@ function pilot.onSay(player, words, param)
 		local id, n = rest:match("(%d+)%D+(%d+)")
 		player:addItem(tonumber(id), tonumber(n))
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: given")
+	elseif cmd == "wall" then
+		-- (PvP spell tests) put a wall item (vine 2130, barrier 2128) this many tiles ahead of you
+		local id, n = rest:match("(%d+)%D+(%d+)")
+		local pos = player:getPosition()
+		for _ = 1, tonumber(n) do
+			pos:getNextPosition(player:getDirection())
+		end
+		local it = Game.createItem(tonumber(id), 1, pos)
+		if it then
+			it:decay()
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: wall " .. (it and "placed" or "failed"))
 	elseif cmd == "unsummon" then
 		for _, m in ipairs(player:getSummons()) do
 			m:remove()

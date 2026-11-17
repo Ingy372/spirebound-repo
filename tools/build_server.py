@@ -129,6 +129,12 @@ def patch_core(build: Path) -> None:
             f.write_text(rename_vocations(f.read_text(encoding="utf-8"), r"vocation\([^)]*\)"), encoding="utf-8")
     # Tibia's spells (and their incantations) are replaced by Spirebound's own (data-spirebound/scripts/spirebound/spells)
     shutil.rmtree(build / "data" / "scripts" / "spells", ignore_errors=True)
+    # The barrier (magic wall) rune is the Arcanist's PvP tool (DESIGN 6.7, Jay 2026-11-17): only Arcanists may use it
+    mw = build / "data" / "scripts" / "runes" / "magic_wall.lua"
+    text = mw.read_text(encoding="utf-8")
+    if "rune:vocation(" not in text:
+        text = text.replace("rune:register()", 'rune:vocation("arcanist;true", "high arcanist;true")\nrune:register()')
+        mw.write_text(text, encoding="utf-8")
     # Spirebound's own spell effects (art/effects): the server only sends effects listed in its appearances file
     import install_effects
     n = install_effects.patch_server(build / "data" / "items" / "appearances.dat")

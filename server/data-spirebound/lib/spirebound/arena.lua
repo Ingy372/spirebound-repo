@@ -16,7 +16,11 @@ SpireArena.KINDS = {
 	lms = { id = "lms", name = "Last Man Standing", teams = false },
 	rush = { id = "rush", name = "Team Rush", teams = true },
 	banner = { id = "banner", name = "Capture the Banner", teams = true },
+	-- every push, pull, slow and root works at full strength on players (DESIGN 6.7, Jay 2026-11-17): the weekly
+	-- test of "chaotic but fun" PvP before it ever reaches the open world
+	wild = { id = "wild", name = "Wild PvP", teams = false, wild = true },
 }
+SpireArena.WILD_DAY = 6 -- one day in seven (day number % 7) is Wild PvP day
 SpireArena.ROTATION = { "lms", "rush", "banner" }
 
 -- Pure state machine --------------------------------------------------------
@@ -177,5 +181,8 @@ end
 
 -- Pure: which kind runs today (rotates by day number)
 function SpireArena.kindForDay(day)
+	if day % 7 == SpireArena.WILD_DAY then
+		return "wild"
+	end
 	return SpireArena.ROTATION[(day % #SpireArena.ROTATION) + 1]
 end

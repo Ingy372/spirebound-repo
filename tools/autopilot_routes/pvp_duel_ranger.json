@@ -1,0 +1,32 @@
+{
+ "name": "pvp_duel_ranger",
+ "about": "PvP spell check (DESIGN 6.7). Read with: python tools/spell_routes.py --report",
+ "character": "Spell Ranger",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1366,
+    7
+   ],
+   "note": "stand"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 75
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

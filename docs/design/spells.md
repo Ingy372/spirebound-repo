@@ -191,6 +191,18 @@ second area attack is Faultline at 170, a line, still under half the strength of
 
 **Names with a space** go in quotes, as in Tibia: `mend other "Some Name"`. With no name, ally spells land on you.
 
+### 3.6 PvP (2026-11-17)
+
+The PvP rules for spells are `DESIGN.md` 6.7 (Jay's decision). New for it: **Vinewall** (Mystic 34), **Breach Arrow**
+(Ranger 34), **Conjure Barrier Rune** (Arcanist 34, 3 runes from a blank rune), **Tailwind** (Arcanist 40, party
+haste +40% for 10 s that frees from slows and roots). Changed: **Iron Reach** and **Snare** now strike first (light
+damage) so the normal PvP rules decide who they may touch; Iron Reach and Shield Bash move players.
+Checked in the real client with two test characters at once (Iron Reach pulled a player 3 tiles, Shield Bash knocked
+it back), and the walls with `tools/autopilot_routes/pvp_terrain_*.json`.
+
+**Speed fix (Jay's playtest, 2026-11-17: haste made him slower):** the engine's speed formula gives the new speed,
+not the change. All speed effects now go through `SpireSpells.setSpeed(condition, pct)`.
+
 ## 4. Spell lists
 
 Words are what you say (always the spell name in lower case, without apostrophes). Visuals are cast → projectile →

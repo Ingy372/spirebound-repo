@@ -305,6 +305,35 @@ The current zone is shown in the corner of the client (icon + color).
 - Death Game characters are also covered by newbie and level-range protection like everyone, and killing an unskulled Death Game character counts as **two** unjust kills.
 - Every saved death is logged; staff can review patterns.
 
+### 6.7 Spells in PvP (Jay, 2026-11-17)
+Jay: "im split between full, letting effects happen and everything be kinda chaotic but also have a system of checks
+for everything, so one class isnt to powerful... on the flip side, just because it sounds fun to me doesnt mean the
+tibia community will go with it." Decided with Claude: **the proven Tibia core for controlling players, Jay's
+counter system as terrain, and full chaos tested as a weekly arena event first.** The idea behind it: players
+accept losing a path, they hate losing control of their character; terrain counters are decisions, not reflexes, so
+bots and lag can't decide them.
+
+- **Damage:** every hit between players is halved (Tibia's rule, already in the engine; black skulls take full).
+  Burn and bleed ticks are halved too, and finisher/opener bonuses (Final Verdict, Mercy Shot, Ambush Shot) give half.
+- **Holding players:** roots and slows last half as long on players (at least 1 s); afterwards the player can't be
+  held again for 4 s. **Haste breaks slows and roots** (Quickstep, Swift Foot, Gale Step), as in Tibia.
+- **Moving players:** only the Vanguard: **Iron Reach** pulls a player next to you, **Shield Bash** knocks one back
+  and roots briefly. Every other push, pull or gather (Repulse, Gravity Well, Scatterwind, Tidecrash...) moves monsters only.
+- **Terrain:** the Mystic's **Vinewall** (3 vines across your path, 20 s); **fire burns vines** (every Arcanist fire
+  spell, burning ground, Firewake); the Arcanist's **Barrier Rune** (a 20 s wall; only Arcanists make and use it);
+  the Ranger's **Breach Arrow** breaks the first vine or barrier ahead.
+- **Cheat death:** Undying Oath works against players (the Vanguard's clutch, 2-minute cooldown); Lifeseed saves from
+  monsters only.
+- **Wild PvP:** one arena event a week where every push, pull, slow and root works on players at full strength, no
+  immunity. If the community loves it, it can graduate to a zone (Deadzone).
+
+| Class | PvP specialty | Its counters |
+|---|---|---|
+| Vanguard | pulls and pushes players, gap-closers, Undying Oath, shields allies | kited; walls stop its leaps |
+| Ranger | range, escapes, roots from afar, finisher, breaks walls | weak up close; pulled in by the Vanguard |
+| Arcanist | strongest beams and bursts, burning ground, Barrier Rune, Tailwind (party haste that frees from slows) | fragile; can't push or trap besides the barrier |
+| Mystic | heals and cures, roots, Vinewall, paralysis rune | fire burns its walls; haste breaks its roots |
+
 ---
 
 ## 7. Social and housing

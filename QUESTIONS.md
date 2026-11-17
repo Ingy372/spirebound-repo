@@ -6,6 +6,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q44. Answered 2026-11-17: spells in PvP
+Jay chose the proven Tibia core for controlling players plus his counter system as terrain (vine walls that fire
+burns, a barrier rune, party haste, wall-breaking arrows), with full-chaos "Wild PvP" as a weekly arena event first.
+Written into `DESIGN.md` 6.7 and built the same day. Also assumed (Claude's recommendations, Jay picked "yes, build
+it"): Undying Oath works against players, Lifeseed only against monsters, the barrier rune is the Arcanist's only.
+
 ### Q43. The new spells: Elemental Clash, and spells that move monsters (2026-11-17)
 Every class now has 28 to 31 of its own spells (was 17 to 19), with new kinds: chains, knock-backs and pulls, roots,
 burning ground, meteors that are marked on the ground a second before they land, and a 15-second "form" at level 230.

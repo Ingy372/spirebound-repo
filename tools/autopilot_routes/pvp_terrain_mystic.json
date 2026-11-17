@@ -1,0 +1,50 @@
+{
+ "name": "pvp_terrain_mystic",
+ "about": "PvP spell check (DESIGN 6.7). Read with: python tools/spell_routes.py --report",
+ "character": "Spell Mystic",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "cast",
+   "text": "vinewall",
+   "shots": [
+    0.2,
+    1.0,
+    5.0
+   ],
+   "gap": 5.5,
+   "name": "pvp_vinewall",
+   "note": "Vinewall",
+   "dir": "north"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

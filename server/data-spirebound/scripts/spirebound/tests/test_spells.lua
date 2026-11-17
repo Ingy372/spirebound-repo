@@ -397,3 +397,77 @@ SpireTest.add("spells: haste makes you faster and slows slow (they don't freeze)
 		end
 	end
 end)
+
+-- PvP pass (DESIGN 6.7, Jay 2026-11-17: the proven Tibia core for control, plus terrain and counters)
+SpireTest.add("pvp spells: players are held briefly and then immune; Wild PvP holds them fully", function()
+	SpireTest.eq(SpireSpells.holdSeconds(false, 3, nil, 100, false), 3, "monsters: full time")
+	local secs, untilT = SpireSpells.holdSeconds(true, 3, nil, 100, false)
+	SpireTest.eq(secs .. "/" .. untilT, "1/105", "players: half (at least 1 s), then 4 s immune")
+	SpireTest.eq(SpireSpells.holdSeconds(true, 3, 105, 103, false), 0, "immune players can't be held again")
+	SpireTest.eq(SpireSpells.holdSeconds(true, 3, 105, 106, false), 1, "after the immunity, they can")
+	SpireTest.eq(SpireSpells.holdSeconds(true, 3, 105, 103, true), 3, "Wild PvP: full time, no immunity")
+	SpireTest.eq(SpireSpells.pvpBonus(0.6, true), 0.3, "finishers give half the bonus against players")
+	SpireTest.eq(SpireSpells.pvpBonus(0.6, false), 0.6, "and all of it against monsters")
+	SpireTest.eq(SpireArena.KINDS.wild.wild, true, "Wild PvP is an arena event")
+	local wildDays = 0
+	for d = 0, 6 do
+		if SpireArena.kindForDay(d) == "wild" then wildDays = wildDays + 1 end
+	end
+	SpireTest.eq(wildDays, 1, "Wild PvP runs one day a week")
+	SpireTest.eq(SpireSpells.wildAt(WorldPoints.centre_boar_meadow), false, "never in the open world")
+end)
+
+SpireTest.add("pvp spells: only the Vanguard's spells move players; Lifeseed is monster-only", function()
+	local moversOfPlayers = {}
+	for _, row in ipairs(SpireSpells.list) do
+		if row.pvpMove then
+			table.insert(moversOfPlayers, row.name)
+			SpireTest.eq(row.voc ~= "all" and row.voc[1] == 4, true, row.name .. " is a Vanguard spell")
+			SpireTest.eq(row.kind, "attack_target", row.name .. " must hit first (so PvP rules decide)")
+		end
+	end
+	table.sort(moversOfPlayers)
+	SpireTest.eq(table.concat(moversOfPlayers, ","), "Iron Reach,Shield Bash", "the two player-movers")
+	local snare
+	for _, row in ipairs(SpireSpells.list) do
+		if row.name == "Snare" then snare = row end
+	end
+	SpireTest.eq(snare.kind .. "/" .. tostring(snare.root), "attack_target/3", "Snare roots through a real hit")
+end)
+
+SpireTest.add("pvp spells: vine walls, fire burns them, Breach Arrow breaks walls, haste cures slows", function()
+	local base = WorldPoints.centre_boar_meadow
+	SpireTest.eq(#SpireSpells.VINES, 2, "vine items exist")
+	SpireTest.eq(#SpireSpells.BARRIERS, 2, "barrier items exist")
+	local tiles = SpireSpells.wallTiles(100, 100, 0, 3, 2)
+	SpireTest.eq(#tiles .. ":" .. tiles[1].x .. "," .. tiles[1].y .. ":" .. tiles[3].x .. "," .. tiles[3].y, "3:99,98:101,98", "a wall across your path, 2 ahead")
+	-- find an open tile east of the meadow centre for the walls
+	local spot
+	for dx = 1, 6 do
+		local p = Position(base.x + dx, base.y, base.z)
+		local t = Tile(p)
+		if t and t:getGround() and not t:hasFlag(TILESTATE_BLOCKSOLID) and not t:getTopCreature() then spot = p break end
+	end
+	if not spot then error("no open tile near the meadow centre") end
+	local vine = Game.createItem(ITEM_WILDGROWTH, 1, spot)
+	SpireTest.eq(vine ~= nil, true, "a vine wall grows")
+	SpireTest.eq(SpireSpells.burnVines(spot), true, "fire burns it")
+	SpireTest.eq(Tile(spot):getItemById(ITEM_WILDGROWTH), nil, "and it is gone")
+	Game.createItem(ITEM_MAGICWALL, 1, spot)
+	local from = Position(spot.x - 1, spot.y, spot.z)
+	local hit = SpireSpells.breakFirstWall(from, DIRECTION_EAST, 6)
+	SpireTest.eq(hit ~= nil and hit == spot, true, "Breach Arrow breaks the barrier straight ahead")
+	SpireTest.eq(Tile(spot):getItemById(ITEM_MAGICWALL), nil, "the barrier is gone")
+	-- haste breaks a slow (the counter to roots)
+	local m = Game.createMonster("Field Rat", base, true, true)
+	if not m then error("could not place a test monster") end
+	SpireSpells.pin(m, 5, 0.9)
+	SpireTest.eq(m:getCondition(CONDITION_PARALYZE) ~= nil, true, "rooted")
+	local quick
+	for _, row in ipairs(SpireSpells.list) do
+		if row.name == "Quickstep" then quick = row end
+	end
+	SpireSpells.KINDS.haste(quick, m)
+	SpireTest.eq(m:getCondition(CONDITION_PARALYZE), nil, "haste frees it")
+	m:remove()
+end)

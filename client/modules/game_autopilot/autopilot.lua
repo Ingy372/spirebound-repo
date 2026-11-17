@@ -14,7 +14,8 @@
 --   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
 --                                                 (spell tests) target the nearest monster without chasing it if
 --                                                 "target", say the words, take screenshots that many seconds after,
---                                                 move on after "gap" seconds; every server message is logged
+--                                                 move on after "gap" seconds; every server message is logged;
+--                                                 "target": "player" targets the nearest other player instead
 -- The log (autopilot_log.txt in the client's settings folder) has a line per event, a sample every 2 seconds and a
 -- summary per step: monsters in sight, monsters next to you, damage taken, kills, potions.
 
@@ -68,6 +69,20 @@ local function monsters(player)
     for _, c in ipairs(g_map.getSpectators(pos, false) or {}) do
         local p = c:getPosition()
         if c:isMonster() and p and p.z == pos.z and c:getHealthPercent() > 0 then
+            out[#out + 1] = { c = c, d = dist(p, pos) }
+        end
+    end
+    table.sort(out, function(a, b) return a.d < b.d end)
+    return out
+end
+
+-- other players in sight, nearest first (PvP spell tests)
+local function players(player)
+    local pos = player:getPosition()
+    local out = {}
+    for _, c in ipairs(g_map.getSpectators(pos, false) or {}) do
+        local p = c:getPosition()
+        if c:isPlayer() and not c:isLocalPlayer() and p and p.z == pos.z then
             out[#out + 1] = { c = c, d = dist(p, pos) }
         end
     end
@@ -172,7 +187,8 @@ end
 function handlers.cast(player)
     if not stepData.sent then
         if step.target then
-            local list = monsters(player)
+            local list = step.target == 'player' and players(player) or monsters(player)
+            if step.target == 'player' then g_game.setSafeFight(false) end -- secure mode off, like a player who means it
             if list[1] then
                 g_game.setChaseMode(DontChase)
                 if g_game.getAttackingCreature() ~= list[1].c then g_game.attack(list[1].c) end
@@ -383,6 +399,7 @@ function Autopilot.init()
         return
     end
     plan = p
+    if p.log then LOG = '/' .. p.log end -- two clients at once (PvP tests) each keep their own log
     -- with vertical sync on, Windows stalls the client while its window is hidden behind others; a test run must
     -- keep going in the background
     pcall(function() g_window.setVerticalSync(false) end)

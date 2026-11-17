@@ -1,0 +1,66 @@
+{
+ "name": "pvp_terrain_ranger",
+ "about": "PvP spell check (DESIGN 6.7). Read with: python tools/spell_routes.py --report",
+ "character": "Spell Ranger",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "setup"
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "cast",
+   "text": "turn",
+   "dir": "north",
+   "shots": [],
+   "gap": 0.5,
+   "name": "turn",
+   "note": "face north"
+  },
+  {
+   "do": "say",
+   "text": "/pilot wall 2128, 3"
+  },
+  {
+   "do": "shot",
+   "name": "pvp_barrier_before"
+  },
+  {
+   "do": "cast",
+   "text": "breach arrow",
+   "shots": [
+    0.0,
+    0.4
+   ],
+   "gap": 3.0,
+   "name": "pvp_breach_arrow",
+   "note": "Breach Arrow breaks a barrier",
+   "dir": "north"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

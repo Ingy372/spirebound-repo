@@ -1,0 +1,61 @@
+{
+ "name": "pvp_duel_vanguard",
+ "about": "PvP spell check (DESIGN 6.7). Read with: python tools/spell_routes.py --report",
+ "character": "Spell Vanguard",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1159,
+    1370,
+    7
+   ],
+   "note": "setup"
+  },
+  {
+   "do": "wait",
+   "seconds": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "cast",
+   "text": "iron reach",
+   "shots": [
+    0.0,
+    0.5
+   ],
+   "gap": 3.0,
+   "name": "pvp_iron_reach",
+   "note": "Iron Reach pulls a player",
+   "target": "player"
+  },
+  {
+   "do": "cast",
+   "text": "shield bash",
+   "shots": [
+    0.0,
+    0.5
+   ],
+   "gap": 3.0,
+   "name": "pvp_shield_bash",
+   "note": "Shield Bash pushes and roots a player",
+   "target": "player"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
