@@ -13,6 +13,9 @@ You said the Reed Snapper "looks like a mix between a crab and a turtle". The or
 
 *Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
 
+### Q42. Which Floor 1 ground is for which class, and party size 8 (2026-11-16)
+From the new spawn rules (`DESIGN.md` 9.4). My picks: the Ratwarren, Toad Pond and Sproutling Glade are the all-class training grounds; Boar Meadow suits the Vanguard, Reedmarsh the Ranger, Waspgrass Fields the Arcanist, Thornsnap Hollow the Mystic; Burrow Hills, Wolf Copse and Shard Fields are mixed; the party caves, the bandit Vault and the lower Quarry are for groups of 3 to 4; the Old Watchtower's inner room and cave is the one ground for 4 to 8. I also raised the party size from 6 to 8 so those 8 can share experience. Recommendation: go with these; tell me any you want swapped.
+
 ### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)
 To meet the calm rules (at most 3 monsters able to reach you near the gate, 4 further in), the open-air part of Toad Pond, Sproutling Glade and Waspgrass Fields now holds about 12 monsters each, spread out with quiet stretches between. The other ~36 of each ground are in the cave (or on the hill) below, where they come in pairs and threes. The Ratwarren already works this way. Recommendation: keep it. The surface is the gentle, safe part for new players, and you choose to go down when you want more. If the surface feels too empty when you try it, I can add a few more singles there.
 
@@ -169,6 +172,9 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 ---
 
 ## Answered
+
+### Spawn rules: habits, ground types, the floor recipe (2026-11-16)
+Jay: "yep i like the idea so far." Group size: "that is good but we should also create an occasional hunting ground that can support 4-8 players." One high-level player soloing a group ground: "yes". Written into `DESIGN.md` 9.4 and `FLOOR1_HUNTING_PLAN.md` Part 10. This also settles Q41: how many monsters stand on a starter ground's surface now follows from each monster's habit.
 
 ### Q40. Should Field Rats be able to hurt a brand-new vanguard? (2026-11-14)
 The test autopilot played the Ratwarren with a fresh level 2 vanguard (sword and the starting wooden shield). Four rats stood next to it for half a minute and it never lost a single hit point: the shield blocked every bite. Rangers, arcanists and mystics have no shield and will take some damage. Recommendation: keep it. It's the very first ground, and in the original game rats barely scratch a knight too. The danger starts at Toad Pond. If you'd like rats to bite a little, I'd raise their bite slightly rather than add more rats.

@@ -308,7 +308,7 @@ The current zone is shown in the corner of the client (icon + color).
 ## 7. Social and housing
 
 ### 7.1 Parties
-- Shared XP like Tibia, with a bonus so team hunting beats solo (Jay: most servers got this wrong). Party bonus: +30% per extra member and +10% per extra vocation in the party, split evenly **(from the old pack; Claude's call to keep)**. Party size up to 6 **(Claude's call)**.
+- Shared XP like Tibia, with a bonus so team hunting beats solo (Jay: most servers got this wrong). Party bonus: +30% per extra member and +10% per extra vocation in the party, split evenly **(from the old pack; Claude's call to keep)**. Party size up to 8, so a large-group ground (9.4) fits in one party **(Claude's call, 2026-11-16; was 6)**.
 - Shared XP requires being within 30 tiles and the highest level being no more than 1.5× the lowest (Tibia uses 2/3), unless the leader turns on Mentor mode.
 
 ### 7.2 Guilds
@@ -387,6 +387,45 @@ Every floor has story quests and side quests. Every quest has a quest-log entry 
 - Drops: Azhrakkar's Greatsword (the strongest sword in season 1, earned only), cosmetic horns, Boss Sigil, Last Blow Shard to the last hit.
 
 ---
+
+### 9.4 How monsters spawn: habits, ground types and the floor recipe (Jay, 2026-11-16)
+
+Jay, 2026-11-16: *"i think each spawn should be a little different. there shouldn't be one uniform rule across the board for how many monsters to a spawn... the system we currently have of 3 monsters per group isnt working either. it might be alright for one monster specifically... we need to have some kind of spawn rule or way to design every floors spawns so they are similar but not the same. also keeping in mind certain classes will hunt better at certain areas. we could make a certain area for all of them to train semi decent solo. but i think the best hunting grounds should have to be hunted as a group."* He agreed to the three layers below, and added: *"we should also create an occasional hunting ground that can support 4-8 players."*
+
+**Layer 1. Every monster has a habit.** The habit belongs to the monster and goes with it to every ground it appears in. Which monster gets which habit is **(Claude's call, Jay can veto)**.
+
+| Habit | How it spawns | Suits |
+|---|---|---|
+| Loner | always alone, well apart, tougher per monster | Vanguard |
+| Pair | twos, sometimes a single | everyone |
+| Pack | 3 to 5 that stay together, one of them a leader | groups; strong solo players |
+| Swarm | 5 to 8 weak ones in a clump that die fast | Arcanist (area spells) |
+| Colony | thin on the outside, thick round a nest | everyone outside, groups at the nest |
+| Sentry | stands guard at fixed spots, often ranged | Ranger |
+
+**Layer 2. Every hunting ground has a type.** The type says who the ground is for and how much danger it may hold.
+
+| Type | Who hunts it | Reward target (per person, per hour) |
+|---|---|---|
+| Training ground | any class, solo, semi-decent; mostly loners and pairs | 100% (the floor's baseline) |
+| Class ground | one class does clearly better; the others can hunt it, just slower | about 120% for the right class |
+| Mixed ground | two or three habits side by side; fine solo, better as a pair | about 110% |
+| Group ground | 3 to 4 players: mixed packs (a front-liner, a ranged one, a caster) that need a tank, damage and healing | about 150%, the floor's best |
+| Large-group ground | 4 to 8 players; one per floor at most (Jay: "occasional") | about 175% |
+
+- What makes a class ground (layout and habit together): **Vanguard**, tight tunnels and hard-hitting loners and pairs that walk up to you. **Ranger**, open ground and slow, tough monsters or sentries, with room to keep your distance. **Arcanist**, swarms. **Mystic**, long wearing fights (poison, monsters that heal or come back) where staying power and healing win. **(Claude's call.)**
+- The reward targets come from the monsters and the layout, never from a hidden bonus. `tools/balance.py` holds them **(Claude's call on the numbers)**.
+- One player far above a group ground's level may hunt it alone (Jay, 2026-11-16: "yes"). It must never be that player's best place to hunt.
+- Party size goes from 6 to 8 so a large-group ground can be hunted in one party **(Claude's call)**.
+
+**Layer 3. Every floor follows the same recipe, with one twist of its own.**
+- Per floor, roughly: 1 or 2 training grounds, one class ground per class, 2 or 3 mixed grounds, 2 or 3 group grounds, and at most one large-group ground (usually the floor's apex spawn, 3.5).
+- Each floor adds one new habit or behaviour that the floors below do not have (for example monsters that call their neighbours, or monsters that flee and come back). **(Claude's call per floor.)**
+- No two grounds on a floor use the same habit in the same kind of layout.
+
+**The danger budget replaces the head count.** Each monster has a weight: 1 for the floor's ordinary monster, less for a swarm monster, more for a loner or a leader. Each ground type has a budget for how much weight may come at a player at once, rising from the gate inward. Group and large-group grounds have budgets sized for their party. The checker (`tools/hunt_check.py`) enforces the budget of each ground's own type.
+
+**One rule is the same everywhere:** the gate and the first stretch of every ground are quiet (Jay, 2026-11-14: no "nonstop monsters flooding to me" on walking in).
 
 ## 10. Economy
 

@@ -2,6 +2,8 @@
 
 Jay, 2026-11-14: *"im still not satisfied with the hunting field. it is a major step up from the first pass, but still not complete. im feeling overhelmed when i walk into a zone with nonstop monsters flooding to me. i think the zones need to bigger... utilize multi height levels as well. layer the monsters throughout the spawn more like real tibia does... certain areas are fine but the whole spawn shouldn't be a massive swarm."*
 
+**Changed 2026-11-16 (Jay): the group sizes and the head-count limits in Parts 3 and 5 are replaced by Part 10 (habits, ground types, danger budget; `DESIGN.md` 9.4). The layouts, levels and positions in this plan stay.**
+
 **This is a plan only. Nothing in the game has changed.** It replaces Parts 4.1, 5 and 6 of `FLOOR1_WILDS_PLAN.md` (the four-loop skeleton). Everything else in that plan stays: the experience stages, the ladder, the respawn rule, the roads idea, the crowd system (with the changes in Part 7 here).
 
 Part 1 is for Jay. Parts 2 to 9 are the build instructions for the next model.
@@ -257,6 +259,59 @@ Render outdoor upper levels with the `top` argument of `tools/maprender.py`, and
 | H13 | Walk every ground and level in the real client (replaces W12); playtest list for Jay in `WEEKLY_REPORT.md` | Notes fixed or turned into tasks |
 
 If Jay's notes on the pilots (H4, H5) arrive, apply them before continuing with the next ground.
+
+---
+
+## Part 10. Spawn habits and ground types on Floor 1 (2026-11-16; replaces the group sizes in Parts 3 and 5)
+
+The rules are in `DESIGN.md` 9.4. This part applies them to Floor 1. Everything here is Claude's call and Jay can veto any line.
+
+### 10.1 Habits
+
+| Monster | Habit | Weight | In practice |
+|---|---|---|---|
+| Field Rat | Swarm | 0.4 | clumps of 5 to 8 in the Warren; ones and twos in the Yard |
+| Hopper Toad | Pair | 1 | twos by the water, a single here and there |
+| Sproutling | Colony | 0.7 | a few on the paths, thick round the great tree's roots |
+| Meadow Wasp | Colony | 0.5 | scouts in the meadows, a cloud at the hive |
+| Burrow Mole | Colony | 1 | singles on the hills, thick in the Molework |
+| Bristle Boar | Loner | 1.8 | always alone, far apart |
+| Meadow Wolf | Pack | 1 (Grey Alpha 2) | 3 to 5 together; the larger packs have a Grey Alpha |
+| Field Shardling | Pair | 1 | twos among the crystals |
+| Thornsnap | Sentry | 1.3 | rooted in place at bends and doorways |
+| Road Bandit | Sentry | 1 (Captain 2.5) | guards at camps and ambush spots; a Captain leads a camp |
+| Ruin Sentinel, Ruin Archer | Sentry | 1.3, 1 | a Sentinel in front with Archers behind |
+| Stonehorn Ram | Pack | 2 | a herd; the apex spawn |
+
+Reedmarsh's monster gets its habit when H7 reaches it. Weights are first guesses; S1 sets them from each monster's real numbers in `tools/balance.py`.
+
+### 10.2 Ground types
+
+| Ground | Type | Why |
+|---|---|---|
+| The Ratwarren, Toad Pond, Sproutling Glade | Training | the three first grounds; any class, solo |
+| Boar Meadow | Class: Vanguard | loners that charge you, tunnels in the Wallows |
+| Reedmarsh | Class: Ranger | open islands, water as the wall, room to keep your distance |
+| Waspgrass Fields | Class: Arcanist | clouds of weak wasps |
+| Thornsnap Hollow | Class: Mystic | rooted monsters that poison; long fights where staying power wins |
+| Burrow Hills, Wolf Copse, Shard Fields | Mixed | two habits each; fine solo, better as a pair |
+| The party caves, the Bandit Road's Vault, the Old Quarry's Lower Works and Flooded Level | Group (3 to 4) | mixed packs: a front-liner, a ranged one, a caster |
+| The Old Watchtower's inner room and cave | Large group (4 to 8) | the apex spawn; Jay already wanted it hard |
+
+### 10.3 Danger budget (weight that may come at one player at once)
+
+| Type | Gate | Outer part | Middle | Deep | Nest or den |
+|---|---|---|---|---|---|
+| Training | 0 | 2 | 3 | 4 | 6 |
+| Class, mixed | 0 | 3 | 4 | 6 | 8 |
+| Group | 0 | 6 | 9 | 12 | 14 |
+| Large group | 0 | 10 | 16 | 22 | 26 |
+
+Breathing room, rest spots and room to fight (3.2) stay as they are for training, class and mixed grounds. Group and large-group grounds only need a quiet gate and a quiet room between packs. Never raise a budget to make a ground pass; change the ground.
+
+### 10.4 The five grounds already rebuilt
+
+Their maps stay. Their monsters are regrouped by habit (task S3): the Ratwarren's lower level in swarms, Waspgrass as a colony round the hive, Burrow Hills as a colony with loner boars on top, Toad Pond in pairs, the Glade as a colony round the great tree. Totals per ground may change; the economy generator is rerun after.
 
 ---
 
