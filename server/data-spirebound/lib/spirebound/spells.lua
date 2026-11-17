@@ -10,6 +10,16 @@
 --   min/max/base  damage or healing = level/5 + scale*min + base  ..  level/5 + scale*max + base*2
 --   cast / shoot / effect  the three visual layers: on the caster, the projectile, the impact on each tile/target
 --   lostArt  floor whose story quests teach it (never level-unlocked)
+-- Extra mechanics (2026-11-16 pass, docs/design/spells.md section 3.5):
+--   anim     how an area spell plays out: "burst" (rings outward), "sweep" (rows away from you), "spiral" (around you),
+--            "rain" (random tiles over a second); step = milliseconds between stages
+--   delay / warn   the spell lands `delay` ms after the cast; `warn` is the marker shown on the tiles meanwhile
+--   hits / hitGap  several projectiles in a row at one target
+--   chain    { jumps, range, falloff }: the hit jumps on to nearby monsters
+--   push / root / leech / vuln / execute / opener   riders on a hit (knock back, pin, heal the caster, armour break,
+--            more damage on wounded / untouched targets)
+--   dashTo   leap next to the target first
+--   evolve   { { level, ...visual fields } }: the spell looks bigger once the caster reaches that level
 
 SpireSpells = {}
 
@@ -21,6 +31,29 @@ SpireSpells.BLANK_RUNE = 3147
 
 local A, M, R, V = 1, 2, 3, 4
 
+-- Spirebound's own spell effects, made with the Blender pipeline (art/effects, installed by tools/install_effects.py).
+-- Ids start above the engine's own (which end at 309).
+SpireFx = {
+	STEEL_ARC = 401, -- crimson-edged steel slash
+	SKYREND = 402, -- tall golden sword falling from above
+	OATH_HALO = 403, -- golden ring around a character
+	GROUND_CRACK = 404, -- stone bursting out of the ground
+	WAR_BANNER = 405, -- a planted crimson banner
+	LIGHT_NEEDLES = 406, -- needles of light falling
+	SUN_SIGIL = 407, -- golden circle on the ground
+	VIOLET_BOLT = 408, -- lightning striking from above
+	METEOR = 409, -- a meteor landing
+	EMBER_PILLAR = 410, -- a column of fire
+	THORN_BURST = 411, -- thorns bursting out of the ground
+	LEAF_WARD = 412, -- a leaf-green bubble around a character
+	ICE_SPIRES = 413, -- ice crystals erupting
+	BLOOM = 414, -- a flower of light opening
+	CLASH = 415, -- the starburst of an elemental clash
+	VOID_PULL = 416, -- violet swirl pulling inward
+	EMBER_SIGIL = 417, -- orange warning circle
+	FROST_SIGIL = 418, -- teal warning circle
+}
+
 SpireSpells.list = {
 	-- Shared utilities: every vocation gets them, each at its own level -----------------------------------------
 	{ name = "Kindle", words = "kindle", voc = "all", level = { [A] = 8, [M] = 8, [R] = 9, [V] = 10 }, mana = 20, cd = 2, kind = "light", lightLevel = 7, duration = 600, effect = CONST_ME_FIRE_SPARKLES },
@@ -31,86 +64,132 @@ SpireSpells.list = {
 	{ name = "Quickstep", words = "quickstep", voc = "all", level = { [A] = 14, [M] = 14, [R] = 10, [V] = 16 }, mana = 60, cd = 2, kind = "haste", speed = 0.3, duration = 30, effect = CONST_ME_WHIRLWIND_BLOW_WHITE },
 
 	-- Vanguard: crimson and gold, steel impacts. Slow burn: sparse early, defensive milestones, late power. ---------
-	{ name = "Heavy Strike", words = "heavy strike", voc = { V }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.8, max = 1.5, range = 1, effect = CONST_ME_HITAREA_RED },
+	{ name = "Heavy Strike", words = "heavy strike", voc = { V }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.8, max = 1.5, range = 1, effect = CONST_ME_HITAREA_RED, evolve = { { level = 50, impact2 = CONST_ME_GROUNDSHAKER }, { level = 120, effect = SpireFx.STEEL_ARC, impact2 = CONST_ME_GROUNDSHAKER } } },
 	{ name = "Second Wind", words = "second wind", voc = { V }, level = 9, mana = 30, cd = 1, kind = "heal_self", scale = "level", min = 1.0, max = 1.6, base = 20, effect = CONST_ME_OUTBURST_YELLOW },
+	{ name = "Shield Bash", words = "shield bash", voc = { V }, level = 12, mana = 25, cd = 8, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.5, max = 0.9, range = 1, push = 1, root = 2, effect = CONST_ME_BLOCKHIT, impact2 = CONST_ME_STUN },
 	{ name = "Rending Blow", words = "rending blow", voc = { V }, level = 16, mana = 35, cd = 6, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.9, max = 1.6, range = 1, effect = CONST_ME_SLASH, impact2 = CONST_ME_DRAWBLOOD, dot = { type = CONDITION_BLEEDING, ticks = 5, interval = 2000, pct = 0.12 } },
 	{ name = "Rally Cry", words = "rally cry", voc = { V }, level = 20, mana = 40, cd = 4, kind = "taunt", radius = 3, cast = CONST_ME_CHIVALRIOUS_CHALLENGE, effect = CONST_ME_SOUND_RED },
+	{ name = "Iron Reach", words = "iron reach", voc = { V }, level = 22, mana = 50, cd = 14, kind = "pull_target", range = 5, shoot = CONST_ANI_WHIRLWINDCLUB, effect = CONST_ME_GROUNDSHAKER },
 	{ name = "Charge", words = "charge", voc = { V }, level = 25, mana = 70, cd = 12, kind = "dash", tiles = 3, cast = CONST_ME_BLOODYSTEPS, effect = CONST_ME_GROUNDSHAKER },
+	{ name = "Bloodoath Strike", words = "bloodoath strike", voc = { V }, level = 28, mana = 45, cd = 8, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.9, max = 1.5, range = 1, leech = 0.4, effect = CONST_ME_BIG_SCRATCH, impact2 = CONST_ME_DRAWBLOOD },
 	{ name = "Iron Hide", words = "iron hide", voc = { V }, level = 30, mana = 80, cd = 20, kind = "dr_self", pct = 30, duration = 6, cast = CONST_ME_YELLOW_RINGS, effect = CONST_ME_BLOCKHIT },
 	-- the Vanguard's only damaging area spell: adjacent tiles only, about half the damage and half the rate of the others' (docs/design/spells.md)
-	{ name = "Whirlwind", words = "whirlwind", voc = { V }, level = 33, mana = 60, cd = 8, kind = "attack_area", area = "ring1", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.4, max = 0.7, cast = CONST_ME_WHIRLWIND_BLOW_WHITE, effect = CONST_ME_HITAREA_RED },
+	{ name = "Whirlwind", words = "whirlwind", voc = { V }, level = 33, mana = 60, cd = 8, kind = "attack_area", area = "ring1", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.4, max = 0.7, cast = CONST_ME_WHIRLWIND_BLOW_WHITE, effect = SpireFx.STEEL_ARC, anim = "spiral", step = 45 },
+	{ name = "Counterguard", words = "counterguard", voc = { V }, level = 36, mana = 70, cd = 20, kind = "reflect", pct = 35, duration = 6, cast = CONST_ME_YELLOW_RINGS, effect = CONST_ME_BLOCKHIT },
 	{ name = "Intimidate", words = "intimidate", voc = { V }, level = 40, mana = 90, cd = 16, kind = "slow_area", radius = 2, duration = 4, cast = CONST_ME_SOUND_RED, effect = CONST_ME_STUN },
+	{ name = "Sunder", words = "sunder", voc = { V }, level = 45, mana = 60, cd = 15, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.8, max = 1.3, range = 1, vuln = { pct = 10, duration = 10 }, effect = CONST_ME_HITAREA_ORANGE, impact2 = CONST_ME_STONES },
 	{ name = "Battle Hymn", words = "battle hymn", voc = { V }, level = 50, mana = 150, cd = 30, kind = "party_buff", buff = "melee", amount = 10, duration = 120, cast = CONST_ME_OUTBURST_YELLOW, effect = CONST_ME_MAGIC_RED },
+	{ name = "Standard of Defiance", words = "standard of defiance", voc = { V }, level = 55, mana = 110, cd = 30, kind = "banner", duration = 8, radius = 4, cast = CONST_ME_CHIVALRIOUS_CHALLENGE, effect = SpireFx.WAR_BANNER },
 	{ name = "Guardian Stance", words = "guardian stance", voc = { V }, level = 60, mana = 120, cd = 24, kind = "dr_adjacent", pct = 20, duration = 8, cast = CONST_ME_YELLOW_RINGS, effect = CONST_ME_BLOCKHIT },
 	{ name = "Recovery", words = "recovery", voc = { V }, level = 70, mana = 120, cd = 2, kind = "heal_self", scale = "level", min = 2.0, max = 3.0, base = 60, cast = CONST_ME_MAGIC_RED, effect = CONST_ME_OUTBURST_YELLOW },
-	{ name = "Skyrend", words = "skyrend", voc = { V }, level = 90, mana = 160, cd = 12, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 2.2, max = 3.4, base = 20, range = 1, cast = CONST_ME_HITAREA_ORANGE, effect = CONST_ME_EXPLOSIONHIT, impact2 = CONST_ME_CRITICAL_DAMAGE },
+	{ name = "Vault Strike", words = "vault strike", voc = { V }, level = 80, mana = 100, cd = 14, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 1.2, max = 2.0, base = 10, range = 4, dashTo = true, effect = SpireFx.GROUND_CRACK, impact2 = CONST_ME_HITAREA_RED },
+	{ name = "Skyrend", words = "skyrend", voc = { V }, level = 90, mana = 160, cd = 12, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 2.2, max = 3.4, base = 20, range = 1, cast = CONST_ME_HITAREA_ORANGE, effect = SpireFx.SKYREND, impact2 = CONST_ME_CRITICAL_DAMAGE },
 	{ name = "Iron Will", words = "iron will", voc = { V }, level = 110, mana = 80, cd = 12, kind = "break_free", effect = CONST_ME_MAGIC_RED },
+	{ name = "Final Verdict", words = "final verdict", voc = { V }, level = 125, mana = 150, cd = 16, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 1.6, max = 2.4, base = 15, range = 1, execute = { below = 0.3, bonus = 0.6 }, cast = CONST_ME_HITAREA_ORANGE, effect = CONST_ME_FATAL, impact2 = CONST_ME_CRITICAL_DAMAGE },
 	{ name = "Bulwark Aura", words = "bulwark aura", voc = { V }, level = 140, mana = 200, cd = 60, kind = "dr_party", pct = 8, duration = 120, radius = 4, cast = CONST_ME_YELLOW_RINGS, effect = CONST_ME_BLOCKHIT },
-	{ name = "Undying Oath", words = "undying oath", voc = { V }, level = 200, mana = 250, cd = 120, kind = "undying", duration = 4, cast = CONST_ME_DIVINE_EMPOWERMENT, effect = CONST_ME_OUTBURST_YELLOW },
+	-- a second, late area attack (a line, still weak for its level), like the old knights' late sweep
+	{ name = "Faultline", words = "faultline", voc = { V }, level = 170, mana = 180, cd = 14, kind = "attack_area", area = "beam", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 0.9, max = 1.4, base = 10, root = 1, anim = "sweep", step = 90, cast = CONST_ME_GROUNDSHAKER, effect = SpireFx.GROUND_CRACK },
+	{ name = "Undying Oath", words = "undying oath", voc = { V }, level = 200, mana = 250, cd = 120, kind = "undying", duration = 4, cast = SpireFx.OATH_HALO, effect = CONST_ME_OUTBURST_YELLOW },
+	{ name = "Aegis Ascendant", words = "aegis ascendant", voc = { V }, level = 230, mana = 300, cd = 180, kind = "form", duration = 15, dr = 25, buff = "melee", amount = 15, aura = SpireFx.OATH_HALO, pulse = { kind = "taunt", radius = 3, effect = CONST_ME_SOUND_RED }, cast = CONST_ME_DIVINE_EMPOWERMENT },
+	{ name = "Mountainbreaker", words = "mountainbreaker", voc = { V }, level = 300, mana = 350, cd = 45, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 3.0, max = 4.6, base = 30, range = 5, dashTo = true, root = 3, effect = SpireFx.SKYREND, impact2 = SpireFx.GROUND_CRACK, ringFx = CONST_ME_GROUNDSHAKER },
 	{ name = "Last Bastion", words = "last bastion", voc = { V }, level = 120, mana = 250, cd = 60, kind = "heal_last_stand", scale = "level", min = 1.6, max = 2.4, base = 100, cast = CONST_ME_DIVINE_EMPOWERMENT, effect = CONST_ME_OUTBURST_YELLOW, lostArt = 5 },
 	{ name = "Unbroken Line", words = "unbroken line", voc = { V }, level = 250, mana = 400, cd = 90, kind = "dr_party", pct = 15, duration = 10, radius = 4, cast = CONST_ME_CHIVALRIOUS_CHALLENGE, effect = CONST_ME_BLOCKHIT, lostArt = 8 },
 
 	-- Ranger: daylight gold-white and forest green, arrows. Steady: something new every few levels, kiting tools early. -
-	{ name = "Piercing Shot", words = "piercing shot", voc = { R }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.8, max = 1.5, shoot = CONST_ANI_SNIPERARROW, effect = CONST_ME_HITAREA_GREEN },
+	{ name = "Piercing Shot", words = "piercing shot", voc = { R }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.8, max = 1.5, shoot = CONST_ANI_SNIPERARROW, effect = CONST_ME_HITAREA_GREEN, evolve = { { level = 50, shoot = CONST_ANI_CRYSTALLINEARROW }, { level = 120, shoot = CONST_ANI_DIAMONDARROW, impact2 = CONST_ME_HOLYDAMAGE } } },
 	{ name = "Field Dressing", words = "field dressing", voc = { R }, level = 10, mana = 40, cd = 1, kind = "heal_target", min = 1.2, max = 1.9, base = 15, shoot = CONST_ANI_SMALLHOLY, effect = CONST_ME_SPARKLING },
+	{ name = "Double Nock", words = "double nock", voc = { R }, level = 12, mana = 25, cd = 4, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.5, max = 0.9, hits = 2, hitGap = 180, shoot = CONST_ANI_SIMPLEARROW, effect = CONST_ME_HITAREA_GREEN },
 	{ name = "Keen Sight", words = "keen sight", voc = { R }, level = 13, mana = 40, cd = 10, kind = "reveal", radius = 6, cast = CONST_ME_OUTBURST_WHITE, effect = CONST_ME_MAGIC_BLUE },
-	{ name = "Scatter Shot", words = "scatter shot", voc = { R }, level = 16, mana = 45, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.7, max = 1.3, cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_HITAREA_GREEN },
+	{ name = "Scatter Shot", words = "scatter shot", voc = { R }, level = 16, mana = 45, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.7, max = 1.3, cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_HITAREA_GREEN, anim = "sweep", step = 70 },
+	{ name = "Recoil Shot", words = "recoil shot", voc = { R }, level = 18, mana = 40, cd = 10, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.7, max = 1.2, push = 2, shoot = CONST_ANI_BURSTARROW, effect = CONST_ME_BLOW_GREEN },
 	{ name = "Snare", words = "snare", voc = { R }, level = 20, mana = 60, cd = 10, kind = "root", duration = 3, shoot = CONST_ANI_EARTHARROW, effect = CONST_ME_ROOTS },
+	{ name = "Ambush Shot", words = "ambush shot", voc = { R }, level = 22, mana = 40, cd = 8, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 1.0, max = 1.6, opener = { bonus = 0.6 }, shoot = CONST_ANI_ONYXARROW, effect = CONST_ME_CLAW_GREEN },
 	{ name = "Disengage", words = "disengage", voc = { R }, level = 24, mana = 60, cd = 12, kind = "leap_away", tiles = 2, cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_POFF },
 	{ name = "Tracker's Mark", words = "trackers mark", voc = { R }, level = 28, mana = 60, cd = 15, kind = "mark", pct = 10, duration = 15, shoot = CONST_ANI_FLASHARROW, effect = CONST_ME_REDSMOKE },
+	{ name = "Caltrops", words = "caltrops", voc = { R }, level = 30, mana = 60, cd = 16, kind = "zone", at = "self", area = "square1", duration = 8, slowZone = true, cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_WOODEN_STAKES },
 	{ name = "Swift Foot", words = "swift foot", voc = { R }, level = 32, mana = 100, cd = 2, kind = "haste", speed = 0.7, duration = 22, effect = CONST_ME_WHIRLWIND_BLOW_GREEN },
+	{ name = "Ricochet", words = "ricochet", voc = { R }, level = 35, mana = 60, cd = 6, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.9, max = 1.4, chain = { jumps = 3, range = 3, falloff = 0.8 }, shoot = CONST_ANI_CRYSTALLINEARROW, effect = CONST_ME_HITAREA_GREEN },
 	{ name = "Radiant Shot", words = "radiant shot", voc = { R }, level = 38, mana = 70, cd = 4, kind = "attack_target", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.1, max = 1.8, base = 10, shoot = CONST_ANI_SMALLHOLY, effect = CONST_ME_HOLYDAMAGE },
-	{ name = "Sunburst Volley", words = "sunburst volley", voc = { R }, level = 45, mana = 110, cd = 6, kind = "attack_area", area = "target1", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 0.9, max = 1.5, shoot = CONST_ANI_HOLY, effect = CONST_ME_HOLYAREA },
+	{ name = "Mercy Shot", words = "mercy shot", voc = { R }, level = 42, mana = 60, cd = 8, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 1.0, max = 1.6, execute = { below = 0.3, bonus = 0.75 }, shoot = CONST_ANI_TARSALARROW, effect = CONST_ME_FATAL },
+	{ name = "Sunburst Volley", words = "sunburst volley", voc = { R }, level = 45, mana = 110, cd = 6, kind = "attack_area", area = "target1", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 0.9, max = 1.5, shoot = CONST_ANI_HOLY, effect = CONST_ME_HOLYAREA, anim = "burst", step = 110 },
 	{ name = "Camouflage", words = "camouflage", voc = { R }, level = 50, mana = 120, cd = 30, kind = "invisible", duration = 10, effect = CONST_ME_GREENSMOKE },
 	{ name = "Eagle Eye", words = "eagle eye", voc = { R }, level = 55, mana = 180, cd = 60, kind = "party_buff", buff = "crit", amount = 10, duration = 120, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_SPARKLING },
-	{ name = "Sanctified Ground", words = "sanctified ground", voc = { R }, level = 65, mana = 220, cd = 30, kind = "heal_zone", min = 0.6, max = 1.0, base = 20, radius = 2, duration = 6, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_HOLYAREA },
-	{ name = "Dawnpiercer", words = "dawnpiercer", voc = { R }, level = 80, mana = 160, cd = 10, kind = "attack_area", area = "beam7", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.5, max = 2.4, base = 10, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_HOLYDAMAGE },
+	{ name = "Rapid Volley", words = "rapid volley", voc = { R }, level = 60, mana = 110, cd = 10, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.45, max = 0.7, hits = 5, hitGap = 140, shoot = CONST_ANI_SIMPLEARROW, effect = CONST_ME_HITAREA_GREEN },
+	{ name = "Sanctified Ground", words = "sanctified ground", voc = { R }, level = 65, mana = 220, cd = 30, kind = "heal_zone", min = 0.6, max = 1.0, base = 20, radius = 2, duration = 6, cast = CONST_ME_DIVINE_DAZZLE, effect = SpireFx.SUN_SIGIL },
+	{ name = "Falling Star", words = "falling star", voc = { R }, level = 72, mana = 150, cd = 14, kind = "attack_area", area = "target1", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.6, max = 2.5, base = 10, delay = 1200, warn = SpireFx.SUN_SIGIL, skyshot = CONST_ANI_HOLY, anim = "burst", step = 90, cast = CONST_ME_DIVINE_DAZZLE, effect = SpireFx.LIGHT_NEEDLES },
+	{ name = "Dawnpiercer", words = "dawnpiercer", voc = { R }, level = 80, mana = 160, cd = 10, kind = "attack_area", area = "beam7", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.5, max = 2.4, base = 10, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_HOLYDAMAGE, anim = "sweep", step = 40 },
+	{ name = "Scatterwind", words = "scatterwind", voc = { R }, level = 90, mana = 100, cd = 20, kind = "attack_area", area = "ring1", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 0.3, max = 0.5, push = 3, anim = "burst", cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_BLOW_GREEN },
 	{ name = "Hunter's Focus", words = "hunters focus", voc = { R }, level = 100, mana = 150, cd = 60, kind = "party_buff", buff = "distance", amount = 15, duration = 20, radius = 0, cast = CONST_ME_DIVINE_EMPOWERMENT, effect = CONST_ME_SPARKLING },
-	{ name = "Lightrain", words = "lightrain", voc = { R }, level = 160, mana = 300, cd = 15, kind = "attack_area", area = "target2", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.6, max = 2.6, base = 20, shoot = CONST_ANI_HOLY, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_HOLYAREA },
+	{ name = "Pinning Volley", words = "pinning volley", voc = { R }, level = 130, mana = 200, cd = 14, kind = "attack_area", area = "wave", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 1.2, max = 1.9, base = 10, root = 2, anim = "sweep", step = 70, cast = CONST_ME_WHIRLWIND_BLOW_GREEN, effect = CONST_ME_WOODEN_STAKES },
+	{ name = "Lightrain", words = "lightrain", voc = { R }, level = 160, mana = 300, cd = 15, kind = "attack_area", area = "target2", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 1.6, max = 2.6, base = 20, shoot = CONST_ANI_HOLY, cast = CONST_ME_DIVINE_DAZZLE, effect = SpireFx.LIGHT_NEEDLES, anim = "rain" },
+	{ name = "Dawnstrider", words = "dawnstrider", voc = { R }, level = 230, mana = 300, cd = 180, kind = "form", duration = 15, buff = "distance", amount = 15, speed = 0.5, aura = SpireFx.SUN_SIGIL, pulse = { kind = "strike", count = 1, radius = 5, element = COMBAT_HOLYDAMAGE, min = 0.8, max = 1.2, shoot = CONST_ANI_HOLY, effect = SpireFx.LIGHT_NEEDLES }, scale = "distance", cast = CONST_ME_DIVINE_EMPOWERMENT },
+	{ name = "Constellation", words = "constellation", voc = { R }, level = 300, mana = 600, cd = 45, kind = "attack_area", area = "target3", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 2.4, max = 3.6, base = 30, delay = 800, warn = SpireFx.SUN_SIGIL, anim = "rain", cast = CONST_ME_DIVINE_DAZZLE, effect = SpireFx.LIGHT_NEEDLES },
 	{ name = "Hawk's Path", words = "hawks path", voc = { R }, level = 120, mana = 150, cd = 20, kind = "blink", tiles = 6, cast = CONST_ME_WHIRLWIND_BLOW_WHITE, effect = CONST_ME_OUTBURST_WHITE, lostArt = 5 },
-	{ name = "Volley of Dawn", words = "volley of dawn", voc = { R }, level = 250, mana = 500, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 2.6, max = 4.0, base = 30, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_DIVINE_GRENADE, lostArt = 8 },
+	{ name = "Volley of Dawn", words = "volley of dawn", voc = { R }, level = 250, mana = 500, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_HOLYDAMAGE, scale = "distance", min = 2.6, max = 4.0, base = 30, cast = CONST_ME_DIVINE_DAZZLE, effect = CONST_ME_DIVINE_GRENADE, lostArt = 8, anim = "burst", step = 130 },
 
 	-- Arcanist: ember orange and storm violet. Front-loaded glass cannon: most attacks by 30, big spikes at 55, 80, 100. --
-	{ name = "Ember Strike", words = "ember strike", voc = { A }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_FIREDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_FIRE, effect = CONST_ME_FIREATTACK },
+	{ name = "Ember Strike", words = "ember strike", voc = { A }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_FIREDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_FIRE, effect = CONST_ME_FIREATTACK, evolve = { { level = 50, impact2 = CONST_ME_EXPLOSIONHIT }, { level = 120, effect = SpireFx.EMBER_PILLAR, impact2 = CONST_ME_EXPLOSIONHIT } } },
 	{ name = "Mending Spark", words = "mending spark", voc = { A }, level = 9, mana = 25, cd = 1, kind = "heal_self", min = 1.0, max = 1.6, base = 10, effect = CONST_ME_PURPLEENERGY },
-	{ name = "Volt Strike", words = "volt strike", voc = { A }, level = 12, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_ENERGYDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_ENERGY, effect = CONST_ME_PURPLE_ELECTRIC_SPARK },
+	{ name = "Volt Strike", words = "volt strike", voc = { A }, level = 12, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_ENERGYDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_ENERGY, effect = CONST_ME_PURPLE_ELECTRIC_SPARK, evolve = { { level = 50, impact2 = CONST_ME_ENERGYHIT }, { level = 120, effect = SpireFx.VIOLET_BOLT, impact2 = CONST_ME_ENERGYHIT } } },
 	{ name = "Mana Ward", words = "mana ward", voc = { A }, level = 14, mana = 50, cd = 14, kind = "manashield", duration = 180, effect = CONST_ME_PURPLETELEPORT },
-	{ name = "Fireburst Wave", words = "fireburst wave", voc = { A }, level = 18, mana = 80, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_FIREDAMAGE, min = 1.3, max = 2.1, cast = CONST_ME_ORANGE_ENERGY_SPARK, effect = CONST_ME_FIREAREA },
-	{ name = "Arc Beam", words = "arc beam", voc = { A }, level = 23, mana = 110, cd = 4, kind = "attack_area", area = "beam", element = COMBAT_ENERGYDAMAGE, min = 1.6, max = 2.6, cast = CONST_ME_PURPLE_ELECTRIC_SPARK, effect = CONST_ME_ENERGYHIT },
+	{ name = "Forked Arc", words = "forked arc", voc = { A }, level = 16, mana = 45, cd = 6, kind = "attack_target", element = COMBAT_ENERGYDAMAGE, min = 0.9, max = 1.5, chain = { jumps = 3, range = 3, falloff = 0.75 }, shoot = CONST_ANI_ENERGY, effect = CONST_ME_PURPLE_ELECTRIC_SPARK },
+	{ name = "Fireburst Wave", words = "fireburst wave", voc = { A }, level = 18, mana = 80, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_FIREDAMAGE, min = 1.3, max = 2.1, cast = CONST_ME_ORANGE_ENERGY_SPARK, effect = CONST_ME_FIREAREA, anim = "sweep", step = 80 },
+	{ name = "Ember Barrage", words = "ember barrage", voc = { A }, level = 20, mana = 50, cd = 6, kind = "attack_target", element = COMBAT_FIREDAMAGE, min = 0.5, max = 0.8, hits = 4, hitGap = 150, shoot = CONST_ANI_FIRE, effect = CONST_ME_FIREATTACK },
+	{ name = "Arc Beam", words = "arc beam", voc = { A }, level = 23, mana = 110, cd = 4, kind = "attack_area", area = "beam", element = COMBAT_ENERGYDAMAGE, min = 1.6, max = 2.6, cast = CONST_ME_PURPLE_ELECTRIC_SPARK, effect = CONST_ME_ENERGYHIT, anim = "sweep", step = 45 },
 	{ name = "Gale Step", words = "gale step", voc = { A }, level = 26, mana = 100, cd = 2, kind = "haste", speed = 0.7, duration = 22, effect = CONST_ME_PURPLESMOKE },
 	{ name = "Conjure Fire Rune", words = "conjure fire rune", voc = { A }, level = 27, mana = 300, cd = 2, kind = "conjure", item = 3191, count = 4, effect = CONST_ME_FIRE_SPARKLES },
 	{ name = "Blink", words = "blink", voc = { A }, level = 30, mana = 80, cd = 14, kind = "blink", tiles = 3, cast = CONST_ME_PURPLETELEPORT, effect = CONST_ME_PURPLETELEPORT },
+	{ name = "Emberfield", words = "emberfield", voc = { A }, level = 32, mana = 120, cd = 14, kind = "zone", at = "target", area = "target1", duration = 6, element = COMBAT_FIREDAMAGE, min = 0.35, max = 0.6, base = 2, shoot = CONST_ANI_FIRE, effect = SpireFx.EMBER_PILLAR },
 	{ name = "Searing Brand", words = "searing brand", voc = { A }, level = 35, mana = 60, cd = 8, kind = "attack_target", element = COMBAT_FIREDAMAGE, min = 1.0, max = 1.6, shoot = CONST_ANI_FIRE, effect = CONST_ME_HITBYFIRE, dot = { type = CONDITION_FIRE, ticks = 6, interval = 2000, pct = 0.12 } },
+	{ name = "Repulse", words = "repulse", voc = { A }, level = 38, mana = 90, cd = 12, kind = "attack_area", area = "ring1", element = COMBAT_ENERGYDAMAGE, min = 0.8, max = 1.3, push = 2, anim = "burst", cast = CONST_ME_PURPLEENERGY, effect = CONST_ME_ENERGYHIT },
+	{ name = "Gravity Well", words = "gravity well", voc = { A }, level = 42, mana = 120, cd = 20, kind = "gravity", radius = 3, tiles = 2, duration = 2, shoot = CONST_ANI_ENERGYBALL, effect = SpireFx.VOID_PULL },
 	{ name = "Conjure Strike Rune", words = "conjure strike rune", voc = { A }, level = 45, mana = 600, cd = 2, kind = "conjure", item = 3155, count = 3, effect = CONST_ME_PURPLEENERGY },
 	{ name = "Summon Ember Sprite", words = "summon ember sprite", voc = { A }, level = 50, mana = 300, cd = 30, kind = "summon", monster = "Ember Sprite", effect = CONST_ME_ORANGETELEPORT },
-	{ name = "Stormcall", words = "stormcall", voc = { A }, level = 55, mana = 300, cd = 16, kind = "attack_area", area = "ring2", element = COMBAT_ENERGYDAMAGE, min = 2.2, max = 3.4, base = 10, cast = CONST_ME_STORM, effect = CONST_ME_ENERGYAREA },
+	{ name = "Stormcall", words = "stormcall", voc = { A }, level = 55, mana = 300, cd = 16, kind = "attack_area", area = "ring2", element = COMBAT_ENERGYDAMAGE, min = 2.2, max = 3.4, base = 10, cast = CONST_ME_STORM, effect = SpireFx.VIOLET_BOLT, anim = "rain" },
 	{ name = "Arcane Empower", words = "arcane empower", voc = { A }, level = 60, mana = 220, cd = 60, kind = "party_buff", buff = "magic", amount = 10, duration = 120, cast = CONST_ME_PURPLETELEPORT, effect = CONST_ME_PURPLEENERGY },
-	{ name = "Inferno Core", words = "inferno core", voc = { A }, level = 80, mana = 400, cd = 20, kind = "attack_area", area = "ring2", element = COMBAT_FIREDAMAGE, min = 2.6, max = 4.0, base = 20, cast = CONST_ME_EXPLOSIONAREA, effect = CONST_ME_FIREAREA },
+	{ name = "Skybrand", words = "skybrand", voc = { A }, level = 70, mana = 220, cd = 14, kind = "attack_area", area = "target1", element = COMBAT_FIREDAMAGE, min = 2.4, max = 3.6, base = 15, delay = 1200, warn = SpireFx.EMBER_SIGIL, anim = "burst", step = 90, cast = CONST_ME_ORANGE_ENERGY_SPARK, effect = SpireFx.METEOR },
+	{ name = "Inferno Core", words = "inferno core", voc = { A }, level = 80, mana = 400, cd = 20, kind = "attack_area", area = "ring2", element = COMBAT_FIREDAMAGE, min = 2.6, max = 4.0, base = 20, cast = CONST_ME_EXPLOSIONAREA, effect = SpireFx.EMBER_PILLAR, anim = "burst", step = 130 },
+	{ name = "Firewake", words = "firewake", voc = { A }, level = 90, mana = 150, cd = 16, kind = "trail_dash", tiles = 4, duration = 4, element = COMBAT_FIREDAMAGE, min = 0.4, max = 0.7, base = 2, cast = CONST_ME_ORANGETELEPORT, effect = SpireFx.EMBER_PILLAR },
 	{ name = "Cinder Lance", words = "cinder lance", voc = { A }, level = 100, mana = 250, cd = 30, kind = "attack_target", element = COMBAT_FIREDAMAGE, min = 3.2, max = 4.8, base = 30, shoot = CONST_ANI_EXPLOSION, effect = CONST_ME_EXPLOSIONHIT, impact2 = CONST_ME_FIRE_SPARKLES },
-	{ name = "Arc Cataclysm", words = "arc cataclysm", voc = { A }, level = 130, mana = 500, cd = 12, kind = "attack_area", area = "bigbeam", element = COMBAT_ENERGYDAMAGE, min = 2.4, max = 3.6, base = 20, cast = CONST_ME_STORM, effect = CONST_ME_PURPLE_ELECTRIC_SPARK },
-	{ name = "Meteor Rain", words = "meteor rain", voc = { A }, level = 120, mana = 600, cd = 40, kind = "attack_area", area = "target2", element = COMBAT_FIREDAMAGE, min = 3.2, max = 5.0, base = 30, shoot = CONST_ANI_FIRE, cast = CONST_ME_EXPLOSIONAREA, effect = CONST_ME_FIREAREA, lostArt = 5 },
+	{ name = "Arc Cataclysm", words = "arc cataclysm", voc = { A }, level = 130, mana = 500, cd = 12, kind = "attack_area", area = "bigbeam", element = COMBAT_ENERGYDAMAGE, min = 2.4, max = 3.6, base = 20, cast = CONST_ME_STORM, effect = SpireFx.VIOLET_BOLT, anim = "sweep", step = 60 },
+	{ name = "Storm Lash", words = "storm lash", voc = { A }, level = 160, mana = 350, cd = 16, kind = "attack_target", element = COMBAT_ENERGYDAMAGE, min = 2.0, max = 3.0, base = 20, chain = { jumps = 6, range = 4, falloff = 1.0 }, shoot = CONST_ANI_ENERGYBALL, effect = SpireFx.VIOLET_BOLT },
+	{ name = "Stormheart", words = "stormheart", voc = { A }, level = 230, mana = 400, cd = 180, kind = "form", duration = 15, buff = "magic", amount = 15, aura = CONST_ME_PURPLEENERGY, pulse = { kind = "strike", count = 2, radius = 4, element = COMBAT_ENERGYDAMAGE, min = 0.9, max = 1.4, effect = SpireFx.VIOLET_BOLT }, cast = CONST_ME_STORM },
+	{ name = "Worldfire", words = "worldfire", voc = { A }, level = 300, mana = 800, cd = 45, kind = "attack_area", area = "target3", element = COMBAT_FIREDAMAGE, min = 3.4, max = 5.2, base = 40, delay = 1000, warn = SpireFx.EMBER_SIGIL, anim = "rain", cast = CONST_ME_EXPLOSIONAREA, effect = SpireFx.METEOR },
+	{ name = "Meteor Rain", words = "meteor rain", voc = { A }, level = 120, mana = 600, cd = 40, kind = "attack_area", area = "target2", element = COMBAT_FIREDAMAGE, min = 3.2, max = 5.0, base = 30, shoot = CONST_ANI_FIRE, cast = CONST_ME_EXPLOSIONAREA, effect = SpireFx.METEOR, lostArt = 5, anim = "rain", delay = 900, warn = SpireFx.EMBER_SIGIL },
 	{ name = "Mirror Image", words = "mirror image", voc = { A }, level = 250, mana = 300, cd = 60, kind = "decoy", monster = "Mirror Image", duration = 5, effect = CONST_ME_PURPLETELEPORT, lostArt = 8 },
 
 	-- Mystic: frost teal and living green. Healer's rhythm: heals first, party tools mid-game, damage a step behind the Arcanist. -
-	{ name = "Frost Strike", words = "frost strike", voc = { M }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_ICEDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_ICE, effect = CONST_ME_ICEATTACK },
+	{ name = "Frost Strike", words = "frost strike", voc = { M }, level = 8, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_ICEDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_ICE, effect = CONST_ME_ICEATTACK, evolve = { { level = 50, impact2 = CONST_ME_ICEAREA }, { level = 120, effect = SpireFx.ICE_SPIRES, impact2 = CONST_ME_ICEAREA } } },
 	{ name = "Dewfall", words = "dewfall", voc = { M }, level = 9, mana = 25, cd = 1, kind = "heal_self", min = 1.1, max = 1.8, base = 12, effect = CONST_ME_GREEN_RINGS },
-	{ name = "Thorn Strike", words = "thorn strike", voc = { M }, level = 13, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_EARTHDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_EARTH, effect = CONST_ME_CARNIPHILA },
+	{ name = "Sapdrain", words = "sapdrain", voc = { M }, level = 11, mana = 25, cd = 6, kind = "attack_target", element = COMBAT_EARTHDAMAGE, min = 0.7, max = 1.2, leech = 0.5, shoot = CONST_ANI_SMALLEARTH, effect = CONST_ME_SMALLPLANTS },
+	{ name = "Thorn Strike", words = "thorn strike", voc = { M }, level = 13, mana = 20, cd = 2, kind = "attack_target", element = COMBAT_EARTHDAMAGE, min = 1.2, max = 2.0, shoot = CONST_ANI_EARTH, effect = CONST_ME_CARNIPHILA, evolve = { { level = 50, impact2 = CONST_ME_PLANTATTACK }, { level = 120, effect = SpireFx.THORN_BURST } } },
 	{ name = "Mend Other", words = "mend other", voc = { M }, level = 16, mana = 70, cd = 1, kind = "heal_target", min = 1.6, max = 2.6, base = 20, shoot = CONST_ANI_GREENSTAR, effect = CONST_ME_MAGIC_GREEN },
-	{ name = "Frost Wave", words = "frost wave", voc = { M }, level = 21, mana = 70, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_ICEDAMAGE, min = 1.0, max = 1.7, slow = true, cast = CONST_ME_ICETORNADO, effect = CONST_ME_ICEAREA },
+	{ name = "Hailshards", words = "hailshards", voc = { M }, level = 18, mana = 45, cd = 6, kind = "attack_target", element = COMBAT_ICEDAMAGE, min = 0.55, max = 0.9, hits = 3, hitGap = 160, shoot = CONST_ANI_SMALLICE, effect = CONST_ME_ICEATTACK },
+	{ name = "Frost Wave", words = "frost wave", voc = { M }, level = 21, mana = 70, cd = 4, kind = "attack_area", area = "wave", element = COMBAT_ICEDAMAGE, min = 1.0, max = 1.7, slow = true, cast = CONST_ME_ICETORNADO, effect = CONST_ME_ICEAREA, anim = "sweep", step = 80 },
 	{ name = "Conjure Healing Rune", words = "conjure healing rune", voc = { M }, level = 24, mana = 400, cd = 2, kind = "conjure", item = 3160, count = 1, effect = CONST_ME_GREEN_RINGS },
+	{ name = "Bramble Patch", words = "bramble patch", voc = { M }, level = 26, mana = 100, cd = 14, kind = "zone", at = "target", area = "target1", duration = 8, element = COMBAT_EARTHDAMAGE, min = 0.3, max = 0.5, base = 2, slowZone = true, shoot = CONST_ANI_EARTH, effect = SpireFx.THORN_BURST },
 	{ name = "Purify", words = "purify", voc = { M }, level = 28, mana = 90, cd = 6, kind = "purify", radius = 4, cast = CONST_ME_GREEN_RINGS, effect = CONST_ME_WHITE_SMOKES },
+	{ name = "Bloomburst", words = "bloomburst", voc = { M }, level = 30, mana = 90, cd = 8, kind = "heal_burst", min = 1.2, max = 2.0, base = 15, element = COMBAT_EARTHDAMAGE, burst = 0.5, shoot = CONST_ANI_GREENSTAR, effect = SpireFx.BLOOM, burstEffect = CONST_ME_PLANTATTACK },
 	{ name = "Barkskin", words = "barkskin", voc = { M }, level = 32, mana = 150, cd = 30, kind = "dr_party", pct = 10, duration = 120, radius = 4, cast = CONST_ME_GREEN_RINGS, effect = CONST_ME_SMALLPLANTS },
 	{ name = "Mass Mend", words = "mass mend", voc = { M }, level = 36, mana = 160, cd = 2, kind = "heal_party", min = 1.0, max = 1.6, base = 20, radius = 4, cast = CONST_ME_GREEN_RINGS, effect = CONST_ME_MAGIC_GREEN },
+	{ name = "Rimebind", words = "rimebind", voc = { M }, level = 38, mana = 80, cd = 12, kind = "attack_target", element = COMBAT_ICEDAMAGE, min = 0.6, max = 1.0, root = 3, shoot = CONST_ANI_ICE, effect = CONST_ME_ICEATTACK, impact2 = CONST_ME_GIANTICE },
 	{ name = "Rejuvenate", words = "rejuvenate", voc = { M }, level = 42, mana = 100, cd = 6, kind = "hot_target", duration = 10, shoot = CONST_ANI_GREENSTAR, effect = CONST_ME_PULSE_GREEN },
+	{ name = "Tidecrash", words = "tidecrash", voc = { M }, level = 45, mana = 110, cd = 14, kind = "attack_area", area = "wave", element = COMBAT_ICEDAMAGE, min = 0.8, max = 1.3, push = 2, anim = "sweep", step = 90, cast = CONST_ME_WATERSPLASH, effect = CONST_ME_WATERSPLASH },
 	{ name = "Conjure Binding Rune", words = "conjure binding rune", voc = { M }, level = 48, mana = 500, cd = 2, kind = "conjure", item = 3165, count = 1, effect = CONST_ME_ROOTS },
 	{ name = "Summon Wolf Companion", words = "summon wolf companion", voc = { M }, level = 50, mana = 300, cd = 30, kind = "summon", monster = "Wolf Companion", effect = CONST_ME_GREENSMOKE },
-	{ name = "Thornfield", words = "thornfield", voc = { M }, level = 55, mana = 300, cd = 16, kind = "attack_area", area = "ring2", element = COMBAT_EARTHDAMAGE, min = 1.8, max = 2.9, base = 10, cast = CONST_ME_BIGPLANTS, effect = CONST_ME_PLANTATTACK },
-	{ name = "Lifeward", words = "lifeward", voc = { M }, level = 65, mana = 120, cd = 12, kind = "dr_target", pct = 25, duration = 6, shoot = CONST_ANI_GREENSTAR, effect = CONST_ME_GREEN_RINGS },
-	{ name = "Glacier Core", words = "glacier core", voc = { M }, level = 80, mana = 400, cd = 20, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 2.2, max = 3.4, base = 20, cast = CONST_ME_GIANTICE, effect = CONST_ME_ICETORNADO },
-	{ name = "Verdant Renewal", words = "verdant renewal", voc = { M }, level = 100, mana = 400, cd = 4, kind = "heal_party", min = 2.0, max = 3.0, base = 40, radius = 5, cast = CONST_ME_BIGPLANTS, effect = CONST_ME_PULSE_GREEN },
+	{ name = "Thornfield", words = "thornfield", voc = { M }, level = 55, mana = 300, cd = 16, kind = "attack_area", area = "ring2", element = COMBAT_EARTHDAMAGE, min = 1.8, max = 2.9, base = 10, cast = CONST_ME_BIGPLANTS, effect = SpireFx.THORN_BURST, anim = "burst", step = 130 },
+	{ name = "Linked Mend", words = "linked mend", voc = { M }, level = 60, mana = 140, cd = 4, kind = "heal_chain", min = 1.4, max = 2.2, base = 20, jumps = 3, range = 4, falloff = 0.8, shoot = CONST_ANI_GREENSTAR, effect = SpireFx.BLOOM },
+	{ name = "Lifeward", words = "lifeward", voc = { M }, level = 65, mana = 120, cd = 12, kind = "dr_target", pct = 25, duration = 6, shoot = CONST_ANI_GREENSTAR, effect = SpireFx.LEAF_WARD },
+	{ name = "Lifeseed", words = "lifeseed", voc = { M }, level = 75, mana = 250, cd = 120, kind = "seed", duration = 20, pct = 35, shoot = CONST_ANI_GREENSTAR, effect = SpireFx.LEAF_WARD },
+	{ name = "Glacier Core", words = "glacier core", voc = { M }, level = 80, mana = 400, cd = 20, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 2.2, max = 3.4, base = 20, cast = CONST_ME_GIANTICE, effect = SpireFx.ICE_SPIRES, anim = "burst", step = 130 },
+	{ name = "Icefall", words = "icefall", voc = { M }, level = 90, mana = 280, cd = 16, kind = "attack_area", area = "target2", element = COMBAT_ICEDAMAGE, min = 2.0, max = 3.2, base = 15, delay = 900, warn = SpireFx.FROST_SIGIL, anim = "rain", cast = CONST_ME_ICETORNADO, effect = SpireFx.ICE_SPIRES },
+	{ name = "Verdant Renewal", words = "verdant renewal", voc = { M }, level = 100, mana = 400, cd = 4, kind = "heal_party", min = 2.0, max = 3.0, base = 40, radius = 5, cast = CONST_ME_BIGPLANTS, effect = SpireFx.BLOOM },
 	{ name = "Mana Bloom", words = "mana bloom", voc = { M }, level = 130, mana = 200, cd = 60, kind = "mana_party", duration = 30, radius = 5, cast = CONST_ME_GREEN_RINGS, effect = CONST_ME_MAGIC_BLUE },
+	{ name = "Overgrowth", words = "overgrowth", voc = { M }, level = 160, mana = 450, cd = 30, kind = "attack_area", area = "ring3", element = COMBAT_EARTHDAMAGE, min = 2.4, max = 3.6, base = 20, root = 2, anim = "burst", step = 120, cast = CONST_ME_BIGPLANTS, effect = SpireFx.THORN_BURST },
+	{ name = "Wildheart", words = "wildheart", voc = { M }, level = 230, mana = 400, cd = 180, kind = "form", duration = 16, dr = 10, aura = SpireFx.BLOOM, pulse = { kind = "heal", every = 2, radius = 4, min = 0.8, max = 1.2, base = 20, effect = CONST_ME_MAGIC_GREEN }, cast = CONST_ME_BIGPLANTS },
+	{ name = "Worldroot", words = "worldroot", voc = { M }, level = 300, mana = 700, cd = 90, kind = "heal_party", min = 3.0, max = 4.4, base = 60, radius = 6, ward = { pct = 30, duration = 6 }, purify = true, cast = CONST_ME_BIGPLANTS, effect = SpireFx.BLOOM },
 	{ name = "Wellspring", words = "wellspring", voc = { M }, level = 120, mana = 400, cd = 45, kind = "heal_zone", min = 1.0, max = 1.6, base = 40, radius = 3, duration = 8, cast = CONST_ME_WATERSPLASH, effect = CONST_ME_PULSE_GREEN, lostArt = 5 },
-	{ name = "Winter's Breath", words = "winters breath", voc = { M }, level = 250, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 3.2, max = 5.0, base = 30, cast = CONST_ME_GIANTICE, effect = CONST_ME_ICEAREA, lostArt = 8 },
+	{ name = "Winter's Breath", words = "winters breath", voc = { M }, level = 250, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 3.2, max = 5.0, base = 30, cast = CONST_ME_GIANTICE, effect = SpireFx.ICE_SPIRES, lostArt = 8, anim = "burst", step = 150 },
 }
 
 -- Retired in the 2026-11-13 overhaul (docs/design/spells.md, "Retired"): First Aid (each vocation now has its own
@@ -138,13 +217,183 @@ end
 
 -- Pure: the spell group for a row
 function SpireSpells.group(row)
-	if row.kind == "attack_target" or row.kind == "attack_area" then
+	if row.kind == "attack_target" or row.kind == "attack_area" or row.kind == "trail_dash" or (row.kind == "zone" and row.element) then
 		return "attack"
 	end
 	if row.kind:find("heal") then
 		return "healing"
 	end
 	return "support"
+end
+
+-- Pure: is this an attack that needs the engine's "aggressive" rules (no casting in safe zones, PvP checks)?
+function SpireSpells.aggressive(row)
+	local k = row.kind
+	return SpireSpells.group(row) == "attack" or k == "root" or k == "mark" or k == "pull_target" or k == "gravity"
+end
+
+-- Area shapes, drawn facing north with the caster at the bottom (2 or 3 marks the centre; 3 = the centre is hit too).
+SpireSpells.AREAS = {
+	wave = { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 2, 0 } },
+	beam = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 2 } },
+	beam7 = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 2 } },
+	bigbeam = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 }, { 0, 2, 0 } },
+	ring1 = { { 1, 1, 1 }, { 1, 2, 1 }, { 1, 1, 1 } },
+	ring2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
+	ring3 = { { 0, 0, 1, 1, 1, 0, 0 }, { 0, 1, 1, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 2, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1, 0, 0 } },
+	square1 = { { 1, 1, 1 }, { 1, 3, 1 }, { 1, 1, 1 } },
+	-- centred on the target (needs a target)
+	target1 = { { 1, 1, 1 }, { 1, 3, 1 }, { 1, 1, 1 } },
+	target2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 3, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
+	target3 = { { 0, 0, 1, 1, 1, 0, 0 }, { 0, 1, 1, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1, 1, 1 }, { 1, 1, 1, 3, 1, 1, 1 }, { 1, 1, 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 1, 1, 0 }, { 0, 0, 1, 1, 1, 0, 0 } },
+}
+SpireSpells.DIRECTIONAL = { wave = true, beam = true, beam7 = true, bigbeam = true }
+SpireSpells.ON_TARGET = { target1 = true, target2 = true, target3 = true }
+
+-- Pure: the tiles of an area as offsets from its centre, turned to face `dir` (0 north, 1 east, 2 south, 3 west).
+-- Each entry: { dx, dy, ring = distance from the centre, row = distance in front of the caster }.
+function SpireSpells.areaOffsets(areaName, dir)
+	local grid = SpireSpells.AREAS[areaName]
+	local cx, cy
+	for y, line in ipairs(grid) do
+		for x, v in ipairs(line) do
+			if v >= 2 then
+				cx, cy = x, y
+			end
+		end
+	end
+	local out = {}
+	for y, line in ipairs(grid) do
+		for x, v in ipairs(line) do
+			if v == 1 or v == 3 then
+				local dx, dy = x - cx, y - cy
+				local rx, ry = dx, dy
+				if dir == 1 then
+					rx, ry = -dy, dx
+				elseif dir == 2 then
+					rx, ry = -dx, -dy
+				elseif dir == 3 then
+					rx, ry = dy, -dx
+				end
+				table.insert(out, { dx = rx, dy = ry, ring = math.max(math.abs(dx), math.abs(dy)), row = -dy })
+			end
+		end
+	end
+	return out
+end
+
+-- Pure: split an area's tiles into the stages of its animation. Returns a list of stages (each a list of offsets)
+-- and the milliseconds between stages. rnd(n) returns 1..n (math.random in the game, fixed in tests).
+function SpireSpells.stages(row, dir, rnd)
+	local tiles = SpireSpells.areaOffsets(row.area, dir or 0)
+	local anim = row.anim
+	if not anim then
+		return { tiles }, 0
+	end
+	local stages = {}
+	local function put(i, t)
+		stages[i] = stages[i] or {}
+		table.insert(stages[i], t)
+	end
+	if anim == "burst" then
+		for _, t in ipairs(tiles) do
+			put(t.ring + 1, t)
+		end
+	elseif anim == "sweep" then
+		for _, t in ipairs(tiles) do
+			put(math.max(1, t.row), t)
+		end
+	elseif anim == "spiral" then
+		table.sort(tiles, function(a, b)
+			return math.atan2(a.dx, -a.dy) % (2 * math.pi) < math.atan2(b.dx, -b.dy) % (2 * math.pi)
+		end)
+		for i, t in ipairs(tiles) do
+			put(i, t)
+		end
+	elseif anim == "rain" then
+		for i = #tiles, 2, -1 do
+			local j = rnd(i)
+			tiles[i], tiles[j] = tiles[j], tiles[i]
+		end
+		local per = math.max(1, math.ceil(#tiles / 8))
+		for i, t in ipairs(tiles) do
+			put(math.ceil(i / per), t)
+		end
+	end
+	-- close gaps (a shape may have no tile on some ring or row)
+	local packed = {}
+	local last = 0
+	for i in pairs(stages) do
+		last = math.max(last, i)
+	end
+	for i = 1, last do
+		if stages[i] then
+			table.insert(packed, stages[i])
+		end
+	end
+	return packed, row.step or (anim == "rain" and 110 or 100)
+end
+
+-- Pure: how many tiles an area covers (used by the balance test)
+function SpireSpells.areaSize(areaName)
+	return #SpireSpells.areaOffsets(areaName, 0)
+end
+
+-- Pure: the look of a spell for a caster of this level (row.evolve upgrades the cast/shoot/effect/impact2 fields)
+function SpireSpells.visuals(row, level)
+	local v = { cast = row.cast, shoot = row.shoot, effect = row.effect, impact2 = row.impact2 }
+	for _, step in ipairs(row.evolve or {}) do
+		if level >= step.level then
+			for _, k in ipairs({ "cast", "shoot", "effect", "impact2" }) do
+				if step[k] then
+					v[k] = step[k]
+				end
+			end
+		end
+	end
+	return v
+end
+
+-- Pure: extra damage share from a row's execute / opener riders, for a target at this health share (0..1)
+function SpireSpells.riderBonus(row, healthShare)
+	local bonus = 0
+	if row.execute and healthShare <= row.execute.below then
+		bonus = bonus + row.execute.bonus
+	end
+	if row.opener and healthShare >= 1 then
+		bonus = bonus + row.opener.bonus
+	end
+	return bonus
+end
+
+-- Elemental Clash (docs/design/spells.md 3.5): a spell leaves its element on a monster for a few seconds; the next
+-- spell of a DIFFERENT element (from anyone) clashes with it for extra damage and uses the mark up.
+-- Physical spells and weapon arts never leave a mark, but they do set off a clash.
+SpireClash = { BONUS_PCT = 25, SECONDS = 8, state = {} } -- creatureId -> { el, untilTime }
+SpireClash.NAMES = {
+	["energy+fire"] = "Flashfire", ["fire+ice"] = "Steamburst", ["earth+fire"] = "Wildfire", ["fire+holy"] = "Sunflare",
+	["energy+ice"] = "Shatterstorm", ["earth+energy"] = "Groundstrike", ["energy+holy"] = "Skyfire",
+	["earth+ice"] = "Rimethorn", ["holy+ice"] = "Prism", ["earth+holy"] = "Blossom",
+}
+
+-- Pure: what happens when damage of element `el` ("fire", "energy", "ice", "earth", "holy", "physical" or nil for
+-- anything else) lands on a creature whose current mark is `mark` (or nil).
+-- Returns bonusPct, newMark (false = clear it, nil = leave it), clashName.
+function SpireClash.resolve(mark, el)
+	if not el then
+		return 0, nil, nil
+	end
+	if mark and mark ~= el then
+		local a, b = mark, el
+		if a > b then
+			a, b = b, a
+		end
+		return SpireClash.BONUS_PCT, false, SpireClash.NAMES[a .. "+" .. b] or "Breaker"
+	end
+	if el == "physical" then
+		return 0, nil, nil
+	end
+	return 0, el, nil
 end
 
 -- Pure: Skystep needs a real gap. gapHasFloor = the tile you would pass through (above your head when going up,
@@ -182,6 +431,22 @@ function SpireSpells.unlockedAt(level, baseVocation)
 	return out
 end
 
+-- Pure: the next level above `level` at which this vocation learns something, and the names it learns then
+function SpireSpells.nextUnlock(level, baseVocation)
+	local best, names = nil, {}
+	for _, row in ipairs(SpireSpells.list) do
+		if not row.lostArt and SpireSpells.allowed(row, baseVocation) then
+			local l = SpireSpells.levelFor(row, baseVocation)
+			if l > level and (not best or l < best) then
+				best, names = l, { row.name }
+			elseif l == best then
+				table.insert(names, row.name)
+			end
+		end
+	end
+	return best, names
+end
+
 -- Pure: damage/heal range for a row. stat = the scaling value (magic level, weapon skill or character level).
 function SpireSpells.range(row, level, stat)
 	local base = row.base or 5
@@ -193,7 +458,7 @@ end
 
 -- Timed damage reduction / damage-taken marks / last-stand (Iron Hide, Guardian Stance, Barkskin, Lifeward,
 -- Tracker's Mark, Undying Oath)
-SpireBuffs = { reduce = {}, mark = {}, undying = {} } -- creatureId -> { pct, untilTime }
+SpireBuffs = { reduce = {}, mark = {}, undying = {}, reflect = {}, seed = {} } -- creatureId -> { pct, untilTime }
 
 function SpireBuffs.addReduction(creatureId, pct, seconds)
 	local cur = SpireBuffs.reduce[creatureId]

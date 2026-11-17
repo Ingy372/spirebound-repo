@@ -8,19 +8,7 @@ local VOC_NAMES = {
 	[4] = { "vanguard;true", "blade warden;true" },
 }
 
-local AREAS = {
-	wave = { { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 3, 0 } },
-	beam = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 3 } },
-	beam7 = { { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 1 }, { 3 } },
-	bigbeam = { { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 }, { 1, 1, 1 }, { 0, 1, 0 }, { 0, 1, 0 }, { 0, 3, 0 } },
-	ring2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 2, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
-	ring1 = { { 1, 1, 1 }, { 1, 2, 1 }, { 1, 1, 1 } },
-	-- centred on the target (needs a target)
-	target1 = { { 1, 1, 1 }, { 1, 3, 1 }, { 1, 1, 1 } },
-	target2 = { { 0, 1, 1, 1, 0 }, { 1, 1, 1, 1, 1 }, { 1, 1, 3, 1, 1 }, { 1, 1, 1, 1, 1 }, { 0, 1, 1, 1, 0 } },
-}
-local DIRECTIONAL = { wave = true, beam = true, beam7 = true, bigbeam = true }
-local ON_TARGET = { target1 = true, target2 = true }
+local AREAS, DIRECTIONAL, ON_TARGET = SpireSpells.AREAS, SpireSpells.DIRECTIONAL, SpireSpells.ON_TARGET
 
 -- the value a row's numbers grow with
 local function stat(row, player)
@@ -141,6 +129,14 @@ KINDS.heal_party = function(row, player)
 	local mn, mx = formula(row, player)
 	for _, m in ipairs(partyAround(player, row.radius)) do
 		m:addHealth(math.random(mn, mx))
+		if row.ward then
+			SpireBuffs.addReduction(m:getId(), row.ward.pct, row.ward.duration)
+		end
+		if row.purify then
+			for _, c in ipairs(BAD_CONDITIONS) do
+				m:removeCondition(c)
+			end
+		end
 		fx(m:getPosition(), row.effect)
 	end
 	return true
@@ -538,33 +534,64 @@ KINDS.summon = function(row, player)
 	return true
 end
 
--- Attack spells use Combat objects so damage follows the normal PvP and armor rules
-local function makeCombat(row, i)
+-- ---------------------------------------------------------------------------------------------------------------
+-- Attacks. Every hit goes through a Combat object, so damage follows the normal PvP and armour rules. The numbers
+-- of the hit being dealt right now sit in `cast` (set just before the Combat runs), which lets one spell deal
+-- several different hits: stages of an area, chain jumps with falloff, execute bonuses.
+local cast = { mn = 0, mx = 0 }
+
+local function makeCombat(row, tag)
 	local combat = Combat()
 	combat:setParameter(COMBAT_PARAM_TYPE, row.element)
-	combat:setParameter(COMBAT_PARAM_EFFECT, row.effect)
-	if row.shoot then
-		combat:setParameter(COMBAT_PARAM_DISTANCEEFFECT, row.shoot)
-	end
 	if row.element == COMBAT_PHYSICALDAMAGE then
 		combat:setParameter(COMBAT_PARAM_BLOCKARMOR, true)
 	end
-	if row.area then
-		combat:setArea(createCombatArea(AREAS[row.area]))
-	end
-	if row.slow then
-		local cond = Condition(CONDITION_PARALYZE)
-		cond:setParameter(CONDITION_PARAM_TICKS, 2000)
-		cond:setFormula(-0.3, 0, -0.35, 0)
-		combat:addCondition(cond)
-	end
-	local fname = "SpireSpellFormula_" .. i
-	_G[fname] = function(player, level, magicLevel)
-		local mn, mx = formula(row, player)
-		return -mn, -mx
+	local fname = "SpireSpellFormula_" .. tag
+	_G[fname] = function()
+		return -cast.mn, -cast.mx
 	end
 	combat:setCallback(CALLBACK_PARAM_LEVELMAGICVALUE, fname)
 	return combat
+end
+
+-- Bosses cannot be dragged or thrown around (the monster generator marks them as "pushes creatures")
+local function movable(c)
+	return c and c:isMonster() and not c:getType():canPushCreatures()
+end
+SpireSpells.movable = movable
+
+-- a wild monster (not somebody's companion)
+local function wild(c)
+	return c:isMonster() and not c:getMaster()
+end
+
+-- Slide a creature up to `tiles` steps in a direction; stops at walls and other creatures. Returns steps moved.
+local function shove(c, dx, dy, tiles)
+	if not movable(c) or (dx == 0 and dy == 0) then
+		return 0
+	end
+	local pos, moved = c:getPosition(), 0
+	for _ = 1, tiles do
+		local nxt = Position(pos.x + dx, pos.y + dy, pos.z)
+		if not walkable(nxt) then
+			break
+		end
+		pos, moved = nxt, moved + 1
+	end
+	if moved > 0 then
+		c:teleportTo(pos, true)
+	end
+	return moved
+end
+SpireSpells.shove = shove
+
+local function pin(c, seconds, strength)
+	local cond = Condition(CONDITION_PARALYZE)
+	-- players are held half as long (DESIGN: crowd control on players is weaker)
+	local secs = c:isPlayer() and math.max(1, math.floor(seconds / 2)) or seconds
+	cond:setParameter(CONDITION_PARAM_TICKS, secs * 1000)
+	cond:setFormula(-strength, 0, -strength - 0.05, 0)
+	c:addCondition(cond)
 end
 
 -- Bleeding / burning after the hit (Rending Blow, Searing Brand): each tick is a share of the spell's average hit
@@ -581,12 +608,533 @@ local function applyDot(row, player, target)
 	target:addCondition(cond)
 end
 
+-- What a hit does besides damage. target may be nil (it died); from = where the blow came from (for knock-back).
+local function riders(player, row, target, dealt, from)
+	if row.leech and dealt > 0 then
+		player:addHealth(math.floor(dealt * row.leech))
+		fx(player:getPosition(), CONST_ME_MAGIC_RED)
+	end
+	if not target or target:getHealth() <= 0 then
+		return
+	end
+	applyDot(row, player, target)
+	if row.vuln and target:isMonster() then
+		SpireBuffs.addMark(target:getId(), row.vuln.pct, row.vuln.duration)
+	end
+	if row.push and from then
+		local dx, dy = stepToward(from, target:getPosition())
+		shove(target, dx, dy, row.push)
+	end
+	if row.root then
+		pin(target, row.root, 0.9)
+		fx(target:getPosition(), CONST_ME_ROOTS)
+	end
+	if row.slow and wild(target) then
+		pin(target, 2, 0.3)
+	end
+end
+
+-- One hit on one creature. Returns the damage dealt.
+local function hitCreature(player, row, combat, target, mult, vis, from)
+	local tid, tpos = target:getId(), target:getPosition()
+	local before = target:getHealth()
+	local mn, mx = formula(row, player)
+	cast.mn, cast.mx = math.floor(mn * mult), math.floor(mx * mult)
+	combat:execute(player, Variant(tid))
+	fx(tpos, vis.effect)
+	fx(tpos, vis.impact2)
+	local after = Creature(tid)
+	local dealt = before - (after and after:getHealth() or 0)
+	if dealt > 0 then
+		riders(player, row, after, dealt, from or player:getPosition())
+	end
+	return dealt
+end
+
+-- One hit on everything standing on a tile (walls and tiles out of sight are skipped). Returns the damage dealt.
+local function hitTile(player, row, combat, pos, mult, vis, from)
+	local tile = Tile(pos)
+	if not tile or not tile:getGround() or tile:hasProperty(CONST_PROP_BLOCKPROJECTILE) or not from:isSightClear(pos) then
+		return 0
+	end
+	local seen = {}
+	for _, c in ipairs(tile:getCreatures() or {}) do
+		if c ~= player then
+			table.insert(seen, { id = c:getId(), hp = c:getHealth() })
+		end
+	end
+	local mn, mx = formula(row, player)
+	cast.mn, cast.mx = math.floor(mn * mult), math.floor(mx * mult)
+	combat:execute(player, Variant(pos))
+	fx(pos, vis.effect)
+	local total = 0
+	for _, s in ipairs(seen) do
+		local c = Creature(s.id)
+		local dealt = s.hp - (c and c:getHealth() or 0)
+		if dealt > 0 then
+			total = total + dealt
+			riders(player, row, c, dealt, from)
+		end
+	end
+	return total
+end
+
+-- run fn now (no wait) or later; the caster is looked up again when it runs, because they may have left
+local function later(ms, pid, fn)
+	if ms <= 0 then
+		fn(Player(pid))
+		return
+	end
+	addEvent(function()
+		local caster = Player(pid)
+		if caster then
+			fn(caster)
+		end
+	end, ms)
+end
+
+-- Area attacks play out in stages (SpireSpells.stages): rings outward, rows away from you, a spiral, or a rain.
+local function castArea(player, row, combat, var)
+	local origin = player:getPosition()
+	local centre, dir, from = origin, 0, origin
+	if ON_TARGET[row.area] then
+		local target = Creature(var:getNumber()) or player:getTarget()
+		if not target then
+			return false
+		end
+		centre, from = target:getPosition(), target:getPosition()
+	elseif DIRECTIONAL[row.area] then
+		dir = player:getDirection()
+	end
+	local vis = SpireSpells.visuals(row, player:getLevel())
+	local stages, step = SpireSpells.stages(row, dir, math.random)
+	local delay = row.delay or 0
+	if row.skyshot then -- the shot goes up and comes down later
+		shootFx(origin, Position(origin.x - 2, origin.y - 6, origin.z), row.skyshot)
+	elseif delay == 0 then
+		shootFx(origin, centre, vis.shoot)
+	end
+	if row.warn then
+		for _, stage in ipairs(stages) do
+			for _, t in ipairs(stage) do
+				local pos = Position(centre.x + t.dx, centre.y + t.dy, centre.z)
+				if Tile(pos) and from:isSightClear(pos) then
+					fx(pos, row.warn)
+				end
+			end
+		end
+	end
+	local pid = player:getId()
+	for i, stage in ipairs(stages) do
+		later(delay + (i - 1) * step, pid, function(caster)
+			for _, t in ipairs(stage) do
+				local pos = Position(centre.x + t.dx, centre.y + t.dy, centre.z)
+				if delay > 0 and row.shoot then -- delayed strikes fall from the sky
+					shootFx(Position(pos.x - 3, pos.y - 5, pos.z), pos, row.shoot)
+				end
+				hitTile(caster, row, combat, pos, 1, vis, from)
+			end
+		end)
+	end
+	return true
+end
+
+-- the nearest wild monster to `pos` within `range` that is not in `done`
+local function nextInChain(pos, range, done)
+	local best, bestDist
+	for _, c in ipairs(Game.getSpectators(pos, false, false, range, range, range, range)) do
+		if wild(c) and not done[c:getId()] and c:getHealth() > 0 and pos:isSightClear(c:getPosition()) then
+			local d = pos:getDistance(c:getPosition())
+			if not best or d < bestDist then
+				best, bestDist = c, d
+			end
+		end
+	end
+	return best
+end
+
+local function dashNextTo(player, target, tiles)
+	local pos = player:getPosition()
+	for _ = 1, tiles do
+		local dx, dy = stepToward(pos, target:getPosition())
+		local nxt = Position(pos.x + dx, pos.y + dy, pos.z)
+		if (dx == 0 and dy == 0) or not walkable(nxt) then
+			break
+		end
+		pos = nxt
+	end
+	if pos ~= player:getPosition() then
+		fx(player:getPosition(), CONST_ME_BLOODYSTEPS)
+		player:teleportTo(pos, true)
+	end
+end
+
+-- Single-target attacks: one hit, several hits in a row, a chain, with optional leap, execute and opener bonuses.
+local function castTarget(player, row, combat, var)
+	local target = Creature(var:getNumber()) or player:getTarget()
+	if not target then
+		return false
+	end
+	local vis = SpireSpells.visuals(row, player:getLevel())
+	if row.dashTo then
+		dashNextTo(player, target, row.range or 4)
+	end
+	local bonus = SpireSpells.riderBonus(row, target:getHealth() / math.max(1, target:getMaxHealth()))
+	local mult = 1 + bonus
+	local pid, tid = player:getId(), target:getId()
+	shootFx(player:getPosition(), target:getPosition(), vis.shoot)
+	if bonus > 0 then
+		fx(target:getPosition(), CONST_ME_CRITICAL_DAMAGE)
+	end
+	if row.ringFx then
+		for _, t in ipairs(SpireSpells.areaOffsets("ring1", 0)) do
+			fx(Position(target:getPosition().x + t.dx, target:getPosition().y + t.dy, target:getPosition().z), row.ringFx)
+		end
+	end
+	local lastPos = target:getPosition()
+	hitCreature(player, row, combat, target, mult, vis)
+	for h = 2, row.hits or 1 do
+		later((h - 1) * (row.hitGap or 150), pid, function(caster)
+			local t = Creature(tid)
+			if t and t:getHealth() > 0 and t:getPosition().z == caster:getPosition().z and caster:getPosition():getDistance(t:getPosition()) <= 8 then
+				shootFx(caster:getPosition(), t:getPosition(), vis.shoot)
+				hitCreature(caster, row, combat, t, mult, vis)
+			end
+		end)
+	end
+	if row.chain then
+		local done = { [tid] = true }
+		local function jump(n, m)
+			later(140, pid, function(caster)
+				local nxt = nextInChain(lastPos, row.chain.range, done)
+				if not nxt then
+					return
+				end
+				done[nxt:getId()] = true
+				shootFx(lastPos, nxt:getPosition(), vis.shoot)
+				lastPos = nxt:getPosition()
+				hitCreature(caster, row, combat, nxt, m, vis)
+				if n < row.chain.jumps then
+					jump(n + 1, m * row.chain.falloff)
+				end
+			end)
+		end
+		jump(1, mult * row.chain.falloff)
+	end
+	return true
+end
+
+-- Zones: tiles that keep hurting (and/or slowing) for a few seconds. One tick a second, the first at once.
+local function runZone(player, row, combat, tiles)
+	local vis = SpireSpells.visuals(row, player:getLevel())
+	local pid = player:getId()
+	for tick = 0, row.duration - 1 do
+		later(tick * 1000, pid, function(caster)
+			for _, pos in ipairs(tiles) do
+				if combat then
+					hitTile(caster, row, combat, pos, 1, vis, pos)
+				else
+					fx(pos, vis.effect)
+				end
+				if row.slowZone then
+					local tile = Tile(pos)
+					for _, c in ipairs(tile and tile:getCreatures() or {}) do
+						if wild(c) then
+							pin(c, 2, 0.5)
+						end
+					end
+				end
+			end
+		end)
+	end
+end
+
+local zoneCombat = {} -- row -> Combat, filled in the registration loop
+
+KINDS.zone = function(row, player, var)
+	local centre = player:getPosition()
+	if row.at == "target" then
+		local target = Creature(var:getNumber()) or player:getTarget()
+		if not target then
+			player:sendCancelMessage("You need a target.")
+			return false
+		end
+		centre = target:getPosition()
+		shootFx(player:getPosition(), centre, row.shoot)
+	end
+	local tiles = {}
+	for _, t in ipairs(SpireSpells.areaOffsets(row.area, 0)) do
+		local pos = Position(centre.x + t.dx, centre.y + t.dy, centre.z)
+		local tile = Tile(pos)
+		if tile and tile:getGround() and not tile:hasProperty(CONST_PROP_BLOCKPROJECTILE) and centre:isSightClear(pos) then
+			table.insert(tiles, pos)
+		end
+	end
+	runZone(player, row, zoneCombat[row], tiles)
+	return true
+end
+
+-- Firewake: dash forward and leave the tiles behind you burning
+KINDS.trail_dash = function(row, player)
+	local pos = player:getPosition()
+	local dest, trail = pos, { pos }
+	for _ = 1, row.tiles do
+		local nxt = Position(dest)
+		nxt:getNextPosition(player:getDirection())
+		if not walkable(nxt) then
+			break
+		end
+		dest = nxt
+		table.insert(trail, dest)
+	end
+	if dest == pos then
+		player:sendCancelMessage(RETURNVALUE_NOTPOSSIBLE)
+		return false
+	end
+	table.remove(trail) -- not the tile you land on
+	player:teleportTo(dest, true)
+	fx(dest, row.cast)
+	runZone(player, row, zoneCombat[row], trail)
+	return true
+end
+
+-- Iron Reach: drag a monster to your side (bosses are too heavy) and make it yours to fight
+KINDS.pull_target = function(row, player, var)
+	local target = Creature(var:getNumber()) or player:getTarget()
+	if not target or not target:isMonster() then
+		player:sendCancelMessage("You need a monster as your target.")
+		return false
+	end
+	if not movable(target) then
+		player:sendCancelMessage("It is too heavy to drag.")
+		return false
+	end
+	local ppos, tpos = player:getPosition(), target:getPosition()
+	shootFx(ppos, tpos, row.shoot)
+	local dx, dy = stepToward(ppos, tpos)
+	local spots = { { dx, dy }, { dx, 0 }, { 0, dy }, { dx, -dy }, { -dx, dy }, { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 }, { 1, 1 }, { -1, -1 }, { 1, -1 }, { -1, 1 } }
+	for _, s in ipairs(spots) do
+		local pos = Position(ppos.x + s[1], ppos.y + s[2], ppos.z)
+		if (s[1] ~= 0 or s[2] ~= 0) and (pos == tpos or walkable(pos)) then
+			if pos ~= tpos then
+				target:teleportTo(pos, true)
+			end
+			target:setTarget(player)
+			fx(pos, row.effect)
+			return true
+		end
+	end
+	player:sendCancelMessage(RETURNVALUE_NOTENOUGHROOM)
+	return false
+end
+
+-- Gravity Well: everything near the target is dragged toward it and slowed, ready for an area spell
+KINDS.gravity = function(row, player, var)
+	local target = Creature(var:getNumber()) or player:getTarget()
+	if not target then
+		player:sendCancelMessage("You need a target.")
+		return false
+	end
+	local centre = target:getPosition()
+	shootFx(player:getPosition(), centre, row.shoot)
+	fx(centre, row.effect)
+	local r = row.radius
+	local list = Game.getSpectators(centre, false, false, r, r, r, r)
+	-- nearest first, so the ones in front make room for the ones behind
+	table.sort(list, function(a, b)
+		return centre:getDistance(a:getPosition()) < centre:getDistance(b:getPosition())
+	end)
+	for _, c in ipairs(list) do
+		if wild(c) and centre:isSightClear(c:getPosition()) then
+			for _ = 1, row.tiles do
+				local dx, dy = stepToward(c:getPosition(), centre)
+				if shove(c, dx, dy, 1) == 0 then
+					break
+				end
+			end
+			pin(c, row.duration, 0.5)
+			fx(c:getPosition(), CONST_ME_PURPLEENERGY)
+		end
+	end
+	return true
+end
+
+-- Standard of Defiance: a banner that keeps calling the monsters around it onto you
+KINDS.banner = function(row, player)
+	local pos, pid = player:getPosition(), player:getId()
+	local r = row.radius
+	for t = 0, row.duration - 1 do
+		later(t * 1000, pid, function(caster)
+			fx(pos, row.effect)
+			if t % 2 == 0 and caster:getPosition().z == pos.z and caster:getPosition():getDistance(pos) <= r + 2 then
+				for _, c in ipairs(Game.getSpectators(pos, false, false, r, r, r, r)) do
+					if wild(c) then
+						c:setTarget(caster)
+						fx(c:getPosition(), CONST_ME_SOUND_RED)
+					end
+				end
+			end
+		end)
+	end
+	return true
+end
+
+-- Counterguard: part of every blow a monster lands on you is thrown back at it
+KINDS.reflect = function(row, player)
+	SpireBuffs.reflect[player:getId()] = { pct = row.pct, untilTime = os.time() + row.duration }
+	fx(player:getPosition(), row.effect)
+	return true
+end
+
+-- Lifeseed: the next blow that would kill this player leaves them alive, and the seed heals them
+KINDS.seed = function(row, player, var)
+	local target = allyTarget(player, var)
+	SpireBuffs.seed[target:getId()] = { pct = row.pct, untilTime = os.time() + row.duration }
+	shootFx(player:getPosition(), target:getPosition(), row.shoot)
+	fx(target:getPosition(), row.effect)
+	return true
+end
+
+-- Linked Mend: the heal jumps on to the most wounded party members nearby
+KINDS.heal_chain = function(row, player, var)
+	local first = allyTarget(player, var)
+	local mn, mx = formula(row, player)
+	local pid = player:getId()
+	local done = { [first:getId()] = true }
+	shootFx(player:getPosition(), first:getPosition(), row.shoot)
+	first:addHealth(math.random(mn, mx))
+	fx(first:getPosition(), row.effect)
+	local lastPos = first:getPosition()
+	local function jump(n, mult)
+		later(160, pid, function(caster)
+			local best, bestShare
+			for _, m in ipairs(partyAround(caster, 30)) do
+				local share = m:getHealth() / math.max(1, m:getMaxHealth())
+				if not done[m:getId()] and share < 1 and m:getPosition().z == lastPos.z and m:getPosition():getDistance(lastPos) <= row.range and (not best or share < bestShare) then
+					best, bestShare = m, share
+				end
+			end
+			if not best then
+				return
+			end
+			done[best:getId()] = true
+			shootFx(lastPos, best:getPosition(), row.shoot)
+			lastPos = best:getPosition()
+			best:addHealth(math.floor(math.random(mn, mx) * mult))
+			fx(lastPos, row.effect)
+			if n < row.jumps then
+				jump(n + 1, mult * row.falloff)
+			end
+		end)
+	end
+	jump(1, row.falloff)
+	return true
+end
+
+-- Bloomburst: heal an ally; the bloom bursts and hurts the monsters next to them
+KINDS.heal_burst = function(row, player, var)
+	local target = allyTarget(player, var)
+	local mn, mx = formula(row, player)
+	local centre = target:getPosition()
+	shootFx(player:getPosition(), centre, row.shoot)
+	target:addHealth(math.random(mn, mx))
+	fx(centre, row.effect)
+	local vis = { effect = row.burstEffect }
+	for _, t in ipairs(SpireSpells.areaOffsets("ring1", 0)) do
+		hitTile(player, row, zoneCombat[row], Position(centre.x + t.dx, centre.y + t.dy, centre.z), row.burst, vis, centre)
+	end
+	return true
+end
+
+-- Forms: for a short time the caster is something more. An aura plays every second, and the form pulses:
+-- it strikes nearby monsters, heals the party, or calls monsters onto the caster.
+local function formPulse(caster, row)
+	local p = row.pulse
+	local pos = caster:getPosition()
+	local r = p.radius
+	if p.kind == "taunt" then
+		for _, c in ipairs(Game.getSpectators(pos, false, false, r, r, r, r)) do
+			if wild(c) then
+				c:setTarget(caster)
+				fx(c:getPosition(), p.effect)
+			end
+		end
+	elseif p.kind == "heal" then
+		local mn, mx = formula(p, caster)
+		for _, m in ipairs(partyAround(caster, r)) do
+			m:addHealth(math.random(mn, mx))
+			fx(m:getPosition(), p.effect)
+		end
+	elseif p.kind == "strike" then
+		local pool = {}
+		for _, c in ipairs(Game.getSpectators(pos, false, false, r, r, r, r)) do
+			if wild(c) and c:getHealth() > 0 and pos:isSightClear(c:getPosition()) then
+				table.insert(pool, c)
+			end
+		end
+		for _ = 1, math.min(p.count, #pool) do
+			local c = table.remove(pool, math.random(#pool))
+			shootFx(pos, c:getPosition(), p.shoot)
+			hitCreature(caster, p, zoneCombat[row], c, 1, p)
+		end
+	end
+end
+
+KINDS.form = function(row, player)
+	local pid = player:getId()
+	if row.dr then
+		SpireBuffs.addReduction(pid, row.dr, row.duration)
+	end
+	if row.buff then
+		local c = Condition(CONDITION_ATTRIBUTES)
+		c:setParameter(CONDITION_PARAM_SUBID, 89)
+		c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
+		if row.buff == "melee" then
+			c:setParameter(CONDITION_PARAM_SKILL_MELEEPERCENT, 100 + row.amount)
+		elseif row.buff == "distance" then
+			c:setParameter(CONDITION_PARAM_SKILL_DISTANCEPERCENT, 100 + row.amount)
+		elseif row.buff == "magic" then
+			c:setParameter(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT, 100 + row.amount)
+		end
+		c:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
+		player:addCondition(c)
+	end
+	if row.speed then
+		local c = Condition(CONDITION_HASTE)
+		c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
+		c:setFormula(row.speed, -40, row.speed, 40)
+		player:addCondition(c)
+	end
+	local every = row.pulse and row.pulse.every or 1
+	for t = 0, row.duration - 1 do
+		later(t * 1000, pid, function(caster)
+			fx(caster:getPosition(), row.aura)
+			if row.pulse and t % every == 0 then
+				formPulse(caster, row)
+			end
+		end)
+	end
+	return true
+end
+
 local VOC_ALL = { "arcanist;true", "high arcanist;true", "mystic;true", "elder mystic;true", "ranger;true", "far warden;true", "vanguard;true", "blade warden;true" }
+
+local NEEDS_TARGET = { attack_target = true, root = true, mark = true, pull_target = true, gravity = true }
+local ALLY_PARAM = { heal_target = true, hot_target = true, dr_target = true, seed = true, heal_chain = true, heal_burst = true }
 
 for i, row in ipairs(SpireSpells.list) do
 	local spell = Spell("instant")
 	local isAttack = row.kind == "attack_target" or row.kind == "attack_area"
 	local combat = isAttack and makeCombat(row, i) or nil
+	if not isAttack and row.element then -- zones, trails and blooms deal their damage through a Combat too
+		zoneCombat[row] = makeCombat(row, i)
+	end
+	if row.pulse and row.pulse.element then
+		row.pulse.scale = row.scale
+		zoneCombat[row] = makeCombat(row.pulse, i .. "p")
+	elseif row.pulse then
+		row.pulse.scale = row.scale
+	end
 	function spell.onCastSpell(creature, var)
 		local player = creature:getPlayer()
 		if not player then
@@ -601,15 +1149,16 @@ for i, row in ipairs(SpireSpells.list) do
 			player:sendCancelMessage(row.name .. " is a Lost Art. Finish every story quest on Floor " .. row.lostArt .. " to learn it.")
 			return false
 		end
-		fx(player:getPosition(), row.cast)
-		if combat then
-			local target = player:getTarget()
-			local ok = combat:execute(creature, var)
-			if ok and target and row.kind == "attack_target" then
-				fx(target:getPosition(), row.impact2)
-				applyDot(row, player, target)
-			end
-			return ok
+		local vis = SpireSpells.visuals(row, player:getLevel())
+		if row.kind == "attack_area" then
+			fx(player:getPosition(), vis.cast)
+			return castArea(player, row, combat, var)
+		elseif row.kind == "attack_target" then
+			fx(player:getPosition(), vis.cast)
+			return castTarget(player, row, combat, var)
+		end
+		if row.kind ~= "trail_dash" then
+			fx(player:getPosition(), vis.cast)
 		end
 		return KINDS[row.kind](row, player, var)
 	end
@@ -624,11 +1173,11 @@ for i, row in ipairs(SpireSpells.list) do
 	spell:mana(row.mana)
 	spell:needLearn(false)
 	spell:isPremium(false)
-	spell:isAggressive(isAttack or row.kind == "root" or row.kind == "mark")
-	if row.kind == "attack_target" or row.kind == "root" or row.kind == "mark" or ON_TARGET[row.area] then
+	spell:isAggressive(SpireSpells.aggressive(row))
+	if NEEDS_TARGET[row.kind] or ON_TARGET[row.area] or row.at == "target" then
 		spell:needTarget(true)
 		spell:range(row.range or (row.kind == "attack_target" and 5 or 7))
-	elseif row.kind == "heal_target" or row.kind == "hot_target" or row.kind == "dr_target" then
+	elseif ALLY_PARAM[row.kind] then
 		spell:needCasterTargetOrDirection(false)
 		spell:hasPlayerNameParam(true)
 		spell:hasParams(true)
@@ -652,7 +1201,26 @@ for i, row in ipairs(SpireSpells.list) do
 	spell:register()
 end
 
--- Damage reduction buffs, marks and Undying Oath (applies to every player and monster that registers the event)
+-- Everything that changes damage as it lands: Elemental Clash, damage reduction, marks, Counterguard, Lifeseed and
+-- Undying Oath (applies to every player and monster that registers the event)
+local CLASH_ELEMENT = {
+	[COMBAT_FIREDAMAGE] = "fire", [COMBAT_ENERGYDAMAGE] = "energy", [COMBAT_ICEDAMAGE] = "ice",
+	[COMBAT_EARTHDAMAGE] = "earth", [COMBAT_HOLYDAMAGE] = "holy", [COMBAT_PHYSICALDAMAGE] = "physical",
+}
+
+-- Leave a creature on 1 health if this damage would kill it. Returns the new primary and secondary damage and
+-- whether anything was held back. Damage can arrive as negative numbers here: work on sizes and keep the sign.
+local function holdAtOne(creature, primaryDamage, secondaryDamage)
+	local sign = (primaryDamage < 0 or secondaryDamage < 0) and -1 or 1
+	local p, s = math.abs(primaryDamage), math.abs(secondaryDamage)
+	local allowed = SpireBuffs.undyingClamp(creature:getHealth(), p + s)
+	if allowed < p + s then
+		s = math.min(s, allowed)
+		return sign * (allowed - s), sign * s, true
+	end
+	return primaryDamage, secondaryDamage, false
+end
+
 local buffs = CreatureEvent("SpireBuffDamage")
 function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
 	if primaryType == COMBAT_HEALING then
@@ -660,6 +1228,21 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	end
 	local now = os.time()
 	local cid = creature:getId()
+	-- Elemental Clash: spells (and weapon arts) from players on monsters
+	if origin == ORIGIN_SPELL and attacker and attacker:isPlayer() and creature:isMonster() then
+		local st = SpireClash.state[cid]
+		local bonus, newMark, name = SpireClash.resolve(st and st.untilTime >= now and st.el or nil, CLASH_ELEMENT[primaryType])
+		if bonus > 0 then
+			primaryDamage = math.floor(primaryDamage * (1 + bonus / 100))
+			creature:getPosition():sendMagicEffect(SpireFx.CLASH)
+			creature:say(name .. "!", TALKTYPE_MONSTER_SAY)
+		end
+		if newMark == false then
+			SpireClash.state[cid] = nil
+		elseif newMark then
+			SpireClash.state[cid] = { el = newMark, untilTime = now + SpireClash.SECONDS }
+		end
+	end
 	local r = SpireBuffs.reduce[cid]
 	local m = SpireBuffs.mark[cid]
 	local rp = (r and r.untilTime >= now) and r.pct or 0
@@ -671,16 +1254,40 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	if SpirePerks and SpirePerks.onDealt and creature:isMonster() then -- floor perks (R12)
 		primaryDamage = SpirePerks.onDealt(attacker, creature, primaryDamage)
 	end
+	-- Counterguard: a share of a monster's physical blow goes back to it (a moment later, never inside this event)
+	local rf = SpireBuffs.reflect[cid]
+	if rf and rf.untilTime >= now and attacker and attacker:isMonster() and primaryType == COMBAT_PHYSICALDAMAGE then
+		local back = math.floor(math.abs(primaryDamage) * rf.pct / 100)
+		if back > 0 then
+			addEvent(function(pid, aid, dmg)
+				local p, a = Player(pid), Creature(aid)
+				if p and a then
+					doTargetCombatHealth(p, a, COMBAT_PHYSICALDAMAGE, -dmg, -dmg, CONST_ME_BLOCKHIT, ORIGIN_NONE)
+				end
+			end, 50, cid, attacker:getId(), back)
+		end
+	end
+	local held
+	local seed = SpireBuffs.seed[cid]
+	if seed and seed.untilTime >= now then
+		primaryDamage, secondaryDamage, held = holdAtOne(creature, primaryDamage, secondaryDamage)
+		if held then
+			SpireBuffs.seed[cid] = nil
+			creature:getPosition():sendMagicEffect(SpireFx.LEAF_WARD)
+			addEvent(function(id, pct)
+				local c = Creature(id)
+				if c then
+					c:addHealth(math.floor(c:getMaxHealth() * pct / 100))
+					c:getPosition():sendMagicEffect(SpireFx.BLOOM)
+				end
+			end, 50, cid, seed.pct)
+		end
+	end
 	local u = SpireBuffs.undying[cid]
 	if u and u >= now then
-		-- damage can arrive as negative numbers here; work on sizes and keep the sign
-		local sign = (primaryDamage < 0 or secondaryDamage < 0) and -1 or 1
-		local p, s = math.abs(primaryDamage), math.abs(secondaryDamage)
-		local allowed = SpireBuffs.undyingClamp(creature:getHealth(), p + s)
-		if allowed < p + s then
-			s = math.min(s, allowed)
-			primaryDamage, secondaryDamage = sign * (allowed - s), sign * s
-			creature:getPosition():sendMagicEffect(CONST_ME_OUTBURST_YELLOW)
+		primaryDamage, secondaryDamage, held = holdAtOne(creature, primaryDamage, secondaryDamage)
+		if held then
+			creature:getPosition():sendMagicEffect(SpireFx.OATH_HALO)
 		end
 	end
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
@@ -694,9 +1301,18 @@ function advance.onAdvance(player, skill, oldLevel, newLevel)
 		return true
 	end
 	local base = player:getVocation():getBaseId()
+	local learned = false
 	for level = oldLevel + 1, newLevel do
 		for _, row in ipairs(SpireSpells.unlockedAt(level, base)) do
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("New spell: %s. Say \"%s\" to cast it.", row.name, row.words))
+			learned = true
+		end
+	end
+	if learned then
+		fx(player:getPosition(), CONST_ME_OPENING_MAGIC_BOOK)
+		local nextLevel, names = SpireSpells.nextUnlock(newLevel, base)
+		if nextLevel then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Next spell at level %d: %s.", nextLevel, table.concat(names, ", ")))
 		end
 	end
 	return true
@@ -714,4 +1330,5 @@ login:register()
 -- Forget timed buffs when a creature leaves the game
 SpireCleanup.add(function(cid)
 	SpireBuffs.reduce[cid], SpireBuffs.mark[cid], SpireBuffs.undying[cid] = nil, nil, nil
+	SpireBuffs.reflect[cid], SpireBuffs.seed[cid], SpireClash.state[cid] = nil, nil, nil
 end)
