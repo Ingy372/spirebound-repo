@@ -12,8 +12,9 @@ Repo: GitHub `Ingy372/spirebound-repo` (private). Jay's local copy: `C:\Users\Mu
 4. **After each task:**
    - make sure the server still compiles and boots (`tools/test_boot.sh`);
    - commit with a plain-English message;
-   - check the task off in `ROADMAP.md`;
-   - add a 2–3 line entry to `PROGRESS.md`.
+   - check the task off and move it from `ROADMAP.md` to `ROADMAP_DONE.md` (same phase heading);
+   - add a 2–3 line entry to `PROGRESS.md`; when it passes ~30 KB, move entries older than a few days to `PROGRESS_ARCHIVE.md`.
+   - Keep the files read every session lean (Jay, 2026-11-17, to save tokens): finished work goes to the archive files, which are read only when needed.
 5. **Write everything meant for Jay in plain English.** He is not a programmer.
 6. **Don't buy anything, install paid software, or deploy to any server other than Jay's PC.** Pushing to GitHub is fine.
 7. **Commit and push to GitHub often**, so no work is lost when usage runs out.
@@ -55,7 +56,9 @@ Repo: GitHub `Ingy372/spirebound-repo` (private). Jay's local copy: `C:\Users\Mu
 |---|---|
 | DESIGN.md | The game bible |
 | ROADMAP.md | Numbered tasks with "Done when" checks |
-| PROGRESS.md | Log: 2–3 lines per finished task |
+| ROADMAP_DONE.md | Finished roadmap tasks (archive, read only when needed) |
+| PROGRESS.md | Log: 2–3 lines per finished task (recent entries) |
+| PROGRESS_ARCHIVE.md | Older log entries (archive, read only when needed) |
 | QUESTIONS.md | Questions for Jay, each with Claude's recommendation (assumed until answered) |
 | PLAYTEST.md | Jay's playtest notes |
 | ART_REQUESTS.md | Sprites Jay needs to make with Grok |
