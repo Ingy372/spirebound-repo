@@ -203,6 +203,8 @@ it back), and the walls with `tools/autopilot_routes/pvp_terrain_*.json`.
 **Speed fix (Jay's playtest, 2026-11-17: haste made him slower):** the engine's speed formula gives the new speed,
 not the change. All speed effects now go through `SpireSpells.setSpeed(condition, pct)`.
 
+**Client spellbook (2026-11-18):** after any change to the spell or sword-skill tables, run `python tools/gen_spellbook.py` (rewrites the client's Spell List data; `--check` says if it is stale).
+
 ## 4. Spell lists
 
 Words are what you say (always the spell name in lower case, without apostrophes). Visuals are cast → projectile →

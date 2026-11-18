@@ -1,0 +1,11 @@
+{
+ "name": "spellbook_check",
+ "about": "Open the client spellbook as a level 300 Arcanist and check it lists Spirebound spells (tools/gen_spellbook.py)",
+ "character": "Spell Arcanist",
+ "timeout": 90,
+ "steps": [
+  {"do": "wait", "seconds": 3},
+  {"do": "spellbook", "name": "spellbook_arcanist"},
+  {"do": "say", "text": "/pilot logout"}
+ ]
+}

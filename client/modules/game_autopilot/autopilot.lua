@@ -261,6 +261,26 @@ function handlers.react(player)
     if now() - stepT >= (step.seconds or 30) then nextStep() end
 end
 
+-- open the spellbook window, log what it lists, screenshot it, close it
+function handlers.spellbook()
+    local m = modules.game_spelllist
+    if not stepData.sent then
+        if m and m.toggle then m.toggle() end
+        stepData.sent = now()
+    elseif now() - stepData.sent > 1.5 and not stepData.shot then
+        local list, shown = m and m.spellList, {}
+        for _, child in ipairs(list and list:getChildren() or {}) do
+            if child:isVisible() then table.insert(shown, child:getId()) end
+        end
+        log('spellbook: ' .. #shown .. ' shown: ' .. table.concat(shown, ', ', 1, math.min(#shown, 12)))
+        g_app.doScreenshot('autopilot_' .. (step.name or 'spellbook') .. '.png')
+        stepData.shot = now()
+    elseif stepData.shot and now() - stepData.shot > 1 then
+        if m and m.toggle then m.toggle() end
+        nextStep()
+    end
+end
+
 function handlers.wait()
     if now() - stepT >= (step.seconds or 1) then nextStep() end
 end

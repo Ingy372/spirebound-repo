@@ -80,6 +80,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **J15b Fire runes burn vines too**: the engine's own fire runes (fire bomb, great fireball) don't burn Vinewalls yet; only our fire spells do.
 - [ ] **J15c Wild PvP verdict**: after a few weeks of the weekly event, ask the players; if they love it, give it a zone (Deadzone).
 - [ ] **J14b Dawnpiercer light arrow**: a projectile of our own (the effect pipeline makes effects only; projectiles need 8 directions).
+- [ ] **J13d Client action bar defaults**: a new character's action bar starts with three Tibia incantations (the client's stock defaults); start it empty or with the character's first spells instead.
 - [ ] **J13c Spirebound names for the rune items** (fire, strike, healing, paralysis runes still use the engine's item names; Q36).
 - [ ] **J9 Ten-minute mini events** between the big ones (snowball fight, quiz, last man standing at fixed gear).
 - [ ] **J10 Forge for Floor 3 and up** (waiting on Q27).

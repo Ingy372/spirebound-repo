@@ -105,3 +105,8 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - Jay's playtest: haste made him slower. The engine's speed formula gives the new speed, not the change, so Quickstep left you at a third of your speed and every slow nearly froze its target. Fixed for spells, sword skills and bosses, with a test on a real monster.
 - PvP for spells (Jay's choice, `DESIGN.md` 6.7): the Tibia core for control plus his counter system as terrain. Vinewall, fire burns vines, Barrier Rune (Arcanist only), Breach Arrow, Tailwind; only the Vanguard moves players; short roots with immunity; haste breaks slows; weekly Wild PvP arena event. Checked with two clients at once (Iron Reach pulled a player, Shield Bash knocked it back) and the walls in the client. Open: J15b, J15c.
 - Bot-vs-bot PvP test (Jay: "have them test everything you need"): two clients at once ran 8 scenarios; everything passes (`docs/design/pvp_test_2026-11-17.md`). Found and fixed: Wild PvP ended as a draw one second after it began (the arena treated every event but Last Man Standing as a team game).
+
+### 2026-11-18: The client spellbook shows Spirebound's spells (Jay: "did you update !spells and the spellbooks")
+- `!spells` already read the live spell table. The client's Spell List window still showed Tibia's spells and vocations: now generated from the server's tables by `tools/gen_spellbook.py` (128 spells, 51 sword skills, same ids as the server, a plain-English description each; filters say Arcanist / Mystic / Ranger / Vanguard).
+- Checked in the real client with the test Arcanist: 88 entries (its 31 spells, 6 shared, 51 sword skills). Icons are borrowed placeholders. New open task J13d (action bar starts with Tibia incantations).
+
