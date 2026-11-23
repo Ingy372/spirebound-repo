@@ -77,7 +77,8 @@ function SpireCraft.talk(npc, npcHandler, player, msg, npcName)
 			if #miss > 0 then
 				local parts = {}
 				for _, m in ipairs(miss) do
-					table.insert(parts, m[1] == "gold" and (m[2] .. " gold") or itemName(m[1], m[2]))
+					local where = m[1] ~= "gold" and SpireMaterials and SpireMaterials.where[m[1]]
+					table.insert(parts, m[1] == "gold" and (m[2] .. " gold") or (itemName(m[1], m[2]) .. (where and (" (" .. where:gsub("%.$", "") .. ")") or "")))
 				end
 				npcHandler:say("For that I still need " .. table.concat(parts, ", ") .. ". Hunters sell materials on the market.", npc, player)
 				return true

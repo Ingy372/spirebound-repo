@@ -135,6 +135,15 @@ def patch_core(build: Path) -> None:
         text, n = re.subn(r'(<item id="%s"[^>]*>)(.*?</item>)' % item_id, fix, text, count=1, flags=re.S)
         if n != 1:
             raise SystemExit(f"item {item_id} to rename is missing from items.xml")
+    # where each Floor 1 material drops (tools/gen_material_sources.py -> data/item_descriptions.json)
+    descs = json.loads((ROOT / "data" / "item_descriptions.json").read_text(encoding="utf-8"))
+    for item_id, desc in descs.items():
+        def add(m, desc=desc):
+            body = re.sub(r'<attribute key="description"[^>]*/>\s*', "", m.group(2))
+            return m.group(1) + f'\n\t\t<attribute key="description" value="{desc}"/>' + body
+        text, n = re.subn(r'(<item id="%s"[^>]*>)(.*?</item>)' % item_id, add, text, count=1, flags=re.S)
+        if n != 1:
+            raise SystemExit(f"material {item_id} is missing from items.xml")
     items.write_text(text, encoding="utf-8")
     for folder in ("runes", "weapons"):
         for f in (build / "data" / "scripts" / folder).rglob("*.lua"):
