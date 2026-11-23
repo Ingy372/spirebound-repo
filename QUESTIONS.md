@@ -6,6 +6,10 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q45. A spear for Rangers' barracks weapon? (2026-11-23)
+Captain Dorrow's level 10 weapon comes in bow or crossbow for Rangers, not spear: in this engine thrown spears are used up or drop on the target, so a tiered spear would be lost on the first throw. **My recommendation: keep bow and crossbow.** If you want spears, I can make a non-thrown spear later.
+Jay's answer:
+
 ### Q44. Answered 2026-11-17: spells in PvP
 Jay chose the proven Tibia core for controlling players plus his counter system as terrain (vine walls that fire
 burns, a barrier rune, party haste, wall-breaking arrows), with full-chaos "Wild PvP" as a weekly arena event first.

@@ -5,6 +5,8 @@
 -- are ordinary chat.
 --   /pilot jump x, y, z    go there
 --   /pilot heal            full health and mana
+--   /pilot level n         (gear tests) set your level
+--   /pilot gearreset       (gear tests) forget the barracks weapon, style and trophies; drop Spirebound gear
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
 --   /pilot give id, n      items into the backpack
@@ -37,6 +39,30 @@ function pilot.onSay(player, words, param)
 		end
 		player:teleportTo(to)
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: jumped")
+	elseif cmd == "level" then -- (gear tests) set the test character's level
+		local n = tonumber(rest:match("(%d+)"))
+		if not n then
+			player:sendCancelMessage("pilot: level n")
+			return true
+		end
+		local l = n - 1
+		local need = math.floor((50 * l * l * l - 150 * l * l + 400 * l) / 3) -- Tibia: experience for level n
+		player:addExperience(math.max(0, need - player:getExperience()), false)
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: level " .. player:getLevel())
+	elseif cmd == "gearreset" then -- (gear tests) forget the barracks' weapon, style and trophies; drop Spirebound gear
+		local k = player:kv():scoped("spirebound")
+		for _, key in ipairs({ "gear_main_1", "style_points", "style_path", "style_final", "style_respec_at" }) do
+			k:remove(key)
+		end
+		for _, t in ipairs(SpireTrophies.LIST) do
+			k:remove("trophy_" .. t.id)
+		end
+		for _, it in ipairs(SpireGear.carried(player)) do
+			if SpireGear.defOf(it) then
+				it:remove()
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: gear reset")
 	elseif cmd == "heal" then
 		player:addHealth(player:getMaxHealth())
 		player:addMana(player:getMaxMana())

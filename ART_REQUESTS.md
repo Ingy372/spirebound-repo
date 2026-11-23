@@ -103,3 +103,14 @@ The donation shop (closed until launch) uses placeholder looks for 2 outfits (He
 | [~] | `npc_innkeeper_bess_*` (drafted by the pipeline, in ART_FOR_JAY/bess, waiting for Jay's OK) | 32×32, 12 | A cheerful round innkeeper in an apron with rolled sleeves, a ladle in one hand, red cheeks. |
 | [~] | `npc_fisher_corwin_*` (drafted by the pipeline, in ART_FOR_JAY/corwin, waiting for Jay's OK) | 32×32, 12 | A lean fisher in a patched oilskin coat and a floppy hat, a fishing rod over his shoulder. |
 | [~] | `npc_guide_pell_*` (drafted by the pipeline, in ART_FOR_JAY/pell, waiting for Jay's OK) | 32×32, 12 | A friendly young guide in a bright tabard with a satchel and a small pennant on a stick, wide smile. |
+
+## Batch 6 — Gear progression (added 2026-11-23, Priority: medium)
+Moving sprites (the mini-bosses) are made by Claude with the Blender pipeline; the still icons below keep a Grok prompt.
+
+| ✓ | File names | Size / frames | Grok prompt / note |
+|---|---|---|---|
+| [ ] | `mon_hollowfang_*` (pipeline, on `art/models/quadruped.py`) | 32×32, 12 | Hidden mini-boss in Wolf Copse: a huge gaunt wolf, darker and bigger than the Grey Alpha, one torn ear, a ridge of bristling black fur. Compare with Tibia's war wolf. |
+| [ ] | `mon_briar_mother_*` (pipeline, crawler rules) | 32×32, 12 | Hidden mini-boss in Thornsnap Hollow: a bloated thornsnap queen, a crown of curled thorns, dark red blooms. Compare with Tibia's carniphila. |
+| [ ] | `mon_drowned_warden_*` (pipeline, outfit rules) | 32×32, 12 | Hidden mini-boss under the ruined well: a waterlogged stone knight, moss and weed hanging from rusted plate, green light in the visor. |
+| [ ] | `item_hearth_shard_rough.png`, `_cut.png`, `_flawless.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small warm-orange crystal shard; rough = jagged dull chip, cut = clean faceted shard, flawless = glowing gem with a soft halo." |
+| [ ] | `item_mastery_respec_scroll.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a rolled parchment tied with a silver ribbon and a blue wax seal showing a branching tree." |

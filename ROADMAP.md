@@ -11,7 +11,7 @@ Finished tasks live in `ROADMAP_DONE.md` (move each task there when it is ticked
 ---
 
 ## Jay's playtest, 2026-11-23 ("floor 1 is boring"). Do this first.
-- [ ] **P1 Gear and weapon progression** (design `docs/superpowers/specs/2026-11-23-gear-progression-design.md`, waiting for Jay's OK; the build plan comes after). Done when: a new character can follow the "Next upgrade" window from level 1 to the Floor 1 boss, tested in the real game.
+- [~] **P1 Gear and weapon progression** (design `docs/superpowers/specs/2026-11-23-gear-progression-design.md`, plan `docs/superpowers/plans/2026-11-23-gear-progression.md`). *(2026-11-23: built; 207 in-game tests pass. Still open: the in-client run `python tools/autopilot.py floor1_gear_path` needs the server restarted with the new code.)* Done when: a new character can follow the "Next upgrade" window from level 1 to the Floor 1 boss, tested in the real game.
 - [ ] **P1b Style path abilities (8, stage 2)**: one signature ability per path (Bulwark, Reaver, Marksman, Trapper, Emberwright, Stormbinder, Lifebinder, Wildcaller), learned when the path's Mastery reaches 10 (`style = 2` rows in `lib/spirebound/spells.lua`). Reached around Floors 4-5, so after the alpha. Done when: each casts in the client with a level 120 tester.
 - [ ] **P1c Style final abilities (16, stage 3)**: one per final style, learned at final Mastery 10 (`style = 3`). Reached around Floor 8. Done when: each casts in the client with a level 280 tester.
 - [ ] **P2 Quests you can find**: every Floor 1 quest giver marked (map marks, a sign or board in Hearthgate, the window from P1). Done when: autopilot or Claude reaches every Floor 1 quest giver from the temple using only in-game directions.
