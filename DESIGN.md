@@ -20,7 +20,7 @@ It plays like Tibia (hunting, loot, skulls, houses, guilds, depots, parties, the
 2. **PvP with teeth, not bullying.** Fights are real, but the game actively protects weaker and newer players. Toxicity is why Jay has quit servers, so this is the top priority.
 3. **Exploration pays.** Secrets are everywhere and worth money, bragging rights, or both.
 4. **Houses do things.** Houses are functional: portals, private boss rooms, gambling halls, gardens.
-5. **Never pay-to-win.** The best gear and spells come only from playing.
+5. **Never pay-to-win.** The best gear and spells come only from playing. (Jay, 2026-11-23: "the shop should have some gear that gets outclassed later": shop starter gear is allowed, but gear earned by playing always beats it past the early levels.)
 6. **Plain to learn.** Every quest says what to do next. No hour-long puzzles you can't figure out (Jay's own pain point).
 
 ### Naming rule
@@ -393,6 +393,8 @@ Hidden shops, dungeons, quests, bosses, fishing spots, NPCs, chests and Easter e
   - Anti-bot: a fish that "struggles" needs one extra click within a few seconds; unattended fishing catches only junk.
 
 ### 8.3 Quests
+**Gear and weapon progression (Jay, 2026-11-23)** is designed in `docs/superpowers/specs/2026-11-23-gear-progression-design.md`: a permanent style tree per character with two locked-in choices, weapons swapped floor by floor with tiers (tier tokens) and familiarity, a clear checklist per floor in a "Next upgrade" window, and hidden mini-bosses. Crafting is no longer a gear path.
+
 Every floor has story quests and side quests. Every quest has a quest-log entry that names the next step. No required puzzle longer than about 15 minutes once understood. Hints exist in game (Jay hated unexplained hour-long quests). Each floor's story quests unlock a **perk choice** (pick 1 of 2), earned only, never sold *(from the old pack)*.
 
 ---
@@ -471,7 +473,7 @@ Jay, 2026-11-16: *"i think each spawn should be a little different. there should
 ## 11. Monetization
 
 - **Donation shop** (opens only at public launch, not during friend testing): cosmetics (outfits, mounts, auras, name effects), housing items (furniture, decorations, Fortune Hall table skins, mannequins), convenience (name change, extra character slot, extra depot space, house moving service).
-- **Never pay-to-win:** nothing in the shop gives damage, defense, healing, XP, skill speed, loot or gear stats. The best gear and spells come only from playing. No XP boosts, no loot boxes **(Claude's call: no XP boosts)**.
+- **Never pay-to-win:** nothing in the shop gives defense, healing, XP, skill speed or loot. **Exception (Jay, 2026-11-23: "the shop should have some gear that gets outclassed later. i believe that was a good idea and another chance for the server to make money"):** a starter gear set per class for levels 1-15 that cannot be tiered or improved and is beaten by the Floor 1 quest weapon at tier 2 (`docs/superpowers/specs/2026-11-23-gear-progression-design.md` 4.9). The best gear and spells come only from playing. No XP boosts, no loot boxes **(Claude's call: no XP boosts)**.
 - Shop items can be sold to other players on the market for gold, so non-donors can earn cosmetics by playing **(Claude's call, Jay can veto)**.
 - Shop currency and shop items can never be gambled (7.5).
 - Account-wide cosmetics carry across seasons (4).

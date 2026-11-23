@@ -10,6 +10,13 @@ Finished tasks live in `ROADMAP_DONE.md` (move each task there when it is ticked
 
 ---
 
+## Jay's playtest, 2026-11-23 ("floor 1 is boring"). Do this first.
+- [ ] **P1 Gear and weapon progression** (design `docs/superpowers/specs/2026-11-23-gear-progression-design.md`, waiting for Jay's OK; the build plan comes after). Done when: a new character can follow the "Next upgrade" window from level 1 to the Floor 1 boss, tested in the real game.
+- [ ] **P2 Quests you can find**: every Floor 1 quest giver marked (map marks, a sign or board in Hearthgate, the window from P1). Done when: autopilot or Claude reaches every Floor 1 quest giver from the temple using only in-game directions.
+- [ ] **P3 Hearthgate feels alive**: more NPCs with things to say or do, townsfolk that walk, lights, fires, fountains, ambient effects. Done when: rendered, checked in the client, and listed in the playtest checklist for Jay.
+- [ ] **P4 Toad Pond too small, levelling slow and dull**: grow Toad Pond (and check the other rebuilt grounds the same way) and re-check XP per hour levels 1-15 in `tools/gen_economy.py`. Done when: the walk test and economy check pass and autopilot hunts it.
+- [ ] **P5 Remove stock materials we don't use** ("venomous slime" and similar from leftover Tibia files); every material's description says where it drops. Done when: a script finds no material without a source and the boot test passes.
+
 ## Phase R — Make it real (from REVIEW.md, 2026-11-11). Do this before anything else.
 The review found that phases 2–8 were built wide and thin before anyone played Phase 1. **No new features until this phase is done.** Section numbers in brackets point into `REVIEW.md`. Order = priority.
 - [ ] **R0 🧑 Jay plays the first hour** (same as 1.21): new character → Registrar → level 15 → a secret → a death. Then a 3-person Floor 1 boss run. Every note becomes a fix or a task.

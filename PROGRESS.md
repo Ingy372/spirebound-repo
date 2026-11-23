@@ -110,3 +110,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - `!spells` already read the live spell table. The client's Spell List window still showed Tibia's spells and vocations: now generated from the server's tables by `tools/gen_spellbook.py` (128 spells, 51 sword skills, same ids as the server, a plain-English description each; filters say Arcanist / Mystic / Ranger / Vanguard).
 - Checked in the real client with the test Arcanist: 88 entries (its 31 spells, 6 shared, 51 sword skills). Icons are borrowed placeholders. New open task J13d (action bar starts with Tibia incantations).
 
+
+### 2026-11-23: Jay's "floor 1 is boring" playtest, and a new gear design
+- Jay played a level 12 Ranger: no quests to find, an empty-feeling Hearthgate, Toad Pond too small, slow levelling, and no gear path except crafting. Notes in PLAYTEST.md; new tasks P1-P5 at the top of ROADMAP.md.
+- Designed gear and weapon progression with Jay (`docs/superpowers/specs/2026-11-23-gear-progression-design.md`): a permanent style tree per character with two locked-in choices, weapons swapped floor by floor with tier tokens and familiarity, a "Next upgrade" checklist window, and 4 hidden mini-bosses. Jay changed the shop rule ("the shop should have some gear that gets outclassed later"), recorded in DESIGN.md. Waiting for his OK before building.

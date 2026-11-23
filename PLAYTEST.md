@@ -13,6 +13,15 @@ Template:
 
 ---
 
+## 2026-11-23 (Jay, level 12 Ranger; written down by Claude from chat)
+- Verdict: "floor 1 is boring."
+- No quests, or none that are easy to find.
+- Hearthgate is low on NPCs and visual effects.
+- Toad Pond is "ok i guess, but its way to small now." Levelling would take forever and be boring.
+- No gear or weapon progression except crafting, and Jay is not a fan of crafting. Players hear they need "venomous slime" but have no idea how to get it or where the monster is.
+- Jay: "i would lean towards another system outside of crafting for weapon/gear progression and improvement."
+- Claude's findings: Floor 1 has only 3 named pieces per class (a 3% drop from the hardest monsters, a quest reward, the boss), so a level 12 sees none. 12 Floor 1 quests exist but only the Arrival Yard points to them. "Venomous slime" is not one of our materials; it comes from a stock engine item or NPC.
+
 ## To try next (from Claude, 2026-11-14)
 - **The new Ratwarren** (levels 1-4, west of Hearthgate): walk in from the gate, hunt the Yard, take a hole down into the Warren, then follow the long tunnel south to the Deep Warren. Does it still feel like a flood? Too empty? Write what you think below.
 - **The new Burrow Hills** (levels 11-16, north-east of Hearthgate, gate on the west side): walk the north hollow, climb a ramp onto the Crown (the hill in the middle), come down the other ramp, then take a hole down into the Molework. The far east end and the Crown's east side are meant to be the hard part. Use "Test Vanguard" or a character around level 14. Too calm? Too hard? Write it below.
