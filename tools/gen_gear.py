@@ -69,6 +69,7 @@ WEAPONS = [
     ("f2_vanguard_drop", "Mesa Warhammer", 2, VANGUARD, "club", "drop", 3286, "Mesa Warhammer, Awakened"),
     ("f2_ranger_main", "Ridgecat Longbow", 2, RANGER, "bow", "main", 3350, "Crowned Longbow"),
     ("f2_ranger_cross", "Strider Arbalest", 2, RANGER, "crossbow", "main", 3349, "Crowned Arbalest"),
+    ("f2_ranger_drop", "Mesa Recurve", 2, RANGER, "bow", "drop", 3350, "Mesa Recurve, Awakened"),
     ("f2_arcanist_main", "Wand of Dust Storms", 2, ARCANIST, "wand", "main", 3073, "Wand of the Crowned Herd"),
     ("f2_arcanist_drop", "Wand of Mesa Lightning", 2, ARCANIST, "wand", "drop", 3073, "Wand of Mesa Lightning, Awakened"),
     ("f2_mystic_main", "Highwind Rod", 2, MYSTIC, "rod", "main", 3067, "Rod of the Crowned Herd"),

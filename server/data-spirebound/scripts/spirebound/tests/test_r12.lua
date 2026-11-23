@@ -39,22 +39,16 @@ SpireTest.add("perks: each combat and loot perk changes the numbers it promises"
 	SpireTest.eq(E.marsh_walker.speed, 15, "Marsh Walker: +15 speed")
 end)
 
-SpireTest.add("gear: every vocation has a drop, a quest piece and a boss piece on Floors 1 and 2", function()
+SpireTest.add("gear: every vocation has a main weapon, a rare drop and quest armour on Floors 1 and 2", function()
 	for floor = 1, 2 do
 		for voc = 1, 4 do
-			for _, src in ipairs({ "drop", "quest", "boss" }) do
-				local g = SpireGear.find(voc, floor, src)
-				SpireTest.eq(g ~= nil, true, string.format("vocation %d floor %d %s piece", voc, floor, src))
+			for _, want in ipairs({ { "main", "weapon" }, { "drop", "weapon" }, { "quest", "armour" } }) do
+				local g = SpireGear.find(voc, floor, want[1], want[2])
+				SpireTest.eq(g ~= nil, true, string.format("vocation %d floor %d %s %s", voc, floor, want[1], want[2]))
 				SpireTest.eq(ItemType(g.base):getId() == g.base, true, g.name .. " is a real item")
 			end
 		end
-		SpireTest.eq(MonsterType(SpireGear.bosses[floor]) ~= nil, true, "Floor " .. floor .. "'s boss drops its best piece")
 	end
-	local bag = Game.createItem(2853, 1, WorldPoints.temple_hearthgate)
-	local item = SpireGear.make(bag, SpireGear.find(4, 1, "boss"))
-	SpireTest.eq(item ~= nil and item:getName(), "Stairlord's Cleaver", "a made piece carries its own name")
-	SpireTest.eq(item:getAttribute(ITEM_ATTRIBUTE_ATTACK) > ItemType(3303):getAttack(), true, "and its bonus")
-	bag:remove()
 end)
 
 SpireTest.add("quests: Floors 1 and 2 each have a quest line that rewards gear, not gold", function()

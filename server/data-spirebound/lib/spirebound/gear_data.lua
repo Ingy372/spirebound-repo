@@ -26,6 +26,7 @@ SpireGearData.weapons = {
 	{ id = "f2_vanguard_drop", name = "Mesa Warhammer", floor = 2, vocation = 4, family = "club", source = "drop", base = 3286, awakenedName = "Mesa Warhammer, Awakened", perk = "life_leech", perkValue = 0.02 },
 	{ id = "f2_ranger_main", name = "Ridgecat Longbow", floor = 2, vocation = 3, family = "bow", source = "main", base = 3350, awakenedName = "Crowned Longbow" },
 	{ id = "f2_ranger_cross", name = "Strider Arbalest", floor = 2, vocation = 3, family = "crossbow", source = "main", base = 3349, awakenedName = "Crowned Arbalest" },
+	{ id = "f2_ranger_drop", name = "Mesa Recurve", floor = 2, vocation = 3, family = "bow", source = "drop", base = 3350, awakenedName = "Mesa Recurve, Awakened", perk = "crit", perkValue = 0.03 },
 	{ id = "f2_arcanist_main", name = "Wand of Dust Storms", floor = 2, vocation = 1, family = "wand", source = "main", base = 3073, awakenedName = "Wand of the Crowned Herd" },
 	{ id = "f2_arcanist_drop", name = "Wand of Mesa Lightning", floor = 2, vocation = 1, family = "wand", source = "drop", base = 3073, awakenedName = "Wand of Mesa Lightning, Awakened", perk = "mana_leech", perkValue = 0.02 },
 	{ id = "f2_mystic_main", name = "Highwind Rod", floor = 2, vocation = 2, family = "rod", source = "main", base = 3067, awakenedName = "Rod of the Crowned Herd" },
