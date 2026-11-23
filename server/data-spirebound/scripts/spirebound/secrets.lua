@@ -4,7 +4,6 @@ local function key(pos)
 	return pos.x .. ":" .. pos.y .. ":" .. pos.z
 end
 
-local lastTusk = 0
 
 local REWARDS = {}
 REWARDS.underkeep = function(player, first)
@@ -24,17 +23,7 @@ REWARDS.north_crack = function(player, first)
 	end
 end
 REWARDS.old_tusk = function(player, first)
-	if os.time() - lastTusk < 30 * 60 then
-		if first then
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Fresh tracks in the mud. Old Tusk was here recently.")
-		end
-		return
-	end
-	lastTusk = os.time()
-	local m = Game.createMonster("Old Tusk", WorldPoints.old_tusk_spawn, false, true)
-	if m then
-		m:say("HRRROOONK!", TALKTYPE_MONSTER_YELL)
-	end
+	-- Old Tusk is one of the hidden mini-bosses now: SpireTrophies.onSecret wakes him (scripts/spirebound/minibosses.lua)
 end
 REWARDS.sealed_shrine = function(player, first)
 	if not first then
@@ -92,6 +81,9 @@ local function trigger(player, secret)
 		logger.info("[Spirebound] {} discovered {} ({} found)", player:getName(), secret.id, count)
 	end
 	giveReward(player, secret, first)
+	if SpireTrophies and SpireTrophies.onSecret then
+		SpireTrophies.onSecret(player, secret, first)
+	end
 end
 
 local startup = GlobalEvent("SpireSecretsStartup")
