@@ -97,3 +97,12 @@ SpireTest.add("style: a respec clears the choices, keeps the points, and waits 7
 	local v = SpireStyle.view(3, P[15], nil, nil)
 	SpireTest.eq(v.stage .. "/" .. v.level .. "/" .. tostring(v.choiceReady), "1/10/true", "after a respec at Marksman 5: the choice again, points kept")
 end)
+
+-- Final review: the damage hook must run on a real monster without errors
+SpireTest.add("progress: the damage hook runs on a real monster", function()
+	local m = Game.createMonster("Meadow Wolf", WorldPoints.temple_hearthgate, true, true)
+	SpireTest.eq(m ~= nil, true, "a wolf to hit")
+	SpireTest.eq(SpireProgress.onDealt(m, m, 100), 100, "a monster's own damage is left alone")
+	SpireTest.eq(SpireProgress.onDealt(nil, m, 100), 100, "no attacker, no change")
+	m:remove()
+end)

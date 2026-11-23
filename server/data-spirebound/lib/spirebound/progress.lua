@@ -53,7 +53,7 @@ function SpireProgress.onDealt(attacker, target, amount)
 	if item and d.vocation == player:getVocation():getBaseId() then
 		w = SpireGear.state(item)
 	end
-	local ctx = { distance = player:getPosition():getDistance(target:getPosition()), race = target:isMonster() and target:getType():race() or nil }
+	local ctx = { distance = player:getPosition():getDistance(target:getPosition()) }
 	return SpireProgress.dealtPure(amount, w, SpireStyle.get(player), ctx, SpireProgress.trophyBonus(player, ctx))
 end
 
