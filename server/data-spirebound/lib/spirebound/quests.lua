@@ -10,8 +10,15 @@ SpireQuests = {
 			step = "Hunt Bristle Boars in the boar meadow (south-west of Hearthgate): %d of %d.",
 			report = "Return to Miller Agna in Millcross and say 'report'.",
 			thanks = "Wonderful! The stew pot will be full for a week. Here's 600 gold." },
+		-- Gear progression (spec 4.5): the barracks' weapon is tempered once you prove yourself in Wolf Copse
+		{ id = "q1_temper", floor = 1, name = "Tempered in the Field", giver = "Captain Dorrow", storage = 50135, killStorage = 50136,
+			target = "Meadow Wolf", count = 15, reward = { temper = true, gold = 300 }, minLevel = 12, requiresWeapon = true,
+			offer = "That weapon of yours is still raw steel. Blood it on 15 meadow wolves in Wolf Copse, west of town, and my smith will temper it. Will you?",
+			step = "Hunt Meadow Wolves in Wolf Copse (west of Hearthgate): %d of %d.",
+			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
+			thanks = "Good. My smith tempered it while you talked: one tier stronger. And 300 gold for the trouble." },
 		{ id = "q1_2", floor = 1, name = "The Lost Patrol", giver = "Captain Dorrow", storage = 50102, killStorage = 50112,
-			target = "Bandit Captain", count = 2, reward = { gold = 1200 },
+			target = "Bandit Captain", count = 2, reward = { gold = 1200 }, minLevel = 19,
 			offer = "My patrol never came back from the bandit road in the east. Two bandit captains run that road. Bring them down?",
 			step = "Defeat Bandit Captains on the bandit road (east of Hearthgate): %d of %d.",
 			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
@@ -23,13 +30,13 @@ SpireQuests = {
 			report = "Return to Miller Agna in Millcross and say 'report'.",
 			thanks = "The road's clear! You've earned the name Millhand, and 900 gold." },
 		-- R12: a hand-written quest line whose reward is gear for your path, not gold
-		{ id = "q1_iron1", floor = 1, side = true, name = "Iron for the Stair (1 of 2)", giver = "Hunter Brannoch", storage = 50131, killStorage = 50132,
+		{ id = "q1_iron1", floor = 1, minLevel = 11, name = "Iron for the Stair (1 of 2)", giver = "Hunter Brannoch", storage = 50131, killStorage = 50132,
 			target = "Burrow Mole", count = 25, reward = { gold = 200 },
 			offer = "The Hall's armourer wants mole claws for rivets: they never rust. Twenty-five moles from Burrow Hills, north-east of town. Will you?",
 			step = "Hunt Burrow Moles in Burrow Hills (north-east of Hearthgate): %d of %d.",
 			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
 			thanks = "Good claws. Here's a little for the walk. Ask me for a quest again: the armourer has one more request." },
-		{ id = "q1_iron2", floor = 1, side = true, name = "Iron for the Stair (2 of 2)", giver = "Hunter Brannoch", storage = 50133, killStorage = 50134,
+		{ id = "q1_iron2", floor = 1, name = "Iron for the Stair (2 of 2)", giver = "Hunter Brannoch", storage = 50133, killStorage = 50134,
 			target = "Road Bandit", count = 30, reward = { gear = true }, requires = "q1_iron1",
 			offer = "The rivets need iron, and the bandits east of town stole a cartload of it. Take back thirty bandits' worth of it. The armourer will make you something for your path.",
 			step = "Defeat Road Bandits on the Bandit Road (east of Hearthgate): %d of %d.",
@@ -135,11 +142,21 @@ function SpireQuests.logText(q, state, kills)
 end
 
 -- Pure: may this player start the quest? doneIds = set of completed quest ids
-function SpireQuests.available(q, state, doneIds)
+function SpireQuests.available(q, state, doneIds, ctx)
 	if state ~= -1 and state ~= 0 then
 		return false
 	end
+	if ctx and q.minLevel and (ctx.level or 0) < q.minLevel then
+		return false
+	end
+	if ctx and q.requiresWeapon and not ctx.hasWeapon then
+		return false
+	end
 	return not q.requires or doneIds[q.requires] == true
+end
+
+function SpireQuests.context(player)
+	return { level = player:getLevel(), hasWeapon = SpireGear.earnedMain ~= nil and SpireGear.earnedMain(player, 1) ~= nil }
 end
 
 function SpireQuests.doneIds(player)
@@ -179,6 +196,9 @@ end
 local offered = {} -- playerId -> quest id
 SpireCleanup.add(function(pid) offered[pid] = nil end)
 function SpireQuests.talk(npc, npcHandler, player, msg, giver)
+	if SpireGear.dorrowTalk and giver == "Captain Dorrow" and SpireGear.dorrowTalk(npc, npcHandler, player, msg) then
+		return true
+	end
 	local lower = msg:lower()
 	local pid = player:getId()
 	if MsgContains(lower, "report") then
@@ -190,6 +210,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					if q.reward.gold then player:addMoney(q.reward.gold) end
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
 					if q.reward.gear then SpireGear.give(player, q.floor, "quest") end -- R12: a reward that isn't gold
+					if q.reward.temper then SpireGear.temperFor(player, q.floor) end -- gear progression: +1 tier
 					npcHandler:say(q.thanks, npc, player)
 					if SpireQuests.floorStoryDone(player, q.floor) then
 						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
@@ -207,7 +228,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 	if MsgContains(lower, "quest") or MsgContains(lower, "mission") or MsgContains(lower, "help") then
 		local done = SpireQuests.doneIds(player)
 		for _, q in ipairs(SpireQuests.list) do
-			if q.giver == giver and SpireQuests.available(q, SpireQuests.state(player, q), done) then
+			if q.giver == giver and SpireQuests.available(q, SpireQuests.state(player, q), done, SpireQuests.context(player)) then
 				offered[pid] = q.id
 				npcHandler:say(q.offer .. " Say {yes} or {no}.", npc, player)
 				return true

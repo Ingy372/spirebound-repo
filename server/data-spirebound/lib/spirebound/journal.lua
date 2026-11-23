@@ -76,7 +76,7 @@ function SpireJournal.quests(player)
 			table.insert(done, label .. ": completed")
 		elseif state == 1 or state == 2 then
 			table.insert(state == 2 and ready or active, label .. ": " .. SpireQuests.logText(q, state, SpireQuests.progress(player, q)))
-		elseif SpireQuests.available(q, state, doneIds) then
+		elseif SpireQuests.available(q, state, doneIds, SpireQuests.context(player)) then
 			table.insert(open, label .. ": talk to " .. q.giver .. ".")
 		end
 	end

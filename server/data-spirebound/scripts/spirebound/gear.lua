@@ -143,3 +143,65 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 	end
 	return false
 end
+
+-- ---------------------------------------------------------------- Captain Dorrow: the barracks' weapon at level 10
+local choosing = {} -- player id -> true while picking a family
+SpireCleanup.add(function(pid) choosing[pid] = nil end)
+
+function SpireGear.giveMain(player, family)
+	local voc = player:getVocation():getBaseId()
+	local d = SpireGear.mainFor(voc, 1, family)
+	if not d then
+		return nil
+	end
+	local item = SpireGear.make(player, d.id)
+	if item then
+		player:kv():scoped("spirebound"):set("gear_main_1", d.id)
+		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+	end
+	return item
+end
+
+function SpireGear.dorrowTalk(npc, handler, player, msg)
+	local lower = msg:lower()
+	local pid = player:getId()
+	local voc = player:getVocation():getBaseId()
+	local say = function(text) handler:say(text, npc, player) end
+	if choosing[pid] then
+		for family in SpireGear.familiesOf(voc, 1):gmatch("%a+") do
+			if MsgContains(lower, family) or (family == "club" and MsgContains(lower, "mace")) then
+				choosing[pid] = nil
+				local item = SpireGear.giveMain(player, family)
+				if item then
+					say("The " .. item:getName() .. ". It's yours: the more you fight with it, the better you'll know it. When you're ready, ask me for a {quest} to temper it.")
+				else
+					say("Make room in your backpack first, then ask me for a {weapon} again.")
+				end
+				return true
+			end
+		end
+	end
+	local offer = SpireGear.dorrowOffer(player:getLevel(), voc, SpireGear.earnedMain(player, 1))
+	local asksWeapon = MsgContains(lower, "weapon")
+	local asksQuest = MsgContains(lower, "quest") or MsgContains(lower, "mission") or MsgContains(lower, "help")
+	if offer == "offer" and (asksWeapon or asksQuest) then
+		choosing[pid] = true
+		local fams = {}
+		for family in SpireGear.familiesOf(voc, 1):gmatch("%a+") do
+			table.insert(fams, "{" .. family .. "}")
+		end
+		say("Level " .. player:getLevel() .. "! Every climber who gets this far earns a weapon from the barracks. Which kind: " .. table.concat(fams, " or ") .. "?")
+		return true
+	end
+	if asksWeapon then
+		if offer == "too_low" then
+			say("Come back at level " .. SpireGear.MAIN_LEVEL .. " and the barracks will give you a weapon of your own.")
+		elseif offer == "has" then
+			say("You already have the barracks' weapon. Weaponsmith Garrick can {upgrade} it with Hearth Shards, or {replace} it if you lost it.")
+		else
+			say("Choose your path with Registrar Maelis first.")
+		end
+		return true
+	end
+	return false
+end

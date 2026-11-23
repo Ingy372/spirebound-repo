@@ -275,3 +275,110 @@ function SpireGear.carried(player)
 	end
 	return out
 end
+
+-- ---------------------------------------------------------------- the Floor 1 path (spec 4.5)
+-- Pure: what Captain Dorrow says about the barracks' weapon: "no_class", "too_low", "offer" or "has"
+SpireGear.MAIN_LEVEL = 10
+function SpireGear.dorrowOffer(level, vocation, earnedId)
+	if not SpireGearData.style[vocation] then
+		return "no_class"
+	end
+	if earnedId then
+		return "has"
+	end
+	if level < SpireGear.MAIN_LEVEL then
+		return "too_low"
+	end
+	return "offer"
+end
+
+-- Pure: the main weapon of a family for a vocation and floor
+function SpireGear.mainFor(vocation, floor, family)
+	for _, d in pairs(defs) do
+		if not d.shop and d.kind == "weapon" and d.source == "main" and d.vocation == vocation and d.floor == floor and d.family == family then
+			return d
+		end
+	end
+end
+
+-- +1 tier, free (the temper quest)
+function SpireGear.temper(item)
+	local s = SpireGear.state(item)
+	if not s or s.shop or s.tier >= SpireGearData.MAX_TIER then
+		return false
+	end
+	SpireGear.setState(item, { tier = s.tier + 1 })
+	return true
+end
+
+-- The awakening (the floor boss): its new name and final base power, once
+function SpireGear.awaken(item)
+	local s, d = SpireGear.state(item), SpireGear.defOf(item)
+	if not s or s.shop or d.kind ~= "weapon" or s.awakened then
+		return false
+	end
+	SpireGear.setState(item, { awakened = true })
+	return true
+end
+
+-- Pure: what a credited fighter gets from a Floor 1 boss
+SpireGear.BOSS_REWARDS = { ["Gate Hound"] = { shards = 3, grade = "cut", floor = 1 }, ["Axe-Lord of the Stair"] = { awaken = 1 } }
+function SpireGear.bossReward(boss, hadShards)
+	local r = SpireGear.BOSS_REWARDS[boss]
+	if not r then
+		return {}
+	end
+	return { shards = r.shards and (hadShards and 0 or r.shards) or 0, grade = r.grade, floor = r.floor, awaken = r.awaken }
+end
+
+-- A Floor n weapon the player holds or carries (the one in hand first)
+function SpireGear.floorWeapon(player, floor)
+	local item, d = SpireGear.mainWeapon(player)
+	if item and d.floor == floor and not d.shop then
+		return item
+	end
+	for _, it in ipairs(SpireGear.carried(player)) do
+		local dd = SpireGear.defOf(it)
+		if dd and dd.kind == "weapon" and dd.floor == floor and not dd.shop then
+			return it
+		end
+	end
+end
+
+function SpireGear.temperFor(player, floor)
+	local item = SpireGear.floorWeapon(player, floor)
+	if item and SpireGear.temper(item) then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, item:getName() .. " is tempered: tier " .. SpireGear.state(item).tier .. ".")
+	else
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Bring your Floor 1 weapon next time and it will be tempered.")
+	end
+end
+
+-- Give every credited fighter its boss reward (public and private kills alike)
+function SpireGear.grantBoss(boss, creditNames)
+	if not SpireGear.BOSS_REWARDS[boss] then
+		return
+	end
+	for _, name in ipairs(creditNames) do
+		local p = Player(name)
+		if p then
+			local k = p:kv():scoped("spirebound")
+			local flag = "boss_credit_" .. boss
+			local plan = SpireGear.bossReward(boss, k:get(flag) ~= nil)
+			k:set(flag, os.time())
+			if plan.shards > 0 then
+				p:addItem(SpireGearData.tokens[plan.floor][plan.grade], plan.shards)
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s leaves you %d %s.", boss, plan.shards, SpireGearData.tokenNames[SpireGearData.tokens[plan.floor][plan.grade]][2]))
+			end
+			if plan.awaken then
+				local item = SpireGear.floorWeapon(p, 1)
+				if item and SpireGear.awaken(item) then
+					p:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your weapon awakens: " .. item:getName() .. "!")
+				elseif not item then
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Carry a Floor 1 weapon when you defeat the " .. boss .. " to awaken it.")
+				end
+			end
+		end
+	end
+end

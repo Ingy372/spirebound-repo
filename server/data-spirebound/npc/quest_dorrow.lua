@@ -29,7 +29,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Halt, |PLAYERNAME|. Hearthgate's north gate. If you're looking for honest work, ask about a {quest}. {Report} when it's done.")
+npcHandler:setMessage(MESSAGE_GREET, "Halt, |PLAYERNAME|. Hearthgate's north gate. Climbers of level 10 can ask me for a {weapon} from the barracks. For honest work, ask about a {quest}. {Report} when it's done.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Safe travels.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
