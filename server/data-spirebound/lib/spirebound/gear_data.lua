@@ -112,4 +112,32 @@ SpireGearData.PASSIVES = {
 	frostwarden = { kind = "damage", per = 0.009 },
 }
 SpireGearData.STYLE_POINTS = { 22857, 45715, 68572, 91429, 114287, 137144, 160001, 182859, 205716, 228573, 413163, 597753, 782342, 966932, 1151522, 1336111, 1520701, 1705291, 1889880, 2074470, 7660059, 13245647, 18831236, 24416825, 30002414, 35588002, 41173591, 46759180, 52344768, 57930357 }
+SpireGearData.REFORGE_FEE = 1000
+SpireGearData.REISSUE_FEE = 2000
+SpireGearData.tokenNames = {
+	[16124] = { "rough Hearth Shard", "rough Hearth Shards" },
+	[16119] = { "cut Hearth Shard", "cut Hearth Shards" },
+	[16120] = { "flawless Hearth Shard", "flawless Hearth Shards" },
+	[16122] = { "rough Highland Shard", "rough Highland Shards" },
+	[16121] = { "cut Highland Shard", "cut Highland Shards" },
+	[16127] = { "flawless Highland Shard", "flawless Highland Shards" },
+}
+SpireGearData.shardMonsters = {
+	["Bandit Captain"] = { rough = true, cut = true, flawless = true },
+	["Bristle Boar"] = { rough = true },
+	["Burrow Mole"] = { rough = true },
+	["Field Rat"] = { rough = true },
+	["Field Shardling"] = { rough = true, cut = true },
+	["Grey Alpha"] = { rough = true, cut = true, flawless = true },
+	["Hopper Toad"] = { rough = true },
+	["Meadow Wasp"] = { rough = true },
+	["Meadow Wolf"] = { rough = true, cut = true },
+	["Reed Snapper"] = { rough = true, cut = true },
+	["Road Bandit"] = { rough = true, cut = true },
+	["Ruin Archer"] = { rough = true, cut = true },
+	["Ruin Sentinel"] = { rough = true, cut = true },
+	["Sproutling"] = { rough = true },
+	["Stonehorn Ram"] = { rough = true, cut = true, flawless = true },
+	["Thornsnap"] = { rough = true, cut = true },
+}
 SpireGearData.SHARD_CHANCE = { rough = 0.00555, cut = 0.00469, flawless = 0.03520 }

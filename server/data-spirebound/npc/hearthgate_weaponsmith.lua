@@ -58,11 +58,14 @@ end
 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "The weaponsmith. Ask me for a {trade}." })
 
-npcHandler:setMessage(MESSAGE_GREET, "Steel for the climb, |PLAYERNAME|. Swords, axes, clubs, bows, wands and rods: ask for a {trade}.")
+npcHandler:setMessage(MESSAGE_GREET, "Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireGear and SpireGear.talk and SpireGear.talk(npc, npcHandler, player, msg, npcConfig.name) then
+		return false
+	end
 	if SpireCraft and SpireCraft.talk(npc, npcHandler, player, msg, npcConfig.name) then
 		return false
 	end

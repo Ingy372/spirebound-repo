@@ -162,3 +162,116 @@ function SpireGear.give(player, floor, source)
 	end
 	return item
 end
+
+-- ---------------------------------------------------------------- the Weaponsmith (spec 4.4, 4.5)
+-- A wallet is { count(id), remove(id, n), money(), pay(n) }: a player's (SpireGear.playerWallet) or a test's.
+function SpireGear.playerWallet(player)
+	return {
+		count = function(id) return player:getItemCount(id) end,
+		remove = function(id, n) return player:removeItem(id, n) end,
+		money = function() return player:getTotalMoney() + player:getBankBalance() end,
+		pay = function(n) return player:removeMoneyBank(n) end,
+	}
+end
+
+local function shardName(id, n)
+	local names = SpireGearData.tokenNames[id]
+	return n == 1 and names[1] or names[2]
+end
+
+-- What the next tier costs: ok, { tier, shard, count, gold } or false, message (nothing is taken here)
+function SpireGear.upgradeCheck(item, wallet)
+	local s, d = SpireGear.state(item), SpireGear.defOf(item)
+	if not s then
+		return false, "That is not Spirebound gear."
+	end
+	if s.shop then
+		return false, "Starter gear from the shop cannot be upgraded. A Spirebound weapon can: Captain Dorrow gives one at level 10."
+	end
+	if s.tier >= SpireGearData.MAX_TIER then
+		return false, item:getName() .. " is already at its best: tier " .. SpireGearData.MAX_TIER .. "."
+	end
+	local tokens = SpireGearData.tokens[d.floor]
+	local cost = SpireGearData.TIER_COST[s.tier + 1]
+	local shard, need, gold = tokens[cost.grade], SpireGearData.SHARDS_PER_TIER, cost.gold * d.floor
+	local have = wallet.count(shard)
+	if have < need then
+		return false, string.format("Tier %d needs %d %s and %d gold; you have %d. %s", s.tier + 1, need, shardName(shard, need),
+			gold, have, SpireGearData.tokenWhere[shard])
+	end
+	if wallet.money() < gold then
+		return false, string.format("Tier %d costs %d gold as well as the shards.", s.tier + 1, gold)
+	end
+	return true, { tier = s.tier + 1, shard = shard, count = need, gold = gold }
+end
+
+function SpireGear.upgradeWith(item, wallet)
+	local ok, cost = SpireGear.upgradeCheck(item, wallet)
+	if not ok then
+		return false, cost
+	end
+	if not wallet.pay(cost.gold) then
+		return false, "You could not pay the fee."
+	end
+	wallet.remove(cost.shard, cost.count)
+	SpireGear.setState(item, { tier = cost.tier })
+	return true, string.format("Done: %s is now tier %d.", item:getName(), cost.tier)
+end
+
+-- Remake a weapon in another family of its class and floor: tier kept, familiarity 0. Returns the new item or nil, message.
+function SpireGear.reforgeWith(item, family, wallet, into)
+	local s, d = SpireGear.state(item), SpireGear.defOf(item)
+	if not s or d.kind ~= "weapon" or s.shop then
+		return nil, "Only a Spirebound weapon can be reforged."
+	end
+	local target = nil
+	for _, w in pairs(defs) do
+		if not w.shop and w.kind == "weapon" and w.vocation == d.vocation and w.floor == d.floor and w.source == "main" and w.family == family then
+			target = w
+		end
+	end
+	if not target or target.id == d.id then
+		return nil, "I can't reforge it into that. Your class's families on this floor: " .. SpireGear.familiesOf(d.vocation, d.floor) .. "."
+	end
+	local fee = SpireGearData.REFORGE_FEE * d.floor
+	if wallet.money() < fee or not wallet.pay(fee) then
+		return nil, string.format("A reforge costs %d gold.", fee)
+	end
+	local new = SpireGear.make(into, target.id)
+	if not new then
+		return nil, "You have no room for the new weapon."
+	end
+	SpireGear.setState(new, { tier = s.tier, awakened = s.awakened })
+	item:remove()
+	return new, string.format("Reforged into %s, tier %d. Its familiarity starts again.", new:getName(), s.tier)
+end
+
+function SpireGear.familiesOf(vocation, floor)
+	local out = {}
+	for _, w in ipairs(SpireGearData.weapons) do
+		if w.vocation == vocation and w.floor == floor and w.source == "main" then
+			table.insert(out, w.family)
+		end
+	end
+	return table.concat(out, ", ")
+end
+
+-- Every item the player carries (slots and nested containers)
+function SpireGear.carried(player)
+	local out = {}
+	local function walk(item)
+		table.insert(out, item)
+		if item:isContainer() then
+			for i = 0, item:getSize() - 1 do
+				walk(item:getItem(i))
+			end
+		end
+	end
+	for slot = CONST_SLOT_FIRST, CONST_SLOT_LAST do
+		local it = player:getSlotItem(slot)
+		if it then
+			walk(it)
+		end
+	end
+	return out
+end

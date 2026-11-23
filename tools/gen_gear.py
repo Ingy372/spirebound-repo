@@ -115,6 +115,33 @@ TIER_COST = {1: ("rough", 500), 2: ("rough", 1000), 3: ("cut", 2000), 4: ("cut",
 SHARDS_PER_TIER = 3
 CUT_FROM_LEVEL = 12            # Floor 1 grounds whose lowest level is 12 or more drop cut shards
 FLAWLESS_MONSTERS = {1: ["Grey Alpha", "Bandit Captain", "Stonehorn Ram"]}
+NO_SHARDS = {"Pen Rat"}       # the Arrival Yard's tutorial rats
+REFORGE_FEE = 1000             # change family at the Weaponsmith (per floor of the weapon); tier kept, familiarity 0
+REISSUE_FEE = 2000             # a lost main weapon replaced by its quest giver (per floor), tier 0
+
+
+def shard_monsters():
+    """{monster: [grades]} on Floor 1: rough everywhere, cut where a monster only lives on grounds from level 12 up,
+    flawless on elites and the apex (spec 4.4)."""
+    sys.path[:0] = [str(ROOT / "maps")]
+    from floor1_plan import CAMPS
+    lowest = {}
+    for c in CAMPS:
+        for name in {m[0] for m in c.get("mix", [])}:
+            lowest[name] = min(lowest.get(name, 99), c["levels"][0])
+    for name in FLAWLESS_MONSTERS[1]:
+        lowest.setdefault(name, 99)
+    out = {}
+    for name, lo in lowest.items():
+        if name in NO_SHARDS:
+            continue
+        grades = ["rough"]
+        if lo >= CUT_FROM_LEVEL:
+            grades.append("cut")
+        if name in FLAWLESS_MONSTERS[1]:
+            grades.append("flawless")
+        out[name] = grades
+    return out
 
 # ---------------------------------------------------------------- style trees (spec 4.2; names are Claude's call)
 STYLE = {
@@ -304,6 +331,17 @@ def main():
         L.append(f'\t{k} = {{ kind = "{kind}", per = {v} }},')
     L.append("}")
     L.append("SpireGearData.STYLE_POINTS = { " + ", ".join(str(v) for v in style_thresholds()) + " }")
+    L.append(f"SpireGearData.REFORGE_FEE = {REFORGE_FEE}")
+    L.append(f"SpireGearData.REISSUE_FEE = {REISSUE_FEE}")
+    L.append("SpireGearData.tokenNames = {")
+    for fl, grades in TOKENS.items():
+        for g, v in grades.items():
+            L.append(f"	[{v[0]}] = {{ {lua_str(v[1])}, {lua_str(v[2])} }},")
+    L.append("}")
+    L.append("SpireGearData.shardMonsters = {")
+    for name, grades in sorted(shard_monsters().items()):
+        L.append(f"	[{lua_str(name)}] = {{ " + ", ".join(f"{g} = true" for g in grades) + " },")
+    L.append("}")
     ch = shard_chances()
     L.append("SpireGearData.SHARD_CHANCE = { " + ", ".join(f"{g} = {v:.5f}" for g, v in ch.items()) + " }")
     out = ROOT / "server/data-spirebound/lib/spirebound/gear_data.lua"

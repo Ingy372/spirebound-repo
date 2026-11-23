@@ -104,6 +104,9 @@ npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireGear and SpireGear.talk and SpireGear.talk(npc, npcHandler, player, msg, npcConfig.name) then
+		return false
+	end
 	if SpireCraft and SpireCraft.talk(npc, npcHandler, player, msg, npcConfig.name) then
 		return false
 	end
