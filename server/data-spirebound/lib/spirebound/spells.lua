@@ -195,6 +195,11 @@ SpireSpells.list = {
 	{ name = "Worldroot", words = "worldroot", voc = { M }, level = 300, mana = 700, cd = 90, kind = "heal_party", min = 3.0, max = 4.4, base = 60, radius = 6, ward = { pct = 30, duration = 6 }, purify = true, cast = CONST_ME_BIGPLANTS, effect = SpireFx.BLOOM },
 	{ name = "Wellspring", words = "wellspring", voc = { M }, level = 120, mana = 400, cd = 45, kind = "heal_zone", min = 1.0, max = 1.6, base = 40, radius = 3, duration = 8, cast = CONST_ME_WATERSPLASH, effect = CONST_ME_PULSE_GREEN, lostArt = 5 },
 	{ name = "Winter's Breath", words = "winters breath", voc = { M }, level = 250, mana = 600, cd = 40, kind = "attack_area", area = "ring2", element = COMBAT_ICEDAMAGE, min = 3.2, max = 5.0, base = 30, cast = CONST_ME_GIANTICE, effect = SpireFx.ICE_SPIRES, lostArt = 8, anim = "burst", step = 150 },
+	-- Style abilities (gear progression spec 4.2): learned when the class's Mastery reaches 10, never by level alone.
+	{ name = "Hearthbreaker", words = "hearthbreaker", voc = { V }, level = 10, style = 1, mana = 60, cd = 12, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "melee", min = 1.8, max = 2.6, range = 1, vuln = { pct = 10, duration = 6 }, cast = CONST_ME_GROUNDSHAKER, effect = SpireFx.GROUND_CRACK },
+	{ name = "Truesight Arrow", words = "truesight arrow", voc = { R }, level = 10, style = 1, mana = 50, cd = 10, kind = "attack_target", element = COMBAT_PHYSICALDAMAGE, scale = "distance", min = 2.0, max = 3.0, shoot = CONST_ANI_SNIPERARROW, effect = CONST_ME_HITAREA_GREEN, execute = { below = 0.3, bonus = 0.5 } },
+	{ name = "Ember Crown", words = "ember crown", voc = { A }, level = 10, style = 1, mana = 120, cd = 12, kind = "attack_area", area = "ring2", element = COMBAT_FIREDAMAGE, min = 1.4, max = 2.2, cast = CONST_ME_ORANGE_ENERGY_SPARK, effect = CONST_ME_FIREAREA, anim = "burst", step = 90 },
+	{ name = "Verdant Surge", words = "verdant surge", voc = { M }, level = 10, style = 1, mana = 140, cd = 12, kind = "heal_party", min = 1.4, max = 2.2, base = 30, radius = 4, cast = CONST_ME_BIGPLANTS, effect = CONST_ME_MAGIC_GREEN },
 }
 
 -- Retired in the 2026-11-13 overhaul (docs/design/spells.md, "Retired"): First Aid (each vocation now has its own
@@ -540,7 +545,7 @@ end
 function SpireSpells.unlockedAt(level, baseVocation)
 	local out = {}
 	for _, row in ipairs(SpireSpells.list) do
-		if not row.lostArt and SpireSpells.allowed(row, baseVocation) and SpireSpells.levelFor(row, baseVocation) == level then
+		if not row.lostArt and not row.style and SpireSpells.allowed(row, baseVocation) and SpireSpells.levelFor(row, baseVocation) == level then
 			table.insert(out, row)
 		end
 	end
@@ -551,7 +556,7 @@ end
 function SpireSpells.nextUnlock(level, baseVocation)
 	local best, names = nil, {}
 	for _, row in ipairs(SpireSpells.list) do
-		if not row.lostArt and SpireSpells.allowed(row, baseVocation) then
+		if not row.lostArt and not row.style and SpireSpells.allowed(row, baseVocation) then
 			local l = SpireSpells.levelFor(row, baseVocation)
 			if l > level and (not best or l < best) then
 				best, names = l, { row.name }

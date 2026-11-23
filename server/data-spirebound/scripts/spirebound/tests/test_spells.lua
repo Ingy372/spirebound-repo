@@ -28,7 +28,7 @@ SpireTest.add("spells: 26-32 own spells per vocation, 2 Lost Arts each, at most 
 	for v = 1, 4 do
 		local own, lost, total = 0, 0, 0
 		for _, row in ipairs(SpireSpells.list) do
-			if SpireSpells.allowed(row, v) then
+			if SpireSpells.allowed(row, v) and not row.style then -- style abilities come from Mastery, not levels
 				total = total + 1
 				if row.voc ~= "all" then
 					own = own + 1

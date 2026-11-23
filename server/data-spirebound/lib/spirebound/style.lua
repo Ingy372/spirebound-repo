@@ -125,6 +125,11 @@ function SpireStyle.speedBonus(v)
 	return sum(v, { speed = true })
 end
 
+-- Pure: does this style view have the signature ability of `stage` (that stage complete)?
+function SpireStyle.hasAbilityPure(v, stage)
+	return v.stage > stage or (v.stage == stage and v.level == 10)
+end
+
 -- ---------------------------------------------------------------- the character
 local function kv(player)
 	return player:kv():scoped("spirebound")
@@ -133,6 +138,10 @@ end
 function SpireStyle.get(player)
 	local k = kv(player)
 	return SpireStyle.view(player:getVocation():getBaseId(), k:get("style_points") or 0, k:get("style_path"), k:get("style_final"))
+end
+
+function SpireStyle.hasAbility(player, stage)
+	return SpireStyle.hasAbilityPure(SpireStyle.get(player), stage)
 end
 
 function SpireStyle.name(voc, key)

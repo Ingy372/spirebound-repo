@@ -89,7 +89,7 @@ def spell_rows():
         r = {"name": field(line, "name"), "words": field(line, "words"), "kind": field(line, "kind"),
              "mana": int(field(line, "mana", r"(\d+)") or 0), "cd": float(field(line, "cd", r"([\d.]+)") or 0),
              "element": ELEMENT.get(field(line, "element", r"COMBAT_([A-Z]+)DAMAGE") or "", None),
-             "lostArt": field(line, "lostArt", r"(\d+)"), "riders": [t for k, t in RIDERS if re.search(r"\b" + k + r" = ", line)]}
+             "lostArt": field(line, "lostArt", r"(\d+)"), "style": field(line, "style", r"(\d+)"), "riders": [t for k, t in RIDERS if re.search(r"\b" + k + r" = ", line)]}
         voc = re.search(r'\bvoc = ("all"|\{[^}]*\})', line).group(1)
         r["voc"] = [1, 2, 3, 4] if voc == '"all"' else [VOC[v] for v in re.findall(r"[AMRV]", voc)]
         lv = re.search(r"\blevel = (\d+|\{[^}]*\})", line).group(1)
@@ -163,11 +163,13 @@ def spellinfo():
             desc += " Learned at level " + ", ".join(f"{lv[v]} ({VOC_NAME[v]})" for v in sorted(lv)) + "."
         if r["lostArt"]:
             desc += f" Lost Art: learned by finishing the Floor {r['lostArt']} story quests."
+        if r["style"]:
+            desc += " Style ability: learned when your class's Mastery reaches 10 (say !style)."
         out.append(entry(r["name"], id=300 + i, name=r["name"], words=r["words"],
                          type="Conjure" if r["kind"] == "conjure" else "Instant", level=min(lv.values()), mana=r["mana"],
                          soul=0, maglevel=0, icon="", clientId=icon_of(r), group={GROUP_ID[g]: GROUP_MS[g]},
                          needTarget=r["kind"] == "attack_target", parameter=r["kind"] in ("find_person", "levitate", "heal_target", "hot_target", "dr_target"),
-                         range=-1, exhaustion=int(r["cd"] * 1000), premium=False, vocations=vocs, special=bool(r["lostArt"]),
+                         range=-1, exhaustion=int(r["cd"] * 1000), premium=False, vocations=vocs, special=bool(r["lostArt"] or r["style"]),
                          source=0, description=desc))
     for i, s in enumerate(skill_rows(), 1):
         out.append(entry(s["name"], id=240 + i, name=s["name"], words=s["words"], type="Sword skill", level=s["level"],

@@ -67,3 +67,22 @@ SpireTest.add("progress: weapon power and style multiply the damage dealt", func
 	SpireTest.eq(SpireProgress.dealtPure(100, nil, v, { distance = 1 }, 0), 105, "no weapon, stage 1 complete: +5%")
 	SpireTest.eq(SpireProgress.dealtPure(100, nil, v, { distance = 1 }, 0.02), 107, "a trophy adds 2%")
 end)
+
+-- Task 8: each class's first style ability (spec 4.2: finishing a stage unlocks a signature ability)
+SpireTest.add("style: each class has one stage-1 ability, learned only from its mastery", function()
+	for voc = 1, 4 do
+		local rows = {}
+		for _, row in ipairs(SpireSpells.list) do
+			if row.style == 1 and SpireSpells.allowed(row, voc) then
+				table.insert(rows, row)
+			end
+		end
+		SpireTest.eq(#rows, 1, "vocation " .. voc .. " has one stage-1 ability")
+		for _, r in ipairs(SpireSpells.unlockedAt(rows[1].level, voc)) do
+			SpireTest.eq(r.style == nil, true, "a style ability never unlocks by level alone")
+		end
+	end
+	SpireTest.eq(SpireStyle.hasAbilityPure(SpireStyle.view(3, P[9], nil, nil), 1), false, "not at mastery 9")
+	SpireTest.eq(SpireStyle.hasAbilityPure(SpireStyle.view(3, P[10], nil, nil), 1), true, "at mastery 10")
+	SpireTest.eq(SpireStyle.hasAbilityPure(SpireStyle.view(3, P[12], "marksman", nil), 1), true, "and after")
+end)
