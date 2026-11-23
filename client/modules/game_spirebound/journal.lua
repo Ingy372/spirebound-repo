@@ -3,11 +3,12 @@
 SpireJournalUi = {}
 local win = nil
 local TABS = {
-  { 'secrets', 'Secrets' }, { 'fishing', 'Fishing' }, { 'quests', 'Quests' },
+  { 'upgrade', 'Upgrade' }, { 'secrets', 'Secrets' }, { 'fishing', 'Fishing' }, { 'quests', 'Quests' },
   { 'task', 'Task' }, { 'top', 'Top' }, { 'memorial', 'Memorial' }, { 'howto', 'How do I' }, { 'commands', 'Commands' },
 }
 -- Roadmap R19: every chat command a player needs, one click away (the Commands tab sends it for you)
 local COMMANDS = {
+  { '!upgrade', 'My next upgrade: weapon, path and style' }, { '!style', 'My style tree and my next choice' },
   { '!hunt', 'Where should I hunt for my level?' }, { '!guide', 'Read the starter letter again' },
   { '!spells', 'Every spell and sword skill of my path' }, { '!rules', 'The rules' },
   { '!taskshop', 'Spend task points' }, { '!top', 'Top climbers' }, { '!memorial', 'The fallen of the Death Game' },
@@ -20,10 +21,10 @@ local COMMANDS = {
   { '!fortune', 'Make my house a Fortune Hall (add: license)', true }, { '!mannequin', 'Show my outfit on a house mannequin' },
   { '!pond', 'My house pond' }, { '!warroom', 'My guild war room' }, { '!journal', 'Open this Journal' },
 }
-local current = 'secrets'
+local current = 'upgrade'
 local LABELS = {
-  pt = { secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', top = 'Top', memorial = 'Memorial', howto = 'Como faço', commands = 'Comandos', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
-  es = { secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', top = 'Top', memorial = 'Memorial', howto = 'Cómo hago', commands = 'Comandos', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
+  pt = { upgrade = 'Melhoria', secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', top = 'Top', memorial = 'Memorial', howto = 'Como faço', commands = 'Comandos', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
+  es = { upgrade = 'Mejora', secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', top = 'Top', memorial = 'Memorial', howto = 'Cómo hago', commands = 'Comandos', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
 }
 SpireJournalUi.lang = 'en'
 local function label(key, english)
@@ -68,6 +69,13 @@ local function request(tab)
 end
 
 function SpireJournalUi.show(data)
+  if data.open and data.tab then -- the server asked to open the window on this tab (!upgrade)
+    current = data.tab
+    if not win then
+      SpireJournalUi.toggle()
+      return
+    end
+  end
   if not win or data.tab ~= current then
     return
   end

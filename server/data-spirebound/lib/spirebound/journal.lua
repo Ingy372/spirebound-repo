@@ -2,7 +2,7 @@
 -- The client asks {t="journal", tab="secrets"}; the server answers {t="journal", tab, title, lines={...}}.
 -- Every builder below returns plain text lines, so the window and the tests share one source.
 SpireJournal = {
-	TABS = { "secrets", "fishing", "quests", "task", "top", "memorial" },
+	TABS = { "upgrade", "secrets", "fishing", "quests", "task", "top", "memorial" },
 	MAX_LINES = 120,
 }
 
@@ -153,7 +153,12 @@ end
 -- Build the reply for a tab; nil if the tab is unknown.
 function SpireJournal.build(player, tab)
 	local title, lines
-	if tab == "secrets" then
+	if tab == "upgrade" then
+		if type(player.getGuid) ~= "function" then
+			return nil
+		end
+		title, lines = "Next upgrade", SpireUpgrade.lines(SpireUpgrade.viewFor(player))
+	elseif tab == "secrets" then
 		title, lines = SpireJournal.secrets(player)
 	elseif tab == "fishing" then
 		title, lines = SpireJournal.fishing(player)
