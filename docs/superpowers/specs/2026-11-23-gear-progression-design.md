@@ -1,6 +1,6 @@
 # Gear and weapon progression (design, 2026-11-23)
 
-Status: written after a design conversation with Jay on 2026-11-23. Waiting for Jay's OK before anything is built.
+Status: approved by Jay on 2026-11-23 ("agree on everything... everything is good to build"), with one change: mastery respecs are sold in the donation shop (4.2, 4.9).
 Lines marked **(Claude's call)** are mine and Jay can veto them. Everything else is Jay's decision, in his words where quoted.
 
 ---
@@ -41,7 +41,7 @@ What Jay wants, in his words:
 - Pay-to-win: shop gear must never beat gear earned by playing, past the early levels.
 - One right answer: if one style path or one weapon is clearly best, the choices are fake.
 - "Old faithful forever": if a maxed old weapon is never beaten, nobody switches. If it is beaten instantly, nobody cares about familiarity.
-- A respec that undoes choices. There is none.
+- A respec that can be earned in game. Respecs exist only in the donation shop (Jay, 2026-11-23).
 
 ## 3. Approaches we considered
 
@@ -76,7 +76,7 @@ Stage 1: <Class> Mastery 1-10
 - 3 stages x 10 levels = 30 style levels. 2 choices. 4 end styles per class, 16 in the game.
 - **Each style level** gives a small passive bonus that fits the path (example: Marksman +1% damage at range 4 or more; Bulwark +1% shielding).
 - **Finishing each stage** (level 10) unlocks one **signature ability** for that path: a sword skill or spell no other path has. So a finished character has 3 signature abilities.
-- **Choices are permanent.** No NPC, item, shop product or GM command undoes them for players. (GMs can fix bugs only, logged.)
+- **Choices are permanent, except by a shop respec.** Jay, 2026-11-23: "i want to sell mastery respec's in the donation shop. that will be the only way to acquire one." No NPC, quest, drop or GM command undoes a choice (GMs can fix bugs only, logged). A **Mastery Respec** from the shop lets the character re-pick its choices; how far back it goes and what happens to points is in 4.9.
 - **How style fills (Claude's call):** style points come from the experience of monsters you kill while holding a weapon of your class, counted before XP stages and bonuses, so a fast-levelling weekend does not skip it. Party kills count for each member's share. Players never fill style from other players (no PvP farming).
 - **Pacing (Claude's call, numbers in `tools/balance.py`):** Stage 1 finishes around the end of Floor 1 / start of Floor 2 (around level 35 to 40), so the first choice comes at the first floor change. Stage 2 finishes around Floor 4 to 5. Stage 3 finishes around Floor 8. That spreads the three big moments across a season.
 - **Showing it:** the style window (section 4.7) shows both options of the next choice before you reach it, with what each does, so a player can plan. Choosing asks twice ("This is permanent. Choose Marksman?").
@@ -188,6 +188,7 @@ TROPHIES 2 found
 - Shop gear **cannot be tiered, has no familiarity and cannot be awakened**. The Floor 1 main weapon at tier 2 already beats it (checked by `balance.py`).
 - No shop gear for Floor 2 and up at launch (Claude's call; adding any later is Jay's decision, one floor at a time, always outclassed by that floor's quest weapon at tier 2).
 - Shop gear can be sold to other players on the market, like other shop items (DESIGN 11).
+- **Mastery Respec** (Jay, 2026-11-23: "that will be the only way to acquire one"): sold only in the donation shop, never dropped, earned or given by NPCs. **(Claude's calls:)** it resets both style choices; style points already earned are kept, so the character lands at the same stage and picks again (no grind back); one use per item; it can be sold to other players on the market like any shop item, so the shop is still the only source; a 7-day wait between respecs on one character, so players can't swap style per fight.
 - The shop only opens at public launch, so during friend tests the starter set is given by a GM command for testing.
 
 ### 4.10 What changes in existing systems

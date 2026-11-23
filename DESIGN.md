@@ -393,7 +393,7 @@ Hidden shops, dungeons, quests, bosses, fishing spots, NPCs, chests and Easter e
   - Anti-bot: a fish that "struggles" needs one extra click within a few seconds; unattended fishing catches only junk.
 
 ### 8.3 Quests
-**Gear and weapon progression (Jay, 2026-11-23)** is designed in `docs/superpowers/specs/2026-11-23-gear-progression-design.md`: a permanent style tree per character with two locked-in choices, weapons swapped floor by floor with tiers (tier tokens) and familiarity, a clear checklist per floor in a "Next upgrade" window, and hidden mini-bosses. Crafting is no longer a gear path.
+**Gear and weapon progression (Jay, 2026-11-23)** is designed in `docs/superpowers/specs/2026-11-23-gear-progression-design.md`: a permanent style tree per character with two locked-in choices, weapons swapped floor by floor with tiers (tier tokens) and familiarity, a clear checklist per floor in a "Next upgrade" window, and hidden mini-bosses. Crafting is no longer a gear path. Jay approved it 2026-11-23; mastery respecs are sold only in the donation shop (Jay: "that will be the only way to acquire one").
 
 Every floor has story quests and side quests. Every quest has a quest-log entry that names the next step. No required puzzle longer than about 15 minutes once understood. Hints exist in game (Jay hated unexplained hour-long quests). Each floor's story quests unlock a **perk choice** (pick 1 of 2), earned only, never sold *(from the old pack)*.
 
