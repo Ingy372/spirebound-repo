@@ -130,6 +130,19 @@ function SpireStyle.hasAbilityPure(v, stage)
 	return v.stage > stage or (v.stage == stage and v.level == 10)
 end
 
+-- Pure: may the character respec now? path = its first choice (nil = nothing to undo), lastAt = last respec time
+SpireStyle.RESPEC_WAIT = 7 * 86400
+function SpireStyle.respecCheck(path, lastAt, now)
+	if not path then
+		return false, "You have not chosen a style yet: there is nothing to undo."
+	end
+	if lastAt and now - lastAt < SpireStyle.RESPEC_WAIT then
+		local days = math.ceil((SpireStyle.RESPEC_WAIT - (now - lastAt)) / 86400)
+		return false, string.format("Your style settled too recently. You can respec again in %d day%s.", days, days == 1 and "" or "s")
+	end
+	return true
+end
+
 -- ---------------------------------------------------------------- the character
 local function kv(player)
 	return player:kv():scoped("spirebound")
@@ -211,4 +224,17 @@ function SpireStyle.choose(player, key)
 		k:set("style_final", key)
 	end
 	return true, "You chose " .. msg .. ". This is your style for good."
+end
+
+-- The Mastery Respec Scroll (shop only): clears both choices, keeps every point. Returns ok, message.
+function SpireStyle.respec(player, now)
+	local k = kv(player)
+	local ok, msg = SpireStyle.respecCheck(k:get("style_path"), k:get("style_respec_at"), now)
+	if not ok then
+		return false, msg
+	end
+	k:remove("style_path")
+	k:remove("style_final")
+	k:set("style_respec_at", now)
+	return true, "Your style is undone. Your Mastery points stay: say !style to choose again."
 end

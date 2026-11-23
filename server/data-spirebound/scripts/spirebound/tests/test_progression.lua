@@ -86,3 +86,14 @@ SpireTest.add("style: each class has one stage-1 ability, learned only from its 
 	SpireTest.eq(SpireStyle.hasAbilityPure(SpireStyle.view(3, P[10], nil, nil), 1), true, "at mastery 10")
 	SpireTest.eq(SpireStyle.hasAbilityPure(SpireStyle.view(3, P[12], "marksman", nil), 1), true, "and after")
 end)
+
+-- Task 9: the Mastery Respec (Jay, 2026-11-23: sold only in the shop)
+SpireTest.add("style: a respec clears the choices, keeps the points, and waits 7 days", function()
+	local now = 1000000
+	SpireTest.eq((SpireStyle.respecCheck(nil, nil, now)), false, "nothing to undo without a choice")
+	SpireTest.eq((SpireStyle.respecCheck("marksman", nil, now)), true, "a first respec")
+	SpireTest.eq((SpireStyle.respecCheck("marksman", now - 6 * 86400, now)), false, "not within 7 days")
+	SpireTest.eq((SpireStyle.respecCheck("marksman", now - 7 * 86400, now)), true, "after 7 days")
+	local v = SpireStyle.view(3, P[15], nil, nil)
+	SpireTest.eq(v.stage .. "/" .. v.level .. "/" .. tostring(v.choiceReady), "1/10/true", "after a respec at Marksman 5: the choice again, points kept")
+end)

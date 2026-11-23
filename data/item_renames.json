@@ -28,5 +28,10 @@
   "name": "flawless Highland Shard",
   "plural": "flawless Highland Shards",
   "description": "Dropped by Floor 2's elites and on its group grounds."
+ },
+ "28650": {
+  "name": "Mastery Respec Scroll",
+  "plural": "Mastery Respec Scrolls",
+  "description": "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use."
  }
 }

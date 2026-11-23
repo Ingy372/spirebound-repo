@@ -7,13 +7,25 @@ local function findHouse(name)
 	end
 end
 
+function SpireShop.giveStarterSet(player)
+	local set = SpireGearData.shop[player:getVocation():getBaseId()]
+	if not set then
+		return false
+	end
+	SpireGear.make(player, set.weapon.id)
+	SpireGear.make(player, set.armour.id)
+	return true
+end
+
 local function deliver(player, e)
 	if e.kind == "house" then
 		local h = findHouse(e.house)
 		h:setHouseOwner(player:getGuid())
 		return
 	end
-	if e.kind == "outfit" then
+	if e.kind == "gear" then
+		SpireShop.giveStarterSet(player)
+	elseif e.kind == "outfit" then
 		player:addOutfitAddon(e.lookType, 3)
 	elseif e.kind == "mount" then
 		player:addMount(e.mount)
@@ -98,3 +110,38 @@ end
 grant:separator(" ")
 grant:groupType("god")
 grant:register()
+
+-- GM testing while the shop is closed: /givegear <online player>, shop|respec
+local give = TalkAction("/givegear")
+function give.onSay(player, words, param)
+	local name, what = param:match("^(.-)%s*,%s*(%a+)$")
+	local target = name and Player(name)
+	if not target or (what ~= "shop" and what ~= "respec") then
+		player:sendCancelMessage("/givegear <online player>, shop|respec")
+		return false
+	end
+	if what == "shop" then
+		SpireShop.giveStarterSet(target)
+	else
+		target:addItem(SpireShop.RESPEC_ITEM, 1)
+	end
+	player:sendTextMessage(MESSAGE_ADMINISTRATOR, "Gave " .. what .. " gear to " .. target:getName() .. ".")
+	return false
+end
+give:separator(" ")
+give:groupType("god")
+give:register()
+
+-- Using the Mastery Respec Scroll
+local scroll = Action()
+function scroll.onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	local ok, msg = SpireStyle.respec(player, os.time())
+	player:sendTextMessage(ok and MESSAGE_EVENT_ADVANCE or MESSAGE_STATUS, msg)
+	if ok then
+		item:remove(1)
+		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
+	end
+	return true
+end
+scroll:id(SpireShop.RESPEC_ITEM)
+scroll:register()

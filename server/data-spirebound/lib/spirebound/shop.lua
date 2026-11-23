@@ -4,7 +4,8 @@
 SpireShop = {
 	ENABLED = false,
 	CURRENCY = "Spire Coins", -- account-wide; granted by the payment system (7.3) or by the owner with /shopgrant
-	KINDS = { furniture = true, outfit = true, mount = true, decoration = true, house = true },
+	KINDS = { furniture = true, outfit = true, mount = true, decoration = true, house = true, gear = true, respec = true },
+	RESPEC_ITEM = 28650, -- the Mastery Respec Scroll (named by tools/gen_gear.py)
 }
 
 -- kind: furniture/decoration = a takeable item (item id); outfit = lookType (+addons 3); mount = mount id.
@@ -20,6 +21,10 @@ SpireShop.catalog = {
 	{ id = "outfit_hearth_cloak", kind = "outfit", name = "Hearth Cloak outfit", price = 400, lookType = 129 }, -- placeholder look until art arrives
 	{ id = "outfit_tower_mantle", kind = "outfit", name = "Tower Mantle outfit", price = 400, lookType = 130 },
 	{ id = "mount_stone_hound", kind = "mount", name = "Stone Hound mount", price = 500, mount = 1 },
+	-- Gear progression (Jay, 2026-11-23: "the shop should have some gear that gets outclassed later"; respecs "the only way to acquire one").
+	-- The starter set (weapon + armour for the buyer's class) cannot be upgraded and is beaten by the Floor 1 weapon at tier 2.
+	{ id = "starter_set", kind = "gear", name = "the Climber's starter set (weapon and armour for your class, levels 1-15)", price = 300 },
+	{ id = "mastery_respec", kind = "respec", name = "a Mastery Respec Scroll (choose your style again)", price = 500, item = 28650 },
 	-- Spire Manor: the only way to own it (Jay, 2026-11-11: "pay to obtain only"). Cosmetic: no stats, no bonuses.
 	{ id = "spire_manor", kind = "house", name = "the deed to Spire Manor (Hearthgate)", price = 5000, house = "Spire Manor" },
 }
