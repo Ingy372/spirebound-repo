@@ -1469,6 +1469,9 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	if SpirePerks and SpirePerks.onDealt and creature:isMonster() then -- floor perks (R12)
 		primaryDamage = SpirePerks.onDealt(attacker, creature, primaryDamage)
 	end
+	if SpireProgress and creature:isMonster() then -- weapon power, style and trophies (gear progression)
+		primaryDamage = SpireProgress.onDealt(attacker, creature, primaryDamage)
+	end
 	-- Counterguard: a share of a monster's physical blow goes back to it (a moment later, never inside this event)
 	local rf = SpireBuffs.reflect[cid]
 	if rf and rf.untilTime >= now and attacker and attacker:isMonster() and primaryType == COMBAT_PHYSICALDAMAGE then
