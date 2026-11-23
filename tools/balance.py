@@ -380,6 +380,34 @@ def write(rows, problems, tasks):
     (ROOT / "BALANCE.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 
 
+# ---------------------------------------------------------------- gear progression (docs/superpowers/specs/2026-11-23-gear-progression-design.md)
+def gear_problems():
+    """Ceiling rule (4.3), shop rule (4.9), pacing of style (4.2) and Hearth Shards (4.4)."""
+    import gen_gear as g
+    out = []
+    p = g.weapon_power
+    f1max, f2new = p(1, 5, 10, True), p(2, 0, 0, False)
+    if not 0.90 <= f2new / f1max <= 0.95:
+        out.append(f"gear: a new Floor 2 weapon is {f2new / f1max:.0%} of a maxed Floor 1 weapon (want 90-95%)")
+    if not f1max < p(2, 2, 5, False):
+        out.append("gear: a maxed Floor 1 weapon beats a Floor 2 weapon at tier 2, familiarity 5")
+    h = g.hours_to_pass(2)
+    if not 2 <= h <= 3:
+        out.append(f"gear: a Floor 2 weapon passes a maxed Floor 1 weapon after {h:.1f} h (want 2-3 h)")
+    if not g.shop_power() < p(1, 2, 0, False):
+        out.append("gear: shop starter weapon is not beaten by the Floor 1 main weapon at tier 2")
+    if not g.shop_power() > 1.0:
+        out.append("gear: shop starter weapon is no better than shop gear")
+    for stage, (lo, hi) in {1: (35, 40), 2: (90, 160), 3: (250, 300)}.items():
+        lvl = g.style_stage_level(stage)
+        if not lo <= lvl <= hi:
+            out.append(f"gear: style stage {stage} finishes at level {lvl} (want {lo}-{hi})")
+    lvl = g.shard_tier5_level()
+    if not 30 <= lvl <= 35:
+        out.append(f"gear: a solo player saving every shard reaches tier 5 at level {lvl} (want 30-35)")
+    return out
+
+
 def main(argv):
     monsters, floors, prices, houses, tasks = load_game()
     if "--selftest" in argv:
@@ -394,6 +422,7 @@ def main(argv):
         return 0
     rows, problems = rows_and_problems(monsters, floors, prices, houses, tasks)
     problems += spawn_rule_problems()
+    problems += gear_problems()
     write(rows, problems, tasks)
     print(f"wrote BALANCE.md, data/balance_floors.csv and tasks_floors.lua ({len(rows)} floors, {len(tasks)} tasks)")
     if problems:

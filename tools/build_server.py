@@ -123,6 +123,18 @@ def patch_core(build: Path) -> None:
     # Mystic would otherwise fist-fight up to level 6 (playtest 2026-11-11).
     for item_id in (3074, 3066):
         text = re.sub(r'(<item id="%d"[^>]*>.*?<attribute key="level" value=")\d+(")' % item_id, r"\g<1>1\g<2>", text, count=1, flags=re.S)
+    # Spirebound's own item names (tools/gen_gear.py -> data/item_renames.json): Hearth Shards and other tokens
+    import json
+    renames = json.loads((ROOT / "data" / "item_renames.json").read_text(encoding="utf-8"))
+    for item_id, r in renames.items():
+        def fix(m, r=r):
+            body = re.sub(r'<attribute key="description"[^>]*/>\s*', "", m.group(2))
+            name, plural, desc = r["name"], r["plural"], r["description"]
+            return (f'<item id="{item_id}" article="a" name="{name}" plural="{plural}">'
+                    f'\n\t\t<attribute key="description" value="{desc}"/>' + body)
+        text, n = re.subn(r'(<item id="%s"[^>]*>)(.*?</item>)' % item_id, fix, text, count=1, flags=re.S)
+        if n != 1:
+            raise SystemExit(f"item {item_id} to rename is missing from items.xml")
     items.write_text(text, encoding="utf-8")
     for folder in ("runes", "weapons"):
         for f in (build / "data" / "scripts" / folder).rglob("*.lua"):

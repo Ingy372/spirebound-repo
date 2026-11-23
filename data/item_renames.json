@@ -1,0 +1,32 @@
+{
+ "16124": {
+  "name": "rough Hearth Shard",
+  "plural": "rough Hearth Shards",
+  "description": "Dropped by every monster on Floor 1's hunting grounds."
+ },
+ "16119": {
+  "name": "cut Hearth Shard",
+  "plural": "cut Hearth Shards",
+  "description": "Dropped on Floor 1's harder grounds: Wolf Copse, Reedmarsh, Thornsnap Hollow, Shard Fields, the Bandit Road, the Old Quarry, and their caves."
+ },
+ "16120": {
+  "name": "flawless Hearth Shard",
+  "plural": "flawless Hearth Shards",
+  "description": "Dropped by Floor 1's elites (Grey Alpha, Bandit Captain), in the Old Watchtower and on group grounds."
+ },
+ "16122": {
+  "name": "rough Highland Shard",
+  "plural": "rough Highland Shards",
+  "description": "Dropped by every monster on Floor 2's hunting grounds."
+ },
+ "16121": {
+  "name": "cut Highland Shard",
+  "plural": "cut Highland Shards",
+  "description": "Dropped on Floor 2's harder grounds and caves."
+ },
+ "16127": {
+  "name": "flawless Highland Shard",
+  "plural": "flawless Highland Shards",
+  "description": "Dropped by Floor 2's elites and on its group grounds."
+ }
+}
