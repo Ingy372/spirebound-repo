@@ -333,7 +333,42 @@ Check after with `tools/gen_economy.py` that no class runs at a loss on its own 
 
 ## 10. Measured numbers (autopilot playthroughs)
 
-*(filled in below from tonight's runs)*
+Each ground: two routes, 75 s of hunting on each, at the middle of its level band. "XP/h" is experience per hour over
+the whole visit (walking included), with the real experience stages; the economy model (ECONOMY.md) predicts
+18,000-36,000 for these grounds. Kills are counted from loot messages, so they undercount; trust the XP.
+
+**Vanguard** (Registrar kit: sword, wooden shield, leather set; Dorrow's Hearthguard Sword at level 10):
+
+| Place | Level | XP/h | Damage taken | Lowest health | Most in sight / next to you | Result |
+|---|---|---|---|---|---|---|
+| Tutorial pen | 2 | 26,500 | 0 | 100% | 3 / 3 | Pell's quest: offered, done, 100 gold paid (real NPC) |
+| Ratwarren | 3 | 21,000 | 0 | 100% | 2 / 2 | |
+| Toad Pond | 5 | 26,700 | 0 | 100% | 3 / 2 | |
+| Sproutling Glade | 7 | 27,900 | 10 | 96% | 2 / 1 | |
+| Waspgrass Fields | 9 | 28,400 | 35 | 83% | 4 / 4 | |
+| Boar Meadow (old map) | 12 | - | 1,708 in 62 s | 0% | 10 / 7 | **died 5 tiles inside the gate** |
+
+**Ranger** (ran without a weapon equipped by a test fault; worst case):
+
+| Place | Level | XP/h | Damage taken | Lowest health | Most in sight / next to you | Result |
+|---|---|---|---|---|---|---|
+| Ratwarren | 3 | 12,600 | 0 | 100% | 2 / 2 | |
+| Toad Pond | 5 | 19,700 | 0 | 100% | 3 / 2 | |
+| Sproutling Glade | 7 | 18,200 | 57 | 69% | 2 / 2 | |
+| Waspgrass Fields | 9 | 13,500 | 55 | 72% | 4 / 4 | |
+| Boar Meadow (old map) | 12 | - | 1,556 in ~2 min | 0% | 10 / 5 | **died at the gate** |
+
+**What the numbers say**
+- The four rebuilt starter grounds work: steady experience at the model's rate, little damage, never more than 4
+  monsters in sight. A new player's first two hours are fine to play, just plain (section 3).
+- **The step from the starter grounds to the level 9-15 ground killed two of two Pilots on the old map.** A real new
+  player who survives it will still meet a wall of monsters on six of the next seven grounds (section 4). The rebuilds
+  done overnight (Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow, Shard Fields) are meant to fix exactly this, but
+  they are only live after a server restart and are not yet walked in the client.
+- Experience per hour matches the economy model, so the 11-15 hour Floor 1 (Jay's Q30) holds for a steady hunter.
+  Levelling is not *slow* by the numbers; it *feels* slow because each hour is the same thing (Jay's "boring").
+
+*(Arcanist and Mystic results are added below when their runs finish.)*
 
 ---
 
