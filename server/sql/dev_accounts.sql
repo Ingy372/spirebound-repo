@@ -45,7 +45,9 @@ SET @pilot = (SELECT `id` FROM `accounts` WHERE `name` = 'autopilot');
 INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
 VALUES
  ('Pilot Vanguard', 1, @pilot, 2, 4, 165, 165, 100, 68, 76, 78, 58, 128, 60, 60, @town, '', 425, 1),
- ('Pilot Ranger', 1, @pilot, 2, 3, 160, 160, 100, 68, 76, 78, 58, 129, 70, 70, @town, '', 420, 1)
+ ('Pilot Ranger', 1, @pilot, 2, 3, 160, 160, 100, 68, 76, 78, 58, 129, 70, 70, @town, '', 420, 1),
+ ('Pilot Arcanist', 1, @pilot, 2, 1, 150, 150, 100, 68, 76, 78, 58, 130, 70, 70, @town, '', 410, 1),
+ ('Pilot Mystic', 1, @pilot, 2, 2, 150, 150, 100, 68, 76, 78, 58, 131, 70, 70, @town, '', 410, 1)
 ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALUES(`level`), `experience` = VALUES(`experience`),
  `health` = VALUES(`healthmax`), `healthmax` = VALUES(`healthmax`), `mana` = VALUES(`manamax`), `manamax` = VALUES(`manamax`),
  `skill_fist` = 10, `skill_fist_tries` = 0, `skill_club` = 10, `skill_club_tries` = 0, `skill_sword` = 10, `skill_sword_tries` = 0,

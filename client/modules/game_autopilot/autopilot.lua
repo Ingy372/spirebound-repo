@@ -27,6 +27,7 @@ Autopilot = {}
 local RUN = '/game_autopilot/run.json'
 local LOG = '/autopilot_log.txt'
 local TICK = 250 -- ms
+local stepXp
 local POTION = 266 -- health potion
 local NEAR = 2 -- a monster this close (tiles) gets fought on a walk
 
@@ -129,7 +130,12 @@ local function nextStep()
     if step then
         log(string.format('== step %d done in %.0fs', idx, now() - stepT))
         log(summary(st, '   step ' .. idx))
+        local lp = g_game.getLocalPlayer()
+        if lp and stepXp then -- (playthroughs) experience per step, for experience per hour
+            log(string.format('   xp step %d: +%d experience, level %d', idx, lp:getExperience() - stepXp, lp:getLevel()))
+        end
     end
+    stepXp = g_game.getLocalPlayer() and g_game.getLocalPlayer():getExperience()
     idx = idx + 1
     step = plan.steps[idx]
     if not step then
@@ -209,7 +215,7 @@ function handlers.npc()
     end
 end
 
--- put an item from the backpack into a hand: { "do": "equip", "id": 3350, "slot": "left" }
+-- wear an item from the backpack: { "do": "equip", "id": 3350, "slot": "left" } (left right ammo body head legs feet)
 function handlers.equip(player)
     if stepData.done then
         if now() - stepT > 1.5 then nextStep() end
@@ -218,7 +224,9 @@ function handlers.equip(player)
     for _, c in pairs(g_game.getContainers()) do
         for _, it in ipairs(c:getItems()) do
             if it:getId() == step.id then
-                local slot = step.slot == 'right' and InventorySlotRight or InventorySlotLeft
+                local slots = { left = InventorySlotLeft, right = InventorySlotRight, ammo = InventorySlotAmmo,
+                    body = InventorySlotBody, head = InventorySlotHead, legs = InventorySlotLeg, feet = InventorySlotFeet }
+                local slot = slots[step.slot or 'left'] or InventorySlotLeft
                 g_game.move(it, { x = 65535, y = slot, z = 0 }, it:getCount())
                 log('equip: moved item ' .. step.id .. ' to the ' .. (step.slot or 'left') .. ' hand')
                 stepData.done = true
@@ -441,6 +449,7 @@ local function onText(mode, text)
     if not st then return end
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
+        log('loot: ' .. text)
     elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') or (step and step['do'] == 'cast') then
         log('message: ' .. text)
     end

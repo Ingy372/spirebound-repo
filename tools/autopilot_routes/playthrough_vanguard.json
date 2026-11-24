@@ -1,0 +1,856 @@
+{
+ "name": "playthrough_vanguard",
+ "character": "Pilot Vanguard",
+ "timeout": 3300,
+ "about": "A whole Floor 1 run as Pilot Vanguard (tools/make_playthrough_routes.py).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot gearreset",
+   "note": "Arrival"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3264, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3264,
+   "slot": "left"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3412, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3412,
+   "slot": "right"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3361, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3361,
+   "slot": "body"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3355, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3355,
+   "slot": "head"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3559, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3559,
+   "slot": "legs"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3552, 1",
+   "note": "Arrival"
+  },
+  {
+   "do": "equip",
+   "id": 3552,
+   "slot": "feet"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 10",
+   "note": "Arrival"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 268, 10",
+   "note": "Arrival"
+  },
+  {
+   "do": "jump",
+   "to": "tutorial_spawn",
+   "note": "Arrival"
+  },
+  {
+   "do": "shot",
+   "name": "arrival"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "hunt"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "pell"
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "walk",
+   "to": "tutorial_pen",
+   "fight": true,
+   "timeout": 40,
+   "note": "Tutorial pen (level 2)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 6
+  },
+  {
+   "do": "jump",
+   "to": "tutorial_spawn",
+   "note": "Tutorial pen (level 2)"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 3"
+  },
+  {
+   "do": "jump",
+   "to": "gate_starter_west",
+   "note": "Ratwarren (level 3): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "starter_west_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_west_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Ratwarren (level 3): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "starter_west_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_west_b",
+   "fight": true,
+   "timeout": 60,
+   "note": "Ratwarren (level 3): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 5"
+  },
+  {
+   "do": "jump",
+   "to": "gate_starter_east",
+   "note": "Toad Pond (level 5): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "starter_east_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_east_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Toad Pond (level 5): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "starter_east_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_east_b",
+   "fight": true,
+   "timeout": 60,
+   "note": "Toad Pond (level 5): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 7"
+  },
+  {
+   "do": "jump",
+   "to": "gate_starter_south",
+   "note": "Sproutling Glade (level 7): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "starter_south_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_south_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Sproutling Glade (level 7): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "starter_south_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_south_b",
+   "fight": true,
+   "timeout": 60,
+   "note": "Sproutling Glade (level 7): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 9"
+  },
+  {
+   "do": "jump",
+   "to": "gate_wasp_fields",
+   "note": "Waspgrass Fields (level 9): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "wasp_fields_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wasp_fields_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Waspgrass Fields (level 9): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "wasp_fields_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wasp_fields_b",
+   "fight": true,
+   "timeout": 60,
+   "note": "Waspgrass Fields (level 9): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 10",
+   "note": "Captain Dorrow (level 10)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Captain Dorrow (level 10)"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "weapon"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "sword"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "equip",
+   "id": 3264,
+   "slot": "left"
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "!upgrade"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "upgrade_tab_l10"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "jump",
+   "to": "gate_boar_meadow",
+   "note": "Boar Meadow (level 12): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "boar_meadow_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_boar_meadow_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Boar Meadow (level 12): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "boar_meadow_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_boar_meadow_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Boar Meadow (level 12): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 13"
+  },
+  {
+   "do": "jump",
+   "to": "gate_burrow_hills",
+   "note": "Burrow Hills (level 13): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "burrow_hills_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_burrow_hills_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Burrow Hills (level 13): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "burrow_hills_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_burrow_hills_b",
+   "fight": true,
+   "timeout": 60,
+   "note": "Burrow Hills (level 13): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15"
+  },
+  {
+   "do": "jump",
+   "to": "gate_wolf_copse",
+   "note": "Wolf Copse (level 15): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "wolf_copse_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Wolf Copse (level 15): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "wolf_copse_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Wolf Copse (level 15): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 16"
+  },
+  {
+   "do": "jump",
+   "to": "gate_reed_marsh",
+   "note": "Reedmarsh (level 16): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "reed_marsh_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_reed_marsh_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Reedmarsh (level 16): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "reed_marsh_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_reed_marsh_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Reedmarsh (level 16): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 17"
+  },
+  {
+   "do": "jump",
+   "to": "gate_thornsnap_hollow",
+   "note": "Thornsnap Hollow (level 17): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "thornsnap_hollow_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_thornsnap_hollow_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Thornsnap Hollow (level 17): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "thornsnap_hollow_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_thornsnap_hollow_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Thornsnap Hollow (level 17): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 20"
+  },
+  {
+   "do": "jump",
+   "to": "gate_shard_fields",
+   "note": "Shard Fields (level 20): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "shard_fields_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_shard_fields_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Shard Fields (level 20): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "shard_fields_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_shard_fields_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Shard Fields (level 20): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 23"
+  },
+  {
+   "do": "jump",
+   "to": "gate_bandit_road",
+   "note": "Bandit Road (level 23): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "bandit_road_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Bandit Road (level 23): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "bandit_road_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Bandit Road (level 23): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 26"
+  },
+  {
+   "do": "jump",
+   "to": "gate_old_quarry",
+   "note": "Old Quarry (level 26): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "old_quarry_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_old_quarry_nw",
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry (level 26): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "old_quarry_a"
+  },
+  {
+   "do": "walk",
+   "to": "loop_old_quarry_se",
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry (level 26): route B"
+  },
+  {
+   "do": "hunt",
+   "seconds": 75,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 24",
+   "note": "Gate Hound (level 24)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1084,
+    7
+   ],
+   "note": "Gate Hound (level 24)"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 9
+  },
+  {
+   "do": "shot",
+   "name": "gate_hound"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 32",
+   "note": "Old Watchtower (level 32)"
+  },
+  {
+   "do": "jump",
+   "to": "apex_watchtower",
+   "note": "Old Watchtower (level 32)"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "watchtower"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 30",
+   "note": "Axe-Lord (level 30)"
+  },
+  {
+   "do": "jump",
+   "to": "boss_room_floor1",
+   "note": "Axe-Lord (level 30)"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "shot",
+   "name": "axe_lord_room"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 9
+  },
+  {
+   "do": "shot",
+   "name": "axe_lord_after"
+  },
+  {
+   "do": "say",
+   "text": "!upgrade",
+   "note": "End"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "upgrade_tab_end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout",
+   "note": "End"
+  }
+ ]
+}
