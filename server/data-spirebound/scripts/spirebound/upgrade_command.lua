@@ -95,6 +95,10 @@ function login.onLogin(player)
 		if p and p:getVocation():getBaseId() > 0 then
 			p:sendTextMessage(MESSAGE_STATUS, SpireUpgrade.nextLine(SpireUpgrade.viewFor(p)) .. " (Journal: Upgrade tab, or !upgrade)")
 		end
+		if p then -- the race (F1-03)
+			local top = Floors.highestOpen()
+			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, Floors.raceLine(top, Floors.get(top)))
+		end
 	end, 3000, player:getId())
 	return true
 end

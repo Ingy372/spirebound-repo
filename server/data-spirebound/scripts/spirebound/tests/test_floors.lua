@@ -48,3 +48,10 @@ SpireTest.add("floors: saved state survives a restart", function()
 		error("probe value corrupted: " .. tostring(previous))
 	end
 end)
+
+-- FLOOR1_REVIEW.md F1-03: the race is the hook; every login says where the tower stands
+SpireTest.add("floors: the login line says which floor is sealed and what opens it", function()
+	SpireTest.eq(Floors.raceLine(1, {}), "The tower: Floor 2 is sealed. No one has broken through the Pass on Floor 1 yet: the first party to defeat its guardian opens the way to the floor boss.", "launch day")
+	SpireTest.eq(Floors.raceLine(1, { fieldBossDeadAt = 1, fieldBossCredit = { "Ana", "Bo" } }), "The tower: Floor 2 is sealed. The Pass on Floor 1 was first broken by Ana. The first party to defeat the floor boss opens Floor 2 for everyone.", "pass open")
+	SpireTest.eq(Floors.raceLine(10, {}), "The tower: all 10 floors are open.", "the end")
+end)

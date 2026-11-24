@@ -55,6 +55,20 @@ function Floors.highestOpen()
 	return n
 end
 
+-- Pure: one line on where the tower's race stands (FLOOR1_REVIEW.md F1-03). top = highest open floor, rec = its record.
+function Floors.raceLine(top, rec)
+	if top >= Floors.LAUNCH_FLOORS then
+		return "The tower: all " .. Floors.LAUNCH_FLOORS .. " floors are open."
+	end
+	local nextFloor = top + 1
+	if not rec.fieldBossDeadAt then
+		return string.format("The tower: Floor %d is sealed. No one has broken through the Pass on Floor %d yet: the first party to defeat its guardian opens the way to the floor boss.", nextFloor, top)
+	end
+	local first = rec.fieldBossCredit and rec.fieldBossCredit[1]
+	return string.format("The tower: Floor %d is sealed. The Pass on Floor %d was first broken%s. The first party to defeat the floor boss opens Floor %d for everyone.",
+		nextFloor, top, first and (" by " .. first) or "", nextFloor)
+end
+
 function Floors.isLabyrinthOpen(n)
 	return Floors.get(n).fieldBossDeadAt ~= nil
 end

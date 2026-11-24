@@ -89,6 +89,9 @@ hours are there, the variety isn't.
 - **F1-03 The hook is hidden.** Nothing in the first hour mentions the race: that the first party to kill the Axe-Lord
   opens Floor 2 *for everyone* and goes on a monument. Add a world-state line to the login message and the Journal
   ("Floor 2: sealed. No one has reached the Axe-Lord yet.") and a server broadcast when the Gate Hound first falls.
+  **Login line done 2026-11-23 (overnight):** every login now says e.g. "The tower: Floor 2 is sealed. No one has broken
+  through the Pass on Floor 1 yet: the first party to defeat its guardian opens the way to the floor boss." Still to do:
+  the Journal line and Portuguese/Spanish text.
 - **F1-04 Pell's quest needs a "yes" that new players miss.** "Ready? Say {yes} or {no}." Fine for Tibia veterans; but
   the Journal should list the quest as soon as Pell offers it. (My own route forgot the "yes" and the quest silently
   didn't start: a new player would do the same.)
