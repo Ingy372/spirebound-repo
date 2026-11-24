@@ -214,6 +214,9 @@ end
 local offered = {} -- playerId -> quest id
 SpireCleanup.add(function(pid) offered[pid] = nil end)
 function SpireQuests.talk(npc, npcHandler, player, msg, giver)
+	if msg:sub(1, 1) == "!" then
+		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
+	end
 	if SpireGear.dorrowTalk and giver == "Captain Dorrow" and SpireGear.dorrowTalk(npc, npcHandler, player, msg) then
 		return true
 	end

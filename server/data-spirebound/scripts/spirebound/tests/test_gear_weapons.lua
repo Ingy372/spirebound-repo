@@ -135,3 +135,9 @@ SpireTest.add("familiarity: progress to the next level is a percentage", functio
 	SpireTest.eq(SpireGear.famProgress(T[1], 1), 0, "just reached level 1")
 	SpireTest.eq(SpireGear.famProgress(T[#T] + 5, 1), nil, "maxed: no next level")
 end)
+
+-- 2026-11-24 in-client check: saying !upgrade near Weaponsmith Garrick made him offer an upgrade
+SpireTest.add("weaponsmith: a !command said nearby is not talk", function()
+	SpireTest.eq(SpireGear.talk(nil, nil, nil, "!upgrade", SpireGear.WEAPONSMITH), false, "!upgrade is ignored")
+	SpireTest.eq(SpireQuests.talk(nil, nil, nil, "!quest", "Hunter Brannoch"), false, "!quest is ignored by quest givers")
+end)

@@ -55,6 +55,9 @@ end
 
 -- NPC hook: returns true when it handled the message
 function SpireCraft.talk(npc, npcHandler, player, msg, npcName)
+	if msg:sub(1, 1) == "!" then
+		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
+	end
 	local list = SpireCraft.forNpc(npcName)
 	if #list == 0 then
 		return false

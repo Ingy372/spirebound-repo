@@ -1,0 +1,293 @@
+{
+ "name": "check_rebuilt",
+ "about": "In-client check of the grounds rebuilt on 2026-11-23/24 (FLOOR1_REVIEW.md): calm gates, route A, chests.",
+ "character": "Pilot Vanguard",
+ "timeout": 1500,
+ "steps": [
+  {
+   "do": "jump",
+   "to": "tutorial_spawn",
+   "note": "Arrival (lamps)"
+  },
+  {
+   "do": "shot",
+   "name": "check_arrival"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12",
+   "note": "Boar Meadow (level 12): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_boar_meadow",
+   "note": "Boar Meadow (level 12): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "check_boar_meadow_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_boar_meadow_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Boar Meadow (level 12): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "check_boar_meadow_a"
+  },
+  {
+   "do": "heal",
+   "note": "Boar Meadow: chest"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1170,
+    1398,
+    8
+   ],
+   "note": "Boar Meadow: chest"
+  },
+  {
+   "do": "use",
+   "at": [
+    1170,
+    1397,
+    8
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "check_boar_meadow_chest"
+  },
+  {
+   "do": "use",
+   "at": [
+    1170,
+    1397,
+    8
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15",
+   "note": "Wolf Copse (level 15): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_wolf_copse",
+   "note": "Wolf Copse (level 15): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "check_wolf_copse_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Wolf Copse (level 15): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "check_wolf_copse_a"
+  },
+  {
+   "do": "heal",
+   "note": "Wolf Copse: chest"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1031,
+    1284,
+    7
+   ],
+   "note": "Wolf Copse: chest"
+  },
+  {
+   "do": "use",
+   "at": [
+    1031,
+    1283,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "check_wolf_copse_chest"
+  },
+  {
+   "do": "use",
+   "at": [
+    1031,
+    1283,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 16",
+   "note": "Reedmarsh (level 16): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_reed_marsh",
+   "note": "Reedmarsh (level 16): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "check_reed_marsh_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_reed_marsh_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Reedmarsh (level 16): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "check_reed_marsh_a"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 17",
+   "note": "Thornsnap Hollow (level 17): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_thornsnap_hollow",
+   "note": "Thornsnap Hollow (level 17): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "check_thornsnap_hollow_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_thornsnap_hollow_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Thornsnap Hollow (level 17): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "check_thornsnap_hollow_a"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 20",
+   "note": "Shard Fields (level 20): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_shard_fields",
+   "note": "Shard Fields (level 20): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "check_shard_fields_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_shard_fields_a",
+   "fight": true,
+   "timeout": 60,
+   "note": "Shard Fields (level 20): route A"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "check_shard_fields_a"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout",
+   "note": "End"
+  }
+ ]
+}

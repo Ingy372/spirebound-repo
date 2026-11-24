@@ -215,6 +215,24 @@ function handlers.npc()
     end
 end
 
+-- use what lies on a map tile (open a chest): { "do": "use", "at": [x, y, z] }
+function handlers.use()
+    if not stepData.sent then
+        local p = toPos(step.at)
+        local tile = g_map.getTile(p)
+        local thing = tile and tile:getTopUseThing()
+        if thing then
+            g_game.use(thing)
+            log('use: ' .. fmtPos(p))
+        else
+            log('use: nothing to use at ' .. fmtPos(p))
+        end
+        stepData.sent = now()
+    elseif now() - stepData.sent > 2 then
+        nextStep()
+    end
+end
+
 -- wear an item from the backpack: { "do": "equip", "id": 3350, "slot": "left" } (left right ammo body head legs feet)
 function handlers.equip(player)
     if stepData.done then
@@ -450,7 +468,7 @@ local function onText(mode, text)
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
         log('loot: ' .. text)
-    elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') or (step and step['do'] == 'cast') then
+    elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') or text:find('chest') or text:find('tower') or (step and step['do'] == 'cast') then
         log('message: ' .. text)
     end
 end

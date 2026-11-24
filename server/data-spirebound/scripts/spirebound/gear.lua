@@ -75,6 +75,9 @@ function SpireGear.carriesMain(player, floor)
 end
 
 function SpireGear.talk(npc, handler, player, msg, npcName)
+	if msg:sub(1, 1) == "!" then
+		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
+	end
 	if npcName ~= SpireGear.WEAPONSMITH then
 		return false
 	end
@@ -172,6 +175,9 @@ function SpireGear.giveMain(player, family)
 end
 
 function SpireGear.dorrowTalk(npc, handler, player, msg)
+	if msg:sub(1, 1) == "!" then
+		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
+	end
 	local lower = msg:lower()
 	local pid = player:getId()
 	local voc = player:getVocation():getBaseId()
