@@ -473,16 +473,16 @@ SpireTest.add("pvp spells: vine walls, fire burns them, Breach Arrow breaks wall
 end)
 
 -- FLOOR1_REVIEW.md F1-02: no class spends its first half hour with no spell
-SpireTest.add("spells: every class has an attack spell by level 2 and a heal by level 4", function()
+SpireTest.add("spells: every class has an attack spell at level 1 and a heal by level 4", function()
 	for _, voc in ipairs({ 1, 2, 3, 4 }) do
 		local attack, heal = false, false
-		for _, r in ipairs(SpireSpells.unlockedAt(2, voc)) do
+		for _, r in ipairs(SpireSpells.unlockedAt(1, voc)) do
 			if r.kind == "attack_target" then attack = true end
 		end
 		for _, r in ipairs(SpireSpells.unlockedAt(4, voc)) do
 			if r.kind == "heal_self" or r.kind == "heal_target" then heal = true end
 		end
-		SpireTest.eq(attack, true, "vocation " .. voc .. ": an attack spell at level 2")
+		SpireTest.eq(attack, true, "vocation " .. voc .. ": an attack spell at level 1")
 		SpireTest.eq(heal, true, "vocation " .. voc .. ": a heal by level 4")
 	end
 end)

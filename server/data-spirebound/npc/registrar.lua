@@ -114,6 +114,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			giveKit(player, c.voc)
 			player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 			npcHandler:say(string.format("It is written: %s, %s. The temple is through the gate. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You know your first attack spell. Say !spells to see its words, then say them in a fight.") -- F1-02
 			player:setTown(Town(1)) -- the Arrival Yard was only the starting town
 				player:teleportTo(Town(1):getTemplePosition())
 			chosen[pid] = nil
