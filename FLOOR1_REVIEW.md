@@ -86,6 +86,9 @@ hours are there, the variety isn't.
 - **F1-02 Levels 1-7 have no spells.** Every class's first attack spell is at level 8 (Ember Strike, Frost Strike,
   Piercing Shot, Heavy Strike). The first 30-45 minutes are auto-attack only. Give each class one starter attack at
   level 1 and one utility by level 4.
+  **Done 2026-11-23 (overnight):** each class's first attack (Heavy Strike, Piercing Shot, Ember Strike, Frost Strike) now
+  unlocks at level 2, right after the Registrar, and its first heal (Second Wind, Field Dressing, Mending Spark, Dewfall)
+  at level 4; Guide Pell says so. In-game test added.
 - **F1-03 The hook is hidden.** Nothing in the first hour mentions the race: that the first party to kill the Axe-Lord
   opens Floor 2 *for everyone* and goes on a monument. Add a world-state line to the login message and the Journal
   ("Floor 2: sealed. No one has reached the Axe-Lord yet.") and a server broadcast when the Gate Hound first falls.
