@@ -199,8 +199,10 @@ two bridges, pairs of Reed Snappers with single Hopper Toads on the near islands
 part. Checker, walk test and in-game tests pass; not yet walked in the client.
 **Thornsnap Hollow rebuilt overnight too (H7 done on paper):** a dirt rim curving round a bramble mass, a path from the
 gate into the hollow's middle, sentries in ones and twos at the bends, the Rootcellar as the party cave (eight root
-chambers of four). Its shape is its own (not a ring round a ridge). **H8 is next:** Shard Fields, Bandit Road and Old
-Quarry are the last grounds over budget (19-24 against 6).
+chambers of four). Its shape is its own (not a ring round a ridge). **H8 started:** Shard Fields rebuilt (gravel flats with
+two lines of shardling pairs, the Terraces up the east side by a ramp, the Shard Grotto party cave). Bandit Road and Old
+Quarry are the last grounds over budget (19-22 against 6); both need buildings (ruined lookouts, a built mine), so they
+are the hardest two.
 
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the

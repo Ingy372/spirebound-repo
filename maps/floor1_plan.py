@@ -88,7 +88,7 @@ CAMPS = [
          note="Poison bites; bring antidotes or healing. Good experience for the effort."),
     dict(id="shard_fields", type="mixed", title="Shard Fields", x=340, y=300, w=52, h=48, gate="n", size="std", zone="open",
          levels=(17, 24), role="xp", wall="boulders", core="gravelmound", trail="gravel", decor="shards",
-         groups=same(6, "Field Shardling"), respawn=180,
+         groups=same(6, "Field Shardling"), respawn=180, design="SHARDS",
          den="Shard Grotto", den_groups=same(8, "Field Shardling", 4),
          note="Shardlings hit with energy and resist it; wands are weak here. Strong experience."),
     dict(id="bandit_road", type="mixed", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
@@ -538,7 +538,41 @@ THORNS = dict(
     },
     links=[("stairs", 48, 26, 8)],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS}
+# Shard Fields (H8, 2026-11-23 overnight): gravel flats on the west, the Terraces (z 6) up the east side by a ramp at
+# their south end, the Shard Grotto (z 8) as the party cave down the stair in the south. Shardlings are pairs.
+_FS1, _FS2, _FS4 = (("Field Shardling", 1),), (("Field Shardling", 2),), (("Field Shardling", 4),)
+SHARDS = dict(
+    gate=(26, 0), crowd_group=[("Field Shardling", 1)],
+    routes={"a": "a1", "b": "b1", "c": "kl", "d": "s0"},
+    route_names={"a": "The West Flats", "b": "The Middle Flats", "c": "The Terraces", "d": "The Shard Grotto"},
+    levels={
+        7: dict(name="Shard Fields", box=(0, 0, 52, 48), clearings=[
+            ("hub", 26, 5, 4, "approach", None, "hub"), ("n0", 14, 7, 3, "calm", None, None),
+            ("a1", 3, 14, 3, "calm", "a", [_FS2]), ("qa", 3, 27, 3, "calm", "a", "rest"), ("a2", 4, 40, 3, "deep", "a", [_FS2]),
+            ("b1", 26, 26, 3, "calm", "b", [_FS2]), ("qb", 25, 33, 3, "middle", "b", "rest"), ("b2", 24, 42, 3, "deep", "b", [_FS2]),
+            ("s0", 14, 44, 3, "deep", "d", "rest"), ("rf", 34, 45, 2, "middle", None, "rest"),
+            ("ca1", 3, 8, 1, "calm", "a", "crowd"), ("ca2", 8, 27, 1, "calm", "a", "crowd"), ("ca3", 9, 45, 1, "deep", "a", "crowd"),
+            ("cb1", 14, 30, 1, "calm", "b", "crowd"), ("cb2", 14, 20, 1, "calm", "b", "crowd"), ("cb3", 29, 45, 1, "deep", "b", "crowd"),
+        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "s0", 4), ("s0", "b2", 4),
+                  ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "hub", 4), ("b2", "rf", 3)]),
+        6: dict(name="The Terraces", box=(30, 8, 21, 37), clearings=[
+            ("kl", 34, 39, 3, "middle", "c", "rest"), ("k1", 41, 29, 3, "middle", "c", "rest"), ("kq", 46, 19, 3, "middle", "c", "rest"),
+            ("k2", 38, 12, 3, "deep", "c", [_FS2, _FS1]),
+            ("kc1", 45, 30, 1, "middle", "c", "crowd"), ("kc2", 35, 20, 1, "deep", "c", "crowd"), ("kc3", 47, 11, 1, "deep", "c", "crowd"),
+        ], paths=[("kl", "k1", 3), ("k1", "kq", 3), ("kq", "k2", 3)]),
+        8: dict(name="The Shard Grotto", party=True, box=(0, 8, 52, 50), clearings=[
+            ("pe", 11, 45, 4, "party", None, "rest"),
+            ("p1", 5, 14, 4, "party", None, [_FS4]), ("p2", 26, 12, 4, "party", None, [_FS4]),
+            ("p3", 46, 14, 4, "party", None, [_FS4]), ("p4", 47, 31, 4, "party", None, [_FS4]),
+            ("p5", 45, 50, 4, "party", None, [_FS4]), ("p6", 27, 51, 4, "party", None, [_FS4]),
+            ("p7", 4, 52, 3, "party", None, [_FS4]), ("p8", 5, 31, 4, "party", None, [_FS4]),
+            ("cd1", 16, 12, 1, "party", "d", "crowd"), ("cd2", 37, 12, 1, "party", "d", "crowd"), ("cd3", 37, 51, 1, "party", "d", "crowd"),
+        ], paths=[("pe", "p8", 4), ("pe", "p6", 4), ("p1", "p2", 4), ("p2", "p3", 4), ("p3", "p4", 4), ("p4", "p5", 4),
+                  ("p5", "p6", 4), ("p6", "p7", 4), ("p7", "p8", 4), ("p8", "p1", 4)]),
+    },
+    links=[("ramp", 33, 42, 7, "n"), ("stairs", 11, 45, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS, "SHARDS": SHARDS}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,
