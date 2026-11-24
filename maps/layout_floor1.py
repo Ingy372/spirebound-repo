@@ -733,7 +733,7 @@ def build(m):
             m.clear_items(xx, yy, Z)
     m.walls(px, py, 24, 20, Z, gaps={(px + 12, py + 19), (px + 13, py + 19), (px + 12, py), (px + 13, py)}, style="stone")
     DG.flagstones(m, px + 3, py + 3, 18, 14, Z, 351)                  # a trampled dirt pit inside a flagstone ring
-    m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script (it never returns once dead)
+    m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script; it returns 30 minutes after a kill
     m.points["pass_arena"] = (px + 12, py + 10, Z)
     # sealed until the Gate Hound dies once (scripts remove the boulders)
     for i, gx in enumerate((px + 12, px + 13)):

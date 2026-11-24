@@ -6,6 +6,13 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q48. The Gate Hound now comes back after it dies (2026-11-24)
+It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.
+- **Recommendation (built):** it returns 30 minutes after each kill, like the Axe-Lord. The first kill still opens the labyrinth for everyone, once, with the server-wide announcement.
+- Other option: keep it one-time and move the "3 cut shards" step to something repeatable.
+- Assumed until you answer: it comes back.
+- Jay's answer:
+
 ### Q47. Floor 1's first impression: rebuild the Arrival Yard and Hearthgate before the alpha? (2026-11-23)
 From the overnight Floor 1 review (`FLOOR1_REVIEW.md` sections 2 and 7): the Arrival Yard is a plain rectangle with four wall-gates, and Hearthgate is a strict grid of same-sized buildings. These are the first screenshots any tester or streamer sees.
 - **Recommendation:** yes. Rebuild the yard as an arrival at the foot of the tower (sealed Floor 2 gate in view, a plaque of first clears) and give Hearthgate a market square, varied buildings, walking townsfolk and ambient effects, before inviting alpha testers (roadmap P3 and P7).

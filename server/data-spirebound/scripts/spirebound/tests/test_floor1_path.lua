@@ -56,3 +56,9 @@ SpireTest.add("path: every Floor 1 step says where to go", function()
 		SpireTest.eq(type(s.done), "function", s.key .. " can be checked")
 	end
 end)
+
+-- FLOOR1_REVIEW.md F1-46: the Floor 1 checklist asks every climber to defeat the Gate Hound, so it must come back
+SpireTest.add("bosses: the Gate Hound and the Axe-Lord both return after a kill", function()
+	SpireTest.eq(SpireBoss.defs["Gate Hound"].respawn, true, "the Gate Hound respawns (its shards are on everyone's path)")
+	SpireTest.eq(SpireBoss.defs["Axe-Lord of the Stair"].respawn, true, "the Axe-Lord respawns")
+end)

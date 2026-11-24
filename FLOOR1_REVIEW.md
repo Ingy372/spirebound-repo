@@ -414,6 +414,9 @@ old grounds, Boar Meadow skipped):
 - **F1-44 The Gate Hound kills a solo level 24 in about 12 seconds**, and the Upgrade tab sent players to it at level
   24 with no word about a party. **Fixed overnight:** the step now says "gather a party of 3 or more"; the Axe-Lord
   step says "a party of 4 or more" (Claude's numbers). Consider a short warning on the Pass sign too.
+- **F1-46 The Gate Hound never came back after its first death**, but every climber's checklist (and its 3 cut shards)
+  needs it. **Fixed overnight:** it returns 30 minutes after a kill and is always spawned at start-up; the first kill
+  still opens the labyrinth once (Q48 for Jay). In-game test.
 - **F1-45 Burrow Hills is harder than its neighbours** for a ranged class at level 13 (43% health, half the expected
   experience). Re-check its mole weights or move the soft boars nearer the gate.
 

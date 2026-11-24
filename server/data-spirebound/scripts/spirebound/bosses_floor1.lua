@@ -44,6 +44,9 @@ SpireBoss.register("Gate Hound", {
 			Game.broadcastMessage("The Gate Hound has fallen! The labyrinth of Floor 1 is open to all.", MESSAGE_EVENT_ADVANCE)
 		end
 	end,
+	-- it comes back (30 minutes after a kill): "Defeat the Gate Hound" is a step on every climber's Floor 1 path and pays
+	-- its shards to everyone credited (gear progression spec; FLOOR1_REVIEW.md F1-46). The gate stays open for good.
+	respawn = true,
 })
 
 SpireBoss.register("Axe-Lord of the Stair", {
@@ -361,9 +364,8 @@ local startup = GlobalEvent("SpireFloor1Startup")
 function startup.onStartup()
 	if Floors.isLabyrinthOpen(FLOOR) then
 		openGate("gate_pass")
-	else
-		SpireBoss.spawn("Gate Hound")
 	end
+	SpireBoss.spawn("Gate Hound") -- always: it guards the Pass even after the gate is open (F1-46)
 	if Floors.isOpen(FLOOR + 1) then
 		openGate("gate_floor2")
 	end
