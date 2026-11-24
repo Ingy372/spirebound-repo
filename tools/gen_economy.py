@@ -98,6 +98,22 @@ def melee(name):
     return max((-a[2] for a in MONSTERS[name]["attacks"] if a[0] == "melee"), default=0)
 
 
+def refill(c):
+    """Kills an hour a ground can supply: the monsters on its solo levels times 3600 / respawn. Designed grounds count
+    their clearings (the party level is left out); the old loop grounds are dense enough not to limit anyone."""
+    from floor1_plan import DESIGNS
+    if not c.get("design"):
+        return 10 ** 6
+    n = 0
+    for lv in DESIGNS[c["design"]]["levels"].values():
+        if lv.get("party"):
+            continue
+        for cl in lv["clearings"]:
+            if isinstance(cl[6], list):
+                n += sum(k for grp in cl[6] for _m, k in grp)
+    return n * 3600 / c["respawn"]
+
+
 ROWS = []
 for c in CAMPS:
     lo, hi = c["levels"]
@@ -111,6 +127,7 @@ for c in CAMPS:
     mat = sum(drop_value(n)[2] * s for n, s in mons)
     kill_s = hp / dps(lvl) + 8                     # fighting, then about 8 s to find and reach the next one
     kph = min(3600 / kill_s, 300)                  # a hunting ground can't feed one hunter more than ~300 kills an hour
+    kph = min(kph, refill(c))                      # nor more than its monsters can respawn (FLOOR1_REVIEW.md F1-33)
     # damage taken per hour: half the monster's max melee every 2 s while fighting, ~60% of hits land, armour soaks a bit
     taken = sum(melee(n) * s for n, s in mons) / 2 * 0.6 * 0.8 * (hp / dps(lvl)) / 2 * kph
     hp_pots = taken * 0.35 / 100                   # regeneration and healing spells cover ~65%; potions the rest (~100 each)

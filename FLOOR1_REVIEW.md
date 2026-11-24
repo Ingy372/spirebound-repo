@@ -212,8 +212,8 @@ monsters on their solo levels (the old loop grounds had 72). With the old respaw
 only 130-300 an hour, while the economy model expects one hunter to kill 264-300: two hunters would starve and
 levelling would slow, the opposite of Jay's note. **Done overnight:** respawn on the five grounds rebuilt tonight is
 now 70-140 s (Boar Meadow 100, Wolf Copse 140, Reedmarsh 100, Thornsnap Hollow 70, Shard Fields 100), so each refills at
-least ~400 an hour. Still to do: teach `tools/gen_economy.py` to cap kills per hour by a ground's monsters x respawn, so
-the check catches this next time, and watch it in the client (monsters popping up behind you means it is too fast).
+least ~400 an hour, and `tools/gen_economy.py` now caps kills per hour by a ground's monsters x respawn (with the old
+times Thornsnap Hollow would have supplied 129 an hour against the 252 expected). Still to do: watch it in the client (monsters popping up behind you means it is too fast).
 
 Floor 1 after the overnight rebuilds (tools/hunt_check.py): every ground passes the calm rules except Bandit Road and
 Old Quarry (max pull 19.5 and 22.1 against 6, no quiet tiles; their party caves 27 against 12).
