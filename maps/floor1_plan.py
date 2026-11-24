@@ -74,7 +74,7 @@ CAMPS = [
          note="Sturdy diggers with plenty of health. Slow and steady experience. Climb the Crown or dig down into the Molework."),
     dict(id="wolf_copse", type="mixed", title="Wolf Copse", x=28, y=262, w=60, h=40, gate="e", size="std", zone="open",
          levels=(12, 18), role="xp", wall="firs", core="firs", trail="grass", decor="copse",
-         groups=same(5, "Meadow Wolf") + [G(("Grey Alpha", 1), ("Meadow Wolf", 2))], respawn=190,
+         groups=same(5, "Meadow Wolf") + [G(("Grey Alpha", 1), ("Meadow Wolf", 2))], respawn=190, design="WOLVES",
          den="The Alpha's Den", den_groups=same(6, "Meadow Wolf", 4) + [G(("Grey Alpha", 1), ("Meadow Wolf", 3))] * 2,
          note="Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the river, south of Millcross."),
     dict(id="reed_marsh", type="class", cls="Ranger", title="Reedmarsh", x=44, y=322, w=52, h=48, gate="n", size="std", zone="open",
@@ -438,7 +438,44 @@ BOARS = dict(
     },
     links=[("ramp", 19, 46, 7, "n"), ("stairs", 8, 52, 8), ("stairs", 30, 52, 8)],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS}
+# Wolf Copse (H7, 2026-11-23 overnight): dense firs. Wolves hunt in packs (DESIGN.md 9.4: 3 to 5), so packs stand far
+# apart: two along the north edge, two along the south, one in the far west, with quiet glades between. Howling Rock
+# (z 6, up a ramp) holds the Grey Alpha's pack; the Alpha's Den (z 8) is the party cave, down the stair in the middle.
+_W3, _W4 = (("Meadow Wolf", 3),), (("Meadow Wolf", 4),)
+_GA = (("Grey Alpha", 1), ("Meadow Wolf", 3))
+WOLVES = dict(
+    gate=(59, 20), crowd_group=[("Meadow Wolf", 2)],   # crowd spots add two stragglers, not a whole pack (Claude's call)
+    routes={"a": "a1", "b": "b1", "c": "kl", "d": "w0"},
+    route_names={"a": "The North Firs", "b": "The South Firs", "c": "Howling Rock", "d": "The West Pass"},
+    levels={
+        7: dict(name="Wolf Copse", box=(0, 0, 60, 40), clearings=[
+            ("hub", 54, 20, 4, "approach", None, "hub"), ("n0", 48, 9, 3, "calm", None, None), ("s0", 48, 31, 3, "calm", None, None),
+            ("mc", 46, 20, 3, "calm", None, "rest"),
+            ("a1", 38, 5, 3, "calm", "a", [_W3]), ("qa", 26, 5, 3, "calm", "a", "rest"), ("a2", 10, 5, 3, "deep", "a", [_W3]),
+            ("b1", 38, 35, 3, "calm", "b", [_W3]), ("qb", 26, 35, 3, "calm", "b", "rest"), ("b2", 10, 35, 3, "deep", "b", [_W3]),
+            ("w0", 2, 20, 2, "deep", "d", "rest"), ("mr", 36, 30, 2, "calm", None, "rest"),
+            ("ca1", 50, 4, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"), ("ca3", 16, 10, 1, "deep", "a", "crowd"),
+            ("cb1", 50, 36, 1, "calm", "b", "crowd"), ("cb2", 24, 36, 1, "deep", "b", "crowd"), ("cb3", 16, 30, 1, "deep", "b", "crowd"),
+        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "w0", 3), ("w0", "b2", 3),
+                  ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "s0", 4), ("s0", "hub", 4), ("hub", "mc", 4), ("b1", "mr", 3)]),
+        6: dict(name="Howling Rock", box=(5, 13, 37, 13), clearings=[
+            ("kl", 37, 20, 3, "middle", "c", "rest"), ("kq", 29, 19, 3, "middle", "c", "rest"),
+            ("kn", 11, 19, 4, "nest", "c", [_GA]), ("kw", 19, 19, 2, "nest", "c", None),
+            ("kc1", 40, 16, 1, "middle", "c", "crowd"), ("kc2", 33, 23, 1, "middle", "c", "crowd"), ("kc3", 13, 24, 1, "nest", "c", "crowd"),
+        ], paths=[("kl", "kq", 3), ("kq", "kn", 3)]),
+        8: dict(name="The Alpha's Den", party=True, box=(0, -4, 60, 48), clearings=[
+            ("pe", 46, 20, 4, "party", None, "rest"),
+            ("p1", 8, 3, 4, "party", None, [_W4]), ("p2", 30, 0, 4, "party", None, [_GA]),
+            ("p3", 52, 3, 4, "party", None, [_W4]), ("p4", 55, 20, 4, "party", None, [_W4]),
+            ("p5", 52, 38, 4, "party", None, [_W4]), ("p6", 30, 41, 4, "party", None, [_GA]),
+            ("p7", 8, 38, 4, "party", None, [_W4]), ("p8", 5, 20, 4, "party", None, [_W4]),
+            ("cd1", 19, 2, 1, "party", "d", "crowd"), ("cd2", 41, 2, 1, "party", "d", "crowd"), ("cd3", 19, 39, 1, "party", "d", "crowd"),
+        ], paths=[("pe", "p3", 3), ("pe", "p5", 3), ("pe", "p4", 3), ("p1", "p2", 3), ("p2", "p3", 3),
+                  ("p3", "p4", 3), ("p4", "p5", 3), ("p5", "p6", 3), ("p6", "p7", 3), ("p7", "p8", 3), ("p8", "p1", 3)]),
+    },
+    links=[("ramp", 36, 24, 7, "n"), ("stairs", 46, 20, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

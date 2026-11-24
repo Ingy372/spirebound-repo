@@ -189,6 +189,11 @@ round Oak Ridge, the Ridge itself at z 6 up a ramp, the Wallows at z 8 down two 
 spots, a quiet gate, Old Tusk's wallow now a dead-end chamber in the Wallows (GM list updated). Passes the checker on
 every level, the walk test and the in-game tests. Not yet walked in the client (needs the restart). Its surface is
 still a rectangle round the ridge: give it a more natural outline in the polish pass.
+**Wolf Copse rebuilt overnight too (H7):** packs of 3 along the north and south firs, far apart, a quiet West Pass,
+Howling Rock (z 6) with the Grey Alpha's pack at its west end, and the Alpha's Den (z 8 party cave, eight chambers of
+four, two led by an Alpha). Crowd spots add two stragglers each (Claude's call: a whole extra pack broke every budget).
+Checker, walk test and in-game tests pass; not yet walked in the client. Same caveat: it is also a ring round a ridge,
+so Boar Meadow and Wolf Copse now share a shape; vary them in the polish pass.
 
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
