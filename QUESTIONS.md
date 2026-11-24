@@ -126,6 +126,7 @@ A public launch needs every tile, wall, tree, item and effect replaced, not just
 ### Q22. Friends test: Floors 1–2 only? [9.2 of review]
 - **Recommendation:** yes. Seal Floors 3–10, switch off arena, siege, shop and Season Path for the test. Wipe after.
 - *Built 2026-11-13 (R13) as recommended. You can switch it in game: `/scope test` or `/scope launch`.*
+- *Changed 2026-11-23 (Claude, from the Floor 1 review): the Season Path is now ON for the test. Its daily and weekly goals are the "what do I do today" loop testers should try.*
 - Jay's answer:
 
 ### Q23. Who moderates at launch, in which languages? [§4]

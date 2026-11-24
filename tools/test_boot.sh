@@ -15,7 +15,10 @@ if [[ "${1:-}" == "--offline" ]]; then OFFLINE="--offline"; shift; fi
 WAIT="${1:-90}"
 
 [[ -f "$ROOT/server/local.env" ]] && set -a && source "$ROOT/server/local.env" && set +a
-: "${MYSQL_HOST:=127.0.0.1}" "${MYSQL_USER:=spire}" "${MYSQL_PASS:=spiretest}" "${MYSQL_DATABASE:=spirebound}"
+# The boot test has its own database: its in-game tests write world state (floors opened, accounts reset), and on
+# 2026-11-23 a test that failed half-way left Floors 1-2 "opened" in the database Jay plays on. Never Jay's world.
+: "${MYSQL_HOST:=127.0.0.1}" "${MYSQL_USER:=spire}" "${MYSQL_PASS:=spiretest}"
+MYSQL_DATABASE="${SPIRE_TEST_DATABASE:-spirebound_test}"
 export MYSQL_HOST MYSQL_USER MYSQL_PASS MYSQL_DATABASE
 
 python3 "$ROOT/tools/check_names.py" | tail -1
@@ -39,9 +42,10 @@ B="$ROOT/.build/server"
 if ! mysqladmin -h"$MYSQL_HOST" ping >/dev/null 2>&1 && [[ "$(id -u)" == "0" ]] && command -v service >/dev/null; then
   service mariadb start >/dev/null 2>&1 || true; sleep 3
 fi
-if [[ "${SPIRE_SETUP_DB:-0}" == "1" ]]; then
-  mysql -uroot -hlocalhost --protocol=socket -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'localhost'; FLUSH PRIVILEGES;"
+if [[ "${SPIRE_SETUP_DB:-0}" == "1" || "$(id -u)" == "0" ]]; then
+  mysql -uroot -hlocalhost --protocol=socket -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS'; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'127.0.0.1' IDENTIFIED BY '$MYSQL_PASS'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'localhost'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'127.0.0.1'; FLUSH PRIVILEGES;" || true
 fi
+[[ "$MYSQL_DATABASE" == "spirebound" ]] && { echo "FAIL: the boot test must not use the game's database"; exit 1; }
 MY=(mysql -h"$MYSQL_HOST" -u"$MYSQL_USER" -p"$MYSQL_PASS" "$MYSQL_DATABASE")
 if ! "${MY[@]}" -N -e "SHOW TABLES LIKE 'server_config'" | grep -q server_config; then
   echo "importing schema"; "${MY[@]}" < "$B/schema.sql"

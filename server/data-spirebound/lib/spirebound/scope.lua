@@ -1,11 +1,11 @@
 -- What is switched on for the friends test (roadmap R13, REVIEW 1.3 and 9.2; Q22 assumed "yes"):
 -- Floors 1-2 only (3-10 stay sealed even if Floor 2's boss falls), and the Arena, the Spire Siege, the shop and the
--- Season Path are off. The owner can change it in game with /scope. For the public launch set FRIENDS_TEST = false.
+-- Season Path was off until 2026-11-23. The owner can change it in game with /scope. For the public launch set FRIENDS_TEST = false.
 
 SpireScope = SpireScope or {
 	FRIENDS_TEST = true,
 	MAX_FLOOR = 2,
-	OFF = { arena = true, siege = true, shop = true, seasonpath = true },
+	OFF = { arena = true, siege = true, shop = true }, -- Season Path on since 2026-11-23 (FLOOR1_REVIEW.md section 8)
 }
 
 local function store()

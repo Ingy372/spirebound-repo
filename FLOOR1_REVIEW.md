@@ -262,14 +262,17 @@ test): a `{keyword}` followed by `)` makes OTClient's chat window throw and drop
 
 ## 8. Reasons to log in every day
 
-Spirebound has seasons, a season path, tasks, a task shop, arena, siege, world events every 3 h (Frenzy, Incursion,
-Fishing Frenzy, Wandering Champion), fishing, houses, boards. Missing compared with Cyntara and other top servers:
+Spirebound has seasons, a **Season Path** (daily and weekly goals for points, a cosmetic every 100 points: this is
+the daily/weekly loop, and it was switched **off** for the friends test; switched on overnight so testers see it),
+tasks, a task shop, arena, siege, world events every 3 h (Frenzy, Incursion, Fishing Frenzy, Wandering Champion),
+fishing, houses, boards. Missing compared with Cyntara and other top servers:
 - **F1-60 A daily reward** (login streak; small, cosmetic-leaning, never power). **Done 2026-11-23 (overnight):** day n
   of 7 pays 100 x n gold to the bank, day 7 pays 1,000 gold and 5 health potions; a missed day restarts the week
   (`lib/spirebound/daily.lua`, rules tested in game; the login itself not yet seen in the client). Later: swap the
   day-7 prize for a cosmetic once shop outfits exist.
 - **F1-61 Daily chests** on quest ends (see F1-20).
-- **F1-62 A weekly goal list** (seven goals, one reward), shown in the Journal.
+- **F1-62 A weekly goal list**: exists as the Season Path's weekly goals (`!path`). Add "finish 2 quests" as a goal, and
+  show the goals in the Upgrade tab so players don't have to know the command.
 - **F1-63 An hourly lottery or "lucky player" broadcast**: cheap to build, makes chat move. **Done 2026-11-23
   (overnight):** every hour one climber online (level 8+, not staff, not last hour's winner) gets 20 gold a level (max
   5,000) in the bank and a server-wide shout-out (rules tested in game).
@@ -302,6 +305,13 @@ Check after with `tools/gen_economy.py` that no class runs at a loss on its own 
 ---
 
 ## Caveats
+
+- **Found and fixed overnight: the boot test was writing into Jay's game database.** `tools/test_boot.sh` used the
+  same database (`spirebound`) as the game Jay plays, so its in-game tests (which open floors, reset test accounts and
+  save the world on shutdown) touched Jay's world. A test of mine failed half-way at 21:22 and left Floors 1-2 marked
+  as "boss defeated" there; I removed those three records at 21:25 (before that, no floor had a boss kill). The boot
+  test now uses its own database, `spirebound_test`, refuses to run on `spirebound`, and the scope test puts its
+  changes back even when a check fails.
 
 - The autopilot auto-attacks and drinks potions; it casts no spells and doesn't pick routes like a player. Kill speed
   and damage taken are for comparing grounds and classes, not absolute.
