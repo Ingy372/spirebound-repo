@@ -6,6 +6,19 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q47. Floor 1's first impression: rebuild the Arrival Yard and Hearthgate before the alpha? (2026-11-23)
+From the overnight Floor 1 review (`FLOOR1_REVIEW.md` sections 2 and 7): the Arrival Yard is a plain rectangle with four wall-gates, and Hearthgate is a strict grid of same-sized buildings. These are the first screenshots any tester or streamer sees.
+- **Recommendation:** yes. Rebuild the yard as an arrival at the foot of the tower (sealed Floor 2 gate in view, a plaque of first clears) and give Hearthgate a market square, varied buildings, walking townsfolk and ambient effects, before inviting alpha testers (roadmap P3 and P7).
+- Assumed until you answer: yes, do it before the alpha.
+- Jay's answer:
+
+### Q46. When should a player make their first style choice? (2026-11-23)
+Today the first permanent style choice (Marksman or Trapper, and so on) comes at Mastery 10, around level 37, which is just after Floor 1 ends. An alpha tester who plays only Floor 1 never makes it, and that choice is the most exciting part of the new system.
+- **Recommendation:** add a small, free-to-swap "stance" at Mastery 5 (around the Gate Hound) that previews the two paths, so Floor 1 players feel the choice coming. Keep the permanent choice at Mastery 10.
+- Other option: move the permanent choice earlier, to about level 30, so it lands on the Axe-Lord.
+- Assumed until you answer: the free stance at Mastery 5.
+- Jay's answer:
+
 ### Q45. A spear for Rangers' barracks weapon? (2026-11-23)
 Captain Dorrow's level 10 weapon comes in bow or crossbow for Rangers, not spear: in this engine thrown spears are used up or drop on the target, so a tiered spear would be lost on the first throw. **My recommendation: keep bow and crossbow.** If you want spears, I can make a non-thrown spear later.
 Jay's answer:
