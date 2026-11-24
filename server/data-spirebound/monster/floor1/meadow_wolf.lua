@@ -21,7 +21,7 @@ monster.strategiesTarget = { nearest = 100 }
 monster.flags = {
 	summonable = false, attackable = true, hostile = true, convinceable = false, pushable = false,
 	rewardBoss = false, illusionable = false, canPushItems = false, canPushCreatures = false,
-	staticAttackChance = 90, targetDistance = 1, runHealth = 0, healthHidden = false, isBlockable = false,
+	staticAttackChance = 90, targetDistance = 1, runHealth = 12, healthHidden = false, isBlockable = false,
 	canWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,
 }
 
@@ -46,6 +46,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 6,
 	armor = 4,
+	{ name = "speed", interval = 2000, chance = 10, speedChange = 250, duration = 3000, effect = CONST_ME_MAGIC_GREEN, target = false },
 }
 
 monster.elements = {

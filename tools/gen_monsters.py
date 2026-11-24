@@ -19,7 +19,7 @@ GOLD, PLAT = 3031, 3035
 MONSTERS = {
     # ---------------------------------------------------------------- Floor 1, starter fields (Guarded)
     "Field Rat": dict(desc="a field rat", look=(56,), corpse=5964, hp=20, xp=6, speed=75, race="blood",
-                      attacks=[("melee", 0, -8)], armor=1, defense=2,
+                      attacks=[("melee", 0, -8)], armor=1, defense=2, run=4,  # F1-10: bolts when nearly dead
                       loot=[(GOLD, 70000, 4), (3607, 30000, 1), (9668, 15000, 1)], voices=["Squeak!"]),
     # the tutorial pen's rats: weak on purpose, so the very first fight can't kill a level 1 with a practice club
     # (2026-11-12 playthrough: three Field Rats killed a new character in the pen)
@@ -27,26 +27,26 @@ MONSTERS = {
                     attacks=[("melee", 0, -3)], armor=0, defense=0,
                     loot=[(3607, 100000, 1), (GOLD, 80000, 3)], voices=["Squeak?"]),  # cheese every time: the yard's loot gate needs something to take
     "Hopper Toad": dict(desc="a hopper toad", look=(222,), corpse=6077, hp=28, xp=9, speed=80, race="blood",
-                        attacks=[("melee", 0, -10)], armor=2, defense=2,
+                        attacks=[("melee", 0, -10), ("slow", -120, 2000, 3, "CONST_ME_GREEN_RINGS")], armor=2, defense=2,  # F1-10: a sticky spit
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),
     "Sproutling": dict(desc="a sproutling", look=(19,), corpse=2127, hp=35, xp=13, speed=70, race="venom",
                        attacks=[("melee", 0, -10), ("earth", 0, -12, 4)], armor=2, defense=3,
                        loot=[(GOLD, 75000, 7), (3577, 20000, 1), (3738, 14000, 1)]),
     # ---------------------------------------------------------------- Floor 1 camps (Open)
     "Meadow Wasp": dict(desc="a meadow wasp", look=(44,), corpse=5964, hp=45, xp=17, speed=130, race="venom",
-                        attacks=[("melee", 0, -16, None, "poison")], armor=2, defense=4,
+                        attacks=[("melee", 0, -16, None, "poison")], armor=2, defense=4, defenses=[("haste", 12, 200)],  # F1-10: darts
                         loot=[(GOLD, 70000, 8), (3577, 25000, 1), (5902, 16000, 1), (14083, 2500, 1)], voices=["Bzzzt!"]),
     "Burrow Mole": dict(desc="a burrow mole", look=(26,), corpse=6046, hp=130, xp=39, speed=85, race="blood",
-                        attacks=[("melee", 0, -32)], armor=8, defense=8,
+                        attacks=[("melee", 0, -32)], armor=8, defense=8, defenses=[("invisible", 8)],  # F1-10: burrows out of sight
                         loot=[(GOLD, 90000, 26), (3577, 40000, 2), (266, 4000, 1), (5880, 12000, 1)]),  # more gold: an xp camp that must still pay for arrows
     "Reed Snapper": dict(desc="a reed snapper", look=(112,), corpse=6077, hp=150, xp=39, speed=90, race="blood",
-                         attacks=[("melee", 0, -38)], armor=12, defense=12,
+                         attacks=[("melee", 0, -38), ("slow", -250, 3000, 1, "CONST_ME_WATERSPLASH")], armor=12, defense=12,  # F1-10: drags you down
                          loot=[(GOLD, 100000, 30), (PLAT, 1500, 1), (3582, 20000, 1), (266, 8000, 1), (5899, 10000, 1), (30975, 18000, 1)]),
     "Bristle Boar": dict(desc="a bristle boar", look=(119,), corpse=6046, hp=90, xp=28, speed=105, race="blood",
-                         attacks=[("melee", 0, -30)], armor=6, defense=8,
+                         attacks=[("melee", 0, -30), ("charge", 0, -36, 4)], armor=6, defense=8,  # F1-10: charges
                          loot=[(GOLD, 85000, 15), (3577, 40000, 2), (3582, 15000, 1), (903, 12000, 1)], voices=["Hrrnk!"]),
     "Meadow Wolf": dict(desc="a meadow wolf", look=(27,), corpse=5968, hp=85, xp=36, speed=115, race="blood",
-                        attacks=[("melee", 0, -25)], armor=4, defense=6,
+                        attacks=[("melee", 0, -25)], armor=4, defense=6, run=12, defenses=[("haste", 10, 250)],  # F1-10: darts in, flees hurt
                         loot=[(GOLD, 70000, 10), (5897, 10000, 1), (3577, 30000, 1)], voices=["Grrr!"]),
     "Grey Alpha": dict(desc="a grey alpha", look=(52,), corpse=5997, hp=260, xp=107, speed=125, race="blood",
                        attacks=[("melee", 0, -60)], armor=12, defense=14,
@@ -56,7 +56,7 @@ MONSTERS = {
                             attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10,
                             loot=[(GOLD, 85000, 20), (268, 6000, 1), (3033, 6000, 1)], elements={"energy": 50, "earth": -10}),
     "Road Bandit": dict(desc="a road bandit", look=(129, 58, 59, 45, 114, 0), corpse=18050, hp=160, xp=50, speed=100,
-                        race="blood", attacks=[("melee", 0, -45)], armor=10, defense=12,
+                        race="blood", attacks=[("melee", 0, -45), ("drunk", 0, 4000, 3)], armor=10, defense=12,  # F1-10: smoke bomb
                         loot=[(GOLD, 90000, 60), (PLAT, 6000, 1), (3294, 5000, 1), (3361, 4000, 1), (3286, 5000, 1), (11492, 13000, 1), (5913, 6000, 1)],
                         voices=["Your money or your life!"]),
     "Bandit Captain": dict(desc="a bandit captain", look=(129, 94, 94, 94, 95, 1), corpse=18050, hp=450, xp=201, speed=110,
@@ -64,10 +64,10 @@ MONSTERS = {
                            loot=[(GOLD, 100000, 80), (PLAT, 15000, 1), (3359, 4000, 1), (3352, 5000, 1), (266, 15000, 2), (5909, 12000, 1)],
                            voices=["Get them, boys!"], summons=[("Road Bandit", 2)]),
     "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=3998, hp=140, xp=56, speed=90, race="venom",
-                      attacks=[("melee", 0, -35, None, "poison")], armor=8, defense=8,
+                      attacks=[("melee", 0, -35, None, "poison"), ("slow", -150, 2500, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
     "Ruin Sentinel": dict(desc="a ruin sentinel", look=(131, 79, 79, 79, 79, 0), corpse=18074, hp=300, xp=96, speed=85,
-                          race="undead", attacks=[("melee", 0, -70)], armor=25, defense=25,
+                          race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
                           loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15}),
     "Ruin Archer": dict(desc="a ruin archer", look=(129, 79, 79, 79, 79, 0), corpse=18138, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
@@ -193,7 +193,7 @@ def render(name, d):
          "monster.flags = {",
          f"\tsummonable = {str(d.get('summon', False)).lower()}, attackable = true, hostile = true, convinceable = false, pushable = false,",
          f"\trewardBoss = false, illusionable = false, canPushItems = {str(boss).lower()}, canPushCreatures = {str(boss).lower()},",
-         f"\tstaticAttackChance = 90, targetDistance = {d.get('dist', 1)}, runHealth = 0, healthHidden = false, isBlockable = false,",
+         f"\tstaticAttackChance = 90, targetDistance = {d.get('dist', 1)}, runHealth = {d.get('run', 0)}, healthHidden = false, isBlockable = false,",
          "\tcanWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,",
          "}", "", "monster.light = { level = 0, color = 0 }", ""]
     v = d.get("voices", [])
@@ -221,6 +221,13 @@ def render(name, d):
         kind, mn, mxd = a[0], a[1], a[2]
         rng = a[3] if len(a) > 3 else None
         cond = a[4] if len(a) > 4 else None
+        if kind in ("slow", "drunk"):  # (kind, speedChange or 0, duration ms, range, effect): FLOOR1_REVIEW.md F1-10
+            eff = a[4] if len(a) > 4 else ("CONST_ME_MAGIC_RED" if kind == "slow" else "CONST_ME_POFF")
+            if kind == "slow":
+                L.append(f'	{{ name = "speed", interval = 2000, chance = 15, speedChange = {mn}, range = {rng}, duration = {mxd}, effect = {eff}, target = true }},')
+            else:
+                L.append(f'	{{ name = "drunk", interval = 2000, chance = 12, range = {rng}, duration = {mxd}, shootEffect = CONST_ANI_SMOKE, effect = {eff}, target = true }},')
+            continue
         if kind == "melee":
             extra = ""
             if cond == "poison":
@@ -249,6 +256,11 @@ def render(name, d):
     L.append("monster.defenses = {")
     L.append(f"\tdefense = {d['defense']},")
     L.append(f"\tarmor = {d['armor']},")
+    for dk in d.get("defenses", []):  # ("invisible", chance) or ("haste", chance, speedChange)
+        if dk[0] == "invisible":
+            L.append(f'	{{ name = "invisible", interval = 2000, chance = {dk[1]}, effect = CONST_ME_POFF }},')
+        elif dk[0] == "haste":
+            L.append(f'	{{ name = "speed", interval = 2000, chance = {dk[1]}, speedChange = {dk[2]}, duration = 3000, effect = CONST_ME_MAGIC_GREEN, target = false }},')
     if d.get("heal"):
         pct, interval = d["heal"]
         amount = int(d["hp"] * pct)

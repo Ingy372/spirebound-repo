@@ -40,6 +40,7 @@ monster.loot = {
 
 monster.attacks = {
 	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -35, condition = { type = CONDITION_POISON, totalDamage = 20, interval = 4000 } },
+	{ name = "speed", interval = 2000, chance = 15, speedChange = -150, range = 2, duration = 2500, effect = CONST_ME_CARNIPHILA, target = true },
 }
 
 monster.defenses = {

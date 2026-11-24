@@ -40,6 +40,7 @@ monster.loot = {
 
 monster.attacks = {
 	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -10 },
+	{ name = "speed", interval = 2000, chance = 15, speedChange = -120, range = 3, duration = 2000, effect = CONST_ME_GREEN_RINGS, target = true },
 }
 
 monster.defenses = {

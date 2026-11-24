@@ -46,6 +46,7 @@ monster.attacks = {
 monster.defenses = {
 	defense = 8,
 	armor = 8,
+	{ name = "invisible", interval = 2000, chance = 8, effect = CONST_ME_POFF },
 }
 
 monster.elements = {

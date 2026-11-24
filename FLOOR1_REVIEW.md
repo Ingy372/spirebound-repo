@@ -32,7 +32,7 @@ Ranked by how much each would move a new player's first evening (details in sect
 
 | # | Fix | Why it matters most |
 |---|---|---|
-| 1 | Give Floor 1 monsters real behaviour (F1-10) | Hunting is 80% of play time; 10 of 13 regular monsters only melee |
+| 1 | Give Floor 1 monsters real behaviour (F1-10) | Hunting is 80% of play time; 8 of 13 regular monsters only melee (first pass done overnight) |
 | 2 | Make the first hour show the tower (F1-01..05) | The arrival yard is a plain rectangle; the hook (floors, race, SAO) is invisible |
 | 3 | Replace kill-count quests with real quests (F1-20) | All 16 Floor 1 quests are "kill N of X" |
 | 4 | Rebuild the seven boxy grounds and enlarge Toad Pond (F1-30) | Wolf Copse and six others are four square rings of trees |
@@ -107,22 +107,23 @@ hours are there, the variety isn't.
 
 ## 3. Hunting: monsters (the biggest problem)
 
-Hunting fills most of the 11-15 hours. **10 of the 13 regular Floor 1 monsters only melee.** The other three have one
-ranged bolt each (15% every 2 s). None of them: poisons, sets fields, summons, heals, flees at low health, paralyses,
-pushes, explodes, hides, comes back to life, buffs friends, or changes as it gets hurt.
+Hunting fills most of the 11-15 hours. **8 of the 13 regular Floor 1 monsters only melee** (as found; correction: the
+wasp and the thornsnap's bites already poison, and the elite Grey Alpha and Bandit Captain summon helpers). Three have
+one ranged bolt each (15% every 2 s). None of them set fields, heal, flee at low health, push, explode, hide, come back
+to life, buff friends, or change as they get hurt.
 
 | Monster | XP | HP | Attacks |
 |---|---|---|---|
 | Field Rat | 6 | 20 | melee |
 | Hopper Toad | 9 | 28 | melee |
 | Sproutling | 13 | 35 | melee, earth bolt (range 4) |
-| Meadow Wasp | 17 | 45 | melee |
+| Meadow Wasp | 17 | 45 | melee + poison |
 | Bristle Boar | 28 | 90 | melee |
 | Meadow Wolf | 36 | 85 | melee |
 | Burrow Mole | 39 | 130 | melee |
 | Reed Snapper | 39 | 150 | melee |
 | Road Bandit | 50 | 160 | melee |
-| Thornsnap | 56 | 140 | melee |
+| Thornsnap | 56 | 140 | melee + poison |
 | Field Shardling | 58 | 120 | melee, energy bolt (range 4) |
 | Ruin Archer | 83 | 220 | melee, arrow (range 6) |
 | Ruin Sentinel | 96 | 300 | melee |
@@ -146,6 +147,14 @@ summons snakes, a spider webs, a cave rat runs. That variety is why hunting feel
 - Sproutling: heals other Sproutlings.
 This uses Canary's existing spell kinds (condition, field, push, invisible, summon, heal); no engine work. Check each
 in `tools/balance.py` so XP per minute stays on target.
+
+**First pass done 2026-11-23 (overnight)**, in `tools/gen_monsters.py`, with an in-game test that no regular Floor 1
+monster only bites: Field Rat flees when nearly dead; Hopper Toad's sticky spit slows; Meadow Wasp darts (bursts of
+speed); Bristle Boar charges; Meadow Wolf darts in and flees when badly hurt; Burrow Mole burrows out of sight; Reed
+Snapper drags you down (slow); Road Bandit throws a smoke bomb (dizzy); Thornsnap's roots slow; Ruin Sentinel shield-bashes
+in a line. **Not yet seen in the client** (needs the server restart), and still to do: the coin-stealing rat, the wolf's
+call for help, the shardling's death burst, the sproutling healing friends, the sentinel's shield wall (these need
+scripts, not just monster spells), and an economy pass on damage taken now that monsters do more.
 
 **F1-11 One elite per ground.** Only the Watchtower has an elite (Stonehorn Ram). Add a named elite per ground that
 spawns rarely, glows (an aura effect), and drops the ground's best loot and a flawless Hearth Shard chance. This is

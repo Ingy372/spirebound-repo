@@ -45,6 +45,7 @@ monster.loot = {
 
 monster.attacks = {
 	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -45 },
+	{ name = "drunk", interval = 2000, chance = 12, range = 3, duration = 4000, shootEffect = CONST_ANI_SMOKE, effect = CONST_ME_POFF, target = true },
 }
 
 monster.defenses = {
