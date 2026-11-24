@@ -84,7 +84,9 @@ hours are there, the variety isn't.
   platform at the foot of the Spire, see the Floor 2 gate sealed by boulders, read a plaque of "first clears" (empty on
   launch day: the race starts now). This is the screenshot streamers and the website use.
   **Seen in the playthrough: the Pilot arrived at night and the first screen was almost black** (the day/night cycle
-  dims the yard, which has no light sources). Light the yard (lamps along the path, a lit gate) or keep it always day.
+  dims the yard, which has no light sources). Light the yard (lamps along the path, a lit gate) or keep it always day. Detail: the yard already has 12 lamps
+  (`S.lamp`, item 8659, `maps/layout_floor1.py`), none within 5 tiles of the spawn, and the ones in view look dark at
+  night: check that 8659 is a lit lamp and give the arrival square two of its own.
 - **F1-02 Levels 1-7 have no spells.** Every class's first attack spell is at level 8 (Ember Strike, Frost Strike,
   Piercing Shot, Heavy Strike). The first 30-45 minutes are auto-attack only. Give each class one starter attack at
   level 1 and one utility by level 4.
@@ -174,6 +176,11 @@ lore).
 of firs round four blocks, a bench, nothing to remember. Same layout: Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap
 Hollow, Shard Fields, Bandit Road, Old Quarry (the H7-H8 roadmap rebuilds). Each needs a shape and a landmark a
 player would describe to a friend ("the wolf den under the split rock").
+**Measured: the Ranger Pilot died 5 tiles inside Boar Meadow's gate** at level 12 (10 boars in sight, 5 next to it,
+1,556 damage in two minutes). The old loop layout keeps monster *homes* 8+ tiles from the gate, but boars wander and
+chase down the 2-tile loops, so the gate isn't quiet in practice. (The Pilot had no weapon equipped: a test fault,
+fixed for the other classes, but five boars at once would still kill most level 12s.) This makes H7 urgent: Boar
+Meadow is the level 9-15 ground every new player reaches right after the starter grounds.
 
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
