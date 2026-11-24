@@ -51,7 +51,9 @@ GROUNDS = [
 # until the server runs the new map.)
 _SAFE_FIRST = ["starter_west", "starter_east", "starter_south", "wasp_fields", "burrow_hills", "BOSSES",
                "thornsnap_hollow", "shard_fields", "bandit_road", "old_quarry"]
-ORDERS = {"arcanist": _SAFE_FIRST, "mystic": _SAFE_FIRST}
+# the Mystic: the grounds still on the old map (Bandit Road, Old Quarry) before the bosses (the Gate Hound kills a solo Pilot)
+_MYSTIC = ["starter_west", "starter_east", "starter_south", "wasp_fields", "burrow_hills", "bandit_road", "old_quarry", "BOSSES"]
+ORDERS = {"arcanist": _SAFE_FIRST, "mystic": _MYSTIC}
 REBUILT = {"starter_west", "starter_east", "starter_south", "wasp_fields", "burrow_hills"}  # the rest still name corners
 
 
