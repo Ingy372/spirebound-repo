@@ -30,15 +30,20 @@ what makes us different (the tower, the floors, the cursors) instead of hiding i
 
 Ranked by how much each would move a new player's first evening (details in sections 2-9):
 
-| # | Fix | Why it matters most |
-|---|---|---|
-| 1 | Give Floor 1 monsters real behaviour (F1-10) | Hunting is 80% of play time; 8 of 13 regular monsters only melee (first pass done overnight) |
-| 2 | Make the first hour show the tower (F1-01..05) | The arrival yard is a plain rectangle; the hook (floors, race, SAO) is invisible |
-| 3 | Replace kill-count quests with real quests (F1-20) | All 16 Floor 1 quests are "kill N of X" |
-| 4 | Rebuild the seven boxy grounds and enlarge Toad Pond (F1-30) | Wolf Copse and six others are four square rings of trees |
-| 5 | Bring a style choice into Floor 1 (F1-40) | The Mastery path, our best "choice" system, starts after Floor 1 |
-| 6 | A lived-in Hearthgate (F1-50) | Jay's own note; town is a grid of identical boxes |
-| 7 | Daily and repeatable reasons to log in (F1-60) | Cyntara's daily chests, weekly quest, events every few hours |
+| # | Fix | Why it matters most | Status after the overnight session |
+|---|---|---|---|
+| 1 | Give Floor 1 monsters real behaviour (F1-10) | Hunting is 80% of play time; 8 of 13 regular monsters only melee | First pass done (10 behaviours + shardling burst) plus 5 elites; unseen in client |
+| 2 | Make the first hour show the tower (F1-01..05) | The arrival yard is a plain rectangle; the hook is invisible | Spells from level 1, lit lamps, race line at login; the yard rebuild is still to do (Q47) |
+| 3 | Replace kill-count quests with real quests (F1-20) | All 16 Floor 1 quests are "kill N of X" | Chests in 10 grounds, quests pay XP and show rewards; escort/puzzle/Stair Key still to do |
+| 4 | Rebuild the boxy grounds and enlarge Toad Pond (F1-30) | Six grounds swarmed at 3-5x the danger budget; two Pilots died at Boar Meadow | Five rebuilt; Bandit Road and Old Quarry left (need buildings); Toad Pond not enlarged yet |
+| 5 | Bring a style choice into Floor 1 (F1-40) | Our best "choice" system starts after Floor 1 | Waiting on Q46 |
+| 6 | A lived-in Hearthgate (F1-50) | Jay's own note; town is a grid of identical boxes | Not started (P3; Cowork polish) |
+| 7 | Daily and repeatable reasons to log in (F1-60) | Cyntara's daily chests, weekly quest, events | Daily streak, lucky climber, daily chests, Season Path on |
+
+Also found and fixed on the way (not in the original list): the smith's broken gold check, the Gate Hound never
+respawning (it blocked everyone's checklist), every street lamp unlit, NPCs wandering out of earshot, an NPC reply the
+client dropped, Rangers losing gold on arrows, calm grounds respawning too slowly to level on, and the boot test writing
+into Jay's game database. **Everything above is live only after a server restart and has not been walked in the client.**
 
 ---
 
