@@ -27,7 +27,7 @@ MONSTERS = {
                     attacks=[("melee", 0, -3)], armor=0, defense=0,
                     loot=[(3607, 100000, 1), (GOLD, 80000, 3)], voices=["Squeak?"]),  # cheese every time: the yard's loot gate needs something to take
     "Hopper Toad": dict(desc="a hopper toad", look=(222,), corpse=6077, hp=28, xp=9, speed=80, race="blood",
-                        attacks=[("melee", 0, -10), ("slow", -120, 2000, 3, "CONST_ME_GREEN_RINGS")], armor=2, defense=2,  # F1-10: a sticky spit
+                        attacks=[("melee", 0, -10), ("slow", -70, 1500, 3, "CONST_ME_GREEN_RINGS")], armor=2, defense=2,  # F1-10: a sticky spit
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),
     "Sproutling": dict(desc="a sproutling", look=(19,), corpse=2127, hp=35, xp=13, speed=70, race="venom",
                        attacks=[("melee", 0, -10), ("earth", 0, -12, 4)], armor=2, defense=3,
@@ -40,7 +40,7 @@ MONSTERS = {
                         attacks=[("melee", 0, -32)], armor=8, defense=8, defenses=[("invisible", 8)],  # F1-10: burrows out of sight
                         loot=[(GOLD, 90000, 26), (3577, 40000, 2), (266, 4000, 1), (5880, 12000, 1)]),  # more gold: an xp camp that must still pay for arrows
     "Reed Snapper": dict(desc="a reed snapper", look=(112,), corpse=6077, hp=150, xp=39, speed=90, race="blood",
-                         attacks=[("melee", 0, -38), ("slow", -250, 3000, 1, "CONST_ME_WATERSPLASH")], armor=12, defense=12,  # F1-10: drags you down
+                         attacks=[("melee", 0, -38), ("slow", -120, 2000, 1, "CONST_ME_WATERSPLASH")], armor=12, defense=12,  # F1-10: drags you down
                          loot=[(GOLD, 100000, 30), (PLAT, 1500, 1), (3582, 20000, 1), (266, 8000, 1), (5899, 10000, 1), (30975, 18000, 1)]),
     "Bristle Boar": dict(desc="a bristle boar", look=(119,), corpse=6046, hp=90, xp=28, speed=105, race="blood",
                          attacks=[("melee", 0, -30), ("charge", 0, -36, 4)], armor=6, defense=8,  # F1-10: charges
@@ -64,7 +64,7 @@ MONSTERS = {
                            loot=[(GOLD, 100000, 80), (PLAT, 15000, 1), (3359, 4000, 1), (3352, 5000, 1), (266, 15000, 2), (5909, 12000, 1)],
                            voices=["Get them, boys!"], summons=[("Road Bandit", 2)]),
     "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=3998, hp=140, xp=56, speed=90, race="venom",
-                      attacks=[("melee", 0, -35, None, "poison"), ("slow", -150, 2500, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
+                      attacks=[("melee", 0, -35, None, "poison"), ("slow", -90, 2000, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
     "Ruin Sentinel": dict(desc="a ruin sentinel", look=(131, 79, 79, 79, 79, 0), corpse=18074, hp=300, xp=96, speed=85,
                           race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
@@ -82,11 +82,11 @@ MONSTERS = {
                      attacks=[("melee", 0, -55), ("howl", 0, -40, 2)], armor=10, defense=12, light=(3, 215),
                      loot=[(GOLD, 100000, 50), (PLAT, 25000, 1), (5897, 60000, 3), (266, 30000, 2)], voices=["AWOOOOOO!"]),
     "Mossback Snapper": dict(desc="a mossback snapper", look=(112,), corpse=6077, hp=900, xp=250, speed=95, race="blood",
-                             attacks=[("melee", 0, -70), ("slow", -300, 3000, 1, "CONST_ME_WATERSPLASH")], armor=22,
+                             attacks=[("melee", 0, -70), ("slow", -180, 2500, 1, "CONST_ME_WATERSPLASH")], armor=22,
                              defense=22, light=(3, 210),
                              loot=[(GOLD, 100000, 90), (PLAT, 40000, 2), (3582, 50000, 2), (5899, 40000, 2), (236, 25000, 1)]),
     "Blackthorn": dict(desc="blackthorn", look=(28,), corpse=3998, hp=840, xp=330, speed=95, race="venom",
-                       attacks=[("melee", 0, -65, None, "poison"), ("slow", -200, 3000, 3, "CONST_ME_CARNIPHILA")],
+                       attacks=[("melee", 0, -65, None, "poison"), ("slow", -140, 2500, 3, "CONST_ME_CARNIPHILA")],
                        armor=16, defense=16, light=(3, 30), elements={"earth": 100, "fire": -15},
                        loot=[(GOLD, 100000, 80), (PLAT, 30000, 1), (5879, 60000, 3), (236, 25000, 1)]),
     "Prism Shardling": dict(desc="a prism shardling", look=(122,), corpse=6053, hp=720, xp=340, speed=95, race="undead",
@@ -243,10 +243,12 @@ def render(name, d):
         kind, mn, mxd = a[0], a[1], a[2]
         rng = a[3] if len(a) > 3 else None
         cond = a[4] if len(a) > 4 else None
-        if kind in ("slow", "drunk"):  # (kind, speedChange or 0, duration ms, range, effect): FLOOR1_REVIEW.md F1-10
+        # (kind, speedChange or 0, duration ms, range, effect): FLOOR1_REVIEW.md F1-10. The engine calls any slow
+        # "paralyzed"; keep them small and short (2026-11-24 in-client check: -250 snappers plus toads were too harsh)
+        if kind in ("slow", "drunk"):
             eff = a[4] if len(a) > 4 else ("CONST_ME_MAGIC_RED" if kind == "slow" else "CONST_ME_POFF")
             if kind == "slow":
-                L.append(f'	{{ name = "speed", interval = 2000, chance = 15, speedChange = {mn}, range = {rng}, duration = {mxd}, effect = {eff}, target = true }},')
+                L.append(f'	{{ name = "speed", interval = 2000, chance = 10, speedChange = {mn}, range = {rng}, duration = {mxd}, effect = {eff}, target = true }},')
             else:
                 L.append(f'	{{ name = "drunk", interval = 2000, chance = 12, range = {rng}, duration = {mxd}, shootEffect = CONST_ANI_SMOKE, effect = {eff}, target = true }},')
             continue

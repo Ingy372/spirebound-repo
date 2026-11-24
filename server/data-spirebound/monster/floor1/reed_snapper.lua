@@ -43,7 +43,7 @@ monster.loot = {
 
 monster.attacks = {
 	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -38 },
-	{ name = "speed", interval = 2000, chance = 15, speedChange = -250, range = 1, duration = 3000, effect = CONST_ME_WATERSPLASH, target = true },
+	{ name = "speed", interval = 2000, chance = 10, speedChange = -120, range = 1, duration = 2000, effect = CONST_ME_WATERSPLASH, target = true },
 }
 
 monster.defenses = {
