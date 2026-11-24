@@ -331,6 +331,34 @@ Check after with `tools/gen_economy.py` that no class runs at a loss on its own 
 
 ---
 
+## 9b. Do we stand a chance? The honest scorecard
+
+Scored against what a player gets on a top server in their first week (1 = far behind, 5 = ahead).
+
+| Area | Score | Why |
+|---|---|---|
+| Hook / identity | 4 | "Floors open for everyone; first clears are carved on a monument; permadeath if you dare" is a real pitch. Most top servers are a rate and a version number. |
+| Systems depth | 4 | Seasons, Season Path, difficulty modes, fair-PvP rules, houses that do things, fishing, secrets with a broker, gear path, mini-bosses, 126 spells. More than most launches. |
+| Moment-to-moment hunting | 2 | Monsters only bite (first pass of behaviours done overnight, unseen in client); the old grounds swarm. |
+| First 30 minutes | 2 | Plain yard (dark at night), no wow, no story; the tutorial teaches clicks, not what makes us different. |
+| Quests | 1 | 16 kill-count quests vs Cyntara's 150+ with chests, bosses and access quests. |
+| World look | 2 | Generated-looking town and grounds; hand-made Tibia maps set the bar every veteran compares with. |
+| Art | 2 | Placeholder Tibia sprites with some custom monsters; the pipeline works but most art is still to make. |
+| Daily reasons to log in | 3 | Season Path, events, tasks, now a daily streak and an hourly lucky climber. |
+| Fairness / anti-toxicity | 4 | Newbie protection to 50, cursors, bounty and moderation tools: a real selling point for the players Jay is (people who quit toxic servers). |
+| Stability / ops | 2 | Runs on Jay's PC; no hosting, backups to the cloud, or 24/7 uptime yet (task 9.x). |
+| Launch population | 1 | No community, Discord, website accounts or streamer yet. On OT lists, population is the product: empty servers stay empty. |
+
+**Verdict.** Today, no: a player who tries it next to Cyntara or a RubinOT world leaves in the first hour (plain start,
+swarming grounds, kill-count quests). The design is strong enough that this is fixable *on Floor 1 alone*, because a
+seasonal tower only needs Floor 1-2 to be excellent at launch; the rest opens over weeks. The order that matters:
+1. Make Floor 1's hunting feel good (monster behaviours seen in client, the last two ground rebuilds, elites, loot).
+2. Make the first hour sell the tower (arrival, race line, cursors, a "wow" moment by level 5).
+3. Replace kill-count quests with 6-8 memorable ones (chest, escort, puzzle, Stair Key chain).
+4. A hand polish of Hearthgate and the arrival (Jay's planned Cowork pass) and the art batches.
+5. Then the launch work that decides population: hosting, website accounts, a Discord, OT list listings, one or two
+   streamers on launch day, and a fixed launch date announced weeks ahead (Jay's FOMO plan for Q30 depends on it).
+
 ## 10. Measured numbers (autopilot playthroughs)
 
 Each ground: two routes, 75 s of hunting on each, at the middle of its level band. "XP/h" is experience per hour over
