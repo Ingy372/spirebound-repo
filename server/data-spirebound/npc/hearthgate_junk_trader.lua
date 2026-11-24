@@ -7,7 +7,7 @@ npcConfig.description = "the trader of the Hearth"
 npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
-npcConfig.walkRadius = 2
+npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter + 1 step keeps a player at the counter in earshot
 npcConfig.outfit = { lookType = 129, lookHead = 95, lookBody = 116, lookLegs = 121, lookFeet = 115, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {

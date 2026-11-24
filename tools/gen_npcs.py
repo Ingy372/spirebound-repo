@@ -251,7 +251,7 @@ npcConfig.description = "{desc}"
 npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
-npcConfig.walkRadius = 2
+npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter + 1 step keeps a player at the counter in earshot
 npcConfig.outfit = {{ lookType = {l0}, lookHead = {l1}, lookBody = {l2}, lookLegs = {l3}, lookFeet = {l4}, lookAddons = {l5} }}
 npcConfig.flags = {{ floorchange = false }}
 npcConfig.voices = {{

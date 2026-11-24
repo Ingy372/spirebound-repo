@@ -7,7 +7,7 @@ npcConfig.description = "the quartermaster"
 npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
-npcConfig.walkRadius = 2
+npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter + 1 step keeps a player at the counter in earshot
 npcConfig.outfit = { lookType = 131, lookHead = 95, lookBody = 95, lookLegs = 95, lookFeet = 95, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {
@@ -58,6 +58,9 @@ npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, function(npc, player, type, msg)
+	if SpireGear and SpireGear.talk and SpireGear.talk(npc, npcHandler, player, msg, npcConfig.name) then
+		return false
+	end
 	if SpireCraft and SpireCraft.talk(npc, npcHandler, player, msg, npcConfig.name) then
 		return false
 	end

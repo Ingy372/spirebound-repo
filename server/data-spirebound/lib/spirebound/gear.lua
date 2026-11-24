@@ -169,7 +169,7 @@ function SpireGear.playerWallet(player)
 	return {
 		count = function(id) return player:getItemCount(id) end,
 		remove = function(id, n) return player:removeItem(id, n) end,
-		money = function() return player:getTotalMoney() + player:getBankBalance() end,
+		money = function() return player:getMoney() + player:getBankBalance() end,
 		pay = function(n) return player:removeMoneyBank(n) end,
 	}
 end

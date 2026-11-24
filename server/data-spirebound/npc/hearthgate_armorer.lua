@@ -7,7 +7,7 @@ npcConfig.description = "the armorer"
 npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
-npcConfig.walkRadius = 2
+npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter + 1 step keeps a player at the counter in earshot
 npcConfig.outfit = { lookType = 139, lookHead = 113, lookBody = 38, lookLegs = 76, lookFeet = 96, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {

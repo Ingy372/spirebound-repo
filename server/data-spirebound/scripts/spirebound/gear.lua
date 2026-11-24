@@ -81,7 +81,7 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 	if MsgContains(lower, "upgrade") then
 		local item = (MsgContains(lower, "armour") or MsgContains(lower, "armor")) and armourPiece(player) or SpireGear.mainWeapon(player)
 		if not item then
-			say("Hold your Spirebound weapon in your hand (or wear your Spirebound armour and say {upgrade armour}), and I'll look at it.")
+			say("Hold your Spirebound weapon in your hand and I'll look at it. For your armour, wear it and say {upgrade armour}.")
 			return true
 		end
 		local ok, cost = SpireGear.upgradeCheck(item, SpireGear.playerWallet(player))

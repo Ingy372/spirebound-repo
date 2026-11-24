@@ -4,34 +4,138 @@
  "character": "Pilot Ranger",
  "timeout": 180,
  "steps": [
-  { "do": "jump", "to": [1235, 1246, 7], "note": "Captain Dorrow" },
-  { "do": "say", "text": "/pilot gearreset" },
-  { "do": "say", "text": "/pilot level 12" },
-  { "do": "say", "text": "/pilot give 3035, 50" },
-  { "do": "wait", "seconds": 1 },
-  { "do": "say", "text": "hi" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "weapon" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "bow" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "shot", "name": "dorrow_bow" },
-  { "do": "say", "text": "bye" },
-  { "do": "say", "text": "/pilot give 16124, 3" },
-  { "do": "jump", "to": [1195, 1280, 7], "note": "Weaponsmith Garrick" },
-  { "do": "say", "text": "hi" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "upgrade" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "yes" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "shot", "name": "smith_tier1" },
-  { "do": "say", "text": "bye" },
-  { "do": "say", "text": "!upgrade", "note": "Upgrade tab" },
-  { "do": "wait", "seconds": 3 },
-  { "do": "shot", "name": "upgrade_tab" },
-  { "do": "say", "text": "!style" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "/pilot logout" }
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Captain Dorrow"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gearreset"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3035, 50"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "weapon"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "bow"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "dorrow_bow"
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 16124, 3"
+  },
+  {
+   "do": "equip",
+   "id": 3350,
+   "slot": "left",
+   "note": "hold the bow (the smith upgrades the weapon in your hand)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1195,
+    1280,
+    7
+   ],
+   "note": "Weaponsmith Garrick"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "upgrade"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "smith_tier1"
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "!upgrade",
+   "note": "Upgrade tab"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "upgrade_tab"
+  },
+  {
+   "do": "say",
+   "text": "!style"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
  ]
 }

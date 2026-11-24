@@ -11,6 +11,7 @@
 --   { "do": "wait", "seconds": 5 }
 --   { "do": "shot", "name": "yard" }              screenshot
 --   { "do": "say", "text": "!hunt" }
+--   { "do": "npc", "text": "trade" }              after "hi": talk to the NPC in the NPCs channel
 --   { "do": "rune", "id": 3180, "ahead": 2 }        (PvP tests) use a rune on the tile ahead
 --   { "do": "react", "text": "quickstep", "seconds": 40 }  (PvP tests) say it whenever you get held
 --   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
@@ -182,6 +183,55 @@ function handlers.say()
         g_game.talk(step.text)
         stepData.sent = true
     elseif now() - stepT > 1.5 then
+        nextStep()
+    end
+end
+
+-- talk to an NPC after "hi": Canary's NPCs only listen to the NPCs channel once a conversation has started
+function handlers.npc()
+    if not stepData.sent then
+        -- NPCs only listen within 3 tiles and some wander: wait (up to 15 s) until the nearest NPC is in earshot
+        local me = g_game.getLocalPlayer():getPosition()
+        local best
+        for _, c in ipairs(g_map.getSpectators(me, false)) do
+            if c:isNpc() then
+                local p = c:getPosition()
+                local d = math.max(math.abs(p.x - me.x), math.abs(p.y - me.y))
+                if not best or d < best then best = d end
+            end
+        end
+        if best and best > 3 and now() - stepT < 15 then return end
+        if best and best > 3 then log('npc: nearest NPC is ' .. best .. ' tiles away; talking anyway') end
+        g_game.talkChannel(MessageModes.NpcTo, 0, step.text)
+        stepData.sent = now()
+    elseif now() - stepData.sent > 1.5 then
+        nextStep()
+    end
+end
+
+-- put an item from the backpack into a hand: { "do": "equip", "id": 3350, "slot": "left" }
+function handlers.equip(player)
+    if stepData.done then
+        if now() - stepT > 1.5 then nextStep() end
+        return
+    end
+    for _, c in pairs(g_game.getContainers()) do
+        for _, it in ipairs(c:getItems()) do
+            if it:getId() == step.id then
+                local slot = step.slot == 'right' and InventorySlotRight or InventorySlotLeft
+                g_game.move(it, { x = 65535, y = slot, z = 0 }, it:getCount())
+                log('equip: moved item ' .. step.id .. ' to the ' .. (step.slot or 'left') .. ' hand')
+                stepData.done = true
+                return
+            end
+        end
+    end
+    if not stepData.opened then
+        local bp = player:getInventoryItem(InventorySlotBack)
+        if bp then g_game.open(bp, nil) end
+        stepData.opened = true
+    elseif now() - stepT > 4 then
+        log('equip: item ' .. step.id .. ' not found')
         nextStep()
     end
 end
@@ -396,6 +446,14 @@ local function onText(mode, text)
     end
 end
 
+-- what NPCs say back (NPC tests)
+local function onTalk(name, level, mode, text)
+    if not st then return end
+    if mode == MessageModes.NpcFrom or mode == MessageModes.NpcFromStartBlock then
+        log('npc ' .. name .. ': ' .. text)
+    end
+end
+
 local function onGameStart()
     log('in game as ' .. plan.character)
     lastHp = g_game.getLocalPlayer() and g_game.getLocalPlayer():getHealth()
@@ -460,14 +518,14 @@ function Autopilot.init()
     pcall(function() g_window.setVerticalSync(false) end)
     pcall(function() g_app.setMaxFps(30) end)
     log('autopilot run "' .. (plan.name or '?') .. '": ' .. #plan.steps .. ' steps; log folder ' .. g_resources.getWriteDir())
-    connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText })
+    connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
     connect(LocalPlayer, { onHealthChange = onHealthChange })
     scheduleEvent(function() login(0) end, 2000)
 end
 
 function Autopilot.terminate()
     if not plan then return end
-    disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText })
+    disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
     disconnect(LocalPlayer, { onHealthChange = onHealthChange })
     if tickEvent then removeEvent(tickEvent) end
 end

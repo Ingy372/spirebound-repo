@@ -7,7 +7,7 @@ npcConfig.description = "the coachman"
 npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
-npcConfig.walkRadius = 2
+npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter + 1 step keeps a player at the counter in earshot
 npcConfig.outfit = { lookType = 128, lookHead = 58, lookBody = 68, lookLegs = 109, lookFeet = 115, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {
