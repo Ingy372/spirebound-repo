@@ -79,7 +79,7 @@ CAMPS = [
          note="Wolves hunt in packs, and one pack in each loop follows a Grey Alpha. Across the river, south of Millcross."),
     dict(id="reed_marsh", type="class", cls="Ranger", title="Reedmarsh", x=44, y=322, w=52, h=48, gate="n", size="std", zone="open",
          levels=(14, 19), role="money", wall="water", core="pool", trail="mud", decor="marsh",
-         groups=same(6, "Reed Snapper"), respawn=215,
+         groups=same(6, "Reed Snapper"), respawn=215, design="MARSH",
          note="Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool."),
     dict(id="thornsnap_hollow", type="class", cls="Mystic", title="Thornsnap Hollow", x=158, y=132, w=60, h=40, gate="e", size="std", zone="open",
          levels=(14, 20), role="xp", wall="thorns", core="thorns", trail="dirt", decor="thorns",
@@ -475,7 +475,36 @@ WOLVES = dict(
     },
     links=[("ramp", 36, 24, 7, "n"), ("stairs", 46, 20, 8)],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES}
+# Reedmarsh (H7, 2026-11-23 overnight): mud islands in open water, the Ranger's ground (room to keep your distance;
+# water is the wall). Snappers are pairs; single Hopper Toads are the soft monster on the near islands. The central
+# island sits in the big pond, reached by bridges; the far southern islands are the deep part. Surface only.
+_RS1, _RS2, _HT1 = (("Reed Snapper", 1),), (("Reed Snapper", 2),), (("Hopper Toad", 1),)
+MARSH = dict(
+    gate=(26, 0), crowd_group=[("Reed Snapper", 1)],
+    routes={"a": "a1", "b": "b1", "c": "cn", "d": "dq"},
+    route_names={"a": "The West Islands", "b": "The East Islands", "c": "The Middle Island", "d": "The Far Islands"},
+    levels={
+        7: dict(name="Reedmarsh", box=(0, 0, 52, 48),
+                ponds=[(26, 27, 7), (9, 22, 3), (43, 22, 3), (16, 38, 3), (36, 38, 3)],
+                clearings=[
+            ("hub", 26, 5, 4, "approach", None, "hub"), ("w0", 14, 6, 3, "calm", None, None), ("e0", 38, 6, 3, "calm", None, None),
+            ("a0", 5, 10, 2, "calm", "a", [_HT1]), ("a1", 4, 18, 3, "calm", "a", [_RS2]), ("qa", 3, 31, 3, "calm", "a", "rest"),
+            ("a2", 6, 42, 3, "middle", "a", [_RS2]),
+            ("b0", 47, 10, 2, "calm", "b", [_HT1]), ("b1", 48, 18, 3, "calm", "b", [_RS2]), ("qb", 49, 31, 3, "calm", "b", "rest"),
+            ("b2", 46, 42, 3, "middle", "b", [_RS2]),
+            ("cn", 26, 15, 3, "middle", "c", "rest"), ("c1", 26, 27, 3, "middle", "c", [_RS2]), ("cs", 26, 39, 2, "middle", "c", "rest"),
+            ("dq", 26, 45, 2, "deep", "d", "rest"), ("d1", 12, 46, 2, "deep", "d", [_RS2, _RS1]), ("d2", 40, 46, 2, "deep", "d", [_RS2, _RS1]),
+            ("ca1", 4, 25, 1, "calm", "a", "crowd"), ("ca2", 9, 8, 1, "calm", "a", "crowd"), ("ca3", 9, 43, 1, "middle", "a", "crowd"),
+            ("cb1", 48, 25, 1, "calm", "b", "crowd"), ("cb2", 43, 8, 1, "calm", "b", "crowd"), ("cb3", 43, 43, 1, "middle", "b", "crowd"),
+            ("cc1", 21, 15, 1, "middle", "c", "crowd"), ("cc2", 31, 15, 1, "middle", "c", "crowd"), ("cc3", 22, 40, 1, "middle", "c", "crowd"),
+            ("cd1", 7, 44, 1, "deep", "d", "crowd"), ("cd2", 45, 44, 1, "deep", "d", "crowd"), ("cd3", 31, 44, 1, "deep", "d", "crowd"),
+        ], paths=[("hub", "w0", 4), ("w0", "a0", 3), ("a0", "a1", 3), ("a1", "qa", 3), ("qa", "a2", 3), ("a2", "d1", 3),
+                  ("d1", "dq", 3), ("dq", "d2", 3), ("d2", "b2", 3), ("b2", "qb", 3), ("qb", "b1", 3), ("b1", "b0", 3),
+                  ("b0", "e0", 3), ("e0", "hub", 4), ("hub", "cn", 3), ("cn", "c1", 2), ("c1", "cs", 2), ("cs", "dq", 2)]),
+    },
+    links=[],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

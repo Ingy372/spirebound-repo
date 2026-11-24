@@ -194,6 +194,9 @@ Howling Rock (z 6) with the Grey Alpha's pack at its west end, and the Alpha's D
 four, two led by an Alpha). Crowd spots add two stragglers each (Claude's call: a whole extra pack broke every budget).
 Checker, walk test and in-game tests pass; not yet walked in the client. Same caveat: it is also a ring round a ridge,
 so Boar Meadow and Wolf Copse now share a shape; vary them in the polish pass.
+**Reedmarsh rebuilt overnight too (H7):** mud causeways between open water, a middle island in the big pond reached by
+two bridges, pairs of Reed Snappers with single Hopper Toads on the near islands, the far southern islands as the deep
+part. Checker, walk test and in-game tests pass; not yet walked in the client.
 
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
