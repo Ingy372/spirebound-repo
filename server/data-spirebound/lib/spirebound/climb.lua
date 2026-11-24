@@ -29,10 +29,10 @@ SpireClimb.FLOOR1 = {
 		where = "hunt Road Bandits on the Bandit Road (east), then report to Hunter Brannoch",
 		done = questDone("q1_iron2") },
 	{ key = "gate_hound", level = 24, text = "Defeat the Gate Hound",
-		where = "fight the Gate Hound at the Pass, the way into the Floor 1 labyrinth",
+		where = "gather a party of 3 or more and fight the Gate Hound at the Pass, the way into the Floor 1 labyrinth",
 		done = bossDone("Gate Hound") },
 	{ key = "axe_lord", level = 30, text = "Defeat the Axe-Lord of the Stair: your weapon awakens",
-		where = "climb the Floor 1 labyrinth behind the Pass to the Axe-Lord's hall",
+		where = "bring a party of 4 or more up the Floor 1 labyrinth behind the Pass to the Axe-Lord's hall",
 		done = bossDone("Axe-Lord of the Stair") },
 }
 

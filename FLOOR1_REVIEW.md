@@ -399,7 +399,24 @@ the whole visit (walking included), with the real experience stages; the economy
 - Experience per hour matches the economy model, so the 11-15 hour Floor 1 (Jay's Q30) holds for a steady hunter.
   Levelling is not *slow* by the numbers; it *feels* slow because each hour is the same thing (Jay's "boring").
 
-*(Arcanist and Mystic results are added below when their runs finish.)*
+**Arcanist** (wand of vortex; Dorrow's Wand of Hearth Sparks at level 10; order changed so the bosses came before the
+old grounds, Boar Meadow skipped):
+
+| Place | Level | XP/h | Damage taken | Lowest health | Most in sight / next to you | Result |
+|---|---|---|---|---|---|---|
+| Ratwarren | 3 | 23,900 | 0 | 100% | 2 / 2 | |
+| Toad Pond | 5 | 28,600 | 0 | 100% | 2 / 2 | |
+| Sproutling Glade | 7 | 27,900 | 5 | 97% | 2 / 1 | |
+| Waspgrass Fields | 9 | 35,100 | 15 | 91% | 4 / 3 | the Arcanist's class ground: the best numbers of the night |
+| Burrow Hills (rebuilt earlier) | 13 | 17,300 | 189 | 43% | 2 / 2 | half the model's rate, and a scare |
+| Gate Hound | 24 | - | 1,549 in ~12 s | 0% | 1 / 1 | **died solo** |
+
+- **F1-44 The Gate Hound kills a solo level 24 in about 12 seconds**, and the Upgrade tab sent players to it at level
+  24 with no word about a party. **Fixed overnight:** the step now says "gather a party of 3 or more"; the Axe-Lord
+  step says "a party of 4 or more" (Claude's numbers). Consider a short warning on the Pass sign too.
+- **F1-45 Burrow Hills is harder than its neighbours** for a ranged class at level 13 (43% health, half the expected
+  experience). Re-check its mole weights or move the soft boars nearer the gate.
+
 
 ---
 
