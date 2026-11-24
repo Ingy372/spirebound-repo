@@ -92,7 +92,7 @@ def counter(m, x, y, w, z, vertical=False):
 
 
 def lamp(m, x, y, z):
-    prop(m, x, y, z, 8659)
+    prop(m, x, y, z, 8660)  # the lit street lamp (8659 is the same lamp unlit: brightness 0)
 
 
 def bridge(m, x0, y0, w, h, z):

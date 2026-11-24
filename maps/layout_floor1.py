@@ -659,7 +659,7 @@ def build(m):
     m.points["tutorial_yard_se"] = (yx + YW - 1, yy + YH - 1, Z)
     S.sprinkle(m, yx + 1, yy + 1, 52, 8, Z, S.FLOWERS + S.BUSHES, 0.12, seed=40)
     S.sprinkle(m, yx + 1, yy + 14, 52, 9, Z, S.FLOWERS + S.BUSHES, 0.12, seed=41)
-    for px in (yx + 10, yx + 21, yx + 29, yx + 35, yx + 41, yx + 48):
+    for px in (yx + 2, yx + 10, yx + 21, yx + 29, yx + 35, yx + 41, yx + 48):   # yx + 2: the arrival square is lit at night
         S.lamp(m, px, yy + 9, Z)
         S.lamp(m, px, yy + 14, Z)
     pen = (yx + 13, yy + 2, 11, 6)

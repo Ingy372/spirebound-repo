@@ -87,6 +87,9 @@ hours are there, the variety isn't.
   dims the yard, which has no light sources). Light the yard (lamps along the path, a lit gate) or keep it always day. Detail: the yard already has 12 lamps
   (`S.lamp`, item 8659, `maps/layout_floor1.py`), none within 5 tiles of the spawn, and the ones in view look dark at
   night: check that 8659 is a lit lamp and give the arrival square two of its own.
+  **Found and fixed overnight:** 8659 is the *unlit* street lamp (brightness 0 in the client's appearances); 8660 is
+  the lit one (brightness 7). Every street lamp on Floor 1, Hearthgate included, was unlit. `S.lamp` now places 8660,
+  and the arrival square has two lamps of its own. Live after a restart.
 - **F1-02 Levels 1-7 have no spells.** Every class's first attack spell is at level 8 (Ember Strike, Frost Strike,
   Piercing Shot, Heavy Strike). The first 30-45 minutes are auto-attack only. Give each class one starter attack at
   level 1 and one utility by level 4.
