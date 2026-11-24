@@ -43,7 +43,13 @@ Ranked by how much each would move a new player's first evening (details in sect
 Also found and fixed on the way (not in the original list): the smith's broken gold check, the Gate Hound never
 respawning (it blocked everyone's checklist), every street lamp unlit, NPCs wandering out of earshot, an NPC reply the
 client dropped, Rangers losing gold on arrows, calm grounds respawning too slowly to level on, and the boot test writing
-into Jay's game database. **Everything above is live only after a server restart and has not been walked in the client.**
+into Jay's game database. **Checked in the client after Jay's restart (2026-11-24):** the weaponsmith upgrade works; the login race line shows;
+both chests tried open once, then say "empty, fills again in about 20 hours"; Boar Meadow, Wolf Copse, Reedmarsh,
+Thornsnap Hollow and Shard Fields have calm gates (1-3 monsters in sight against 10-15 before) and the test Vanguard
+survived all five. Found and fixed from it: saying `!upgrade` near Garrick made him offer an upgrade (NPCs now ignore
+"!" commands), and snapper and toad slows stacked into near-paralysis in Reedmarsh (now smaller, shorter, rarer; live
+after the next restart). Not yet seen: monster behaviours up close, the elites, the shardling burst, the lit lamps at
+night.
 
 ---
 
