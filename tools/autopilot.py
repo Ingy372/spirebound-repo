@@ -78,10 +78,9 @@ class Planner:
     def ok(self, p):
         return p not in self.avoid and self.walkable(self.m, p, self.block)
 
-    def path(self, a, b, allow_end=False):
+    def path(self, a, b, allow_end=False, lim=90):
         if a[2] != b[2]:
             return None
-        lim = 90
         prev, q = {a: None}, deque([a])
         while q:
             p = q.popleft()

@@ -126,6 +126,64 @@ local function describe(s)
     return d
 end
 
+-- ---------------------------------------------------------------- live mode (tools/grok_tester.py)
+-- With "live": true in the run file, the steps are not a fixed route: when the queued steps run out, the client writes
+-- autopilot_state.json (and a screenshot) to its settings folder and waits for autopilot_cmd.json from the script,
+-- { "seq": n, "steps": [...] } or { "seq": n, "stop": true }. The script decides each move (a Grok play tester).
+local CMD, STATE = '/autopilot_cmd.json', '/autopilot_state.json'
+local liveSeq, recent = 0, {}
+
+local function remember(s)
+    recent[#recent + 1] = s
+    if #recent > 40 then table.remove(recent, 1) end
+end
+
+local function itemName(it)
+    local ok, md = pcall(function() return it:getMarketData() end)
+    if ok and md and md.name and md.name ~= '' then return md.name end
+    return 'item ' .. it:getId()
+end
+
+local function writeState(reason)
+    local p = g_game.getLocalPlayer()
+    if not p then return end
+    local pos = p:getPosition()
+    local around = {}
+    for _, c in ipairs(g_map.getSpectators(pos, false) or {}) do
+        if c ~= p then
+            local cp = c:getPosition()
+            around[#around + 1] = { name = c:getName(), kind = c:isMonster() and 'monster' or (c:isNpc() and 'npc' or 'player'),
+                dx = cp.x - pos.x, dy = cp.y - pos.y, dz = cp.z - pos.z, health = c:getHealthPercent() }
+        end
+    end
+    local bag = {}
+    local open = 0
+    for _ in pairs(g_game.getContainers()) do open = open + 1 end
+    if open == 0 then -- a tester needs to see its potions and loot: open the backpack (shows from the next state on)
+        local bp = p:getInventoryItem(InventorySlotBack)
+        if bp then g_game.open(bp, nil) end
+    end
+    for _, c in pairs(g_game.getContainers()) do
+        for _, it in ipairs(c:getItems()) do
+            bag[#bag + 1] = itemName(it) .. (it:getCount() > 1 and (' x' .. it:getCount()) or '')
+        end
+    end
+    local worn = {}
+    for slot = 1, 10 do
+        local it = p:getInventoryItem(slot)
+        if it then worn[#worn + 1] = itemName(it) end
+    end
+    local shot = string.format('autopilot_live_%d.png', liveSeq)
+    g_app.doScreenshot(shot)
+    local state = { seq = liveSeq, reason = reason, x = pos.x, y = pos.y, z = pos.z,
+        health = p:getHealth(), maxHealth = p:getMaxHealth(), mana = p:getMana(), maxMana = p:getMaxMana(),
+        level = p:getLevel(), experience = p:getExperience(), vocation = p:getVocation(), soul = p:getSoul(),
+        attacking = g_game.isAttacking(), around = around, backpack = bag, worn = worn, messages = recent, screenshot = shot }
+    recent = {}
+    g_resources.writeFileContents(STATE, json.encode(state))
+    log('live: state ' .. liveSeq .. ' written (' .. tostring(reason) .. ')')
+end
+
 local function nextStep()
     if step then
         log(string.format('== step %d done in %.0fs', idx, now() - stepT))
@@ -138,6 +196,10 @@ local function nextStep()
     stepXp = g_game.getLocalPlayer() and g_game.getLocalPlayer():getExperience()
     idx = idx + 1
     step = plan.steps[idx]
+    if not step and plan.live then
+        writeState('ready')
+        step = { ['do'] = 'live_wait' }
+    end
     if not step then
         return finish('route complete')
     end
@@ -361,6 +423,19 @@ function handlers.wait()
     if now() - stepT >= (step.seconds or 1) then nextStep() end
 end
 
+function handlers.live_wait()
+    if stepData.polled and now() - stepData.polled < 0.75 then return end
+    stepData.polled = now()
+    if not g_resources.fileExists(CMD) then return end
+    local ok, cmd = pcall(json.decode, g_resources.readFileContents(CMD))
+    if not ok or type(cmd) ~= 'table' or (cmd.seq or 0) <= liveSeq then return end
+    liveSeq = cmd.seq
+    if cmd.stop then return finish('stopped by the tester') end
+    log('live: command ' .. liveSeq .. ' with ' .. #(cmd.steps or {}) .. ' steps')
+    plan.steps, idx, step = cmd.steps or {}, 0, nil
+    nextStep()
+end
+
 function handlers.shot()
     local name = 'autopilot_' .. (step.name or idx) .. '.png'
     g_app.doScreenshot(name)
@@ -465,6 +540,7 @@ end
 
 local function onText(mode, text)
     if not st then return end
+    if plan.live then remember(text) end
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
         log('loot: ' .. text)
@@ -476,6 +552,7 @@ end
 -- what NPCs say back (NPC tests)
 local function onTalk(name, level, mode, text)
     if not st then return end
+    if plan.live then remember(name .. ': ' .. text) end
     if mode == MessageModes.NpcFrom or mode == MessageModes.NpcFromStartBlock then
         log('npc ' .. name .. ': ' .. text)
     end

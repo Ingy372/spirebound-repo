@@ -18,3 +18,14 @@ If something fails, copy the red text into `PLAYTEST.md` and Claude will fix it 
 ## Accounts (2026-11-13)
 - **Make an account:** while the server is running, open http://localhost:8080/signup in a browser on this PC.
 - **Test accounts:** starting the server no longer resets the test account "jay". If you ever need it back, double-click `Make-Test-Accounts.bat` (local testing only; its password is public).
+
+## A Grok play tester (optional, costs a little per run)
+Grok can play a brand-new character on your server and write a playtest report, like a first-time player would.
+1. Sign in at console.x.ai (your X account works). This is xAI's developer site; your Grok subscription does **not**
+   include it. Add some credits under Billing and set a spending limit there.
+2. Create an API key (it starts with `xai-`).
+3. Double-click `windows\Grok-Playtest.bat`. The first time, it opens `server\local.env` in Notepad: replace
+   `paste-your-key-here` with your key and save. (That file never goes to GitHub.)
+4. Start the server (`Start-Spirebound.bat`), then double-click `Grok-Playtest.bat` again. A game window opens and
+   Grok plays for up to 40 minutes (60 moves). Don't use the game window while it plays.
+5. The report lands in `docs\playtests\` (the newest `grok_` file). Tell Claude it's there.
