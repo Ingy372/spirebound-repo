@@ -166,6 +166,11 @@ scripts, not just monster spells), and an economy pass on damage taken now that 
 **F1-11 One elite per ground.** Only the Watchtower has an elite (Stonehorn Ram). Add a named elite per ground that
 spawns rarely, glows (an aura effect), and drops the ground's best loot and a flawless Hearth Shard chance. This is
 the "something exciting might happen" Cyntara gets from champions.
+**Done overnight for the five grounds rebuilt tonight:** Old Bristleback (Oak Ridge), Moonhowl (leads a pack in Wolf
+Copse's north-west firs), Mossback Snapper (Reedmarsh's far islands), Blackthorn (the Bramble Ring), Prism Shardling
+(the Terraces' summit). About six times their base monster's health, a glow, better loot, flawless Hearth Shard drops,
+15-minute respawn; they borrow their ground's sprite (ART_REQUESTS.md Batch 7 for variants later). The checker passes
+with them in place; the in-game test confirms the engine spawns them.
 
 **F1-12 Loot that matters.** Check the per-ground loot tables against the gear path: every ground should have one
 thing worth picking up beyond gold and crafting stuff (a rare cosmetic, a ground-specific trinket, a book page of

@@ -28,7 +28,7 @@ SIZES = {
     "tall": dict(loop=(18, 24), cross=3, hub=6, groups=6, crowd=3),
 }
 ELITE_RESPAWN = 900                               # Grey Alpha, Bandit Captain: 15 minutes
-ELITES = {"Grey Alpha", "Bandit Captain"}
+ELITES = {"Grey Alpha", "Bandit Captain", "Old Bristleback", "Moonhowl", "Mossback Snapper", "Blackthorn", "Prism Shardling"}
 CAVE_RESPAWN = 160
 
 
@@ -427,9 +427,9 @@ BOARS = dict(
         ], paths=[("hub", "nw", 4), ("nw", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "sw", 4), ("sw", "sf", 4),
                   ("sf", "se", 4), ("se", "b2", 4), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4)]),
         6: dict(name="Oak Ridge", box=(12, 12, 15, 37), clearings=[
-            ("kl", 19, 44, 3, "middle", "c", "rest"), ("k1", 19, 34, 3, "middle", "c", "rest"), ("kq", 19, 26, 3, "middle", "c", "rest"),
-            ("k2", 19, 15, 3, "deep", "c", [_BB]),
-            ("kc1", 16, 19, 1, "deep", "c", "crowd"), ("kc2", 22, 18, 1, "deep", "c", "crowd"), ("kc3", 19, 30, 1, "middle", "c", "crowd"),
+            ("kl", 19, 44, 3, "middle", "c", "rest"), ("k1", 19, 34, 3, "deep", "c", "rest"), ("kq", 19, 26, 3, "deep", "c", "rest"),
+            ("k2", 19, 15, 3, "deep", "c", [(("Old Bristleback", 1),)]),
+            ("kc1", 16, 19, 1, "deep", "c", "crowd"), ("kc2", 22, 18, 1, "deep", "c", "crowd"), ("kc3", 19, 30, 1, "deep", "c", "crowd"),
         ], paths=[("kl", "k1", 3), ("k1", "kq", 3), ("kq", "k2", 3)]),
         8: ring_level("The Wallows", (-6, 2, 45, 62), (-2, 8, 35, 58),
                       [("wm", 19, 52, 5), ("wl", 8, 52, 4), ("wr", 30, 52, 4), ("tusk", 19, 31, 4, "nest")],
@@ -451,10 +451,10 @@ WOLVES = dict(
         7: dict(name="Wolf Copse", box=(0, 0, 60, 40), clearings=[
             ("hub", 54, 20, 4, "approach", None, "hub"), ("n0", 48, 9, 3, "calm", None, None), ("s0", 48, 31, 3, "calm", None, None),
             ("mc", 46, 20, 3, "calm", None, "rest"),
-            ("a1", 38, 5, 3, "calm", "a", [_W3]), ("qa", 26, 5, 3, "calm", "a", "rest"), ("a2", 10, 5, 3, "deep", "a", [_W3]),
+            ("a1", 38, 5, 3, "calm", "a", [_W3]), ("qa", 26, 5, 3, "middle", "a", "rest"), ("a2", 10, 5, 3, "deep", "a", [(("Moonhowl", 1), ("Meadow Wolf", 2))]),
             ("b1", 38, 35, 3, "calm", "b", [_W3]), ("qb", 26, 35, 3, "calm", "b", "rest"), ("b2", 10, 35, 3, "deep", "b", [_W3]),
             ("w0", 2, 20, 2, "deep", "d", "rest"), ("mr", 36, 30, 2, "calm", None, "rest"),
-            ("ca1", 50, 4, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"), ("ca3", 16, 10, 1, "deep", "a", "crowd"),
+            ("ca1", 50, 4, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"),
             ("cb1", 50, 36, 1, "calm", "b", "crowd"), ("cb2", 24, 36, 1, "deep", "b", "crowd"), ("cb3", 16, 30, 1, "deep", "b", "crowd"),
         ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "w0", 3), ("w0", "b2", 3),
                   ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "s0", 4), ("s0", "hub", 4), ("hub", "mc", 4), ("b1", "mr", 3)]),
@@ -469,6 +469,7 @@ WOLVES = dict(
             ("p3", 52, 3, 4, "party", None, [_W4]), ("p4", 55, 20, 4, "party", None, [_W4]),
             ("p5", 52, 38, 4, "party", None, [_W4]), ("p6", 30, 41, 4, "party", None, [_GA]),
             ("p7", 8, 38, 4, "party", None, [_W4]), ("p8", 5, 20, 4, "party", None, [_W4]),
+            ("ca3", 41, 40, 1, "party", "a", "crowd"),
             ("cd1", 19, 2, 1, "party", "d", "crowd"), ("cd2", 41, 2, 1, "party", "d", "crowd"), ("cd3", 19, 39, 1, "party", "d", "crowd"),
         ], paths=[("pe", "p3", 3), ("pe", "p5", 3), ("pe", "p4", 3), ("p1", "p2", 3), ("p2", "p3", 3),
                   ("p3", "p4", 3), ("p4", "p5", 3), ("p5", "p6", 3), ("p6", "p7", 3), ("p7", "p8", 3), ("p8", "p1", 3)]),
@@ -493,7 +494,7 @@ MARSH = dict(
             ("b0", 47, 10, 2, "calm", "b", [_HT1]), ("b1", 48, 18, 3, "calm", "b", [_RS2]), ("qb", 49, 31, 3, "calm", "b", "rest"),
             ("b2", 46, 42, 3, "middle", "b", [_RS2]),
             ("cn", 26, 15, 3, "middle", "c", "rest"), ("c1", 26, 27, 3, "middle", "c", [_RS2]), ("cs", 26, 39, 2, "middle", "c", "rest"),
-            ("dq", 26, 45, 2, "deep", "d", "rest"), ("d1", 12, 46, 2, "deep", "d", [_RS2, _RS1]), ("d2", 40, 46, 2, "deep", "d", [_RS2, _RS1]),
+            ("dq", 26, 45, 2, "deep", "d", "rest"), ("d1", 12, 46, 2, "deep", "d", [_RS2, (("Mossback Snapper", 1),)]), ("d2", 40, 46, 2, "deep", "d", [_RS2, _RS1]),
             ("ca1", 4, 25, 1, "calm", "a", "crowd"), ("ca2", 9, 8, 1, "calm", "a", "crowd"), ("ca3", 9, 43, 1, "middle", "a", "crowd"),
             ("cb1", 48, 25, 1, "calm", "b", "crowd"), ("cb2", 43, 8, 1, "calm", "b", "crowd"), ("cb3", 43, 43, 1, "middle", "b", "crowd"),
             ("cc1", 21, 15, 1, "middle", "c", "crowd"), ("cc2", 31, 15, 1, "middle", "c", "crowd"), ("cc3", 22, 40, 1, "middle", "c", "crowd"),
@@ -518,7 +519,7 @@ THORNS = dict(
             ("a1", 40, 4, 3, "calm", "a", [_T1]), ("qa", 30, 5, 3, "calm", "a", "rest"), ("a2", 17, 4, 3, "deep", "a", [_T2]),
             ("b1", 40, 36, 3, "calm", "b", [_T1]), ("qb", 30, 35, 3, "calm", "b", "rest"), ("b2", 17, 36, 3, "deep", "b", [_T2]),
             ("w0", 3, 20, 3, "deep", "d", "rest"),
-            ("ce", 42, 20, 3, "calm", "c", "rest"), ("c1", 27, 20, 4, "middle", "c", [_T1]),
+            ("ce", 42, 20, 3, "calm", "c", "rest"), ("c1", 27, 20, 4, "middle", "c", [(("Blackthorn", 1),)]),
             ("ms", 48, 26, 2, "calm", None, "rest"),
             ("ca1", 47, 3, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"), ("ca3", 9, 6, 1, "deep", "a", "crowd"),
             ("cb1", 47, 37, 1, "calm", "b", "crowd"), ("cb2", 24, 37, 1, "deep", "b", "crowd"), ("cb3", 9, 34, 1, "deep", "b", "crowd"),
@@ -556,8 +557,8 @@ SHARDS = dict(
         ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "s0", 4), ("s0", "b2", 4),
                   ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "hub", 4), ("b2", "rf", 3)]),
         6: dict(name="The Terraces", box=(30, 8, 21, 37), clearings=[
-            ("kl", 34, 39, 3, "middle", "c", "rest"), ("k1", 41, 29, 3, "middle", "c", "rest"), ("kq", 46, 19, 3, "middle", "c", "rest"),
-            ("k2", 38, 12, 3, "deep", "c", [_FS2, _FS1]),
+            ("kl", 34, 39, 3, "middle", "c", "rest"), ("k1", 41, 29, 3, "middle", "c", "rest"), ("kq", 46, 19, 3, "deep", "c", "rest"),
+            ("k2", 38, 12, 3, "deep", "c", [_FS2, (("Prism Shardling", 1),)]),
             ("kc1", 45, 30, 1, "middle", "c", "crowd"), ("kc2", 35, 20, 1, "deep", "c", "crowd"), ("kc3", 47, 11, 1, "deep", "c", "crowd"),
         ], paths=[("kl", "k1", 3), ("k1", "kq", 3), ("kq", "k2", 3)]),
         8: dict(name="The Shard Grotto", party=True, box=(0, 8, 52, 50), clearings=[

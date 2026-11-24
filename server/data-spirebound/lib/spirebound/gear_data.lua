@@ -124,6 +124,7 @@ SpireGearData.tokenNames = {
 }
 SpireGearData.shardMonsters = {
 	["Bandit Captain"] = { rough = true, cut = true, flawless = true },
+	["Blackthorn"] = { rough = true, cut = true, flawless = true },
 	["Bristle Boar"] = { rough = true },
 	["Burrow Mole"] = { rough = true },
 	["Field Rat"] = { rough = true },
@@ -132,6 +133,10 @@ SpireGearData.shardMonsters = {
 	["Hopper Toad"] = { rough = true },
 	["Meadow Wasp"] = { rough = true },
 	["Meadow Wolf"] = { rough = true, cut = true },
+	["Moonhowl"] = { rough = true, cut = true, flawless = true },
+	["Mossback Snapper"] = { rough = true, cut = true, flawless = true },
+	["Old Bristleback"] = { rough = true, cut = true, flawless = true },
+	["Prism Shardling"] = { rough = true, cut = true, flawless = true },
 	["Reed Snapper"] = { rough = true, cut = true },
 	["Road Bandit"] = { rough = true, cut = true },
 	["Ruin Archer"] = { rough = true, cut = true },

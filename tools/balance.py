@@ -53,6 +53,9 @@ HABITS = {
     "Thornsnap": ("sentry", 1.3), "Field Shardling": ("pair", 1.0), "Road Bandit": ("sentry", 1.0),
     "Bandit Captain": ("sentry", 2.5), "Ruin Sentinel": ("sentry", 1.3), "Ruin Archer": ("sentry", 1.0),
     "Stonehorn Ram": ("pack", 2.0),
+    # Floor 1 elites (FLOOR1_REVIEW.md F1-11): alone, rare, each counts for about two and a half
+    "Old Bristleback": ("loner", 2.5), "Moonhowl": ("loner", 2.5), "Mossback Snapper": ("loner", 2.5),
+    "Blackthorn": ("loner", 2.5), "Prism Shardling": ("loner", 2.5),
 }
 # Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}

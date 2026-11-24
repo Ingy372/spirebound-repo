@@ -88,7 +88,7 @@ SpireWilds = { grounds = {
 	{ id = "wolf_copse", title = "Wolf Copse", type = "mixed", want = 16, guarded = false, respawn = 140, lo = 12, hi = 18, x1 = 1028, y1 = 1262, x2 = 1087, y2 = 1301, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1078, y = 1266, z = 7, group = { { "Meadow Wolf", 2 } } },
 		{ n = 2, loop = "a", x = 1052, y = 1264, z = 7, group = { { "Meadow Wolf", 2 } } },
-		{ n = 3, loop = "a", x = 1044, y = 1272, z = 7, group = { { "Meadow Wolf", 2 } } },
+		{ n = 3, loop = "a", x = 1069, y = 1302, z = 8, group = { { "Meadow Wolf", 2 } } },
 		{ n = 4, loop = "b", x = 1078, y = 1298, z = 7, group = { { "Meadow Wolf", 2 } } },
 		{ n = 5, loop = "b", x = 1052, y = 1298, z = 7, group = { { "Meadow Wolf", 2 } } },
 		{ n = 6, loop = "b", x = 1044, y = 1292, z = 7, group = { { "Meadow Wolf", 2 } } },
@@ -178,6 +178,7 @@ SpireWilds = { grounds = {
 	{ id = "old_quarry", x1 = 1255, y1 = 1131, x2 = 1290, y2 = 1156, z = 8, exit = Position(1273, 1143, 7) },
 }, weights = {
 	["Bandit Captain"] = 2.5,
+	["Blackthorn"] = 2.5,
 	["Bristle Boar"] = 1.5,
 	["Burrow Mole"] = 1.0,
 	["Field Rat"] = 0.4,
@@ -186,6 +187,10 @@ SpireWilds = { grounds = {
 	["Hopper Toad"] = 1.0,
 	["Meadow Wasp"] = 0.5,
 	["Meadow Wolf"] = 1.0,
+	["Moonhowl"] = 2.5,
+	["Mossback Snapper"] = 2.5,
+	["Old Bristleback"] = 2.5,
+	["Prism Shardling"] = 2.5,
 	["Reed Snapper"] = 1.0,
 	["Road Bandit"] = 1.0,
 	["Ruin Archer"] = 1.0,

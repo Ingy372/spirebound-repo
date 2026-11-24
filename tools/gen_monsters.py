@@ -72,6 +72,27 @@ MONSTERS = {
     "Ruin Archer": dict(desc="a ruin archer", look=(129, 79, 79, 79, 79, 0), corpse=18138, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
+    # ---------------------------------------------------------------- Floor 1 elites (FLOOR1_REVIEW.md F1-11): one rare,
+    # glowing elite per rebuilt ground, on the ground's own monster sprite (no new art), every 15 minutes (ELITE_RESPAWN)
+    "Old Bristleback": dict(desc="old bristleback", look=(119,), corpse=6046, hp=600, xp=220, speed=115, race="blood",
+                            attacks=[("melee", 0, -60), ("charge", 0, -80, 4)], armor=14, defense=14, light=(3, 198),
+                            loot=[(GOLD, 100000, 60), (PLAT, 25000, 1), (3577, 60000, 3), (903, 50000, 2), (266, 30000, 2)],
+                            voices=["HRRRNK!"]),
+    "Moonhowl": dict(desc="moonhowl", look=(27,), corpse=5968, hp=520, xp=240, speed=130, race="blood",
+                     attacks=[("melee", 0, -55), ("howl", 0, -40, 2)], armor=10, defense=12, light=(3, 215),
+                     loot=[(GOLD, 100000, 50), (PLAT, 25000, 1), (5897, 60000, 3), (266, 30000, 2)], voices=["AWOOOOOO!"]),
+    "Mossback Snapper": dict(desc="a mossback snapper", look=(112,), corpse=6077, hp=900, xp=250, speed=95, race="blood",
+                             attacks=[("melee", 0, -70), ("slow", -300, 3000, 1, "CONST_ME_WATERSPLASH")], armor=22,
+                             defense=22, light=(3, 210),
+                             loot=[(GOLD, 100000, 90), (PLAT, 40000, 2), (3582, 50000, 2), (5899, 40000, 2), (236, 25000, 1)]),
+    "Blackthorn": dict(desc="blackthorn", look=(28,), corpse=3998, hp=840, xp=330, speed=95, race="venom",
+                       attacks=[("melee", 0, -65, None, "poison"), ("slow", -200, 3000, 3, "CONST_ME_CARNIPHILA")],
+                       armor=16, defense=16, light=(3, 30), elements={"earth": 100, "fire": -15},
+                       loot=[(GOLD, 100000, 80), (PLAT, 30000, 1), (5879, 60000, 3), (236, 25000, 1)]),
+    "Prism Shardling": dict(desc="a prism shardling", look=(122,), corpse=6053, hp=720, xp=340, speed=95, race="undead",
+                            attacks=[("melee", 0, -40), ("energy", 0, -80, 4)], armor=18, defense=18, light=(4, 143),
+                            elements={"energy": 50, "earth": -10},
+                            loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=20996, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),
@@ -195,7 +216,7 @@ def render(name, d):
          f"\trewardBoss = false, illusionable = false, canPushItems = {str(boss).lower()}, canPushCreatures = {str(boss).lower()},",
          f"\tstaticAttackChance = 90, targetDistance = {d.get('dist', 1)}, runHealth = {d.get('run', 0)}, healthHidden = false, isBlockable = false,",
          "\tcanWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,",
-         "}", "", "monster.light = { level = 0, color = 0 }", ""]
+         "}", "", "monster.light = { level = %d, color = %d }" % d.get("light", (0, 0)), ""]
     v = d.get("voices", [])
     L.append("monster.voices = {")
     L.append(f"\tinterval = 5000, chance = {10 if v else 0},")

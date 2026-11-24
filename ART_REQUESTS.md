@@ -114,3 +114,9 @@ Moving sprites (the mini-bosses) are made by Claude with the Blender pipeline; t
 | [ ] | `mon_drowned_warden_*` (pipeline, outfit rules) | 32×32, 12 | Hidden mini-boss under the ruined well: a waterlogged stone knight, moss and weed hanging from rusted plate, green light in the visor. |
 | [ ] | `item_hearth_shard_rough.png`, `_cut.png`, `_flawless.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small warm-orange crystal shard; rough = jagged dull chip, cut = clean faceted shard, flawless = glowing gem with a soft halo." |
 | [ ] | `item_mastery_respec_scroll.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a rolled parchment tied with a silver ribbon and a blue wax seal showing a branching tree." |
+
+## Batch 7 (2026-11-24): Floor 1 elites (no art needed yet)
+Five rare elites now borrow their ground's monster sprite and glow (a coloured light): Old Bristleback (boar), Moonhowl
+(wolf), Mossback Snapper, Blackthorn (thornsnap), Prism Shardling. Later, each could get a variant of its base creature
+from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal) so players spot
+them at a glance. Not needed for the alpha.
