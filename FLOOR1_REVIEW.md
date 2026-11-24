@@ -229,7 +229,10 @@ times Thornsnap Hollow would have supplied 129 an hour against the 252 expected)
 Floor 1 after the overnight rebuilds (tools/hunt_check.py): every ground passes the calm rules except Bandit Road and
 Old Quarry (max pull 19.5 and 22.1 against 6, no quiet tiles; their party caves 27 against 12).
 
-**F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
+**F1-31 Toad Pond is too small** (Jay's playtest). A likely cause worth checking first: Jay's Ranger was level 12 and Toad
+Pond is a level 3-7 ground. At 9-15 the game sends players to Boar Meadow, which swarmed at the gate (two Pilots died
+there tonight), so the real problem may have been "nowhere good to go next" rather than Toad Pond's size. Ask Jay to
+try the rebuilt Boar Meadow and Wolf Copse at his level before enlarging Toad Pond. Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
 crowd system's extra groups switching on with 3+ players.
 
