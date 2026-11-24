@@ -114,7 +114,7 @@ Jay: "im feeling overhelmed when i walk into a zone with nonstop monsters floodi
 - [ ] **S4 Group grounds (3 to 4 players) and the large-group ground (4 to 8, the Old Watchtower)**: mixed packs with a front-liner, a ranged one and a caster; party size 8 in the game too (`party_rules.lua` still says 6); a test with several Pilot characters in one party.
 - [ ] **S5 Packs stay together and follow their leader in the game** (a pack that splits up is just three singles); test on the Meadow Wolf and Grey Alpha.
 - [ ] **S6 The floor recipe for Floors 2 to 10**: each floor's grounds get types and habits by the recipe, plus the floor's own twist, in `maps/floors.py`; the generator and checker obey them. (Takes over H12.)
-- [ ] **H7 Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow.** *(After S1 and S2; built with habits and ground types.)*
+- [ ] **H7 Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow.** *(After S1 and S2; built with habits and ground types.)* *(2026-11-23 overnight: Boar Meadow rebuilt as a designed ground, checker and walk test pass; walk it in the client after a restart. Still to do: Wolf Copse, Reedmarsh, Thornsnap Hollow, which measure 4-5x over the danger budget.)*
 - [ ] **H8 Shard Fields, the Bandit Road, the Old Quarry, the Old Watchtower's groups.** *(After S1 and S2; the group parts are S4.)*
 - [ ] **H9 Roads, trails, signposts, zones on every level, secrets, forest pass.**
 - [ ] **H10 Crowd pockets, the weekend-bonus change, cavebot rule, respawn times and the economy re-check.**
