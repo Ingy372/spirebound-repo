@@ -45,6 +45,13 @@ GROUNDS = [
 ]
 
 
+# Arcanist and Mystic (2026-11-23): Boar Meadow skipped (two Pilots died at its gate on the old map), the bosses before
+# the old loop grounds, which are 3-5x over the danger budget and likely to end the run
+# (Wolf Copse and Reedmarsh were rebuilt the same night: the autopilot plans on the repo's map, so they are left out
+# until the server runs the new map.)
+_SAFE_FIRST = ["starter_west", "starter_east", "starter_south", "wasp_fields", "burrow_hills", "BOSSES",
+               "thornsnap_hollow", "shard_fields", "bandit_road", "old_quarry"]
+ORDERS = {"arcanist": _SAFE_FIRST, "mystic": _SAFE_FIRST}
 REBUILT = {"starter_west", "starter_east", "starter_south", "wasp_fields", "burrow_hills"}  # the rest still name corners
 
 
@@ -63,7 +70,7 @@ def hunt_ground(gid, title, level):
     ]
 
 
-def route(key, char, word, wid):
+def route(key, char, word, wid, order=None):
     kit = []
     for iid, n, slot in KIT[key] + COMMON:
         kit.append({"do": "say", "text": f"/pilot give {iid}, {n}", "note": "Arrival"})
@@ -93,8 +100,12 @@ def route(key, char, word, wid):
         {"do": "wait", "seconds": 2},
         {"do": "npc", "text": "bye"},
     ]
-    for i, (gid, title, level) in enumerate(GROUNDS):
-        if level >= 10 and GROUNDS[i - 1][2] < 10:  # Captain Dorrow's weapon at level 10, before the first level 10+ ground
+    grounds = GROUNDS if order is None else [g for k in order for g in GROUNDS if g[0] == k]
+    boss_steps = boss_part()
+    for i, (gid, title, level) in enumerate(grounds):
+        if gid == "BOSSES":
+            continue
+        if level >= 10 and (i == 0 or grounds[i - 1][2] < 10):  # Captain Dorrow's weapon at level 10, before the first level 10+ ground
             s += [
                 {"do": "say", "text": "/pilot level 10", "note": "Captain Dorrow (level 10)"},
                 {"do": "jump", "to": [1235, 1246, 7], "note": "Captain Dorrow (level 10)"},
@@ -113,7 +124,22 @@ def route(key, char, word, wid):
                 {"do": "shot", "name": "upgrade_tab_l10"},
             ]
         s += hunt_ground(gid, title, level)
+        if order is not None and gid == order[order.index("BOSSES") - 1]:
+            s += boss_steps                       # the bosses before the risky old grounds (a death ends a run)
+    if order is None:
+        s += boss_steps
     s += [
+        {"do": "say", "text": "!upgrade", "note": "End"},
+        {"do": "wait", "seconds": 2},
+        {"do": "shot", "name": "upgrade_tab_end"},
+        {"do": "say", "text": "/pilot logout", "note": "End"},
+    ]
+    return {"name": f"playthrough_{key}", "character": char, "timeout": 3300,
+            "about": f"A whole Floor 1 run as {char} (tools/make_playthrough_routes.py).", "steps": s}
+
+
+def boss_part():
+    return [
         {"do": "say", "text": "/pilot level 24", "note": "Gate Hound (level 24)"},
         {"do": "jump", "to": [1232, 1084, 7], "note": "Gate Hound (level 24)"},
         {"do": "heal"},
@@ -130,16 +156,10 @@ def route(key, char, word, wid):
         {"do": "shot", "name": "axe_lord_room"},
         {"do": "hunt", "seconds": 90, "radius": 9},
         {"do": "shot", "name": "axe_lord_after"},
-        {"do": "say", "text": "!upgrade", "note": "End"},
-        {"do": "wait", "seconds": 2},
-        {"do": "shot", "name": "upgrade_tab_end"},
-        {"do": "say", "text": "/pilot logout", "note": "End"},
     ]
-    return {"name": f"playthrough_{key}", "character": char, "timeout": 3300,
-            "about": f"A whole Floor 1 run as {char} (tools/make_playthrough_routes.py).", "steps": s}
 
 
 if __name__ == "__main__":
     for key, (char, word, wid) in CLASSES.items():
-        (OUT / f"playthrough_{key}.json").write_text(json.dumps(route(key, char, word, wid), indent=1) + "\n", encoding="utf-8")
+        (OUT / f"playthrough_{key}.json").write_text(json.dumps(route(key, char, word, wid, ORDERS.get(key)), indent=1) + "\n", encoding="utf-8")
     print(f"wrote {len(CLASSES)} playthrough routes")

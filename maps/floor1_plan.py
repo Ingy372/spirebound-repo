@@ -83,7 +83,7 @@ CAMPS = [
          note="Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool."),
     dict(id="thornsnap_hollow", type="class", cls="Mystic", title="Thornsnap Hollow", x=158, y=132, w=60, h=40, gate="e", size="std", zone="open",
          levels=(14, 20), role="xp", wall="thorns", core="thorns", trail="dirt", decor="thorns",
-         groups=same(5, "Thornsnap") + same(1, "Bristle Boar"), respawn=195,
+         groups=same(5, "Thornsnap") + same(1, "Bristle Boar"), respawn=195, design="THORNS",
          den="The Rootcellar", den_groups=same(8, "Thornsnap", 4),
          note="Poison bites; bring antidotes or healing. Good experience for the effort."),
     dict(id="shard_fields", type="mixed", title="Shard Fields", x=340, y=300, w=52, h=48, gate="n", size="std", zone="open",
@@ -389,7 +389,7 @@ WASPS = dict(
             ("b1", 47, 43, 3, "calm", "b", [_WS]), ("b2", 42, 45, 3, "calm", "b", [_WT]), ("q2", 28, 44, 3, "calm", "b", "rest"),
             ("b3", 14, 45, 3, "middle", "b", [_W4]), ("b4", 6, 40, 3, "middle", "b", [_WP]),
             ("cw", 4, 25, 3, "middle", None, "rest"), ("w0", 54, 24, 3, "calm", None, "rest"),
-            ("ca1", 56, 3, 1, "calm", "a", "crowd"), ("ca2", 34, 2, 1, "calm", "a", "crowd"), ("ca3", 10, 3, 1, "middle", "a", "crowd"),
+            ("ca1", 56, 3, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"), ("ca3", 10, 3, 1, "middle", "a", "crowd"),
             ("cb1", 56, 47, 1, "calm", "b", "crowd"), ("cb2", 34, 47, 1, "calm", "b", "crowd"), ("cb3", 10, 47, 1, "middle", "b", "crowd"),
         ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "a2", 4), ("a2", "q1", 4), ("q1", "a3", 4), ("a3", "a4", 4), ("a4", "cw", 4),
                   ("cw", "b4", 4), ("b4", "b3", 4), ("b3", "q2", 4), ("q2", "b2", 4), ("b2", "b1", 4), ("b1", "s0", 4), ("s0", "hub", 4), ("hub", "w0", 4)]),
@@ -504,7 +504,41 @@ MARSH = dict(
     },
     links=[],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH}
+# Thornsnap Hollow (H7, 2026-11-23 overnight): the Mystic's ground. A north rim and a south rim round a ring of
+# brambles, with a gap into the hollow's middle (route c). Thornsnaps are sentries: rooted at bends, in ones and twos.
+# The Rootcellar (z 8) is the party cave: eight root chambers of four, down the stair by the gate.
+_T1, _T2, _T4 = (("Thornsnap", 1),), (("Thornsnap", 2),), (("Thornsnap", 4),)
+THORNS = dict(
+    gate=(59, 20), crowd_group=[("Thornsnap", 1)],
+    routes={"a": "a1", "b": "b1", "c": "ce", "d": "w0"},
+    route_names={"a": "The North Rim", "b": "The South Rim", "c": "The Bramble Ring", "d": "The Rootcellar"},
+    levels={
+        7: dict(name="Thornsnap Hollow", box=(0, 0, 60, 40), clearings=[
+            ("hub", 54, 20, 4, "approach", None, "hub"), ("n0", 48, 9, 3, "calm", None, None), ("s0", 48, 31, 3, "calm", None, None),
+            ("a1", 40, 4, 3, "calm", "a", [_T1]), ("qa", 30, 5, 3, "calm", "a", "rest"), ("a2", 17, 4, 3, "deep", "a", [_T2]),
+            ("b1", 40, 36, 3, "calm", "b", [_T1]), ("qb", 30, 35, 3, "calm", "b", "rest"), ("b2", 17, 36, 3, "deep", "b", [_T2]),
+            ("w0", 3, 20, 3, "deep", "d", "rest"),
+            ("ce", 42, 20, 3, "calm", "c", "rest"), ("c1", 27, 20, 4, "middle", "c", [_T1]),
+            ("ms", 48, 26, 2, "calm", None, "rest"),
+            ("ca1", 47, 3, 1, "calm", "a", "crowd"), ("ca2", 24, 2, 1, "deep", "a", "crowd"), ("ca3", 9, 6, 1, "deep", "a", "crowd"),
+            ("cb1", 47, 37, 1, "calm", "b", "crowd"), ("cb2", 24, 37, 1, "deep", "b", "crowd"), ("cb3", 9, 34, 1, "deep", "b", "crowd"),
+        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 3), ("qa", "a2", 3), ("a2", "w0", 3), ("w0", "b2", 3),
+                  ("b2", "qb", 3), ("qb", "b1", 3), ("b1", "s0", 4), ("s0", "hub", 4), ("hub", "ce", 3), ("ce", "c1", 2),
+                  ("hub", "ms", 3)]),
+        8: dict(name="The Rootcellar", party=True, box=(0, -10, 60, 49), clearings=[
+            ("pe", 48, 26, 4, "party", None, "rest"),
+            ("p1", 8, -2, 4, "party", None, [_T4]), ("p2", 30, -5, 4, "party", None, [_T4]),
+            ("p3", 52, -2, 4, "party", None, [_T4]), ("p4", 55, 12, 4, "party", None, [_T4]),
+            ("p5", 52, 34, 4, "party", None, [_T4]), ("p6", 30, 34, 4, "party", None, [_T4]),
+            ("p7", 8, 33, 4, "party", None, [_T4]), ("p8", 5, 15, 4, "party", None, [_T4]),
+            ("cd1", 19, -3, 1, "party", "d", "crowd"), ("cd2", 41, -3, 1, "party", "d", "crowd"), ("cd3", 19, 34, 1, "party", "d", "crowd"),
+            ("cc1", 5, 6, 1, "party", "c", "crowd"), ("cc2", 41, 34, 1, "party", "c", "crowd"), ("cc3", 5, 25, 1, "party", "c", "crowd"),
+        ], paths=[("pe", "p4", 4), ("pe", "p5", 4), ("p1", "p2", 4), ("p2", "p3", 4), ("p3", "p4", 4),
+                  ("p5", "p6", 4), ("p6", "p7", 4), ("p7", "p8", 4), ("p8", "p1", 4)]),
+    },
+    links=[("stairs", 48, 26, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

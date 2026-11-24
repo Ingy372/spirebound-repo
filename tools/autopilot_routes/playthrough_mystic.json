@@ -400,50 +400,6 @@
   },
   {
    "do": "say",
-   "text": "/pilot level 12"
-  },
-  {
-   "do": "jump",
-   "to": "gate_boar_meadow",
-   "note": "Boar Meadow (level 12): gate"
-  },
-  {
-   "do": "heal"
-  },
-  {
-   "do": "shot",
-   "name": "boar_meadow_gate"
-  },
-  {
-   "do": "walk",
-   "to": "loop_boar_meadow_nw",
-   "fight": true,
-   "timeout": 60,
-   "note": "Boar Meadow (level 12): route A"
-  },
-  {
-   "do": "hunt",
-   "seconds": 75,
-   "radius": 7
-  },
-  {
-   "do": "shot",
-   "name": "boar_meadow_a"
-  },
-  {
-   "do": "walk",
-   "to": "loop_boar_meadow_se",
-   "fight": true,
-   "timeout": 60,
-   "note": "Boar Meadow (level 12): route B"
-  },
-  {
-   "do": "hunt",
-   "seconds": 75,
-   "radius": 7
-  },
-  {
-   "do": "say",
    "text": "/pilot level 13"
   },
   {
@@ -488,91 +444,77 @@
   },
   {
    "do": "say",
-   "text": "/pilot level 15"
+   "text": "/pilot level 24",
+   "note": "Gate Hound (level 24)"
   },
   {
    "do": "jump",
-   "to": "gate_wolf_copse",
-   "note": "Wolf Copse (level 15): gate"
+   "to": [
+    1232,
+    1084,
+    7
+   ],
+   "note": "Gate Hound (level 24)"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 9
+  },
+  {
+   "do": "shot",
+   "name": "gate_hound"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 32",
+   "note": "Old Watchtower (level 32)"
+  },
+  {
+   "do": "jump",
+   "to": "apex_watchtower",
+   "note": "Old Watchtower (level 32)"
   },
   {
    "do": "heal"
   },
   {
    "do": "shot",
-   "name": "wolf_copse_gate"
-  },
-  {
-   "do": "walk",
-   "to": "loop_wolf_copse_nw",
-   "fight": true,
-   "timeout": 60,
-   "note": "Wolf Copse (level 15): route A"
+   "name": "watchtower"
   },
   {
    "do": "hunt",
-   "seconds": 75,
-   "radius": 7
-  },
-  {
-   "do": "shot",
-   "name": "wolf_copse_a"
-  },
-  {
-   "do": "walk",
-   "to": "loop_wolf_copse_se",
-   "fight": true,
-   "timeout": 60,
-   "note": "Wolf Copse (level 15): route B"
-  },
-  {
-   "do": "hunt",
-   "seconds": 75,
+   "seconds": 90,
    "radius": 7
   },
   {
    "do": "say",
-   "text": "/pilot level 16"
+   "text": "/pilot level 30",
+   "note": "Axe-Lord (level 30)"
   },
   {
    "do": "jump",
-   "to": "gate_reed_marsh",
-   "note": "Reedmarsh (level 16): gate"
+   "to": "boss_room_floor1",
+   "note": "Axe-Lord (level 30)"
   },
   {
    "do": "heal"
   },
   {
    "do": "shot",
-   "name": "reed_marsh_gate"
-  },
-  {
-   "do": "walk",
-   "to": "loop_reed_marsh_nw",
-   "fight": true,
-   "timeout": 60,
-   "note": "Reedmarsh (level 16): route A"
+   "name": "axe_lord_room"
   },
   {
    "do": "hunt",
-   "seconds": 75,
-   "radius": 7
+   "seconds": 90,
+   "radius": 9
   },
   {
    "do": "shot",
-   "name": "reed_marsh_a"
-  },
-  {
-   "do": "walk",
-   "to": "loop_reed_marsh_se",
-   "fight": true,
-   "timeout": 60,
-   "note": "Reedmarsh (level 16): route B"
-  },
-  {
-   "do": "hunt",
-   "seconds": 75,
-   "radius": 7
+   "name": "axe_lord_after"
   },
   {
    "do": "say",
@@ -749,80 +691,6 @@
    "do": "hunt",
    "seconds": 75,
    "radius": 7
-  },
-  {
-   "do": "say",
-   "text": "/pilot level 24",
-   "note": "Gate Hound (level 24)"
-  },
-  {
-   "do": "jump",
-   "to": [
-    1232,
-    1084,
-    7
-   ],
-   "note": "Gate Hound (level 24)"
-  },
-  {
-   "do": "heal"
-  },
-  {
-   "do": "hunt",
-   "seconds": 90,
-   "radius": 9
-  },
-  {
-   "do": "shot",
-   "name": "gate_hound"
-  },
-  {
-   "do": "say",
-   "text": "/pilot level 32",
-   "note": "Old Watchtower (level 32)"
-  },
-  {
-   "do": "jump",
-   "to": "apex_watchtower",
-   "note": "Old Watchtower (level 32)"
-  },
-  {
-   "do": "heal"
-  },
-  {
-   "do": "shot",
-   "name": "watchtower"
-  },
-  {
-   "do": "hunt",
-   "seconds": 90,
-   "radius": 7
-  },
-  {
-   "do": "say",
-   "text": "/pilot level 30",
-   "note": "Axe-Lord (level 30)"
-  },
-  {
-   "do": "jump",
-   "to": "boss_room_floor1",
-   "note": "Axe-Lord (level 30)"
-  },
-  {
-   "do": "heal"
-  },
-  {
-   "do": "shot",
-   "name": "axe_lord_room"
-  },
-  {
-   "do": "hunt",
-   "seconds": 90,
-   "radius": 9
-  },
-  {
-   "do": "shot",
-   "name": "axe_lord_after"
   },
   {
    "do": "say",
