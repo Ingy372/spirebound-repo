@@ -379,40 +379,40 @@
 		<monster name="Meadow Wasp" x="0" y="1" z="8" spawntime="55" />
 	</monster>
 	<monster centerx="1143" centery="1358" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1144" centery="1380" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1175" centery="1358" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1174" centery="1380" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1159" centery="1391" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1159" centery="1353" centerz="6" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="6" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="6" spawntime="50" />
 	</monster>
 	<monster centerx="1138" centery="1346" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1148" centery="1346" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1175" centery="1378" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1175" centery="1388" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1155" centery="1396" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1145" centery="1396" centerz="8" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="95" />
+		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="50" />
 	</monster>
 	<monster centerx="1254" centery="1179" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="108" />
@@ -591,30 +591,30 @@
 		<monster name="Burrow Mole" x="0" y="1" z="9" spawntime="80" />
 	</monster>
 	<monster centerx="1066" centery="1267" centerz="7" radius="2">
-		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="95" />
+		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="70" />
 	</monster>
 	<monster centerx="1038" centery="1267" centerz="7" radius="2">
-		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="95" />
+		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="70" />
 	</monster>
 	<monster centerx="1066" centery="1297" centerz="7" radius="2">
-		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="95" />
+		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="70" />
 	</monster>
 	<monster centerx="1038" centery="1297" centerz="7" radius="2">
-		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="95" />
+		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="70" />
 	</monster>
 	<monster centerx="1039" centery="1281" centerz="6" radius="2">
 		<monster name="Grey Alpha" x="0" y="0" z="6" spawntime="450" />
-		<monster name="Meadow Wolf" x="-1" y="0" z="6" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="-1" z="6" spawntime="95" />
-		<monster name="Meadow Wolf" x="0" y="1" z="6" spawntime="95" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="6" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="6" spawntime="70" />
+		<monster name="Meadow Wolf" x="0" y="1" z="6" spawntime="70" />
 	</monster>
 	<monster centerx="1036" centery="1265" centerz="8" radius="2">
 		<monster name="Meadow Wolf" x="0" y="0" z="8" spawntime="80" />
@@ -665,61 +665,61 @@
 		<monster name="Meadow Wolf" x="0" y="1" z="8" spawntime="80" />
 	</monster>
 	<monster centerx="1049" centery="1332" centerz="7" radius="2">
-		<monster name="Hopper Toad" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Hopper Toad" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1048" centery="1340" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1050" centery="1364" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1091" centery="1332" centerz="7" radius="2">
-		<monster name="Hopper Toad" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Hopper Toad" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1092" centery="1340" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1090" centery="1364" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1070" centery="1349" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1056" centery="1368" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1059" centery="1368" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1084" centery="1368" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="108" />
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1081" centery="1368" centerz="7" radius="2">
-		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Reed Snapper" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1198" centery="1136" centerz="7" radius="2">
-		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="98" />
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="35" />
 	</monster>
 	<monster centerx="1175" centery="1136" centerz="7" radius="2">
-		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="98" />
-		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="98" />
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="35" />
+		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="35" />
 	</monster>
 	<monster centerx="1198" centery="1168" centerz="7" radius="2">
-		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="98" />
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="35" />
 	</monster>
 	<monster centerx="1175" centery="1168" centerz="7" radius="2">
-		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="98" />
-		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="98" />
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="35" />
+		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="35" />
 	</monster>
 	<monster centerx="1185" centery="1152" centerz="7" radius="2">
-		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="98" />
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="35" />
 	</monster>
 	<monster centerx="1166" centery="1130" centerz="8" radius="2">
 		<monster name="Thornsnap" x="0" y="0" z="8" spawntime="80" />
@@ -770,27 +770,27 @@
 		<monster name="Thornsnap" x="0" y="1" z="8" spawntime="80" />
 	</monster>
 	<monster centerx="1343" centery="1314" centerz="7" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="90" />
-		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1344" centery="1340" centerz="7" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="90" />
-		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1366" centery="1326" centerz="7" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="90" />
-		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1364" centery="1342" centerz="7" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="90" />
-		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="50" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="50" />
 	</monster>
 	<monster centerx="1378" centery="1312" centerz="6" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="6" spawntime="90" />
-		<monster name="Field Shardling" x="-1" y="0" z="6" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="6" spawntime="50" />
+		<monster name="Field Shardling" x="-1" y="0" z="6" spawntime="50" />
 	</monster>
 	<monster centerx="1381" centery="1312" centerz="6" radius="2">
-		<monster name="Field Shardling" x="0" y="0" z="6" spawntime="90" />
+		<monster name="Field Shardling" x="0" y="0" z="6" spawntime="50" />
 	</monster>
 	<monster centerx="1345" centery="1314" centerz="8" radius="2">
 		<monster name="Field Shardling" x="0" y="0" z="8" spawntime="80" />

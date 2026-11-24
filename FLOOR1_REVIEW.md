@@ -207,6 +207,17 @@ two lines of shardling pairs, the Terraces up the east side by a ramp, the Shard
 Quarry are the last grounds over budget (19-22 against 6); both need buildings (ruined lookouts, a built mine), so they
 are the hardest two.
 
+**F1-33 Calm grounds hold far fewer monsters, so respawn has to carry the kill rate.** The rebuilt grounds keep 7-16
+monsters on their solo levels (the old loop grounds had 72). With the old respawn times (180-215 s) a ground refills
+only 130-300 an hour, while the economy model expects one hunter to kill 264-300: two hunters would starve and
+levelling would slow, the opposite of Jay's note. **Done overnight:** respawn on the five grounds rebuilt tonight is
+now 70-140 s (Boar Meadow 100, Wolf Copse 140, Reedmarsh 100, Thornsnap Hollow 70, Shard Fields 100), so each refills at
+least ~400 an hour. Still to do: teach `tools/gen_economy.py` to cap kills per hour by a ground's monsters x respawn, so
+the check catches this next time, and watch it in the client (monsters popping up behind you means it is too fast).
+
+Floor 1 after the overnight rebuilds (tools/hunt_check.py): every ground passes the calm rules except Bandit Road and
+Old Quarry (max pull 19.5 and 22.1 against 6, no quiet tiles; their party caves 27 against 12).
+
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
 crowd system's extra groups switching on with 3+ players.
