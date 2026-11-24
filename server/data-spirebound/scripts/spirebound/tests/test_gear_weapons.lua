@@ -126,3 +126,12 @@ SpireTest.add("shards: the pity counter guarantees a shard at three times the ex
 	SpireTest.eq(SpireGear.shardRoll(c, cap - 1, 0.999), false, "just short of the cap: still the dice")
 	SpireTest.eq(SpireGear.shardRoll(c, cap, 0.999), true, "at the cap: guaranteed")
 end)
+
+-- FLOOR1_REVIEW.md F1-41: how far to the next familiarity level, in plain numbers
+SpireTest.add("familiarity: progress to the next level is a percentage", function()
+	local T = SpireGearData.FAMILIARITY_POINTS[1]
+	SpireTest.eq(SpireGear.famProgress(0, 1), 0, "nothing yet")
+	SpireTest.eq(SpireGear.famProgress(T[1] / 2, 1), 50, "half way to level 1")
+	SpireTest.eq(SpireGear.famProgress(T[1], 1), 0, "just reached level 1")
+	SpireTest.eq(SpireGear.famProgress(T[#T] + 5, 1), nil, "maxed: no next level")
+end)

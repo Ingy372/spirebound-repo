@@ -91,6 +91,7 @@ function SpireProgress.credit(player, target, share)
 		local after = SpireGear.state(item).fam
 		if after > before then
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s: familiarity %d/10.", item:getName(), after))
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN) -- seen, not just read (F1-41)
 		end
 	end
 end

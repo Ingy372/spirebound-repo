@@ -38,6 +38,17 @@ function SpireGear.famLevel(points, floor)
 	return lvl
 end
 
+-- Pure: percent of the way to the next familiarity level (0-99), or nil when maxed (FLOOR1_REVIEW.md F1-41)
+function SpireGear.famProgress(points, floor)
+	local T = SpireGearData.FAMILIARITY_POINTS[floor] or SpireGearData.FAMILIARITY_POINTS[1]
+	local lvl = SpireGear.famLevel(points, floor)
+	if lvl >= #T then
+		return nil
+	end
+	local from, to = lvl == 0 and 0 or T[lvl], T[lvl + 1]
+	return math.floor(((points or 0) - from) / (to - from) * 100)
+end
+
 -- Pure: damage multiplier of a weapon state { floor, tier, fam, awakened, shop }
 function SpireGear.power(s)
 	if not s then
@@ -80,6 +91,10 @@ local function describe(item, d, s)
 	local text = string.format("Spirebound %s, Floor %d. Tier %d/%d", name, d.floor, s.tier, SpireGearData.MAX_TIER)
 	if d.kind == "weapon" then
 		text = text .. string.format(", familiarity %d/10: %+d%% damage", s.fam, math.floor((SpireGear.power(s) - 1) * 100 + 0.5))
+		local pct = SpireGear.famProgress(s.famPoints, d.floor)
+		if pct then
+			text = text .. string.format(" (%d%% to the next)", pct)
+		end
 		if s.awakened then
 			text = text .. ". Awakened"
 		end

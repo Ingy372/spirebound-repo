@@ -219,8 +219,9 @@ makes the permanent choice that makes the system exciting. Options: a small "sta
 that previews the two paths and can be swapped freely until Mastery 10; or lower Mastery 10 to ~level 30 so it lands at
 the Axe-Lord.
 
-**F1-41 Familiarity is invisible in play.** It shows only as a chat line. Show it on the weapon's look text and as a
-small bar in the Upgrade tab, with a visible effect at each step (a flash on the character).
+**F1-41 Familiarity is hard to see in play.** (Correction: the look text already showed "familiarity 3/10: +x% damage".)
+**Done 2026-11-23 (overnight):** the look text now adds "(45% to the next)" and each new level flashes green on the
+character. Still to do: a bar in the Upgrade tab.
 
 **F1-42 Shards are rare and silent.** About 1 in 180 kills. When one drops, show a special loot message and an effect
 on the corpse (the "rare drop" moment). Consider a pity counter so no one goes 600 kills without one.
