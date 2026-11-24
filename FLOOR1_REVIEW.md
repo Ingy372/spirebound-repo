@@ -270,7 +270,9 @@ Fishing Frenzy, Wandering Champion), fishing, houses, boards. Missing compared w
   day-7 prize for a cosmetic once shop outfits exist.
 - **F1-61 Daily chests** on quest ends (see F1-20).
 - **F1-62 A weekly goal list** (seven goals, one reward), shown in the Journal.
-- **F1-63 An hourly lottery or "lucky player" broadcast**: cheap to build, makes chat move.
+- **F1-63 An hourly lottery or "lucky player" broadcast**: cheap to build, makes chat move. **Done 2026-11-23
+  (overnight):** every hour one climber online (level 8+, not staff, not last hour's winner) gets 20 gold a level (max
+  5,000) in the bank and a server-wide shout-out (rules tested in game).
 - **F1-64 A bounty on the top player online** (we have the bounty system; tie it to the top-level player every 6 h).
 - **F1-65 Leaderboards on the website and in town** (first kills, Death Game survivors, fish records).
 

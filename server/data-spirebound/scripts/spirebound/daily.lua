@@ -28,3 +28,26 @@ function login.onLogin(player)
 	return true
 end
 login:register()
+
+-- Every hour one climber online (level 8+, not staff, not last hour's winner) gets a little gold and a shout-out.
+local lastLucky
+local lucky = GlobalEvent("SpireLuckyClimber")
+function lucky.onThink(interval)
+	local list = {}
+	for _, p in ipairs(Game.getPlayers()) do
+		table.insert(list, { name = p:getName(), level = p:getLevel(), staff = p:getGroup():getAccess() })
+	end
+	local name = SpireDaily.luckyPick(list, lastLucky, math.random())
+	local p = name and Player(name)
+	if not p then
+		return true
+	end
+	lastLucky = name
+	local gold = SpireDaily.luckyGold(p:getLevel())
+	p:setBankBalance(p:getBankBalance() + gold)
+	p:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW)
+	Game.broadcastMessage(string.format("Lucky climber of the hour: %s! %d gold has been added to their bank.", name, gold), MESSAGE_EVENT_ADVANCE)
+	return true
+end
+lucky:interval(60 * 60 * 1000)
+lucky:register()

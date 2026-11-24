@@ -20,3 +20,23 @@ function SpireDaily.reward(day)
 	end
 	return { gold = 100 * day, potions = 0 }
 end
+
+-- The hourly lucky climber (FLOOR1_REVIEW.md F1-63). list = { { name, level, staff } }, last = last winner's name,
+-- roll in [0, 1). Pure: returns the winner's name or nil.
+SpireDaily.LUCKY_MIN_LEVEL = 8
+function SpireDaily.luckyPick(list, last, roll)
+	local pool = {}
+	for _, p in ipairs(list) do
+		if not p.staff and p.level >= SpireDaily.LUCKY_MIN_LEVEL and p.name ~= last then
+			table.insert(pool, p.name)
+		end
+	end
+	if #pool == 0 then
+		return nil
+	end
+	return pool[math.floor(roll * #pool) + 1]
+end
+
+function SpireDaily.luckyGold(level)
+	return math.min(5000, 20 * level)
+end

@@ -9,3 +9,12 @@ SpireTest.add("daily: the streak grows on consecutive days, resets after a gap, 
 	SpireTest.eq(SpireDaily.reward(7).gold, 1000, "day 7: 1000 gold")
 	SpireTest.eq(SpireDaily.reward(7).potions, 5, "day 7: five health potions")
 end)
+
+-- FLOOR1_REVIEW.md F1-63: an hourly lucky climber (chat moves, nobody is left out for long)
+SpireTest.add("lucky: picks only real climbers, never the same one twice in a row, and pays by level", function()
+	local list = { { name = "A", level = 5, staff = false }, { name = "B", level = 20, staff = false }, { name = "GM", level = 900, staff = true } }
+	SpireTest.eq(SpireDaily.luckyPick(list, nil, 0.0), "B", "below level 8 doesn't count; staff never")
+	SpireTest.eq(SpireDaily.luckyPick({ { name = "B", level = 20, staff = false } }, "B", 0.5), nil, "not the same one twice in a row")
+	SpireTest.eq(SpireDaily.luckyGold(20), 400, "20 gold a level")
+	SpireTest.eq(SpireDaily.luckyGold(500), 5000, "capped at 5000")
+end)
