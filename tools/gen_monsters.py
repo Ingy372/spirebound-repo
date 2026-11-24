@@ -53,7 +53,7 @@ MONSTERS = {
                        loot=[(GOLD, 100000, 40), (5897, 50000, 2), (266, 8000, 1), (3012, 6000, 1)], voices=["AWOOOO!"],
                        summons=[("Meadow Wolf", 2)]),
     "Field Shardling": dict(desc="a field shardling", look=(122,), corpse=6053, hp=120, xp=58, speed=90, race="undead",
-                            attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10,
+                            attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10, events=["SpireShardBurst"],
                             loot=[(GOLD, 85000, 20), (268, 6000, 1), (3033, 6000, 1)], elements={"energy": 50, "earth": -10}),
     "Road Bandit": dict(desc="a road bandit", look=(129, 58, 59, 45, 114, 0), corpse=18050, hp=160, xp=50, speed=100,
                         race="blood", attacks=[("melee", 0, -45), ("drunk", 0, 4000, 3)], armor=10, defense=12,  # F1-10: smoke bomb
@@ -91,6 +91,7 @@ MONSTERS = {
                        loot=[(GOLD, 100000, 80), (PLAT, 30000, 1), (5879, 60000, 3), (236, 25000, 1)]),
     "Prism Shardling": dict(desc="a prism shardling", look=(122,), corpse=6053, hp=720, xp=340, speed=95, race="undead",
                             attacks=[("melee", 0, -40), ("energy", 0, -80, 4)], armor=18, defense=18, light=(4, 143),
+                            events=["SpireShardBurst"],
                             elements={"energy": 50, "earth": -10},
                             loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)

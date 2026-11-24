@@ -159,8 +159,9 @@ in `tools/balance.py` so XP per minute stays on target.
 monster only bites: Field Rat flees when nearly dead; Hopper Toad's sticky spit slows; Meadow Wasp darts (bursts of
 speed); Bristle Boar charges; Meadow Wolf darts in and flees when badly hurt; Burrow Mole burrows out of sight; Reed
 Snapper drags you down (slow); Road Bandit throws a smoke bomb (dizzy); Thornsnap's roots slow; Ruin Sentinel shield-bashes
-in a line. **Not yet seen in the client** (needs the server restart), and still to do: the coin-stealing rat, the wolf's
-call for help, the shardling's death burst, the sproutling healing friends, the sentinel's shield wall (these need
+in a line; and (a script) shardlings die in a burst: a flash, then a second later an energy hit on anyone next to the body.
+**Not yet seen in the client** (needs the server restart; the burst has no automated test), and still to do: the
+coin-stealing rat, the wolf's call for help, the sproutling healing friends, the sentinel's shield wall (these need
 scripts, not just monster spells), and an economy pass on damage taken now that monsters do more.
 
 **F1-11 One elite per ground.** Only the Watchtower has an elite (Stonehorn Ram). Add a named elite per ground that
