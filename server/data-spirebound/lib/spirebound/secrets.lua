@@ -15,7 +15,7 @@ SpireSecrets = {
 -- reward: function(player, secret) run once, the first time this character finds it
 SpireSecrets.list = {
 	{ id = "s1", floor = 1, tier = "large", name = "The Underkeep", hint = "Something echoes beneath the drain grate in Hearthgate's south-west corner.", reward = "underkeep" },
-	{ id = "s2", floor = 1, tier = "large", name = "Old Tusk", hint = "East of the boar meadow, a mud wallow nobody dares to step in.", reward = "old_tusk" },
+	{ id = "s2", floor = 1, tier = "large", name = "Old Tusk", hint = "Down in the boar meadow's Wallows, a mud wallow nobody dares to step in.", reward = "old_tusk" },
 	{ id = "s3", floor = 1, tier = "medium", name = "Miller's Race", hint = "Something hides under the Millcross mill.", reward = { gold = 800 } },
 	{ id = "s4", floor = 1, tier = "medium", name = "Inn Smith", hint = "The Millcross inn's pantry shelf is not what it seems.", reward = { items = { { 236, 3 } } } },
 	{ id = "s5", floor = 1, tier = "small", name = "North Crack", hint = "A crack in the old quarry's wall leads somewhere useful.", reward = "north_crack" },

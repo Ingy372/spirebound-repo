@@ -65,7 +65,7 @@ CAMPS = [
          note="Fast and stingy, little health. Just north of the city gate, beside the Pass road."),
     dict(id="boar_meadow", type="class", cls="Vanguard", title="Boar Meadow", x=140, y=338, w=39, h=57, gate="n", size="tall", zone="open",
          levels=(9, 15), role="xp", wall="oaks", core="oakgrove", trail="dirt", decor="boars",
-         groups=same(6, "Bristle Boar"), respawn=190, wallow=(1, 1),   # Old Tusk's wallow in the south-east loop
+         groups=same(6, "Bristle Boar"), respawn=190, design="BOARS",   # H7: Old Tusk's wallow is in the Wallows (z 8)
          note="Where most climbers spend their first real hours. Boars drop ham. Old Tusk wallows somewhere in here."),
     dict(id="burrow_hills", type="mixed", title="Burrow Hills", x=240, y=170, w=84, h=58, gate="w", size="std", zone="open",
          levels=(11, 16), role="xp", wall="boulders", core="hills", trail="dirt", decor="hills",
@@ -407,7 +407,38 @@ WASPS = dict(
     links=[("ramp", 23, 37, 7, "n"), ("ramp", 45, 37, 7, "n"), ("stairs", 54, 23, 8), ("stairs", 28, 43, 8)],
     nest_signs=[(47, 27, 6)],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS}
+# Boar Meadow (H7, 2026-11-23 overnight, FLOOR1_REVIEW.md F1-30): the narrow meadow stacks three levels. The surface is
+# a ring of oak glades round the foot of Oak Ridge; the Ridge (z 6) runs up the middle, climbed by a ramp at its south
+# end; the Wallows (z 8) are mud tunnels underneath, reached by holes in the two southern glades, with Old Tusk's wallow
+# a dead-end chamber in the middle of them. Boars are loners (DESIGN.md 9.4): always one to a glade, far apart.
+_BB = (("Bristle Boar", 1),)
+BOARS = dict(
+    gate=(19, 0), crowd_group=[("Bristle Boar", 1)],
+    routes={"a": "a1", "b": "b1", "c": "kl", "d": "wm"},
+    route_names={"a": "The West Glades", "b": "The East Glades", "c": "Oak Ridge", "d": "The Wallows"},
+    levels={
+        7: dict(name="Boar Meadow", box=(0, 0, 39, 57), clearings=[
+            ("hub", 19, 5, 4, "approach", None, "hub"), ("nw", 8, 6, 3, "calm", None, None), ("ne", 30, 6, 3, "calm", None, None),
+            ("a1", 3, 20, 3, "calm", "a", [_BB]), ("qa", 4, 31, 3, "calm", "a", "rest"), ("a2", 4, 42, 3, "middle", "a", [_BB]),
+            ("b1", 35, 20, 3, "calm", "b", [_BB]), ("qb", 34, 31, 3, "calm", "b", "rest"), ("b2", 34, 42, 3, "middle", "b", [_BB]),
+            ("sw", 8, 52, 3, "middle", "a", "rest"), ("se", 30, 52, 3, "middle", "b", "rest"), ("sf", 19, 53, 3, "middle", None, [_BB]),
+            ("ca1", 5, 25, 1, "calm", "a", "crowd"), ("ca2", 2, 47, 1, "middle", "a", "crowd"), ("ca3", 5, 36, 1, "middle", "a", "crowd"),
+            ("cb1", 33, 25, 1, "calm", "b", "crowd"), ("cb2", 36, 47, 1, "middle", "b", "crowd"), ("cb3", 33, 36, 1, "middle", "b", "crowd"),
+        ], paths=[("hub", "nw", 4), ("nw", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "sw", 4), ("sw", "sf", 4),
+                  ("sf", "se", 4), ("se", "b2", 4), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4)]),
+        6: dict(name="Oak Ridge", box=(12, 12, 15, 37), clearings=[
+            ("kl", 19, 44, 3, "middle", "c", "rest"), ("k1", 19, 34, 3, "middle", "c", "rest"), ("kq", 19, 26, 3, "middle", "c", "rest"),
+            ("k2", 19, 15, 3, "deep", "c", [_BB]),
+            ("kc1", 16, 19, 1, "deep", "c", "crowd"), ("kc2", 22, 18, 1, "deep", "c", "crowd"), ("kc3", 19, 30, 1, "middle", "c", "crowd"),
+        ], paths=[("kl", "k1", 3), ("k1", "kq", 3), ("kq", "k2", 3)]),
+        8: ring_level("The Wallows", (-6, 2, 45, 62), (-2, 8, 35, 58),
+                      [("wm", 19, 52, 5), ("wl", 8, 52, 4), ("wr", 30, 52, 4), ("tusk", 19, 31, 4, "nest")],
+                      [("wm", "wl", 3), ("wm", "wr", 3), ("wl", "q1", 3), ("wr", "q0", 3), ("wl", "tusk", 2)],
+                      "Bristle Boar", 1, gap=20, mid_band="deep", mid=[[_BB]], deep=[[_BB]]),
+    },
+    links=[("ramp", 19, 46, 7, "n"), ("stairs", 8, 52, 8), ("stairs", 30, 52, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

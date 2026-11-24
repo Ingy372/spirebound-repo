@@ -46,11 +46,15 @@ SpireTest.add("crowd: quiet with 4 players, half the spots with 5, all with 8, a
 	state, n = SpireCrowd.update(g, t + 30, 5, far)
 	SpireTest.eq(state, "busy", "5 players: busy")
 	SpireTest.eq(n, math.ceil(#g.spots / 2), "5 players: the odd-numbered spots switch on")
-	SpireTest.eq(aliveAt(g), n * 3, "their boars are really on the map")
+	local per = 0 -- monsters in one crowd group (the boars are loners since H7: one each)
+	for _, e in ipairs(g.spots[1].group) do
+		per = per + e[2]
+	end
+	SpireTest.eq(aliveAt(g), n * per, "their boars are really on the map")
 	state, n = SpireCrowd.update(g, t + 60, 8, far)
 	SpireTest.eq(state, "packed", "8 players: packed")
 	SpireTest.eq(n, math.floor(#g.spots / 2), "8 players: the rest switch on too")
-	SpireTest.eq(aliveAt(g), #g.spots * 3, "every crowd spot holds a group")
+	SpireTest.eq(aliveAt(g), #g.spots * per, "every crowd spot holds a group")
 	reset(g)
 end)
 

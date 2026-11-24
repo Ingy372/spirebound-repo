@@ -849,7 +849,7 @@ def build(m):
     # ------------------------------------------------ Floor 1 secrets (DESIGN.md 8.1). Trigger tiles only; no markers.
     def secret(sid, x, y, z=Z):
         for L in getattr(m, "wilds", []):                 # inside a walled ground a secret must sit on its trails
-            if (x, y) in L["rect"] and (x, y) not in L["open"]:
+            if z == Z and (x, y) in L["rect"] and (x, y) not in L["open"]:
                 nx, ny = min(L["open"], key=lambda t: (t[0] - x) ** 2 + (t[1] - y) ** 2)
                 print(f"secret {sid} moved from {(x - X0, y - Y0)} to {(nx - X0, ny - Y0)} (onto a trail in {L['id']})")
                 x, y = nx, ny
@@ -858,10 +858,15 @@ def build(m):
         m.clear_items(x, y, z)  # trigger tiles must be walkable
         m.points["secret_" + sid] = (x, y, z)
     secret("s1", tx + 6, ty + 67)                       # beside the drain grate
-    wallow = next(L for L in m.wilds if L["id"] == "boar_meadow")["wallow"]
-    wx_, wy_ = wallow["centre"]
-    m.points["old_tusk_spawn"] = (wx_, wy_, Z)          # Old Tusk's wallow: the hollow south-east core of Boar Meadow
-    secret("s2", *max(wallow["clear"], key=lambda t: (t[1], t[0])))   # the far corner of the wallow
+    bm = next(L for L in m.wilds if L["id"] == "boar_meadow")
+    if bm.get("wallow"):                                # the old loop layout: a hollow core on the surface
+        wx_, wy_ = bm["wallow"]["centre"]
+        m.points["old_tusk_spawn"] = (wx_, wy_, Z)
+        secret("s2", *max(bm["wallow"]["clear"], key=lambda t: (t[1], t[0])))
+    else:                                               # H7: Old Tusk's wallow is a dead-end chamber in the Wallows (z 8)
+        tusk = next(p for p, v in bm["clearings"].items() if v[0] == "tusk")
+        m.points["old_tusk_spawn"] = tusk
+        secret("s2", tusk[0] + 1, tusk[1], tusk[2])      # a step into the mud from the chamber's middle
     secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
     qne = next(lp for L in m.wilds if L["id"] == "old_quarry" for lp in L["loops"] if lp["name"] == "ne")

@@ -181,6 +181,14 @@ player would describe to a friend ("the wolf den under the split rock").
 chase down the 2-tile loops, so the gate isn't quiet in practice. (The Pilot had no weapon equipped: a test fault,
 fixed for the other classes, but five boars at once would still kill most level 12s.) This makes H7 urgent: Boar
 Meadow is the level 9-15 ground every new player reaches right after the starter grounds.
+**Measured across Floor 1 (tools/hunt_check.py, 2026-11-23):** the six grounds still on the old loop layout (Wolf Copse,
+Reedmarsh, Thornsnap Hollow, Shard Fields, Bandit Road, Old Quarry) let 19-32 monster-weight reach one player at once
+against a budget of 6, have 0-3% quiet tiles (rule: 25%), and 72 monsters each; their party caves 24-31 against 12.
+**Boar Meadow rebuilt overnight (H7, first of the six-plus-one):** a designed ground on three levels (a ring of glades
+round Oak Ridge, the Ridge itself at z 6 up a ramp, the Wallows at z 8 down two holes), 12 loner boars plus crowd
+spots, a quiet gate, Old Tusk's wallow now a dead-end chamber in the Wallows (GM list updated). Passes the checker on
+every level, the walk test and the in-game tests. Not yet walked in the client (needs the restart). Its surface is
+still a rectangle round the ridge: give it a more natural outline in the polish pass.
 
 **F1-31 Toad Pond is too small** (Jay's playtest). Render: about 45 x 40 tiles of usable space, four ponds and an
 island, boxed in by trees. Grow it to about 70 x 60 with a second lower level (the Sunken Grotto is the start) and the
