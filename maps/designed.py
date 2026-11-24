@@ -213,6 +213,26 @@ def build(m, c):
             den_done = True
             m.points[f"den_{gid}"] = (wx, wy, zl - 1)
             L["den"] = ((wx, wy, zl - 1), (wx, wy + 1, zl))
+    # ---- the ground's chest (FLOOR1_REVIEW.md F1-20): beside the quiet clearing deepest from the gate, never on the party
+    # level; scripts/spirebound/chests.lua puts the chest there at start-up
+    best = None
+    gx_, gy_ = ox + d["gate"][0], oy + d["gate"][1]
+    for z, lv in d["levels"].items():
+        if z == party_z:
+            continue
+        cells, named, _box = lv_cells[z]
+        for (name, x, y, r, band, route, content) in lv["clearings"]:
+            if content != "rest" or band not in ("middle", "deep", "nest"):
+                continue
+            wx, wy = named[name]
+            far = max(abs(wx - gx_), abs(wy - gy_)) + (20 if z != Z else 0)   # a lower or upper level counts as deeper
+            for ddx, ddy in ((1, 1), (-1, 1), (1, -1), (-1, -1), (2, 0), (-2, 0), (0, 2), (0, -2)):
+                if (wx + ddx, wy + ddy) in cells:
+                    if best is None or far > best[0]:
+                        best = (far, (wx + ddx, wy + ddy, z))
+                    break
+    if best:
+        m.points[f"chest_{gid}"] = best[1]
     # ---- monsters, crowd spots, rest spots
     routes = {r: dict(name=r, groups=[], crowd=[]) for r in d["routes"]}
     offs = [(0, 0), (3, 0), (0, 3), (-3, 0)]

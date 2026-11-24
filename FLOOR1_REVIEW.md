@@ -225,6 +225,10 @@ Millstone: 20 Thornsnaps; ... The Alpha: 1 Grey Alpha.) Rewards are mostly gold.
 not "all the same". Mix in the quest types players remember, keeping every step written in the Journal:
 - **A chest quest** per ground: a hard-to-reach chest (behind the elite, at the end of the lower level) with a fixed
   reward (Tibia's oldest joy). Cyntara's daily chest on top: open it again every 20 h for a small roll.
+  **Done overnight for the 10 rebuilt grounds:** a treasure chest in each ground's deepest quiet clearing (picked by
+  `maps/designed.py`, placed at start-up): first time 150 gold per level of the ground, 5 health or 3 strong health
+  potions and a rough Hearth Shard; then a daily chest every 20 hours (in-game tests, real chests on the map). Not
+  announced anywhere: finding them is the point. Bandit Road and Old Quarry get theirs with their rebuild.
 - **An escort / rescue**: the Lost Patrol becomes "find the patrol's survivor in the Bandit Vault and walk him home".
 - **A delivery with a choice**: Millcross's miller and the Bandit Road (help the bandits or the miller: a different
   reward, a title).
