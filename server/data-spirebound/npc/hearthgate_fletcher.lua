@@ -17,8 +17,8 @@ npcConfig.voices = {
 	{ text = "Bolts, a hundred at a time!" },
 }
 npcConfig.shop = {
-	{ itemName = "arrow", clientId = 3447, buy = 3 },
-	{ itemName = "bolt", clientId = 3446, buy = 4 },
+	{ itemName = "arrow", clientId = 3447, buy = 1 },
+	{ itemName = "bolt", clientId = 3446, buy = 2 },
 	{ itemName = "spear", clientId = 3277, buy = 9, sell = 3 },
 	{ itemName = "bow", clientId = 3350, buy = 400, sell = 100 },
 	{ itemName = "crossbow", clientId = 3349, buy = 500, sell = 120 },

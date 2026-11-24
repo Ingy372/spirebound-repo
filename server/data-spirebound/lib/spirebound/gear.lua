@@ -163,6 +163,12 @@ function SpireGear.give(player, floor, source)
 	return item
 end
 
+-- Pure: does this kill drop a shard? chance per kill, kills since the last shard of this grade, a roll in [0, 1).
+-- Pity (FLOOR1_REVIEW.md F1-42): at three times the expected wait the shard is guaranteed.
+function SpireGear.shardRoll(chance, sinceLast, roll)
+	return roll < chance or sinceLast >= math.floor(3 / chance)
+end
+
 -- ---------------------------------------------------------------- the Weaponsmith (spec 4.4, 4.5)
 -- A wallet is { count(id), remove(id, n), money(), pay(n) }: a player's (SpireGear.playerWallet) or a test's.
 function SpireGear.playerWallet(player)

@@ -116,3 +116,13 @@ SpireTest.add("weaponsmith: a reforge keeps the tier and starts familiarity agai
 	SpireTest.eq((SpireGear.reforgeWith(new, "axe", wallet({}, 99999), b)), nil, "not another class's family")
 	b:remove()
 end)
+
+-- FLOOR1_REVIEW.md F1-42: a pity counter so a hunter never goes far past the expected wait without a shard
+SpireTest.add("shards: the pity counter guarantees a shard at three times the expected wait", function()
+	local c = SpireGearData.SHARD_CHANCE.rough
+	local cap = math.floor(3 / c)
+	SpireTest.eq(SpireGear.shardRoll(c, 0, 0.999), false, "an unlucky roll early gives nothing")
+	SpireTest.eq(SpireGear.shardRoll(c, 0, c / 2), true, "a lucky roll gives a shard")
+	SpireTest.eq(SpireGear.shardRoll(c, cap - 1, 0.999), false, "just short of the cap: still the dice")
+	SpireTest.eq(SpireGear.shardRoll(c, cap, 0.999), true, "at the cap: guaranteed")
+end)

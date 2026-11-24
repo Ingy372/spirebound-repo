@@ -162,6 +162,9 @@ for r in ROWS:
         continue                                   # nobody is expected to fire paid arrows at rats: spears are the early ammo
     if r["net_with_trading_h"] < 0:
         problems.append(f"{r['vocation']} loses {-r['net_with_trading_h']} gold an hour at {r['camp']}")
+    # FLOOR1_REVIEW.md F1-13: a small server (alpha, a quiet hour) has no market, so selling to NPCs alone must pay too
+    if r["net_npc_h"] < 0:
+        problems.append(f"{r['vocation']} loses {-r['net_npc_h']} gold an hour at {r['camp']} selling only to NPCs")
 for rc in RECIPES:
     if rc["gold"] >= rc["worth"]:
         problems.append(f"recipe {rc['name']} costs {rc['gold']} gold but is only worth {rc['worth']}: nobody would craft it")

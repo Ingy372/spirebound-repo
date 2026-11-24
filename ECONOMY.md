@@ -16,51 +16,51 @@
 | Hunting ground | Levels | Vocation | Kills/h | XP/h | Gold/h | Supplies/h | Net (NPC only) | Net with trading |
 |---|---|---|---|---|---|---|---|---|
 | The Ratwarren | 1-4 | Vanguard | 300 | 18,000 | 1,065 | 151 | 914 | 914 |
-| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 18,000 | 1,065 | 1,651 | -586 | -586 |
+| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 18,000 | 1,065 | 651 | 414 | 414 |
 | The Ratwarren | 1-4 | Ranger (spears) | 300 | 18,000 | 1,065 | 286 | 779 | 779 |
 | The Ratwarren | 1-4 | Arcanist/Mystic | 300 | 18,000 | 1,065 | 200 | 865 | 865 |
 | Toad Pond | 3-7 | Vanguard | 300 | 24,750 | 1,087 | 156 | 932 | 1,989 |
-| Toad Pond | 3-7 | Ranger (arrows) | 300 | 24,750 | 1,087 | 1,456 | -368 | 689 |
+| Toad Pond | 3-7 | Ranger (arrows) | 300 | 24,750 | 1,087 | 589 | 499 | 1,556 |
 | Toad Pond | 3-7 | Ranger (spears) | 300 | 24,750 | 1,087 | 273 | 815 | 1,872 |
 | Toad Pond | 3-7 | Arcanist/Mystic | 300 | 24,750 | 1,087 | 206 | 882 | 1,939 |
 | Sproutling Glade | 5-10 | Vanguard | 300 | 36,000 | 1,354 | 171 | 1,182 | 2,847 |
-| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 36,000 | 1,354 | 1,532 | -178 | 1,487 |
+| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 36,000 | 1,354 | 625 | 729 | 2,394 |
 | Sproutling Glade | 5-10 | Ranger (spears) | 300 | 36,000 | 1,354 | 294 | 1,060 | 2,725 |
 | Sproutling Glade | 5-10 | Arcanist/Mystic | 300 | 36,000 | 1,354 | 227 | 1,127 | 2,792 |
 | Waspgrass Fields | 7-12 | Vanguard | 300 | 20,400 | 1,763 | 314 | 1,448 | 3,448 |
-| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 20,400 | 1,763 | 1,872 | -109 | 1,891 |
+| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 20,400 | 1,763 | 833 | 929 | 2,929 |
 | Waspgrass Fields | 7-12 | Ranger (spears) | 300 | 20,400 | 1,763 | 454 | 1,308 | 3,308 |
 | Waspgrass Fields | 7-12 | Arcanist/Mystic | 300 | 20,400 | 1,763 | 415 | 1,347 | 3,347 |
 | Boar Meadow | 9-15 | Vanguard | 264 | 29,593 | 2,590 | 843 | 1,747 | 5,974 |
-| Boar Meadow | 9-15 | Ranger (arrows) | 264 | 29,593 | 2,590 | 3,072 | -483 | 3,745 |
+| Boar Meadow | 9-15 | Ranger (arrows) | 264 | 29,593 | 2,590 | 1,586 | 1,004 | 5,231 |
 | Boar Meadow | 9-15 | Ranger (spears) | 264 | 29,593 | 2,590 | 1,043 | 1,546 | 5,774 |
 | Boar Meadow | 9-15 | Arcanist/Mystic | 264 | 29,593 | 2,590 | 1,115 | 1,475 | 5,702 |
 | Burrow Hills | 11-16 | Vanguard | 232 | 35,627 | 3,367 | 1,051 | 2,316 | 3,679 |
-| Burrow Hills | 11-16 | Ranger (arrows) | 232 | 35,627 | 3,367 | 3,667 | -300 | 1,063 |
+| Burrow Hills | 11-16 | Ranger (arrows) | 232 | 35,627 | 3,367 | 1,923 | 1,444 | 2,807 |
 | Burrow Hills | 11-16 | Ranger (spears) | 232 | 35,627 | 3,367 | 1,286 | 2,081 | 3,444 |
 | Burrow Hills | 11-16 | Arcanist/Mystic | 232 | 35,627 | 3,367 | 1,390 | 1,977 | 3,340 |
 | Wolf Copse | 12-18 | Vanguard | 277 | 44,296 | 2,026 | 704 | 1,322 | 6,750 |
-| Wolf Copse | 12-18 | Ranger (arrows) | 277 | 44,296 | 2,026 | 2,777 | -751 | 4,676 |
+| Wolf Copse | 12-18 | Ranger (arrows) | 277 | 44,296 | 2,026 | 1,395 | 631 | 6,059 |
 | Wolf Copse | 12-18 | Ranger (spears) | 277 | 44,296 | 2,026 | 890 | 1,136 | 6,563 |
 | Wolf Copse | 12-18 | Arcanist/Mystic | 277 | 44,296 | 2,026 | 1,763 | 263 | 5,691 |
 | Reedmarsh | 14-19 | Vanguard | 232 | 36,232 | 4,747 | 1,251 | 3,496 | 15,088 |
-| Reedmarsh | 14-19 | Ranger (arrows) | 232 | 36,232 | 4,747 | 3,864 | 883 | 12,475 |
+| Reedmarsh | 14-19 | Ranger (arrows) | 232 | 36,232 | 4,747 | 2,122 | 2,625 | 14,217 |
 | Reedmarsh | 14-19 | Ranger (spears) | 232 | 36,232 | 4,747 | 1,486 | 3,261 | 14,852 |
 | Reedmarsh | 14-19 | Arcanist/Mystic | 232 | 36,232 | 4,747 | 2,352 | 2,396 | 13,987 |
 | Thornsnap Hollow | 14-20 | Vanguard | 252 | 51,802 | 2,795 | 1,021 | 1,774 | 3,485 |
-| Thornsnap Hollow | 14-20 | Ranger (arrows) | 252 | 51,802 | 2,795 | 3,394 | -599 | 1,112 |
+| Thornsnap Hollow | 14-20 | Ranger (arrows) | 252 | 51,802 | 2,795 | 1,812 | 983 | 2,694 |
 | Thornsnap Hollow | 14-20 | Ranger (spears) | 252 | 51,802 | 2,795 | 1,235 | 1,560 | 3,271 |
 | Thornsnap Hollow | 14-20 | Arcanist/Mystic | 252 | 51,802 | 2,795 | 2,108 | 687 | 2,398 |
 | Shard Fields | 17-24 | Vanguard | 277 | 64,246 | 5,795 | 523 | 5,271 | 6,517 |
-| Shard Fields | 17-24 | Ranger (arrows) | 277 | 64,246 | 5,795 | 2,600 | 3,194 | 4,440 |
+| Shard Fields | 17-24 | Ranger (arrows) | 277 | 64,246 | 5,795 | 1,216 | 4,579 | 5,825 |
 | Shard Fields | 17-24 | Ranger (spears) | 277 | 64,246 | 5,795 | 710 | 5,084 | 6,330 |
 | Shard Fields | 17-24 | Arcanist/Mystic | 277 | 64,246 | 5,795 | 1,523 | 4,272 | 5,518 |
 | The Bandit Road | 19-27 | Vanguard | 248 | 43,422 | 9,711 | 1,452 | 8,259 | 10,307 |
-| The Bandit Road | 19-27 | Ranger (arrows) | 248 | 43,422 | 9,711 | 3,877 | 5,834 | 7,881 |
+| The Bandit Road | 19-27 | Ranger (arrows) | 248 | 43,422 | 9,711 | 2,260 | 7,451 | 9,498 |
 | The Bandit Road | 19-27 | Ranger (spears) | 248 | 43,422 | 9,711 | 1,670 | 8,041 | 10,088 |
 | The Bandit Road | 19-27 | Arcanist/Mystic | 248 | 43,422 | 9,711 | 2,664 | 7,047 | 9,095 |
 | The Old Quarry | 23-30 | Vanguard | 233 | 57,049 | 10,000 | 1,206 | 8,794 | 9,664 |
-| The Old Quarry | 23-30 | Ranger (arrows) | 233 | 57,049 | 10,000 | 3,815 | 6,185 | 7,054 |
+| The Old Quarry | 23-30 | Ranger (arrows) | 233 | 57,049 | 10,000 | 2,075 | 7,925 | 8,794 |
 | The Old Quarry | 23-30 | Ranger (spears) | 233 | 57,049 | 10,000 | 1,440 | 8,560 | 9,429 |
 | The Old Quarry | 23-30 | Arcanist/Mystic | 233 | 57,049 | 10,000 | 2,292 | 7,708 | 8,577 |
 

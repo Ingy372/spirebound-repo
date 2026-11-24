@@ -20,8 +20,8 @@ npcConfig.shop = {
 	{ itemName = "mana potion", clientId = 268, buy = 56 },
 	{ itemName = "strong health potion", clientId = 236, buy = 115 },
 	{ itemName = "strong mana potion", clientId = 237, buy = 108 },
-	{ itemName = "arrow", clientId = 3447, buy = 3 },
-	{ itemName = "bolt", clientId = 3446, buy = 4 },
+	{ itemName = "arrow", clientId = 3447, buy = 1 },
+	{ itemName = "bolt", clientId = 3446, buy = 2 },
 	{ itemName = "spear", clientId = 3277, buy = 10, sell = 3 },
 }
 

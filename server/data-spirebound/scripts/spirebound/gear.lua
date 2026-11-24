@@ -19,9 +19,18 @@ function drops.monsterOnDropLoot(monster, corpse)
 	end
 	local shards = SpireGearData.shardMonsters[monster:getName()]
 	if shards and not monster:getMaster() then -- Hearth Shards (spec 4.4)
+		local kv = owner:kv():scoped("spirebound")
 		for grade in pairs(shards) do
-			if math.random() < SpireGearData.SHARD_CHANCE[grade] then
+			local key = "shard_since_" .. grade
+			local since = kv:get(key) or 0
+			if SpireGear.shardRoll(SpireGearData.SHARD_CHANCE[grade], since, math.random()) then
 				corpse:addItem(SpireGearData.tokens[1][grade], 1)
+				kv:set(key, 0)
+				-- the rare-drop moment (F1-42): a sparkle on the corpse and a line of its own
+				corpse:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
+				owner:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("A %s glints in the remains!", SpireGearData.tokenNames[SpireGearData.tokens[1][grade]][1]))
+			else
+				kv:set(key, since + 1)
 			end
 		end
 	end

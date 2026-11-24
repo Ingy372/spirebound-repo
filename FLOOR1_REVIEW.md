@@ -209,6 +209,7 @@ small bar in the Upgrade tab, with a visible effect at each step (a flash on the
 
 **F1-42 Shards are rare and silent.** About 1 in 180 kills. When one drops, show a special loot message and an effect
 on the corpse (the "rare drop" moment). Consider a pity counter so no one goes 600 kills without one.
+**Done 2026-11-23 (overnight):** a shard is guaranteed at three times the expected wait (counted per player and grade), and a drop shows a sparkle on the corpse and "A rough Hearth Shard glints in the remains!" (in-game test; live after a restart).
 
 **F1-43 The smith's gold check was broken** (fixed tonight: `getTotalMoney` doesn't exist in Canary 3.6.1; Garrick went
 silent). Needs a server restart to be live; then rerun `floor1_gear_path` and tick roadmap P1.
@@ -251,6 +252,14 @@ Fishing Frenzy, Wandering Champion), fishing, houses, boards. Missing compared w
 ---
 
 ## 9. Shop and money (launch-readiness)
+
+**F1-13 Rangers with arrows lose money on every Floor 1 ground** (ECONOMY.md, NPC-only net per hour: Ratwarren -586,
+Toad Pond -368, Glade -178, Waspgrass -109, Boar Meadow -483, Burrow Hills -300, Wolf Copse -751). They only profit by
+selling materials to other players, which a small alpha (or a quiet launch hour) won't have. Spears break even but are
+used up and clumsy. Jay played a Ranger. Fix: cheaper arrows on Floor 1 (or a recoverable share, as Tibia's arrows
+sometimes drop back), and/or Floor 1 monsters pay Rangers' ammo through slightly better NPC prices for materials.
+Check after with `tools/gen_economy.py` that no class runs at a loss on its own floor by NPC selling alone.
+**Done 2026-11-23 (overnight):** arrows 1 gold and bolts 2 in Hearthgate; `gen_economy.py` now fails if any class loses gold selling to NPCs alone. Arrow Rangers now net +414 (Ratwarren) to +929 (Waspgrass) an hour.
 
 - Shop prices are placeholders (300 starter set, 500 respec scroll): set before alpha ends (roadmap 7.3).
 - Cosmetics carry Cyntara's shop (title shaders, outfit effects, loot tracker). We have outfits and mounts in the art

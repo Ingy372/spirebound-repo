@@ -40,7 +40,7 @@ NPCS = {
         voices=["Potions and arrows! Don't climb without them!"],
         shop=[("health potion", 266, 50, None), ("mana potion", 268, 56, None),
               ("strong health potion", 236, 115, None), ("strong mana potion", 237, 108, None),
-              ("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 10, 3)]),
+              ("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("spear", 3277, 10, 3)]),
     "hearthgate_weaponsmith": dict(
         name="Weaponsmith Garrick", desc="the weaponsmith", look=(131, 76, 76, 38, 76, 0),
         greet="Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost.",
@@ -63,7 +63,7 @@ NPCS = {
         name="Fletcher Tamsin", desc="the fletcher", look=(137, 59, 63, 58, 114, 0),
         greet="Arrows, bolts and spears, |PLAYERNAME|. Bring materials and I'll {craft} better ones. Nobody conjures them in this tower, so I never run out of customers. Ask for a {trade}.",
         voices=["Fresh-cut arrows!", "Bolts, a hundred at a time!"],
-        shop=[("arrow", 3447, 3, None), ("bolt", 3446, 4, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("quiver", 35562, 150, None)]),
+        shop=[("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("quiver", 35562, 150, None)]),
     "hearthgate_alchemist": dict(
         name="Alchemist Ivo", desc="the alchemist", look=(130, 0, 87, 87, 95, 0),
         greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them, or bring materials and I'll {craft} strong potions cheaply. Ask for a {trade}.",
