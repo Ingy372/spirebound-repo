@@ -33,3 +33,14 @@ SpireTest.add("quests: quest log catalog loaded", function()
 	end
 	SpireTest.eq(found, 3, "quests in the client quest log")
 end)
+
+-- FLOOR1_REVIEW.md F1-21: every Floor 1 quest pays experience as well
+SpireTest.add("quests: every Floor 1 quest pays experience", function()
+	local missing = {}
+	for _, q in ipairs(SpireQuests.list) do
+		if q.floor == 1 and not (q.reward.exp and q.reward.exp > 0) then
+			table.insert(missing, q.id)
+		end
+	end
+	SpireTest.eq(table.concat(missing, ","), "", "Floor 1 quests without experience")
+end)

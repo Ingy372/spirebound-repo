@@ -202,6 +202,11 @@ not "all the same". Mix in the quest types players remember, keeping every step 
   and an outfit addon.
 
 **F1-21 Quest rewards should include experience** (see F1-32) and at least one cosmetic per quest line.
+**Experience done 2026-11-23 (overnight):** every Floor 1 quest now pays about 10 minutes of hunting experience at its
+ground (3,400 for Wasp Nest up to 10,700 for Shard Hunt; 300 for Pell's rats; 92,150 in all), so quests shave roughly
+two hours off the modelled 14.9 h climb, which stays inside Jay's 11-15 h. In-game test. Still to do: cosmetics.
+**F1-23 The Journal never shows what a quest pays.** Add the reward line (gold, experience, title, gear) to each quest
+in the Quests tab and to the NPC's offer.
 
 **F1-22 Quests are found by talking to the right NPC.** The Upgrade tab now points to the next gear step (built
 today), but side quests still require walking into Hunter Brannoch. Put a "!" over NPCs with a quest you can take
