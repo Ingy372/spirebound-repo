@@ -258,7 +258,10 @@ test): a `{keyword}` followed by `)` makes OTClient's chat window throw and drop
 
 Spirebound has seasons, a season path, tasks, a task shop, arena, siege, world events every 3 h (Frenzy, Incursion,
 Fishing Frenzy, Wandering Champion), fishing, houses, boards. Missing compared with Cyntara and other top servers:
-- **F1-60 A daily reward** (login streak; small, cosmetic-leaning, never power).
+- **F1-60 A daily reward** (login streak; small, cosmetic-leaning, never power). **Done 2026-11-23 (overnight):** day n
+  of 7 pays 100 x n gold to the bank, day 7 pays 1,000 gold and 5 health potions; a missed day restarts the week
+  (`lib/spirebound/daily.lua`, rules tested in game; the login itself not yet seen in the client). Later: swap the
+  day-7 prize for a cosmetic once shop outfits exist.
 - **F1-61 Daily chests** on quest ends (see F1-20).
 - **F1-62 A weekly goal list** (seven goals, one reward), shown in the Journal.
 - **F1-63 An hourly lottery or "lucky player" broadcast**: cheap to build, makes chat move.
