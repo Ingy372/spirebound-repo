@@ -83,6 +83,8 @@ hours are there, the variety isn't.
   red carpet. Real Tibia gives Dawnport an island and a ship arrival. Ours should show **the tower**: arrive on a
   platform at the foot of the Spire, see the Floor 2 gate sealed by boulders, read a plaque of "first clears" (empty on
   launch day: the race starts now). This is the screenshot streamers and the website use.
+  **Seen in the playthrough: the Pilot arrived at night and the first screen was almost black** (the day/night cycle
+  dims the yard, which has no light sources). Light the yard (lamps along the path, a lit gate) or keep it always day.
 - **F1-02 Levels 1-7 have no spells.** Every class's first attack spell is at level 8 (Ember Strike, Frost Strike,
   Piercing Shot, Heavy Strike). The first 30-45 minutes are auto-attack only. Give each class one starter attack at
   level 1 and one utility by level 4.
@@ -217,8 +219,10 @@ today), but side quests still require walking into Hunter Brannoch. Put a "!" ov
 
 ## 6. Gear and progression on Floor 1 (built today; what is still missing)
 
-Built today and checked in the real client: Dorrow gives the Trailwarden Bow at level 12 ("Level 12! Every climber who
-gets this far earns a weapon from the barracks..."), the Upgrade tab shows the next step and where.
+Built today and checked in the real client: Dorrow gives the Trailwarden Bow ("Level 12! Every climber who gets this far
+earns a weapon from the barracks..."), and the Upgrade tab names the next step and where. In the playthrough its top
+line at level 12 read "Next: take 3 rough Hearth Shards and 500 gold to Weaponsmith Garrick: tier 1." (clear and
+actionable).
 
 **F1-40 The style choice comes after Floor 1.** Mastery 10 is around level 37, so an alpha tester on Floor 1 never
 makes the permanent choice that makes the system exciting. Options: a small "stance" choice at Mastery 5 (Floor 1)
