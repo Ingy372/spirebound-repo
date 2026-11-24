@@ -1,33 +1,52 @@
-# Update, 2026-11-23: gear progression
+# Update, 2026-11-24: the overnight Floor 1 playtest and review
 
-(The 2026-11-13 report is in git history. Since then: five calmer hunting grounds, spawn habits, 45 new spells, PvP spell rules and the client spellbook. They are logged in PROGRESS.md.)
+(The 2026-11-23 gear report is in git history. The full review is `FLOOR1_REVIEW.md`; this page is the short version.)
 
-## What's new
-- **Your weapon, your path.** At level 10, Captain Dorrow (Hearthgate's north gate) gives you a weapon from the barracks, and you pick the kind: sword, axe or mace; bow or crossbow; wand; rod.
-- **Tiers.** Every monster on Floor 1's grounds can drop **Hearth Shards**. Three shards at Weaponsmith Garrick raise your weapon or armour one tier, up to 5. Rough shards drop everywhere, cut shards on the harder grounds, and flawless shards from elites and the Old Watchtower. Upgrades never fail. Shards sell well on the market, so you can save them or sell them.
-- **Familiarity.** The more you fight with a weapon, the better you know it (0 to 10, up to +15% damage). A new, stronger weapon starts at 0. On Floor 2 a new weapon passes your maxed Floor 1 weapon after about 2 hours, so sticking with old faithful works for a while.
-- **Style (permanent).** Fighting also fills your class Mastery. At Mastery 10 (around level 37) you get your first style ability and choose a path: Marksman or Trapper, Bulwark or Reaver, Emberwright or Stormbinder, Lifebinder or Wildcaller. Later you choose a final style. The only way to undo a choice is a **Mastery Respec Scroll from the shop**, as you asked.
-- **The Floor 1 checklist.** Your weapon from Dorrow → *Tempered in the Field* (Dorrow, Wolf Copse) → *Iron for the Stair* 1 and 2 (Hunter Brannoch, your armour) → the Gate Hound (3 cut shards) → the Axe-Lord (your weapon **awakens**: new name, its full power, for everyone who helped).
-- **The Upgrade tab.** Press J. The first tab always starts with one sentence: your next step and where to go. `!upgrade` opens it, and you get the same line at every login.
-- **Four hidden mini-bosses.** Each one gives a permanent trophy the first time you help kill it. The Upgrade tab never mentions them. Their spots are secrets you can sell to Vesper.
-- **Shop starter gear.** A starter set for levels 1-15 that can't be upgraded. Dorrow's weapon at tier 2 already beats it. (The shop stays closed until launch.)
-- **"Venomous slime" fixed.** It was the poisonous slime the Alchemist wants, dropped by Hopper Toads. Every material's look text now names the monster and the ground, and crafters tell you where to find anything you're missing.
+## The answer to "do we stand a chance?"
+Not yet, but it's fixable on Floor 1 alone. Our systems and our pitch (floors that open for everyone, a monument for
+first clears, permadeath if you dare, fair PvP) are stronger than most servers'. What loses players today is the feel
+of the first evening: a plain start, monsters that only bite, kill-count quests, a generated-looking town, and grounds
+that swarm. Section 9b of the review has the scorecard and the order to fix things in.
+
+## What changed overnight (all live after one server restart)
+- **Hunting grounds:** Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow and Shard Fields rebuilt: calm gates,
+  monsters spread out, two or three levels each, a party cave under four of them, faster respawn so the kill rate
+  holds. Two test characters died at Boar Meadow's old gate before this. Only Bandit Road and Old Quarry are still the
+  old swarming kind (they need buildings, next session).
+- **Monsters fight differently:** rats flee, toads slow you, boars charge, wolves dart and run when hurt, moles
+  burrow, snappers drag you down, bandits throw smoke, thornsnaps root, sentinels shield-bash.
+- **Five rare glowing elites** (one per rebuilt ground), and a **treasure chest** hidden in every rebuilt ground (a
+  first-time prize with a Hearth Shard, then a daily chest every 20 hours).
+- **First hour:** first attack spell the moment you pick a class, a heal at level 4; the street lamps are lit (every
+  lamp on Floor 1 was the unlit kind); every login says where the tower's race stands.
+- **Quests:** every Floor 1 quest pays experience now, and offers and the Journal show the reward.
+- **Gear:** the smith's upgrade was broken (fixed), the Gate Hound now comes back after a kill (your checklist needs
+  it), the checklist and a sign at the Pass say to bring a party, shards have a pity counter and a sparkle.
+- **Reasons to come back:** a daily login reward, a lucky climber every hour, and the Season Path's daily and weekly
+  goals switched on for the friends test.
+- **Money:** arrows cost 1 gold on Floor 1, so a Ranger no longer loses money hunting.
+- **Safety:** the automatic test was writing into your game's database; it has its own now. A half-failed test had
+  marked Floors 1-2 as cleared in your world; I removed that.
 
 ## Before you play (one step)
-Restart the server so it runs the new code: double-click `windows\Stop-Spirebound.bat`, then `windows\Start-Spirebound.bat`.
+Restart the server: double-click `windows\Stop-Spirebound.bat`, then `windows\Start-Spirebound.bat`.
 
 ## Playtest checklist (about 45 minutes)
-Use your level 12 Ranger.
-1. **Dorrow (5 min):** go to Hearthgate's north gate, say `hi`, then `weapon`, then `bow` or `crossbow`. Do you get the weapon? Look at it: does it show tier and familiarity?
-2. **The Upgrade tab (5 min):** press J. Is the top line clear about what to do next and where? Is anything on the tab confusing?
-3. **Hunt (20 min):** hunt anywhere around your level. Do you see "familiarity" go up? Do you find a rough Hearth Shard? (About 1 kill in 180 drops one, so you may not find one in 20 minutes. Tell me if that feels too rare.)
-4. **Tempered in the Field (10 min):** ask Dorrow for a `quest`, hunt the wolves in Wolf Copse, then `report`. Does the weapon go up a tier?
-5. **Weaponsmith (5 min):** if you have 3 rough shards, say `hi`, `upgrade`, `yes` to Weaponsmith Garrick. If you don't have them yet, say `upgrade` anyway: does he tell you clearly what you need and where to get it?
+1. **New character (10 min):** make a new character. Is the yard lit? Can you cast your first spell right after the
+   Registrar? Does the login message mention the tower's race?
+2. **Boar Meadow (10 min, level 9-12):** walk in. Is the gate calm? Do boars charge? Try Oak Ridge (the ramp) and the
+   Wallows (the holes in the south). Can you find the chest?
+3. **Wolf Copse or Reedmarsh (10 min):** does it feel like a place, or still like a grid? Did you meet an elite?
+4. **Weaponsmith (5 min):** with your Ranger, hold your bow, say `hi`, `upgrade`, `yes` to Garrick. Does it work now?
+5. **Quests (10 min):** take a quest from Dorrow or Brannoch. Does the offer say what it pays? Does finishing it
+   give experience?
 
-## Open questions (my recommendation is assumed until you answer; see QUESTIONS.md)
-- Shop prices for the starter set (300 coins) and the respec scroll (500 coins) are placeholders until you set prices (roadmap 7.3).
-- Rangers can't pick a spear as their barracks weapon, because thrown spears are used up. Do you want a spear that isn't thrown? My recommendation: no, keep bow and crossbow.
+## Open questions (my recommendation is assumed until you answer; QUESTIONS.md)
+- **Q46:** a free "stance" at Mastery 5 so Floor 1 players feel the style choice coming? Recommended: yes.
+- **Q47:** rebuild the arrival yard and Hearthgate before inviting alpha testers? Recommended: yes.
+- **Q48:** the Gate Hound comes back after it dies (so everyone can finish the checklist). Built that way.
+- Still open: Q45 (spear for Rangers), shop prices.
 
 ## Art and map requests
-- New in `ART_REQUESTS.md` Batch 6: three mini-boss sprites (I make these with the Blender pipeline and send them for your OK), plus Grok icons for the three Hearth Shards and the Mastery Respec Scroll.
-- No new map requests: the mini-bosses use existing secret spots.
+- `ART_REQUESTS.md` Batch 7: the elites use their ground's monster sprite for now; variants later.
+- No map requests: I built the grounds. The last two (Bandit Road, Old Quarry) need ruined buildings and a mine.
