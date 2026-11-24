@@ -193,6 +193,24 @@ end
 -- SpirePerks.apply lives in lib/spirebound/perks.lua (roadmap R12: every perk works)
 
 -- Shared NPC dialogue for quest givers. Returns true if it handled the message.
+-- Pure: what a quest pays, in one line (FLOOR1_REVIEW.md F1-23)
+local function thousands(n)
+	local s = tostring(math.floor(n))
+	return (s:reverse():gsub("(%d%d%d)", "%1,"):reverse():gsub("^,", ""))
+end
+function SpireQuests.rewardText(r)
+	local parts = {}
+	if r.gold then table.insert(parts, thousands(r.gold) .. " gold") end
+	if r.exp then table.insert(parts, thousands(r.exp) .. " experience") end
+	if r.title then table.insert(parts, "the title \"" .. r.title .. "\"") end
+	if r.gear then table.insert(parts, "a piece of Floor gear") end
+	if r.temper then table.insert(parts, "your weapon tempered one tier") end
+	if #parts == 0 then
+		return ""
+	end
+	return "Reward: " .. table.concat(parts, ", ") .. "."
+end
+
 local offered = {} -- playerId -> quest id
 SpireCleanup.add(function(pid) offered[pid] = nil end)
 function SpireQuests.talk(npc, npcHandler, player, msg, giver)
@@ -231,7 +249,8 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		for _, q in ipairs(SpireQuests.list) do
 			if q.giver == giver and SpireQuests.available(q, SpireQuests.state(player, q), done, SpireQuests.context(player)) then
 				offered[pid] = q.id
-				npcHandler:say(q.offer .. " Say {yes} or {no}.", npc, player)
+				local rw = SpireQuests.rewardText(q.reward)
+				npcHandler:say(q.offer .. (rw ~= "" and (" " .. rw) or "") .. " Say {yes} or {no}.", npc, player)
 				return true
 			end
 		end

@@ -44,3 +44,11 @@ SpireTest.add("quests: every Floor 1 quest pays experience", function()
 	end
 	SpireTest.eq(table.concat(missing, ","), "", "Floor 1 quests without experience")
 end)
+
+-- FLOOR1_REVIEW.md F1-23: players see what a quest pays before they take it
+SpireTest.add("quests: the reward line names gold, experience, title, gear and tempering", function()
+	SpireTest.eq(SpireQuests.rewardText({ gold = 600, exp = 4950 }), "Reward: 600 gold, 4,950 experience.", "gold and experience")
+	SpireTest.eq(SpireQuests.rewardText({ exp = 300, title = "Millhand", gear = true, temper = true }),
+		"Reward: 300 experience, the title \"Millhand\", a piece of Floor gear, your weapon tempered one tier.", "the rest")
+	SpireTest.eq(SpireQuests.rewardText({}), "", "nothing to say")
+end)

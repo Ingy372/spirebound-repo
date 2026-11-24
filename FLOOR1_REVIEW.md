@@ -206,7 +206,8 @@ not "all the same". Mix in the quest types players remember, keeping every step 
 ground (3,400 for Wasp Nest up to 10,700 for Shard Hunt; 300 for Pell's rats; 92,150 in all), so quests shave roughly
 two hours off the modelled 14.9 h climb, which stays inside Jay's 11-15 h. In-game test. Still to do: cosmetics.
 **F1-23 The Journal never shows what a quest pays.** Add the reward line (gold, experience, title, gear) to each quest
-in the Quests tab and to the NPC's offer.
+in the Quests tab and to the NPC's offer. **Done 2026-11-23 (overnight):** "Reward: 600 gold, 4,950 experience." on every
+offer and every quest row in the Journal (in-game test).
 
 **F1-22 Quests are found by talking to the right NPC.** The Upgrade tab now points to the next gear step (built
 today), but side quests still require walking into Hunter Brannoch. Put a "!" over NPCs with a quest you can take
