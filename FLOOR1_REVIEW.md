@@ -443,6 +443,23 @@ old grounds, Boar Meadow skipped):
 - **F1-44 The Gate Hound kills a solo level 24 in about 12 seconds**, and the Upgrade tab sent players to it at level
   24 with no word about a party. **Fixed overnight:** the step now says "gather a party of 3 or more"; the Axe-Lord
   step says "a party of 4 or more" (Claude's numbers), and a sign at the Pass entrance warns "Come with a party of three or more".
+**Mystic** (snakebite rod; Dorrow's Reedroot Rod at level 10; the old grounds before the bosses):
+
+| Place | Level | XP/h | Damage taken | Lowest health | Most in sight / next to you | Result |
+|---|---|---|---|---|---|---|
+| Ratwarren | 3 | 24,400 | 0 | 100% | 2 / 2 | |
+| Toad Pond | 5 | 28,600 | 0 | 100% | 2 / 2 | |
+| Sproutling Glade | 7 | 33,400 | 11 | 95% | 2 / 1 | |
+| Waspgrass Fields | 9 | 34,600 | 17 | 90% | 4 / 3 | |
+| Burrow Hills | 13 | 17,600 | 116 | 43% | 2 / 2 | same dip as the Arcanist (F1-45) |
+| Bandit Road (old map) | 23 | - | 1,613 in ~40 s | 0% | 15 / 7 | **died at the gate** |
+
+**All four classes together:** the starter grounds and Waspgrass are fine for every class (24,000-35,000 XP/h, never
+below 90% health). Every Pilot that reached an old loop ground (Boar Meadow twice, Bandit Road once) died within a
+minute or two at the gate, and the Gate Hound kills a solo player in about 12 seconds. Burrow Hills is the one rebuilt
+ground that underpays and overhits ranged classes. Nobody reached the Watchtower or the Axe-Lord alive, so those were
+not tested tonight.
+
 - **F1-46 The Gate Hound never came back after its first death**, but every climber's checklist (and its 3 cut shards)
   needs it. **Fixed overnight:** it returns 30 minutes after a kill and is always spawned at start-up; the first kill
   still opens the labyrinth once (Q48 for Jay). In-game test.
