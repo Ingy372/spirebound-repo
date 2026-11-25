@@ -6,6 +6,59 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+*Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
+
+### Q54. Launch with 3 finished floors instead of 10? (2026-11-25)
+The design says 10 floors at launch. But floors unlock about 6 days apart (the calendar gate), so Floor 4 isn't needed until about week 3 and Floor 10 until about week 8. Ten floors of our own maps and art before launch is most of a year's work; three is a few months.
+- **Recommendation:** launch with Floors 1-3 finished to the standard Floor 1 is getting, and add a floor every week or two during the season. Say "new floors every week" instead of "10 floors".
+- Other option: keep 10 at launch and accept a much later launch date.
+- Assumed until you answer: the design stays at 10, but I work on Floors 1-3 first either way.
+- Jay's answer:
+
+### Q55. Drop Hardcore mode? (2026-11-25)
+Three difficulty modes split a small population three ways, and Hardcore is the one nobody will talk about: Normal is the game, Death Game is the headline.
+- **Recommendation:** two modes, Normal and Death Game. A Death Game character who steps down becomes Normal.
+- Other option: keep all three.
+- Assumed until you answer: all three stay.
+- Jay's answer:
+
+### Q56. Twin Fang and the Fortune Hall (2026-11-25; also Q17 and Q18)
+- **Twin Fang** goes to the first 3 characters each season. That is a power prize for the fastest guild, which pulls against your "no bullying" pillar. **Recommendation:** make it a style anyone can earn through the trial (hard, but open), or make it look-only.
+- **Fortune Hall** (gambling with gold) is a legal risk once gold can be bought indirectly through shop items sold on the market. **Recommendation:** leave it out of season 1 and decide after talking to a professional (roadmap 7.5).
+- Assumed until you answer: both stay as designed; neither gets more work.
+- Jay's answer:
+
+### Q57. Shrink crafting to arrows and potions? (2026-11-25)
+You said on 23 Nov you're "not a fan of crafting", and the gear path has replaced it for weapons and armour. What's left is four crafters (Fletcher, Alchemist, Runewright, Tailor) and a material from every monster.
+- **Recommendation:** keep the Fletcher and Alchemist (special arrows and cheaper potions give monster materials a use, so hunters trade), drop the Tailor's and Runewright's recipes, and cut the house workshop bench and garden (roadmap 3.5b).
+- Other options: cut crafting completely (materials just sell to a trader); or keep all of it.
+- Assumed until you answer: shrink it as recommended (not built yet; nothing is removed before the friends test).
+- Jay's answer:
+
+### Q58. Too many small reward loops (2026-11-25)
+A player now has nine things handing out small rewards: hunting tasks, the Season Path, the Spire Chronicle, the daily login streak, the hourly lucky climber, the Tower Quiz, Floor Beacons, the boosted creature of the day and world events. Each has its own command. It reads as clutter, and the review of other servers shows that piles of systems don't hold players (Halera: 50+ systems, about 5 online).
+- **Recommendation:** keep the ones you chose (Beacons, Chronicle) plus hunting tasks and world events. Fold the daily streak into the Season Path, and drop the lucky climber, the quiz and the boosted creature, or keep them as rare weekend extras. Show everything on one Journal page (roadmap N5).
+- Assumed until you answer: fold as recommended, after the friends test.
+- Jay's answer:
+
+### Q59. Switch off big-group events until there are players for them (2026-11-25)
+Spire Siege, the arena events and Spire Pressure need dozens of players online. With a handful of testers an event that starts and gets nobody looks worse than no event.
+- **Recommendation:** each event starts only when enough people are online (Claude's numbers: arena 8, siege 20). Below that it doesn't announce at all. Nothing is deleted.
+- Assumed until you answer: yes.
+- Jay's answer:
+
+### Q60. The case against the cavebot on Floor 1 (2026-11-25; you asked for the reasons behind Grok's R5)
+The calm hunting grounds you asked for each feed one or two players. With a built-in cavebot and three windows per computer, a few players can hold every spawn on Floor 1 around the clock, and at a season launch everyone needs those spawns the same evening. New players would find every ground taken by characters nobody is playing. That is the strongest version of Grok's argument, and it only bites where grounds are small and everyone is the same level: Floor 1 at launch.
+- **Recommendation:** keep the cavebot as you designed it, but it does not work on Floor 1 for the first two weeks of a season, and never in the four starter grounds. Decide again once roadmap N2 has measured how many players Floor 1 really feeds.
+- Other options: as designed everywhere; or off on Floor 1 for good.
+- Assumed until you answer: as designed (your decision); nothing changes.
+- Jay's answer:
+
+### Q61. The new roadmap order (2026-11-25)
+ROADMAP.md is now one list: first-hour fixes, finish the last third of Floor 1, then a real party clears Floor 1 (you, with Grok's characters or friends), then make Floor 1 big enough for a launch evening, Floor 2's own map, Hearthgate polish, an art count, website accounts, friends test. **Nothing new gets built until the party run passes.** If you bring a new idea before then, I'll write it under "Later" and tell you so, unless you say it jumps the queue.
+- Assumed until you answer: yes.
+- Jay's answer:
+
 ### Q53. How many game windows can one person run at once? (2026-11-25)
 You said multi-clienting is welcome (extra characters, trainers, playing two at once). Today's rule is 2 game windows per computer. With the built-in cavebot, a much higher limit lets one person run a small bot army that floods the market with gold and items.
 - **Recommendation:** raise it to **3 per computer**: enough for a main, a helper and a trainer, still not a bot farm. The website count shows real people separately, so nobody is fooled by the numbers.
