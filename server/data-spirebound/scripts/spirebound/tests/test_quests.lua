@@ -124,3 +124,26 @@ SpireTest.add("quests: the Stair Key guards the Axe-Lord's hall door", function(
 	SpireTest.eq(SpireQuests.logText(key, -1, 0):find("Gate Hound") ~= nil, true, "the log says what the pieces are")
 	SpireTest.eq(MonsterType("Stonehorn Ram") ~= nil, true, "the Stonehorn Ram exists")
 end)
+
+-- P2: quests you can find
+SpireTest.add("quests: every Floor 1 quest giver can be found from the temple", function()
+	local t = Position(100, 100, 7)
+	SpireTest.eq(SpireQuests.compass(t, Position(100, 59, 7)), "about 40 steps north of the temple", "north")
+	SpireTest.eq(SpireQuests.compass(t, Position(70, 70, 7)), "about 30 steps north-west of the temple", "north-west")
+	SpireTest.eq(SpireQuests.compass(t, Position(102, 101, 7)), "right by the temple", "close")
+	for _, q in ipairs(SpireQuests.list) do
+		if q.floor == 1 and not q.auto then
+			SpireTest.eq(SpireQuests.WHERE[q.giver] ~= nil, true, q.giver .. " has a place")
+			local pos = SpireQuests.giverPos(q.giver)
+			SpireTest.eq(pos ~= nil, true, q.giver .. " has a position")
+			local seen = false
+			for _, c in ipairs(pos and Game.getSpectators(pos, false, false, 2, 2, 2, 2) or {}) do
+				if c:isNpc() and c:getName() == q.giver then
+					seen = true
+				end
+			end
+			SpireTest.eq(seen, true, q.giver .. " really stands there")
+			SpireTest.eq(SpireQuests.whereText(q.giver):find("temple") ~= nil, true, q.giver .. ": the directions name the temple")
+		end
+	end
+end)

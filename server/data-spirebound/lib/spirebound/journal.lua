@@ -79,7 +79,7 @@ function SpireJournal.quests(player)
 			table.insert(state == 2 and ready or active, label .. ": " .. SpireQuests.logText(q, state, SpireQuests.progress(player, q)) .. (rw ~= "" and (" " .. rw) or ""))
 		elseif SpireQuests.available(q, state, doneIds, SpireQuests.context(player)) then
 			local rw = SpireQuests.rewardText(q.reward)
-			table.insert(open, label .. ": talk to " .. q.giver .. "." .. (rw ~= "" and (" " .. rw) or ""))
+			table.insert(open, label .. ": talk to " .. SpireQuests.whereText(q.giver) .. "." .. (rw ~= "" and (" " .. rw) or ""))
 		end
 	end
 	local lines = {}

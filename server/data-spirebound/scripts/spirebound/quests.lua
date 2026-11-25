@@ -25,6 +25,7 @@ local login = CreatureEvent("SpireQuestLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireQuestKill")
 	SpirePerks.apply(player)
+	SpireQuests.markGivers(player) -- P2: "!" on the minimap where a quest waits
 	-- G3 (Grok playtest, 2026-11-24: Pell's quest never showed in the Quest Tracker): the tracker only lists missions
 	-- the player picked by hand unless "auto-track new quests" is on, and it starts off. Turn both auto options on
 	-- once per character (the player can still switch them off in the tracker).

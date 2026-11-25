@@ -223,7 +223,7 @@ function SpireQuests.logText(q, state, kills)
 	if q.auto then
 		return string.format(q.step, math.min(kills or 0, q.count), q.count)
 	end
-	return "Talk to " .. q.giver .. "."
+	return "Talk to " .. (SpireQuests.whereText and SpireQuests.whereText(q.giver) or q.giver) .. "."
 end
 
 -- Pure: may this player start the quest? doneIds = set of completed quest ids
@@ -350,6 +350,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					if q.reward.temper then SpireGear.temperFor(player, q.floor) end -- gear progression: +1 tier
 					if q.id == "q1_iron2" then SpireStairKey.update(player) end
 					npcHandler:say(q.thanks, npc, player)
+					SpireQuests.markGivers(player) -- the next quest may be with someone new
 					if SpireQuests.floorStoryDone(player, q.floor) then
 						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
 					end
@@ -449,4 +450,70 @@ function SpireStairKey.update(player, quiet)
 		return
 	end
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The Stair Key: %d of 3 pieces. Your quest log says what is left.", n))
+end
+
+-- P2 (Jay's playtest 2026-11-23, "quests you can find"): where each quest giver stands, said in the Journal and the
+-- NPC offer lines, and marked on the minimap. Positions match world/spirebound-npc.xml (an in-game test checks the
+-- NPC really stands there); Fence Marrow is placed at start-up (scripts/spirebound/quest_objects.lua).
+SpireQuests.WHERE = {
+	["Guide Pell"] = { place = "the Arrival Yard, at the start of the stone path", pos = { 1276, 1347, 7 } },
+	["Captain Dorrow"] = { place = "Hearthgate's north gate, outside the guardhouse", pos = { 1235, 1244, 7 } },
+	["Hunter Brannoch"] = { place = "the Hunters' Hall on Hearthgate's east side", pos = { 1267, 1273, 7 } },
+	["Vesper"] = { place = "Hearthgate, just south of the temple", pos = { 1236, 1302, 7 } },
+	["Fisher Corwin"] = { place = "the river bank north-west of Hearthgate", pos = { 1143, 1190, 7 } },
+	["Miller Agna"] = { place = "the mill in Millcross, far to the west", pos = { 1059, 1204, 7 } },
+	["Fence Marrow"] = { place = "the road just south of the Bandit Road, east of Hearthgate" },
+}
+
+function SpireQuests.giverPos(giver)
+	local w = SpireQuests.WHERE[giver]
+	if w and w.pos then
+		return Position(w.pos[1], w.pos[2], w.pos[3])
+	end
+	if giver == "Fence Marrow" and SpireQuestObjects and SpireQuestObjects.placed then
+		return SpireQuestObjects.placed.marrow
+	end
+end
+
+-- Pure: "about 41 steps north of the temple"
+function SpireQuests.compass(from, to)
+	local dx, dy = to.x - from.x, to.y - from.y
+	local dist = math.max(math.abs(dx), math.abs(dy))
+	if dist <= 4 then
+		return "right by the temple"
+	end
+	local ns = (dy < 0 and -dy * 2.4 > math.abs(dx)) and "north" or ((dy > 0 and dy * 2.4 > math.abs(dx)) and "south" or "")
+	local ew = (dx > 0 and dx * 2.4 > math.abs(dy)) and "east" or ((dx < 0 and -dx * 2.4 > math.abs(dy)) and "west" or "")
+	local dir = ns ~= "" and ew ~= "" and (ns .. "-" .. ew) or (ns .. ew)
+	return string.format("about %d steps %s of the temple", math.floor(dist / 5 + 0.5) * 5, dir)
+end
+
+-- "Captain Dorrow (Hearthgate's north gate, outside the guardhouse: about 40 steps north of the temple)"
+function SpireQuests.whereText(giver)
+	local w = SpireQuests.WHERE[giver]
+	if not w then
+		return giver
+	end
+	local pos, temple = SpireQuests.giverPos(giver), WorldPoints and WorldPoints.temple_hearthgate
+	if pos and temple and pos.z == temple.z then
+		return string.format("%s (%s: %s)", giver, w.place, SpireQuests.compass(temple, pos))
+	end
+	return string.format("%s (%s)", giver, w.place)
+end
+
+-- Minimap marks on the givers who have something for this player (once per giver per character)
+function SpireQuests.markGivers(player)
+	local doneIds, ctx = SpireQuests.doneIds(player), SpireQuests.context(player)
+	local marked = player:kv():scoped("spirebound-questmarks")
+	for _, q in ipairs(SpireQuests.list) do
+		local st = SpireQuests.state(player, q)
+		local giver = q.giver
+		if q.floor == 1 and not q.auto and (SpireQuests.available(q, st, doneIds, ctx) or st == 2) and not marked:get(giver) then
+			local pos = SpireQuests.giverPos(giver)
+			if pos and player.addMapMark then
+				player:addMapMark(pos, MAPMARK_EXCLAMATION or 2, "Quest: " .. giver)
+				marked:set(giver, os.time())
+			end
+		end
+	end
 end

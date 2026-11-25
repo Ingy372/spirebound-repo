@@ -1,0 +1,264 @@
+{
+ "name": "p2_givers",
+ "character": "Pilot Vanguard",
+ "timeout": 1500,
+ "about": "P2 check: walk from the temple to every Floor 1 quest giver and greet them.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1237,
+    1244,
+    7
+   ],
+   "fight": true,
+   "note": "Captain Dorrow",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1269,
+    1273,
+    7
+   ],
+   "fight": true,
+   "note": "Hunter Brannoch",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1238,
+    1302,
+    7
+   ],
+   "fight": true,
+   "note": "Vesper",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1145,
+    1190,
+    7
+   ],
+   "fight": true,
+   "note": "Fisher Corwin",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1061,
+    1204,
+    7
+   ],
+   "fight": true,
+   "note": "Miller Agna",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1358,
+    1224,
+    7
+   ],
+   "fight": true,
+   "note": "Fence Marrow",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1278,
+    1347,
+    7
+   ],
+   "fight": true,
+   "note": "Guide Pell",
+   "timeout": 240
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
