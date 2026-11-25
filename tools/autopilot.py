@@ -139,7 +139,7 @@ def plan_steps(route, wp, planner):
             pts = hops(path)
             for i, p in enumerate(pts):
                 last = i == len(pts) - 1
-                step = {"do": "walk", "to": list(p), "fight": s.get("fight", True), "timeout": 60}
+                step = {"do": "walk", "to": list(p), "fight": s.get("fight", True), "timeout": s.get("timeout", 60)}
                 if last and end_z is not None:
                     step["arrive_z"] = end_z
                 if last and s.get("note"):

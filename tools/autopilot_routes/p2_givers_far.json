@@ -1,0 +1,120 @@
+{
+ "name": "p2_givers_far",
+ "character": "Pilot Vanguard",
+ "timeout": 1500,
+ "about": "P2 check: the far quest givers from the temple.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1145,
+    1190,
+    7
+   ],
+   "fight": true,
+   "note": "Fisher Corwin",
+   "timeout": 400
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1061,
+    1204,
+    7
+   ],
+   "fight": true,
+   "note": "Miller Agna",
+   "timeout": 400
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "temple"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1355,
+    1228,
+    7
+   ],
+   "fight": true,
+   "note": "Fence Marrow",
+   "timeout": 400
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

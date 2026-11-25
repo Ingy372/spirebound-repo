@@ -55,7 +55,11 @@ function pilot.onSay(player, words, param)
 		end
 		local l = n - 1
 		local need = math.floor((50 * l * l * l - 150 * l * l + 400 * l) / 3) -- Tibia: experience for level n
-		player:addExperience(math.max(0, need - player:getExperience()), false)
+		if need >= player:getExperience() then
+			player:addExperience(need - player:getExperience(), false)
+		else -- (ability tests raise a tester to 280 and put it back afterwards)
+			player:removeExperience(player:getExperience() - need, false)
+		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: level " .. player:getLevel())
 	elseif cmd == "gearreset" then -- (gear tests) forget the barracks' weapon, style and trophies; drop Spirebound gear
 		local k = player:kv():scoped("spirebound")

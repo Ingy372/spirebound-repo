@@ -19,6 +19,10 @@
   },
   {
    "do": "say",
+   "text": "/pilot level 120"
+  },
+  {
+   "do": "say",
    "text": "/pilot trace on"
   },
   {
@@ -32,6 +36,9 @@
   {
    "do": "wait",
    "seconds": 2
+  },
+  {
+   "do": "heal"
   },
   {
    "do": "cast",
@@ -58,6 +65,9 @@
    "seconds": 2
   },
   {
+   "do": "heal"
+  },
+  {
    "do": "cast",
    "text": "snarefield",
    "target": true,
@@ -68,6 +78,10 @@
    "gap": 2.5,
    "name": "trapper",
    "note": "snarefield"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
   },
   {
    "do": "say",

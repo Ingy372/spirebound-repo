@@ -19,6 +19,10 @@
   },
   {
    "do": "say",
+   "text": "/pilot level 280"
+  },
+  {
+   "do": "say",
    "text": "/pilot trace on"
   },
   {
@@ -32,6 +36,9 @@
   {
    "do": "wait",
    "seconds": 2
+  },
+  {
+   "do": "heal"
   },
   {
    "do": "cast",
@@ -58,6 +65,9 @@
    "seconds": 2
   },
   {
+   "do": "heal"
+  },
+  {
    "do": "cast",
    "text": "arrow squall",
    "target": true,
@@ -80,6 +90,9 @@
   {
    "do": "wait",
    "seconds": 2
+  },
+  {
+   "do": "heal"
   },
   {
    "do": "cast",
@@ -106,6 +119,9 @@
    "seconds": 2
   },
   {
+   "do": "heal"
+  },
+  {
    "do": "cast",
    "text": "wayfarers stride",
    "target": true,
@@ -116,6 +132,10 @@
    "gap": 2.5,
    "name": "pathfinder",
    "note": "wayfarers stride"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
   },
   {
    "do": "say",
