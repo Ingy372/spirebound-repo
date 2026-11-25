@@ -75,38 +75,153 @@ function SpireTutorial.pity(player)
 	return true
 end
 
--- the gates: stepping onto a closed door sends you back a tile with a hint
-local lastHint = {} -- player guid -> when the gate last explained itself in the Server Log
-local gate = MoveEvent()
-function gate.onStepIn(creature, item, position, fromPosition)
-	local player = creature:getPlayer()
-	if not player or player:getGroup():getAccess() then
-		return true
-	end
+-- The gates (Claude's playtest 2026-11-25, C1; Jay: "use a gate of expertise"): a closed timber door on each gate tile,
+-- placed at start-up. Like Canary's level doors, nobody can walk onto a closed door; clicking it opens it and moves you
+-- through only when the step is done, and it closes behind you. (The old open gap pushed walkers back with a teleport;
+-- the engine rate-limits teleports, so after ~20 s of bumping a walker slipped through, and every bump repeated the
+-- hint.)
+SpireTutorial.GATE_AID = 47200
+SpireTutorial.DOOR_CLOSED, SpireTutorial.DOOR_OPEN = 1638, 1639 -- the timber fence's own door (an ordinary door to the engine)
+SpireTutorial.HINT_GAP = 8 -- seconds between two hints to the same player
+
+local function gateStep(pos)
 	for _, step in ipairs(SpireTutorial.STEPS) do
 		for i = 1, 2 do
 			local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
-			if p and p == position then
-				local open, missing = SpireTutorial.gateOpen(step, function(s)
-					return SpireTutorial.done(player, s)
-				end)
-				if not open and fromPosition.x < position.x and missing == "loot" and SpireTutorial.pity(player) then
-					return true -- a free cheese after a few tries: the gate never locks anyone in (Grok session 2)
-				end
-				if not open and fromPosition.x < position.x then
-					player:teleportTo(fromPosition, true)
-					position:sendMagicEffect(CONST_ME_ENERGYHIT)
-					player:sendCancelMessage(SpireTutorial.HELP[missing])
-					-- in the Server Log too: the bottom-of-screen line alone was missed (Grok session 3, SB3-08)
-					local pid = player:getGuid()
-					if (lastHint[pid] or 0) + 8 < os.time() then
-						lastHint[pid] = os.time()
-						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "This gate is closed. " .. SpireTutorial.HELP[missing])
+			if p and p == pos then
+				return step
+			end
+		end
+	end
+end
+
+local function check(player, step)
+	return SpireTutorial.gateOpen(step, function(s)
+		return SpireTutorial.done(player, s)
+	end)
+end
+
+local lastHint = {} -- player guid -> when a gate last explained itself
+local function hint(player, text)
+	local pid = player:getGuid()
+	if (lastHint[pid] or 0) + SpireTutorial.HINT_GAP <= os.time() then
+		lastHint[pid] = os.time()
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, text)
+		return true
+	end
+	return false
+end
+
+local gateStartup = GlobalEvent("SpireTutorialGates")
+function gateStartup.onStartup()
+	for _, step in ipairs(SpireTutorial.STEPS) do
+		for i = 1, 2 do
+			local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
+			local tile = p and Tile(p)
+			if tile then
+				local door = tile:getItemById(SpireTutorial.DOOR_CLOSED) or tile:getItemById(SpireTutorial.DOOR_OPEN)
+					or Game.createItem(SpireTutorial.DOOR_CLOSED, 1, p)
+				if door then
+					if door:getId() ~= SpireTutorial.DOOR_CLOSED then
+						door:transform(SpireTutorial.DOOR_CLOSED)
 					end
-					return true
+					door:setActionId(SpireTutorial.GATE_AID)
+					door:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "A yard gate. Click it to pass: it opens once you have done what the sign beside it says.")
 				end
 			end
 		end
+	end
+	return true
+end
+gateStartup:register()
+
+local gateUse = Action()
+function gateUse.onUse(player, item, fromPosition, target, toPosition)
+	local pos = item:getPosition()
+	local step = gateStep(pos)
+	if not step then
+		return false
+	end
+	local ppos = player:getPosition()
+	local goingBack = ppos.x > pos.x
+	if not goingBack and not player:getGroup():getAccess() then
+		local open, missing = check(player, step)
+		if not open and missing == "loot" and SpireTutorial.pity(player) then
+			open = check(player, step) -- a free cheese after a few tries: the gate never locks anyone in (Grok session 2)
+		end
+		if not open then
+			pos:sendMagicEffect(CONST_ME_ENERGYHIT)
+			player:sendCancelMessage(SpireTutorial.HELP[missing])
+			-- in the Server Log too: the bottom-of-screen line alone was missed (Grok session 3, SB3-08)
+			hint(player, "This gate is closed. " .. SpireTutorial.HELP[missing])
+			return true
+		end
+	end
+	if Tile(pos):getCreatureCount() > 0 then
+		player:sendCancelMessage("Someone is standing in the gate. Wait a moment.")
+		return true
+	end
+	if item:getId() == SpireTutorial.DOOR_CLOSED then
+		item:transform(SpireTutorial.DOOR_OPEN)
+		pos:sendSingleSoundEffect(SOUND_EFFECT_TYPE_ACTION_OPEN_DOOR)
+	end
+	player:teleportTo(pos, true)
+	return true
+end
+gateUse:aid(SpireTutorial.GATE_AID)
+gateUse:register()
+
+-- an open gate (someone just went through) still turns back anyone who hasn't done the step
+local gateIn = MoveEvent()
+gateIn:type("stepin")
+function gateIn.onStepIn(creature, item, position, fromPosition)
+	local player = creature:getPlayer()
+	if not player or player:getGroup():getAccess() or fromPosition.x >= position.x then
+		return true
+	end
+	local step = gateStep(position)
+	if not step then
+		return true
+	end
+	local open, missing = check(player, step)
+	if not open then
+		player:teleportTo(fromPosition, true)
+		hint(player, "This gate is closed. " .. SpireTutorial.HELP[missing])
+	end
+	return true
+end
+gateIn:aid(SpireTutorial.GATE_AID)
+gateIn:register()
+
+-- ... and closes behind whoever walked through
+local gateOut = MoveEvent()
+gateOut:type("stepout")
+function gateOut.onStepOut(creature, item, position, fromPosition)
+	if item:getId() == SpireTutorial.DOOR_OPEN and Tile(position):getCreatureCount() == 0 then
+		item:transform(SpireTutorial.DOOR_CLOSED)
+	end
+	return true
+end
+gateOut:aid(SpireTutorial.GATE_AID)
+gateOut:register()
+
+-- the tile in front of each gate says once what to do: click the gate, or do the step first
+local gateFront = MoveEvent()
+gateFront:type("stepin")
+function gateFront.onStepIn(creature, item, position, fromPosition)
+	local player = creature:getPlayer()
+	if not player or player:getVocation():getId() ~= 0 or fromPosition.x > position.x then
+		return true
+	end
+	local step = gateStep(Position(position.x + 1, position.y, position.z))
+	if not step then
+		return true
+	end
+	local open, missing = check(player, step)
+	if open then
+		hint(player, "A gate: click it to open it and walk through.")
+	else
+		hint(player, "This gate is closed. " .. SpireTutorial.HELP[missing])
 	end
 	return true
 end
@@ -114,12 +229,11 @@ for _, step in ipairs(SpireTutorial.STEPS) do
 	for i = 1, 2 do
 		local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
 		if p then
-			gate:position(p)
+			gateFront:position(Position(p.x - 1, p.y, p.z))
 		end
 	end
 end
-gate:type("stepin")
-gate:register()
+gateFront:register()
 
 -- step 1: beat a rat
 local kill = CreatureEvent("SpireTutorialKill")
@@ -187,20 +301,3 @@ function guard.onThink(interval)
 end
 guard:interval(5000)
 guard:register()
-
--- something to see at each gate (Jay, 2026-11-13: "a door, a gate, a wall of fire or energy, anything will do"):
--- a shimmering wall of energy across each gap. It never hurts; the gate check above is what stops you.
-local shimmer = GlobalEvent("SpireTutorialShimmer")
-function shimmer.onThink(interval)
-	for _, step in ipairs(SpireTutorial.STEPS) do
-		for i = 1, 2 do
-			local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
-			if p and #Game.getSpectators(p, false, true, 9, 9, 7, 7) > 0 then
-				p:sendMagicEffect(CONST_ME_ENERGYAREA)
-			end
-		end
-	end
-	return true
-end
-shimmer:interval(1200)
-shimmer:register()

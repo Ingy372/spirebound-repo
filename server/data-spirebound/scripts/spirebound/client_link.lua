@@ -8,7 +8,7 @@ function login.onLogin(player)
 		if p then
 			SpireClient.sendAll(p)
 			SpireClient.seedSpellBar(p, true) -- every login: the client only swaps out stock Tibia spells (Grok session 3)
-			lastFloor[pid] = Floors.at(p:getPosition())
+			lastFloor[pid] = Floors.at(p:getPosition()) .. "|" .. SpireClient.placeName(p:getPosition())
 			lastFamily[pid] = SwordSkills.heldFamily(p) or ""
 		end
 	end, 1000, player:getId())
@@ -21,10 +21,10 @@ local tick = GlobalEvent("SpireClientTick")
 function tick.onThink(interval)
 	for _, p in ipairs(Game.getPlayers()) do
 		local pid = p:getId()
-		local n = Floors.at(p:getPosition())
-		if lastFloor[pid] ~= n then
-			lastFloor[pid] = n
-			SpireClient.send(p, { t = "floor", n = n, name = Floors.names[n] or "" })
+		local pos = p:getPosition()
+		local key = Floors.at(pos) .. "|" .. SpireClient.placeName(pos)
+		if lastFloor[pid] ~= key then
+			lastFloor[pid] = SpireClient.sendFloor(p)
 		end
 		local zone = SpirePvP.zoneAt(p:getPosition())
 		if lastZone[pid] ~= zone then

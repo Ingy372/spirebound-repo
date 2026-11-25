@@ -936,6 +936,11 @@ function addPrivateText(text, speaktype, name, isPrivateCommand, creatureName)
 end
 
 function addText(text, speaktype, tabName, creatureName)
+    -- the engine writes "due to your %s attack" with an empty word for a normal hit: "your  attack" (C3, Claude's
+    -- playtest 2026-11-25). The server binary is downloaded, so the extra space is dropped here.
+    if type(text) == 'string' then
+        text = text:gsub('(%a)  (%a)', '%1 %2')
+    end
     local tab = getTab(tabName)
     if tab ~= nil then
         addTabText(text, speaktype, tab, creatureName)

@@ -22,7 +22,7 @@ npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, pl
 
 local ANSWERS = {
 	{ { "fight", "fighting", "attack", "combat" }, "To attack, click the monster's name in the Battle List (Ctrl+B opens it), or right-click the monster and choose Attack. When it falls, right-click the body to loot. Your health is the red bar: when it runs low, drink a health potion or step back into the safe square here. Use the practice club in your hand until the Registrar gives you real gear." },
-	{ { "skill", "skills", "sword", "bar" }, "Your sword skills sit on the bar at the right of the screen: Shift+1 to Shift+6. Press J at any time to open the Journal: secrets, fishing, quests, tasks and the list of climbers." },
+	{ { "skill", "skills", "sword", "bar" }, "Your weapon skills sit on the row of buttons at the bottom of the screen: Shift+1, 2 and 3, once the Registrar gives you a path. Press J at any time to open the Journal: secrets, fishing, quests, tasks and the list of climbers." },
 	{ { "spell", "spells", "magic" }, "Spells are learned on their own when you reach their level: no teacher, no cost. Your first attack spell comes the moment you choose your path, a healing spell at level 4. Say !spells to read your list." },
 	{ { "gold", "money", "coin", "shop", "sell" }, "Monsters drop coins and gear. Sell gear to the merchants, keep coins safe with Banker Tolliver, buy potions from Alchemist Ivo and arrows from Fletcher Tamsin. Anything you want to sell to other climbers goes on the market in any depot." },
 	{ { "quest", "quests", "mission" }, "Townsfolk ask for help: Captain Dorrow at Hearthgate's north gate, Hunter Brannoch in the Hunters' Hall, Vesper just south of the temple, Fisher Corwin on the river bank north-west of town and Miller Agna at the mill in Millcross. Say 'quest' to them and 'report' when you finish. A '!' on your minimap marks anyone with work for you, and the Journal (J) says how to find them." },
@@ -65,7 +65,15 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing. Take on my {quest} to learn to fight, ask me to {heal} you, or ask about {skills}, {spells}, {gold}, {death} or where to {hunt}.")
+local GREET = "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing; click a gate to open it. Take on my {quest} to learn to fight, ask me to {heal} you, or ask about {skills}, {spells}, {gold}, {death} or where to {hunt}."
+-- C3 (Claude's playtest 2026-11-25): back with First Blood done, "hi" got the plain greeting and nothing said "report"
+local GREET_READY = "Back already, climber? Three rats down: say {report} and the reward is yours."
+npcHandler:setMessage(MESSAGE_GREET, GREET)
+npcHandler:setCallback(CALLBACK_GREET, function(npc, player)
+	local q = SpireQuests.get("t1_1")
+	npcHandler:setMessage(MESSAGE_GREET, (q and SpireQuests.state(player, q) == 2) and GREET_READY or GREET)
+	return true
+end)
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good luck, climber.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

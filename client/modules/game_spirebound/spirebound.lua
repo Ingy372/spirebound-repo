@@ -375,8 +375,17 @@ local function syncBotScripts()
   end
 end
 
+-- C3 (Claude's playtest 2026-11-25): speech bubbles stayed on screen after a teleport (Registrar Maelis's lines
+-- floated in the Proving). A jump to another floor or far away clears them, as Esc does.
+local function onPositionChange(player, newPos, oldPos)
+  if oldPos and newPos and (newPos.z ~= oldPos.z or math.max(math.abs(newPos.x - oldPos.x), math.abs(newPos.y - oldPos.y)) > 8) then
+    g_map.cleanTexts()
+  end
+end
+
 function init()
   pcall(syncBotScripts)
+  connect(LocalPlayer, { onPositionChange = onPositionChange })
   ProtocolGame.registerExtendedJSONOpcode(OPCODE, onMessage)
   originalOnSkullChange = Creature.onSkullChange
   Creature.onSkullChange = function(self, skullId)
@@ -422,6 +431,7 @@ function terminate()
   if originalOnSkullChange then
     Creature.onSkullChange = originalOnSkullChange
   end
+  disconnect(LocalPlayer, { onPositionChange = onPositionChange })
   disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd })
   onGameEnd()
 end

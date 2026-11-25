@@ -64,9 +64,29 @@ function SpireClient.skillList(player)
 	return fam or "", list
 end
 
+-- The floor label's place name: the floor's own name, or a named place on it (C3, Claude's playtest 2026-11-25: the
+-- Proving, a hall under the Registrar, was labelled "Hearthgate Plains").
+function SpireClient.placeName(pos)
+	if SpireTutorial and SpireTutorial.inYard(pos) then
+		return "Arrival Yard"
+	end
+	local lo, hi = WorldPoints.proving_pit_1_nw, WorldPoints.proving_pit_3_se
+	local top = WorldPoints.proving_skip
+	if lo and hi and top and pos.z == lo.z and pos.x >= lo.x - 8 and pos.x <= hi.x + 8 and pos.y >= top.y - 8 and pos.y <= hi.y + 2 then
+		return "The Proving"
+	end
+	return Floors.names[Floors.at(pos)] or ""
+end
+
+function SpireClient.sendFloor(player)
+	local pos = player:getPosition()
+	local n, name = Floors.at(pos), SpireClient.placeName(pos)
+	SpireClient.send(player, { t = "floor", n = n, name = name })
+	return n .. "|" .. name
+end
+
 function SpireClient.sendAll(player)
-	local n = Floors.at(player:getPosition())
-	SpireClient.send(player, { t = "floor", n = n, name = Floors.names[n] or "" })
+	SpireClient.sendFloor(player)
 	local mode = Difficulty.get(player)
 	SpireClient.send(player, { t = "difficulty", mode = mode, name = Difficulty.names[mode] or "" })
 	local fam, list = SpireClient.skillList(player)

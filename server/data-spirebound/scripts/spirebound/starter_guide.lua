@@ -29,12 +29,28 @@ function SpireGuide.giveLetter(player)
 	return letter
 end
 
--- Pure: the lines of the !spells list for a base vocation and level
-function SpireGuide.spellLines(baseVocation, level)
-	local rows = {}
+-- Pure: does a style view (SpireStyle.view) own this style row? The same checks as casting it (scripts/spirebound/spells.lua).
+function SpireGuide.ownsStyle(row, view)
+	if not view then
+		return false
+	end
+	if row.path and view.path ~= row.path then
+		return false
+	end
+	if row.final and view.final ~= row.final then
+		return false
+	end
+	return SpireStyle.hasAbilityPure(view, row.style)
+end
+
+-- Pure: the lines of the !spells list for a base vocation, level and style view (nil: no style progress).
+-- Style abilities come from the style tree, not from levels, so they get their own section (C2, Claude's playtest
+-- 2026-11-25: a level-8 Ranger with no path saw six of them marked "learned").
+function SpireGuide.spellLines(baseVocation, level, view)
+	local rows, styled = {}, {}
 	for _, row in ipairs(SpireSpells.list) do
 		if not row.lostArt and SpireSpells.allowed(row, baseVocation) then
-			table.insert(rows, row)
+			table.insert(row.style and styled or rows, row)
 		end
 	end
 	local function lv(row)
@@ -46,10 +62,32 @@ function SpireGuide.spellLines(baseVocation, level)
 		end
 		return a.name < b.name
 	end)
+	table.sort(styled, function(a, b)
+		if a.style ~= b.style then
+			return a.style < b.style
+		end
+		return a.name < b.name
+	end)
 	local lines = {}
 	for _, row in ipairs(rows) do
 		local state = level >= lv(row) and "learned" or ("level " .. lv(row))
 		table.insert(lines, string.format("%-18s say \"%s\"   (%s)", row.name, row.words, state))
+	end
+	if #styled > 0 then
+		table.insert(lines, "\nStyle abilities: these come from your fighting style, not your level (say !style).")
+		for _, row in ipairs(styled) do
+			local state
+			if SpireGuide.ownsStyle(row, view) then
+				state = "yours"
+			elseif row.final then
+				state = "with the " .. SpireStyle.name(baseVocation, row.final) .. " style"
+			elseif row.path then
+				state = "with the " .. SpireStyle.name(baseVocation, row.path) .. " path"
+			else
+				state = "at style Mastery 10"
+			end
+			table.insert(lines, string.format("%-18s say \"%s\"   (%s)", row.name, row.words, state))
+		end
 	end
 	return lines
 end
@@ -70,10 +108,10 @@ function spells.onSay(player, words, param)
 	end
 	local base = player:getVocation():getBaseId()
 	if base == 0 then
-		player:sendTextMessage(MESSAGE_STATUS, "Speak to Registrar Maelis in the temple to choose a path first.")
+		player:sendTextMessage(MESSAGE_STATUS, "Choose a path with Registrar Maelis at the end of the stone path first.")
 		return false
 	end
-	local lines = SpireGuide.spellLines(base, player:getLevel())
+	local lines = SpireGuide.spellLines(base, player:getLevel(), SpireStyle.get(player))
 	table.insert(lines, 1, "Spells unlock by level. No one sells them: when you reach a level you learn its spells automatically.\n")
 	player:showTextDialog(LETTER_ID, table.concat(lines, "\n"))
 	return false

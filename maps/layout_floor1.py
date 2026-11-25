@@ -653,16 +653,16 @@ def build(m):
     m.towns.append((50, "Arrival Yard", spawn))
     m.points["tutorial_spawn"] = spawn
     m.sign(yx + 3, yy + 9, Z, "Welcome to the Spirebound tower. Click the ground to walk. Follow the stone path east: each "
-           "gate opens when you have learned one thing. Guide Pell will help.")
+           "gate opens when you have learned one thing (click a gate to open it). Guide Pell will help.")
     m.npcs.append(("Guide Pell", (yx + 6, yy + 11, Z)))
-    gates = [(26, "kill", "Gate 1: beat a rat in the pen."), (32, "loot", "Gate 2: open a rat's body and take what it carried."),
-             (38, "spells", "Gate 3: say !spells to see the sword skills and spells you will learn."),
-             (44, "potion", "Gate 4: drink the health potion in your backpack.")]
-    for gx, step, text in gates:                        # a timber fence right across the yard, an open door on the path
+    gates = [(26, "kill", "Gate 1: beat a rat in the pen, then click the gate."), (32, "loot", "Gate 2: open a rat's body and take what it carried, then click the gate."),
+             (38, "spells", "Gate 3: say !spells to see the skills and spells you will learn, then click the gate."),
+             (44, "potion", "Gate 4: drink the health potion in your backpack, then click the gate.")]
+    for gx, step, text in gates:                        # a timber fence right across the yard, a gap on the path
         line = [(yx + gx, y2) for y2 in range(yy + 1, yy + YH - 1)]
         m.autowall([t for t in line if t[1] not in (yy + 11, yy + 12)], Z, "timber")
         for y2 in (yy + 11, yy + 12):
-            # an open gap, not a door: the engine treats a lone fence door as a quest door ("Only the worthy may pass")
+            # a gap in the map; scripts/spirebound/tutorial.lua puts a click-to-open gate door here at start-up (C1)
             m.points[f"tutorial_gate_{step}_{y2 - yy - 10}"] = (yx + gx, y2, Z)
         m.sign(yx + gx - 1, yy + 9, Z, text)
     m.points["tutorial_yard_nw"] = (yx, yy, Z)

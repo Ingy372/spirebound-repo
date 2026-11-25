@@ -46,6 +46,7 @@ local KITS = {
 local COMMON_KIT = { { 3361, 1 }, { 3355, 1 }, { 3559, 1 }, { 3552, 1 }, { 3582, 5 }, { 266, 5 }, { 268, 5 }, { 3003, 1 }, { 3457, 1 }, { 2920, 1 } }
 -- leather armor, leather helmet, leather legs, leather boots, ham, health/mana potions, rope, shovel
 -- the armour goes on straight away (Grok session 3: every new character walked about with it in the backpack)
+local TOOLS = { [3003] = true, [3457] = true, [2920] = true } -- rope, shovel, torch: one is enough
 local WEAR = { [3361] = CONST_SLOT_ARMOR, [3355] = CONST_SLOT_HEAD, [3559] = CONST_SLOT_LEGS, [3552] = CONST_SLOT_FEET }
 
 local MODES = {
@@ -72,7 +73,10 @@ local function giveKit(player, vocId)
 			SpireQuiver.give(player, 100) -- a bow only fires from a quiver in the shield hand (Jay's playtest, 2026-11-13)
 		end
 		for _, entry in ipairs(COMMON_KIT) do
-			SpireGive.item(player, entry[1], entry[2], WEAR[entry[1]])
+			-- tools the yard already gave (rope, shovel, torch) are not given twice (C3, Claude's playtest 2026-11-25)
+			if not (TOOLS[entry[1]] and player:getItemCount(entry[1]) > 0) then
+				SpireGive.item(player, entry[1], entry[2], WEAR[entry[1]])
+			end
 		end
 	end)
 	if SpireGuide then

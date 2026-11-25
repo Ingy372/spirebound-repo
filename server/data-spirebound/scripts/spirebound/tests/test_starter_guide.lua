@@ -17,3 +17,14 @@ SpireTest.add("guide: !spells lists only the vocation's own spells, marking what
 	SpireTest.eq(joined:find("Arc Beam[^\n]*level 23") ~= nil, true, "level 23 spell is shown as locked at level 8")
 	SpireTest.eq(joined:find("Wayfinder[^\n]*level 10") ~= nil, true, "shared spells show the Arcanist's own level")
 end)
+
+SpireTest.add("guide: !spells keeps style abilities apart and never calls them learned without the style (C2)", function()
+	local joined = table.concat(SpireGuide.spellLines(3, 8, nil), "\n") -- Ranger, level 8, no style progress
+	SpireTest.eq(joined:find("Farshot[^\n]*learned") == nil, true, "a path ability is not learned at level 8")
+	SpireTest.eq(joined:find("Last Light[^\n]*learned") == nil, true, "a final-style ability is not learned at level 8")
+	SpireTest.eq(joined:find("Style abilities", 1, true) ~= nil, true, "style abilities have their own section")
+	SpireTest.eq(joined:find("Piercing Shot[^\n]*learned") ~= nil, true, "the level-1 spell is still learned")
+	local view = SpireStyle.view(3, 999999, "marksman", nil, nil)
+	SpireTest.eq(SpireGuide.ownsStyle({ style = 2, path = "marksman" }, view), SpireStyle.hasAbilityPure(view, 2), "the chosen path's ability follows the style tree")
+	SpireTest.eq(SpireGuide.ownsStyle({ style = 2, path = "trapper" }, view), false, "another path's ability is not owned")
+end)

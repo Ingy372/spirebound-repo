@@ -26,7 +26,11 @@ SpireTest.add("tutorial: the gates stand on the path, and the yard holds the Reg
 	for _, step in ipairs(SpireTutorial.STEPS) do
 		for i = 1, 2 do
 			local p = WorldPoints["tutorial_gate_" .. step .. "_" .. i]
-			SpireTest.eq(p ~= nil and walkable(p), true, step .. " gate door " .. i .. " is an open door on the path")
+			-- C1: a closed, click-to-open gate door (nobody walks onto it; the old open gap could be pushed through)
+			local tile = p and Tile(p)
+			local door = tile and tile:getItemById(SpireTutorial.DOOR_CLOSED)
+			SpireTest.eq(door ~= nil and door:getActionId() == SpireTutorial.GATE_AID, true, step .. " gate " .. i .. " holds a closed gate door")
+			SpireTest.eq(walkable(p), false, step .. " gate " .. i .. " can't be walked onto while closed")
 		end
 	end
 	SpireTest.eq(SpireTutorial.inYard(WorldPoints.tutorial_spawn), true, "the spawn is in the yard")

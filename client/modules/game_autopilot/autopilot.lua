@@ -240,6 +240,17 @@ function handlers.jump(player)
     end
 end
 
+-- drink a health potion on yourself, as a player does with "Use with..." (the yard's potion gate)
+function handlers.drink(player)
+    if not stepData.sent then
+        g_game.useInventoryItemWith(step.id or POTION, player)
+        log('drank item ' .. tostring(step.id or POTION))
+        stepData.sent = now()
+    elseif now() - stepData.sent > 1 then
+        nextStep()
+    end
+end
+
 function handlers.heal()
     if not stepData.sent then
         g_game.talk('/pilot heal')
@@ -541,6 +552,48 @@ function handlers.hunt(player)
     end
 end
 
+-- closed doors a walk may open on its own: the Arrival Yard's gates (scripts/spirebound/tutorial.lua, C1). Like a
+-- player, the pilot clicks the gate in its way; the server says why if it stays shut.
+local OPENABLE = { [1638] = true }
+local function openDoorToward(player, to)
+    local pos = player:getPosition()
+    for dx = -1, 1 do
+        for dy = -1, 1 do
+            local p = { x = pos.x + dx, y = pos.y + dy, z = pos.z }
+            local tile = (dx ~= 0 or dy ~= 0) and g_map.getTile(p)
+            local top = tile and tile:getTopUseThing()
+            if top and top:isItem() and OPENABLE[top:getId()] and dist(p, to) < dist(pos, to) then
+                g_game.use(top)
+                log('opened the gate at ' .. fmtPos(p))
+                return true
+            end
+        end
+    end
+    return false
+end
+
+-- no path because a closed gate is in the way (the client never plans through a closed door): the tile in front of
+-- the nearest gate that lies towards the goal
+local function frontOfGate(player, to)
+    local pos = player:getPosition()
+    local best, bestD
+    for dx = -12, 12 do
+        for dy = -12, 12 do
+            local p = { x = pos.x + dx, y = pos.y + dy, z = pos.z }
+            local tile = g_map.getTile(p)
+            local top = tile and tile:getTopUseThing()
+            if top and top:isItem() and OPENABLE[top:getId()] and dist(p, to) < dist(pos, to) then
+                local d = dist(pos, p)
+                if not bestD or d < bestD then
+                    local side = pos.x < p.x and -1 or (pos.x > p.x and 1 or 0)
+                    best, bestD = { x = p.x + side, y = p.y, z = p.z }, d
+                end
+            end
+        end
+    end
+    return best
+end
+
 function handlers.walk(player)
     local to, pos = toPos(step.to), player:getPosition()
     local arrived = (step.arrive_z and pos.z == step.arrive_z) or (pos.z == to.z and dist(pos, to) == 0)
@@ -561,7 +614,20 @@ function handlers.walk(player)
     end
     if not player:isWalking() and now() - (stepData.lastWalk or 0) > 1 then
         stepData.lastWalk = now()
-        if not player:autoWalk(to) and not stepData.noPath then
+        if now() - (stepData.lastMove or stepT) > 1.5 and now() - (stepData.lastDoor or 0) > 3 then
+            -- not getting anywhere: a closed gate may be in the way (the client never plans a path through one)
+            if openDoorToward(player, to) then
+                stepData.lastDoor = now()
+                return
+            end
+            local front = frontOfGate(player, to)
+            if front and dist(front, player:getPosition()) > 0 and player:autoWalk(front) then
+                stepData.lastDoor = now()
+                return
+            end
+        end
+        local ok = player:autoWalk(to)
+        if not ok and not stepData.noPath then
             stepData.noPath = true
             log('no path from ' .. fmtPos(pos) .. ' to ' .. fmtPos(to) .. ' (too far, or blocked)')
         end
