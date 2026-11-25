@@ -1,0 +1,71 @@
+{
+ "name": "m5_heal_only_live",
+ "character": "Pilot Mystic",
+ "timeout": 200,
+ "about": "M5 with a set-up bot (run \"python tools/bot_test_setup.py on\" first and \"off\" after): HealBot casts dewfall below 70% and a cavebot route walks the Hearth Square. During a player fight it heals but stands still; after the fight it walks again. The autopilot drinks no potions here, so every heal is the bot's.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1303,
+    7
+   ],
+   "note": "Hearth Square"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "bot",
+   "on": true,
+   "note": "bot on: route walks"
+  },
+  {
+   "do": "wait",
+   "seconds": 12,
+   "note": "walking before the fight"
+  },
+  {
+   "do": "botguard",
+   "note": "before the fight"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pvphit",
+   "note": "player fight starts"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot hp 40",
+   "note": "hurt: the bot should heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 20,
+   "note": "during the fight: heals, no steps"
+  },
+  {
+   "do": "botguard"
+  },
+  {
+   "do": "wait",
+   "seconds": 42,
+   "note": "fight ends"
+  },
+  {
+   "do": "wait",
+   "seconds": 15,
+   "note": "after the fight: walking again"
+  },
+  {
+   "do": "bot",
+   "on": false
+  }
+ ],
+ "noPotions": true
+}

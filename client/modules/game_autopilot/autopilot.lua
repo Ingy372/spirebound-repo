@@ -500,6 +500,9 @@ function handlers.botguard(player)
     if g then
         log(string.format('botguard: bot running, %d of %d helper jobs guarded, %d bookmarks, fight seen by the bot = %s',
             g.paused or 0, g.jobs or 0, g.marks or 0, tostring(g.locked)))
+        log(string.format('botguard: cavebot on = %s, paused job runs held back = %d, bot casts during fights = %d%s',
+            tostring(g.cavebotOn), g.held or 0, g.healsInFight or 0, g.lastWords and (' (last: "' .. g.lastWords .. '")') or ''))
+        log(string.format('botguard: cavebot route has %d steps, now at "%s"', g.caveSteps or 0, tostring(g.caveAt)))
     else
         log('botguard: the bot is not running (or its guard has not loaded)')
     end

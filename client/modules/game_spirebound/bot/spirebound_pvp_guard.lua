@@ -24,17 +24,31 @@ end
 
 -- wrap every job that must pause: in a player fight it simply does nothing
 local paused = 0
+local status = { held = 0, healsInFight = 0 } -- for the test autopilot (see the end of this file)
 for i, m in ipairs(_macros) do
   if not allowed(i) and not m.spireGuarded then
     local original = m.callback
     m.callback = function(macro)
       if locked() then
+        status.held = status.held + 1
         return true -- counts as run, so it doesn't retry every frame
       end
       return original(macro)
     end
     m.spireGuarded = true
     paused = paused + 1
+  end
+end
+
+-- count what the healers say during a fight (only healing and eating jobs still run then)
+if type(say) == "function" then
+  local originalSay = say
+  say = function(text, ...)
+    if locked() then
+      status.healsInFight = status.healsInFight + 1
+      status.lastWords = text
+    end
+    return originalSay(text, ...)
   end
 end
 
@@ -45,8 +59,12 @@ macro(200, function()
   if now and CaveBot and CaveBot.isOn and CaveBot.isOn() and CaveBot.delay then
     CaveBot.delay(500)
   end
-  if modules and modules.game_spirebound and modules.game_spirebound.botGuard then
-    modules.game_spirebound.botGuard.locked = now
+  status.locked = now
+  status.cavebotOn = CaveBot and CaveBot.isOn and CaveBot.isOn() or false
+  local list = CaveBot and CaveBot.actionList
+  if list then
+    local f = list:getFocusedChild()
+    status.caveSteps, status.caveAt = list:getChildCount(), f and f:getText() or ''
   end
   if now ~= wasLocked then
     wasLocked = now
@@ -58,6 +76,7 @@ end)
 
 SpireGuard = { paused = paused, allowed = allowed, locked = locked }
 -- for the test autopilot (game_autopilot "botguard" step): how many jobs are guarded and whether a fight is on
+status.paused, status.marks, status.jobs = paused, #marks, #_macros
 if modules and modules.game_spirebound then
-  modules.game_spirebound.botGuard = { paused = paused, marks = #marks, jobs = #_macros }
+  modules.game_spirebound.botGuard = status
 end
