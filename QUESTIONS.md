@@ -10,6 +10,7 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 Grok (and the playtest task) asked to hide the vBot panel for new players; it looks unfinished. But the design builds bot helpers into our client on purpose (DESIGN.md 11: cavebot at 45% experience), so I left it.
 - **Recommendation:** keep it, but start it collapsed for new characters, and later replace it with our own simpler cavebot window. Not urgent.
 - Other option: hide it completely until our own cavebot window exists.
+- Built 2026-11-25 (the recommendation): the bot panel starts folded once per install; players can unfold it.
 
 ### Q48. The Gate Hound now comes back after it dies (2026-11-24)
 It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.

@@ -1,0 +1,20 @@
+{
+ "name": "q51_botpanel",
+ "character": "Pilot Arcanist",
+ "timeout": 60,
+ "about": "Q51 check: the bot panel starts folded.",
+ "steps": [
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "q51_botpanel"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

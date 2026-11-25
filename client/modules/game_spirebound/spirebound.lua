@@ -228,6 +228,16 @@ local function onGameStart()
   removeEvent(cursorEvent)
   redrawButtons()
   scheduleEvent(hideStore, 1500)
+  -- Q51 (Grok playtest): the bot panel looked unfinished to a new player. Fold it once per install; the player can
+  -- open it again, and from then on the bot keeps its own open/closed setting.
+  scheduleEvent(function()
+    local w = modules.game_bot and modules.game_bot.botWindow
+    if not g_settings.getBoolean('spireBotFolded') and w and w.minimize then
+      w:minimize()
+      g_settings.set('spireBotFolded', true)
+      g_settings.save()
+    end
+  end, 2500)
   -- (polling every creature with g_map.getSpectators crashed the Windows client (heap corruption); cursors now update only when the server sends a skull change)
 end
 
