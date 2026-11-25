@@ -69,3 +69,25 @@ function SpireClient.sendAll(player)
 	local fam, list = SpireClient.skillList(player)
 	SpireClient.send(player, { t = "skills", family = fam, list = list })
 end
+
+-- Each path's first attack spell and heal (G1, Grok playtest 2026-11-24). The client puts them on action bar 1,
+-- buttons 3 and 4 (where the stock client left three Tibia spell words), once per character.
+SpireClient.FIRST_SPELLS = {
+	[4] = { "heavy strike", "second wind" },
+	[3] = { "piercing shot", "field dressing" },
+	[1] = { "ember strike", "mending spark" },
+	[2] = { "frost strike", "dewfall" },
+}
+
+function SpireClient.seedSpellBar(player, force)
+	local base = player:getVocation():getBaseId()
+	local list = SpireClient.FIRST_SPELLS[base]
+	local kv = player:kv():scoped("spirebound-notices")
+	if not list or (kv:get("spellbar") == true and not force) then
+		return false
+	end
+	kv:set("spellbar", true)
+	SpireClient.send(player, { t = "spellbar", list = list })
+	return true
+end
+

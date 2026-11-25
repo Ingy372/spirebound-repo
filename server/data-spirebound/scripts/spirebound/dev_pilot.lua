@@ -16,6 +16,8 @@
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
+--   /pilot newbie          (tutorial tests) become a brand-new character again: no path, no mode, the Proving not done,
+--                          a practice club in hand, at the Registrar
 --   /pilot trace on|off    log what every spell you cast did (server log, [SPELLTRACE]); refills you after each
 --                          cast and lets you cast Lost Arts, so a test can try every spell
 local pilot = TalkAction("/pilot")
@@ -99,6 +101,26 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: " .. made .. " " .. name)
+	elseif cmd == "newbie" then -- (tutorial tests, G2) start over as a character that has just reached the Registrar
+		player:setVocation(Vocation(0))
+		player:kv():scoped("spirebound"):remove("difficulty")
+		player:kv():scoped("spirebound-proving"):remove("done")
+		player:kv():scoped("spirebound-notices"):remove("spellbar")
+		for _, slot in ipairs({ CONST_SLOT_LEFT, CONST_SLOT_RIGHT }) do
+			local it = player:getSlotItem(slot)
+			if it then
+				it:remove()
+			end
+		end
+		player:addItem(3270, 1, true, 1, CONST_SLOT_LEFT)
+		if Town(50) then
+			player:setTown(Town(50))
+		end
+		local r = WorldPoints.tutorial_registrar
+		if r then
+			player:teleportTo(Position(r.x - 2, r.y, r.z))
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: newbie")
 	elseif cmd == "clear" then
 		local n = 0
 		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 9, 9)) do

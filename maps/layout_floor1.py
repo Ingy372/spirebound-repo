@@ -672,14 +672,46 @@ def build(m):
         m.clear_items(pen[0] + 5, y2, Z)
     m.monsters.append(("Pen Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
     m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
-    m.sign(yx + 11, yy + 9, Z, "Stop 1 of 3: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
-    m.sign(yx + 33, yy + 9, Z, "Stop 2 of 3: Skills and spells. Once you choose a path, the bar on the right holds the skills of the weapon in your hand (Shift+1..6), and !spells lists your spells. Press J for your Journal: its 'How do I' page answers most questions.")
-    m.sign(yx + 45, yy + 9, Z, "Stop 3 of 3: The Registrar's hall is ahead. Choose your path and how hard you want to live. Then you are sent to Hearthgate.")
+    m.sign(yx + 11, yy + 9, Z, "Stop 1 of 4: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
+    m.sign(yx + 33, yy + 9, Z, "Stop 2 of 4: Skills and spells. Once you choose a path, the bar on the right holds the skills of the weapon in your hand (Shift+1..6), and !spells lists your spells. Press J for your Journal: its 'How do I' page answers most questions.")
+    m.sign(yx + 45, yy + 9, Z, "Stop 3 of 4: The Registrar's hall is ahead. Choose your path and how hard you want to live. Then the Proving, below the hall, before Hearthgate.")
     m.building(yx + 53, yy + 7, 10, 10, Z, floor="marble", door_side="w", style="white", doors=True)
     S.carpet(m, yx + 55, yy + 9, 6, 6, Z, 2576)
     m.npcs.append(("Registrar Maelis", (yx + 58, yy + 12, Z)))
     m.points["tutorial_registrar"] = (yx + 58, yy + 12, Z)
     yard_x, yard_y = yx, yy                       # kept for the zones below (yx/yy are reused as loop names later)
+
+    # ------------------------------------------------ the Proving (G2, Jay 2026-11-24: "continue the tutorial after
+    # picking a class" with "a small one person boss fight"). Under the yard, z 9. The Registrar sends every new
+    # character here: try your new spells on a few rats, then step on the glowing stone to face Bramblejaw alone in one
+    # of three closed pits (scripts/spirebound/proving.lua). A portal skips straight to Hearthgate.
+    rng_state = m.rng.getstate()                       # added late: don't re-roll the rest of the map
+    PX, PY, PZ = yx + 4, yy + 1, 9
+    m.fill(PX, PY, 22, 11, PZ, "stonefloor")
+    m.walls(PX, PY, 22, 11, PZ, style="stone")
+    m.points["proving_arrival"] = (PX + 3, PY + 5, PZ)
+    m.points["proving_entry"] = (PX + 19, PY + 5, PZ)
+    m.npcs.append(("Warden Ketta", (PX + 5, PY + 3, PZ)))
+    m.monsters.append(("Pen Rat", (PX + 11, PY + 5, PZ), 3, 2, 15))
+    m.sign(PX + 2, PY + 1, PZ, "Stop 4 of 4: The Proving. Try your new spells on the rats (they are on your action bar). "
+           "When you are ready, step on the glowing stone in the east to face Bramblejaw alone. The portal in the north-east "
+           "corner skips to Hearthgate.")
+    m.teleport((PX + 20, PY + 1, PZ), m.points["temple_hearthgate"], "proving_skip")
+    DG.hang(m, PX, PY, 22, 11, PZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+    for i in range(3):                                  # three closed pits, one climber each (no way in or out on foot)
+        rx, ry = PX + i * 12, PY + 13
+        m.fill(rx, ry, 11, 9, PZ, "stonefloor")
+        m.walls(rx, ry, 11, 9, PZ, style="stone")
+        m.points[f"proving_pit_{i + 1}_player"] = (rx + 2, ry + 4, PZ)
+        m.points[f"proving_pit_{i + 1}_boss"] = (rx + 7, ry + 4, PZ)
+        m.points[f"proving_pit_{i + 1}_nw"] = (rx + 1, ry + 1, PZ)
+        m.points[f"proving_pit_{i + 1}_se"] = (rx + 9, ry + 7, PZ)
+        DG.hang(m, rx, ry, 11, 9, PZ, every=4, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+    keep = DG.keep_clear(m, PZ) | {(x_, y_) for x_ in range(PX + 1, PX + 21) for y_ in range(PY + 4, PY + 7)}  # the walk to the stone
+    DG.scatter(m, PX + 1, PY + 1, 20, 9, PZ, DG.DEBRIS, 8, avoid=keep)
+    for i in range(3):
+        DG.scatter(m, PX + i * 12 + 1, PY + 14, 9, 7, PZ, DG.BONES, 4, avoid=keep)
+    m.rng.setstate(rng_state)
 
     # ------------------------------------------------ apex spawn: the Old Watchtower (Contested from task 2.2)
     ax, ay = X0 + 30, Y0 + 30
@@ -834,6 +866,7 @@ def build(m):
     m.zone("guarded", tx + 10, Y0 + 195, 70, 55, 7)                  # the gate road up to the Waspgrass Fields
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
     m.zone("guarded", yard_x - 2, yard_y - 2, 68, 28, 7)              # the Arrival Yard
+    m.zone("guarded", yard_x + 3, yard_y, 38, 25, 9)                 # the Proving under it (G2)
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
     for c in CAMPS:                                                   # Open grounds are Open right up to their walls
         if c["zone"] == "open":

@@ -120,3 +120,8 @@ Five rare elites now borrow their ground's monster sprite and glow (a coloured l
 (wolf), Mossback Snapper, Blackthorn (thornsnap), Prism Shardling. Later, each could get a variant of its base creature
 from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal) so players spot
 them at a glance. Not needed for the alpha.
+
+## Batch 8 (2026-11-24): the Proving (Priority: low, placeholders work)
+Made by Claude with the Blender pipeline when the art queue reaches them; until then they borrow stock looks.
+- **Bramblejaw** (creature, the Proving's one-person boss): an old, scarred yard boar with brambles tangled in its bristles and a torn ear; bigger and shaggier than the Bristle Boar so it reads as "boss". Closest Tibia look-alike: Boar / War Boar (make ours obviously different: bramble-green and rust colours, the bramble tangle as the signature). Now: Bristle Boar's placeholder look (119).
+- **Warden Ketta** (NPC): a stern trainer in a padded gambeson with a staff, keeper of the Proving. Now: a stock outfit (139).

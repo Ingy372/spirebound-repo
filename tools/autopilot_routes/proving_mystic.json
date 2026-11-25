@@ -1,0 +1,283 @@
+{
+ "name": "proving_mystic",
+ "character": "Pilot Mystic",
+ "timeout": 900,
+ "about": "G1/G2/G4 check: a fresh Mystic at the Registrar, the Proving, Bramblejaw, on to Hearthgate.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot newbie",
+   "note": "Registrar"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "mystic"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "registrar_pitch"
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "normal"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 5
+  },
+  {
+   "do": "shot",
+   "name": "proving_arrival",
+   "note": "Proving"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "note": "no target (G4)"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "practice rat"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "hunt",
+   "seconds": 20,
+   "radius": 7
+  },
+  {
+   "do": "walk",
+   "to": "proving_entry",
+   "fight": false,
+   "note": "into a pit"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "pit"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "say",
+   "text": "dewfall"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "say",
+   "text": "dewfall"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "say",
+   "text": "dewfall"
+  },
+  {
+   "do": "cast",
+   "text": "frost strike",
+   "target": true,
+   "note": "Bramblejaw"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 8,
+   "radius": 8
+  },
+  {
+   "do": "wait",
+   "seconds": 14,
+   "note": "after the win"
+  },
+  {
+   "do": "shot",
+   "name": "after_proving"
+  },
+  {
+   "do": "say",
+   "text": "!hunt"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  }
+ ]
+}

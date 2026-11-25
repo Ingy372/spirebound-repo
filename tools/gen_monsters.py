@@ -26,6 +26,13 @@ MONSTERS = {
     "Pen Rat": dict(desc="a pen rat", look=(56,), corpse=5964, hp=12, xp=6, speed=70, race="blood",
                     attacks=[("melee", 0, -3)], armor=0, defense=0,
                     loot=[(3607, 100000, 1), (GOLD, 80000, 3)], voices=["Squeak?"]),  # cheese every time: the yard's loot gate needs something to take
+    # The Proving's one-person boss (G2, Jay 2026-11-24): a new character's first fight with its new spells. Gentle on
+    # purpose: a slow bite, and every few seconds a telegraphed stomp (red smoke first) that teaches stepping aside.
+    # It can't kill you: the Proving pulls you out at 1 health (scripts/spirebound/proving.lua). Placeholder look.
+    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=6046, hp=240, xp=60, speed=90, race="blood",
+                       attacks=[("melee", 0, -12)], armor=2, defense=4, boss=True,
+                       loot=[(GOLD, 100000, 40), (266, 100000, 2)], voices=["SNORT!", "Bramblejaw paws the ground."],
+                       events=["SpireProvingThink", "SpireProvingDeath"]),
     "Hopper Toad": dict(desc="a hopper toad", look=(222,), corpse=6077, hp=28, xp=9, speed=80, race="blood",
                         attacks=[("melee", 0, -10), ("slow", -70, 1500, 3, "CONST_ME_GREEN_RINGS")], armor=2, defense=2,  # F1-10: a sticky spit
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),

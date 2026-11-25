@@ -1181,6 +1181,10 @@
 		<monster name="Pen Rat" x="0" y="-1" z="7" spawntime="15" />
 		<monster name="Pen Rat" x="1" y="-1" z="7" spawntime="15" />
 	</monster>
+	<monster centerx="1285" centery="1342" centerz="9" radius="3">
+		<monster name="Pen Rat" x="-1" y="-1" z="9" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="9" spawntime="15" />
+	</monster>
 	<monster centerx="1036" centery="1036" centerz="7" radius="2">
 		<monster name="Stonehorn Ram" x="0" y="0" z="7" spawntime="75" />
 		<monster name="Stonehorn Ram" x="-1" y="0" z="7" spawntime="75" />

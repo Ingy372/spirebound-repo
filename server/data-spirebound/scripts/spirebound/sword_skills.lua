@@ -128,6 +128,7 @@ for i, def in ipairs(SwordSkills.list) do
 	if def.area == "target" or def.area == "targetaround1" then
 		spell:needTarget(true)
 		local melee = def.family == "sword" or def.family == "axe" or def.family == "club"
+		SpireSpells.needTargetHint(def.words) -- G4: say so when nothing is targeted
 		spell:range(melee and 1 or 6)
 	elseif DIRECTIONAL[def.area] then
 		spell:needDirection(true)

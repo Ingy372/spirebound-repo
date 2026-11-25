@@ -86,6 +86,36 @@ local function redrawButtons()
   tickEvent = scheduleEvent(redrawButtons, 100)
 end
 
+-- G1: put the path's first spells on action bar 1, buttons 3 and 4 (the stock client fills them with Tibia spell words);
+-- button 5 (a third Tibia spell) is cleared. Buttons 1-2 keep the stock potions.
+local function seedSpellBar(list)
+  local ab = modules.game_actionbar
+  if not ab or not ab.ApiJson or not ab.actionBars or type(list) ~= 'table' then
+    return
+  end
+  local slots = { 3, 4 }
+  for i, words in ipairs(list) do
+    if slots[i] then
+      ab.ApiJson.createOrUpdateText(1, slots[i], words, true)
+    end
+  end
+  if ab.ApiJson.removeAction then
+    ab.ApiJson.removeAction(1, 5)
+  end
+  local bar = ab.actionBars[1]
+  if bar and bar.tabBar and ab.updateButton then
+    for _, n in ipairs({ 3, 4, 5 }) do
+      local b = bar.tabBar:getChildById('1.' .. n)
+      if b then
+        pcall(ab.updateButton, b)
+      end
+    end
+  end
+  if ab.ApiJson.saveData then
+    pcall(ab.ApiJson.saveData)
+  end
+end
+
 local function onMessage(protocol, opcode, data)
   if type(data) ~= 'table' then
     return
@@ -109,6 +139,8 @@ local function onMessage(protocol, opcode, data)
       end
       diffLabel:setText(text)
     end
+  elseif data.t == 'spellbar' then
+    seedSpellBar(data.list)
   elseif data.t == 'skills' then
     skills = data.list or {}
   elseif data.t == 'lang' then
@@ -175,6 +207,19 @@ local function destroyUi()
   buttons = {}
 end
 
+-- G5 (Grok playtest, 2026-11-24): the stock Store button opens an empty shop (ours comes with the website, Phase 7)
+local function hideStore()
+  local mp = modules.game_mainpanel
+  local ui = mp and mp.optionsController and mp.optionsController.ui
+  local store = ui and ui.onPanel and ui.onPanel.store
+  if store and store:getChildCount() > 0 then
+    store:destroyChildren()
+    if mp.reloadMainPanelSizes then
+      pcall(mp.reloadMainPanelSizes)
+    end
+  end
+end
+
 local function onGameStart()
   destroyUi()
   createUi()
@@ -182,6 +227,7 @@ local function onGameStart()
   removeEvent(tickEvent)
   removeEvent(cursorEvent)
   redrawButtons()
+  scheduleEvent(hideStore, 1500)
   -- (polling every creature with g_map.getSpectators crashed the Windows client (heap corruption); cursors now update only when the server sends a skull change)
 end
 

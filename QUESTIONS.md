@@ -6,14 +6,10 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
-### Q50. A first fight as your new class within minutes (2026-11-24)
-Grok spent an hour without one kill as a Mystic: after the Registrar there is no next step, just "go hunt".
-- **Recommendation (assumed, roadmap G2):** the Registrar's last line starts a tiny "First hunt" quest: kill 5 monsters at the Ratwarren (next to the west gate) with your new spells, report to Captain Dorrow for a small reward. The temple sign points the way.
-- Other option: a practice dummy or a small pen right outside the temple, before any walking.
-
-### Q49. The first levels come very fast (2026-11-24)
-Grok reached level 5 in the rat pen in about 12 minutes and felt the levels meant little. The experience rate (25x below level 51) is your setting from the design, so I have not touched it.
-- **Recommendation:** keep it for now and judge it in your next playtest; if it feels too fast, lower only the Arrival Yard's rats.
+### Q51. The bot panel on a new player's screen (2026-11-24)
+Grok (and the playtest task) asked to hide the vBot panel for new players; it looks unfinished. But the design builds bot helpers into our client on purpose (DESIGN.md 11: cavebot at 45% experience), so I left it.
+- **Recommendation:** keep it, but start it collapsed for new characters, and later replace it with our own simpler cavebot window. Not urgent.
+- Other option: hide it completely until our own cavebot window exists.
 
 ### Q48. The Gate Hound now comes back after it dies (2026-11-24)
 It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.
@@ -223,6 +219,17 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 ---
 
 ## Answered
+
+### Q50. A first fight as your new class within minutes (2026-11-24)
+Grok spent an hour without one kill as a Mystic: after the Registrar there is no next step, just "go hunt".
+- **Recommendation (assumed, roadmap G2):** the Registrar's last line starts a tiny "First hunt" quest: kill 5 monsters at the Ratwarren (next to the west gate) with your new spells, report to Captain Dorrow for a small reward. The temple sign points the way.
+- Other option: a practice dummy or a small pen right outside the temple, before any walking.
+- **Jay's answer (2026-11-24):** "a small one person boss fight. you decide how should all go." Also yes to continuing the tutorial after picking a class (G2).
+
+### Q49. The first levels come very fast (2026-11-24)
+Grok reached level 5 in the rat pen in about 12 minutes and felt the levels meant little. The experience rate (25x below level 51) is your setting from the design, so I have not touched it.
+- **Recommendation:** keep it for now and judge it in your next playtest; if it feels too fast, lower only the Arrival Yard's rats.
+- **Jay's answer (2026-11-24):** "i honestly am not sure on the xp rate." Kept as it is; Claude's recommendation stands: judge it in the next playtest (Jay's or Grok's rerun) and lower only the Arrival Yard if it still feels too fast.
 
 ### Spawn rules: habits, ground types, the floor recipe (2026-11-16)
 Jay: "yep i like the idea so far." Group size: "that is good but we should also create an occasional hunting ground that can support 4-8 players." One high-level player soloing a group ground: "yes". Written into `DESIGN.md` 9.4 and `FLOOR1_HUNTING_PLAN.md` Part 10. This also settles Q41: how many monsters stand on a starter ground's surface now follows from each monster's habit.

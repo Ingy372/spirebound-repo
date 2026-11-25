@@ -16,6 +16,7 @@ Repo: GitHub `Ingy372/spirebound-repo` (private). Jay's local copy: `C:\Users\Mu
    - add a 2–3 line entry to `PROGRESS.md`; when it passes ~30 KB, move entries older than a few days to `PROGRESS_ARCHIVE.md`.
    - Keep the files read every session lean (Jay, 2026-11-17, to save tokens): finished work goes to the archive files, which are read only when needed.
 5. **Write everything meant for Jay in plain English.** He is not a programmer.
+6a. **Restarting the server is Claude's job** (Jay, 2026-11-24: "is it possible to give you permission to do all that stuff yourself? ... youve gotten stuck on me having to restart the server a few times"). Stop and start the game server on Jay's PC whenever a test needs it (`windows\Stop-Spirebound.bat`, then `tools/run_server_wsl.sh` through WSL as `Start-Spirebound.ps1` does), and say so in PROGRESS.md. Don't wait for Jay. Back up first (the start script does).
 6. **Don't buy anything, install paid software, or deploy to any server other than Jay's PC.** Pushing to GitHub is fine.
 7. **Commit and push to GitHub often**, so no work is lost when usage runs out.
 8. **Weekly, or whenever a phase finishes, write `WEEKLY_REPORT.md`** containing:

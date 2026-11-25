@@ -7,6 +7,7 @@ function login.onLogin(player)
 		local p = Player(pid)
 		if p then
 			SpireClient.sendAll(p)
+			SpireClient.seedSpellBar(p) -- characters made before G1 get their spells on the bar once too
 			lastFloor[pid] = Floors.at(p:getPosition())
 			lastFamily[pid] = SwordSkills.heldFamily(p) or ""
 		end

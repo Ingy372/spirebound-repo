@@ -4,6 +4,11 @@ Ticked tasks moved out of `ROADMAP.md` so each session reads less. Same phase he
 
 ---
 
+## Grok's playtest, 2026-11-24
+- [x] **G1 First spells on the action bar** (was J13d): a new character's action bar starts with three Tibia incantations (the client's stock defaults, `cipsoft-default-options-minimal.json`). After the Registrar, put the path's attack spell and heal on buttons 1-2 instead (server tells the client at registration; `client/modules/game_spirebound`). Done when: autopilot registers a Pilot Mystic and its bar shows frost strike and dewfall. *(2026-11-24: done; checked in the client with `tools/autopilot.py proving_mystic`)*
+- [x] **G2 A first fight as your class, fast** (Grok's #1; Q50): right after the Registrar, a short "First hunt" step that sends the new character to the Ratwarren or Sproutling Glade with its new spells. Done when: autopilot goes Registrar → first class kill in under 5 minutes for all four classes. *(2026-11-24: done; checked in the client with `tools/autopilot.py proving_mystic`)*
+- [x] **G4 "You need a target"**: casting a target spell (frost strike) with nothing targeted showed Grok nothing. Check what the engine sends; make it a clear line in the Server Log. Done when: an in-game test casts it with no target and sees the message. *(2026-11-24: done; checked in the client with `tools/autopilot.py proving_mystic`)*
+
 ## Phase R — Make it real (from REVIEW.md, 2026-11-11). Do this before anything else.
 - [x] **R1 Floor-skipping holes** [3.1, 3.2]: next-floor stair walled in behind the boulder, floor guard sends anyone on a sealed floor back to Hearthgate, Skystep needs a real gap and never lands in a boss room. *(Walking into it in the real client is still part of R0.)*
 - [x] **R2 Skull timers** [3.3]: red 7 days, black 14 days (they lasted ~57 years).

@@ -13,6 +13,10 @@ Template:
 
 ---
 
+## To try next (from Claude, 2026-11-24, night)
+- **Make a brand-new character** and go through the Arrival Yard to the Registrar. After you pick a path you land in the Proving: try your spells on the rats (they are on your action bar, buttons 3 and 4), then step on the glowing stone and fight Bramblejaw alone. Is it too easy or too hard at your level? Is the red-smoke stomp clear?
+- Does the Quest Tracker show Pell's quest now when you take it?
+
 ## 2026-11-24 (Grok play tester, first-time Mystic, about an hour; written down by Claude)
 - Full report: `docs/playtests/2026-11-24-grok-session1.md`. Grok's PC was overloaded, so lag-type items wait for a rerun (G6).
 - Liked: Pell's intro, the stone-path stops, the Journal tip and especially `!hunt`.

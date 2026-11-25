@@ -25,6 +25,14 @@ local login = CreatureEvent("SpireQuestLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireQuestKill")
 	SpirePerks.apply(player)
+	-- G3 (Grok playtest, 2026-11-24: Pell's quest never showed in the Quest Tracker): the tracker only lists missions
+	-- the player picked by hand unless "auto-track new quests" is on, and it starts off. Turn both auto options on
+	-- once per character (the player can still switch them off in the tracker).
+	local qt = player:kv():scoped("quest-tracker")
+	if player.setQuestTrackerOption and qt:get("auto-track-new-quests") == nil then
+		player:setQuestTrackerOption("autoTrackNewQuests", true)
+		player:setQuestTrackerOption("autoUntrackCompletedQuests", true)
+	end
 	return true
 end
 login:register()

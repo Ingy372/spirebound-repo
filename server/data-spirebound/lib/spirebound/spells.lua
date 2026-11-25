@@ -605,3 +605,36 @@ function SpireBuffs.undyingClamp(health, damage)
 	end
 	return damage
 end
+
+-- G4 (Grok playtest, 2026-11-24): saying a target spell with nothing targeted did nothing at all, not even a message.
+-- Talk actions are checked before spells, so each target spell gets one: no target -> a clear line and no cast;
+-- a target -> carry on to the spell (return true). Called from the spell registration scripts.
+SpireSpells.hinted = SpireSpells.hinted or {} -- first word -> { full spell words = true }
+
+-- Pure: is `said` (lower case, spaces squeezed) one of the target spells in `set`?
+function SpireSpells.isHinted(set, said)
+	return set ~= nil and set[said] == true
+end
+
+function SpireSpells.needTargetHint(words)
+	words = words:lower()
+	local first = words:match("^(%S+)")
+	if SpireSpells.hinted[first] then
+		SpireSpells.hinted[first][words] = true
+		return
+	end
+	SpireSpells.hinted[first] = { [words] = true }
+	-- the engine matches a talk action by the first word said; the rest arrives as `param`
+	local ta = TalkAction(first)
+	function ta.onSay(player, w, param)
+		local said = (first .. " " .. (param or "")):lower():gsub("%s+", " "):gsub("%s$", "")
+		if not SpireSpells.isHinted(SpireSpells.hinted[first], said) or player:getTarget() then
+			return true -- not a target spell, or a target is set: carry on (chat or the spell)
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "You need a target: click a monster first (or pick it in the Battle List), then use " .. said .. ".")
+		return false
+	end
+	ta:separator(" ")
+	ta:groupType("normal")
+	ta:register()
+end

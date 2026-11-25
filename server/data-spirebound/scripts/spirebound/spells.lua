@@ -1396,6 +1396,7 @@ for i, row in ipairs(SpireSpells.list) do
 	if NEEDS_TARGET[row.kind] or ON_TARGET[row.area] or row.at == "target" then
 		spell:needTarget(true)
 		spell:range(row.range or (row.kind == "attack_target" and 5 or 7))
+		SpireSpells.needTargetHint(row.words) -- G4: say so when nothing is targeted
 	elseif ALLY_PARAM[row.kind] then
 		-- the name is optional (no name = yourself), so it is a plain parameter: the engine's "player name" parameter
 		-- refuses the spell when no name is given

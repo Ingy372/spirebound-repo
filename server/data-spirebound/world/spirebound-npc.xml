@@ -90,6 +90,9 @@
 	<npc centerx="1328" centery="1348" centerz="7" radius="1">
 		<npc name="Registrar Maelis" x="0" y="0" z="7" spawntime="60" />
 	</npc>
+	<npc centerx="1279" centery="1340" centerz="9" radius="1">
+		<npc name="Warden Ketta" x="0" y="0" z="9" spawntime="60" />
+	</npc>
 	<npc centerx="2155" centery="1238" centerz="7" radius="1">
 		<npc name="Priest of Highrest" x="0" y="0" z="7" spawntime="60" />
 	</npc>

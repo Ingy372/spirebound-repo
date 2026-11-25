@@ -33,13 +33,7 @@ local VOCATIONS = {
 	mystic = { id = 2, text = "Mystics wield rods, heal their allies and command nature. Steady and hard to kill, with the best healing in the tower; every group wants one. Your first spells: frost strike, and dewfall to heal from level 4. A good first path if you like to stay alive." },
 }
 
--- First spells per vocation, said again after registering (the Server Log keeps them)
-local FIRST_SPELLS = {
-	[4] = { "heavy strike", "second wind" },
-	[3] = { "piercing shot", "field dressing" },
-	[1] = { "ember strike", "mending spark" },
-	[2] = { "frost strike", "dewfall" },
-}
+local FIRST_SPELLS = SpireClient.FIRST_SPELLS -- each path's first attack spell and heal (lib/spirebound/client_link.lua)
 local PRACTICE_CLUB = 3270 -- handed out in the Arrival Yard (scripts/spirebound/hunting.lua)
 
 -- Starter kits (client item ids, Tibia 15.11)
@@ -129,15 +123,19 @@ local function creatureSayCallback(npc, player, type, msg)
 			player:setVocation(Vocation(c.voc))
 			giveKit(player, c.voc)
 			player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
-			npcHandler:say(string.format("It is written: %s, %s. The temple is through the gate. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
+			npcHandler:say(string.format("It is written: %s, %s. One last step before Hearthgate: the Proving, below us. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
 			-- Confirm in the Server Log too: the speech bubble is easy to miss (Grok playtest, 2026-11-24)
 			local first = FIRST_SPELLS[c.voc]
+			SpireClient.seedSpellBar(player, true)
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You are now a %s, living by the %s rules.", player:getVocation():getName(), Difficulty.names[c.mode]))
 			if first then
-				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your attack spell: %s. Click a monster to target it, then say the words (or put it on your action bar). At level 4 you learn %s, which heals you. Say !spells for the full list.", first[1], first[2])) -- F1-02
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your attack spell: %s. Click a monster to target it, then say the words (it is on your action bar too). At level 4 you learn %s, which heals you. Say !spells for the full list.", first[1], first[2])) -- F1-02
 			end
 			player:setTown(Town(1)) -- the Arrival Yard was only the starting town
-				player:teleportTo(Town(1):getTemplePosition())
+			-- G2: the tutorial goes on in the Proving (scripts/spirebound/proving.lua), then on to Hearthgate
+			local proving = WorldPoints.proving_arrival
+			player:teleportTo(proving and Position(proving.x, proving.y, proving.z) or Town(1):getTemplePosition())
+			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
 			chosen[pid] = nil
 			npcHandler:setTopic(pid, 0)
 			return true
