@@ -1,0 +1,37 @@
+{
+ "name": "town_square",
+ "character": "Pilot Arcanist",
+ "timeout": 120,
+ "about": "P3 check: townsfolk in the Hearth Square.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1304,
+    7
+   ],
+   "note": "Hearth Square"
+  },
+  {
+   "do": "wait",
+   "seconds": 20
+  },
+  {
+   "do": "shot",
+   "name": "square_1"
+  },
+  {
+   "do": "wait",
+   "seconds": 15
+  },
+  {
+   "do": "shot",
+   "name": "square_2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

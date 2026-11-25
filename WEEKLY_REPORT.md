@@ -1,52 +1,70 @@
-# Update, 2026-11-24: the overnight Floor 1 playtest and review
+# Update, 2026-11-25 morning: what got done overnight
 
-(The 2026-11-23 gear report is in git history. The full review is `FLOOR1_REVIEW.md`; this page is the short version.)
+(The 2026-11-24 report is in git history. Details per task: `PROGRESS.md`, `ROADMAP.md`.)
 
-## The answer to "do we stand a chance?"
-Not yet, but it's fixable on Floor 1 alone. Our systems and our pitch (floors that open for everyone, a monument for
-first clears, permadeath if you dare, fair PvP) are stronger than most servers'. What loses players today is the feel
-of the first evening: a plain start, monsters that only bite, kill-count quests, a generated-looking town, and grounds
-that swarm. Section 9b of the review has the scorecard and the order to fix things in.
+## The short version
+Almost everything from your "Floor 1 is boring" list now has a first version in the game: monsters that fight in
+different ways, quests that aren't "kill 10 of X", quests you can find, a livelier Hearthgate, a bigger Toad Pond, a
+style choice on Floor 1, and your approved monster art in the real client. The server is running all of it (restarted after Grok's playtest), and I checked nearly everything in the real client
+with the autopilot: quests, monsters, the new abilities, the art, the townsfolk, Toad Pond.
 
-## What changed overnight (all live after one server restart)
-- **Hunting grounds:** Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow and Shard Fields rebuilt: calm gates,
-  monsters spread out, two or three levels each, a party cave under four of them, faster respawn so the kill rate
-  holds. Two test characters died at Boar Meadow's old gate before this. Only Bandit Road and Old Quarry are still the
-  old swarming kind (they need buildings, next session).
-- **Monsters fight differently:** rats flee, toads slow you, boars charge, wolves dart and run when hurt, moles
-  burrow, snappers drag you down, bandits throw smoke, thornsnaps root, sentinels shield-bash.
-- **Five rare glowing elites** (one per rebuilt ground), and a **treasure chest** hidden in every rebuilt ground (a
-  first-time prize with a Hearth Shard, then a daily chest every 20 hours).
-- **First hour:** first attack spell the moment you pick a class, a heal at level 4; the street lamps are lit (every
-  lamp on Floor 1 was the unlit kind); every login says where the tower's race stands.
-- **Quests:** every Floor 1 quest pays experience now, and offers and the Journal show the reward.
-- **Gear:** the smith's upgrade was broken (fixed), the Gate Hound now comes back after a kill (your checklist needs
-  it), the checklist and a sign at the Pass say to bring a party, shards have a pity counter and a sparkle.
-- **Reasons to come back:** a daily login reward, a lucky climber every hour, and the Season Path's daily and weekly
-  goals switched on for the friends test.
-- **Money:** arrows cost 1 gold on Floor 1, so a Ranger no longer loses money hunting.
-- **Safety:** the automatic test was writing into your game's database; it has its own now. A half-failed test had
-  marked Floors 1-2 as cleared in your world; I removed that.
+## What's new
+- **Your art is in the game.** The rat, boar, mole, toad, wasp, snapper, thornsnap, shardling, wolf, grey alpha,
+  ram, sproutling and Azhrakkar now show in the client instead of the borrowed Tibia sprites. NPCs and class outfits
+  are next (they need a small server change).
+- **Monsters fight differently:** field rats steal a few coins and run (kill the thief to get them back), hurt wolves
+  howl for the pack, sproutlings heal each other (kill the healer first), ruin sentinels raise a shield (walk round
+  them). Wolf packs now stick together and join each other's fights.
+- **New kinds of quest:**
+  - *The Builders' Stones* (Vesper): six carved stones in the wilds tell who built the tower. Title "Stonereader".
+  - *The Old Sluice* (Fisher Corwin): three levers in Reedmarsh; the order is carved on a stone nearby.
+  - *Flour for the Gate* (Miller Agna, level 12+): take the flour to the guards, or sell it to Fence Marrow on the
+    road south of the Bandit Road. Different reward and title each way.
+  - *The Stair Key*: the Axe-Lord's hall now opens only for climbers who helped kill the Gate Hound, helped kill the
+    Stonehorn Ram, and finished Iron for the Stair. (The review suggested the Underkeep as one piece, but it's a secret,
+    and secrets stay off the main path.)
+- **Quests you can find:** the Journal and quest log say where every quest giver stands ("about 40 steps north of the
+  temple"), and a "!" on the minimap marks anyone with work for you. The Quest Tracker bug Grok found is fixed (half
+  the quests were missing from the game's quest list).
+- **Hearthgate feels alive:** six townsfolk walk the Hearth Square, chat, and give tips when greeted; a town crier
+  calls out the tower's news; the fountain sprays.
+- **Toad Pond** is 12 tiles wider with a fifth pond and a new route (the Reed Beds).
+- **A style choice on Floor 1:** from Mastery 5, `!style marksman` (or your class's other path) gives a free,
+  swappable taste of that path until the permanent choice at Mastery 10.
+- **Later-game abilities:** one signature ability per path (8) and per final style (16).
+- **Reasons to log in:** a Tower Quiz every few hours (`!answer`), a bounty on the strongest climber online (level
+  50+ only), leaderboards on the Monument statue, a familiarity bar in the Upgrade tab.
+- **The Arrival Yard** now has the Spire's sealed door and a stone naming whoever opens each floor first.
+- **Houses** cost more on higher floors (about 8 hours of that floor's hunting; Floor 1 unchanged).
+- **Season reset** is now safe: `/season end` then `windows\Season-Reset.bat`. I rehearsed it on a copy of your real
+  database, which caught a mistake that would have broken the old reset.
+- **Rangers:** a new Ranger's quiver goes straight onto the shield hand, so the bow works from the first minute.
 
-## Before you play (one step)
-Restart the server: double-click `windows\Stop-Spirebound.bat`, then `windows\Start-Spirebound.bat`.
+## Good to know
+- The leaderboard on the Monument lists our test characters (Spell Mystic and friends) at the top. They live on the
+  test account and will be removed before launch.
+- The friend client package was rebuilt with the new art; Grok's next install picks it up.
+- Not done yet: Bandit Road and Old Quarry rebuilds, Floor 2's own map, NPC and outfit art in the game, the escort
+  quest (P9b), fires and lights in town (P3b).
 
 ## Playtest checklist (about 45 minutes)
-1. **New character (10 min):** make a new character. Is the yard lit? Can you cast your first spell right after the
-   Registrar? Does the login message mention the tower's race?
-2. **Boar Meadow (10 min, level 9-12):** walk in. Is the gate calm? Do boars charge? Try Oak Ridge (the ramp) and the
-   Wallows (the holes in the south). Can you find the chest?
-3. **Wolf Copse or Reedmarsh (10 min):** does it feel like a place, or still like a grid? Did you meet an elite?
-4. **Weaponsmith (5 min):** with your Ranger, hold your bow, say `hi`, `upgrade`, `yes` to Garrick. Does it work now?
-5. **Quests (10 min):** take a quest from Dorrow or Brannoch. Does the offer say what it pays? Does finishing it
-   give experience?
+1. **New character (10 min):** make one. Find the Spire's sealed door and read the stone next to it. Do Pell's quest:
+   does it show in the Quest Tracker (bottom right)? If Ranger: does your bow fire right after the Registrar?
+2. **Hearthgate (5 min):** walk the Hearth Square. Do the townsfolk feel alive or annoying? Say `hi` to one.
+3. **Find a quest (5 min):** press J, Quests tab. Can you find a quest giver using only what it says? Look for "!" on
+   the minimap.
+4. **Monsters (10 min):** at Boar Meadow or Wolf Copse: did a rat steal from you? Did wolves come as a pack?
+5. **Toad Pond (5 min):** walk the new east side. Big enough now?
+6. **A new quest (10 min):** take Vesper's stones quest and read one stone, or try the sluice levers in Reedmarsh.
+7. **Art (any time):** do the new monster sprites look right in the game?
 
 ## Open questions (my recommendation is assumed until you answer; QUESTIONS.md)
-- **Q46:** a free "stance" at Mastery 5 so Floor 1 players feel the style choice coming? Recommended: yes.
-- **Q47:** rebuild the arrival yard and Hearthgate before inviting alpha testers? Recommended: yes.
-- **Q48:** the Gate Hound comes back after it dies (so everyone can finish the checklist). Built that way.
-- Still open: Q45 (spear for Rangers), shop prices.
+- **Q46** (style stance at Mastery 5): built as recommended. Does it feel right?
+- **Q47** (rebuild the yard and Hearthgate before the alpha): started (the yard's Spire door, the townsfolk). More to
+  come unless you say stop.
+- **Q51** (the bot panel for new players): keep it, start it folded. Not done yet.
+- Still open: Q45 (spear for Rangers), Q48 (Gate Hound respawns: built), shop prices.
 
 ## Art and map requests
-- `ART_REQUESTS.md` Batch 7: the elites use their ground's monster sprite for now; variants later.
-- No map requests: I built the grounds. The last two (Bandit Road, Old Quarry) need ruined buildings and a mine.
+- No requests for you tonight. The art estimate for the rest of the game is in `ART_REQUESTS.md` (about 10-12
+  sessions of creature art for Floors 2-10, done a floor at a time).

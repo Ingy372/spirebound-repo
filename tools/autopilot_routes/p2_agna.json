@@ -1,0 +1,51 @@
+{
+ "name": "p2_agna",
+ "character": "Pilot Vanguard",
+ "timeout": 600,
+ "about": "P2 check: from the river bank along the road to Miller Agna.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1145,
+    1192,
+    7
+   ],
+   "note": "river bank"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1061,
+    1204,
+    7
+   ],
+   "fight": true,
+   "note": "Miller Agna",
+   "timeout": 400
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
