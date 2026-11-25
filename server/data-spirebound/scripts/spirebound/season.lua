@@ -2,7 +2,7 @@
 --   /season              -> current season number and what an end of season does
 --   /season remix [n]    -> preview what season n (default: next) changes
 --   /season end <number> -> archive everyone and wipe for the next season. Type the CURRENT season number to confirm.
---                           Nobody may be online except you. Restart the server afterwards.
+--                           Nobody may be online except you. The server shuts down; then run windows\Season-Reset.bat.
 local cmd = TalkAction("/season")
 function cmd.onSay(player, words, param)
 	local current = SpireSeason.current()
@@ -30,7 +30,7 @@ function cmd.onSay(player, words, param)
 		return false
 	end
 	if action ~= "end" then
-		player:showTextDialog(2821, string.format("Season %d.\n\nSay '/season end %d' to end it: every character is archived to the Hall of Seasons, account-wide titles carry over, then characters, houses, guilds, the market and world progress are wiped. Accounts are kept. Restart the server afterwards.", current, current))
+		player:showTextDialog(2821, string.format("Season %d.\n\nSay '/season end %d' to end it: every character is archived to the Hall of Seasons, account-wide titles carry over, then the server shuts down and windows\\Season-Reset.bat wipes characters, houses, guilds, the market and world progress. Accounts are kept.", current, current))
 		return false
 	end
 	if tonumber(num) ~= current then
@@ -52,11 +52,14 @@ function cmd.onSay(player, words, param)
 		Result.free(q)
 	end
 	kv.scoped("spirebound-season"):set("number", current + 1)
-	for _, sql in ipairs(SpireSeason.wipeStatements()) do
-		db.query(sql)
-	end
-	logger.info("[Spirebound] season {} ended by {}: {} characters archived", current, player:getName(), count)
-	player:showTextDialog(2821, string.format("Season %d is over. %d characters archived to the Hall of Seasons. Season %d begins after a server restart.", current, count, current + 1))
+	-- 8.3: the wipe itself runs offline (windows\Season-Reset.bat), so nothing the server holds in memory can be
+	-- saved back over it. Save now, then shut down.
+	logger.info("[Spirebound] season {} ended by {}: {} characters archived; the server shuts down for the wipe", current, player:getName(), count)
+	player:showTextDialog(2821, string.format("Season %d is over. %d characters archived to the Hall of Seasons. The server now shuts down: run windows\\Season-Reset.bat to wipe and start Season %d.", current, count, current + 1))
+	addEvent(function()
+		saveServer()
+		Game.setGameState(GAME_STATE_SHUTDOWN)
+	end, 5000)
 	return false
 end
 cmd:separator(" ")

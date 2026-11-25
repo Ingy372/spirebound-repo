@@ -31,4 +31,7 @@ SpireTest.add("season: the wipe never touches accounts or the Hall of Seasons", 
 		end
 	end
 	SpireTest.eq(SpireSeason.current() >= 1, true, "season number is set")
+	local all = table.concat(SpireSeason.wipeStatements(), " ")
+	SpireTest.eq(#SpireSeason.wipeStatements() >= 9, true, "the wipe file is read (8.3)")
+	SpireTest.eq(all:find("tile_store") ~= nil and all:find("DELETE FROM `players`") ~= nil, true, "characters and house contents are wiped")
 end)

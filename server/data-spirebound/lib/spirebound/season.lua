@@ -50,25 +50,33 @@ function SpireSeason.archivePlayer(guid, accountId, name, level, vocationId, sea
 	end
 	acc:set("titles", accTitles)
 	acc:set("explored", (acc:get("explored") or 0) + record.secrets)
+	-- the fishing log carries over (DESIGN.md 4): every kind this character caught joins the account's log
+	local log = acc:get("fishlog") or {}
+	for _, kind in ipairs(okF and fish or {}) do
+		log[kind] = log[kind] or season
+	end
+	acc:set("fishlog", log)
 	acc:set("seasons", (acc:get("seasons") or 0) + 1)
 	return record
 end
 
--- The SQL that wipes a season. Never touches accounts or account-level/hall-of-seasons KV.
+-- The SQL that wipes a season (8.3): data-spirebound/season_wipe.sql, run OFFLINE by tools/season_wipe.sh after
+-- /season end has archived everyone and shut the server down. Read here only so the in-game test can check it.
 function SpireSeason.wipeStatements()
-	return {
-		"DELETE FROM `players` WHERE `group_id` < 4",
-		"UPDATE `houses` SET `owner` = 0, `paid` = 0, `warnings` = 0, `bid` = 0, `bid_end` = 0, `last_bid` = 0, `highest_bidder` = 0",
-		"DELETE FROM `house_lists`",
-		"DELETE FROM `guild_wars`",
-		"DELETE FROM `guilds`",
-		"DELETE FROM `market_offers`",
-		"DELETE FROM `market_history`",
-		"DELETE FROM `kv_store` WHERE `key_name` LIKE 'player.%' OR `key_name` LIKE 'spirebound-floors%' OR `key_name` LIKE 'spirebound-secrets-public%'"
-			.. " OR `key_name` LIKE 'spirebound-bounties%' OR `key_name` LIKE 'spirebound-headstart%' OR `key_name` LIKE 'spirebound-twinfang%'"
-			.. " OR `key_name` LIKE 'spirebound-fortune%' OR `key_name` LIKE 'spirebound-recruit%' OR `key_name` LIKE 'spirebound-memorial%'"
-			.. " OR `key_name` LIKE 'spirebound-openhouse%' OR `key_name` LIKE 'spirebound-houselist%' OR `key_name` LIKE 'spirebound-siege%'",
-	}
+	local f = io.open(DATA_DIRECTORY .. "/season_wipe.sql", "r")
+	if not f then
+		return {}
+	end
+	local text = f:read("*a")
+	f:close()
+	local out = {}
+	for stmt in (text:gsub("%-%-[^\n]*", "")):gmatch("[^;]+") do
+		stmt = stmt:gsub("^%s+", ""):gsub("%s+$", "")
+		if stmt ~= "" then
+			table.insert(out, stmt)
+		end
+	end
+	return out
 end
 
 -- Copy account-wide titles onto a character at login (so every season starts with your legacy titles)
