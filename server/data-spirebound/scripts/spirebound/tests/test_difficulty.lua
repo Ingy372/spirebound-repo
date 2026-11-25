@@ -53,3 +53,9 @@ SpireTest.add("difficulty: Hardcore skill debt and extra item drops (2.14b)", fu
 	SpireTest.eq(type(SKILL_MAGLEVEL), "number", "magic level constant exists")
 	SpireTest.eq(type(TILESTATE_PVPZONE), "number", "arena flag exists")
 end)
+
+SpireTest.add("difficulty: a young Normal death is free and the player is told (G12)", function()
+	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 500, 12, 5000), 0, "Normal below 50 loses nothing")
+	SpireTest.eq(Difficulty.youngGraceText(500):find("no experience", 1, true) ~= nil, true, "the message says no experience was lost")
+	SpireTest.eq(Difficulty.youngGraceText(500):find("500", 1, true) ~= nil, true, "and how much it would have been")
+end)

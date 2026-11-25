@@ -75,7 +75,7 @@ local function redrawButtons()
           b:setOn(false)
           b:setColor('#888888')
         else
-          b:setText(s.name .. '\n[Shift+' .. i .. ']')
+          b:setText(s.name .. '\n[Ctrl+' .. i .. ']')
           b:setOn(true)
           b:setColor(s.tag == 'finisher' and '#ffd27f' or (s.tag == 'link' and '#9fe0ff' or '#ffffff'))
         end
@@ -219,7 +219,7 @@ local function createUi()
 
   bar = g_ui.createWidget('UIWidget', mapPanel)
   bar:setId('spireSkillBar')
-  bar:setSize({ width = SLOTS * 92, height = 40 })
+  bar:setSize({ width = SLOTS * 112, height = 40 })
   bar:addAnchor(AnchorBottom, 'parent', AnchorBottom)
   bar:addAnchor(AnchorHorizontalCenter, 'parent', AnchorHorizontalCenter)
   bar:setMarginBottom(8)
@@ -237,21 +237,33 @@ local function createUi()
   for i = 1, SLOTS do
     local b = g_ui.createWidget('Button', bar)
     b:setId('spireSkill' .. i)
-    b:setSize({ width = 88, height = 36 })
+    -- G10 (Grok session 3): 88 px clipped "Fourfold Rend" to "ourfold Rene"; 108 fits the longest skill name
+    b:setSize({ width = 108, height = 36 })
     b:addAnchor(AnchorTop, 'parent', AnchorTop)
     b:addAnchor(AnchorLeft, 'parent', AnchorLeft)
-    b:setMarginLeft((i - 1) * 92)
+    b:setMarginLeft((i - 1) * 112)
     b:setFont('verdana-11px-rounded')
     b.onClick = function() cast(i) end
+    -- G10: a clicked button kept the keyboard, so the next Enter (meant for chat) fired the skill again
+    b:setFocusable(false)
     b:setVisible(false)
     buttons[i] = b
-    g_keyboard.bindKeyDown('Shift+' .. i, function() cast(i) end)
+    -- G10: Shift+1..6 also types ! @ # $ % ^, so with chat on it put symbols in the chat box (and "!hunt" could not be
+    -- typed without firing a skill). Ctrl+1..6 types nothing: it works with chat on or off. Shift+1..6 still works
+    -- while chat is off (walking with WASD), as before.
+    g_keyboard.bindKeyDown('Ctrl+' .. i, function() cast(i) end)
+    g_keyboard.bindKeyDown('Shift+' .. i, function()
+      local console = modules.game_console
+      if console and console.isChatEnabled and console.isChatEnabled() then return end
+      cast(i)
+    end)
   end
 end
 
 local function destroyUi()
   for i = 1, SLOTS do
     g_keyboard.unbindKeyDown('Shift+' .. i)
+    g_keyboard.unbindKeyDown('Ctrl+' .. i)
   end
   if barTitle then barTitle:destroy() barTitle = nil end
   if bar then bar:destroy() bar = nil end
@@ -300,6 +312,16 @@ local function onGameStart()
       g_settings.save()
     end
   end, 2500)
+  -- J6: a new player needs the Battle List (clicking a name there is the easiest way to attack). Open it once per
+  -- install; after that the player's own open/closed choice stands.
+  scheduleEvent(function()
+    if g_settings.getBoolean('spireBattleOpened') then return end
+    local b = modules.game_battle
+    local button = rootWidget:recursiveGetChildById('battleButton') -- the Battle List's toggle: "on" while it is open
+    if b and b.toggle and button and not button:isOn() then pcall(b.toggle) end
+    g_settings.set('spireBattleOpened', true)
+    g_settings.save()
+  end, 2600)
   -- (polling every creature with g_map.getSpectators crashed the Windows client (heap corruption); cursors now update only when the server sends a skull change)
 end
 

@@ -10,9 +10,10 @@ npcConfig.walkInterval = 2000
 npcConfig.walkRadius = 2
 npcConfig.outfit = { lookType = 128, lookHead = 0, lookBody = 57, lookLegs = 57, lookFeet = 76, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
+-- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {
-	interval = 20000,
-	chance = 35,
+	interval = 45000,
+	chance = 25,
 	{ text = "In my day the Pass was a cart road." },
 	{ text = "*coughs* The fountain was dry for forty years, you know." },
 	{ text = "Blue light at the top of the Spire... never trusted it." },

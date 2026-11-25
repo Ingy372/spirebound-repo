@@ -54,6 +54,12 @@ function Difficulty.finalDeathLoss(mode, engineLoss, level, totalExp)
 	return lost
 end
 
+-- Pure (G12): what a young Normal climber is told after a death that cost nothing
+function Difficulty.youngGraceText(kept)
+	return string.format("Your death cost you no experience (you would have lost %d): climbers below level 50 on the Normal rules are "
+		.. "spared. From level 50 on, a death costs experience; the temple priest sells blessings that soften it.", kept)
+end
+
 -- Does damage from `attacker` count toward saving `victim` from Death Game deletion?
 -- Both are plain tables: { guid, ip, guildId, partyId }. Friends can't "tag" you to make you immortal.
 function Difficulty.countsAsOutsidePlayer(victim, attacker)

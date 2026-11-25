@@ -26,6 +26,11 @@ local function creatureSayCallback(npc, player, type, msg)
 		return false
 	end
 	local lower = msg:lower()
+	if lower == "hi" or lower == "hello" or lower == "hey" then -- G11: a second greeting while already talking
+		local text = VesperGreeting(SpireQuests.state(player, SpireQuests.get("l1_stones")), SpireQuests.collected(player, "builders"))
+		npcHandler:say((text:gsub("|PLAYERNAME|", player:getName())), npc, player)
+		return true
+	end
 	if lower == "secrets" or lower == "mine" then
 		local names = {}
 		for _, s in ipairs(SpireSecrets.foundList(player)) do
@@ -71,7 +76,34 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Ah, |PLAYERNAME|. Found something? Say {secrets} to see what you know, {sell} <name> to sell it, or {list} for what's already public. I also pay for old stories: ask for a {quest}. Keeping a secret is your right. It never stops anyone else from finding it.")
+-- G11 (Grok session 3): with her stones quest running, a second "hi" gave the whole broker speech again, in one long
+-- bubble that overlapped itself. Now she greets by where you are with the quest, in short lines.
+local GREET = "Ah, |PLAYERNAME|. Found a secret? Say {secrets}, {sell} <name> or {list}. I also pay for old stories: ask for a {quest}."
+local STONE_PLACES = { boar_meadow = "Boar Meadow", wolf_copse = "Wolf Copse", reed_marsh = "Reedmarsh",
+	thornsnap_hollow = "Thornsnap Hollow", shard_fields = "the Shard Fields", burrow_hills = "the Burrow Hills" }
+
+-- Pure: Vesper's greeting for a quest state (-1/0 not taken, 1 running, 2 ready, 3 done) and the stones read so far
+function VesperGreeting(state, found)
+	if state == 2 then
+		return "|PLAYERNAME|! All six stones read? Say {report} and tell me the story."
+	elseif state == 1 then
+		local left = {}
+		for _, id in ipairs({ "boar_meadow", "wolf_copse", "reed_marsh", "thornsnap_hollow", "shard_fields", "burrow_hills" }) do
+			if not found[id] then
+				table.insert(left, STONE_PLACES[id])
+			end
+		end
+		return string.format("Back, |PLAYERNAME|? %d of 6 stones read. Still to find: %s.", 6 - #left, table.concat(left, ", "))
+	end
+	return GREET
+end
+
+npcHandler:setMessage(MESSAGE_GREET, GREET)
+npcHandler:setCallback(CALLBACK_GREET, function(npc, player)
+	local q = SpireQuests.get("l1_stones")
+	npcHandler:setMessage(MESSAGE_GREET, VesperGreeting(SpireQuests.state(player, q), SpireQuests.collected(player, "builders")))
+	return true
+end)
 npcHandler:setMessage(MESSAGE_FAREWELL, "Keep your eyes open.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

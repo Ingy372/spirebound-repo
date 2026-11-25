@@ -78,9 +78,22 @@ def entrance(c: dict) -> tuple[int, int]:
             "e": (x + w - 1, y + h // 2)}.get(c.get("gate"), (x + w // 2, y + h // 2))
 
 
+def _walked_routes() -> dict:
+    """The real walking directions found on the finished map (maps/hunt_routes.py, written by tools/mapgen.py)."""
+    import json
+    p = ROOT / "maps" / "hunt_routes.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else {}
+
+
+WALKED = _walked_routes()
+
+
 def route(c: dict) -> str:
-    """Directions a new player can follow: which town gate to leave by, then which way to the ground's entrance.
-    (Grok playtest, 2026-11-24: "south, about 80 steps from the city centre" ran into a tree wall.)"""
+    """Directions a new player can follow: which town gate to leave by, then the legs of the real path along the roads
+    (G9, Grok session 3: the old straight compass line ended at a river or in forest). Falls back to the compass line
+    only when the map has not been generated yet."""
+    if c["id"] in WALKED:
+        return WALKED[c["id"]]["text"]
     ex, ey = entrance(c)
     gate, (gx, gy) = min(TOWN_GATES.items(), key=lambda kv: abs(kv[1][0] - ex) + abs(kv[1][1] - ey))
     dx, dy = ex - gx, ey - gy

@@ -24,13 +24,16 @@ MONSTERS = {
                       events=["SpireRatSteal", "SpireRatStealDeath"]),  # F1-10: snatches coins and runs
     # the tutorial pen's rats: weak on purpose, so the very first fight can't kill a level 1 with a practice club
     # (2026-11-12 playthrough: three Field Rats killed a new character in the pen)
-    "Pen Rat": dict(desc="a pen rat", look=(56,), corpse=5964, hp=12, xp=6, speed=70, race="blood",
+    # G7 (Q52, 2026-11-25): 1 experience. The engine adds +50% below level 50 and +50% for fresh stamina on top of the
+    # 10x stage, so 6 took a new character from level 1 to 4 in three rats. Now the yard ends at level 2.
+    "Pen Rat": dict(desc="a pen rat", look=(56,), corpse=5964, hp=12, xp=1, speed=70, race="blood",
                     attacks=[("melee", 0, -3)], armor=0, defense=0,
                     loot=[(3607, 100000, 1), (GOLD, 80000, 3)], voices=["Squeak?"]),  # cheese every time: the yard's loot gate needs something to take
     # The Proving's one-person boss (G2, Jay 2026-11-24): a new character's first fight with its new spells. Gentle on
     # purpose: a slow bite, and every few seconds a telegraphed stomp (red smoke first) that teaches stepping aside.
     # It can't kill you: the Proving pulls you out at 1 health (scripts/spirebound/proving.lua). Placeholder look.
-    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=6046, hp=240, xp=60, speed=90, race="blood",
+    # G7: 6 experience (was 60 = about 1,350 with the engine's bonuses, level 3 to 5 in one fight); the Proving ends at level 3.
+    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=6046, hp=240, xp=6, speed=90, race="blood",
                        attacks=[("melee", 0, -12)], armor=2, defense=4, boss=True,
                        loot=[(GOLD, 100000, 40), (266, 100000, 2)], voices=["SNORT!", "Bramblejaw paws the ground."],
                        events=["SpireProvingThink", "SpireProvingDeath"]),

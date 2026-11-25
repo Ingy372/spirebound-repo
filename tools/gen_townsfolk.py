@@ -64,9 +64,10 @@ npcConfig.walkInterval = 2000
 npcConfig.walkRadius = {radius}
 npcConfig.outfit = {{ lookType = {l0}, lookHead = {l1}, lookBody = {l2}, lookLegs = {l3}, lookFeet = {l4}, lookAddons = {l5} }}
 npcConfig.flags = {{ floorchange = false }}
+-- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {{
-	interval = 20000,
-	chance = 35,
+	interval = 45000,
+	chance = 25,
 {voices}
 }}
 

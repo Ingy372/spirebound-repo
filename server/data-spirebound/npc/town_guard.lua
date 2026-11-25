@@ -10,9 +10,10 @@ npcConfig.walkInterval = 2000
 npcConfig.walkRadius = 4
 npcConfig.outfit = { lookType = 131, lookHead = 79, lookBody = 79, lookLegs = 79, lookFeet = 79, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
+-- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {
-	interval = 20000,
-	chance = 35,
+	interval = 45000,
+	chance = 25,
 	{ text = "Keep the peace in town." },
 	{ text = "Captain Dorrow wants more climbers on the north road." },
 	{ text = "No fighting in town. Take it outside the walls." },

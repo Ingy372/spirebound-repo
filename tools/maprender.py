@@ -123,6 +123,8 @@ def build_map():
     m = mapgen.Map()
     layout_floor1.build(m)
     m.finish()
+    import hunt_routes                     # the !hunt signposts (G9) are placed after the map is finished
+    hunt_routes.run(m, write=False)
     return m
 
 

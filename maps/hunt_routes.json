@@ -1,0 +1,613 @@
+{
+ "apex_watchtower": {
+  "exit": "west",
+  "forks": [
+   [
+    [
+     1117,
+     1222,
+     7
+    ],
+    "west"
+   ],
+   [
+    [
+     1098,
+     1219,
+     7
+    ],
+    "north-west"
+   ]
+  ],
+  "gate": [
+   1052,
+   1073,
+   7
+  ],
+  "legs": [
+   [
+    "west",
+    60,
+    true
+   ],
+   [
+    "north",
+    245,
+    true
+   ]
+  ],
+  "steps": 361,
+  "text": "leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance",
+  "title": "The Old Watchtower",
+  "turns": [
+   [
+    1117,
+    1283,
+    7
+   ]
+  ]
+ },
+ "bandit_road": {
+  "exit": "east",
+  "forks": [
+   [
+    [
+     1365,
+     1285,
+     7
+    ],
+    "north"
+   ]
+  ],
+  "gate": [
+   1354,
+   1219,
+   7
+  ],
+  "legs": [
+   [
+    "east",
+    80,
+    true
+   ],
+   [
+    "north",
+    55,
+    true
+   ],
+   [
+    "west",
+    10,
+    true
+   ],
+   [
+    "north",
+    5,
+    true
+   ]
+  ],
+  "steps": 209,
+  "text": "leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 55 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance",
+  "title": "The Bandit Road",
+  "turns": [
+   [
+    1367,
+    1283,
+    7
+   ],
+   [
+    1367,
+    1227,
+    7
+   ],
+   [
+    1356,
+    1226,
+    7
+   ]
+  ]
+ },
+ "boar_meadow": {
+  "exit": "west",
+  "forks": [
+   [
+    [
+     1175,
+     1285,
+     7
+    ],
+    "south"
+   ]
+  ],
+  "gate": [
+   1158,
+   1338,
+   7
+  ],
+  "legs": [
+   [
+    "south",
+    25,
+    false
+   ],
+   [
+    "west",
+    15,
+    true
+   ],
+   [
+    "south",
+    25,
+    true
+   ]
+  ],
+  "steps": 119,
+  "text": "leave Hearthgate by the west gate, walk south about 25 steps, then follow the road west about 15 steps, then follow the road south about 25 steps to its north entrance",
+  "title": "Boar Meadow",
+  "turns": [
+   [
+    1172,
+    1311,
+    7
+   ],
+   [
+    1159,
+    1315,
+    7
+   ]
+  ]
+ },
+ "burrow_hills": {
+  "exit": "north",
+  "forks": [
+   [
+    [
+     1232,
+     1202,
+     7
+    ],
+    "east"
+   ]
+  ],
+  "gate": [
+   1240,
+   1199,
+   7
+  ],
+  "legs": [
+   [
+    "north",
+    35,
+    true
+   ],
+   [
+    "east",
+    10,
+    true
+   ]
+  ],
+  "steps": 91,
+  "text": "leave Hearthgate by the north gate, follow the road north about 35 steps, then follow the road east about 10 steps to its west entrance",
+  "title": "Burrow Hills",
+  "turns": [
+   [
+    1232,
+    1202,
+    7
+   ]
+  ]
+ },
+ "old_quarry": {
+  "exit": "north",
+  "forks": [
+   [
+    [
+     1232,
+     1197,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1230,
+     1145,
+     7
+    ],
+    "east"
+   ]
+  ],
+  "gate": [
+   1240,
+   1142,
+   7
+  ],
+  "legs": [
+   [
+    "north",
+    90,
+    true
+   ],
+   [
+    "east",
+    10,
+    true
+   ]
+  ],
+  "steps": 150,
+  "text": "leave Hearthgate by the north gate, follow the road north about 90 steps, then follow the road east about 10 steps to its west entrance",
+  "title": "The Old Quarry",
+  "turns": [
+   [
+    1230,
+    1145,
+    7
+   ]
+  ]
+ },
+ "reed_marsh": {
+  "exit": "west",
+  "forks": [
+   [
+    [
+     1114,
+     1261,
+     7
+    ],
+    "west"
+   ],
+   [
+    [
+     1094,
+     1261,
+     7
+    ],
+    "south"
+   ]
+  ],
+  "gate": [
+   1071,
+   1322,
+   7
+  ],
+  "legs": [
+   [
+    "west",
+    100,
+    true
+   ],
+   [
+    "south",
+    75,
+    true
+   ]
+  ],
+  "steps": 234,
+  "text": "leave Hearthgate by the west gate, follow the road west about 100 steps, then follow the road south about 75 steps to its north entrance",
+  "title": "Reedmarsh",
+  "turns": [
+   [
+    1094,
+    1261,
+    7
+   ]
+  ]
+ },
+ "shard_fields": {
+  "exit": "east",
+  "forks": [
+   [
+    [
+     1335,
+     1285,
+     7
+    ],
+    "south-east"
+   ],
+   [
+    [
+     1339,
+     1291,
+     7
+    ],
+    "east"
+   ],
+   [
+    [
+     1363,
+     1291,
+     7
+    ],
+    "south"
+   ]
+  ],
+  "gate": [
+   1366,
+   1300,
+   7
+  ],
+  "legs": [
+   [
+    "east",
+    45,
+    true
+   ],
+   [
+    "south-east",
+    5,
+    true
+   ],
+   [
+    "east",
+    25,
+    true
+   ],
+   [
+    "south",
+    10,
+    true
+   ]
+  ],
+  "steps": 142,
+  "text": "leave Hearthgate by the east gate, follow the road east about 45 steps, then follow the road south-east about 5 steps, then follow the road east about 25 steps, then follow the road south about 10 steps to its north entrance",
+  "title": "Shard Fields",
+  "turns": [
+   [
+    1335,
+    1285,
+    7
+   ],
+   [
+    1339,
+    1291,
+    7
+   ],
+   [
+    1363,
+    1291,
+    7
+   ]
+  ]
+ },
+ "starter_east": {
+  "exit": "east",
+  "forks": [
+   [
+    [
+     1321,
+     1286,
+     7
+    ],
+    "north"
+   ]
+  ],
+  "gate": [
+   1323,
+   1281,
+   7
+  ],
+  "legs": [
+   [
+    "east",
+    40,
+    true
+   ]
+  ],
+  "steps": 94,
+  "text": "leave Hearthgate by the east gate, follow the road east about 40 steps to its south entrance",
+  "title": "Toad Pond",
+  "turns": []
+ },
+ "starter_south": {
+  "exit": "south",
+  "forks": [
+   [
+    [
+     1233,
+     1332,
+     7
+    ],
+    "west"
+   ]
+  ],
+  "gate": [
+   1207,
+   1338,
+   7
+  ],
+  "legs": [
+   [
+    "west",
+    30,
+    true
+   ]
+  ],
+  "steps": 76,
+  "text": "leave Hearthgate by the south gate, follow the road west about 30 steps to its north entrance",
+  "title": "Sproutling Glade",
+  "turns": []
+ },
+ "starter_west": {
+  "exit": "west",
+  "forks": [],
+  "gate": [
+   1153,
+   1281,
+   7
+  ],
+  "legs": [
+   [
+    "west",
+    25,
+    true
+   ]
+  ],
+  "steps": 80,
+  "text": "leave Hearthgate by the west gate, follow the road west about 25 steps to its south entrance",
+  "title": "The Ratwarren",
+  "turns": []
+ },
+ "thornsnap_hollow": {
+  "exit": "north",
+  "forks": [
+   [
+    [
+     1232,
+     1197,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1228,
+     1152,
+     7
+    ],
+    "west"
+   ]
+  ],
+  "gate": [
+   1217,
+   1151,
+   7
+  ],
+  "legs": [
+   [
+    "north",
+    70,
+    true
+   ],
+   [
+    "north-west",
+    15,
+    true
+   ],
+   [
+    "west",
+    10,
+    true
+   ]
+  ],
+  "steps": 144,
+  "text": "leave Hearthgate by the north gate, follow the road north about 70 steps, then follow the road north-west about 15 steps, then follow the road west about 10 steps to its east entrance",
+  "title": "Thornsnap Hollow",
+  "turns": [
+   [
+    1236,
+    1167,
+    7
+   ],
+   [
+    1228,
+    1152,
+    7
+   ]
+  ]
+ },
+ "wasp_fields": {
+  "exit": "north",
+  "forks": [
+   [
+    [
+     1232,
+     1207,
+     7
+    ],
+    "west"
+   ]
+  ],
+  "gate": [
+   1227,
+   1205,
+   7
+  ],
+  "legs": [
+   [
+    "north",
+    35,
+    true
+   ]
+  ],
+  "steps": 83,
+  "text": "leave Hearthgate by the north gate, follow the road north about 35 steps to its east entrance",
+  "title": "Waspgrass Fields",
+  "turns": []
+ },
+ "wolf_copse": {
+  "exit": "west",
+  "forks": [
+   [
+    [
+     1114,
+     1261,
+     7
+    ],
+    "west"
+   ],
+   [
+    [
+     1094,
+     1261,
+     7
+    ],
+    "south"
+   ],
+   [
+    [
+     1093,
+     1278,
+     7
+    ],
+    "south-west"
+   ]
+  ],
+  "gate": [
+   1087,
+   1282,
+   7
+  ],
+  "legs": [
+   [
+    "west",
+    55,
+    true
+   ],
+   [
+    "north",
+    25,
+    true
+   ],
+   [
+    "west",
+    20,
+    false
+   ],
+   [
+    "south",
+    25,
+    true
+   ]
+  ],
+  "steps": 180,
+  "text": "leave Hearthgate by the west gate, follow the road west about 55 steps, then follow the road north about 25 steps, then walk west about 20 steps, then follow the road south about 25 steps to its east entrance",
+  "title": "Wolf Copse",
+  "turns": [
+   [
+    1121,
+    1286,
+    7
+   ],
+   [
+    1114,
+    1261,
+    7
+   ],
+   [
+    1094,
+    1261,
+    7
+   ]
+  ]
+ }
+}

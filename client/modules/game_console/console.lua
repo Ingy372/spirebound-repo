@@ -610,6 +610,12 @@ function onTabChange(tabBar, tab)
         tab.isOnRedMessage = false
     end
 
+    -- Spirebound (J6): clicking a tab took the keyboard away from the chat box, so the first line typed after
+    -- switching tabs went nowhere. Give it back.
+    if isChatEnabled() then
+        consoleTextEdit:focus()
+    end
+
     if tab.newMessageEvent ~= nil then
         tab:setColor('#dfdfdfff')
         removeEvent(tab.newMessageEvent)

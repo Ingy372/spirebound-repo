@@ -695,12 +695,21 @@ def build(m):
     m.monsters.append(("Pen Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
     m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
     m.sign(yx + 11, yy + 9, Z, "Stop 1 of 4: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
-    m.sign(yx + 33, yy + 9, Z, "Stop 2 of 4: Skills and spells. Once you choose a path, the bar on the right holds the skills of the weapon in your hand (Shift+1..6), and !spells lists your spells. Press J for your Journal: its 'How do I' page answers most questions.")
-    m.sign(yx + 45, yy + 9, Z, "Stop 3 of 4: The Registrar's hall is ahead. Choose your path and how hard you want to live. Then the Proving, below the hall, before Hearthgate.")
-    m.building(yx + 53, yy + 7, 10, 10, Z, floor="marble", door_side="w", style="white", doors=True)
-    S.carpet(m, yx + 55, yy + 9, 6, 6, Z, 2576)
-    m.npcs.append(("Registrar Maelis", (yx + 58, yy + 12, Z)))
-    m.points["tutorial_registrar"] = (yx + 58, yy + 12, Z)
+    m.sign(yx + 33, yy + 9, Z, "Stop 2 of 4: Skills and spells. Once you choose a path, the bar on the right holds the skills of the weapon in your hand (Ctrl+1..6), and !spells lists your spells. Press J for your Journal: its 'How do I' page answers most questions.")
+    m.sign(yx + 45, yy + 9, Z, "Stop 3 of 4: The Registrar's hall is ahead, on the left where the path ends. Choose your path and how hard you want to live. Then the Proving, below the hall, before Hearthgate.")
+    # G8 (Grok session 3): the hall used to close the path's east end with its door in the west wall, but the client
+    # draws a roof one tile up and to the left, so a west (or north) door is hidden under it from outside: Grok saw "a
+    # red roof with no door". Doors a player must find face south or east. The hall now stands north of the path's
+    # end with its door in the south wall, right above the path, and a sign at the end points to it.
+    # (rng saved and restored: added late, the rest of the map's random scenery must not move)
+    rng_state_hall = m.rng.getstate()
+    m.fill(yx + 53, yy + 10, 6, 4, Z, "pave")                      # the path runs on to the end of the hall
+    m.building(yx + 50, yy + 2, 10, 8, Z, floor="marble", door_side="s", style="white", doors=True)
+    S.carpet(m, yx + 52, yy + 4, 6, 3, Z, 2576)
+    m.sign(yx + 57, yy + 11, Z, "The Registrar's hall: its door is two steps west of here, in the wall on the north side of the path.")
+    m.rng.setstate(rng_state_hall)
+    m.npcs.append(("Registrar Maelis", (yx + 55, yy + 5, Z)))
+    m.points["tutorial_registrar"] = (yx + 55, yy + 5, Z)
     yard_x, yard_y = yx, yy                       # kept for the zones below (yx/yy are reused as loop names later)
 
     # ------------------------------------------------ the Proving (G2, Jay 2026-11-24: "continue the tutorial after

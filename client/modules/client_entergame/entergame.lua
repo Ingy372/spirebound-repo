@@ -340,6 +340,20 @@ function EnterGame.showPanels()
     end
     modules.client_topmenu.show()
     pcall(spireLoginScreen)
+    -- G12 (Grok session 3): after a logout the character list showed the level and path from the last login (the
+    -- client keeps that list). Ask the login service again, so it shows what the character is now.
+    scheduleEvent(EnterGame.refreshCharacterList, 500)
+end
+
+-- Spirebound: fetch a fresh character list with the account already logged in (no typing, no new window to click)
+function EnterGame.refreshCharacterList()
+    if not g_app.isRunning() or g_game.isOnline() or not G.account or G.account == '' or not G.password or G.password == '' then
+        return
+    end
+    if not G.clientVersion or G.clientVersion < 1281 or not G.host or G.port == 7171 then
+        return -- only the http login service can be asked again without the old login protocol
+    end
+    EnterGame.tryHttpLogin(G.clientVersion, enterGame:getChildById('httpLoginBox'):isChecked())
 end
 
 function EnterGame.showServerList()

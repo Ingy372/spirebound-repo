@@ -21,6 +21,9 @@ xp:register()
 local lose = EventCallback("SpireDifficultyLoseXp")
 function lose.playerOnLoseExperience(player, exp)
 	local lost = Difficulty.finalDeathLoss(Difficulty.get(player), exp, player:getLevel(), player:getExperience())
+	if lost == 0 and exp > 0 then -- G12: the catch-up rule kept it all; say so after the respawn (the death window doesn't)
+		player:kv():scoped("spirebound"):set("youngGrace", exp)
+	end
 	return math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
 end
 lose:register()
@@ -168,6 +171,12 @@ function login.onLogin(player)
 	player:registerEvent("SpireHardcorePrepareDeath")
 	player:registerEvent("SpireHardcoreItemDrop")
 	SpireHardcore.settleDeath(player)
+	local s = player:kv():scoped("spirebound")
+	local kept = s:get("youngGrace")
+	if kept and kept > 0 then -- G12 (Grok session 3): tell a young climber their death cost no experience, and why
+		s:set("youngGrace", 0)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, Difficulty.youngGraceText(kept))
+	end
 	return true
 end
 login:register()

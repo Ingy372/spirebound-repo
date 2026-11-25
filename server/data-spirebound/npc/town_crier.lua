@@ -10,9 +10,10 @@ npcConfig.walkInterval = 2000
 npcConfig.walkRadius = 3
 npcConfig.outfit = { lookType = 128, lookHead = 78, lookBody = 94, lookLegs = 114, lookFeet = 95, lookAddons = 1 }
 npcConfig.flags = { floorchange = false }
+-- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {
-	interval = 20000,
-	chance = 35,
+	interval = 45000,
+	chance = 25,
 	{ text = "Hear ye! The tower stands sealed! Who will climb?" },
 	{ text = "News of the Spire, every hour on the hour!" },
 	{ text = "Lost a friend in the wilds? The Priest in the Hearth heals for free below level 50!" },

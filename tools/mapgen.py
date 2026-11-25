@@ -837,6 +837,11 @@ def main(argv):
         if problems:
             sys.exit("FAIL: hunting-ground walk test:\n" + "\n".join(problems))
         print(f"walk test: {len(m.wilds)} hunting grounds pass")
+        import hunt_routes                  # G9: real walking directions for !hunt, signposts at the turns
+        routes, posts, problems = hunt_routes.run(m)
+        if problems:
+            sys.exit("FAIL: hunting directions:\n" + "\n".join(problems))
+        print(f"hunt routes: {len(routes)} grounds, {posts} signposts")
         wilds.lua_data(m, LIB / "wilds_data.lua")
     out = m.write()
     m.preview()

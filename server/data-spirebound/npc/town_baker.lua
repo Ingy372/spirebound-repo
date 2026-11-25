@@ -10,9 +10,10 @@ npcConfig.walkInterval = 2000
 npcConfig.walkRadius = 4
 npcConfig.outfit = { lookType = 136, lookHead = 78, lookBody = 39, lookLegs = 76, lookFeet = 115, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
+-- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {
-	interval = 20000,
-	chance = 35,
+	interval = 45000,
+	chance = 25,
 	{ text = "Fresh bread! Well, yesterday's bread." },
 	{ text = "Miller Agna's flour is the best on the floor." },
 	{ text = "Who keeps stealing my cheese? Rats, I tell you." },

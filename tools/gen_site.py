@@ -128,7 +128,7 @@ def how_to_play() -> str:
         ["!buyhouse", "Buy a house at its door"],
     ]) + """
 <h2>Sword skills</h2>
-<p>Melee and ranged attacks come mostly from <b>sword skills</b> on a hotbar (Shift+1 to Shift+9). Each weapon family has
+<p>Melee and ranged attacks come mostly from <b>sword skills</b> on a hotbar (Ctrl+1 to Ctrl+6, or click). Each weapon family has
 its own: Openers, Links and Finishers, chained for combos. Arcanists and Mystics also get big spells that unlock
 automatically as you level; no trainer, no gold.</p>
 <h2>Fishing, secrets and hunting tasks</h2>

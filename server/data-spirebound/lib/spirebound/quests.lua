@@ -55,7 +55,7 @@ SpireQuests = {
 			report = "Return to Scout of Highrest and say 'report'.",
 			thanks = "The smith outdid herself. This is yours." },
 		{ id = "t1_1", floor = 1, side = true, name = "First Blood", giver = "Guide Pell", storage = 50121, killStorage = 50122,
-			target = "Pen Rat", count = 3, reward = { exp = 300, gold = 100 },
+			target = "Pen Rat", count = 3, reward = { exp = 100, gold = 100 }, -- G7: was 300 (level 4 before leaving the yard)
 			offer = "Let's find out what you can do. The rat pen is just along the path; its way in is the gap in the fence. Defeat three of its rats, and open a body to take the cheese it carries: the gate after the pen won't open without one. Ready?",
 			step = "Defeat the rats in the pen along the stone path: %d of %d.",
 			report = "Return to Guide Pell at the start of the path and say 'report'.",

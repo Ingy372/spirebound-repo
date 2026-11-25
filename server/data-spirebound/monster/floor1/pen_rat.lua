@@ -3,7 +3,7 @@ local mType = Game.createMonsterType("Pen Rat")
 local monster = {}
 
 monster.description = "a pen rat"
-monster.experience = 6
+monster.experience = 1
 monster.outfit = {
 	lookType = 56, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
