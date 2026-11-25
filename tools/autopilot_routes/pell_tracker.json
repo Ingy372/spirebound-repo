@@ -1,0 +1,29 @@
+{
+ "name": "pell_tracker",
+ "character": "Pilot Mystic",
+ "timeout": 400,
+ "about": "G3 check: a fresh character takes Pell's First Blood; the Quest Tracker shows it, then it is reported.",
+ "steps": [
+  {"do": "say", "text": "/pilot newbie"},
+  {"do": "wait", "seconds": 2},
+  {"do": "jump", "to": [1278, 1347, 7], "note": "Pell"},
+  {"do": "wait", "seconds": 2},
+  {"do": "say", "text": "hi"},
+  {"do": "wait", "seconds": 2},
+  {"do": "npc", "text": "quest"},
+  {"do": "wait", "seconds": 2},
+  {"do": "npc", "text": "yes"},
+  {"do": "wait", "seconds": 3},
+  {"do": "shot", "name": "tracker_active"},
+  {"do": "walk", "to": "tutorial_pen", "fight": true, "note": "rat pen"},
+  {"do": "hunt", "seconds": 40, "radius": 6},
+  {"do": "shot", "name": "tracker_after_kills"},
+  {"do": "jump", "to": [1278, 1347, 7], "note": "back to Pell"},
+  {"do": "wait", "seconds": 2},
+  {"do": "say", "text": "hi"},
+  {"do": "wait", "seconds": 2},
+  {"do": "npc", "text": "report"},
+  {"do": "wait", "seconds": 3},
+  {"do": "say", "text": "/pilot logout"}
+ ]
+}

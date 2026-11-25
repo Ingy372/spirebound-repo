@@ -20,7 +20,8 @@ MONSTERS = {
     # ---------------------------------------------------------------- Floor 1, starter fields (Guarded)
     "Field Rat": dict(desc="a field rat", look=(56,), corpse=5964, hp=20, xp=6, speed=75, race="blood",
                       attacks=[("melee", 0, -8)], armor=1, defense=2, run=4,  # F1-10: bolts when nearly dead
-                      loot=[(GOLD, 70000, 4), (3607, 30000, 1), (9668, 15000, 1)], voices=["Squeak!"]),
+                      loot=[(GOLD, 70000, 4), (3607, 30000, 1), (9668, 15000, 1)], voices=["Squeak!"],
+                      events=["SpireRatSteal", "SpireRatStealDeath"]),  # F1-10: snatches coins and runs
     # the tutorial pen's rats: weak on purpose, so the very first fight can't kill a level 1 with a practice club
     # (2026-11-12 playthrough: three Field Rats killed a new character in the pen)
     "Pen Rat": dict(desc="a pen rat", look=(56,), corpse=5964, hp=12, xp=6, speed=70, race="blood",
@@ -38,7 +39,8 @@ MONSTERS = {
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),
     "Sproutling": dict(desc="a sproutling", look=(19,), corpse=2127, hp=35, xp=13, speed=70, race="venom",
                        attacks=[("melee", 0, -10), ("earth", 0, -12, 4)], armor=2, defense=3,
-                       loot=[(GOLD, 75000, 7), (3577, 20000, 1), (3738, 14000, 1)]),
+                       loot=[(GOLD, 75000, 7), (3577, 20000, 1), (3738, 14000, 1)],
+                       events=["SpireSproutMend"]),  # F1-10: mends hurt sproutlings
     # ---------------------------------------------------------------- Floor 1 camps (Open)
     "Meadow Wasp": dict(desc="a meadow wasp", look=(44,), corpse=5964, hp=45, xp=17, speed=130, race="venom",
                         attacks=[("melee", 0, -16, None, "poison")], armor=2, defense=4, defenses=[("haste", 12, 200)],  # F1-10: darts
@@ -54,7 +56,8 @@ MONSTERS = {
                          loot=[(GOLD, 85000, 15), (3577, 40000, 2), (3582, 15000, 1), (903, 12000, 1)], voices=["Hrrnk!"]),
     "Meadow Wolf": dict(desc="a meadow wolf", look=(27,), corpse=5968, hp=85, xp=36, speed=115, race="blood",
                         attacks=[("melee", 0, -25)], armor=4, defense=6, run=12, defenses=[("haste", 10, 250)],  # F1-10: darts in, flees hurt
-                        loot=[(GOLD, 70000, 10), (5897, 10000, 1), (3577, 30000, 1)], voices=["Grrr!"]),
+                        loot=[(GOLD, 70000, 10), (5897, 10000, 1), (3577, 30000, 1)], voices=["Grrr!"],
+                        events=["SpireWolfCall", "SpireWolfCallDeath"]),  # F1-10: howls for the pack when hurt
     "Grey Alpha": dict(desc="a grey alpha", look=(52,), corpse=5997, hp=260, xp=107, speed=125, race="blood",
                        attacks=[("melee", 0, -60)], armor=12, defense=14,
                        loot=[(GOLD, 100000, 40), (5897, 50000, 2), (266, 8000, 1), (3012, 6000, 1)], voices=["AWOOOO!"],
@@ -75,7 +78,8 @@ MONSTERS = {
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
     "Ruin Sentinel": dict(desc="a ruin sentinel", look=(131, 79, 79, 79, 79, 0), corpse=18074, hp=300, xp=96, speed=85,
                           race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
-                          loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15}),
+                          loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15},
+                          events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),  # F1-10: shield wall
     "Ruin Archer": dict(desc="a ruin archer", look=(129, 79, 79, 79, 79, 0), corpse=18138, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
