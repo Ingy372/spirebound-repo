@@ -33,10 +33,34 @@ local function findPath(voc, key)
 	end
 end
 
+-- P11 (FLOOR1_REVIEW.md F1-40, Q46): from Mastery 5 a climber may take a stance, a free-to-swap taste of one of
+-- the two paths (its passive as if at level STANCE_TASTE), until the permanent choice at Mastery 10.
+SpireStyle.STANCE_LEVEL = 5
+SpireStyle.STANCE_TASTE = 3
+
+-- Pure: may a stance be taken now? -> ok, message or path name
+function SpireStyle.canStance(voc, points, path, key)
+	if path then
+		return false, "You have chosen your path: stances are only for climbers still deciding."
+	end
+	local s, l = SpireStyle.levelOf(points)
+	if s == 1 and l < SpireStyle.STANCE_LEVEL then
+		return false, string.format("Stances open at Mastery %d.", SpireStyle.STANCE_LEVEL)
+	end
+	local p = findPath(voc, key)
+	if not p then
+		return false, "That is not one of your paths. Say !style to see them."
+	end
+	return true, p.name
+end
+
 -- Pure: what the character's style looks like with its choices
-function SpireStyle.view(voc, points, path, final)
+function SpireStyle.view(voc, points, path, final, stance)
 	local s, l = SpireStyle.levelOf(points)
 	local v = { voc = voc, points = points or 0, path = path, final = final, choiceReady = false }
+	if not path and stance and findPath(voc, stance) and (s > 1 or l >= SpireStyle.STANCE_LEVEL) then
+		v.stance = stance
+	end
 	if not path then
 		if s > 1 or l == 10 then
 			s, l, v.choiceReady = 1, 10, true
@@ -85,6 +109,9 @@ function SpireStyle.levels(v)
 		return out
 	end
 	out[t.key] = v.stage > 1 and 10 or v.level
+	if v.stance and not v.path then
+		out[v.stance] = SpireStyle.STANCE_TASTE
+	end
 	if v.path and v.stage >= 2 then
 		out[v.path] = v.stage > 2 and 10 or v.level
 	end
@@ -150,7 +177,21 @@ end
 
 function SpireStyle.get(player)
 	local k = kv(player)
-	return SpireStyle.view(player:getVocation():getBaseId(), k:get("style_points") or 0, k:get("style_path"), k:get("style_final"))
+	return SpireStyle.view(player:getVocation():getBaseId(), k:get("style_points") or 0, k:get("style_path"), k:get("style_final"),
+		k:get("style_stance"))
+end
+
+function SpireStyle.setStance(player, key)
+	local v = SpireStyle.get(player)
+	local ok, msg = SpireStyle.canStance(v.voc, v.points, v.path, key)
+	if not ok then
+		return false, msg
+	end
+	kv(player):set("style_stance", key)
+	if SpireStyle.applySpeed then
+		SpireStyle.applySpeed(player)
+	end
+	return true, string.format("You take the %s stance: a taste of that path. Swap any time with !style and the other path's name. At Mastery 10 your choice becomes permanent.", msg)
 end
 
 function SpireStyle.hasAbility(player, stage)

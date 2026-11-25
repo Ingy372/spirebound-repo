@@ -34,6 +34,9 @@ local function describeTree(player)
 			table.insert(names, o.name:lower())
 		end
 		table.insert(L, "Your choice is ready. Say !style " .. table.concat(names, " or !style ") .. ". It is permanent.")
+	elseif not v.path and SpireStyle.canStance(voc, v.points, nil, tree.paths[1].key) then
+		table.insert(L, string.format("Stance: %s. Try a path before you choose: say !style %s or !style %s (free to swap until Mastery 10).",
+			v.stance and SpireStyle.name(voc, v.stance) or "none", tree.paths[1].name:lower(), tree.paths[2].name:lower()))
 	else
 		table.insert(L, "Your next choice comes when this stage reaches level 10.")
 	end
@@ -79,6 +82,14 @@ function style.onSay(player, words, param)
 		end
 	end
 	local key = param:gsub(" ", "_")
+	if not v.path and not v.choiceReady then -- P11: before Mastery 10 a path name sets a free stance
+		local ok, smsg = SpireStyle.setStance(player, key)
+		player:sendTextMessage(ok and MESSAGE_EVENT_ADVANCE or MESSAGE_STATUS, smsg)
+		if ok then
+			player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+		end
+		return false
+	end
 	local _, msg = SpireStyle.canChoose(voc, v.points, v.path, v.final, key)
 	player:sendTextMessage(MESSAGE_STATUS, msg)
 	return false

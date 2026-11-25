@@ -16,6 +16,7 @@
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
+--   /pilot mastery n       (style tests) Mastery n of the first stage, no path, no stance
 --   /pilot stairkey [off]  (boss tests) the Axe-Lord's hall opens without the Stair Key's three pieces
 --   /pilot newbie          (tutorial tests) become a brand-new character again: no path, no mode, the Proving not done,
 --                          a practice club in hand, at the Registrar
@@ -54,7 +55,7 @@ function pilot.onSay(player, words, param)
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: level " .. player:getLevel())
 	elseif cmd == "gearreset" then -- (gear tests) forget the barracks' weapon, style and trophies; drop Spirebound gear
 		local k = player:kv():scoped("spirebound")
-		for _, key in ipairs({ "gear_main_1", "style_points", "style_path", "style_final", "style_respec_at" }) do
+		for _, key in ipairs({ "gear_main_1", "style_points", "style_path", "style_final", "style_respec_at", "style_stance" }) do
 			k:remove(key)
 		end
 		for _, t in ipairs(SpireTrophies.LIST) do
@@ -102,6 +103,14 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: " .. made .. " " .. name)
+	elseif cmd == "mastery" then -- (style tests, P11) set the style tree to Mastery n of stage 1 (no path chosen)
+		local n = math.max(1, math.min(10, tonumber(rest) or 1))
+		local k = player:kv():scoped("spirebound")
+		k:set("style_points", SpireGearData.STYLE_POINTS[n])
+		k:remove("style_path")
+		k:remove("style_final")
+		k:remove("style_stance")
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: mastery " .. n)
 	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
 		local k = player:kv():scoped("spirebound")
 		if rest:find("off") then

@@ -1,0 +1,73 @@
+{
+ "name": "p11_stance",
+ "character": "Pilot Ranger",
+ "timeout": 200,
+ "about": "P11 check: a Mastery 5 Ranger takes and swaps a stance.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "temple_hearthgate",
+   "note": "style"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 4"
+  },
+  {
+   "do": "say",
+   "text": "!style marksman"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 5"
+  },
+  {
+   "do": "say",
+   "text": "!style"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "!style trapper"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "!style marksman"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "!upgrade"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "p11_stance"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

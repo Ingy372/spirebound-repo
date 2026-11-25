@@ -102,6 +102,8 @@ function SpireUpgrade.lines(view)
 		table.insert(L, string.format("STYLE  %s %d/10", st.stageName, st.level))
 		if st.choiceReady and st.options then
 			table.insert(L, "      choice ready: " .. table.concat(st.options, " or ") .. " (say !style)")
+		elseif st.stanceOpen then
+			table.insert(L, "      stance: " .. (st.stance or "none") .. " (try a path free until Mastery 10: say !style)")
 		end
 	end
 	if #(view.trophies or {}) == 0 then
@@ -145,7 +147,9 @@ function SpireUpgrade.viewFor(player)
 		table.insert(view.steps, { key = st.key, level = st.level, text = st.text, where = st.where, done = st.done(player) })
 	end
 	local v = SpireStyle.get(player)
-	view.style = { stageName = SpireStyle.stageName(v), level = v.level, choiceReady = v.choiceReady }
+	view.style = { stageName = SpireStyle.stageName(v), level = v.level, choiceReady = v.choiceReady,
+		stance = v.stance and SpireStyle.name(v.voc, v.stance) or nil,
+		stanceOpen = not v.path and not v.choiceReady and SpireStyle.canStance(v.voc, v.points, nil, (SpireGearData.style[v.voc] or { paths = { {} } }).paths[1].key) }
 	if v.options then
 		view.style.options = {}
 		for _, o in ipairs(v.options) do
