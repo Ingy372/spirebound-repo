@@ -182,6 +182,15 @@ if (Test-Path $botCfg) {
     # the guard (loaded last) which helper jobs may keep running; everything else pauses during the fight.
     Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_mark.lua") (Join-Path $vbot "vBot\spirebound_mark.lua")
     Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_pvp_guard.lua") (Join-Path $vbot "vBot\spirebound_pvp_guard.lua")
+    # B1: this client hangs when a wrapping label sits in a hidden bot tab; the override drops the wrapping and the
+    # cavebot editor's one wrapping label gets a fixed height (the client module does the same for older installs)
+    Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_fixes.otui") (Join-Path $vbot "vBot\spirebound_fixes.otui")
+    $ed = Join-Path $vbot "cavebot\editor.otui"
+    if (Test-Path $ed) {
+        $et = [IO.File]::ReadAllText($ed).Replace("`r`n", "`n")
+        $et = $et.Replace("    text: Double click on action from action list to edit it`n    text-align: center`n    text-auto-resize: true`n    text-wrap: true`n", "    text: Double-click an action to edit it`n    text-align: center`n    height: 14`n")
+        [IO.File]::WriteAllText($ed, $et)
+    }
     if (-not $lt.Contains('"spirebound_pvp_guard"')) {
         $lt = $lt.Replace('  "HealBot",', '  "spirebound_mark",' + "`n" + '  "HealBot",')
         $lt = $lt.Replace('  "new_healer",', '  "new_healer",' + "`n" + '  "spirebound_mark",')

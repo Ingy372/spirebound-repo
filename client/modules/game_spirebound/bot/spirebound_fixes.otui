@@ -1,0 +1,8 @@
+BotLabel < Label
+  margin-top: 2
+  height: 15
+  text-align: center
+
+SettingCheckBox < CheckBox
+  margin-top: 3
+  font: verdana-11px-rounded

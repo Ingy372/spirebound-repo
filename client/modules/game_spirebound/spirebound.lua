@@ -316,6 +316,22 @@ end
 -- own folder only the first time, so a player who installed earlier would never get a new script. Every client start
 -- refreshes them in each vBot config the player has, and adds them to that config's load order once.
 local BOT_SCRIPTS = { 'spirebound_report', 'spirebound_mark', 'spirebound_pvp_guard' }
+-- B1 (2026-11-25): this client build hangs for good when a label that wraps its text sits in a hidden bot tab or
+-- panel (it has no width, so the wrapping never ends). Switching the bot on froze the client every time. Fix:
+-- spirebound_fixes.otui (vBot imports every layout in its vBot folder at start, after its own) redefines vBot's
+-- wrapping labels without wrapping, and the cavebot editor's one wrapping label gets a fixed height. Rule for any
+-- bot layout we add: no text-wrap on labels in bot tabs.
+local EDITOR_OLD = "    text: Double click on action from action list to edit it\n    text-align: center\n    text-auto-resize: true\n    text-wrap: true\n"
+local EDITOR_NEW = "    text: Double-click an action to edit it\n    text-align: center\n    height: 14\n"
+local function patchEditor(cfg)
+  local f = '/bot/' .. cfg .. '/cavebot/editor.otui'
+  if not g_resources.fileExists(f) then return end
+  local t = g_resources.readFileContents(f):gsub('\r', '')
+  local s, e = t:find(EDITOR_OLD, 1, true)
+  if s then
+    g_resources.writeFileContents(f, t:sub(1, s - 1) .. EDITOR_NEW .. t:sub(e + 1))
+  end
+end
 local function syncBotScripts()
   for _, cfg in ipairs(g_resources.listDirectoryFiles('/bot', false, false) or {}) do
     local loader = '/bot/' .. cfg .. '/_Loader.lua'
@@ -327,6 +343,12 @@ local function syncBotScripts()
           g_resources.writeFileContents(dst, src)
         end
       end
+      local fixes = g_resources.readFileContents('/modules/game_spirebound/bot/spirebound_fixes.otui')
+      local fixDst = '/bot/' .. cfg .. '/vBot/spirebound_fixes.otui'
+      if fixes and fixes:len() > 0 and (not g_resources.fileExists(fixDst) or g_resources.readFileContents(fixDst) ~= fixes) then
+        g_resources.writeFileContents(fixDst, fixes)
+      end
+      patchEditor(cfg)
       local lt = g_resources.readFileContents(loader)
       -- Q16 / roadmap R15: no automatic attack or spell rotation, no combo helper, no script editor, no pushmax.
       -- The installer removes them from fresh installs; older installs still had them in their own copy.

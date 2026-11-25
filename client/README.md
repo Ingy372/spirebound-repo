@@ -11,3 +11,9 @@ Spirebound's additions to OTClient Redemption (pinned in `server/PINS.env`). The
 
 Server side of the link: `server/data-spirebound/lib/spirebound/client_link.lua` (extended opcode 210, JSON).
 Cursor images are placeholders; final art is in `ART_REQUESTS.md` batch 2.
+
+**Built-in bot (vBot) scripts** live in `modules/game_spirebound/bot/`: the cavebot report, the player-fight guard (M5:
+helpers only heal), its bookmarks, and `spirebound_fixes.otui`. vBot copies its default config into the player's own
+folder only once, so `game_spirebound` refreshes these files in every vBot config at each client start.
+**Rule (B1, 2026-11-25):** no `text-wrap` on labels in bot tabs or hidden bot panels: this client build hangs for good
+when it tries to wrap text into a widget with no width. That is what froze the client whenever the bot was switched on.
