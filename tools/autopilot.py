@@ -239,7 +239,7 @@ def main(argv):
     shutil.copytree(ROOT / "client" / "modules", CLIENT / "modules", dirs_exist_ok=True)
     run = MODULE_DST / "run.json"
     run.write_text(json.dumps({"name": name, "account": ACCOUNT, "password": PASSWORD, "character": char, "exit": True, "steps": steps,
-                                "noPotions": bool(route.get("noPotions", False))}), encoding="utf-8")
+                                "noPotions": bool(route.get("noPotions", False)), "loginShot": bool(route.get("loginShot", False))}), encoding="utf-8")
     started = time.time()
     proc = subprocess.Popen([str(exe)], cwd=str(CLIENT))
     limit = time.time() + route.get("timeout", 1200)

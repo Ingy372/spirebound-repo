@@ -157,6 +157,30 @@ local function updateLabelText()
     end
 end
 
+-- G5 (Grok playtest 2026-11-24, "the login title font is unreadable"): the stock login screen showed "OTClient
+-- Redemption" in a shimmering shader, and boxes that need a web service we don't run (boosted creature, event
+-- schedule, a developer hint about init.lua), plus empty Discord / YouTube / players-online links. Keep the title,
+-- say "Spirebound" without the shader, and hide the rest.
+local function spireLoginScreen()
+    local bm = modules.client_bottommenu and rootWidget:recursiveGetChildById('bottomMenu')
+    if bm then
+        pcall(function() bm:setImageSource('') end)
+        for _, child in ipairs(bm:getChildren()) do
+            if child:getClassName() == 'UILabel' or child:getStyleName() == 'Label' then
+                child:setText('Spirebound')
+                pcall(function() child:setShader('') end)
+                child:setColor('#e8dcc0')
+            else
+                child:hide()
+            end
+        end
+    end
+    for _, id in ipairs({ 'topLeftOnlinePlayers', 'topLeftDiscord', 'topLeftYoutube' }) do
+        local w = rootWidget:recursiveGetChildById(id)
+        if w then w:hide() end
+    end
+end
+
 local function loadServerListModule()
     local module = g_modules.getModule('client_serverlist')
 
@@ -315,6 +339,7 @@ function EnterGame.showPanels()
         modules.client_bottommenu.show()
     end
     modules.client_topmenu.show()
+    pcall(spireLoginScreen)
 end
 
 function EnterGame.showServerList()
@@ -552,6 +577,7 @@ function EnterGame.show()
     enterGame:raise()
     enterGame:focus()
     hasAttemptedAuthenticator = false
+    scheduleEvent(function() pcall(spireLoginScreen) end, 200) -- the bottom menu may load after this module
 end
 
 function EnterGame.hide()

@@ -1,0 +1,10 @@
+{
+ "name": "g5_login",
+ "character": "Pilot Ranger",
+ "timeout": 120,
+ "loginShot": true,
+ "about": "G5: a screenshot of the login window (autopilot_login.png), then log in and out.",
+ "steps": [
+  {"do": "wait", "seconds": 2}
+ ]
+}

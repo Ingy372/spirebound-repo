@@ -147,3 +147,8 @@ Made by Claude with the Blender pipeline when the art queue reaches them; until 
 | [ ] | `deco_beacon_bowl_unlit.png`, `_lit.png` | 32×32, 1 (lit: 4 frames) | "32x32 pixel-art, Tibia style, transparent background: a waist-high bronze fire bowl on three legs; unlit = cold ash; lit = tall golden flame." Now: Tibia's fire bowl. |
 | [ ] | `item_chronicle_cup.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small golden cup engraved with a tower climbing into clouds, a blue ribbon around the stem." Now: Tibia's golden goblet. |
 | [ ] | `deco_arena_champion_statue.png` | 32×64, 1 | "Tibia-style pixel-art statue, transparent background, 32x64: a marble warrior on a plinth raising a sword, a laurel at the feet, a blank name plate on the plinth." The Arena MVP's statue in the Hearth Square. Now: Tibia's plain statue (2025). |
+
+## Batch 10 (2026-11-25): login screen (Priority: low, the stock picture works)
+| Done | File | Size, frames | What it is / Grok prompt |
+|---|---|---|---|
+| [ ] | `client/images/background.png` | 1920×1080, 1 | "Fantasy painting, wide 16:9 game login background: a colossal stone spire rising from green plains into the clouds, ten faint rings of light around it (one per floor), a walled town with timber houses at its foot, a stone road and a small band of adventurers (a knight, an archer, a mage, a healer) seen from behind walking toward it, warm morning light, painterly but crisp, no text, keep the bottom fifth calm and darker so a title can sit there." Now: OTClient's stock picture (the title says Spirebound since G5). |

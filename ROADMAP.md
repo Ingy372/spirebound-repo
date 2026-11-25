@@ -12,13 +12,11 @@ Finished tasks live in `ROADMAP_DONE.md` (move each task there when it is ticked
 
 ## Grok's playtest, 2026-11-24 (first-time Mystic, never killed anything as a Mystic). Do this first.
 Reports: `docs/playtests/2026-11-24-grok-session1.md` and `...-session2.md`. Fixes: see PLAYTEST.md.
-- [~] **G5 Client clean-up for newcomers**: the login field says "email" but wants the account name; hide the bot panel and the Store button; Ctrl+O for Options; the login title font is unreadable. *(2026-11-24: done: the login says "Account:" and the window "Spirebound"; the empty Store button is hidden. Left alone on purpose: the bot panel (DESIGN.md 11 builds bot helpers into our client; Q51) and Ctrl+O (it opens the chat channel list, as in Tibia). Still to do: the unreadable login title font (needs a look at the login screen).)* Done when: checked in the client with screenshots.
 - [ ] **G7 Slower yard levels** (Q52, Grok session 2): Pen Rats and Pell's reward tuned so a new character leaves the yard at level 2-3. Done when: the autopilot's yard run ends at level 2-3.
 - [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a Grok report with no lag caveat, including a Ranger (Grok Fourth) and a Vanguard past the cheese gate (session 2 could not).
 
 ## Claude's playtest, 2026-11-25 (fresh Ranger, `docs/playtests/2026-11-25-claude-ranger.md`). Do this first.
 
-- [ ] **C4 Check the hit-message spacing in the Server Log**: the client now drops the engine's extra space ("your  attack" -> "your attack", `client/modules/game_console/console.lua`); C1-C3 were checked in the client, this one only in code. Done when: a screenshot of the Server Log after a few hits shows single spaces.
 
 ## Grok's playtest, 2026-11-25 (session 3: all four paths on fresh characters). Do this first.
 Report: `docs/playtests/2026-11-25-grok-session3.md` (handoff `...-session3-handoff.md`). Fixed the same day: see PLAYTEST.md. Left:

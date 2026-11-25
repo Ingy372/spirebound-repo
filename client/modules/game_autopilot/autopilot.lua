@@ -240,6 +240,19 @@ function handlers.jump(player)
     end
 end
 
+-- show a chat tab, e.g. { "do": "console", "tab": "Server Log" } (to screenshot what the game wrote there)
+function handlers.console()
+    local c = modules.game_console
+    local tab = c and c.getTab and c.getTab(step.tab or 'Server Log')
+    if tab and c.consoleTabBar then
+        c.consoleTabBar:selectTab(tab)
+        log('console tab: ' .. tostring(step.tab or 'Server Log'))
+    else
+        log('console tab not found: ' .. tostring(step.tab))
+    end
+    nextStep()
+end
+
 -- drink a health potion on yourself, as a player does with "Use with..." (the yard's potion gate)
 function handlers.drink(player)
     if not stepData.sent then
@@ -730,6 +743,7 @@ local function onGameEnd()
 end
 
 -- log in like a player: fill the login window, then pick the character from the list
+local loginShotTaken = false
 local function login(tries)
     tries = tries or 0
     if tries > 120 then
@@ -751,6 +765,16 @@ local function login(tries)
         return finish('no such character')
     end
     local eg = rootWidget:recursiveGetChildById('enterGame')
+    if eg and eg:isVisible() and plan.loginShot and not loginShotTaken then
+        -- "loginShot": true in the run file: a picture of the login window as a player sees it (G5)
+        loginShotTaken = true
+        scheduleEvent(function()
+            g_app.doScreenshot('autopilot_login.png')
+            log('screenshot autopilot_login.png (the login window)')
+        end, 1500)
+        scheduleEvent(function() login(tries + 1) end, 3000)
+        return
+    end
     if eg and eg:isVisible() and not loginEvent then
         eg:getChildById('accountNameTextEdit'):setText(plan.account)
         eg:getChildById('accountPasswordTextEdit'):setText(plan.password)
