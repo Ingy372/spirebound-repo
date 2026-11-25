@@ -1,0 +1,66 @@
+{
+ "name": "p8_vanguard",
+ "character": "Pilot Vanguard",
+ "timeout": 150,
+ "about": "P8: a level 2 Vanguard casts its first attack spell on a pen rat.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 2",
+   "note": "P8: level 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": "tutorial_pen",
+   "note": "rat pen"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "heavy strike",
+   "target": true,
+   "note": "heavy strike at level 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "cast",
+   "text": "heavy strike",
+   "target": true,
+   "note": "heavy strike again"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "!spells"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "p8_vanguard"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

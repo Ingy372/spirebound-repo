@@ -204,7 +204,7 @@ def pvp() -> str:
         ["Contested", "Each floor's apex spawn. Kills give no skull; killers earn Blood Marks. Victims drop more."],
         ["Deadzone", "The deepest areas. Contested rules, bigger losses, the best experience and loot."],
     ]) + "<h2>Protections</h2><ol>" + "".join(f"<li>{e(x)}</li>" for x in [
-        "Newbie protection: below level 50 you cannot attack players and they cannot attack you (except in boss rooms), and the border blocks you from Contested and Deadzone zones. New characters also get 2 hours of play-time protection.",
+        "Newbie protection: below level 50 you cannot attack players and they cannot attack you (except in boss rooms), even on Contested and Deadzone ground, where only players of 50 and above fight. New characters also get 2 hours of play-time protection.",
         "Level-range protection: you cannot start a fight with a player below 70% of your level, outside Contested, Deadzone and boss rooms. They can still defend themselves.",
         "Outnumbered shield: if 3 or more different players hit you within 10 seconds, you take 10% less player damage per attacker beyond 2 (up to 40% less).",
         "Guild-farming shield: if the same guild kills you twice within 6 hours outside a war, you get a 30-minute Sanctuary against that guild.",

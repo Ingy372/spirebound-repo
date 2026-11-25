@@ -29,6 +29,28 @@
   {
    "do": "walk",
    "to": [
+    1232,
+    1315,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Sproutling Glade: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1220,
+    1334,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Sproutling Glade: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
     1207,
     1338,
     7
@@ -57,6 +79,28 @@
   {
    "do": "walk",
    "to": [
+    1202,
+    1284,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Ratwarren: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1172,
+    1285,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Ratwarren: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
     1153,
     1281,
     7
@@ -81,6 +125,28 @@
   {
    "do": "wait",
    "seconds": 2
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1255,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Waspgrass Fields: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1225,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Waspgrass Fields: on the way"
   },
   {
    "do": "walk",
@@ -114,12 +180,23 @@
    "do": "walk",
    "to": [
     1232,
-    1202,
+    1255,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Burrow Hills: a turn"
+   "note": "Burrow Hills: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1225,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Burrow Hills: on the way"
   },
   {
    "do": "walk",
@@ -152,6 +229,28 @@
   {
    "do": "walk",
    "to": [
+    1262,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Toad Pond: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1292,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Toad Pond: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
     1323,
     1281,
     7
@@ -180,24 +279,35 @@
   {
    "do": "walk",
    "to": [
-    1172,
-    1311,
+    1202,
+    1284,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Boar Meadow: a turn"
+   "note": "Boar Meadow: on the way"
   },
   {
    "do": "walk",
    "to": [
-    1159,
-    1315,
+    1174,
+    1288,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Boar Meadow: a turn"
+   "note": "Boar Meadow: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1165,
+    1313,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Boar Meadow: on the way"
   },
   {
    "do": "walk",
@@ -230,35 +340,46 @@
   {
    "do": "walk",
    "to": [
-    1335,
-    1285,
+    1262,
+    1286,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Shard Fields: a turn"
+   "note": "Shard Fields: on the way"
   },
   {
    "do": "walk",
    "to": [
-    1339,
+    1292,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Shard Fields: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1322,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Shard Fields: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1350,
     1291,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Shard Fields: a turn"
-  },
-  {
-   "do": "walk",
-   "to": [
-    1363,
-    1291,
-    7
-   ],
-   "fight": false,
-   "timeout": 120,
-   "note": "Shard Fields: a turn"
+   "note": "Shard Fields: on the way"
   },
   {
    "do": "walk",
@@ -291,24 +412,46 @@
   {
    "do": "walk",
    "to": [
-    1236,
-    1167,
+    1232,
+    1255,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Thornsnap Hollow: a turn"
+   "note": "Thornsnap Hollow: on the way"
   },
   {
    "do": "walk",
    "to": [
-    1228,
-    1152,
+    1232,
+    1225,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Thornsnap Hollow: a turn"
+   "note": "Thornsnap Hollow: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1233,
+    1195,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Thornsnap Hollow: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1235,
+    1165,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Thornsnap Hollow: on the way"
   },
   {
    "do": "walk",
@@ -341,13 +484,46 @@
   {
    "do": "walk",
    "to": [
-    1230,
-    1145,
+    1232,
+    1255,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "The Old Quarry: a turn"
+   "note": "The Old Quarry: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1225,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Quarry: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1233,
+    1195,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Quarry: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1235,
+    1165,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Quarry: on the way"
   },
   {
    "do": "walk",
@@ -380,35 +556,57 @@
   {
    "do": "walk",
    "to": [
-    1121,
-    1286,
+    1202,
+    1284,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Wolf Copse: a turn"
+   "note": "Wolf Copse: on the way"
   },
   {
    "do": "walk",
    "to": [
-    1114,
+    1172,
+    1285,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Wolf Copse: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1142,
+    1283,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Wolf Copse: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1117,
+    1278,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Wolf Copse: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1101,
     1261,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Wolf Copse: a turn"
-  },
-  {
-   "do": "walk",
-   "to": [
-    1094,
-    1261,
-    7
-   ],
-   "fight": false,
-   "timeout": 120,
-   "note": "Wolf Copse: a turn"
+   "note": "Wolf Copse: on the way"
   },
   {
    "do": "walk",
@@ -441,35 +639,68 @@
   {
    "do": "walk",
    "to": [
-    1367,
-    1283,
+    1262,
+    1286,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "The Bandit Road: a turn"
+   "note": "The Bandit Road: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1292,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Bandit Road: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1322,
+    1286,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Bandit Road: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1352,
+    1285,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Bandit Road: on the way"
   },
   {
    "do": "walk",
    "to": [
     1367,
-    1227,
+    1268,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "The Bandit Road: a turn"
+   "note": "The Bandit Road: on the way"
   },
   {
    "do": "walk",
    "to": [
-    1356,
-    1226,
+    1367,
+    1238,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "The Bandit Road: a turn"
+   "note": "The Bandit Road: on the way"
   },
   {
    "do": "walk",
@@ -502,13 +733,79 @@
   {
    "do": "walk",
    "to": [
-    1094,
+    1202,
+    1284,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1172,
+    1285,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1142,
+    1283,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1117,
+    1278,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1101,
     1261,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "Reedmarsh: a turn"
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1093,
+    1284,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1085,
+    1309,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "Reedmarsh: on the way"
   },
   {
    "do": "walk",
@@ -541,13 +838,123 @@
   {
    "do": "walk",
    "to": [
-    1117,
+    1202,
+    1284,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1172,
+    1285,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1142,
     1283,
     7
    ],
    "fight": false,
    "timeout": 120,
-   "note": "The Old Watchtower: a turn"
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1117,
+    1278,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1114,
+    1248,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1113,
+    1219,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1086,
+    1204,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1076,
+    1174,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1076,
+    1144,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1076,
+    1114,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1052,
+    1104,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
   },
   {
    "do": "walk",

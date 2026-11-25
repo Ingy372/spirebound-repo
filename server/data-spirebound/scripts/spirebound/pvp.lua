@@ -206,7 +206,7 @@ function SpirePvP.creditUnjust(k, player, zone, now)
 end
 death:register()
 
--- Murderers and guard-marked killers are thrown out of towns and boss rooms; under-50s are kept out of Contested/Deadzone
+-- Murderers and guard-marked killers are thrown out of towns and boss rooms; under-50s entering Contested/Deadzone are told they stay protected
 local tick = GlobalEvent("SpirePvPTick")
 function tick.onThink(interval)
 	local now = os.time()
@@ -223,8 +223,18 @@ function tick.onThink(interval)
 			p:addHealth(-math.floor(p:getMaxHealth() * 0.25))
 		elseif zone == "bossroom" and murderer then
 			out = "Murderers may not challenge the tower's guardians."
-		elseif (zone == "contested" or zone == "deadzone") and p:getLevel() < SpirePvP.NEWBIE_LEVEL and not p:getGroup():getAccess() then
-			out = "This ground is too dangerous below level " .. SpirePvP.NEWBIE_LEVEL .. "."
+		elseif (zone == "contested" or zone == "deadzone") and p:getLevel() < SpirePvP.NEWBIE_LEVEL then
+			-- 2026-11-25 (Jay's G9 test): the border used to turn everyone below 50 away, but each floor's apex ground
+			-- is Contested and Floors 1-4 are hunted below 50: nobody could reach the Old Watchtower (levels 28-40) or
+			-- its Stonehorn Ram, a piece of the Stair Key. Now they may enter; newbie protection still holds there
+			-- (SpirePvP.canAttack), so only players of 50 and above fight each other on Contested ground.
+			local notes = p:kv():scoped("spirebound-notices")
+			if not notes:get("contestedYoung") then
+				notes:set("contestedYoung", os.time())
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Contested ground: players of level %d and above fight here "
+					.. "freely, with no skulls. Below level %d you are still protected: nobody can attack you, and you can't attack anyone.",
+					SpirePvP.NEWBIE_LEVEL, SpirePvP.NEWBIE_LEVEL))
+			end
 		end
 		if out and lastSafe[pid] then
 			p:teleportTo(lastSafe[pid])

@@ -1,0 +1,212 @@
+{
+ "name": "g10_checks",
+ "character": "Pilot Vanguard",
+ "timeout": 420,
+ "about": "G10-G12: minimap '!' and skill names, Vesper with her quest taken, the Quest Tracker count, a level 5 Vanguard hitting boars.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1304,
+    7
+   ],
+   "note": "Hearth Square, by Vesper"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g10_minimap_and_skillbar",
+   "note": "minimap '!' on quest givers; skill names unclipped"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest l1_stones 1",
+   "note": "Vesper's stones quest taken"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "hi",
+   "note": "G11: a second hi while talking"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g11_vesper"
+  },
+  {
+   "do": "say",
+   "text": "bye"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest l1_stones -1"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest t1_1 -1",
+   "note": "Pell's First Blood new again"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": [
+    1278,
+    1347,
+    7
+   ],
+   "note": "Guide Pell"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g10_tracker_taken"
+  },
+  {
+   "do": "jump",
+   "to": "tutorial_pen",
+   "note": "rat pen"
+  },
+  {
+   "do": "hunt",
+   "seconds": 12,
+   "radius": 6,
+   "note": "one or two kills"
+  },
+  {
+   "do": "shot",
+   "name": "g10_tracker_count",
+   "note": "the tracker should show 1 or 2 of 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest t1_1 3"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 5",
+   "note": "G12: a level 5 Vanguard against boars, as Grok"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": [
+    1158,
+    1340,
+    7
+   ],
+   "note": "Boar Meadow, inside the gate"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1158,
+    1352,
+    7
+   ],
+   "fight": true,
+   "timeout": 40
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8,
+   "note": "Bristle Boars at level 5"
+  },
+  {
+   "do": "shot",
+   "name": "g12_boar"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
