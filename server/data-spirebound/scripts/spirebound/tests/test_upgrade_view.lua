@@ -59,3 +59,10 @@ SpireTest.add("upgrade: the window has its sections, hides unfound trophies and 
 	end
 	SpireTest.eq(lines[1]:sub(1, 5) == "Next:" or lines[1]:sub(1, 5) == "Reach", true, "the next step comes first")
 end)
+
+-- P10: a familiarity bar in the Upgrade tab
+SpireTest.add("upgrade view: the familiarity bar fills toward the next level", function()
+	SpireTest.eq(SpireUpgrade.famBar(3, 60), "FAMILIARITY [######----] 60% to level 4 (kills with this weapon raise it)", "60%")
+	SpireTest.eq(SpireUpgrade.famBar(0, 0):find("%[%-%-%-%-%-%-%-%-%-%-%]") ~= nil, true, "empty bar")
+	SpireTest.eq(SpireUpgrade.famBar(10, nil), "FAMILIARITY [##########] 10/10, mastered", "maxed")
+end)

@@ -148,3 +148,22 @@ SpireTest.add("Hearthgate v3: four open archways, a locker six steps from the He
 	end
 	SpireTest.eq(streets, 30, "thirty houses in the eight streets")
 end)
+
+-- P3: Hearthgate's townsfolk are out in the square
+SpireTest.add("town: the townsfolk walk about Hearthgate", function()
+	SpireTest.eq(#SpireTownsfolk, 6, "six townsfolk")
+	for _, f in ipairs(SpireTownsfolk) do
+		local spot = SpireTownlife.placed[f.name]
+		SpireTest.eq(spot ~= nil, true, f.name .. " has a spot")
+		local seen = false
+		for _, c in ipairs(spot and Game.getSpectators(spot, false, false, 3, 3, 3, 3) or {}) do
+			if c:isNpc() and c:getName() == f.name then
+				seen = true
+			end
+		end
+		SpireTest.eq(seen, true, f.name .. " is in town")
+		SpireTest.eq(math.max(math.abs(spot.x - f.near.x), math.abs(spot.y - f.near.y)) <= 6, true, f.name .. " is near where they belong")
+	end
+	local t = Tile(SpireTownlife.FOUNTAIN)
+	SpireTest.eq(t ~= nil and t:getItemById(1922) ~= nil, true, "the fountain is where the spray goes")
+end)

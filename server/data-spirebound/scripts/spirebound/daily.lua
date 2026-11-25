@@ -51,3 +51,23 @@ function lucky.onThink(interval)
 end
 lucky:interval(60 * 60 * 1000)
 lucky:register()
+
+-- Every 6 hours: a tower bounty on the strongest climber online in PvP range (rules: lib/spirebound/daily.lua)
+local topBounty = GlobalEvent("SpireTopBounty")
+function topBounty.onThink(interval)
+	local list = {}
+	for _, p in ipairs(Game.getPlayers()) do
+		table.insert(list, { name = p:getName(), level = p:getLevel(), staff = p:getGroup():getAccess() })
+	end
+	local name = SpireDaily.topBountyPick(list)
+	local p = name and Player(name)
+	if not p then
+		return true
+	end
+	local total = SpireBounty.add(p:getGuid(), p:getName(), SpireDaily.topBountyGold(p:getLevel()), "the tower")
+	Game.broadcastMessage(string.format("The tower marks its strongest climber: %s (level %d). Whoever brings them down claims %d gold.",
+		name, p:getLevel(), total), MESSAGE_EVENT_ADVANCE)
+	return true
+end
+topBounty:interval(6 * 60 * 60 * 1000)
+topBounty:register()

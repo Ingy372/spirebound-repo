@@ -56,6 +56,16 @@ function SpireUpgrade.nextLine(view)
 	return "Floor 1 is done. Next: Floor 2's new weapons, or keep raising this one's familiarity."
 end
 
+-- Pure: the familiarity bar (P10, FLOOR1_REVIEW.md F1-41): "FAMILIARITY [######----] 60% to level 4"
+function SpireUpgrade.famBar(fam, pct)
+	if not pct then
+		return "FAMILIARITY [##########] 10/10, mastered"
+	end
+	local filled = math.floor(pct / 10)
+	return string.format("FAMILIARITY [%s%s] %d%% to level %d (kills with this weapon raise it)",
+		string.rep("#", filled), string.rep("-", 10 - filled), pct, fam + 1)
+end
+
 -- Pure: every line of the window
 function SpireUpgrade.lines(view)
 	local L = { SpireUpgrade.nextLine(view), "" }
@@ -65,6 +75,9 @@ function SpireUpgrade.lines(view)
 			string.format("  tier %d/%d  familiarity %d/10  %+d%% damage%s", w.tier, SpireGearData.MAX_TIER, w.fam,
 				math.floor(((w.power or 1) - 1) * 100 + 0.5), w.awakened and "  awakened" or "")
 		table.insert(L, "WEAPON  " .. w.name .. extra)
+		if not w.shop then
+			table.insert(L, SpireUpgrade.famBar(w.fam, w.famPct))
+		end
 	else
 		table.insert(L, "WEAPON  none yet: Captain Dorrow gives one at level 10")
 	end
@@ -115,7 +128,7 @@ function SpireUpgrade.viewFor(player)
 	local s = item and SpireGear.state(item)
 	if s then
 		view.weapon = { name = item:getName(), floor = s.floor, tier = s.tier, fam = s.fam, awakened = s.awakened,
-			shop = s.shop, power = SpireGear.power(s) }
+			shop = s.shop, power = SpireGear.power(s), famPct = not s.shop and SpireGear.famProgress(s.famPoints, s.floor) or nil }
 	end
 	for _, it in ipairs(SpireGear.carried(player)) do
 		local d = SpireGear.defOf(it)

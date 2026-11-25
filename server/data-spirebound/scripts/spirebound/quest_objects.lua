@@ -34,9 +34,9 @@ SpireQuestObjects.SLUICE = {
 	hintText = "Carved by the old sluice-keepers: \"First the sun dries the gate, then the reed bends, and last the fish swims free.\"",
 }
 
-local function open(pos)
+local function open(pos, inTown)
 	local t = Tile(pos)
-	if not t or not t:getGround() or t:hasFlag(TILESTATE_PROTECTIONZONE) or t:getTopCreature() then
+	if not t or not t:getGround() or (not inTown and t:hasFlag(TILESTATE_PROTECTIONZONE)) or t:getTopCreature() then
 		return false
 	end
 	if not t:isWalkable(false, false, false, false, true) then
@@ -46,10 +46,10 @@ local function open(pos)
 end
 
 -- open space: the tile and all eight neighbours free, so a solid object never closes a path
-local function roomy(pos)
+local function roomy(pos, inTown)
 	for dx = -1, 1 do
 		for dy = -1, 1 do
-			if not open(Position(pos.x + dx, pos.y + dy, pos.z)) then
+			if not open(Position(pos.x + dx, pos.y + dy, pos.z), inTown) then
 				return false
 			end
 		end
@@ -58,7 +58,7 @@ local function roomy(pos)
 end
 
 -- the nearest roomy tile within r of the centre (rings outward, from distance 2 so the point itself stays clear)
-function SpireQuestObjects.findSpot(centre, r, width)
+function SpireQuestObjects.findSpot(centre, r, width, inTown)
 	width = width or 1
 	for d = 2, r do
 		for dx = -d, d do
@@ -66,7 +66,7 @@ function SpireQuestObjects.findSpot(centre, r, width)
 				if math.max(math.abs(dx), math.abs(dy)) == d then
 					local ok = true
 					for i = 0, width - 1 do
-						if not roomy(Position(centre.x + dx + i, centre.y + dy, centre.z)) then
+						if not roomy(Position(centre.x + dx + i, centre.y + dy, centre.z), inTown) then
 							ok = false
 							break
 						end

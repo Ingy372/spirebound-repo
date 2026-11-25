@@ -18,3 +18,16 @@ SpireTest.add("lucky: picks only real climbers, never the same one twice in a ro
 	SpireTest.eq(SpireDaily.luckyGold(20), 400, "20 gold a level")
 	SpireTest.eq(SpireDaily.luckyGold(500), 5000, "capped at 5000")
 end)
+
+-- P12: the tower's bounty on the strongest climber, and the Monument's leaderboards
+SpireTest.add("daily: the tower's bounty only marks climbers in PvP range", function()
+	local pick = SpireDaily.topBountyPick
+	SpireTest.eq(pick({ { name = "A", level = 40 }, { name = "B", level = 49 } }), nil, "nobody below 50")
+	SpireTest.eq(pick({ { name = "A", level = 80 }, { name = "B", level = 120 }, { name = "C", level = 300, staff = true } }), "B", "the highest non-staff")
+	SpireTest.eq(SpireDaily.topBountyGold(120), 12000, "100 gold a level")
+	SpireTest.eq(SpireDaily.topBountyGold(900), 50000, "capped")
+	SpireTest.eq(SpireMonumentText():find("Top climbers") ~= nil, true, "the Monument shows the top climbers")
+	local m = WorldPoints.monument
+	local t = Tile(Position(m.x, m.y - 1, m.z))
+	SpireTest.eq(t ~= nil and t:getTopDownItem() ~= nil or t:getTopTopItem() ~= nil or t:getItemCount() > 0, true, "the statue stands where the Monument is")
+end)

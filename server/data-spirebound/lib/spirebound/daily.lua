@@ -40,3 +40,22 @@ end
 function SpireDaily.luckyGold(level)
 	return math.min(5000, 20 * level)
 end
+
+-- P12 (FLOOR1_REVIEW.md F1-64): every 6 hours the strongest climber online who can be attacked carries a bounty paid by
+-- the tower. Only climbers in open PvP range (level 50+) qualify, so nobody below the PvP line is ever made a target.
+SpireDaily.TOP_BOUNTY_MIN_LEVEL = 50
+function SpireDaily.topBountyPick(list)
+	local best
+	for _, p in ipairs(list) do
+		if not p.staff and p.level >= SpireDaily.TOP_BOUNTY_MIN_LEVEL then
+			if not best or p.level > best.level or (p.level == best.level and p.name < best.name) then
+				best = p
+			end
+		end
+	end
+	return best and best.name or nil
+end
+
+function SpireDaily.topBountyGold(level)
+	return math.min(50000, 100 * level)
+end
