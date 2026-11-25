@@ -55,6 +55,10 @@ def build(m, n):
     m.sign(tpx + 4, tpy + 9, Z, f"Portal down to Floor {n - 1}.")
     m.npcs.append((f"Priest of {spec['town']}", (tpx + 15, tpy + 4, Z)))
     m.sign(tpx + 9, tpy + 10, Z, f"{spec['town']} Temple. Floor {n}: {spec['name']}.")
+    for i in range(4):                                     # the Floor Beacon (DESIGN 3.6): four fire bowls by the temple door
+        m.put(tpx + 13 + i * 2, tpy + 14, Z, 30964)
+        m.points[f"beacon_{n}_{i + 1}"] = (tpx + 13 + i * 2, tpy + 14, Z)
+    m.sign(tpx + 15, tpy + 16, Z, f"The Floor {n} Beacon. Light a fire bowl with a Beacon Ember: +5% experience and loot on this floor for an hour.")
     dx, dy = tx + 6, ty + 6
     m.building(dx, dy, 16, 10, Z, floor="wood", door_side="s")
     for i in range(4):

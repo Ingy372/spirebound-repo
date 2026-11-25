@@ -113,6 +113,10 @@ TOKENS = {
 # tier t needs 3 shards of this grade plus gold (spec 4.4); gold per floor = fee * floor
 TIER_COST = {1: ("rough", 500), 2: ("rough", 1000), 3: ("cut", 2000), 4: ("cut", 3500), 5: ("flawless", 6000)}
 SHARDS_PER_TIER = 3
+# Floor Beacons (DESIGN 3.6, roadmap M1): the token that lights a town Beacon's fire bowl (server: lib/spirebound/beacons.lua)
+BEACON_EMBER = (9636, "Beacon Ember", "Beacon Embers",
+                "Light a fire bowl of a town's Beacon with it: +5% experience and loot for everyone on that floor for an hour. "
+                "Dropped by field bosses, hidden beasts, and sometimes elites and apex monsters.")
 RESPEC_ITEM = (28650, "Mastery Respec Scroll", "Mastery Respec Scrolls",
                "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use.")
 CUT_FROM_LEVEL = 12            # Floor 1 grounds whose lowest level is 12 or more drop cut shards
@@ -351,6 +355,7 @@ def main():
     out.write_text("\n".join(L) + "\n", encoding="utf-8")
     renames = {str(v[0]): dict(name=v[1], plural=v[2], description=v[3]) for g in TOKENS.values() for v in g.values()}
     renames[str(RESPEC_ITEM[0])] = dict(name=RESPEC_ITEM[1], plural=RESPEC_ITEM[2], description=RESPEC_ITEM[3])
+    renames[str(BEACON_EMBER[0])] = dict(name=BEACON_EMBER[1], plural=BEACON_EMBER[2], description=BEACON_EMBER[3])
     (ROOT / "data/item_renames.json").write_text(json.dumps(renames, indent=1) + "\n", encoding="utf-8")
     print(f"wrote {out.name}: {len(WEAPONS)} weapons, {len(ARMOUR)} armour, {len(SHOP)} shop sets; data/item_renames.json")
     print("shard chances per kill: " + ", ".join(f"{g} {v:.2%}" for g, v in ch.items()))

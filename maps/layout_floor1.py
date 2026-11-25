@@ -171,6 +171,12 @@ def build(m):
     S.prop(m, *R(65, 65), Z, HERO_STATUE)
     m.sign(*R(65, 67), Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
     m.points["monument"] = R(65, 66) + (Z,)
+    # the Floor Beacon (DESIGN 3.6, roadmap M1): four fire bowls east of the Monument; scripts/spirebound/beacons.lua
+    for i, bx_ in enumerate((68, 70, 72, 74)):
+        S.prop(m, *R(bx_, 66), Z, 30964)                                             # empty fire bowl (lit: 30965)
+        m.points[f"beacon_1_{i + 1}"] = R(bx_, 66) + (Z,)
+    m.sign(*R(71, 68), Z, "The Floor Beacon. Bring a Beacon Ember to a fire bowl: each fire gives everyone hunting on this floor "
+           "+5% experience and loot for an hour. Say !beacon to see what burns.")
     m.npcs.append(("Vesper", R(60, 66) + (Z,)))
     for k, (sx_, sy_) in enumerate(((38, 69), (45, 69), (66, 69), (39, 63), (67, 63), (72, 63))):   # six free trading stalls
         S.counter(m, *R(sx_, sy_), 3, Z)

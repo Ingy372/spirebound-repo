@@ -11,6 +11,7 @@
 --   /pilot clear           remove every monster within 9 tiles
 --   /pilot give id, n      items into the backpack
 --   /pilot hp n            set your health (PvP tests)
+--   /pilot beacon n        (M1 tests) put out every fire of floor n's Beacon
 --   /pilot pardon          clear skulls and unjust kills from test fights
 --   /pilot arena join|go|stop   a Wild PvP arena event with just the test characters
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
@@ -203,6 +204,11 @@ function pilot.onSay(player, words, param)
 		local id, n = rest:match("(%d+)%D+(%d+)")
 		player:addItem(tonumber(id), tonumber(n))
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: given")
+	elseif cmd == "beacon" then -- (M1 tests) "/pilot beacon n": put out every fire of floor n's Beacon
+		local n = tonumber(rest:match("(%d+)")) or 1
+		SpireBeacons.put(n, { slots = {} })
+		SpireBeacons.syncBowls(n, os.time())
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: beacon " .. n .. " dark")
 	elseif cmd == "hp" then
 		-- (PvP tests) set your health, to test what saves you from a killing blow
 		local n = tonumber(rest:match("(%d+)")) or player:getMaxHealth()

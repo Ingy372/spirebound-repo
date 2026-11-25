@@ -3,7 +3,7 @@
 local OPCODE = 210
 local SLOTS = 9
 local floorLabel, diffLabel, bar, barTitle = nil, nil, nil, nil
-local floorText, zoneText = '', ''
+local floorText, zoneText, beaconText = '', '', '' -- beaconText: Floor Beacons (roadmap M1)
 local ZONES = {
   town = { 'Safe zone', '#7fff7f' }, guarded = { 'Guarded', '#c8e6ff' }, open = { 'Open PvP', '#ffffff' },
   contested = { 'Contested', '#ffb347' }, deadzone = { 'DEADZONE', '#ff4040' }, bossroom = { 'Boss room: PvP on', '#ff7f7f' },
@@ -11,7 +11,7 @@ local ZONES = {
 
 local function updateFloorLabel()
   if floorLabel then
-    floorLabel:setText(floorText .. (zoneText ~= '' and ('   [' .. zoneText .. ']') or ''))
+    floorLabel:setText(floorText .. (zoneText ~= '' and ('   [' .. zoneText .. ']') or '') .. beaconText)
   end
 end
 local buttons = {}
@@ -125,6 +125,14 @@ local function onMessage(protocol, opcode, data)
   end
   if data.t == 'floor' then
     floorText = (data.n and data.n > 0) and ('Floor ' .. data.n .. ' - ' .. (data.name or '')) or ''
+    updateFloorLabel()
+  elseif data.t == 'beacon' then
+    -- Floor Beacons: how many of the town's fire bowls burn on this floor (each +5% experience and loot)
+    if data.n and data.n > 0 and data.lit and data.lit > 0 then
+      beaconText = string.format('   Beacon %d/%d (+%d%%, %d min)', data.lit, data.slots or 4, data.lit * 5, data.mins or 0)
+    else
+      beaconText = ''
+    end
     updateFloorLabel()
   elseif data.t == 'zone' then
     local z = ZONES[data.tier]

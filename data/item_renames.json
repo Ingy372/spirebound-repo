@@ -33,5 +33,10 @@
   "name": "Mastery Respec Scroll",
   "plural": "Mastery Respec Scrolls",
   "description": "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use."
+ },
+ "9636": {
+  "name": "Beacon Ember",
+  "plural": "Beacon Embers",
+  "description": "Light a fire bowl of a town's Beacon with it: +5% experience and loot for everyone on that floor for an hour. Dropped by field bosses, hidden beasts, and sometimes elites and apex monsters."
  }
 }

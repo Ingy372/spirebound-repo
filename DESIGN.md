@@ -103,8 +103,9 @@ One layered, over-tuned spawn per floor that stays worth hunting long past its f
 Every 3 hours a world event fires on an open floor: Frenzy (apex spawn +50% respawn, +25% loot), Incursion (elite packs), Fishing Frenzy (rare-fish rate up), Wandering Champion (roaming mini-boss). Announced 10 minutes ahead. *(From the old pack, fishing event added.)*
 
 **Floor Beacons (Jay, 2026-11-25: "r1 do it", from Grok's market research R1).** Players choose where the boost goes, instead of the server picking at random.
-- Each open floor's town has a **Beacon with 4 slots**. Players hand in **Beacon Embers** (dropped by that floor's field boss, taskmaster bosses and apex elites) to light one slot for **1 hour**.
-- Each lit slot gives everyone hunting on that floor **+5% experience and +5% loot chance**. The 4th slot also makes that floor's apex spawn come back **25% faster**. No damage bonus, so Contested PvP zones stay fair.
+- Each open floor's town has a **Beacon of 4 fire bowls** (Hearthgate: east of the Monument; other towns: by the temple door). Players use a bowl with a **Beacon Ember** in their backpack (or use the Ember on it) to light it for **1 hour**.
+- **Embers** (one kind, works on any floor's Beacon): field bosses always drop 2, hidden mini-bosses 1, elites 8% of the time, apex monsters 1.5%. (There are no taskmaster bosses yet; if they come, they drop Embers too.) *(Claude's call, Jay can veto.)*
+- Each lit bowl gives everyone hunting on that floor **+5% experience and an extra 5% loot roll**. With **all 4 lit**, the floor's apex spawn refills fast: 3 extra apex monsters at its heart, each back 90 seconds after it dies. No damage bonus, so Contested PvP zones stay fair. `!beacon` shows the fires; the floor label shows "Beacon 2/4 (+10%, 45 min)".
 - Every lighting is **announced server-wide with the names of who lit it**; the floor HUD shows how many slots are lit and for how long.
 - Embers can be traded, so they are worth money. **One guild can hold at most 2 slots on a floor at a time** (stops a rich guild from keeping a floor lit for itself). *(Numbers: Claude's call, Jay can veto.)*
 - The boosted creature of the day (roadmap J7) stays for now; it's a daily reason to try a different ground. *(Claude's call, Jay can veto.)*

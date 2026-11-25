@@ -11,7 +11,7 @@ local COMMANDS = {
   { '!upgrade', 'My next upgrade: weapon, path and style' }, { '!style', 'My style tree and my next choice' },
   { '!hunt', 'Where should I hunt for my level?' }, { '!guide', 'Read the starter letter again' },
   { '!spells', 'Every spell and sword skill of my path' }, { '!rules', 'The rules' },
-  { '!taskshop', 'Spend task points' }, { '!top', 'Top climbers' }, { '!memorial', 'The fallen of the Death Game' },
+  { '!taskshop', 'Spend task points' }, { '!top', 'Top climbers' }, { '!memorial', 'The fallen of the Death Game' }, { '!beacon', 'Floor Beacon fires' },
   { '!path', 'Season Path goals' }, { '!trophies', 'My boss trophies' }, { '!openhouse', 'Open my house to visitors (2 hours)' },
   { '!portal', 'Travel through my house portal' }, { '!private', 'Private boss hall (party leader, top of a labyrinth)' },
   { '!lfg', 'Show or hide me as looking for a group' }, { '!language', 'Change language (en, pt, es)' },
