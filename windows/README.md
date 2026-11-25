@@ -29,3 +29,29 @@ Grok can play a brand-new character on your server and write a playtest report, 
 4. Start the server (`Start-Spirebound.bat`), then double-click `Grok-Playtest.bat` again. A game window opens and
    Grok plays for up to 40 minutes (60 moves). Don't use the game window while it plays.
 5. The report lands in `docs\playtests\` (the newest `grok_` file). Tell Claude it's there.
+
+## Friends and a Grok Bot over Tailscale (roadmap 9.1)
+Players on your private Tailscale network can join your server; nobody else on the internet can, and your home
+address is never shown. The same steps work for a friend (on Windows they use the normal client package) and for a
+Grok Bot (its cloud computer runs Linux; the setup script installs the client with Wine).
+
+**Once:**
+1. Open Tailscale from the Start menu on this PC and make sure it says *Connected*.
+2. Restart the server (Stop-Spirebound, then Start-Spirebound).
+3. Double-click `windows\Open-Friend-Access.bat` and click *Yes* on the administrator prompt. It shows your
+   Tailscale address (starts with 100.). It only opens the game's ports, and only on that address.
+4. In the Tailscale admin console (login.tailscale.com) under **Access controls**, keep the bot away from your other
+   devices: add `"tag:grokbot": ["autogroup:admin"]` to `"tagOwners"`, make sure the general rule is for
+   `"autogroup:member"` (not `"*"`), and add the rule
+   `{"action": "accept", "src": ["tag:grokbot"], "dst": ["YOUR-100-ADDRESS:8080,7172,8090"]}`.
+5. Under **Settings > Keys**, generate an auth key: *Ephemeral* on, *Reusable* off, tag `tag:grokbot`.
+
+**Each time a tester installs:**
+1. Double-click `windows\Share-Client.bat` and leave its window open (it builds the client package and shares it on
+   your Tailscale address). Close it when they've installed.
+2. For a Grok Bot: open `.local\grok_bot_brief.txt` (Share-Client writes it), replace `PASTE-THE-TAILSCALE-KEY-HERE`
+   with the key from step 5, and paste the whole text to your Grok Bot. Its account is `grokbot` (password in the
+   brief); its character is "Grok Tester".
+3. When the bot sends its report, save it in `docs\playtests\` or paste it to Claude.
+
+To shut it again: `windows\Close-Friend-Access.bat`.

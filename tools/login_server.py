@@ -85,7 +85,18 @@ def new_session(acc, now=None):
     return token
 
 
-def login(email, password):
+def game_host_for(host_header):
+    """The game address to hand a client: the one it reached us on, if that is a Tailscale address (100.64.0.0/10, the
+    friend-access network; roadmap 9.1), else this PC. Anything else falls back to GAME_HOST."""
+    host = (host_header or "").rsplit(":", 1)[0].strip("[]")
+    parts = host.split(".")
+    if len(parts) == 4 and all(p.isdigit() and int(p) < 256 for p in parts) and parts[0] == "100" and 64 <= int(parts[1]) <= 127:
+        return host
+    return GAME_HOST
+
+
+def login(email, password, game_host=None):
+    game_host = game_host or GAME_HOST
     if not valid_name(email) or not password or len(password) > 200:
         return None
     rows = sql(f"SELECT id, password FROM accounts WHERE (email={hexlit(email)} OR name={hexlit(email)}) LIMIT 1")
@@ -100,9 +111,9 @@ def login(email, password):
                     "returnernotification": False, "showrewardnews": False, "isreturner": False,
                     "fpstracking": False, "optiontracking": False, "emailcoderequest": False},
         "playdata": {
-            "worlds": [{"id": 0, "name": WORLD_NAME, "externaladdress": GAME_HOST, "externalport": GAME_PORT,
-                        "externaladdressprotected": GAME_HOST, "externalportprotected": GAME_PORT,
-                        "externaladdressunprotected": GAME_HOST, "externalportunprotected": GAME_PORT,
+            "worlds": [{"id": 0, "name": WORLD_NAME, "externaladdress": game_host, "externalport": GAME_PORT,
+                        "externaladdressprotected": game_host, "externalportprotected": GAME_PORT,
+                        "externaladdressunprotected": game_host, "externalportunprotected": GAME_PORT,
                         "previewstate": 0, "location": "BRA", "anticheatprotection": False, "pvptype": "pvp",
                         "istournamentworld": False, "restrictedstore": False, "currenttournamentphase": 2}],
             "characters": [{"worldid": 0, "name": c[0], "ismale": c[9] == "1", "tutorial": False, "level": int(c[1]),
@@ -222,7 +233,7 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(200, {"errorCode": 1, "errorMessage": "Not supported."})
             if too_many_fails(addr):
                 return self.reply(200, {"errorCode": 3, "errorMessage": "Too many wrong passwords. Wait a few minutes and try again."})
-            res = login(str(data.get("email", "")), str(data.get("password", "")))
+            res = login(str(data.get("email", "")), str(data.get("password", "")), game_host_for(self.headers.get("Host")))
             if res is None:
                 note_fail(addr)
                 return self.reply(200, {"errorCode": 3, "errorMessage": "Account name or password is not correct."})
@@ -284,6 +295,9 @@ def selftest():
     finally:
         sql = real
     assert BIND == "127.0.0.1" or os.environ.get("SPIRE_LOGIN_BIND"), "listens on this PC only by default"
+    assert game_host_for("100.101.102.103:8080") == "100.101.102.103", "a Tailscale client gets the Tailscale address"
+    assert game_host_for("127.0.0.1:8080") == GAME_HOST and game_host_for("evil.example.com") == GAME_HOST, "anything else: this PC"
+    assert game_host_for("100.200.1.1:8080") == GAME_HOST, "only Tailscale's 100.64.0.0/10"
     print("login_server selftest: OK")
 
 
