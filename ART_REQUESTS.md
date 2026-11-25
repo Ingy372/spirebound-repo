@@ -3,8 +3,22 @@
 Base Tibia sprites stand in for all of these until the real art arrives, so nothing here blocks the build.
 
 ## Who makes what (new workflow, Jay 2026-11-14)
-- **Anything that moves or turns** (creatures, NPCs, outfits, mounts): **Claude makes it** with the Blender pipeline (`art/`), then sends Jay the sheet and walk loops to approve. Jay does not need to generate these; their Grok prompts below are kept only as design descriptions. Made so far: field rat, Vesper (both approved). Next: Innkeeper Bess (roadmap R22a).
+- **Anything that moves or turns** (creatures, NPCs, outfits, mounts): **Claude makes it** with the Blender pipeline (`art/`), then sends Jay the sheet and walk loops to approve. Jay does not need to generate these; their Grok prompts below are kept only as design descriptions. Made so far: 26 approved (see `art/APPROVED.txt`); 13 monsters are already in the game (below).
 - **Single still images** (item and spell icons, UI, cursors, concept sketches, shop/website art): **Jay makes them with Grok** using the prompts below.
+
+## In the game now, and the size of the rest (roadmap R22, 2026-11-24)
+- **Working end to end:** Jay's approved monster sprites now show in the real client in place of the borrowed Tibia
+  looks: rat, boar, mole, toad, wasp, snapper, thornsnap, shardling, wolf, grey alpha, ram, sproutling, Azhrakkar
+  (`tools/make_creature_sheets.py`, put in at every start by `tools/install_effects.py`). Elites and minibosses borrow
+  their ground's sprite. 18 spell effects were already ours.
+- **Next step (needs one server change):** NPCs and player outfits. Many NPCs share one borrowed look today, so each of
+  ours needs a new look number of its own, plus the client update in the friends' package at the same time.
+  Approved and waiting for this: Bess, Corwin, the merchant, Pell, Vesper, the priest, the Registrar, the banker, Veyra,
+  and the four class outfits.
+- **Still to make:** 8 Floor 1 models in progress (archer, bandit, Brannoch, the captain, guild warden, quartermaster,
+  sentinel, warden); about 90 Floors 2-10 monsters (perhaps 60 different bodies once shared bodies are counted) and
+  about 45 kinds of NPC. At the pace so far (6-8 approved models a long session, including Jay's review), Floors 2-10
+  are roughly 10-12 sessions of art, best done a floor at a time just before each floor opens.
 
 ## How to use this file (still images only)
 1. Copy a prompt into Grok's pixel-art generator.

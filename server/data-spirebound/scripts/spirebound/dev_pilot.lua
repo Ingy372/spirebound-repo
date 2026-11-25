@@ -126,6 +126,8 @@ function pilot.onSay(player, words, param)
 		player:kv():scoped("spirebound-notices"):remove("spellbar")
 		player:setStorageValue(50121, -1) -- Pell's First Blood can be taken again (G3 test)
 		player:setStorageValue(50122, -1)
+		player:kv():scoped("quest-tracker"):remove("known-quests") -- the tracker adds Pell's quest again as if new
+		player:kv():scoped("quest-tracker"):remove("tracked-missions")
 		for _, slot in ipairs({ CONST_SLOT_LEFT, CONST_SLOT_RIGHT }) do
 			local it = player:getSlotItem(slot)
 			if it then
