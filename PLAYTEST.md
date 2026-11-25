@@ -17,6 +17,12 @@ Template:
 - **Make a brand-new character** and go through the Arrival Yard to the Registrar. After you pick a path you land in the Proving: try your spells on the rats (they are on your action bar, buttons 3 and 4), then step on the glowing stone and fight Bramblejaw alone. Is it too easy or too hard at your level? Is the red-smoke stomp clear?
 - Does the Quest Tracker show Pell's quest now when you take it?
 
+## 2026-11-25 (Claude's own playtest: a fresh Ranger, about 25 minutes)
+- Full report: `docs/playtests/2026-11-25-claude-ranger.md`. Played move by move with the new `tools/claude_play.py` (Claude reads every screenshot and picks the next move itself; no shortcuts).
+- Good: Pell's quest, the Ranger kit (bow, quiver and armour all arrive), the Registrar's lines, Bramblejaw at level 5 (health got down to 42% once), the `!hunt` tip leading to wasps.
+- Bugs, now roadmap C1-C3: closed tutorial gates can be walked through after bumping them (and the hint repeats on every bump); `!spells` marks style abilities as learned; small text and kit clean-ups.
+- Confirms G7: I left the yard at level 5.
+
 ## 2026-11-25 (Grok play tester, session 3: Ranger on Grok Fourth, Vanguard on Grok Third, Arcanist on Grok Second, Mystic on Grok Tester; written down by Claude)
 - Full report: `docs/playtests/2026-11-25-grok-session3.md`. Grok started at 09:35, before the client package was rebuilt (09:46), and described the stock client (Store button showing), so the client fixes since Monday weren't on its screen. That's the second session running. From now on the server tells anyone on an old client to download it again.
 - Liked: Arc Slash hitting two rats, the Journal's Quests tab with directions, Vesper's six-stone hunt, Little Bix, the clear [Open PvP] message.

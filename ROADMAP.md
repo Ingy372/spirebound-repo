@@ -16,6 +16,12 @@ Reports: `docs/playtests/2026-11-24-grok-session1.md` and `...-session2.md`. Fix
 - [ ] **G7 Slower yard levels** (Q52, Grok session 2): Pen Rats and Pell's reward tuned so a new character leaves the yard at level 2-3. Done when: the autopilot's yard run ends at level 2-3.
 - [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a Grok report with no lag caveat, including a Ranger (Grok Fourth) and a Vanguard past the cheese gate (session 2 could not).
 
+## Claude's playtest, 2026-11-25 (fresh Ranger, `docs/playtests/2026-11-25-claude-ranger.md`). Do this first.
+
+- [ ] **C1 Closed tutorial gates can be walked through**: after about 20 s of bumping the "spells" gate, a fresh character got through it and the potion gate without doing either step; each bump also repeated the hint (65 times in 20 s). Done when: an autopilot route bumps each closed gate for 60 s and stays behind it, and the bottom-of-screen hint shows at most once every few seconds.
+- [ ] **C2 `!spells` marks style abilities as learned**: a level-8 Ranger with no style path sees Farshot, Snarefield, Last Light, Arrow Squall, Web of Briars and Wayfarer's Stride as "(learned)". Done when: the list shows only spells the character can cast now, the next level spells, and style abilities under "comes with your style path", checked on a fresh character in the client.
+- [ ] **C3 Small clean-ups from Claude's Ranger run**: double space in "due to your  attack"; Pell's "hi" mentions {report} when First Blood is done; Maelis's bubble doesn't follow you into the Proving; the Proving's area label; no duplicate shovel and rope after the Registrar; the pen's fence gap no longer a safe zone (or a hint saying to step inside). Done when: each checked with `tools/claude_play.py` on a fresh character.
+
 ## Grok's playtest, 2026-11-25 (session 3: all four paths on fresh characters). Do this first.
 Report: `docs/playtests/2026-11-25-grok-session3.md` (handoff `...-session3-handoff.md`). Fixed the same day: see PLAYTEST.md. Left:
 - [ ] **G8 A door on the Registrar**: the stone path ends at a red roof with no visible door (Grok found the way in only by clicking the minimap). Done when: a visible door faces the path, the path-end sign points to it, checked in a render and in the client.
