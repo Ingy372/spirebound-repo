@@ -174,6 +174,12 @@ function SpireJournal.build(player, tab)
 		title, lines = SpireJournal.memorial()
 	elseif tab == "howto" then
 		title, lines = SpireJournal.howto()
+	elseif tab == "chronicle" then -- roadmap M3
+		if type(player.getAccountId) ~= "function" then
+			return nil
+		end
+		local acc = player:getAccountId()
+		title, lines = "Spire Chronicle", SpireChronicle.lines(SpireChronicle.get(acc), SpireSeason.current(), SpireChronicle.legacyCount(acc))
 	else
 		return nil
 	end

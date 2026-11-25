@@ -34,6 +34,11 @@
   "plural": "Mastery Respec Scrolls",
   "description": "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use."
  },
+ "5805": {
+  "name": "Chronicle Cup",
+  "plural": "Chronicle Cups",
+  "description": "Awarded for finishing a season's Spire Chronicle. It looks best on a shelf in your house."
+ },
  "9636": {
   "name": "Beacon Ember",
   "plural": "Beacon Embers",

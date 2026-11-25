@@ -56,6 +56,7 @@ function B.lightBy(player, floor, i)
 		return false
 	end
 	player:removeItem(B.EMBER, 1)
+	SpireChronicle.add(player, "beacon", 1)
 	syncBowls(floor, now)
 	local p = WorldPoints["beacon_" .. floor .. "_" .. i]
 	if p then

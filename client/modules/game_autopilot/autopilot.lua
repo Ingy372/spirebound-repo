@@ -445,6 +445,31 @@ function handlers.wait()
     if now() - stepT >= (step.seconds or 1) then nextStep() end
 end
 
+-- write down what is worn in every slot and what the backpack holds: { "do": "inventory" }
+-- (Grok session 3: a new Ranger had no arrows; the check must see the real equipment, not a test kit)
+function handlers.inventory(player)
+    if not stepData.opened then
+        local bp = player:getInventoryItem(InventorySlotBack)
+        if bp then g_game.open(bp, nil) end
+        stepData.opened = true
+        return
+    end
+    if now() - stepT < 1.5 then return end
+    local names = { [InventorySlotHead] = 'head', [InventorySlotNeck] = 'neck', [InventorySlotBack] = 'back',
+        [InventorySlotBody] = 'body', [InventorySlotRight] = 'right hand', [InventorySlotLeft] = 'left hand',
+        [InventorySlotLeg] = 'legs', [InventorySlotFeet] = 'feet', [InventorySlotFinger] = 'finger', [InventorySlotAmmo] = 'ammo' }
+    for slot = InventorySlotHead, InventorySlotAmmo do
+        local it = player:getInventoryItem(slot)
+        log(string.format('inventory: %s = %s', names[slot] or slot, it and (it:getId() .. ' x' .. it:getCount()) or 'empty'))
+    end
+    for _, c in pairs(g_game.getContainers()) do
+        local ids = {}
+        for _, it in ipairs(c:getItems()) do ids[#ids + 1] = it:getId() .. ' x' .. it:getCount() end
+        log('inventory: container ' .. (c:getName() or '?') .. ' holds ' .. table.concat(ids, ', '))
+    end
+    nextStep()
+end
+
 function handlers.live_wait()
     if stepData.polled and now() - stepData.polled < 0.75 then return end
     stepData.polled = now()

@@ -37,6 +37,7 @@ function SpireSeason.archivePlayer(guid, accountId, name, level, vocationId, sea
 	local record = {
 		name = name, level = level, vocation = vocationId, difficulty = difficulty, retired = retired,
 		titles = titles, secrets = okS and #secrets or 0, fish = okF and #fish or 0, season = season,
+		chronicle = SpireChronicle ~= nil and SpireChronicle.get(accountId, season).finishedAt ~= nil, -- M3: finished this season's Chronicle
 	}
 	kv.scoped("hall-of-seasons"):scoped("season-" .. season):set(name, record)
 	-- account-wide rewards carry over

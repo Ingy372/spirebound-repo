@@ -1,7 +1,7 @@
 SpireTabButton < Button
   height: 22
-  width: 80
-  margin-right: 4
+  width: 64
+  margin-right: 3
   font: verdana-11px-rounded
 
 MainWindow

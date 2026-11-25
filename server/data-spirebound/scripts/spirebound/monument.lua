@@ -8,6 +8,11 @@ function SpireMonumentText()
 		table.insert(lines, l)
 	end
 	table.insert(lines, "")
+	local season = SpireSeason.current()
+	local done = SpireChronicle.finishers(season)
+	table.insert(lines, string.format("The Spire Chronicle of Season %d, finished by:", season))
+	table.insert(lines, #done > 0 and table.concat(done, ", ") or "no one yet.")
+	table.insert(lines, "")
 	table.insert(lines, "The Memorial (Death Game):")
 	for _, l in ipairs(fallen) do
 		table.insert(lines, l)

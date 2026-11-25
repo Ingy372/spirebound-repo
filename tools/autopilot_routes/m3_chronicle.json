@@ -1,0 +1,17 @@
+{
+ "name": "m3_chronicle",
+ "character": "Pilot Ranger",
+ "timeout": 180,
+ "about": "M3 Spire Chronicle: !chronicle opens the Journal on the Chronicle tab; hunting rats moves the 'Defeat 100 monsters' count (or the account is already past chapter 1); the tab shows it.",
+ "steps": [
+  { "do": "say", "text": "!chronicle", "note": "Chronicle tab" },
+  { "do": "wait", "seconds": 3 },
+  { "do": "shot", "name": "m3_chronicle_before" },
+  { "do": "jump", "to": "loop_starter_west_a", "note": "Ratwarren" },
+  { "do": "heal" },
+  { "do": "hunt", "seconds": 40 },
+  { "do": "say", "text": "!chronicle", "note": "Chronicle tab after the hunt" },
+  { "do": "wait", "seconds": 3 },
+  { "do": "shot", "name": "m3_chronicle_after" }
+ ]
+}

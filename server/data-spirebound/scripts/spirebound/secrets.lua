@@ -69,6 +69,10 @@ local function trigger(player, secret)
 	if first then
 		local count = SpireSecrets.record(player, secret)
 		SpirePath.progress(player, "secret", 1)
+		SpireChronicle.add(player, "secret", 1)
+		if secret.id == "s1" then -- the way into the Underkeep (scripts/spirebound/underkeep.lua)
+			SpireChronicle.add(player, "underkeep", 1)
+		end
 		local by = SpireSecrets.publicBy(secret.id)
 		local msg = "You discovered a secret: " .. secret.name .. "!"
 		if by then

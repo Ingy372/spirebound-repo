@@ -134,6 +134,8 @@ Jay's brief: 20–30 floors per season with seasonal resets; account-wide reward
 - A **5-chapter goal track per season, shared across your whole account** (all your characters count). Chapters 1–2 teach the game (a guide for new players); chapters 3–5 ask for floor clears, Underkeep wings and secrets.
 - Finishing it gives a **permanent Chronicle seal and title** that upgrades each season, a line on the Monument and a house trophy. **No experience or power carries over** into the next season: cosmetics and bragging rights only (seasons stay a fair race).
 - It sits above the Season Path (Season Path = daily and weekly goals; Chronicle = the season-long story), and finished Chronicles show in the Hall of Seasons. *(Details: Claude's call, Jay can veto.)*
+- **The five chapters** *(Claude's call, Jay can veto)*: 1 *Arrival*: level 8, choose a path, 100 monsters, a quest. 2 *The Climber's Trade*: level 20, a hunting task, 5 fish, a secret. 3 *Through the Pass*: a field boss, a floor boss, stand on Floor 2, light a Beacon fire. 4 *Under the Keep*: find the Underkeep, 5 secrets, a hidden beast, level 50. 5 *The Season's Climb*: stand on Floor 4, 5 floor bosses, 12 secrets, level 100.
+- Every character on the account adds to the same counts (levels and floors: the best any of them reached). Botting doesn't count. The seal's title grows with seasons finished: Chronicler, Seasoned Chronicler, Elder Chronicler, Grand Chronicler. The house trophy is a Chronicle Cup. Journal tab "Chronicle", or `!chronicle`.
 
 ---
 

@@ -322,6 +322,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				if r.exp then player:addExperience(r.exp, true) end
 				if r.title then player:kv():scoped("spirebound-titles"):set(r.title, os.time()) end
 				player:kv():scoped("spirebound-choices"):set(q.id, giver)
+				SpireChronicle.add(player, "quest", 1)
 				npcHandler:say(choice.thanks, npc, player)
 				return true
 			end
@@ -343,6 +344,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				local st = SpireQuests.state(player, q)
 				if st == 2 then
 					player:setStorageValue(q.storage, 3)
+					SpireChronicle.add(player, "quest", 1)
 					if q.reward.gold then player:addMoney(q.reward.gold) end
 					if q.reward.exp then player:addExperience(q.reward.exp, true) end -- FLOOR1_REVIEW.md F1-21: about 10 minutes of hunting
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end

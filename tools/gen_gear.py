@@ -117,6 +117,9 @@ SHARDS_PER_TIER = 3
 BEACON_EMBER = (9636, "Beacon Ember", "Beacon Embers",
                 "Light a fire bowl of a town's Beacon with it: +5% experience and loot for everyone on that floor for an hour. "
                 "Dropped by field bosses, hidden beasts, and sometimes elites and apex monsters.")
+# Spire Chronicle (DESIGN 4, roadmap M3): the house trophy for finishing a season's Chronicle (lib/spirebound/chronicle.lua)
+CHRONICLE_CUP = (5805, "Chronicle Cup", "Chronicle Cups",
+                 "Awarded for finishing a season's Spire Chronicle. It looks best on a shelf in your house.")
 RESPEC_ITEM = (28650, "Mastery Respec Scroll", "Mastery Respec Scrolls",
                "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use.")
 CUT_FROM_LEVEL = 12            # Floor 1 grounds whose lowest level is 12 or more drop cut shards
@@ -355,6 +358,7 @@ def main():
     out.write_text("\n".join(L) + "\n", encoding="utf-8")
     renames = {str(v[0]): dict(name=v[1], plural=v[2], description=v[3]) for g in TOKENS.values() for v in g.values()}
     renames[str(RESPEC_ITEM[0])] = dict(name=RESPEC_ITEM[1], plural=RESPEC_ITEM[2], description=RESPEC_ITEM[3])
+    renames[str(CHRONICLE_CUP[0])] = dict(name=CHRONICLE_CUP[1], plural=CHRONICLE_CUP[2], description=CHRONICLE_CUP[3])
     renames[str(BEACON_EMBER[0])] = dict(name=BEACON_EMBER[1], plural=BEACON_EMBER[2], description=BEACON_EMBER[3])
     (ROOT / "data/item_renames.json").write_text(json.dumps(renames, indent=1) + "\n", encoding="utf-8")
     print(f"wrote {out.name}: {len(WEAPONS)} weapons, {len(ARMOUR)} armour, {len(SHOP)} shop sets; data/item_renames.json")
