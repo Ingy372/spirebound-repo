@@ -91,18 +91,39 @@ end
 
 -- G1: put the path's first spells on action bar 1, buttons 3 and 4 (the stock client fills them with Tibia spell words);
 -- button 5 (a third Tibia spell) is cleared. Buttons 1-2 keep the stock potions.
+-- Grok session 3: the stock client keeps one bar per class, pre-filled with Tibia spells; when the class changed,
+-- that bar came back and hid ours. Now the server sends the list at every login and right after the Registrar, and
+-- here a button is only replaced when it is empty or still holds one of the stock Tibia spells: whatever a player
+-- put there themselves stays.
+local STOCK_WORDS = { ['exura infir'] = true, ['exori infir tera'] = true, ['exevo infir frigo hur'] = true }
+
+local function buttonText(ab, slot)
+  local ok, m = pcall(ab.ApiJson.getMapping, 1, slot)
+  if not ok or not m then return nil, true end
+  local s = m.actionsetting or m
+  return s.chatText, (s.chatText == nil and s.useObject == nil and s.passiveId == nil and s.action == nil)
+end
+
+local function replaceable(ab, slot, ours)
+  local text, empty = buttonText(ab, slot)
+  return empty or (text and (STOCK_WORDS[text:lower()] or ours[text:lower()]))
+end
+
 local function seedSpellBar(list)
   local ab = modules.game_actionbar
   if not ab or not ab.ApiJson or not ab.actionBars or type(list) ~= 'table' then
     return
   end
+  local ours = {}
+  for _, words in ipairs(list) do ours[words:lower()] = true end
   local slots = { 3, 4 }
   for i, words in ipairs(list) do
-    if slots[i] then
+    if slots[i] and replaceable(ab, slots[i], ours) then
       ab.ApiJson.createOrUpdateText(1, slots[i], words, true)
     end
   end
-  if ab.ApiJson.removeAction then
+  local text5 = buttonText(ab, 5)
+  if ab.ApiJson.removeAction and text5 and STOCK_WORDS[text5:lower()] then
     ab.ApiJson.removeAction(1, 5)
   end
   local bar = ab.actionBars[1]
@@ -152,6 +173,8 @@ local function onMessage(protocol, opcode, data)
     end
   elseif data.t == 'spellbar' then
     seedSpellBar(data.list)
+    -- again a moment later: a class change switches the client to that class's bar just after this message
+    scheduleEvent(function() seedSpellBar(data.list) end, 1500)
   elseif data.t == 'skills' then
     skills = data.list or {}
   elseif data.t == 'lang' then
@@ -243,7 +266,16 @@ local function hideStore()
   end
 end
 
+-- Tell the server which client build this is (Grok session 3 played on a weeks-old copy and reported long-fixed bugs).
+-- Raise it together with SpireClient.CLIENT_VERSION (server lib/spirebound/client_link.lua) whenever a client module
+-- changes in a way players must have.
+local CLIENT_VERSION = 2
+
 local function onGameStart()
+  scheduleEvent(function()
+    local protocol = g_game.getProtocolGame()
+    if protocol then protocol:sendExtendedJSONOpcode(OPCODE, { t = 'hello', v = CLIENT_VERSION }) end
+  end, 2000)
   destroyUi()
   createUi()
   skills, cooldownUntil = {}, {}

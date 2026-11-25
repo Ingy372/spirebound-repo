@@ -155,7 +155,7 @@ function skip.onStepIn(creature, item, position, fromPosition)
 		player:teleportTo(fromPosition, true)
 		position:sendMagicEffect(CONST_ME_TELEPORT)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "This swirl skips Bramblejaw and goes straight to Hearthgate. "
-			.. "The fight is the red glowing stone in the east of the hall. Step on the swirl again to leave anyway.")
+			.. "The fight is the glowing stone with the sparks, 4 steps south of this swirl. Step on the swirl again to leave anyway.")
 		return true
 	end
 	skipWarned[pid] = nil
@@ -188,7 +188,12 @@ function think.onThink(creature, interval)
 			p:sendMagicEffect(CONST_ME_REDSMOKE)
 		end
 	end
-	creature:say("Bramblejaw rears up!", TALKTYPE_MONSTER_SAY)
+	creature:say("Bramblejaw rears up! Step back!", TALKTYPE_MONSTER_SAY)
+	-- say what to do in the Server Log too (Grok session 3: "rears up" and the red smoke didn't tell anyone where to go)
+	local climber = pit.pid and Player(pit.pid)
+	if climber then
+		climber:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Bramblejaw is about to stomp: step two tiles away from it, out of the red smoke, then come back and hit it.")
+	end
 	local bossId = creature:getId()
 	addEvent(function()
 		local boss = Creature(bossId)

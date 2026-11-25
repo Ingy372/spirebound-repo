@@ -1,6 +1,6 @@
 -- Server -> Spirebound client messages (extended opcode, JSON). Client side: client/modules/game_spirebound.
 -- Messages: {t="floor", n, name} {t="difficulty", mode, name} {t="skills", family, list={...}} {t="cast", name, cd}
-SpireClient = { OPCODE = 210 }
+SpireClient = { OPCODE = 210, CLIENT_VERSION = 2 } -- CLIENT_VERSION: see scripts/spirebound/client_version.lua
 
 local function encode(v)
 	local t = type(v)

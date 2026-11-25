@@ -6,10 +6,12 @@ SpireQuiver = { ID = 35562 }
 
 function SpireQuiver.give(player, arrows)
 	-- HB (2026-11-25): worn straight away when the shield hand is free, so a new Ranger's bow fires at once
-	local free = not player:getSlotItem(CONST_SLOT_RIGHT)
-	local q = free and player:addItem(SpireQuiver.ID, 1, true, 1, CONST_SLOT_RIGHT) or player:addItem(SpireQuiver.ID, 1)
+	-- SpireGive ignores carrying weight: a low-level Ranger once lost the quiver to the floor (Grok session 3)
+	local q = SpireGive.item(player, SpireQuiver.ID, 1, CONST_SLOT_RIGHT)
+	local worn = player:getSlotItem(CONST_SLOT_RIGHT)
+	local free = q ~= nil and worn ~= nil and worn:getId() == SpireQuiver.ID
 	if q and arrows and arrows > 0 then
-		q:addItem(3447, arrows)
+		SpireGive.into(q, 3447, arrows)
 	end
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, (free and "Your quiver is on your shield hand: " or "Your arrows go in the quiver: wear the quiver in your shield hand, and ")
 		.. "your bow fires from it. Fletcher Tamsin in Hearthgate sells more arrows and quivers.")
@@ -24,8 +26,12 @@ function login.onLogin(player)
 		if player:getItemCount(SpireQuiver.ID) == 0 then
 			SpireQuiver.give(player, 0)
 		end
-	elseif player:getVocation():getBaseId() == 3 then
-		return true
+	elseif player:getVocation():getBaseId() == 3 and not s:get("quiverRepairS3") then
+		-- Grok session 3: Rangers whose starter quiver fell on the Registrar's floor get one now, with arrows
+		s:set("quiverRepairS3", true)
+		if player:getItemCount(SpireQuiver.ID) == 0 and player:getItemCount(3447) == 0 then
+			SpireGive.withRoom(player, function() SpireQuiver.give(player, 100) end)
+		end
 	end
 	return true
 end

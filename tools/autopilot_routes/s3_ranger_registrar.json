@@ -4,23 +4,92 @@
  "timeout": 300,
  "about": "Grok session 3 (SB3-01): a Ranger made at Registrar Maelis, not by a test kit, can shoot in the Proving.",
  "steps": [
-  { "do": "say", "text": "/pilot newbie", "note": "Registrar" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "say", "text": "hi" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "npc", "text": "ranger" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "npc", "text": "yes" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "npc", "text": "normal" },
-  { "do": "wait", "seconds": 2 },
-  { "do": "npc", "text": "yes" },
-  { "do": "wait", "seconds": 5 },
-  { "do": "inventory", "note": "Proving" },
-  { "do": "shot", "name": "s3_ranger_kit" },
-  { "do": "hunt", "seconds": 25, "radius": 7, "note": "practice rats" },
-  { "do": "shot", "name": "s3_ranger_after_rats" },
-  { "do": "inventory" },
-  { "do": "say", "text": "/pilot logout" }
+  {
+   "do": "say",
+   "text": "/pilot level 3",
+   "note": "low level: the kit outweighs what it can carry"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot newbie",
+   "note": "Registrar"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "ranger"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "normal"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 5
+  },
+  {
+   "do": "inventory",
+   "note": "Proving"
+  },
+  {
+   "do": "shot",
+   "name": "s3_ranger_kit"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 7,
+   "note": "practice rats"
+  },
+  {
+   "do": "shot",
+   "name": "s3_ranger_after_rats"
+  },
+  {
+   "do": "inventory"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
  ]
 }

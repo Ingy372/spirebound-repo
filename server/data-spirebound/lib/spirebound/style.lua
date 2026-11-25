@@ -221,7 +221,11 @@ end
 
 -- The name of the stage the character is levelling now
 function SpireStyle.stageName(v)
-	local key = (v.stage == 3 and v.final) or (v.stage == 2 and v.path) or tree(v.voc).key
+	local t = tree(v.voc)
+	if not t then
+		return "" -- no path yet: the Journal of a character fresh out of the Arrival Yard crashed here (Grok session 3)
+	end
+	local key = (v.stage == 3 and v.final) or (v.stage == 2 and v.path) or t.key
 	return SpireStyle.name(v.voc, key)
 end
 

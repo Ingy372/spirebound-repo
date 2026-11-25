@@ -45,6 +45,8 @@ local KITS = {
 }
 local COMMON_KIT = { { 3361, 1 }, { 3355, 1 }, { 3559, 1 }, { 3552, 1 }, { 3582, 5 }, { 266, 5 }, { 268, 5 }, { 3003, 1 }, { 3457, 1 }, { 2920, 1 } }
 -- leather armor, leather helmet, leather legs, leather boots, ham, health/mana potions, rope, shovel
+-- the armour goes on straight away (Grok session 3: every new character walked about with it in the backpack)
+local WEAR = { [3361] = CONST_SLOT_ARMOR, [3355] = CONST_SLOT_HEAD, [3559] = CONST_SLOT_LEGS, [3552] = CONST_SLOT_FEET }
 
 local MODES = {
 	["normal"] = { id = Difficulty.NORMAL, text = "Normal: the tower's usual rules. Death costs experience, as it always has." },
@@ -58,16 +60,21 @@ local function giveKit(player, vocId)
 	-- Take back the yard's practice club and put the path's weapon in the hand, so the skill bar on the right shows
 	-- this path's skills at once (Grok playtest, 2026-11-24: a Mystic still held the club and saw club skills).
 	while player:removeItem(PRACTICE_CLUB, 1) do end
-	for i, entry in ipairs(KITS[vocId] or {}) do
-		local slot = (i == 1 and CONST_SLOT_LEFT) or (vocId == 4 and i == 2 and CONST_SLOT_RIGHT) or CONST_SLOT_WHEREEVER
-		player:addItem(entry[1], entry[2], true, 1, slot)
-	end
-	for _, entry in ipairs(COMMON_KIT) do
-		player:addItem(entry[1], entry[2])
-	end
-	if vocId == 3 then
-		SpireQuiver.give(player, 100) -- a bow only fires from a quiver in the shield hand (Jay's playtest, 2026-11-13)
-	end
+	-- Weapons first, then the Ranger's quiver straight into the shield hand, then armour worn and the rest in the
+	-- backpack. Nothing is limited by carrying weight (SpireGive): a level 3 Ranger once lost its quiver to the floor
+	-- because the kit was too heavy (Grok session 3).
+	SpireGive.withRoom(player, function()
+		for i, entry in ipairs(KITS[vocId] or {}) do
+			local slot = (i == 1 and CONST_SLOT_LEFT) or (vocId == 4 and i == 2 and CONST_SLOT_RIGHT) or nil
+			SpireGive.item(player, entry[1], entry[2], slot)
+		end
+		if vocId == 3 then
+			SpireQuiver.give(player, 100) -- a bow only fires from a quiver in the shield hand (Jay's playtest, 2026-11-13)
+		end
+		for _, entry in ipairs(COMMON_KIT) do
+			SpireGive.item(player, entry[1], entry[2], WEAR[entry[1]])
+		end
+	end)
 	if SpireGuide then
 		SpireGuide.giveLetter(player) -- lore and first steps
 	end

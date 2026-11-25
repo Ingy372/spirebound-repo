@@ -17,6 +17,19 @@ Template:
 - **Make a brand-new character** and go through the Arrival Yard to the Registrar. After you pick a path you land in the Proving: try your spells on the rats (they are on your action bar, buttons 3 and 4), then step on the glowing stone and fight Bramblejaw alone. Is it too easy or too hard at your level? Is the red-smoke stomp clear?
 - Does the Quest Tracker show Pell's quest now when you take it?
 
+## 2026-11-25 (Grok play tester, session 3: Ranger on Grok Fourth, Vanguard on Grok Third, Arcanist on Grok Second, Mystic on Grok Tester; written down by Claude)
+- Full report: `docs/playtests/2026-11-25-grok-session3.md`. Grok started at 09:35, before the client package was rebuilt (09:46), and described the stock client (Store button showing), so the client fixes since Monday weren't on its screen. That's the second session running. From now on the server tells anyone on an old client to download it again.
+- Liked: Arc Slash hitting two rats, the Journal's Quests tab with directions, Vesper's six-stone hunt, Little Bix, the clear [Open PvP] message.
+- *Fixed 2026-11-25 (checked against the database and the real Registrar):*
+  - *New Ranger with nothing to shoot (worst bug): a level 3 character can't carry the whole starter kit, so the game dropped the last pieces (the torch, then the quiver with its 100 arrows) on the Registrar's floor. Starter items now ignore carrying weight, the quiver goes on before the rest, and the armour is worn instead of sitting in the backpack. Rangers who lost theirs get a quiver with arrows at their next login.*
+  - *Can't log out for minutes: the engine kept "in a fight" on while any monster had picked you as its target, even pen rats behind the fence. Now the lock lifts 15 seconds after the last hit given or taken (never during a fight with players).*
+  - *Cheese gate held an Arcanist for good: from the second rat on, a character who hasn't looted gets the cheese straight into the backpack. The old "third try" fallback reset on every login and only counted walking in from one side.*
+  - *Every closed yard gate now says why in the Server Log, not just at the bottom of the screen; "sword skills" now reads "skills"; the potion hint says "Use with..., then click yourself".*
+  - *Action bar: the stock client keeps one bar per class, pre-filled with Tibia spells, and swapped it in when the class changed. Our client now replaces those stock spells with the path's attack and heal at every login, without touching buttons a player set up.*
+  - *Bramblejaw's stomp says what to do: "step two tiles away from it, out of the red smoke". The skip swirl now says the fight stone is "4 steps south of this swirl".*
+  - *The Journal crashed for characters with no path yet (server error at Grok Fourth's first login).*
+- Left for later: roadmap G8-G12 (Registrar door, walking every `!hunt` route, retesting the client-side items on the current client, Vesper's second visit, small clean-ups).
+
 ## 2026-11-24 evening (Grok play tester, session 2: Arcanist on Grok Second, Vanguard on Grok Third; written down by Claude 2026-11-25)
 - Full report: `docs/playtests/2026-11-24-grok-session2.md`. Grok's client was still the 19:00 package, so the evening's client fixes (clean speech bubbles, spells put on the action bar, quest auto-tracking) were not on its screen. The package is rebuilt (2026-11-25 morning).
 - Liked: the new class pitches, the Registrar hall, Warden Ketta, Pell's cheese warning, the "you need a target" line, and `!hunt` (true directions, works in town, real class kills).

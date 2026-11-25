@@ -7,8 +7,8 @@ SpireTutorial = { STEPS = { "kill", "loot", "spells", "potion" } }
 SpireTutorial.HELP = {
 	kill = "Beat a rat in the pen first: click it in the Battle List (Ctrl+B) or right-click it and choose Attack.",
 	loot = "Open a rat's body (right-click it, then drag the cheese into your backpack) before you go on. If the body is gone, beat another rat.",
-	spells = "Say !spells to see the sword skills and spells your path will teach you.",
-	potion = "Drink the health potion in your backpack (right-click it, or drag it onto yourself).",
+	spells = "Say !spells to see the skills and spells each path will teach you.",
+	potion = "Drink the health potion in your backpack: right-click it, choose 'Use with...', then click yourself.",
 }
 
 local function scope(player)
@@ -62,13 +62,13 @@ end
 SpireTutorial.PITY_TRIES = 3
 local lootTries = {} -- player id -> tries at the loot gate
 function SpireTutorial.pity(player)
-	local pid = player:getId()
+	local pid = player:getGuid() -- the same across logins (Grok session 3 relogged and the count started over)
 	lootTries[pid] = (lootTries[pid] or 0) + 1
 	if lootTries[pid] < SpireTutorial.PITY_TRIES or not SpireTutorial.done(player, "kill") then
 		return false
 	end
 	lootTries[pid] = nil
-	player:addItem(SpireTutorial.CHEESE, 1)
+	SpireGive.item(player, SpireTutorial.CHEESE, 1)
 	SpireTutorial.mark(player, "loot")
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A rat's cheese turns up in the grass at your feet, and you pocket it. Next time, open the body: "
 		.. "right-click it and drag what it carried into your backpack.")
@@ -76,6 +76,7 @@ function SpireTutorial.pity(player)
 end
 
 -- the gates: stepping onto a closed door sends you back a tile with a hint
+local lastHint = {} -- player guid -> when the gate last explained itself in the Server Log
 local gate = MoveEvent()
 function gate.onStepIn(creature, item, position, fromPosition)
 	local player = creature:getPlayer()
@@ -96,6 +97,12 @@ function gate.onStepIn(creature, item, position, fromPosition)
 					player:teleportTo(fromPosition, true)
 					position:sendMagicEffect(CONST_ME_ENERGYHIT)
 					player:sendCancelMessage(SpireTutorial.HELP[missing])
+					-- in the Server Log too: the bottom-of-screen line alone was missed (Grok session 3, SB3-08)
+					local pid = player:getGuid()
+					if (lastHint[pid] or 0) + 8 < os.time() then
+						lastHint[pid] = os.time()
+						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "This gate is closed. " .. SpireTutorial.HELP[missing])
+					end
 					return true
 				end
 			end
@@ -118,7 +125,16 @@ gate:register()
 local kill = CreatureEvent("SpireTutorialKill")
 function kill.onKill(player, target)
 	if target and target:isMonster() and target:getName() == "Pen Rat" then
+		local second = SpireTutorial.done(player, "kill") -- this is at least the second rat
 		SpireTutorial.mark(player, "kill")
+		-- Grok session 3: an Arcanist killed rats over the fence, never found a body, and the loot gate held it for
+		-- good. From the second rat on, a character who still hasn't looted gets the cheese straight into the
+		-- backpack: the first kill still teaches opening a body, but nobody can be stuck here.
+		if second and player:getVocation():getId() == 0 and not SpireTutorial.done(player, "loot") then
+			SpireGive.item(player, SpireTutorial.CHEESE, 1)
+			SpireTutorial.mark(player, "loot")
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You take the rat's cheese and put it in your backpack. (Next time, open a body yourself: right-click it and drag out what it carried.)")
+		end
 	end
 	return true
 end
