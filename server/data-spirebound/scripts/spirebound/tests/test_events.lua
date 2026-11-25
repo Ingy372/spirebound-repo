@@ -42,3 +42,20 @@ SpireTest.add("offline training statues and livestream are available", function(
 	SpireTest.eq(found, true, "sword training statue in the Hearthgate Training Yard")
 	SpireTest.eq(configManager.getFloat(configKeys.LIVESTREAM_EXPERIENCE_MULTIPLIER), 1.0, "no XP bonus for streaming")
 end)
+
+-- J9: the Tower Quiz
+SpireTest.add("events: the Tower Quiz takes loose answers and pays by level", function()
+	local row = SpireQuiz.QUESTIONS[2]
+	SpireTest.eq(SpireQuiz.correct(row, "  Gate   HOUND "), true, "spaces and case")
+	SpireTest.eq(SpireQuiz.correct(row, "the gate hound"), true, "a leading 'the'")
+	SpireTest.eq(SpireQuiz.correct(row, "boar"), false, "a wrong answer")
+	SpireTest.eq(SpireQuiz.prize(10), 500, "50 gold a level")
+	SpireTest.eq(SpireQuiz.prize(300), 2000, "capped")
+	local used = {}
+	for _ = 1, #SpireQuiz.QUESTIONS do
+		used[SpireQuiz.pick(used, 0.5)] = true
+	end
+	local n = 0
+	for _ in pairs(used) do n = n + 1 end
+	SpireTest.eq(n, #SpireQuiz.QUESTIONS, "every question once before any repeats")
+end)

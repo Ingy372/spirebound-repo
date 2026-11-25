@@ -19,7 +19,7 @@ local COMMANDS = {
   { '!buyhouse', 'Buy the house whose door I face' }, { '!report', 'Report a player (add: name, what happened)', true },
   { '!summon', 'Summoning Circle in my house (add: boss name)', true }, { '!dice', 'Bet in a Fortune Hall (add: amount high|low)', true },
   { '!fortune', 'Make my house a Fortune Hall (add: license)', true }, { '!mannequin', 'Show my outfit on a house mannequin' },
-  { '!pond', 'My house pond' }, { '!warroom', 'My guild war room' }, { '!journal', 'Open this Journal' },
+  { '!pond', 'My house pond' }, { '!answer', 'Answer the Tower Quiz (add: your answer)', true }, { '!warroom', 'My guild war room' }, { '!journal', 'Open this Journal' },
 }
 local current = 'upgrade'
 local LABELS = {
