@@ -251,10 +251,15 @@
    "name": "agna_flour"
   },
   {
+   "do": "say",
+   "text": "/pilot quest d1_flour 1",
+   "note": "flour in hand"
+  },
+  {
    "do": "jump",
    "to": [
-    1353,
-    1214,
+    1358,
+    1224,
     7
    ],
    "note": "Fence Marrow"

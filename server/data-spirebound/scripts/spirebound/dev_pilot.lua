@@ -18,6 +18,7 @@
 --   /pilot logout          leave the game at once (even right after a fight)
 --   /pilot final p f       (style tests) path p and final style f chosen and finished
 --   /pilot path key        (style tests) that path chosen and finished (its ability ready)
+--   /pilot quest id state  (quest tests) set a quest's state; taking a delivery also gives its item
 --   /pilot kit             (HB) the test kit: a Ranger wears a quiver of arrows in its shield hand
 --   /pilot mastery n       (style tests) Mastery n of the first stage, no path, no stance
 --   /pilot stairkey [off]  (boss tests) the Axe-Lord's hall opens without the Stair Key's three pieces
@@ -142,6 +143,17 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: kit")
+	elseif cmd == "quest" then -- (quest tests) "/pilot quest id state": set a quest's state (-1 new, 1 taken, 2 ready, 3 done);
+		-- taking a delivery quest also hands over its item
+		local id, st = rest:match("^(%S+)%s+(%-?%d+)")
+		local q = id and SpireQuests.get(id)
+		if q then
+			player:setStorageValue(q.storage, tonumber(st))
+			if tonumber(st) == 1 and q.kind == "deliver" and player:getItemCount(q.item) == 0 then
+				player:addItem(q.item, 1)
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: quest " .. tostring(id) .. " " .. tostring(st))
 	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
 		local k = player:kv():scoped("spirebound")
 		if rest:find("off") then
