@@ -1358,8 +1358,12 @@ for i, row in ipairs(SpireSpells.list) do
 			player:sendCancelMessage(row.name .. " belongs to the " .. SpireStyle.name(player:getVocation():getBaseId(), row.path) .. " path. Say !style.")
 			return false
 		end
+		if row.final and not SpireSpells.TRACE[player:getId()] and SpireStyle.get(player).final ~= row.final then
+			player:sendCancelMessage(row.name .. " belongs to the " .. SpireStyle.name(player:getVocation():getBaseId(), row.final) .. " style. Say !style.")
+			return false
+		end
 		if row.style and not SpireSpells.TRACE[player:getId()] and not SpireStyle.hasAbility(player, row.style) then
-			player:sendCancelMessage(row.name .. " is a style ability: it comes when " .. (row.style == 2 and "your path's" or "your") .. " Mastery reaches 10. Say !style.")
+			player:sendCancelMessage(row.name .. " is a style ability: it comes when " .. (row.style == 3 and "your final style's" or row.style == 2 and "your path's" or "your") .. " Mastery reaches 10. Say !style.")
 			return false
 		end
 		local vis = SpireSpells.visuals(row, player:getLevel())

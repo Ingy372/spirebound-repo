@@ -1,0 +1,133 @@
+{
+ "name": "p1c_ranger",
+ "character": "Pilot Ranger",
+ "timeout": 240,
+ "about": "P1c check: this class's four final-style abilities cast in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "final abilities"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final marksman deadeye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "last light",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "deadeye",
+   "note": "last light"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final marksman volley_captain"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "arrow squall",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "volley_captain",
+   "note": "arrow squall"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final trapper snareweaver"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "web of briars",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "snareweaver",
+   "note": "web of briars"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final trapper pathfinder"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "wayfarers stride",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "pathfinder",
+   "note": "wayfarers stride"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

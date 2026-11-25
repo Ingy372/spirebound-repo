@@ -1,0 +1,133 @@
+{
+ "name": "p1c_vanguard",
+ "character": "Pilot Vanguard",
+ "timeout": 240,
+ "about": "P1c check: this class's four final-style abilities cast in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "final abilities"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final bulwark aegis_warden"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "wardens oath",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "aegis_warden",
+   "note": "wardens oath"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final bulwark ironwall"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "iron bastion",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "ironwall",
+   "note": "iron bastion"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final reaver bloodedge"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "crimson verdict",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "bloodedge",
+   "note": "crimson verdict"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final reaver stormbreaker"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "thunder cleave",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "stormbreaker",
+   "note": "thunder cleave"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -1,0 +1,133 @@
+{
+ "name": "p1c_arcanist",
+ "character": "Pilot Arcanist",
+ "timeout": 240,
+ "about": "P1c check: this class's four final-style abilities cast in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "final abilities"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final emberwright cinderheart"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "heart of cinders",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "cinderheart",
+   "note": "heart of cinders"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final emberwright ashwalker"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "ashen path",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "ashwalker",
+   "note": "ashen path"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final stormbinder tempest"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "eye of the tempest",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "tempest",
+   "note": "eye of the tempest"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final stormbinder spellbreaker"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "sundering bolt",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "spellbreaker",
+   "note": "sundering bolt"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

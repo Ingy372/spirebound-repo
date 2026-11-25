@@ -16,6 +16,7 @@
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
+--   /pilot final p f       (style tests) path p and final style f chosen and finished
 --   /pilot path key        (style tests) that path chosen and finished (its ability ready)
 --   /pilot mastery n       (style tests) Mastery n of the first stage, no path, no stance
 --   /pilot stairkey [off]  (boss tests) the Axe-Lord's hall opens without the Stair Key's three pieces
@@ -119,6 +120,13 @@ function pilot.onSay(player, words, param)
 		k:set("style_path", key)
 		k:remove("style_final")
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: path " .. key)
+	elseif cmd == "final" then -- (style tests, P1c) "/pilot final path final": both choices made, the style finished
+		local path, final = rest:match("^(%S+)%s+(%S+)")
+		local k = player:kv():scoped("spirebound")
+		k:set("style_points", SpireGearData.STYLE_POINTS[30])
+		k:set("style_path", path)
+		k:set("style_final", final)
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: final " .. tostring(final))
 	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
 		local k = player:kv():scoped("spirebound")
 		if rest:find("off") then

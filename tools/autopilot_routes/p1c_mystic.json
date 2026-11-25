@@ -1,0 +1,133 @@
+{
+ "name": "p1c_mystic",
+ "character": "Pilot Mystic",
+ "timeout": 240,
+ "about": "P1c check: this class's four final-style abilities cast in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "final abilities"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final lifebinder dawnmender"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "second dawn",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "dawnmender",
+   "note": "second dawn"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final lifebinder wardkeeper"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "grove ward",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "wardkeeper",
+   "note": "grove ward"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final wildcaller rootcaller"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "worldvine grasp",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "rootcaller",
+   "note": "worldvine grasp"
+  },
+  {
+   "do": "say",
+   "text": "/pilot final wildcaller frostwarden"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "hoarfrost prison",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "frostwarden",
+   "note": "hoarfrost prison"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -145,3 +145,24 @@ SpireTest.add("style: every path has its own signature ability", function()
 	local early = SpireStyle.view(3, SpireGearData.STYLE_POINTS[15], "marksman", nil)
 	SpireTest.eq(SpireStyle.hasAbilityPure(early, 2), false, "not before the path's Mastery 10")
 end)
+
+-- P1c: one ability per final style
+SpireTest.add("style: every final style has its own ability", function()
+	local names = {}
+	for voc, tree in pairs(SpireGearData.style) do
+		for _, p in ipairs(tree.paths) do
+			for _, f in ipairs(p.finals) do
+				local found = 0
+				for _, row in ipairs(SpireSpells.list) do
+					if row.style == 3 and row.final == f.key then
+						found = found + 1
+						SpireTest.eq(SpireSpells.allowed(row, voc), true, row.name .. " is for " .. tree.name)
+						SpireTest.eq(names[row.words], nil, row.name .. " has words of its own")
+						names[row.words] = true
+					end
+				end
+				SpireTest.eq(found, 1, f.name .. " has one ability")
+			end
+		end
+	end
+end)
