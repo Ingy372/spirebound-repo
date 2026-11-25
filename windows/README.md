@@ -6,7 +6,9 @@ The game server runs inside **WSL** (the free Ubuntu that Windows keeps inside i
 2. **Log in:** account `jay@localhost`, password `spirebound`. See `MORNING.md` for the list of test characters.
 3. **Stop:** double-click **Stop Spirebound** (`Stop-Spirebound.bat`).
 
-**Backups:** `Start-Spirebound.bat` saves a copy of your world into the `backups` folder before every start and keeps the newest 14. Double-click `Backup-Spirebound.bat` for one any time. To go back, stop the server and double-click `Restore-Spirebound.bat` (it saves the current state first). Do this before ending a season too.
+**Backups:** `Start-Spirebound.bat` saves a copy of your world into the `backups` folder before every start and keeps the newest 14. Double-click `Backup-Spirebound.bat` for one any time. To go back, stop the server and double-click `Restore-Spirebound.bat` (it saves the current state first).
+
+**Ending a season:** in the game, say `/season end <number>` (it archives everyone and shuts the server down), then double-click `Season-Reset.bat`. It asks you to type WIPE, makes a backup, wipes characters, houses, guilds and the market (accounts and account rewards are kept) and starts the new season.
 
 How it fits together
 - `tools/run_server_wsl.sh` (run by Start): copies the repo into WSL, builds the Linux server, makes sure the database and test accounts exist, starts the server and the local login service (`tools/login_server.py`, port 8080, which hands the character list to the client).
