@@ -40,6 +40,10 @@ B.hudFor = hudFor
 
 -- Lights bowl i on a floor for this player, taking one Ember. Returns true when lit.
 function B.lightBy(player, floor, i)
+	if B.isLit(B.get(floor), i, os.time()) then -- a burning bowl says how long it burns, Ember or not
+		player:sendCancelMessage(select(2, B.canLight(B.get(floor), i, 0, os.time())))
+		return false
+	end
 	if player:getItemCount(B.EMBER) < 1 then
 		player:sendCancelMessage("The bowl is cold. A Beacon Ember would light it: field bosses, elites and hidden beasts drop them.")
 		return false
@@ -200,12 +204,17 @@ function tick.onThink(interval)
 	for floor = 1, Floors.highestOpen() do
 		local rec = B.get(floor)
 		wasLit[floor] = wasLit[floor] or {}
+		local out = 0
 		for i = 1, B.SLOTS do
 			local lit = B.isLit(rec, i, now)
 			if wasLit[floor][i] and not lit then
-				Game.broadcastMessage(string.format("A fire on the Floor %d Beacon has gone out (%d of %d still burn).", floor, B.litCount(rec, now), B.SLOTS), MESSAGE_EVENT_ADVANCE)
+				out = out + 1
 			end
 			wasLit[floor][i] = lit or nil
+		end
+		if out > 0 then -- one line, however many went out together
+			Game.broadcastMessage(string.format("%s on the Floor %d Beacon %s gone out (%d of %d still burn).", out == 1 and "A fire" or (out .. " fires"),
+				floor, out == 1 and "has" or "have", B.litCount(rec, now), B.SLOTS), MESSAGE_EVENT_ADVANCE)
 		end
 		syncBowls(floor, now)
 		B.apexTick(floor, now)

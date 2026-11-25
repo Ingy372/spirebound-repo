@@ -1,0 +1,17 @@
+{
+ "name": "m4_pressure",
+ "character": "Pilot Warden",
+ "timeout": 260,
+ "about": "M4 Spire Pressure in the real event loop: the Pilot stands still in a solo arena event; pressure rises every 30 seconds, the arena moves it at 60 seconds idle, at 2 minutes it is a deserter, and !arena join is then refused for 7 days.",
+ "steps": [
+  { "do": "say", "text": "/pilot arena unban" },
+  { "do": "say", "text": "/pilot arena solo", "note": "event starts" },
+  { "do": "wait", "seconds": 35, "note": "first pressure step" },
+  { "do": "wait", "seconds": 30, "note": "idle 60 s: moved" },
+  { "do": "wait", "seconds": 65, "note": "idle 2 min: deserter" },
+  { "do": "say", "text": "/pilot arena open" },
+  { "do": "say", "text": "!arena join", "note": "refused: deserter" },
+  { "do": "say", "text": "/pilot arena stop" },
+  { "do": "say", "text": "/pilot arena unban", "note": "clean up" }
+ ]
+}

@@ -9,11 +9,13 @@
 --   /pilot gearreset       (gear tests) forget the barracks weapon, style and trophies; drop Spirebound gear
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
---   /pilot give id, n      items into the backpack
+--   /pilot give id, n      items into the backpack (says if they did not fit)
+--   /pilot emptybag        (M1 tests) empty the backpack
 --   /pilot hp n            set your health (PvP tests)
 --   /pilot beacon n        (M1 tests) put out every fire of floor n's Beacon
 --   /pilot pardon          clear skulls and unjust kills from test fights
 --   /pilot arena join|go|stop   a Wild PvP arena event with just the test characters
+--   /pilot arena solo|open|unban   (M4 tests) you and an absent dummy; sign-ups only; lift a deserter ban
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
@@ -202,8 +204,23 @@ function pilot.onSay(player, words, param)
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: cleared " .. n)
 	elseif cmd == "give" then
 		local id, n = rest:match("(%d+)%D+(%d+)")
+		local before = player:getItemCount(tonumber(id))
 		player:addItem(tonumber(id), tonumber(n))
-		player:sendTextMessage(MESSAGE_STATUS, "pilot: given")
+		local got = player:getItemCount(tonumber(id)) - before
+		player:sendTextMessage(MESSAGE_STATUS, got > 0 and ("pilot: given " .. got) or "pilot: no room, it fell on the floor")
+	elseif cmd == "emptybag" then -- (M1 tests) the test character's backpack, emptied (loot from earlier runs fills it)
+		local bag = player:getSlotItem(CONST_SLOT_BACKPACK)
+		local n = 0
+		if bag and bag:isContainer() then
+			for i = bag:getSize() - 1, 0, -1 do
+				local it = bag:getItem(i)
+				if it then
+					it:remove()
+					n = n + 1
+				end
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: emptied " .. n)
 	elseif cmd == "beacon" then -- (M1 tests) "/pilot beacon n": put out every fire of floor n's Beacon
 		local n = tonumber(rest:match("(%d+)")) or 1
 		SpireBeacons.put(n, { slots = {} })
@@ -235,6 +252,25 @@ function pilot.onSay(player, words, param)
 			SpireArena.begin()
 			SpireArena.MIN_PLAYERS = keep
 			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena " .. tostring(SpireArena.current and SpireArena.current.phase))
+		elseif what == "solo" and not SpireArena.current then
+			-- (M4 tests) the real event loop with one test character and an absent dummy: stand still and watch the
+			-- pressure rise, the idle move at 60 seconds and the deserter at 2 minutes
+			local st = SpireArena.new("lms", os.time())
+			SpireArena.current = st
+			SpireArena.join(st, player:getGuid(), player:getName(), math.max(player:getLevel(), SpireArena.MIN_LEVEL))
+			SpireArena.join(st, -1, "Arena Dummy", SpireArena.MIN_LEVEL)
+			st.players[-1].dummy = true
+			local keep = SpireArena.MIN_PLAYERS
+			SpireArena.MIN_PLAYERS = 2
+			SpireArena.begin()
+			SpireArena.MIN_PLAYERS = keep
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena solo " .. tostring(SpireArena.current and SpireArena.current.phase))
+		elseif what == "open" and not SpireArena.current then -- (M4 tests) sign-ups open, no broadcast, no timer
+			SpireArena.current = SpireArena.new("lms", os.time())
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena open")
+		elseif what == "unban" then -- (M4 tests) lift a deserter ban
+			player:kv():scoped("spirebound-arena"):remove("banUntil")
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: arena unbanned")
 		elseif what == "stop" and SpireArena.current then
 			if SpireArena.current.phase == "running" then
 				SpireArena.finish(SpireArena.current, {})

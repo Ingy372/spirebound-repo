@@ -240,7 +240,7 @@ function SpireArena.begin()
 	end
 	-- drop sign-ups who logged out
 	for _, guid in ipairs(st.order) do
-		if not Player(st.players[guid].name) then
+		if not Player(st.players[guid].name) and not st.players[guid].dummy then -- (a test dummy stays signed up)
 			SpireArena.leave(st, guid)
 		end
 	end
