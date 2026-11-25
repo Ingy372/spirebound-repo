@@ -170,12 +170,24 @@ $botCfg = Join-Path $Cli "mods\game_bot\default_configs"
 if (Test-Path $botCfg) {
     Remove-Item -Recurse -Force (Join-Path $botCfg "cavebot_1.3") -ErrorAction SilentlyContinue
     $vbot = Join-Path $botCfg "vBot_4.8"
-    Copy-Item -Force (Join-Path $Root "client\bot\spirebound_report.lua") (Join-Path $vbot "vBot\spirebound_report.lua")
+    Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_report.lua") (Join-Path $vbot "vBot\spirebound_report.lua")
     $loader = Join-Path $vbot "_Loader.lua"
     $lt = [IO.File]::ReadAllText($loader)
     $lt = $lt.Replace('  "BotServer",' + "`n", '').Replace('  "BotServer",' + "`r`n", '')
     $lt = $lt.Replace('  "spy_level",' + "`n", '').Replace('  "spy_level",' + "`r`n", '')
-    $lt = $lt.Replace('  "cavebot_control_panel"', '  "cavebot_control_panel",' + "`n" + '  "spirebound_report"')
+    if (-not $lt.Contains('"spirebound_report"')) {
+        $lt = $lt.Replace('  "cavebot_control_panel"', '  "cavebot_control_panel",' + "`n" + '  "spirebound_report"')
+    }
+    # M5 (DESIGN.md 12): in a player fight the helpers only heal. Bookmarks around the healing and eating scripts tell
+    # the guard (loaded last) which helper jobs may keep running; everything else pauses during the fight.
+    Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_mark.lua") (Join-Path $vbot "vBot\spirebound_mark.lua")
+    Copy-Item -Force (Join-Path $Root "client\modules\game_spirebound\bot\spirebound_pvp_guard.lua") (Join-Path $vbot "vBot\spirebound_pvp_guard.lua")
+    if (-not $lt.Contains('"spirebound_pvp_guard"')) {
+        $lt = $lt.Replace('  "HealBot",', '  "spirebound_mark",' + "`n" + '  "HealBot",')
+        $lt = $lt.Replace('  "new_healer",', '  "new_healer",' + "`n" + '  "spirebound_mark",')
+        $lt = $lt.Replace('  "eat_food",', '  "spirebound_mark",' + "`n" + '  "eat_food",' + "`n" + '  "spirebound_mark",')
+        $lt = $lt.Replace('  "spirebound_report"', '  "spirebound_mark",' + "`n" + '  "spirebound_report",' + "`n" + '  "spirebound_pvp_guard"')
+    }
     [IO.File]::WriteAllText($loader, $lt)
 }
 

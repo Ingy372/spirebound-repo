@@ -14,6 +14,8 @@
 --   { "do": "npc", "text": "trade" }              after "hi": talk to the NPC in the NPCs channel
 --   { "do": "rune", "id": 3180, "ahead": 2 }        (PvP tests) use a rune on the tile ahead
 --   { "do": "use", "at": [x, y, z] }              use the thing on top of a nearby tile (a stone, a lever)
+--   { "do": "botguard" }                          (M5) log the player-fight lock and the bot guard's state
+--   { "do": "bot", "on": true }                   (M5) switch the built-in bot on (or off) for this character
 --   { "do": "react", "text": "quickstep", "seconds": 40 }  (PvP tests) say it whenever you get held
 --   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
 --                                                 (spell tests) target the nearest monster without chasing it if
@@ -466,6 +468,40 @@ function handlers.inventory(player)
         local ids = {}
         for _, it in ipairs(c:getItems()) do ids[#ids + 1] = it:getId() .. ' x' .. it:getCount() end
         log('inventory: container ' .. (c:getName() or '?') .. ' holds ' .. table.concat(ids, ', '))
+    end
+    nextStep()
+end
+
+-- M5: switch the built-in bot (vBot) on or off for this character: { "do": "bot", "on": true }
+function handlers.bot(player)
+    if not stepData.done then
+        local settings = g_settings.getNode('bot') or {}
+        local index = g_game.getCharacterName() .. '_' .. g_game.getClientVersion()
+        settings[index] = { enabled = step.on ~= false, config = step.config or 'vBot_4.8' }
+        g_settings.setNode('bot', settings)
+        g_settings.save()
+        stepData.done = true
+        local ok, err = true, nil
+        if modules.game_bot and modules.game_bot.refresh then ok, err = pcall(modules.game_bot.refresh) end
+        log('bot: ' .. ((step.on ~= false) and 'on' or 'off') .. (ok and '' or (' (bot start error: ' .. tostring(err) .. ')')))
+        return
+    end
+    if now() - stepT >= 3 then nextStep() end
+end
+
+-- M5: is a player fight on, is the bot guard installed, and what does it report? { "do": "botguard" }
+function handlers.botguard(player)
+    local sb = modules.game_spirebound
+    log('botguard: player fight = ' .. tostring(sb and sb.pvpLocked and sb.pvpLocked()))
+    local lt = g_resources.fileExists('/bot/vBot_4.8/_Loader.lua') and g_resources.readFileContents('/bot/vBot_4.8/_Loader.lua') or ''
+    log('botguard: guard in the bot load order = ' .. tostring(lt:find('spirebound_pvp_guard', 1, true) ~= nil)
+        .. ', bookmarks = ' .. select(2, lt:gsub('"spirebound_mark"', '')))
+    local g = sb and sb.botGuard
+    if g then
+        log(string.format('botguard: bot running, %d of %d helper jobs guarded, %d bookmarks, fight seen by the bot = %s',
+            g.paused or 0, g.jobs or 0, g.marks or 0, tostring(g.locked)))
+    else
+        log('botguard: the bot is not running (or its guard has not loaded)')
     end
     nextStep()
 end

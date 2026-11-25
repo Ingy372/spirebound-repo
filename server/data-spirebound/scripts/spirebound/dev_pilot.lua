@@ -11,6 +11,7 @@
 --   /pilot clear           remove every monster within 9 tiles
 --   /pilot give id, n      items into the backpack (says if they did not fit)
 --   /pilot emptybag        (M1 tests) empty the backpack
+--   /pilot pvphit          (M5 tests) start the player-fight lock, as if a player had hit you
 --   /pilot hp n            set your health (PvP tests)
 --   /pilot beacon n        (M1 tests) put out every fire of floor n's Beacon
 --   /pilot pardon          clear skulls and unjust kills from test fights
@@ -208,6 +209,9 @@ function pilot.onSay(player, words, param)
 		player:addItem(tonumber(id), tonumber(n))
 		local got = player:getItemCount(tonumber(id)) - before
 		player:sendTextMessage(MESSAGE_STATUS, got > 0 and ("pilot: given " .. got) or "pilot: no room, it fell on the floor")
+	elseif cmd == "pvphit" then -- (M5 tests) start the player-fight lock as if another player had hit you
+		SpirePvPLock.mark(player, os.time())
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: player fight for " .. SpirePvPLock.LOCK .. " seconds")
 	elseif cmd == "emptybag" then -- (M1 tests) the test character's backpack, emptied (loot from earlier runs fills it)
 		local bag = player:getSlotItem(CONST_SLOT_BACKPACK)
 		local n = 0

@@ -4,6 +4,8 @@ local OPCODE = 210
 local SLOTS = 9
 local floorLabel, diffLabel, bar, barTitle = nil, nil, nil, nil
 local floorText, zoneText, beaconText = '', '', '' -- beaconText: Floor Beacons (roadmap M1)
+local pvpLockText = '' -- M5: shown while helpers only heal
+local pvpLockOn = false
 local ZONES = {
   town = { 'Safe zone', '#7fff7f' }, guarded = { 'Guarded', '#c8e6ff' }, open = { 'Open PvP', '#ffffff' },
   contested = { 'Contested', '#ffb347' }, deadzone = { 'DEADZONE', '#ff4040' }, bossroom = { 'Boss room: PvP on', '#ff7f7f' },
@@ -11,7 +13,7 @@ local ZONES = {
 
 local function updateFloorLabel()
   if floorLabel then
-    floorLabel:setText(floorText .. (zoneText ~= '' and ('   [' .. zoneText .. ']') or '') .. beaconText)
+    floorLabel:setText(floorText .. (zoneText ~= '' and ('   [' .. zoneText .. ']') or '') .. beaconText .. pvpLockText)
   end
 end
 local buttons = {}
@@ -146,6 +148,11 @@ local function onMessage(protocol, opcode, data)
   end
   if data.t == 'floor' then
     floorText = (data.n and data.n > 0) and ('Floor ' .. data.n .. ' - ' .. (data.name or '')) or ''
+    updateFloorLabel()
+  elseif data.t == 'pvplock' then
+    -- M5 (DESIGN.md 12): in a fight with a player the built-in helpers only heal (client/modules/game_spirebound/bot/spirebound_pvp_guard.lua)
+    pvpLockOn = data.on == true
+    pvpLockText = pvpLockOn and '   [Player fight: helpers heal only]' or ''
     updateFloorLabel()
   elseif data.t == 'beacon' then
     -- Floor Beacons: how many of the town's fire bowls burn on this floor (each +5% experience and loot)
@@ -297,6 +304,7 @@ local function onGameStart()
 end
 
 local function onGameEnd()
+  pvpLockOn, pvpLockText = false, '' -- a new login starts without a player fight
   SpireJournalUi.hide()
   SpireTasksUi.hide()
   removeEvent(tickEvent)
@@ -304,7 +312,49 @@ local function onGameEnd()
   destroyUi()
 end
 
+-- The built-in bot's Spirebound scripts (M5 and the cavebot report). vBot copies its default config into the player's
+-- own folder only the first time, so a player who installed earlier would never get a new script. Every client start
+-- refreshes them in each vBot config the player has, and adds them to that config's load order once.
+local BOT_SCRIPTS = { 'spirebound_report', 'spirebound_mark', 'spirebound_pvp_guard' }
+local function syncBotScripts()
+  for _, cfg in ipairs(g_resources.listDirectoryFiles('/bot', false, false) or {}) do
+    local loader = '/bot/' .. cfg .. '/_Loader.lua'
+    if g_resources.fileExists(loader) and g_resources.directoryExists('/bot/' .. cfg .. '/vBot') then
+      for _, name in ipairs(BOT_SCRIPTS) do
+        local src = g_resources.readFileContents('/modules/game_spirebound/bot/' .. name .. '.lua')
+        local dst = '/bot/' .. cfg .. '/vBot/' .. name .. '.lua'
+        if src and src:len() > 0 and (not g_resources.fileExists(dst) or g_resources.readFileContents(dst) ~= src) then
+          g_resources.writeFileContents(dst, src)
+        end
+      end
+      local lt = g_resources.readFileContents(loader)
+      -- Q16 / roadmap R15: no automatic attack or spell rotation, no combo helper, no script editor, no pushmax.
+      -- The installer removes them from fresh installs; older installs still had them in their own copy.
+      if lt then
+        local before = lt
+        for _, m in ipairs({ '"AttackBot", %-%- last of major modules', '"combo",', '"ingame_editor",', '"pushmax",' }) do
+          lt = lt:gsub('\n  ' .. m .. '\r?', '')
+        end
+        if lt ~= before then
+          g_resources.writeFileContents(loader, lt)
+        end
+      end
+      if lt and not lt:find('"spirebound_pvp_guard"', 1, true) then
+        if not lt:find('"spirebound_report"', 1, true) then
+          lt = lt:gsub('  "cavebot_control_panel"', '  "cavebot_control_panel",\n  "spirebound_report"', 1)
+        end
+        lt = lt:gsub('  "HealBot",', '  "spirebound_mark",\n  "HealBot",', 1)
+        lt = lt:gsub('  "new_healer",', '  "new_healer",\n  "spirebound_mark",', 1)
+        lt = lt:gsub('  "eat_food",', '  "spirebound_mark",\n  "eat_food",\n  "spirebound_mark",', 1)
+        lt = lt:gsub('  "spirebound_report"', '  "spirebound_mark",\n  "spirebound_report",\n  "spirebound_pvp_guard"', 1)
+        g_resources.writeFileContents(loader, lt)
+      end
+    end
+  end
+end
+
 function init()
+  pcall(syncBotScripts)
   ProtocolGame.registerExtendedJSONOpcode(OPCODE, onMessage)
   originalOnSkullChange = Creature.onSkullChange
   Creature.onSkullChange = function(self, skullId)
@@ -325,6 +375,11 @@ function init()
   if g_game.isOnline() then
     onGameStart()
   end
+end
+
+-- asked by the bot guard (client/modules/game_spirebound/bot/spirebound_pvp_guard.lua): is a player fight on?
+function pvpLocked()
+  return pvpLockOn
 end
 
 function hideJournal()

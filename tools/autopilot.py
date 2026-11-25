@@ -234,7 +234,9 @@ def main(argv):
     old = find_log()
     if old:
         old.unlink()
-    shutil.copytree(MODULE_SRC, MODULE_DST, dirs_exist_ok=True)
+    # the test client runs today's Spirebound modules, as an installed client would (windows/Install-Spirebound.ps1
+    # copies client/modules/* the same way); before 2026-11-25 only game_autopilot was copied
+    shutil.copytree(ROOT / "client" / "modules", CLIENT / "modules", dirs_exist_ok=True)
     run = MODULE_DST / "run.json"
     run.write_text(json.dumps({"name": name, "account": ACCOUNT, "password": PASSWORD, "character": char, "exit": True, "steps": steps}), encoding="utf-8")
     started = time.time()

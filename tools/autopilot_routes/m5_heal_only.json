@@ -1,0 +1,17 @@
+{
+ "name": "m5_heal_only",
+ "character": "Pilot Mystic",
+ "timeout": 120,
+ "about": "M5 helpers only heal in player fights: the bot guard is installed in the player's own vBot config at client start; a player-fight lock reaches the client (and the bot, when it runs) and ends after 60 seconds.",
+ "steps": [
+  { "do": "bot", "on": true, "note": "bot on" },
+  { "do": "botguard", "note": "before" },
+  { "do": "say", "text": "/pilot pvphit", "note": "a player fight starts" },
+  { "do": "wait", "seconds": 3 },
+  { "do": "botguard", "note": "during" },
+  { "do": "shot", "name": "m5_fight_label" },
+  { "do": "wait", "seconds": 62 },
+  { "do": "botguard", "note": "after" },
+  { "do": "bot", "on": false, "note": "bot off again" }
+ ]
+}
