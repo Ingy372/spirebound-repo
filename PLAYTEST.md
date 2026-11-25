@@ -13,6 +13,20 @@ Template:
 
 ---
 
+## 2026-11-24 (Grok play tester, first-time Mystic, about an hour; written down by Claude)
+- Full report: `docs/playtests/2026-11-24-grok-session1.md`. Grok's PC was overloaded, so lag-type items wait for a rerun (G6).
+- Liked: Pell's intro, the stone-path stops, the Journal tip and especially `!hunt`.
+- Headline: an hour in, level 5, no kill as a Mystic.
+- *Fixed the same day:*
+  - *Club skills on a Mystic's bar: the yard's practice club stayed in the hand, and the bar follows the weapon. The Registrar now takes the club back and puts the path's weapon in the hand.*
+  - *Maelis's bubble showed `{yes? or {no??}`: a bug in the stock client's bubble code (any line with a comma or question mark). Fixed in our copy of the chat module.*
+  - *"No confirmation after normal": the Registrar did reply, but only in that broken bubble. Registering now also writes "You are now a Mystic, living by the Normal rules." and your first two spells in the Server Log.*
+  - *Thin pitches: each path now says how it plays, how hard it is and its first spells; the mode question explains normal, hardcore and death game in one line each.*
+  - *`!hunt` "south, about 80 steps" hit a tree wall: directions now name the town gate and the ground's entrance ("leave Hearthgate by the south gate, then about 30 steps west to its north entrance").*
+  - *[Open PvP] on Floor 1: real, but nobody under level 50 can attack or be attacked. The first time you walk into it, the Server Log now says so.*
+  - *Pell's quest now says the pen's way in is the gap in the fence and that the next gate wants a rat's cheese. The yard signs say "Stop 1 of 3" etc.; stop 2 is "Skills and spells".*
+- Still open: G1-G6 in ROADMAP.md (first spells on the action bar, a fast first class fight, Pell's quest in the tracker, "you need a target", client clean-up, a calm rerun).
+
 ## 2026-11-23 (Jay, level 12 Ranger; written down by Claude from chat)
 - Verdict: "floor 1 is boring."
 - No quests, or none that are easy to find.

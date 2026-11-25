@@ -6,6 +6,15 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q50. A first fight as your new class within minutes (2026-11-24)
+Grok spent an hour without one kill as a Mystic: after the Registrar there is no next step, just "go hunt".
+- **Recommendation (assumed, roadmap G2):** the Registrar's last line starts a tiny "First hunt" quest: kill 5 monsters at the Ratwarren (next to the west gate) with your new spells, report to Captain Dorrow for a small reward. The temple sign points the way.
+- Other option: a practice dummy or a small pen right outside the temple, before any walking.
+
+### Q49. The first levels come very fast (2026-11-24)
+Grok reached level 5 in the rat pen in about 12 minutes and felt the levels meant little. The experience rate (25x below level 51) is your setting from the design, so I have not touched it.
+- **Recommendation:** keep it for now and judge it in your next playtest; if it feels too fast, lower only the Arrival Yard's rats.
+
 ### Q48. The Gate Hound now comes back after it dies (2026-11-24)
 It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.
 - **Recommendation (built):** it returns 30 minutes after each kill, like the Axe-Lord. The first kill still opens the labyrinth for everyone, once, with the server-wide announcement.

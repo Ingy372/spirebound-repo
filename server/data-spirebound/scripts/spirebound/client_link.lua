@@ -29,6 +29,12 @@ function tick.onThink(interval)
 		if lastZone[pid] ~= zone then
 			lastZone[pid] = zone
 			SpireClient.send(p, { t = "zone", tier = zone })
+			-- The first time a character walks into an [Open PvP] zone, say what that means (Grok playtest, 2026-11-24:
+			-- "if PvP is really open on the newbie floor, new players should be told")
+			if zone == "open" and p:kv():scoped("spirebound-notices"):get("open-pvp") ~= true then
+				p:kv():scoped("spirebound-notices"):set("open-pvp", true)
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You have left the Guarded land around town. Out here, [Open PvP] means players of level %d and above may fight each other. Below level %d you can't attack anyone and no one can attack you.", SpirePvP.NEWBIE_LEVEL, SpirePvP.NEWBIE_LEVEL))
+			end
 		end
 		local fam, list = SpireClient.skillList(p)
 		if lastFamily[pid] ~= fam then

@@ -25,11 +25,22 @@ npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, pl
 
 -- Vocation ids follow server/core-overrides/XML/vocations.xml
 local VOCATIONS = {
-	vanguard = { id = 4, text = "Vanguards hold the front line with sword, axe or club and a shield." },
-	ranger = { id = 3, text = "Rangers strike from afar with bow, crossbow or spear." },
-	arcanist = { id = 1, text = "Arcanists wield wands and fill the field with fire and lightning." },
-	mystic = { id = 2, text = "Mystics wield rods, heal their allies and command nature." },
+-- Each pitch says how the path plays, how hard it is and its first spells (Grok playtest, 2026-11-24: "one line each
+-- is too thin for the biggest choice a new player makes"). Claude's call, Jay can veto.
+	vanguard = { id = 4, text = "Vanguards hold the front line with sword, axe or club and a shield. The toughest path and the simplest to learn: walk up to a monster and hit it. Your first spells: heavy strike, and second wind to heal yourself from level 4. Strong alone, and every group wants one in front." },
+	ranger = { id = 3, text = "Rangers strike from afar with bow, crossbow or spear. Keep your distance and keep moving; you will buy arrows as you go. Your first spells: piercing shot, and field dressing to heal from level 4. Good alone and in a group; a little harder to play than a vanguard." },
+	arcanist = { id = 1, text = "Arcanists wield wands and fill the field with fire and lightning. The hardest hitters and the most fragile: kill things before they reach you. Your first spells: ember strike, and mending spark to heal from level 4. The trickiest path to start with, and the best against crowds." },
+	mystic = { id = 2, text = "Mystics wield rods, heal their allies and command nature. Steady and hard to kill, with the best healing in the tower; every group wants one. Your first spells: frost strike, and dewfall to heal from level 4. A good first path if you like to stay alive." },
 }
+
+-- First spells per vocation, said again after registering (the Server Log keeps them)
+local FIRST_SPELLS = {
+	[4] = { "heavy strike", "second wind" },
+	[3] = { "piercing shot", "field dressing" },
+	[1] = { "ember strike", "mending spark" },
+	[2] = { "frost strike", "dewfall" },
+}
+local PRACTICE_CLUB = 3270 -- handed out in the Arrival Yard (scripts/spirebound/hunting.lua)
 
 -- Starter kits (client item ids, Tibia 15.11)
 local KITS = {
@@ -50,10 +61,15 @@ local MODES = {
 local chosen = {} -- playerId -> { voc = id, mode = id }
 
 local function giveKit(player, vocId)
-	for _, list in ipairs({ KITS[vocId] or {}, COMMON_KIT }) do
-		for _, entry in ipairs(list) do
-			player:addItem(entry[1], entry[2])
-		end
+	-- Take back the yard's practice club and put the path's weapon in the hand, so the skill bar on the right shows
+	-- this path's skills at once (Grok playtest, 2026-11-24: a Mystic still held the club and saw club skills).
+	while player:removeItem(PRACTICE_CLUB, 1) do end
+	for i, entry in ipairs(KITS[vocId] or {}) do
+		local slot = (i == 1 and CONST_SLOT_LEFT) or (vocId == 4 and i == 2 and CONST_SLOT_RIGHT) or CONST_SLOT_WHEREEVER
+		player:addItem(entry[1], entry[2], true, 1, slot)
+	end
+	for _, entry in ipairs(COMMON_KIT) do
+		player:addItem(entry[1], entry[2])
 	end
 	if vocId == 3 then
 		SpireQuiver.give(player, 100) -- a bow only fires from a quiver in the shield hand (Jay's playtest, 2026-11-13)
@@ -90,7 +106,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			end
 		end
 		if topic == 1 and MsgContains(lower, "yes") then
-			npcHandler:say("Good. Now choose how you will live in the tower: {normal}, {hardcore} or {death game}? You may always step down later, but never up.", npc, player)
+			npcHandler:say("Good. Now choose how you will live in the tower. {normal}: a death costs you some experience. {hardcore}: deaths cost more, but you earn more. {death game}: one death to a monster and this character is gone for good, for the biggest rewards. Say one to hear the details. You may always step down later, but never up.", npc, player)
 			npcHandler:setTopic(pid, 2)
 			return true
 		end
@@ -114,7 +130,12 @@ local function creatureSayCallback(npc, player, type, msg)
 			giveKit(player, c.voc)
 			player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 			npcHandler:say(string.format("It is written: %s, %s. The temple is through the gate. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You know your first attack spell. Say !spells to see its words, then say them in a fight.") -- F1-02
+			-- Confirm in the Server Log too: the speech bubble is easy to miss (Grok playtest, 2026-11-24)
+			local first = FIRST_SPELLS[c.voc]
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You are now a %s, living by the %s rules.", player:getVocation():getName(), Difficulty.names[c.mode]))
+			if first then
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your attack spell: %s. Click a monster to target it, then say the words (or put it on your action bar). At level 4 you learn %s, which heals you. Say !spells for the full list.", first[1], first[2])) -- F1-02
+			end
 			player:setTown(Town(1)) -- the Arrival Yard was only the starting town
 				player:teleportTo(Town(1):getTemplePosition())
 			chosen[pid] = nil

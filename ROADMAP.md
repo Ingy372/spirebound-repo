@@ -10,6 +10,15 @@ Finished tasks live in `ROADMAP_DONE.md` (move each task there when it is ticked
 
 ---
 
+## Grok's playtest, 2026-11-24 (first-time Mystic, never killed anything as a Mystic). Do this first.
+Report: `docs/playtests/2026-11-24-grok-session1.md`. Fixed the same day: see PLAYTEST.md.
+- [ ] **G1 First spells on the action bar** (was J13d): a new character's action bar starts with three Tibia incantations (the client's stock defaults, `cipsoft-default-options-minimal.json`). After the Registrar, put the path's attack spell and heal on buttons 1-2 instead (server tells the client at registration; `client/modules/game_spirebound`). Done when: autopilot registers a Pilot Mystic and its bar shows frost strike and dewfall.
+- [ ] **G2 A first fight as your class, fast** (Grok's #1; Q50): right after the Registrar, a short "First hunt" step that sends the new character to the Ratwarren or Sproutling Glade with its new spells. Done when: autopilot goes Registrar → first class kill in under 5 minutes for all four classes.
+- [ ] **G3 Pell's "First Blood" in the Quest Tracker and Journal** (Grok bug 9: never shown, before or after). Done when: in the client, the tracker shows it while active and the Journal lists it as done.
+- [ ] **G4 "You need a target"**: casting a target spell (frost strike) with nothing targeted showed Grok nothing. Check what the engine sends; make it a clear line in the Server Log. Done when: an in-game test casts it with no target and sees the message.
+- [ ] **G5 Client clean-up for newcomers**: the login field says "email" but wants the account name; hide the bot panel and the Store button; Ctrl+O for Options; the login title font is unreadable. Done when: checked in the client with screenshots.
+- [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a second Grok report with no lag caveat.
+
 ## Jay's playtest, 2026-11-23 ("floor 1 is boring"). Do this first.
 - [~] **P1 Gear and weapon progression** (design `docs/superpowers/specs/2026-11-23-gear-progression-design.md`, plan `docs/superpowers/plans/2026-11-23-gear-progression.md`). *(2026-11-24: in the client, Dorrow's weapon, Garrick's upgrade to tier 1 and the Upgrade tab all work (`floor1_gear_path`). Still to check in the client: the temper quest, the Gate Hound's shards and the Axe-Lord's awakening, which need a party-strength test.)* Done when: a new character can follow the "Next upgrade" window from level 1 to the Floor 1 boss, tested in the real game.
 - [ ] **P1b Style path abilities (8, stage 2)**: one signature ability per path (Bulwark, Reaver, Marksman, Trapper, Emberwright, Stormbinder, Lifebinder, Wildcaller), learned when the path's Mastery reaches 10 (`style = 2` rows in `lib/spirebound/spells.lua`). Reached around Floors 4-5, so after the alpha. Done when: each casts in the client with a level 120 tester.
@@ -96,7 +105,6 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 - [ ] **J15b Fire runes burn vines too**: the engine's own fire runes (fire bomb, great fireball) don't burn Vinewalls yet; only our fire spells do.
 - [ ] **J15c Wild PvP verdict**: after a few weeks of the weekly event, ask the players; if they love it, give it a zone (Deadzone).
 - [ ] **J14b Dawnpiercer light arrow**: a projectile of our own (the effect pipeline makes effects only; projectiles need 8 directions).
-- [ ] **J13d Client action bar defaults**: a new character's action bar starts with three Tibia incantations (the client's stock defaults); start it empty or with the character's first spells instead.
 - [ ] **J13c Spirebound names for the rune items** (fire, strike, healing, paralysis runes still use the engine's item names; Q36).
 - [ ] **J9 Ten-minute mini events** between the big ones (snowball fight, quiz, last man standing at fixed gear).
 - [ ] **J10 Forge for Floor 3 and up** (waiting on Q27).

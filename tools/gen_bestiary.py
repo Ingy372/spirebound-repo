@@ -55,14 +55,39 @@ def need(level: int) -> int:
     return round(50 * (level ** 3 - 6 * level ** 2 + 17 * level - 12) / 3)
 
 
-def direction(x: int, y: int) -> str:
-    """Compass direction and walking distance from the middle of Hearthgate to a spot (map y grows downward)."""
+# Hearthgate's four gates (the roads leave the walled city at the middle of each side; maps/layout_floor1.py)
+TOWN_GATES = {
+    "north": (TOWN["x"] + 56, TOWN["y"]),
+    "south": (TOWN["x"] + 56, TOWN["y"] + TOWN["h"] - 1),
+    "west": (TOWN["x"], TOWN["y"] + 49),
+    "east": (TOWN["x"] + TOWN["w"] - 1, TOWN["y"] + 49),
+}
+SIDE_NAMES = {"n": "north", "s": "south", "e": "east", "w": "west"}
+
+
+def compass(dx: int, dy: int) -> str:
     import math
-    dx, dy = x - TOWN_CENTER[0], y - TOWN_CENTER[1]
     ang = math.degrees(math.atan2(dy, dx)) % 360
-    name = DIRS[int(((ang + 22.5) % 360) // 45)]
-    steps = int(round(max(abs(dx), abs(dy)) / 10.0)) * 10
-    return f"{name}, about {steps} steps from the city centre"
+    return DIRS[int(((ang + 22.5) % 360) // 45)]
+
+
+def entrance(c: dict) -> tuple[int, int]:
+    """Where a ground's gate is (the middle of the side named in the plan); the centre if it has none."""
+    x, y, w, h = c["x"], c["y"], c["w"], c["h"]
+    return {"n": (x + w // 2, y), "s": (x + w // 2, y + h - 1), "w": (x, y + h // 2),
+            "e": (x + w - 1, y + h // 2)}.get(c.get("gate"), (x + w // 2, y + h // 2))
+
+
+def route(c: dict) -> str:
+    """Directions a new player can follow: which town gate to leave by, then which way to the ground's entrance.
+    (Grok playtest, 2026-11-24: "south, about 80 steps from the city centre" ran into a tree wall.)"""
+    ex, ey = entrance(c)
+    gate, (gx, gy) = min(TOWN_GATES.items(), key=lambda kv: abs(kv[1][0] - ex) + abs(kv[1][1] - ey))
+    dx, dy = ex - gx, ey - gy
+    steps = max(10, int(round((abs(dx) + abs(dy)) / 10.0)) * 10)
+    side = SIDE_NAMES.get(c.get("gate"))
+    door = f"its {side} entrance" if side else "it"
+    return f"leave Hearthgate by the {gate} gate, then about {steps} steps {compass(dx, dy)} to {door}"
 
 
 def kills_per_level(level: int, xp: int) -> float:
@@ -86,13 +111,11 @@ def build_ladder() -> list[dict]:
     rows = []
     for c in CAMPS:
         monsters = [m for m, _, _ in c["mix"]]
-        cx, cy = c["x"] + c["w"] // 2, c["y"] + c["h"] // 2
         rows.append(dict(id=c["id"], title=c["title"], lo=c["levels"][0], hi=c["levels"][1], role=c["role"], monsters=monsters,
-                         where=direction(cx, cy), note=c["note"], zone=c["zone"], area=c["w"] * c["h"], kind=kind_text(c),
+                         where=route(c), note=c["note"], zone=c["zone"], area=c["w"] * c["h"], kind=kind_text(c),
                          den=c.get("den")))
-    ax, ay = 30 + 22, 30 + 22
     rows.append(dict(id=APEX["id"], title=APEX["title"], lo=APEX["levels"][0], hi=APEX["levels"][1], role="xp+money",
-                     monsters=["Stonehorn Ram"], where=direction(ax, ay), note=APEX["note"], zone="contested", area=44 * 44,
+                     monsters=["Stonehorn Ram"], where=route(APEX), note=APEX["note"], zone="contested", area=44 * 44,
                      kind=kind_text(APEX)))
     return sorted(rows, key=lambda r: (r["lo"], r["hi"]))
 
