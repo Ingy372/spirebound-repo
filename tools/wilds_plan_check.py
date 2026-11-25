@@ -52,7 +52,7 @@ TRAILS = {
     "Burrow trail": [(234, 199), (239, 199)],
     "Quarry trail": [(234, 144), (239, 144)],
     "Thornsnap trail": [(230, 152), (218, 152)],
-    "Bandit Track": [(338, 285), (356, 285), (356, 240), (354, 224), (354, 220)],
+    "Bandit Track": [(338, 285), (368, 285), (368, 226), (354, 224), (354, 220)],
     "Shard Track": [(338, 285), (338, 292), (366, 296), (366, 299)],
     "Copse Road": [(70, 239), (92, 250), (92, 310), (70, 318), (70, 321)],
     "Copse gate": [(92, 282), (88, 282)],
@@ -117,8 +117,13 @@ def check():
                 if inner[2] > 0 and near_segment(inner, p, q, 0):
                     print("ROAD THROUGH", rname, "->", name); bad += 1
     # every ground has a trail or road ending within 3 tiles of the middle of its hub side
+    from floor1_plan import DESIGNS
+    designs = {c["id"]: DESIGNS[c["design"]] for c in CAMPS if c.get("design")}
     for gid, (title, x, y, w, h, side, *_r) in GROUNDS.items():
         gate = {"n": (x + w // 2, y - 1), "s": (x + w // 2, y + h), "w": (x - 1, y + h // 2), "e": (x + w, y + h // 2)}[side]
+        if gid in designs:                                  # a designed ground says where its gate is
+            gx, gy = designs[gid]["gate"]
+            gate = (x + gx, y + gy + (1 if side == "s" else -1 if side == "n" else 0))
         ends = [pt for path in {**ROADS, **TRAILS}.values() for pt in (path[0], path[-1])]
         if not any(abs(e[0] - gate[0]) <= 4 and abs(e[1] - gate[1]) <= 4 for e in ends):
             print("NO TRAIL TO", title, "gate", gate); bad += 1

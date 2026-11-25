@@ -1,0 +1,62 @@
+{
+ "name": "toad_pond",
+ "character": "Pilot Mystic",
+ "timeout": 700,
+ "about": "P4 check: the widened Toad Pond, its new Reed Beds route on the east side.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "camp_starter_east",
+   "note": "Toad Pond gate"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "toad_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_east_e",
+   "fight": true,
+   "note": "Reed Beds (new east route)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "toad_reedbeds"
+  },
+  {
+   "do": "walk",
+   "to": "crowd_starter_east_e_1",
+   "fight": true,
+   "note": "Reed Beds north"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "walk",
+   "to": "loop_starter_east_b",
+   "fight": true,
+   "note": "East Ponds"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

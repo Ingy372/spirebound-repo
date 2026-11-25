@@ -516,7 +516,7 @@ def build(m):
     m.road((X0 + 130, Y0 + 220), (tx - 60, ty + th // 2 + 1), Z)            # river bank to the west road
     m.road((tx + tw // 2, Y0 + 368), (X0 + 300, Y0 + 368), Z)               # Shrine Path, to the toppled shrine
     # from East Cross: the Bandit Track north and the Shard Track south (2-wide trails)
-    for a, b in (((338, 285), (356, 285)), ((356, 285), (356, 240)), ((356, 240), (354, 224)), ((354, 224), (354, 220)),
+    for a, b in (((338, 285), (368, 285)), ((368, 285), (368, 226)), ((368, 226), (354, 224)), ((354, 224), (354, 220)),
                  ((338, 285), (338, 292)), ((338, 292), (366, 296)), ((366, 296), (366, 299)), ((234, 144), (239, 144))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # gate trails (2 wide) from the roads to the hunting grounds' gates (FLOOR1_WILDS_PLAN.md 4.2)
@@ -1087,7 +1087,7 @@ def build(m):
     S.ruin(m, X0 + 312, Y0 + 125, 14, 11, Z)                       # ruined watchtower by the lake
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
     S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
-    S.standing_stones(m, X0 + 374, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved for Toad Pond)
+    S.standing_stones(m, X0 + 382, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved twice for Toad Pond)
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS]

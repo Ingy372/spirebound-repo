@@ -40,8 +40,15 @@ function step.onStepIn(creature, item, position, fromPosition)
 	if not player or player:getGroup():getAccess() or SpireStairKey.has(player) then
 		return true
 	end
-	player:teleportTo(back)
-	back:sendMagicEffect(CONST_ME_TELEPORT)
+	-- (a moment later: the engine refuses a teleport made while the labyrinth's own teleport is still moving you)
+	local pid = player:getId()
+	addEvent(function()
+		local p = Player(pid)
+		if p then
+			p:teleportTo(back)
+			back:sendMagicEffect(CONST_ME_TELEPORT)
+		end
+	end, 100)
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A sealed door bars the Axe-Lord's hall. It opens only with the Stair Key ("
 		.. SpireStairKey.count(player) .. " of 3 pieces). Still to do: " .. SpireStairKey.missingText(player) .. ".")
 	return true

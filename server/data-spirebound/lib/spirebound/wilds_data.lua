@@ -15,7 +15,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1148, y = 1322, z = 8, group = { { "Field Rat", 1 } } },
 		{ n = 12, loop = "d", x = 1148, y = 1334, z = 8, group = { { "Field Rat", 1 } } },
 	} },
-	{ id = "starter_east", title = "Toad Pond", type = "training", want = 33, guarded = true, respawn = 110, lo = 3, hi = 7, x1 = 1294, y1 = 1230, x2 = 1376, y2 = 1305, z = 7, zs = { [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "middle" }, spots = {
+	{ id = "starter_east", title = "Toad Pond", type = "training", want = 37, guarded = true, respawn = 110, lo = 3, hi = 7, x1 = 1294, y1 = 1230, x2 = 1376, y2 = 1305, z = 7, zs = { [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "middle", e = "calm" }, spots = {
 		{ n = 1, loop = "a", x = 1297, y = 1252, z = 7, group = { { "Hopper Toad", 1 } } },
 		{ n = 2, loop = "a", x = 1305, y = 1276, z = 7, group = { { "Hopper Toad", 1 } } },
 		{ n = 3, loop = "a", x = 1309, y = 1235, z = 7, group = { { "Hopper Toad", 1 } } },
@@ -28,6 +28,8 @@ SpireWilds = { grounds = {
 		{ n = 10, loop = "d", x = 1357, y = 1242, z = 8, group = { { "Hopper Toad", 1 } } },
 		{ n = 11, loop = "d", x = 1369, y = 1273, z = 8, group = { { "Hopper Toad", 1 } } },
 		{ n = 12, loop = "d", x = 1346, y = 1298, z = 8, group = { { "Hopper Toad", 1 } } },
+		{ n = 13, loop = "e", x = 1361, y = 1251, z = 7, group = { { "Hopper Toad", 1 } } },
+		{ n = 14, loop = "e", x = 1352, y = 1277, z = 7, group = { { "Hopper Toad", 1 } } },
 	} },
 	{ id = "starter_south", title = "Sproutling Glade", type = "training", want = 43, guarded = true, respawn = 110, lo = 5, hi = 10, x1 = 1180, y1 = 1338, x2 = 1259, y2 = 1395, z = 7, zs = { [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "middle" }, spots = {
 		{ n = 1, loop = "a", x = 1186, y = 1361, z = 7, group = { { "Sproutling", 1 } } },

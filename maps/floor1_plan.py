@@ -51,10 +51,10 @@ CAMPS = [
          levels=(1, 4), role="xp", wall="broadleaf", core="mounds", trail="dirt", decor="rats",
          groups=same(4, "Field Rat"), respawn=110, design="RATWARREN",
          note="Your first fights. Hit it, loot it, hit the next. Safe: no one can attack you here."),
-    dict(id="starter_east", type="training", title="Toad Pond", x=294, y=230, w=58, h=52, gate="s", size="small", zone="guarded", design="TOADPOND",
+    dict(id="starter_east", type="training", title="Toad Pond", x=294, y=230, w=70, h=52, gate="s", size="small", zone="guarded", design="TOADPOND",
          levels=(3, 7), role="xp", wall="broadleaf", core="pond", trail="grass", decor="pond",
          groups=same(3, "Hopper Toad") + same(1, "Field Rat"), respawn=110,
-         note="Toads hit a little harder and give a little more. Four ponds, four loops; fishing works here."),
+         note="Toads hit a little harder and give a little more. Five ponds, five loops; fishing works here."),
     dict(id="starter_south", type="training", title="Sproutling Glade", x=184, y=338, w=44, h=56, gate="n", size="small", zone="guarded", design="GLADE",
          levels=(5, 10), role="xp", wall="ferns", core="grove", trail="grass", decor="glade",
          groups=same(3, "Sproutling") + same(1, "Hopper Toad"), respawn=110,
@@ -308,11 +308,13 @@ _TT = (("Hopper Toad", 3),)
 _RS, _RP = (("Field Rat", 1),), (("Field Rat", 2),)
 TOADPOND = dict(
     gate=(29, 51), crowd_group=[("Hopper Toad", 1)],
-    routes={"a": "a1", "b": "b1", "c": "cs", "d": "gn"},
-    route_names={"a": "The West Ponds", "b": "The East Ponds", "c": "The Island", "d": "The Sunken Grotto"},
+    routes={"a": "a1", "b": "b1", "c": "cs", "d": "gn", "e": "r1"},
+    route_names={"a": "The West Ponds", "b": "The East Ponds", "c": "The Island", "d": "The Sunken Grotto",
+                 "e": "The Reed Beds"},
     levels={
-        7: dict(name="Toad Pond", box=(0, 0, 58, 52),
-                ponds=[(29, 25, 6), (13, 13, 4), (46, 13, 3), (12, 34, 3)],
+        # P4 (Jay, 2026-11-23: "way to small now"): 12 tiles wider, a fifth pond and a fifth route down the east side
+        7: dict(name="Toad Pond", box=(0, 0, 70, 52),
+                ponds=[(29, 25, 6), (13, 13, 4), (46, 13, 3), (12, 34, 3), (63, 18, 3)],
                 clearings=[
             ("hub", 29, 46, 4, "approach", None, "hub"),
             ("w0", 16, 43, 3, "calm", None, "rest"), ("e0", 42, 44, 3, "calm", None, "rest"),
@@ -325,7 +327,10 @@ TOADPOND = dict(
             ("ca1", 3, 22, 1, "calm", "a", "crowd"), ("ca2", 11, 46, 1, "calm", "a", "crowd"), ("ca3", 15, 5, 1, "middle", "a", "crowd"),
             ("cb1", 54, 22, 1, "calm", "b", "crowd"), ("cb2", 47, 46, 1, "calm", "b", "crowd"), ("cb3", 47, 10, 1, "middle", "b", "crowd"),
             ("cc1", 22, 38, 1, "calm", "c", "crowd"), ("cc2", 36, 38, 1, "calm", "c", "crowd"), ("cc3", 36, 9, 1, "deep", "c", "crowd"),
-        ], paths=[("hub", "w0", 4), ("w0", "a1", 4), ("a1", "a2", 4), ("a2", "q1", 4), ("q1", "a3", 4), ("a3", "a4", 4),
+            ("r0", 63, 44, 3, "calm", None, "rest"), ("r1", 65, 34, 3, "calm", "e", [_TP]), ("r2", 65, 26, 2, "middle", "e", "rest"),
+            ("r3", 64, 9, 3, "middle", "e", [_TP]), ("r4", 59, 4, 3, "middle", "e", "rest"),
+            ("cr1", 67, 21, 1, "calm", "e", "crowd"), ("cr2", 58, 47, 1, "calm", "e", "crowd"),
+        ], paths=[("b1", "r0", 4), ("r0", "r1", 4), ("r1", "r2", 4), ("r2", "r3", 4), ("r3", "r4", 4), ("r4", "b3", 4),("hub", "w0", 4), ("w0", "a1", 4), ("a1", "a2", 4), ("a2", "q1", 4), ("q1", "a3", 4), ("a3", "a4", 4),
                   ("a4", "c2", 4), ("c2", "b4", 4), ("b4", "b3", 4), ("b3", "q2", 4), ("q2", "b2", 4), ("b2", "b1", 4),
                   ("b1", "e0", 4), ("e0", "hub", 4), ("hub", "cs", 4), ("cs", "c1", 3), ("c1", "cn", 3), ("cn", "c2", 3)]),
         # (east of x 13: Underkeep Wing 2 lies under the west part of the pond at this depth)

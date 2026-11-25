@@ -1,0 +1,122 @@
+{
+ "name": "p6_tricks",
+ "character": "Pilot Vanguard",
+ "timeout": 600,
+ "about": "P6 check: thieving rats, howling wolves, mending sproutlings, a sentinel's shield wall, seen in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "arena"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3031, 100"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 400",
+   "note": "thieving rats"
+  },
+  {
+   "do": "wait",
+   "seconds": 40
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "p6_rats"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "howling wolves"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 85"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 6
+  },
+  {
+   "do": "shot",
+   "name": "p6_meadow_wolf"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "sproutlings"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Sproutling, 4, 60"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 6
+  },
+  {
+   "do": "shot",
+   "name": "p6_sproutling"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "shield wall"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Ruin Sentinel, 1, 300"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 6
+  },
+  {
+   "do": "shot",
+   "name": "p6_ruin_sentinel"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
