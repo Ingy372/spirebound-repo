@@ -22,8 +22,8 @@ npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, pl
 
 local ANSWERS = {
 	{ { "spell", "spells", "bar", "attack" }, "Your first attack spell and your heal are on the action bar at the bottom: click one, or say its words. An attack spell needs a target: click the monster first. Say !spells for the whole list." },
-	{ { "bramblejaw", "boss", "pit", "stone", "fight" }, "Bramblejaw is an old boar from the yard. Step on the glowing stone and you face it alone. It bites, and now and then it rears up: red smoke rises around it, so step away before it stomps. Keep your health above half. You can't die down here: I pull you out." },
-	{ { "skip", "hearthgate", "leave", "portal" }, "The portal in the north-east corner takes you straight to Hearthgate. But the Proving pays gold, and it is the best place to learn your spells." },
+	{ { "bramblejaw", "boss", "pit", "stone", "fight" }, "Bramblejaw is an old boar from the yard. Step on the red glowing stone in the east and you face it alone. It bites, and now and then it rears up: red smoke rises around it, so step away before it stomps. Keep your health above half. You can't die down here: I pull you out." },
+	{ { "skip", "hearthgate", "leave", "portal" }, "The blue swirl in the north-east corner takes you straight to Hearthgate (it asks first). But the Proving pays gold, and it is the best place to learn your spells." },
 	{ { "rat", "rats", "practice" }, "The rats are for practice. Try your attack spell on one before you face Bramblejaw." },
 }
 
@@ -50,7 +50,7 @@ local function creatureSayCallback(npc, player, type, msg)
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Welcome to the Proving, climber. Try your new {spells} on the {rats}, then step on the glowing stone to face {Bramblejaw} alone. I can {heal} you, or tell you how to {skip}.")
+npcHandler:setMessage(MESSAGE_GREET, "Welcome to the Proving, climber. Try your new {spells} on the {rats}, then step on the red glowing stone to face {Bramblejaw} alone. I can {heal} you, or tell you how to {skip}.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:setMessage(MESSAGE_FAREWELL, "Go well.")
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

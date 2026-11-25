@@ -127,7 +127,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			-- Confirm in the Server Log too: the speech bubble is easy to miss (Grok playtest, 2026-11-24)
 			local first = FIRST_SPELLS[c.voc]
 			SpireClient.seedSpellBar(player, true)
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You are now a %s, living by the %s rules.", player:getVocation():getName(), Difficulty.names[c.mode]))
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You are now %s %s, living by the %s rules.", player:getVocation():getName():match("^[AEIOUaeiou]") and "an" or "a", player:getVocation():getName(), Difficulty.names[c.mode]))
 			if first then
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your attack spell: %s. Click a monster to target it, then say the words (it is on your action bar too). At level 4 you learn %s, which heals you. Say !spells for the full list.", first[1], first[2])) -- F1-02
 			end
@@ -136,8 +136,17 @@ local function creatureSayCallback(npc, player, type, msg)
 			local proving = WorldPoints.proving_arrival
 			player:teleportTo(proving and Position(proving.x, proving.y, proving.z) or Town(1):getTemplePosition())
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+			if proving then -- the hall's rats come straight at you (Grok session 2: "unannounced")
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The Proving. A few rats live in this hall and will come for you: try your attack spell on them. Your spells are on the action bar; the row of buttons at the bottom of the screen holds your weapon skills (Shift+1, 2, 3), which come with the weapon in your hand. Warden Ketta can heal you.")
+			end
 			chosen[pid] = nil
 			npcHandler:setTopic(pid, 0)
+			return true
+		end
+		-- "no" to a mode goes back to the modes, not all the way to the paths (Grok session 2)
+		if topic == 3 and MsgContains(lower, "no") then
+			npcHandler:say("Then choose how you will live: {normal}, {hardcore} or {death game}?", npc, player)
+			npcHandler:setTopic(pid, 2)
 			return true
 		end
 		if MsgContains(lower, "no") then

@@ -11,9 +11,10 @@ Finished tasks live in `ROADMAP_DONE.md` (move each task there when it is ticked
 ---
 
 ## Grok's playtest, 2026-11-24 (first-time Mystic, never killed anything as a Mystic). Do this first.
-Report: `docs/playtests/2026-11-24-grok-session1.md`. Fixed the same day: see PLAYTEST.md.
+Reports: `docs/playtests/2026-11-24-grok-session1.md` and `...-session2.md`. Fixes: see PLAYTEST.md.
 - [~] **G5 Client clean-up for newcomers**: the login field says "email" but wants the account name; hide the bot panel and the Store button; Ctrl+O for Options; the login title font is unreadable. *(2026-11-24: done: the login says "Account:" and the window "Spirebound"; the empty Store button is hidden. Left alone on purpose: the bot panel (DESIGN.md 11 builds bot helpers into our client; Q51) and Ctrl+O (it opens the chat channel list, as in Tibia). Still to do: the unreadable login title font (needs a look at the login screen).)* Done when: checked in the client with screenshots.
-- [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a second Grok report with no lag caveat.
+- [ ] **G7 Slower yard levels** (Q52, Grok session 2): Pen Rats and Pell's reward tuned so a new character leaves the yard at level 2-3. Done when: the autopilot's yard run ends at level 2-3.
+- [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a Grok report with no lag caveat, including a Ranger (Grok Fourth) and a Vanguard past the cheese gate (session 2 could not).
 
 ## Jay's playtest, 2026-11-23 ("floor 1 is boring"). Do this first.
 - [~] **P1 Gear and weapon progression** (design `docs/superpowers/specs/2026-11-23-gear-progression-design.md`, plan `docs/superpowers/plans/2026-11-23-gear-progression.md`). *(2026-11-24: in the client, Dorrow's weapon, Garrick's upgrade to tier 1 and the Upgrade tab all work (`floor1_gear_path`). Still to check in the client: the temper quest, the Gate Hound's shards and the Axe-Lord's awakening, which need a party-strength test.)* Done when: a new character can follow the "Next upgrade" window from level 1 to the Floor 1 boss, tested in the real game.

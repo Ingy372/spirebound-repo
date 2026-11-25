@@ -6,6 +6,13 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q52. The Arrival Yard levels you too fast (2026-11-25)
+Grok: three rats in the pen took a fresh character from level 1 to 4 (Pen Rats give 135 experience at the early 10x rate, plus Pell's 300), so "levels feel meaningless" and a level 3 tip fired in the yard (the tip is fixed).
+- **Recommendation:** lower the yard's rewards so a new character leaves the yard at level 2-3 and reaches level 4 (first heal) in the first hunting ground. Floor 1's overall length stays the same.
+- Other option: keep it; fast early levels feel good.
+- Assumed until you answer: lower them (not built yet; roadmap G7).
+- Jay's answer:
+
 ### Q51. The bot panel on a new player's screen (2026-11-24)
 Grok (and the playtest task) asked to hide the vBot panel for new players; it looks unfinished. But the design builds bot helpers into our client on purpose (DESIGN.md 11: cavebot at 45% experience), so I left it.
 - **Recommendation:** keep it, but start it collapsed for new characters, and later replace it with our own simpler cavebot window. Not urgent.

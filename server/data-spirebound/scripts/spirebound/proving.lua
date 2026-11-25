@@ -134,6 +134,43 @@ end
 stone:type("stepin")
 stone:register()
 
+-- The skip in the north-east corner (Grok session 2: a tester took it for the fight stone). The first step only
+-- warns; a second step within 30 seconds goes to Hearthgate.
+SpireProving.SKIP_CONFIRM = 30
+local skipWarned = {} -- player id -> os.time() of the warning
+local skip = MoveEvent()
+function skip.onStepIn(creature, item, position, fromPosition)
+	local player = creature:getPlayer()
+	if not player then
+		return true
+	end
+	local pid = player:getId()
+	local since = systemTime() - (skipWarned[pid] or 0) -- milliseconds
+	if not SpireProving.done(player) and since < 2500 then -- still walking on from the warning: not a real second step
+		player:teleportTo(fromPosition, true)
+		return true
+	end
+	if not SpireProving.done(player) and since > SpireProving.SKIP_CONFIRM * 1000 then
+		skipWarned[pid] = systemTime()
+		player:teleportTo(fromPosition, true)
+		position:sendMagicEffect(CONST_ME_TELEPORT)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "This swirl skips Bramblejaw and goes straight to Hearthgate. "
+			.. "The fight is the red glowing stone in the east of the hall. Step on the swirl again to leave anyway.")
+		return true
+	end
+	skipWarned[pid] = nil
+	local temple = player:getTown() and player:getTown():getTemplePosition() or point("temple_hearthgate")
+	player:teleportTo(temple)
+	temple:sendMagicEffect(CONST_ME_TELEPORT)
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Welcome to Hearthgate. " .. SpireHunt.advice(player:getLevel()) .. " Say !hunt any time to hear this again.")
+	return true
+end
+if WorldPoints.proving_skip then
+	skip:position(WorldPoints.proving_skip)
+end
+skip:type("stepin")
+skip:register()
+
 -- Bramblejaw's stomp: red smoke on the tiles around it, then a hit on anyone still standing there
 local think = CreatureEvent("SpireProvingThink")
 function think.onThink(creature, interval)
@@ -227,7 +264,7 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 				p:addHealth(p:getMaxHealth())
 				p:addMana(p:getMaxMana())
 				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Warden Ketta pulls you out just in time. Heal sooner (your heal spell is on the action bar), "
-					.. "step out of the red smoke, and step on the glowing stone to try again.")
+					.. "step out of the red smoke, and step on the red glowing stone to try again.")
 			end
 		end, 0)
 	end
@@ -239,7 +276,10 @@ guard:register()
 local tick = GlobalEvent("SpireProvingTick")
 function tick.onThink(interval)
 	if WorldPoints.proving_entry then
-		point("proving_entry"):sendMagicEffect(CONST_ME_MAGIC_BLUE)
+		point("proving_entry"):sendMagicEffect(CONST_ME_MAGIC_RED) -- red: the fight
+	end
+	if WorldPoints.proving_skip then
+		point("proving_skip"):sendMagicEffect(CONST_ME_TELEPORT) -- blue swirl: the way out
 	end
 	local now = os.time()
 	for i, pit in pairs(SpireProving.pits) do
@@ -250,7 +290,7 @@ function tick.onThink(interval)
 			end
 		elseif now - pit.t > SpireProving.TIME_LIMIT then
 			SpireProving.close(i, point("proving_arrival"))
-			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Time is up. Rest a moment and step on the glowing stone to try again.")
+			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Time is up. Rest a moment and step on the red glowing stone to try again.")
 		end
 	end
 	return true

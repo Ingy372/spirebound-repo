@@ -17,6 +17,22 @@ Template:
 - **Make a brand-new character** and go through the Arrival Yard to the Registrar. After you pick a path you land in the Proving: try your spells on the rats (they are on your action bar, buttons 3 and 4), then step on the glowing stone and fight Bramblejaw alone. Is it too easy or too hard at your level? Is the red-smoke stomp clear?
 - Does the Quest Tracker show Pell's quest now when you take it?
 
+## 2026-11-24 evening (Grok play tester, session 2: Arcanist on Grok Second, Vanguard on Grok Third; written down by Claude 2026-11-25)
+- Full report: `docs/playtests/2026-11-24-grok-session2.md`. Grok's client was still the 19:00 package, so the evening's client fixes (clean speech bubbles, spells put on the action bar, quest auto-tracking) were not on its screen. The package is rebuilt (2026-11-25 morning).
+- Liked: the new class pitches, the Registrar hall, Warden Ketta, Pell's cheese warning, the "you need a target" line, and `!hunt` (true directions, works in town, real class kills).
+- *Fixed 2026-11-25 (checked in the client with the `s2_fixes` autopilot route):*
+  - *Cheese gate hard-lock (top bug): the body decayed before the cheese reached the backpack. The gate now hands over a cheese on the third try (the first two still teach opening a body), and the hint says "if the body is gone, beat another rat".*
+  - *The Proving's fight stone and the skip portal both glowed blue: the fight stone now glows red; the skip is a blue swirl that warns once ("this skips Bramblejaw...") and only sends you on if you step on it again.*
+  - *Two sets of attack names: the row at the bottom is now labelled "Weapon skills (from the weapon in your hand)", and it stays empty before a path is chosen (no club skills in the yard). Arriving in the Proving explains both rows and warns about the hall's rats.*
+  - *"a Arcanist" now reads "an Arcanist" (Registrar and Ascendancy). "No" to a mode goes back to the modes, not to the class choice.*
+  - *No level-up hunting or spell tips before a path is chosen (the level 3 Toad Pond tip in the yard).*
+  - *Esc no longer switches chat off; it clears what you were typing.*
+- Not changed, and why:
+  - *Magic Level 0 after many casts: the weapon skills (Spark Edge...) cost no mana, so they don't train Magic Level; the spells (ember strike...) do. It rises with spell casting.*
+  - *Character list showing level 1 / None: the client reuses the list from your last login; logging in again shows the saved level and path.*
+  - *"There is not enough room" on walls, left-click walking to a monster, a wand on the action bar asking "use with": the game's standard behaviour (right-click or the Battle List attacks).*
+  - *Fast early levels (1 to 4 in three yard rats): Q52.*
+
 ## 2026-11-24 (Grok play tester, first-time Mystic, about an hour; written down by Claude)
 - Full report: `docs/playtests/2026-11-24-grok-session1.md`. Grok's PC was overloaded, so lag-type items wait for a rerun (G6).
 - Liked: Pell's intro, the stone-path stops, the Journal tip and especially `!hunt`.

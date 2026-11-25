@@ -2,7 +2,7 @@
 -- server side: server/data-spirebound/lib/spirebound/client_link.lua
 local OPCODE = 210
 local SLOTS = 9
-local floorLabel, diffLabel, bar = nil, nil, nil
+local floorLabel, diffLabel, bar, barTitle = nil, nil, nil, nil
 local floorText, zoneText = '', ''
 local ZONES = {
   town = { 'Safe zone', '#7fff7f' }, guarded = { 'Guarded', '#c8e6ff' }, open = { 'Open PvP', '#ffffff' },
@@ -82,6 +82,9 @@ local function redrawButtons()
         b:setVisible(false)
       end
     end
+  end
+  if barTitle then
+    barTitle:setVisible(#skills > 0)
   end
   tickEvent = scheduleEvent(redrawButtons, 100)
 end
@@ -182,6 +185,17 @@ local function createUi()
   bar:addAnchor(AnchorBottom, 'parent', AnchorBottom)
   bar:addAnchor(AnchorHorizontalCenter, 'parent', AnchorHorizontalCenter)
   bar:setMarginBottom(8)
+  -- Grok session 2: two sets of attack names looked like a mistake. Name this row as the weapon skills.
+  barTitle = g_ui.createWidget('Label', mapPanel)
+  barTitle:setId('spireSkillBarTitle')
+  barTitle:setFont('verdana-11px-rounded')
+  barTitle:setColor('#c8c8c8')
+  barTitle:setText('Weapon skills (from the weapon in your hand)')
+  barTitle:setTextAutoResize(true)
+  barTitle:addAnchor(AnchorBottom, 'spireSkillBar', AnchorTop)
+  barTitle:addAnchor(AnchorLeft, 'spireSkillBar', AnchorLeft)
+  barTitle:setPhantom(true)
+  barTitle:setVisible(false)
   for i = 1, SLOTS do
     local b = g_ui.createWidget('Button', bar)
     b:setId('spireSkill' .. i)
@@ -201,6 +215,7 @@ local function destroyUi()
   for i = 1, SLOTS do
     g_keyboard.unbindKeyDown('Shift+' .. i)
   end
+  if barTitle then barTitle:destroy() barTitle = nil end
   if bar then bar:destroy() bar = nil end
   if floorLabel then floorLabel:destroy() floorLabel = nil end
   if diffLabel then diffLabel:destroy() diffLabel = nil end

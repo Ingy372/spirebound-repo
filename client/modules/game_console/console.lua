@@ -459,8 +459,10 @@ function disableChatOnCall()
         return
     end
 
-    if isChatEnabled() and not consoleToggleChat.isChecked then
-        toggleChat()
+    -- Spirebound (Grok session 2): Esc used to switch chat off without a word, so a spell typed next became walking.
+    -- Esc now only clears what you were typing; chat goes off only through the console's own on/off button.
+    if isChatEnabled() then
+        consoleTextEdit:clearText()
     end
 end
 

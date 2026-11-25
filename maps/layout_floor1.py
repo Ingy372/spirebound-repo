@@ -706,9 +706,11 @@ def build(m):
     m.npcs.append(("Warden Ketta", (PX + 5, PY + 3, PZ)))
     m.monsters.append(("Pen Rat", (PX + 11, PY + 5, PZ), 3, 2, 15))
     m.sign(PX + 2, PY + 1, PZ, "Stop 4 of 4: The Proving. Try your new spells on the rats (they are on your action bar). "
-           "When you are ready, step on the glowing stone in the east to face Bramblejaw alone. The portal in the north-east "
-           "corner skips to Hearthgate.")
-    m.teleport((PX + 20, PY + 1, PZ), m.points["temple_hearthgate"], "proving_skip")
+           "When you are ready, step on the red glowing stone in the east to face Bramblejaw alone. The blue swirl in the "
+           "north-east corner skips the fight and goes to Hearthgate (it asks first).")
+    # the skip is scripted, not a map teleport (Grok session 2: the old portal and the fight stone both glowed blue and a
+    # tester skipped the fight by mistake). scripts/spirebound/proving.lua asks once before sending you on.
+    m.points["proving_skip"] = (PX + 20, PY + 1, PZ)
     DG.hang(m, PX, PY, 22, 11, PZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
     for i in range(3):                                  # three closed pits, one climber each (no way in or out on foot)
         rx, ry = PX + i * 12, PY + 13

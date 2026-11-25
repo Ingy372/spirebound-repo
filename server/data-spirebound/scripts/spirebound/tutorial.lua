@@ -6,7 +6,7 @@
 SpireTutorial = { STEPS = { "kill", "loot", "spells", "potion" } }
 SpireTutorial.HELP = {
 	kill = "Beat a rat in the pen first: click it in the Battle List (Ctrl+B) or right-click it and choose Attack.",
-	loot = "Open a rat's body (right-click it) and take the cheese it carried before you go on.",
+	loot = "Open a rat's body (right-click it, then drag the cheese into your backpack) before you go on. If the body is gone, beat another rat.",
 	spells = "Say !spells to see the sword skills and spells your path will teach you.",
 	potion = "Drink the health potion in your backpack (right-click it, or drag it onto yourself).",
 }
@@ -56,6 +56,25 @@ function SpireTutorial.inYard(pos)
 	return nw ~= nil and pos.z == nw.z and pos.x >= nw.x and pos.x <= se.x and pos.y >= nw.y and pos.y <= se.y
 end
 
+-- Grok session 2: a tester saw the cheese in the loot message but never got it into the backpack (the body decayed
+-- while the client lagged), and the loot gate held them for ten minutes. Now the third try at the loot gate with no
+-- cheese hands one over and opens it. The first two tries still teach opening a body.
+SpireTutorial.PITY_TRIES = 3
+local lootTries = {} -- player id -> tries at the loot gate
+function SpireTutorial.pity(player)
+	local pid = player:getId()
+	lootTries[pid] = (lootTries[pid] or 0) + 1
+	if lootTries[pid] < SpireTutorial.PITY_TRIES or not SpireTutorial.done(player, "kill") then
+		return false
+	end
+	lootTries[pid] = nil
+	player:addItem(SpireTutorial.CHEESE, 1)
+	SpireTutorial.mark(player, "loot")
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A rat's cheese turns up in the grass at your feet, and you pocket it. Next time, open the body: "
+		.. "right-click it and drag what it carried into your backpack.")
+	return true
+end
+
 -- the gates: stepping onto a closed door sends you back a tile with a hint
 local gate = MoveEvent()
 function gate.onStepIn(creature, item, position, fromPosition)
@@ -70,6 +89,9 @@ function gate.onStepIn(creature, item, position, fromPosition)
 				local open, missing = SpireTutorial.gateOpen(step, function(s)
 					return SpireTutorial.done(player, s)
 				end)
+				if not open and fromPosition.x < position.x and missing == "loot" and SpireTutorial.pity(player) then
+					return true -- a free cheese after a few tries: the gate never locks anyone in (Grok session 2)
+				end
 				if not open and fromPosition.x < position.x then
 					player:teleportTo(fromPosition, true)
 					position:sendMagicEffect(CONST_ME_ENERGYHIT)

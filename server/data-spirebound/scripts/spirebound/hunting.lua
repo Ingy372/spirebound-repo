@@ -20,7 +20,8 @@ hunt:register()
 -- When a level takes you past the ground you were using, say where to go next.
 local advance = CreatureEvent("SpireHuntAdvice")
 function advance.onAdvance(player, skill, oldLevel, newLevel)
-	if skill ~= SKILL_LEVEL then
+	-- no hunting or spell tips in the Arrival Yard, before a path is chosen (Grok session 2)
+	if skill ~= SKILL_LEVEL or player:getVocation():getId() == 0 then
 		return true
 	end
 	local before, after = SpireHunt.recommend(oldLevel), SpireHunt.recommend(newLevel)
@@ -43,7 +44,8 @@ local HINTS = {
 }
 local hints = CreatureEvent("SpireLevelHints")
 function hints.onAdvance(player, skill, oldLevel, newLevel)
-	if skill ~= SKILL_LEVEL then
+	-- no hunting or spell tips in the Arrival Yard, before a path is chosen (Grok session 2)
+	if skill ~= SKILL_LEVEL or player:getVocation():getId() == 0 then
 		return true
 	end
 	for level = oldLevel + 1, newLevel do

@@ -1,0 +1,28 @@
+{
+ "name": "s2_fixes",
+ "character": "Pilot Mystic",
+ "timeout": 300,
+ "about": "Grok session 2 fixes: 'no' to a mode goes back to the modes, 'a/an' in the confirmation, the Proving's rat warning and weapon-skill label, the skip swirl asks first.",
+ "steps": [
+  { "do": "say", "text": "/pilot newbie", "note": "Registrar" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "say", "text": "hi" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "mystic" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "yes" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "hardcore" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "no", "note": "should go back to the modes" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "normal" },
+  { "do": "wait", "seconds": 2 },
+  { "do": "npc", "text": "yes" },
+  { "do": "wait", "seconds": 5 },
+  { "do": "shot", "name": "s2_proving_arrival", "note": "Proving" },
+  { "do": "walk", "to": "proving_skip", "fight": false, "note": "skip swirl" },
+  { "do": "wait", "seconds": 3 },
+  { "do": "shot", "name": "s2_after_skip" }
+ ]
+}

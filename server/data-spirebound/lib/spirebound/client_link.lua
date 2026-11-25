@@ -52,6 +52,9 @@ end
 function SpireClient.skillList(player)
 	local fam = SwordSkills.heldFamily(player)
 	local list = {}
+	if player:getVocation():getId() == 0 then
+		return fam or "", list -- weapon skills need a path: before the Registrar the bar stays empty (Grok session 2)
+	end
 	local twin = SwordSkills.hasTwinFang(player)
 	for _, d in ipairs(SwordSkills.list) do
 		if d.family == fam and (d.level or 1) <= player:getLevel() and (not d.twinFang or twin) then

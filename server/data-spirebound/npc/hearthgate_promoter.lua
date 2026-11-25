@@ -53,7 +53,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			else
 				player:setVocation(Vocation(id + 4))
 				player:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
-				npcHandler:say("It is done. You are now a " .. player:getVocation():getName() .. ".", npc, player)
+				npcHandler:say("It is done. You are now " .. (player:getVocation():getName():match("^[AEIOUaeiou]") and "an " or "a ") .. player:getVocation():getName() .. ".", npc, player)
 			end
 		else
 			npcHandler:say("As you wish.", npc, player)
