@@ -77,7 +77,7 @@ One task per floor: placeholder map, town + NPCs, monsters, apex spawn, field bo
 
 ## Phase 9 — Friends test (still on Jay's PC)
 *Starts only after Phase R. Friends test is invite-only (REVIEW 8.3) and wiped afterwards.*
-- [~] **9.1 Remote friend access on Jay's PC** (free options only; written guide; a tunnel so friends never see Jay's home address [REVIEW 7.7]). 🧑 *(2026-11-24: built over Tailscale: `Open-Friend-Access.bat` (ports 8080/7172/8090, Tailscale address only), the login service hands Tailscale clients the Tailscale address, `Share-Client.bat` + `tools/make_friend_client.py` package the client, a Linux/Wine `setup.sh` and a brief for a Grok Bot; guide in windows/README.md. To tick: a player connects from another machine. Still to do: a Windows install path for friends that uses the same package.)*
+- [~] **9.1 Remote friend access on Jay's PC** (free options only; written guide; a tunnel so friends never see Jay's home address [REVIEW 7.7]). 🧑 *(2026-11-24: built over Tailscale: `Open-Friend-Access.bat` (ports 8080/7172/8090, Tailscale address only), the login service hands Tailscale clients the Tailscale address, `Share-Client.bat` + `tools/make_friend_client.py` package the client, a Linux/Wine `setup.sh` and a brief for a Grok Bot; guide in windows/README.md. Checked 2026-11-24: the shared client package logged in as Grok Tester through the Tailscale address. To tick: a player connects from another machine. Still to do: a Windows install path for friends that uses the same package.)*
 - [ ] **9.2 Load test with scripted clients** (target 100 bots on Jay's PC without lag).
 - [ ] **9.3 🧑 Friends playtest weekend + fixes.**
 
