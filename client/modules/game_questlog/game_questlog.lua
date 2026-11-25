@@ -130,12 +130,14 @@ local function ensureQuestTrackerState()
     end
 
     -- Spirebound fix (G3, Grok playtest 2026-11-24): track new quests by default, or a new player's tracker stays empty
-    if settings.autoTrackNewQuests == nil then
+    -- (once per install: clients that saved "off" before this fix get it switched on; the player can still turn it off)
+    if settings.autoTrackNewQuests == nil or not settings.spireAutoTrackDefault then
         settings.autoTrackNewQuests = true
     end
-    if settings.autoUntrackCompleted == nil then
+    if settings.autoUntrackCompleted == nil or not settings.spireAutoTrackDefault then
         settings.autoUntrackCompleted = true
     end
+    settings.spireAutoTrackDefault = true
     if not settings[namePlayer] then
         settings[namePlayer] = {}
     end

@@ -129,7 +129,7 @@ SpireQuests = {
 		{ id = "d1_flour", floor = 1, side = true, minLevel = 12, kind = "deliver", item = 3603, name = "Flour for the Gate", giver = "Miller Agna",
 			storage = 50137, killStorage = 50138, count = 1, reward = { exp = 2500, gold = 300, title = "Honest Carter" },
 			offer = "The guards at Hearthgate's north gate have had no bread in a week. Carry this sack of flour to Captain Dorrow? Mind the Bandit Road: there's a fence there who would pay far more for it, and I would never know. Ready?",
-			step = "Carry Agna's flour to Captain Dorrow at Hearthgate's north gate (or sell it to Fence Marrow on the Bandit Road).",
+			step = "Carry Agna's flour to Captain Dorrow at Hearthgate's north gate (or sell it to Fence Marrow, on the road just south of the Bandit Road).",
 			report = "Give the flour to Captain Dorrow or to Fence Marrow: say 'report' to either.",
 			choices = {
 				["Captain Dorrow"] = { reward = { exp = 2500, gold = 300, title = "Honest Carter" },
@@ -326,7 +326,19 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				return true
 			end
 		end
+		-- finished quests first: a giver with one quest done and another still running pays out the finished one
+		local order = {}
 		for _, q in ipairs(SpireQuests.list) do
+			if q.giver == giver and SpireQuests.state(player, q) == 2 then
+				table.insert(order, q)
+			end
+		end
+		for _, q in ipairs(SpireQuests.list) do
+			if q.giver == giver and SpireQuests.state(player, q) ~= 2 then
+				table.insert(order, q)
+			end
+		end
+		for _, q in ipairs(order) do
 			if q.giver == giver then
 				local st = SpireQuests.state(player, q)
 				if st == 2 then

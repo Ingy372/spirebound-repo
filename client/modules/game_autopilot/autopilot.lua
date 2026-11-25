@@ -392,6 +392,9 @@ end
 -- use the thing on top of a tile next to you ("at": [x, y, z]): read a stone, pull a lever, open a chest
 function handlers.use(player)
     if not stepData.sent then
+        if modules.game_textwindow and modules.game_textwindow.destroyWindows then
+            modules.game_textwindow.destroyWindows() -- a stone's text from the last use would sit on top
+        end
         local to = { x = step.at[1], y = step.at[2], z = step.at[3] }
         local tile = g_map.getTile(to)
         local thing = tile and tile:getTopUseThing()
@@ -563,7 +566,7 @@ local function onText(mode, text)
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
         log('loot: ' .. text)
-    elseif text:find('^pilot:') or text:find('[Yy]ou are dead') or text:find('[Ll]evel') or text:find('chest') or text:find('tower') or (step and step['do'] == 'cast') then
+    else -- every server message (quests, stones, levers, doors...) so a route's report shows what the game said
         log('message: ' .. text)
     end
 end

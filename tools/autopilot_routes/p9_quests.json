@@ -1,0 +1,312 @@
+{
+ "name": "p9_quests",
+ "character": "Pilot Ranger",
+ "timeout": 500,
+ "about": "P9 check: Vesper's stones, the sluice riddle and levers, Corwin, Agna's flour sold to Fence Marrow, the Stair Key door.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1238,
+    1302,
+    7
+   ],
+   "note": "Vesper"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "vesper_quest"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1068,
+    1338,
+    7
+   ],
+   "note": "stone in Reedmarsh"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "use",
+   "at": [
+    1068,
+    1337,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "stone_read"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1091,
+    1338,
+    7
+   ],
+   "note": "sluice riddle"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "use",
+   "at": [
+    1091,
+    1337,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "sluice_hint"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1070,
+    1372,
+    7
+   ],
+   "note": "sluice levers"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "use",
+   "at": [
+    1069,
+    1371,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "use",
+   "at": [
+    1070,
+    1371,
+    7
+   ]
+  },
+  {
+   "do": "use",
+   "at": [
+    1071,
+    1371,
+    7
+   ]
+  },
+  {
+   "do": "use",
+   "at": [
+    1069,
+    1371,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "sluice_open"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1145,
+    1190,
+    7
+   ],
+   "note": "Corwin"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "corwin_report"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1061,
+    1204,
+    7
+   ],
+   "note": "Agna"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "agna_flour"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1353,
+    1214,
+    7
+   ],
+   "note": "Fence Marrow"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "marrow_sold"
+  },
+  {
+   "do": "say",
+   "text": "/pilot stairkey off"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1231,
+    1035,
+    4
+   ],
+   "note": "Axe-Lord door"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "stair_door"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

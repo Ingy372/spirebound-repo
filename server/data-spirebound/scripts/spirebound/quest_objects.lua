@@ -120,8 +120,9 @@ function SpireQuestObjects.place()
 		put(STONE, hspot, AID_HINT, "A stone carved by the old sluice-keepers. Use it to read it.")
 		placed.sluice_hint = hspot
 	end
+	-- on the road south of the Bandit Road's gate, outside the ground: a level 12 climber died to bandits at the gate itself
 	local gate = WorldPoints.camp_bandit_road
-	local mspot = gate and SpireQuestObjects.findSpot(gate, 6)
+	local mspot = gate and SpireQuestObjects.findSpot(Position(gate.x, gate.y + 11, gate.z), 6)
 	if mspot then
 		Game.createNpc("Fence Marrow", mspot, false, true)
 		placed.marrow = mspot
