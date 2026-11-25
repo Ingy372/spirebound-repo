@@ -20,8 +20,22 @@ SpireArena.KINDS = {
 	-- test of "chaotic but fun" PvP before it ever reaches the open world
 	wild = { id = "wild", name = "Wild PvP", teams = false, wild = true },
 }
-SpireArena.WILD_DAY = 6 -- one day in seven (day number % 7) is Wild PvP day
-SpireArena.ROTATION = { "lms", "rush", "banner" }
+-- The week (Spire Pressure, Jay 2026-11-25): Capture the Banner is the twice-weekly objective match (Wednesday and
+-- Saturday), Friday is Wild PvP day, the other days alternate Last Man Standing and Team Rush. Index = weekday,
+-- 1 = Sunday ... 7 = Saturday.
+SpireArena.WEEK = { "rush", "lms", "rush", "banner", "lms", "wild", "banner" }
+
+-- Spire Pressure (DESIGN.md 15, roadmap M4; Jay 2026-11-25: "sure i like the way this sounds"): fights end. Every
+-- 30 seconds of a running event everyone deals 15% more damage and loses 10% of their event health. Anyone who stands
+-- idle for 60 seconds is moved elsewhere in the arena; idle for 2 minutes is a deserter: out, no rewards, and no
+-- events for 7 days. The event's MVP gets a statue in Hearthgate until the next event.
+SpireArena.PRESSURE_EVERY = 30
+SpireArena.PRESSURE_DAMAGE = 0.15
+SpireArena.PRESSURE_HP = 0.10
+SpireArena.PRESSURE_MAX = 7 -- at most 7 steps: +105% damage, 30% health
+SpireArena.IDLE_MOVE = 60
+SpireArena.IDLE_DESERT = 120
+SpireArena.DESERTER_BAN = 7 * 86400
 
 -- Pure state machine --------------------------------------------------------
 function SpireArena.new(kind, now)
@@ -171,7 +185,7 @@ function SpireArena.result(st, now)
 	if winner ~= "draw" then
 		for _, id in ipairs(st.order) do
 			local p = st.players[id]
-			if p.team == winner and not p.left then
+			if p.team == winner and not p.left and not p.deserter then
 				table.insert(out, id)
 			end
 		end
@@ -179,10 +193,53 @@ function SpireArena.result(st, now)
 	return out
 end
 
--- Pure: which kind runs today (rotates by day number)
+-- Pure: which kind runs on this day number (days since 1970-01-01, which was a Thursday)
 function SpireArena.kindForDay(day)
-	if day % 7 == SpireArena.WILD_DAY then
-		return "wild"
+	return SpireArena.WEEK[(day + 4) % 7 + 1]
+end
+
+-- Pure: the pressure step a running event has reached
+function SpireArena.pressureStep(started, now)
+	if not started then
+		return 0
 	end
-	return SpireArena.ROTATION[(day % #SpireArena.ROTATION) + 1]
+	return math.min(SpireArena.PRESSURE_MAX, math.floor((now - started) / SpireArena.PRESSURE_EVERY))
+end
+
+-- Pure: damage multiplier and event health at a pressure step
+function SpireArena.pressureDamage(step)
+	return 1 + SpireArena.PRESSURE_DAMAGE * step
+end
+
+function SpireArena.pressureHp(step)
+	return math.floor(SpireArena.HP * (1 - SpireArena.PRESSURE_HP * step) + 0.5)
+end
+
+-- Pure: what happens to a fighter idle since lastActive? nil, "move" (once per idle spell) or "desert"
+function SpireArena.idleAction(lastActive, moved, now)
+	local idle = now - lastActive
+	if idle >= SpireArena.IDLE_DESERT then
+		return "desert"
+	end
+	if idle >= SpireArena.IDLE_MOVE and not moved then
+		return "move"
+	end
+	return nil
+end
+
+-- Pure: the event's MVP: most kills; ties go to whoever signed up first. Nobody with no kills is MVP.
+function SpireArena.mvp(st)
+	local best, bestKills = nil, 0
+	for _, id in ipairs(st.order) do
+		local p = st.players[id]
+		if not p.deserter and p.kills > bestKills then
+			best, bestKills = id, p.kills
+		end
+	end
+	return best
+end
+
+-- Pure: may this character join, given a deserter ban until banUntil?
+function SpireArena.banned(banUntil, now)
+	return banUntil ~= nil and banUntil > now
 end

@@ -139,3 +139,11 @@ them at a glance. Not needed for the alpha.
 Made by Claude with the Blender pipeline when the art queue reaches them; until then they borrow stock looks.
 - **Bramblejaw** (creature, the Proving's one-person boss): an old, scarred yard boar with brambles tangled in its bristles and a torn ear; bigger and shaggier than the Bristle Boar so it reads as "boss". Closest Tibia look-alike: Boar / War Boar (make ours obviously different: bramble-green and rust colours, the bramble tangle as the signature). Now: Bristle Boar's placeholder look (119).
 - **Warden Ketta** (NPC): a stern trainer in a padded gambeson with a staff, keeper of the Proving. Now: a stock outfit (139).
+
+## Batch 9 (2026-11-25): market-research features (Priority: low, placeholders work)
+| Done | File | Size, frames | What it is / Grok prompt |
+|---|---|---|---|
+| [ ] | `item_beacon_ember.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a glowing ember the size of a walnut, orange-red core, small flickering flame on top, soot-dark edges." Now: Tibia's fiery heart. |
+| [ ] | `deco_beacon_bowl_unlit.png`, `_lit.png` | 32×32, 1 (lit: 4 frames) | "32x32 pixel-art, Tibia style, transparent background: a waist-high bronze fire bowl on three legs; unlit = cold ash; lit = tall golden flame." Now: Tibia's fire bowl. |
+| [ ] | `item_chronicle_cup.png` | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small golden cup engraved with a tower climbing into clouds, a blue ribbon around the stem." Now: Tibia's golden goblet. |
+| [ ] | `deco_arena_champion_statue.png` | 32×64, 1 | "Tibia-style pixel-art statue, transparent background, 32x64: a marble warrior on a plinth raising a sword, a laurel at the feet, a blank name plate on the plinth." The Arena MVP's statue in the Hearth Square. Now: Tibia's plain statue (2025). |

@@ -6,6 +6,7 @@ WorldPoints = {
 	["arena_a"] = Position(1014, 1025, 11),
 	["arena_b"] = Position(1045, 1025, 11),
 	["arena_center"] = Position(1030, 1025, 11),
+	["arena_mvp_statue"] = Position(1217, 1301, 7),
 	["arena_nw"] = Position(1011, 1011, 11),
 	["arena_se"] = Position(1048, 1038, 11),
 	["axe_lord_spawn"] = Position(1231, 1024, 4),

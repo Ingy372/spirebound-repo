@@ -58,8 +58,10 @@ SpireTest.add("arena: equal numbers and the map", function()
 		if h < SpireArena.HIT[1] or h > SpireArena.HIT[2] then error("hit out of range") end
 	end
 	SpireTest.eq(SpireArena.amount("spell", 0), SpireArena.SPELL[1], "spell floor")
-	SpireTest.eq(SpireArena.kindForDay(0), "lms", "rotation")
-	SpireTest.eq(SpireArena.kindForDay(4), "rush", "rotation wraps")
+	SpireTest.eq(SpireArena.kindForDay(0), "lms", "day 0 was a Thursday: Last Man Standing")
+	SpireTest.eq(SpireArena.kindForDay(5), "rush", "Tuesday: Team Rush")
+	SpireTest.eq(SpireArena.kindForDay(6), "banner", "Wednesday: Capture the Banner")
+	SpireTest.eq(SpireArena.kindForDay(9), "banner", "Saturday: Capture the Banner")
 	SpireTest.eq(SpirePvP.zoneAt(WorldPoints["arena_center"]), "arena", "arena zone on the map")
 	local tile = Tile(WorldPoints["arena_center"])
 	SpireTest.eq(tile and tile:hasFlag(TILESTATE_PVPZONE), true, "arena floor is an engine PvP zone (no death loss)")

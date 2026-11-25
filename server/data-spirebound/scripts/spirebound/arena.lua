@@ -35,6 +35,38 @@ local function spawnPos(st, guid)
 	return WorldPoints["arena_center"]
 end
 
+local function randomSpot()
+	local nw, se = WorldPoints["arena_nw"], WorldPoints["arena_se"]
+	for _ = 1, 20 do
+		local pos = Position(math.random(nw.x + 1, se.x - 1), math.random(nw.y + 1, se.y - 1), nw.z)
+		local tile = Tile(pos)
+		if tile and tile:getGround() and not tile:hasProperty(CONST_PROP_BLOCKSOLID) and tile:getCreatureCount() == 0 then
+			return pos
+		end
+	end
+	return WorldPoints["arena_center"]
+end
+
+-- Spire Pressure: the MVP statue in the Hearth Square (kv keeps the name across restarts)
+local function mvpText(rec)
+	if not rec then
+		return "The Arena Champion's plinth. No champion yet: win the next arena event's MVP and your name goes here."
+	end
+	return string.format("The Arena Champion: %s, MVP of %s (%s) with %d takedown%s. Stands here until the next event.",
+		rec.name, rec.kind, os.date("%d %b", rec.at), rec.kills, rec.kills == 1 and "" or "s")
+end
+SpireArena.mvpText = mvpText
+
+function SpireArena.raiseStatue(rec)
+	kv.scoped("spirebound-arena"):set("mvp", rec or {})
+	local p = WorldPoints.arena_mvp_statue
+	local item = p and Tile(p) and Tile(p):getItemById(2025)
+	if item then
+		item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, mvpText(rec and rec.name and rec or nil))
+	end
+	return item ~= nil
+end
+
 local function enter(player, st)
 	local guid = player:getGuid()
 	local s = { maxHp = player:getMaxHealth(), maxMana = player:getMaxMana() }
@@ -66,6 +98,25 @@ local function leaveArena(player)
 	end
 end
 
+-- A deserter: out at once, no rewards, no arena events for 7 days
+function SpireArena.desert(player)
+	local st = SpireArena.current
+	local guid = player:getGuid()
+	if not st or not st.players[guid] then
+		return
+	end
+	SpireArena.leave(st, guid)
+	st.players[guid].deserter = true
+	arenaKv(player):set("banUntil", os.time() + SpireArena.DESERTER_BAN)
+	leaveArena(player)
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You stood idle for 2 minutes: deserter. No rewards, and no arena events for 7 days.")
+	logger.info("[Spirebound] arena deserter {}", player:getName())
+	local winners = SpireArena.result(st, os.time())
+	if winners then
+		SpireArena.finish(st, winners)
+	end
+end
+
 local function finish(st, winners)
 	st.phase = "over"
 	local names = {}
@@ -77,6 +128,12 @@ local function finish(st, winners)
 		end
 	end
 	local kind = SpireArena.KINDS[st.kind].name
+	local mvp = SpireArena.mvp(st)
+	if mvp then
+		local m = st.players[mvp]
+		SpireArena.raiseStatue({ name = m.name, kind = kind, kills = m.kills, at = os.time() })
+		Game.broadcastMessage(string.format("Arena MVP: %s with %d takedown%s. Their statue now stands in the Hearth Square.", m.name, m.kills, m.kills == 1 and "" or "s"), MESSAGE_EVENT_ADVANCE)
+	end
 	if #names == 0 then
 		Game.broadcastMessage(kind .. " is over: a draw.", MESSAGE_EVENT_ADVANCE)
 	else
@@ -99,6 +156,54 @@ local function tick()
 		return
 	end
 	local now = os.time()
+	-- Spire Pressure: every 30 seconds everyone hits harder and has less health, so fights end
+	local step = SpireArena.pressureStep(st.started, now)
+	if step > (st.step or 0) then
+		st.step = step
+		local hp = SpireArena.pressureHp(step)
+		for _, guid in ipairs(st.order) do
+			local p = st.players[guid].alive and Player(st.players[guid].name)
+			if p then
+				p:setMaxHealth(hp)
+				if p:getHealth() > hp then
+					p:setHealth(hp)
+				end
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Spire Pressure rises! +%d%% damage, %d health.",
+					math.floor((SpireArena.pressureDamage(step) - 1) * 100 + 0.5), hp))
+			end
+		end
+	end
+	-- idle fighters: moved at 60 seconds, deserters at 2 minutes
+	st.active = st.active or {}
+	for _, guid in ipairs(st.order) do
+		if SpireArena.current ~= st then
+			break -- a deserter just ended the event
+		end
+		local rec = st.players[guid]
+		local p = rec.alive and Player(rec.name)
+		if p then
+			local a = st.active[guid]
+			local pos = p:getPosition()
+			if not a or a.x ~= pos.x or a.y ~= pos.y or (a.hitAt or 0) > a.t then
+				st.active[guid] = { x = pos.x, y = pos.y, t = now, moved = false }
+			else
+				local what = SpireArena.idleAction(a.t, a.moved, now)
+				if what == "move" then
+					a.moved = true
+					p:teleportTo(randomSpot())
+					p:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+					local np = p:getPosition()
+					a.x, a.y = np.x, np.y
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You stood still too long, so the arena moved you. Idle for 2 minutes and you are a deserter.")
+				elseif what == "desert" then
+					SpireArena.desert(p)
+				end
+			end
+		end
+	end
+	if not SpireArena.current then
+		return
+	end
 	if st.kind == "banner" and now - (st.lastBanner or st.started) >= SpireArena.BANNER_TICK then
 		st.lastBanner = now
 		local c = WorldPoints["arena_center"]
@@ -220,7 +325,11 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	if not a or not SpireArena.canHit(st, a:getGuid(), v:getGuid()) then
 		return 0, primaryType, 0, secondaryType
 	end
-	local dmg = SpireArena.amount(origin == ORIGIN_SPELL and "spell" or "hit", math.random())
+	local dmg = math.floor(SpireArena.amount(origin == ORIGIN_SPELL and "spell" or "hit", math.random()) * SpireArena.pressureDamage(st.step or 0))
+	local act = st.active and st.active[a:getGuid()]
+	if act then
+		act.hitAt = os.time() -- fighting counts as not idle
+	end
 	if dmg >= v:getHealth() then
 		down(v, a)
 		return 0, primaryType, 0, secondaryType
@@ -281,6 +390,11 @@ function cmd.onSay(player, words, param)
 		if Difficulty.get(player) == Difficulty.DEATHGAME then
 			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Nobody dies in the Arena, Death Game climber. You are safe here.")
 		end
+		if SpireArena.banned(arenaKv(player):get("banUntil"), os.time()) then
+			local days = math.ceil((arenaKv(player):get("banUntil") - os.time()) / 86400)
+			player:sendCancelMessage(string.format("You deserted an arena event. You may fight again in %d day%s.", days, days == 1 and "" or "s"))
+			return false
+		end
 		local ok, why = SpireArena.join(st, player:getGuid(), player:getName(), player:getLevel())
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, ok and ("You are signed up for " .. SpireArena.KINDS[st.kind].name .. ". Stay online!") or why)
 	elseif p == "leave" then
@@ -324,3 +438,12 @@ end
 gm:separator(" ")
 gm:groupType("gamemaster")
 gm:register()
+
+-- the MVP statue keeps its name across restarts
+local statueStartup = GlobalEvent("SpireArenaStatue")
+function statueStartup.onStartup()
+	local rec = kv.scoped("spirebound-arena"):get("mvp")
+	SpireArena.raiseStatue(rec and rec.name and rec or nil)
+	return true
+end
+statueStartup:register()

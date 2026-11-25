@@ -171,6 +171,10 @@ def build(m):
     S.prop(m, *R(65, 65), Z, HERO_STATUE)
     m.sign(*R(65, 67), Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the climbers, !memorial for the fallen.")
     m.points["monument"] = R(65, 66) + (Z,)
+    # the Arena MVP's statue (Spire Pressure, roadmap M4): west of the fountain; scripts/spirebound/arena.lua names it
+    S.prop(m, *R(41, 65), Z, 2025)
+    m.points["arena_mvp_statue"] = R(41, 65) + (Z,)
+    m.sign(*R(41, 67), Z, "The Arena Champion. The best fighter of the last arena event stands here until the next one. Say !arena for the schedule.")
     # the Floor Beacon (DESIGN 3.6, roadmap M1): four fire bowls east of the Monument; scripts/spirebound/beacons.lua
     for i, bx_ in enumerate((68, 70, 72, 74)):
         S.prop(m, *R(bx_, 66), Z, 30964)                                             # empty fire bowl (lit: 30965)
