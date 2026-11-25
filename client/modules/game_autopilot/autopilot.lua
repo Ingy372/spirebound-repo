@@ -577,8 +577,8 @@ local function onTalk(name, level, mode, text)
     if plan.live then remember(name .. ': ' .. text) end
     if mode == MessageModes.NpcFrom or mode == MessageModes.NpcFromStartBlock then
         log('npc ' .. name .. ': ' .. text)
-    elseif mode == MessageModes.MonsterSay or mode == MessageModes.MonsterYell then
-        log('monster ' .. name .. ': ' .. text) -- monster tricks announce themselves (P6)
+    elseif name ~= g_game.getCharacterName() then
+        log('talk (' .. tostring(mode) .. ') ' .. name .. ': ' .. text) -- monster tricks announce themselves (P6)
     end
 end
 

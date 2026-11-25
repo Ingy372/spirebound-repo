@@ -1,0 +1,91 @@
+{
+ "name": "town_life",
+ "character": "Pilot Arcanist",
+ "timeout": 200,
+ "about": "P3/P10/P12/P7 check: townsfolk, the familiarity bar, the Monument, the first-clears stone.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1297,
+    7
+   ],
+   "note": "Hearth Square"
+  },
+  {
+   "do": "wait",
+   "seconds": 25
+  },
+  {
+   "do": "shot",
+   "name": "town_square"
+  },
+  {
+   "do": "say",
+   "text": "!upgrade"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": "monument",
+   "note": "Monument"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "use",
+   "at": [
+    1241,
+    1301,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "monument"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1280,
+    1342,
+    7
+   ],
+   "note": "first-clears stone"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "use",
+   "at": [
+    1280,
+    1341,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "first_clears"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}
