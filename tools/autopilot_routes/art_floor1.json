@@ -1,0 +1,114 @@
+{
+ "name": "art_floor1",
+ "character": "Pilot Arcanist",
+ "timeout": 300,
+ "about": "6.5 check: Jay's approved monster art in the real client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "art check"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Burrow Mole, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Hopper Toad, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_batch1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wasp, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Reed Snapper, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Thornsnap, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Shardling, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_batch2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Grey Alpha, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Stonehorn Ram, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Sproutling, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_batch3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

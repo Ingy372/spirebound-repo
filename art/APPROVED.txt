@@ -2,18 +2,29 @@
 # art/pipeline/render.sh refuses to re-render these: an approved sprite is FROZEN.
 # To change one on purpose (only when Jay asks), run:  FORCE=1 sh art/pipeline/render.sh <name>
 # Keep this list in step with the folder: python tools/art_approved.py
+alpha
+arcanist
+azhrakkar
+banker
 bess
 boar
 corwin
 merchant
 mole
+mystic
 pell
+priest
 ram
 ranger
 rat
+registrar
 shardling
 snapper
+sproutling
 thornsnap
 toad
+vanguard
 vesper
+veyra
 wasp
+wolf

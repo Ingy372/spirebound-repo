@@ -1,0 +1,109 @@
+{
+ "about": "Spirebound creature sprites (Blender pipeline, approved by Jay); made by tools/make_creature_sheets.py, installed in the client by tools/install_effects.py in place of the listed placeholder looks",
+ "creatures": [
+  {
+   "name": "rat",
+   "file": "rat.bmp.lzma",
+   "count": 36,
+   "looks": [
+    56
+   ]
+  },
+  {
+   "name": "boar",
+   "file": "boar.bmp.lzma",
+   "count": 36,
+   "looks": [
+    119
+   ]
+  },
+  {
+   "name": "mole",
+   "file": "mole.bmp.lzma",
+   "count": 36,
+   "looks": [
+    26
+   ]
+  },
+  {
+   "name": "toad",
+   "file": "toad.bmp.lzma",
+   "count": 36,
+   "looks": [
+    222
+   ]
+  },
+  {
+   "name": "wasp",
+   "file": "wasp.bmp.lzma",
+   "count": 36,
+   "looks": [
+    44
+   ]
+  },
+  {
+   "name": "snapper",
+   "file": "snapper.bmp.lzma",
+   "count": 36,
+   "looks": [
+    112
+   ]
+  },
+  {
+   "name": "thornsnap",
+   "file": "thornsnap.bmp.lzma",
+   "count": 36,
+   "looks": [
+    28
+   ]
+  },
+  {
+   "name": "shardling",
+   "file": "shardling.bmp.lzma",
+   "count": 36,
+   "looks": [
+    122
+   ]
+  },
+  {
+   "name": "wolf",
+   "file": "wolf.bmp.lzma",
+   "count": 36,
+   "looks": [
+    27
+   ]
+  },
+  {
+   "name": "alpha",
+   "file": "alpha.bmp.lzma",
+   "count": 36,
+   "looks": [
+    52
+   ]
+  },
+  {
+   "name": "ram",
+   "file": "ram.bmp.lzma",
+   "count": 36,
+   "looks": [
+    607
+   ]
+  },
+  {
+   "name": "sproutling",
+   "file": "sproutling.bmp.lzma",
+   "count": 36,
+   "looks": [
+    19
+   ]
+  },
+  {
+   "name": "azhrakkar",
+   "file": "azhrakkar.bmp.lzma",
+   "count": 36,
+   "looks": [
+    61
+   ]
+  }
+ ]
+}

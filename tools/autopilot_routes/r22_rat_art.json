@@ -1,0 +1,45 @@
+{
+ "name": "r22_rat_art",
+ "character": "Pilot Arcanist",
+ "timeout": 200,
+ "about": "R22 / 6.4 check: Jay's approved rat sprite in the real client in place of the placeholder look.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "rat art"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 400"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "r22_rats_1"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "r22_rats_2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

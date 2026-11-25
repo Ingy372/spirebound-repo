@@ -89,6 +89,80 @@ def effect_message(e: dict, first_sprite: int | None) -> bytes:
     return field(1, e["id"]) + field(2, group) + field(3, flags)
 
 
+CREATURES = ROOT / "art" / "creatures" / "game"
+
+
+def creature_manifest() -> list:
+    f = CREATURES / "creatures.json"
+    return json.loads(f.read_text())["creatures"] if f.exists() else []
+
+
+def rebuild(b: bytes, fn) -> bytes:
+    """the message b with each top-level field passed through fn(num, value) -> new value bytes/int, or None to keep"""
+    out = bytearray()
+    for num, wt, v, raw in top_fields(b):
+        nv = fn(num, wt, v)
+        out += raw if nv is None else field(num, nv)
+    return bytes(out)
+
+
+def sprite_counts(msg: bytes) -> list:
+    """sprites in each frame group of an outfit (standing, walking), with one layer and four directions only"""
+    out = []
+    for num, wt, v, _ in top_fields(msg):
+        if num == 2:
+            info = next(x for n, w, x, _ in top_fields(v) if n == 3)
+            d = {}
+            for n, w, x, _ in top_fields(info):
+                d.setdefault(n, []).append(x)
+            if d.get(1) != [4] or d.get(4, [1]) != [1] or d.get(2, [1]) != [1] or d.get(3, [1]) != [1]:
+                return []
+            out.append(len(d.get(5, [])))
+    return out
+
+
+def standard_outfit(msg: bytes, first: int) -> bytes:
+    """the outfit with its frame groups replaced by ours: standing (N E S W) and walking (8 steps x N E S W, 300 ms a
+    step, like the rat), one layer; everything else (flags, name) kept"""
+    def info(start, phases):
+        b = field(1, 4) + field(2, 1) + field(3, 1) + field(4, 1)
+        for k in range(4 * phases):
+            b += field(5, start + k)
+        if phases > 1:
+            anim = field(2, 0) + field(4, 0)
+            for _ in range(phases):
+                anim += field(6, field(1, 300) + field(2, 300))
+            b += field(6, anim)
+        return b + field(7, 32)
+    out = bytearray()
+    for num, wt, v, raw in top_fields(msg):
+        if num != 2:
+            out += raw
+        if num == 1:
+            out += field(2, field(1, 0) + field(2, 0) + field(3, info(first, 1)))
+            out += field(2, field(1, 1) + field(2, 1) + field(3, info(first + 4, 8)))
+    return bytes(out)
+
+
+def reskin_outfit(msg: bytes, first: int) -> bytes:
+    """an outfit Appearance with its sprites replaced, in order, by first, first+1, ... (R22: our creature art)"""
+    counter = [first]
+
+    def info_fn(num, wt, v):
+        if num == 5 and wt == 0:
+            counter[0] += 1
+            return counter[0] - 1
+        return None
+
+    def group_fn(num, wt, v):
+        return rebuild(v, info_fn) if num == 3 else None
+
+    def outfit_fn(num, wt, v):
+        return rebuild(v, group_fn) if num == 2 else None
+
+    return rebuild(msg, outfit_fn)
+
+
 def manifest() -> dict:
     return json.loads((GAME / "effects.json").read_text())
 
@@ -136,11 +210,31 @@ def install_client(client: Path) -> None:
         catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid,
                         "lastspriteid": sid + sh["count"] - 1, "area": 0})
         sid += sh["count"]
+    creature_first = {}
+    for c in creature_manifest():
+        name = f"{SHEET_PREFIX}creature-{c['name']}.bmp.lzma"
+        (things / name).write_bytes((CREATURES / c["file"]).read_bytes())
+        catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid,
+                        "lastspriteid": sid + c["count"] - 1, "area": 0})
+        for look in c["looks"]:
+            creature_first[look] = sid
+        sid += c["count"]
     for old in things.glob(SHEET_PREFIX + "*"):
         if not any(c.get("file") == old.name for c in catalog):
             old.unlink()
     ids = {e["id"] for e in m["effects"]}
     data = strip_effects((things / original).read_bytes(), ids)
+    if creature_first:                            # our approved creatures in place of the placeholder looks
+        out = bytearray()
+        for num, wt, v, raw in top_fields(data):
+            look = next((x for n, w, x, _ in top_fields(v) if n == 1), None) if num == 2 else None
+            if look in creature_first and sprite_counts(v) == [4, 32]:
+                out += field(2, reskin_outfit(v, creature_first[look]))
+            elif look in creature_first:                       # another layout: our standard one instead
+                out += field(2, standard_outfit(v, creature_first[look]))
+            else:
+                out += raw
+        data = bytes(out)
     for e in m["effects"]:
         data += field(3, effect_message(e, first))
     (things / OURS).write_bytes(data)
@@ -150,7 +244,7 @@ def install_client(client: Path) -> None:
     state.update({"first_sprite": first, "effects": sorted(ids)})
     state_path.write_text(json.dumps(state, indent=1))
     print(f"install_effects: {len(ids)} spell effects and {len(m['sheets'])} sprite sheets installed in the client "
-          f"(sprites {first}-{sid - 1})")
+          f"(sprites {first}-{sid - 1}); creatures: {', '.join(c['name'] for c in creature_manifest()) or 'none'}")
 
 
 def check_client(client: Path) -> None:
