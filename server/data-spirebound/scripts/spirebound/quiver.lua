@@ -5,12 +5,14 @@
 SpireQuiver = { ID = 35562 }
 
 function SpireQuiver.give(player, arrows)
-	local q = player:addItem(SpireQuiver.ID, 1)
+	-- HB (2026-11-25): worn straight away when the shield hand is free, so a new Ranger's bow fires at once
+	local free = not player:getSlotItem(CONST_SLOT_RIGHT)
+	local q = free and player:addItem(SpireQuiver.ID, 1, true, 1, CONST_SLOT_RIGHT) or player:addItem(SpireQuiver.ID, 1)
 	if q and arrows and arrows > 0 then
 		q:addItem(3447, arrows)
 	end
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your arrows go in the quiver: wear the quiver in your shield hand, "
-		.. "and your bow fires from it. Fletcher Tamsin in Hearthgate sells more arrows and quivers.")
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, (free and "Your quiver is on your shield hand: " or "Your arrows go in the quiver: wear the quiver in your shield hand, and ")
+		.. "your bow fires from it. Fletcher Tamsin in Hearthgate sells more arrows and quivers.")
 	return q
 end
 

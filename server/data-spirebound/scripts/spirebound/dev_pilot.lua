@@ -18,6 +18,7 @@
 --   /pilot logout          leave the game at once (even right after a fight)
 --   /pilot final p f       (style tests) path p and final style f chosen and finished
 --   /pilot path key        (style tests) that path chosen and finished (its ability ready)
+--   /pilot kit             (HB) the test kit: a Ranger wears a quiver of arrows in its shield hand
 --   /pilot mastery n       (style tests) Mastery n of the first stage, no path, no stance
 --   /pilot stairkey [off]  (boss tests) the Axe-Lord's hall opens without the Stair Key's three pieces
 --   /pilot newbie          (tutorial tests) become a brand-new character again: no path, no mode, the Proving not done,
@@ -127,6 +128,20 @@ function pilot.onSay(player, words, param)
 		k:set("style_path", path)
 		k:set("style_final", final)
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: final " .. tostring(final))
+	elseif cmd == "kit" then -- (HB) the test kit: a Ranger wears a quiver with 100 arrows in the shield hand
+		if player:getVocation():getBaseId() == 3 then
+			local worn = player:getSlotItem(CONST_SLOT_RIGHT)
+			if worn and worn:getId() ~= SpireQuiver.ID then
+				worn:moveTo(player:getSlotItem(CONST_SLOT_BACKPACK) or player:getPosition())
+				worn = nil
+			end
+			if not worn then
+				SpireQuiver.give(player, 100)
+			elseif worn:isContainer() and worn:getItemCountById(3447) < 50 then
+				worn:addItem(3447, 100)
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: kit")
 	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
 		local k = player:kv():scoped("spirebound")
 		if rest:find("off") then

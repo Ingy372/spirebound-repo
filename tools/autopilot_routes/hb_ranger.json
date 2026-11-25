@@ -1,0 +1,49 @@
+{
+ "name": "hb_ranger",
+ "character": "Pilot Ranger",
+ "timeout": 150,
+ "about": "HB check: the test Ranger shoots arrows from its bow.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "ranger hunt"
+  },
+  {
+   "do": "say",
+   "text": "/pilot kit"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 60"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 7
+  },
+  {
+   "do": "shot",
+   "name": "hb_ranger"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -11,6 +11,10 @@
   },
   {
    "do": "say",
+   "text": "/pilot kit"
+  },
+  {
+   "do": "say",
    "text": "/pilot clear"
   },
   {
