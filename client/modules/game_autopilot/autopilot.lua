@@ -13,6 +13,7 @@
 --   { "do": "say", "text": "!hunt" }
 --   { "do": "npc", "text": "trade" }              after "hi": talk to the NPC in the NPCs channel
 --   { "do": "rune", "id": 3180, "ahead": 2 }        (PvP tests) use a rune on the tile ahead
+--   { "do": "use", "at": [x, y, z] }              use the thing on top of a nearby tile (a stone, a lever)
 --   { "do": "react", "text": "quickstep", "seconds": 40 }  (PvP tests) say it whenever you get held
 --   { "do": "cast", "text": "inferno core", "target": true, "face": "target", "shots": [0.25, 0.75], "gap": 2.3 }
 --                                                 (spell tests) target the nearest monster without chasing it if
@@ -381,6 +382,24 @@ function handlers.rune(player)
             log('rune ' .. step.id .. ' used at ' .. fmtPos(to))
         else
             log('rune: no tile at ' .. fmtPos(to))
+        end
+        stepData.sent = now()
+    elseif now() - stepData.sent > (step.gap or 2) then
+        nextStep()
+    end
+end
+
+-- use the thing on top of a tile next to you ("at": [x, y, z]): read a stone, pull a lever, open a chest
+function handlers.use(player)
+    if not stepData.sent then
+        local to = { x = step.at[1], y = step.at[2], z = step.at[3] }
+        local tile = g_map.getTile(to)
+        local thing = tile and tile:getTopUseThing()
+        if thing then
+            g_game.use(thing)
+            log('used ' .. thing:getId() .. ' at ' .. fmtPos(to))
+        else
+            log('use: nothing at ' .. fmtPos(to))
         end
         stepData.sent = now()
     elseif now() - stepData.sent > (step.gap or 2) then

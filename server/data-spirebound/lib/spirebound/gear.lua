@@ -387,6 +387,9 @@ function SpireGear.grantBoss(boss, creditNames)
 			local flag = "boss_credit_" .. boss
 			local plan = SpireGear.bossReward(boss, k:get(flag) ~= nil)
 			k:set(flag, os.time())
+			if boss == "Gate Hound" and SpireStairKey then
+				SpireStairKey.update(p) -- one piece of the Stair Key
+			end
 			if plan.shards > 0 then
 				p:addItem(SpireGearData.tokens[plan.floor][plan.grade], plan.shards)
 				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s leaves you %d %s.", boss, plan.shards, SpireGearData.tokenNames[SpireGearData.tokens[plan.floor][plan.grade]][2]))

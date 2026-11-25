@@ -67,10 +67,11 @@ local function creatureSayCallback(npc, player, type, msg)
 		npcHandler:say("I don't know a secret by that name.", npc, player)
 		return true
 	end
+	SpireQuests.talk(npc, npcHandler, player, msg, npcName) -- P9: The Builders' Stones
 	return true
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Ah, |PLAYERNAME|. Found something? Say {secrets} to see what you know, {sell} <name> to sell it, or {list} for what's already public. Keeping a secret is your right. It never stops anyone else from finding it.")
+npcHandler:setMessage(MESSAGE_GREET, "Ah, |PLAYERNAME|. Found something? Say {secrets} to see what you know, {sell} <name> to sell it, or {list} for what's already public. I also pay for old stories: ask for a {quest}. Keeping a secret is your right. It never stops anyone else from finding it.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Keep your eyes open.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)

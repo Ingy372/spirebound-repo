@@ -104,6 +104,39 @@ SpireQuests = {
 			step = "Kill Field Shardlings in the Shard Fields (south-east of Hearthgate): %d of %d.",
 			report = "Return to Hunter Brannoch in the Hunters' Hall and say 'report'.",
 			thanks = "Twenty shardlings. You are becoming a real climber. 2,200 gold." },
+		-- P9 (FLOOR1_REVIEW.md F1-20): quests that aren't "kill N of X"
+		-- a lore set: six carved stones in the wilds (placed at start-up by scripts/spirebound/quest_objects.lua)
+		{ id = "l1_stones", floor = 1, side = true, kind = "collect", collect = "builders", name = "The Builders' Stones", giver = "Vesper",
+			storage = 50139, killStorage = 50140, count = 6, reward = { exp = 6000, gold = 800, title = "Stonereader" },
+			offer = "Six carved stones stand in the wilds around Hearthgate, older than the town: one each in Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow, the Shard Fields and the Burrow Hills. Read all six and you'll know who raised the Spire. I pay well for a story like that. Ready?",
+			step = "Read the builders' stones in the wilds (Boar Meadow, Wolf Copse, Reedmarsh, Thornsnap Hollow, Shard Fields, Burrow Hills): %d of %d.",
+			report = "Return to Vesper in Hearthgate and say 'report'.",
+			thanks = "Wardwrights. A tower built to hold something down, not to reach the sky. That will sell. 800 gold, and the name Stonereader is yours." },
+		-- a lever puzzle; the answer is carved on a stone in the same marsh
+		{ id = "p1_sluice", floor = 1, side = true, kind = "collect", collect = "sluice", name = "The Old Sluice", giver = "Fisher Corwin",
+			storage = 50141, killStorage = 50142, count = 1, reward = { exp = 3000, gold = 400 },
+			offer = "Out in Reedmarsh there's an old sluice with three levers that nobody can work. The builders carved the order on a stone somewhere in the marsh, never far from the levers. Open it and tell me what was behind it?",
+			step = "Open the old sluice in Reedmarsh: find the carved stone that gives the lever order, then pull the three levers in that order (%d of %d).",
+			report = "Return to Fisher Corwin by the river and say 'report'.",
+			thanks = "A strongbox under the sluice! Keep what was in it. Here's my 400 on top." },
+		-- the boss-access chain: three pieces open the Axe-Lord's hall (scripts/spirebound/stair_key.lua). Starts by itself
+		-- with the first piece; there is nobody to report to.
+		{ id = "k1_stairkey", floor = 1, side = true, kind = "key", auto = true, name = "The Stair Key", giver = "the Stair Key",
+			storage = 50143, killStorage = 50144, count = 3, reward = { exp = 4000 },
+			offer = "", step = "Make the Stair Key that opens the Axe-Lord's hall: help defeat the Gate Hound in the Pass, help defeat the Stonehorn Ram at the Old Watchtower, and finish Hunter Brannoch's Iron for the Stair. %d of %d pieces.",
+			report = "The Stair Key is whole.", thanks = "" },
+		-- a delivery with a choice: the guards or the bandits
+		{ id = "d1_flour", floor = 1, side = true, minLevel = 12, kind = "deliver", item = 3603, name = "Flour for the Gate", giver = "Miller Agna",
+			storage = 50137, killStorage = 50138, count = 1, reward = { exp = 2500, gold = 300, title = "Honest Carter" },
+			offer = "The guards at Hearthgate's north gate have had no bread in a week. Carry this sack of flour to Captain Dorrow? Mind the Bandit Road: there's a fence there who would pay far more for it, and I would never know. Ready?",
+			step = "Carry Agna's flour to Captain Dorrow at Hearthgate's north gate (or sell it to Fence Marrow on the Bandit Road).",
+			report = "Give the flour to Captain Dorrow or to Fence Marrow: say 'report' to either.",
+			choices = {
+				["Captain Dorrow"] = { reward = { exp = 2500, gold = 300, title = "Honest Carter" },
+					thanks = "Flour! The lads will eat tonight. Here's 300 gold, and the gate knows your name now." },
+				["Fence Marrow"] = { reward = { exp = 2500, gold = 900, title = "Friend of the Road" },
+					thanks = "Heh. Nobody misses one sack. 900 gold, and the road remembers its friends." },
+			} },
 	},
 	PERKS = {
 		[1] = {
@@ -126,24 +159,76 @@ function SpireQuests.state(player, q)
 end
 
 function SpireQuests.progress(player, q)
+	if q.kind == "collect" then
+		return SpireQuests.collectedCount(player, q.collect)
+	elseif q.kind == "deliver" then
+		return 0
+	elseif q.kind == "key" then
+		return SpireStairKey.count(player)
+	end
 	return math.max(0, player:getStorageValue(q.killStorage))
+end
+
+-- Collect quests (P9): what a player has found of a set (builders' stones, the sluice), kept even before the quest is taken
+function SpireQuests.collected(player, set)
+	return player:kv():scoped("spirebound-collect"):get(set) or {}
+end
+
+function SpireQuests.collectedCount(player, set)
+	local n = 0
+	for _ in pairs(SpireQuests.collected(player, set)) do
+		n = n + 1
+	end
+	return n
+end
+
+-- Marks one piece found; returns true if it was new. Moves a running collect quest on to "report" when it is complete.
+function SpireQuests.find(player, set, piece)
+	local have = SpireQuests.collected(player, set)
+	if have[piece] then
+		return false
+	end
+	have[piece] = os.time()
+	player:kv():scoped("spirebound-collect"):set(set, have)
+	SpireQuests.checkCollect(player)
+	return true
+end
+
+function SpireQuests.checkCollect(player)
+	for _, q in ipairs(SpireQuests.list) do
+		if q.kind == "collect" and SpireQuests.state(player, q) == 1 then
+			local n = SpireQuests.progress(player, q)
+			if n >= q.count then
+				player:setStorageValue(q.storage, 2)
+				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, q.name .. ": done! " .. q.report)
+			elseif n > 0 then
+				player:sendTextMessage(MESSAGE_STATUS, string.format("%s: %d of %d.", q.name, n, q.count))
+			end
+		end
+	end
 end
 
 -- Pure: the quest-log line for a state
 function SpireQuests.logText(q, state, kills)
 	if state == 1 then
+		if q.kind == "deliver" then
+			return q.step
+		end
 		return string.format(q.step, math.min(kills, q.count), q.count)
 	elseif state == 2 then
 		return q.report
 	elseif state == 3 then
 		return "Completed."
 	end
+	if q.auto then
+		return string.format(q.step, math.min(kills or 0, q.count), q.count)
+	end
 	return "Talk to " .. q.giver .. "."
 end
 
 -- Pure: may this player start the quest? doneIds = set of completed quest ids
 function SpireQuests.available(q, state, doneIds, ctx)
-	if state ~= -1 and state ~= 0 then
+	if q.auto or (state ~= -1 and state ~= 0) then
 		return false
 	end
 	if ctx and q.minLevel and (ctx.level or 0) < q.minLevel then
@@ -224,6 +309,24 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 	local pid = player:getId()
 	if MsgContains(lower, "report") then
 		for _, q in ipairs(SpireQuests.list) do
+			local choice = q.choices and q.choices[giver]
+			if choice and SpireQuests.state(player, q) == 1 then
+				if player:getItemCount(q.item) < 1 then
+					npcHandler:say("You don't have " .. q.giver .. "'s " .. ItemType(q.item):getName() .. " with you.", npc, player)
+					return true
+				end
+				player:removeItem(q.item, 1)
+				player:setStorageValue(q.storage, 3)
+				local r = choice.reward
+				if r.gold then player:addMoney(r.gold) end
+				if r.exp then player:addExperience(r.exp, true) end
+				if r.title then player:kv():scoped("spirebound-titles"):set(r.title, os.time()) end
+				player:kv():scoped("spirebound-choices"):set(q.id, giver)
+				npcHandler:say(choice.thanks, npc, player)
+				return true
+			end
+		end
+		for _, q in ipairs(SpireQuests.list) do
 			if q.giver == giver then
 				local st = SpireQuests.state(player, q)
 				if st == 2 then
@@ -233,6 +336,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
 					if q.reward.gear then SpireGear.give(player, q.floor, "quest") end -- R12: a reward that isn't gold
 					if q.reward.temper then SpireGear.temperFor(player, q.floor) end -- gear progression: +1 tier
+					if q.id == "q1_iron2" then SpireStairKey.update(player) end
 					npcHandler:say(q.thanks, npc, player)
 					if SpireQuests.floorStoryDone(player, q.floor) then
 						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
@@ -265,7 +369,13 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		offered[pid] = nil
 		player:setStorageValue(q.storage, 1)
 		player:setStorageValue(q.killStorage, 0)
+		if q.kind == "deliver" then
+			player:addItem(q.item, 1)
+		end
 		npcHandler:say("Thank you! It's in your quest log.", npc, player)
+		if q.kind == "collect" then
+			SpireQuests.checkCollect(player) -- pieces found before the quest count
+		end
 		return true
 	end
 	if MsgContains(lower, "no") and offered[pid] then
@@ -274,4 +384,57 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		return true
 	end
 	return false
+end
+
+-- The Stair Key (P9, FLOOR1_REVIEW.md F1-20): the Axe-Lord's hall opens only for a climber who has helped defeat the
+-- Gate Hound, helped defeat the Stonehorn Ram at the Old Watchtower, and finished Iron for the Stair (2 of 2).
+-- (The review also named the Underkeep, but that is a secret and DESIGN.md 9 keeps secrets off the main path.)
+SpireStairKey = {}
+
+function SpireStairKey.pieces(player)
+	return {
+		hound = player:kv():scoped("spirebound"):get("boss_credit_Gate Hound") ~= nil,
+		ram = SpireQuests.collected(player, "stairkey").ram ~= nil,
+		iron = SpireQuests.state(player, SpireQuests.get("q1_iron2")) == 3,
+	}
+end
+
+function SpireStairKey.count(player)
+	local n = 0
+	for _, have in pairs(SpireStairKey.pieces(player)) do
+		if have then
+			n = n + 1
+		end
+	end
+	return n
+end
+
+function SpireStairKey.has(player)
+	return SpireStairKey.count(player) >= 3 or player:kv():scoped("spirebound"):get("stair_key_pilot") ~= nil
+end
+
+-- Starts the quest with the first piece and finishes it with the third.
+function SpireStairKey.update(player, quiet)
+	local q = SpireQuests.get("k1_stairkey")
+	local st, n = SpireQuests.state(player, q), SpireStairKey.count(player)
+	if st == 3 or n == 0 then
+		return
+	end
+	if n >= q.count then
+		player:setStorageValue(q.storage, 3)
+		player:addExperience(q.reward.exp, true)
+		if quiet then
+			return
+		end
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The Stair Key is whole. The Axe-Lord's hall at the top of the labyrinth will open for you.")
+		player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
+		return
+	end
+	if st ~= 1 then
+		player:setStorageValue(q.storage, 1)
+	end
+	if quiet then
+		return
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The Stair Key: %d of 3 pieces. Your quest log says what is left.", n))
 end

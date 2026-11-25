@@ -109,7 +109,7 @@ MONSTERS = {
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=20996, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),
                           loot=[(GOLD, 100000, 100), (PLAT, 30000, 2), (266, 20000, 3), (268, 20000, 3), (5880, 10000, 1)],
-                          voices=["BAAAH!"]),
+                          voices=["BAAAH!"], events=["SpireStairKeyRam"]),  # P9: a piece of the Stair Key
     # ---------------------------------------------------------------- Floor 1 bosses (behaviour scripts: tasks 1.18 / 1.19)
     "Gate Hound": dict(desc="the Gate Hound", look=(240,), corpse=6331, hp=4000, xp=2500, speed=150, race="fire",
                        attacks=[("melee", 0, -180), ("howl", -80, -160, 2)], armor=35, defense=35, boss=True,

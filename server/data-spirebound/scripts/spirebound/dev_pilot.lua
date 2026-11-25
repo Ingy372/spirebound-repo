@@ -16,6 +16,7 @@
 --   /pilot wall id, n      a wall item (vine 2130, barrier 2128) n tiles ahead of you
 --   /pilot unsummon        send your summons away
 --   /pilot logout          leave the game at once (even right after a fight)
+--   /pilot stairkey [off]  (boss tests) the Axe-Lord's hall opens without the Stair Key's three pieces
 --   /pilot newbie          (tutorial tests) become a brand-new character again: no path, no mode, the Proving not done,
 --                          a practice club in hand, at the Registrar
 --   /pilot trace on|off    log what every spell you cast did (server log, [SPELLTRACE]); refills you after each
@@ -101,6 +102,14 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: " .. made .. " " .. name)
+	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
+		local k = player:kv():scoped("spirebound")
+		if rest:find("off") then
+			k:remove("stair_key_pilot")
+		else
+			k:set("stair_key_pilot", os.time())
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: stairkey " .. (k:get("stair_key_pilot") and "on" or "off"))
 	elseif cmd == "newbie" then -- (tutorial tests, G2) start over as a character that has just reached the Registrar
 		player:setVocation(Vocation(0))
 		player:kv():scoped("spirebound"):remove("difficulty")
