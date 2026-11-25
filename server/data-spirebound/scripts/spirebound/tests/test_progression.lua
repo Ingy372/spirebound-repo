@@ -125,3 +125,23 @@ SpireTest.add("style: a stance from Mastery 5 gives a taste of a path until the 
 	local chosen = SpireStyle.view(ranger, P[12], "marksman", nil, "trapper")
 	SpireTest.eq(chosen.stance, nil, "the old stance is gone after the choice")
 end)
+
+-- P1b: one signature ability per path, castable only on that path
+SpireTest.add("style: every path has its own signature ability", function()
+	for voc, tree in pairs(SpireGearData.style) do
+		for _, p in ipairs(tree.paths) do
+			local found = 0
+			for _, row in ipairs(SpireSpells.list) do
+				if row.style == 2 and row.path == p.key then
+					found = found + 1
+					SpireTest.eq(SpireSpells.allowed(row, voc), true, row.name .. " is for " .. tree.name)
+				end
+			end
+			SpireTest.eq(found, 1, p.name .. " has one ability")
+		end
+	end
+	local v = SpireStyle.view(3, SpireGearData.STYLE_POINTS[20], "marksman", nil)
+	SpireTest.eq(SpireStyle.hasAbilityPure(v, 2), true, "a finished path has its ability")
+	local early = SpireStyle.view(3, SpireGearData.STYLE_POINTS[15], "marksman", nil)
+	SpireTest.eq(SpireStyle.hasAbilityPure(early, 2), false, "not before the path's Mastery 10")
+end)

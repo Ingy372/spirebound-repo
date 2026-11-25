@@ -1,0 +1,85 @@
+{
+ "name": "p1b_arcanist",
+ "character": "Pilot Arcanist",
+ "timeout": 200,
+ "about": "P1b check: this class's two path abilities cast in the client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "path abilities"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "say",
+   "text": "/pilot path emberwright"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "cinderfall",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "emberwright",
+   "note": "cinderfall"
+  },
+  {
+   "do": "say",
+   "text": "/pilot path stormbinder"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 3, 3000"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "cast",
+   "text": "arc cascade",
+   "target": true,
+   "shots": [
+    0.4,
+    1.2
+   ],
+   "gap": 2.5,
+   "name": "stormbinder",
+   "note": "arc cascade"
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mastery 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

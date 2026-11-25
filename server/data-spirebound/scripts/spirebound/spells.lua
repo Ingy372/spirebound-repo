@@ -1354,8 +1354,12 @@ for i, row in ipairs(SpireSpells.list) do
 			player:sendCancelMessage(row.name .. " is a Lost Art. Finish every story quest on Floor " .. row.lostArt .. " to learn it.")
 			return false
 		end
+		if row.path and not SpireSpells.TRACE[player:getId()] and SpireStyle.get(player).path ~= row.path then
+			player:sendCancelMessage(row.name .. " belongs to the " .. SpireStyle.name(player:getVocation():getBaseId(), row.path) .. " path. Say !style.")
+			return false
+		end
 		if row.style and not SpireSpells.TRACE[player:getId()] and not SpireStyle.hasAbility(player, row.style) then
-			player:sendCancelMessage(row.name .. " is a style ability: it comes when your Mastery reaches 10. Say !style.")
+			player:sendCancelMessage(row.name .. " is a style ability: it comes when " .. (row.style == 2 and "your path's" or "your") .. " Mastery reaches 10. Say !style.")
 			return false
 		end
 		local vis = SpireSpells.visuals(row, player:getLevel())
