@@ -662,6 +662,18 @@ def build(m):
     for px in (yx + 2, yx + 10, yx + 21, yx + 29, yx + 35, yx + 41, yx + 48):   # yx + 2: the arrival square is lit at night
         S.lamp(m, px, yy + 9, Z)
         S.lamp(m, px, yy + 14, Z)
+    # P7 (FLOOR1_REVIEW.md F1-01, Q47): the yard stands at the foot of the Spire. North of the arrival square, the
+    # tower's sealed door between two pillars, and the first-clears stone (scripts/spirebound/monument.lua reads it).
+    # (placed after the yard's flowers, on cleared tiles, so the shared random scenery elsewhere doesn't shift)
+    for t in [(x_, yy + 3) for x_ in range(yx + 2, yx + 11)] + [(yx + 6, yy + 5), (yx + 10, yy + 5)]:
+        m.clear_items(t[0], t[1], Z)
+    m.autowall([(x_, yy + 3) for x_ in range(yx + 2, yx + 11) if x_ != yx + 6], Z, "stone")   # the tower's foot
+    m.put(yx + 6, yy + 3, Z, 1772)                      # the sealed door: a boulder that never moves
+    m.points["yard_spire_door"] = (yx + 6, yy + 3, Z)
+    m.sign(yx + 6, yy + 5, Z, "The Spire. Its doors stay sealed until someone breaks each floor's guardian. "
+           "Read the stone beside it: the names of everyone who opened a floor first.")
+    S.prop(m, yx + 10, yy + 5, Z, 2199)                 # the first-clears stone
+    m.points["yard_first_clears"] = (yx + 10, yy + 5, Z)
     pen = (yx + 13, yy + 2, 11, 6)
     m.walls(pen[0], pen[1], pen[2], pen[3], Z, gaps={(pen[0] + 5, pen[1] + 5)}, style="timber")
     m.fill(pen[0] + 1, pen[1] + 1, pen[2] - 2, pen[3] - 2, Z, "dirt")

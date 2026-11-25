@@ -31,3 +31,11 @@ SpireTest.add("daily: the tower's bounty only marks climbers in PvP range", func
 	local t = Tile(Position(m.x, m.y - 1, m.z))
 	SpireTest.eq(t ~= nil and t:getTopDownItem() ~= nil or t:getTopTopItem() ~= nil or t:getItemCount() > 0, true, "the statue stands where the Monument is")
 end)
+
+SpireTest.add("monument: the first-clears stone at the foot of the Spire", function()
+	SpireTest.eq(SpireFirstClearsText():find("Floor 1") ~= nil, true, "it lists Floor 1")
+	local t = Tile(WorldPoints.yard_first_clears)
+	SpireTest.eq(t ~= nil and t:getItemById(2199) ~= nil, true, "the stone stands in the yard")
+	local d = Tile(WorldPoints.yard_spire_door)
+	SpireTest.eq(d ~= nil and d:getItemById(1772) ~= nil, true, "the Spire's door is sealed")
+end)

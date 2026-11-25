@@ -862,6 +862,8 @@ WorldPoints = {
 	["underkeep_exit"] = Position(1178, 1248, 8),
 	["underkeep_grate"] = Position(1181, 1302, 7),
 	["underkeep_wing2_door"] = Position(1245, 1271, 8),
+	["yard_first_clears"] = Position(1280, 1341, 7),
+	["yard_spire_door"] = Position(1276, 1339, 7),
 }
 -- PvP zone tiers (DESIGN.md 6.3). Later rectangles win. z = -1 means every level.
 WorldZones = {

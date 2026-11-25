@@ -25,3 +25,32 @@ if m then
 	statue:position(Position(m.x, m.y - 1, m.z))
 	statue:register()
 end
+
+-- P7 (FLOOR1_REVIEW.md F1-01): the first-clears stone at the foot of the Spire in the Arrival Yard
+function SpireFirstClearsText()
+	local lines = { "THE FIRST TO OPEN EACH FLOOR", "" }
+	for n = 1, Floors.LAUNCH_FLOORS do
+		local rec = Floors.get(n)
+		local who = rec.credit and #rec.credit > 0 and table.concat(rec.credit, ", ", 1, math.min(5, #rec.credit))
+		if who then
+			table.insert(lines, string.format("Floor %d: %s", n, who))
+		else
+			table.insert(lines, string.format("Floor %d: no one yet.", n))
+			break
+		end
+	end
+	table.insert(lines, "")
+	local top = Floors.highestOpen()
+	table.insert(lines, Floors.raceLine(top, Floors.get(top)))
+	return table.concat(lines, "\n")
+end
+
+local firstClears = Action()
+function firstClears.onUse(player, item)
+	player:showTextDialog(item:getId(), SpireFirstClearsText())
+	return true
+end
+if WorldPoints.yard_first_clears then
+	firstClears:position(WorldPoints.yard_first_clears)
+	firstClears:register()
+end
