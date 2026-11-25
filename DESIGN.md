@@ -512,6 +512,14 @@ Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp 
 - Boss rooms (field and floor bosses) refuse to let a cavebot character in.
 - **Auto-targeting on its own (no cavebot) costs nothing.** It's a convenience for players at the keyboard **(Claude's call)**.
 
+**In fights with players, the helpers only heal (Jay, 2026-11-25):** *"i think the bot should work for pvp strictly for healing. no auto hasting or auto counters to any pvp elements, strictly healing."*
+- **When it applies:** from the moment a player hits you or you hit a player, until the combat lock wears off (Tibia's usual lock, about 1 minute). Against monsters everything works as normal. *(Claude's call)*
+- **Still on:** auto-heal (healing spells and potions) and auto-eat.
+- **Switched off:** auto-haste, auto attack spells, auto-targeting players, auto-casting clutch spells (Undying Oath, Lifeseed...), auto-breaking vines or barriers, and **automatic ring and amulet swaps** (putting on a protective amulet when a fight starts is a counter, not healing). *(the last one: Claude's call)*
+- **The cavebot stops walking** when a player attacks: the character stands still and only heals until the lock ends, so it can't run away. Being PKed stays the risk of botting. *(Claude's call)*
+- The server already limits how often anyone can heal, so a bot heals no faster than a person, only more reliably. If PvP tests show bot-healed characters are too hard to kill, add a short reaction delay to auto-heal during player fights.
+- These limits are built into our client; a client changed to get around them falls under the hacked-client ban below.
+
 **Not allowed:**
 - Any third-party bot or modified client. Our client is the only allowed client.
 - Auto-fishing (fishing has its own anti-AFK "struggle" click) **(Claude's call)**.
