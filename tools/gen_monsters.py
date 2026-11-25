@@ -57,11 +57,11 @@ MONSTERS = {
     "Meadow Wolf": dict(desc="a meadow wolf", look=(27,), corpse=5968, hp=85, xp=36, speed=115, race="blood",
                         attacks=[("melee", 0, -25)], armor=4, defense=6, run=12, defenses=[("haste", 10, 250)],  # F1-10: darts in, flees hurt
                         loot=[(GOLD, 70000, 10), (5897, 10000, 1), (3577, 30000, 1)], voices=["Grrr!"],
-                        events=["SpireWolfCall", "SpireWolfCallDeath"]),  # F1-10: howls for the pack when hurt
+                        events=["SpireWolfCall", "SpireWolfCallDeath", "SpirePack"]),  # F1-10: howls for the pack when hurt; S5: keeps to its pack
     "Grey Alpha": dict(desc="a grey alpha", look=(52,), corpse=5997, hp=260, xp=107, speed=125, race="blood",
                        attacks=[("melee", 0, -60)], armor=12, defense=14,
                        loot=[(GOLD, 100000, 40), (5897, 50000, 2), (266, 8000, 1), (3012, 6000, 1)], voices=["AWOOOO!"],
-                       summons=[("Meadow Wolf", 2)]),
+                       summons=[("Meadow Wolf", 2)], events=["SpirePack"]),  # S5: leads its pack
     "Field Shardling": dict(desc="a field shardling", look=(122,), corpse=6053, hp=120, xp=58, speed=90, race="undead",
                             attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10, events=["SpireShardBurst"],
                             loot=[(GOLD, 85000, 20), (268, 6000, 1), (3033, 6000, 1)], elements={"energy": 50, "earth": -10}),
@@ -91,7 +91,8 @@ MONSTERS = {
                             voices=["HRRRNK!"]),
     "Moonhowl": dict(desc="moonhowl", look=(27,), corpse=5968, hp=520, xp=240, speed=130, race="blood",
                      attacks=[("melee", 0, -55), ("howl", 0, -40, 2)], armor=10, defense=12, light=(3, 215),
-                     loot=[(GOLD, 100000, 50), (PLAT, 25000, 1), (5897, 60000, 3), (266, 30000, 2)], voices=["AWOOOOOO!"]),
+                     loot=[(GOLD, 100000, 50), (PLAT, 25000, 1), (5897, 60000, 3), (266, 30000, 2)], voices=["AWOOOOOO!"],
+                     events=["SpirePack"]),  # S5: leads its pack
     "Mossback Snapper": dict(desc="a mossback snapper", look=(112,), corpse=6077, hp=900, xp=250, speed=95, race="blood",
                              attacks=[("melee", 0, -70), ("slow", -180, 2500, 1, "CONST_ME_WATERSPLASH")], armor=22,
                              defense=22, light=(3, 210),

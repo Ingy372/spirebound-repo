@@ -63,3 +63,20 @@ SpireTest.add("monsters: a thieving rat drops what it stole", function()
 	end
 	r:remove()
 end)
+
+-- S5: packs keep together
+SpireTest.add("monsters: wolves follow the nearest alpha, or the eldest wolf", function()
+	local base = WorldPoints.centre_boar_meadow
+	local w1 = Game.createMonster("Meadow Wolf", Position(base.x + 2, base.y + 1, base.z), true, true)
+	local w2 = Game.createMonster("Meadow Wolf", Position(base.x + 3, base.y + 1, base.z), true, true)
+	SpireTest.eq(SpirePack.leaderOf(w2) == w1, true, "without an alpha the eldest wolf leads")
+	SpireTest.eq(SpirePack.leaderOf(w1), nil, "the eldest has no leader")
+	local a = Game.createMonster("Grey Alpha", Position(base.x + 6, base.y + 1, base.z), true, true)
+	SpireTest.eq(SpirePack.leaderOf(w1) == a and SpirePack.leaderOf(w2) == a, true, "the alpha leads them all")
+	SpireTest.eq(SpirePack.leaderOf(a), nil, "the alpha follows nobody")
+	SpireTest.eq(SpirePack.stepToward(Position(10, 10, 7), Position(15, 11, 7)), DIRECTION_EAST, "a step toward the leader")
+	SpireTest.eq(SpirePack.stepToward(Position(10, 10, 7), Position(11, 11, 7)), nil, "already beside it")
+	for _, m in ipairs({ w1, w2, a }) do
+		m:remove()
+	end
+end)

@@ -213,3 +213,87 @@ function shieldDeath.onDeath(creature)
 	return true
 end
 shieldDeath:register()
+
+-- S5 (FLOOR1_HUNTING_PLAN.md: "a pack that splits up is just three singles"): wolves keep to their pack. The leader is
+-- the nearest Grey Alpha or Moonhowl, or else the eldest wolf close by. An idle wolf drifts back to its leader; when
+-- one member picks a fight, the others close by join it on the same climber.
+SpirePack = SpirePack or {}
+SpirePack.MEMBERS = { ["Meadow Wolf"] = true, ["Grey Alpha"] = true, ["Moonhowl"] = true }
+SpirePack.LEADERS = { ["Grey Alpha"] = true, ["Moonhowl"] = true }
+SpirePack.JOIN, SpirePack.STAY, SpirePack.LOOK = 5, 3, 8
+
+local function packmates(mon, r)
+	local out = {}
+	for _, c in ipairs(Game.getSpectators(mon:getPosition(), false, false, r, r, r, r)) do
+		local o = c:getMonster()
+		if o and o ~= mon and not o:getMaster() and SpirePack.MEMBERS[o:getName()] and o:getPosition().z == mon:getPosition().z then
+			table.insert(out, o)
+		end
+	end
+	return out
+end
+
+function SpirePack.leaderOf(mon)
+	if SpirePack.LEADERS[mon:getName()] then
+		return nil
+	end
+	local best, bestD, eldest
+	for _, o in ipairs(packmates(mon, SpirePack.LOOK)) do
+		local d = mon:getPosition():getDistance(o:getPosition())
+		if SpirePack.LEADERS[o:getName()] and (not best or d < bestD) then
+			best, bestD = o, d
+		elseif not SpirePack.LEADERS[o:getName()] and o:getId() < mon:getId() and d <= SpirePack.JOIN
+			and (not eldest or o:getId() < eldest:getId()) then
+			eldest = o
+		end
+	end
+	return best or eldest
+end
+
+-- Pure: the one step from a toward b (nil when already next to it)
+function SpirePack.stepToward(a, b)
+	local dx, dy = b.x - a.x, b.y - a.y
+	if math.max(math.abs(dx), math.abs(dy)) <= 1 then
+		return nil
+	end
+	if math.abs(dx) >= math.abs(dy) then
+		return dx > 0 and DIRECTION_EAST or DIRECTION_WEST
+	end
+	return dy > 0 and DIRECTION_SOUTH or DIRECTION_NORTH
+end
+
+function SpirePack.share(mon)
+	local player = targetPlayer(mon)
+	if not player then
+		return 0
+	end
+	local n = 0
+	for _, o in ipairs(packmates(mon, SpirePack.JOIN)) do
+		if not o:getTarget() and o.selectTarget then
+			o:selectTarget(player)
+			n = n + 1
+		end
+	end
+	return n
+end
+
+local pack = CreatureEvent("SpirePack")
+function pack.onThink(creature, interval)
+	local mon = creature:getMonster()
+	if not mon or mon:getMaster() then
+		return true
+	end
+	if mon:getTarget() then
+		SpirePack.share(mon)
+		return true
+	end
+	local leader = SpirePack.leaderOf(mon)
+	if leader and mon:getPosition():getDistance(leader:getPosition()) > SpirePack.STAY then
+		local dir = SpirePack.stepToward(mon:getPosition(), leader:getPosition())
+		if dir then
+			mon:move(dir)
+		end
+	end
+	return true
+end
+pack:register()
