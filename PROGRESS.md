@@ -48,3 +48,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 morning: Grok's session 2 report
 - Reset Grok's four characters to new (level 1, no path), backup first. Fixed from the report: the cheese gate can no longer lock anyone in, the Proving's fight stone is red and the skip asks first, the weapon-skill row is labelled and empty before a path, "an Arcanist", "no" to a mode, no yard tips, Esc keeps chat on. Report in `docs/playtests/`, notes in PLAYTEST.md, Q52 and G7 for the yard's fast levels.
 - Boot test 245 pass; restarted the server three times (nobody online) and checked the Registrar, the Proving and the skip in the client (`s2_fixes`). Friend client package rebuilt.
+
+### 2026-11-25: Grok's market research, Jay's answers
+- Read Jay's Grok research page (summary in `docs/RESEARCH_GROK_MARKET_2026-11-25.md`). Jay: R1 Floor Beacons "do it", R3 Spire Chronicle "love the idea", R4 Spire Pressure "sure i like the way this sounds", R6 money prizes "never planned on this". R2: "i dont mind extra character, players playing multi accounts, or online trainers... extra characters shouldnt be confided to town", so only the honest count and public ban list were kept.
+- Written into DESIGN.md (3.6, 4, 12, 15) and the roadmap as M1-M4. Client cap raised from 2 to 3 per computer (Q53, assumed). R5 (Grok says drop the built-in cavebot): Jay asked for the reasons; the cavebot stays as designed until he decides.

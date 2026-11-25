@@ -102,6 +102,13 @@ One layered, over-tuned spawn per floor that stays worth hunting long past its f
 ### 3.6 Something always happening
 Every 3 hours a world event fires on an open floor: Frenzy (apex spawn +50% respawn, +25% loot), Incursion (elite packs), Fishing Frenzy (rare-fish rate up), Wandering Champion (roaming mini-boss). Announced 10 minutes ahead. *(From the old pack, fishing event added.)*
 
+**Floor Beacons (Jay, 2026-11-25: "r1 do it", from Grok's market research R1).** Players choose where the boost goes, instead of the server picking at random.
+- Each open floor's town has a **Beacon with 4 slots**. Players hand in **Beacon Embers** (dropped by that floor's field boss, taskmaster bosses and apex elites) to light one slot for **1 hour**.
+- Each lit slot gives everyone hunting on that floor **+5% experience and +5% loot chance**. The 4th slot also makes that floor's apex spawn come back **25% faster**. No damage bonus, so Contested PvP zones stay fair.
+- Every lighting is **announced server-wide with the names of who lit it**; the floor HUD shows how many slots are lit and for how long.
+- Embers can be traded, so they are worth money. **One guild can hold at most 2 slots on a floor at a time** (stops a rich guild from keeping a floor lit for itself). *(Numbers: Claude's call, Jay can veto.)*
+- The boosted creature of the day (roadmap J7) stays for now; it's a daily reason to try a different ground. *(Claude's call, Jay can veto.)*
+
 ---
 
 ## 4. Seasons
@@ -121,6 +128,11 @@ Jay's brief: 20–30 floors per season with seasonal resets; account-wide reward
 - **Carries over (account-wide):** titles, cosmetic outfits and mounts, Death Game titles, fishing collection log, explorer titles, donation-shop purchases (cosmetics), Hall of Fame entries (first clears, Death Game leaderboard).
 - Old-season characters are frozen in a read-only "Hall of Seasons" on the website (name, level, achievements).
 - Final two weeks of a season: "Last Stand" events (double XP weekends, the season's final boss rushes), announced well ahead.
+
+### Spire Chronicle: a season-long journey (Jay, 2026-11-25: "love the idea", from Grok's research R3)
+- A **5-chapter goal track per season, shared across your whole account** (all your characters count). Chapters 1–2 teach the game (a guide for new players); chapters 3–5 ask for floor clears, Underkeep wings and secrets.
+- Finishing it gives a **permanent Chronicle seal and title** that upgrades each season, a line on the Monument and a house trophy. **No experience or power carries over** into the next season: cosmetics and bragging rights only (seasons stay a fair race).
+- It sits above the Season Path (Season Path = daily and weekly goals; Chronicle = the season-long story), and finished Chronicles show in the Hall of Seasons. *(Details: Claude's call, Jay can veto.)*
 
 ---
 
@@ -508,8 +520,16 @@ Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp 
 **Enforcement:**
 - The client tells the server when the cavebot is on, and the server applies the XP/loot cut. The server also logs patterns that look like an unmarked bot (identical routes for 20+ minutes, 24-hour sessions with steady XP, impossibly fast reactions) for staff review. No automatic bans.
 - Punishment for third-party bots or a hidden cavebot: first offense 7-day ban and removal of gains; second offense permanent.
-- Up to 2 clients per computer at once **(Claude's call)**.
+- Up to **3 clients per computer** at once **(Claude's call, was 2; raised because of Jay's 2026-11-25 answer below; QUESTIONS Q53)**.
 - Rules are published on the website and in game.
+
+**Extra characters, multi-clienting and trainers (Jay, 2026-11-25):** *"i dont mind extra character, players playing multi accounts, or online trainers. that can push players in the direction of playing things they usually wouldnt otherwise. extra characters shouldnt be confided to town."* So extra characters play anywhere, with no town-only rule, and online trainers are allowed.
+
+**Clean Count and Exile Ledger (from Grok's research R2, kept in the form Jay's answer allows):**
+- The website shows **characters online and real people online side by side**, so nobody thinks the count is padded.
+- Every ban for cheating (third-party bots, hacked clients, real-money trading) is **public with its reason** in the Exile Ledger on the website. A ban covers the person's other accounts too.
+- Cheat detection runs on the server only (no scanning of players' computers).
+- Not adopted: Grok's "one fighting character per person" rule (Jay's answer above).
 
 ---
 
@@ -539,7 +559,7 @@ Jay asked (2026-11-08) not to reinvent the wheel: look at what top servers share
 | Scheduled automatic events | all 5 | World events every 3 h (DESIGN 3.6) + automatic PvP events (below) + holiday events |
 | Weekend rotating bonus | Cyleria, Gunzodus, RubinOT | Every weekend one bonus rotates: double XP, rapid respawn, double loot, double fishing, double skill |
 | Guild territory war | RubinOT, Gunzodus, Cyleria, Baiak | **Spire Siege**: weekly castle on a floor plateau, held by a guild for a week (small XP/loot buff for the holders + a cosmetic banner). Level-scaled like Cyleria's Tower Siege so it isn't just "highest level wins" |
-| Equal-footing PvP events | Cyleria, Gunzodus | Automated arena events (Last Man Standing, Team Rush, Capture the Banner) where everyone gets the same level, gear and skills for the event. Cosmetic rewards. Great for the anti-bullying goal |
+| Equal-footing PvP events | Cyleria, Gunzodus | Automated arena events (Last Man Standing, Team Rush, Capture the Banner) where everyone gets the same level, gear and skills for the event. Cosmetic rewards. Great for the anti-bullying goal. **Spire Pressure (Jay, 2026-11-25: "sure i like the way this sounds", Grok's research R4):** every 30 s everyone in the event deals +15% damage and loses 10% max HP, so fights end; anyone idle for 60 s is moved elsewhere in the arena; idle for 2 minutes = deserter (banned from events for 7 days, no rewards). Twice a week Capture the Banner runs as an objective match, and the event's MVP gets a statue in Hearthgate until the next one *(numbers: Claude's call, Jay can veto)* |
 | Offline / static training | Baiak, Gunzodus | Offline training statues in towns (Canary has offline training built in), slower than active training |
 | Cast / livestream | Gunzodus, Baiak, RubinOT | Canary's built-in livestream ("cast") so people can watch others play; later a Twitch-linked cosmetic reward |
 | Tasks, bestiary, bosstiary, boss timers | RubinOT, Gunzodus, Cyleria | **Hunting tasks** from each floor's Taskmaster, picked from a task window listing that floor's monsters (kill X, earn gold + task points for cosmetics/titles); bestiary/bosstiary tracker on; boss cooldowns shown in the client and on the website |
@@ -556,4 +576,5 @@ Jay asked (2026-11-08) not to reinvent the wheel: look at what top servers share
 - Real-money traders, launch rushers → no character bazaar; RMT bans in the rules.
 - Level gaps → seasons + catch-up + level-range PvP protection.
 - Account theft, shop bugs → two-factor login on the website, automated tests on everything that touches the shop.
-- Multi-client inflation → 2 clients per computer, published rule.
+- Multi-client inflation → the website shows real people next to characters online (Clean Count, DESIGN 12).
+- Real-money prize contests → never (Jay, 2026-11-25: "never planned on this").

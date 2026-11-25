@@ -6,6 +6,13 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
+### Q53. How many game windows can one person run at once? (2026-11-25)
+You said multi-clienting is welcome (extra characters, trainers, playing two at once). Today's rule is 2 game windows per computer. With the built-in cavebot, a much higher limit lets one person run a small bot army that floods the market with gold and items.
+- **Recommendation:** raise it to **3 per computer**: enough for a main, a helper and a trainer, still not a bot farm. The website count shows real people separately, so nobody is fooled by the numbers.
+- Other options: keep 2; or no limit.
+- Assumed until you answer: 3.
+- Jay's answer:
+
 ### Q52. The Arrival Yard levels you too fast (2026-11-25)
 Grok: three rats in the pen took a fresh character from level 1 to 4 (Pen Rats give 135 experience at the early 10x rate, plus Pell's 300), so "levels feel meaningless" and a level 3 tip fired in the yard (the tip is fixed).
 - **Recommendation:** lower the yard's rewards so a new character leaves the yard at level 2-3 and reaches level 4 (first heal) in the first hunting ground. Floor 1's overall length stays the same.
