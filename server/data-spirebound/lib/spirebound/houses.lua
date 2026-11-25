@@ -210,3 +210,19 @@ function SpireHouses.pondBait(kinds, lastDay, today)
 	end
 	return math.min(20, SpireHouses.POND_BAIT_BASE + (kinds or 0))
 end
+
+-- R10c: houses cost more on higher floors (prices per tile: lib/spirebound/house_prices.lua, from tools/balance.py)
+function SpireHouses.floorOfTown(townId)
+	for floor, town in pairs(SpireHouses.floorTown or {}) do
+		if town == townId then
+			return floor
+		end
+	end
+	return 1
+end
+
+-- Pure: the price of a house whose engine price is `enginePrice` (the engine charges 1,000 gold a tile)
+function SpireHouses.priceFor(enginePrice, floor)
+	local per = (SpireHouses.PRICE_PER_TILE or {})[floor] or 1000
+	return math.floor(enginePrice / 1000 * per + 0.5)
+end

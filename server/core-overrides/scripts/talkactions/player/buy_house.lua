@@ -60,7 +60,7 @@ function buyHouse.onSay(player, words, param)
 		return true
 	end
 
-	local price = house:getPrice()
+	local price = SpireHouses.priceFor(house:getPrice(), SpireHouses.floorOfTown(townId)) -- R10c: dearer on higher floors
 	if not player:removeMoneyBank(price) then
 		player:sendCancelMessage("You do not have enough money.")
 		return true

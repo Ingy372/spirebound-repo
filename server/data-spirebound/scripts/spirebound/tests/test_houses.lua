@@ -44,3 +44,12 @@ SpireTest.add("houses: relist announcements for houses that lost their owner", f
 	SpireTest.eq(type(House) == "table" or type(House) == "userdata" or type(House) == "function", true, "House class exists")
 	SpireTest.eq(#Game.getHouses() > 0, true, "the map has houses")
 end)
+
+-- R10c: house prices by floor
+SpireTest.add("houses: a house costs more on higher floors", function()
+	SpireTest.eq(SpireHouses.priceFor(43000, 1), 43000, "Floor 1: 1,000 a tile")
+	SpireTest.eq(SpireHouses.priceFor(43000, 3) > 43000, true, "Floor 3 costs more")
+	SpireTest.eq(SpireHouses.priceFor(43000, 10) > SpireHouses.priceFor(43000, 3), true, "Floor 10 costs most")
+	SpireTest.eq(SpireHouses.floorOfTown(SpireHouses.floorTown[3]), 3, "Floor 3's town is on Floor 3")
+	SpireTest.eq(SpireHouses.floorOfTown(1), 1, "Hearthgate is Floor 1")
+end)
