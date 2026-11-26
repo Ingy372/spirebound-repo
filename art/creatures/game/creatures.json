@@ -943,6 +943,123 @@
    ],
    "addons": 0,
    "size": 50
+  },
+  {
+   "name": "gate_hound",
+   "file": "gate_hound.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2205,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     22,
+     2,
+     40,
+     58
+    ],
+    [
+     7,
+     20,
+     55,
+     43
+    ],
+    [
+     21,
+     12,
+     41,
+     47
+    ],
+    [
+     3,
+     19,
+     59,
+     44
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "axe_lord",
+   "file": "axe_lord.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2206,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     17,
+     16,
+     46,
+     44
+    ],
+    [
+     34,
+     4,
+     26,
+     59
+    ],
+    [
+     15,
+     18,
+     48,
+     41
+    ],
+    [
+     35,
+     4,
+     27,
+     59
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "axe_lord_blade",
+   "file": "axe_lord_blade.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2207,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     26,
+     7,
+     37,
+     52
+    ],
+    [
+     28,
+     15,
+     35,
+     48
+    ],
+    [
+     21,
+     18,
+     42,
+     41
+    ],
+    [
+     19,
+     9,
+     42,
+     54
+    ]
+   ],
+   "addons": 0,
+   "size": 54
   }
  ]
 }

@@ -85,6 +85,9 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
 - **People keep Tibia's 8 px shift.** Our figures are drawn 8 px low-right on the canvas (`CANVAS_OFFSET`), exactly
   where Tibia's raw outfit sprites sit, and Tibia's people carry an 8 px up-left shift (flag 26) in the client. A new
   person look gets the same shift, or it stands 8 px off its tile. Animals have no shift.
+  The rule in code: every new look gets the shift unless its model uses `AUTO_PLACE` (animals, the Floor 1 bosses),
+  read from the render's meta.json. Older people renders keep their offset in `canvas_offset`, newer ones in
+  `placed`, so never decide by those fields: the live NPCs would lose their shift.
 - **The server must know the number too.** Canary refuses (with a warning) an NPC, monster or player outfit whose
   look is not in its appearances file; `tools/build_server.py` lists ours there (id only) at every build.
 - **Addons** (base, addon 1, addon 2) are extra pattern rows of the same look, packed from approved

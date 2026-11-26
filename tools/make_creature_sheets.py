@@ -42,7 +42,9 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "corwin": 2016, "pell": 2017, "veyra": 2018, "warden": 2019,
              "guildwarden": 2020, "quartermaster": 2021, "brannoch": 2022,
              # monsters on the humanoid body (2201+): they shared borrowed look 129/131 with NPCs, so no reskin
-             "bandit": 2201, "captain": 2202, "archer": 2203, "sentinel": 2204}
+             "bandit": 2201, "captain": 2202, "archer": 2203, "sentinel": 2204,
+             # Floor 1 bosses (approved via the art-count session): placed like the animals, so no people shift
+             "gate_hound": 2205, "axe_lord": 2206, "axe_lord_blade": 2207}
 
 
 def cip_sheet(img: Image.Image) -> bytes:
@@ -113,7 +115,11 @@ def main() -> None:
         if new_look:
             # people are drawn 8 px low-right on the canvas like Tibia's own outfits (CANVAS_OFFSET), and Tibia's
             # people carry an 8 px shift up-left in the client: the new look gets the same shift
-            entry.update({"new_look": new_look, "shift": [8, 8], "boxes": boxes, "addons": len(layers) - 1,
+            # ...but only figures placed like people (humanoid CANVAS_OFFSET 8, 8); AUTO_PLACE creatures such as the
+            # Floor 1 bosses sit like the animals and get no shift, or they would stand 8 px off their tile
+            meta = json.loads((ROOT / "art" / "output" / name / "meta.json").read_text(encoding="utf-8"))
+            shift = [0, 0] if meta.get("auto_place") is not None else [8, 8]   # older renders keep the offset in "canvas_offset"
+            entry.update({"new_look": new_look, "shift": shift, "boxes": boxes, "addons": len(layers) - 1,
                           "size": max(max(b[2], b[3]) for b in boxes)})
         manifest.append(entry)
     (OUT / "creatures.json").write_text(json.dumps({
