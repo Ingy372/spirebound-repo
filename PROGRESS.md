@@ -149,3 +149,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: townsfolk that stood out, redrawn
 - Jay: "I'm not stressing every npc being custom, as long as they fit in... Redo any that stand out." The ones in Tibia's most recognisable outfits (knight, warrior, pointed-hat mage) and the child drawn as an adult: Guard Ressa and Captain Dorrow (a new Hearthgate Watch uniform), Weaponsmith Garrick, Alchemist Ivo, Runewright Mael, Little Bix (now child-sized). All ALL PASS, sent for Jay's morning approval. Ordinary citizens keep their borrowed looks for now. Rule O23 added (no bald crowns or hair balls).
 
+### 2026-11-25 night: lead session handover, server restart, H14 ticked
+- New lead session took over at 22:25. Restarted the server (boot test passed, 263 in-game tests), which installed the bandit, archer, sentinel, Granite Warden and Floor 1 boss looks and the Boar Meadow change.
+- H14 (Jay: "challenge, not calm") ticked: a test character holds the near parts of the denser grounds with spells, and the Granite Warden's nest in the Old Quarry pushes it back. New test route: `h14_nests`.

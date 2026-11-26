@@ -1,0 +1,126 @@
+{
+ "name": "h14_nests",
+ "about": "H14 (2026-11-25): a Pilot at the low end of the ground's levels hunts the near part of a hill level, then stands in the overwhelming spot (nest). Expect: near part held with spells, the nest drains health and potions fast.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 20"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12",
+   "note": "Wolf Copse (level 12): Howling Rock / Upper Cut, near part"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_c_1",
+   "note": "Wolf Copse (level 12): near part"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": "crowd_wolf_copse_c_2",
+   "fight": true,
+   "timeout": 60,
+   "note": "Wolf Copse: near part"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 6,
+   "note": "Wolf Copse: near part"
+  },
+  {
+   "do": "heal",
+   "note": "Wolf Copse: the nest"
+  },
+  {
+   "do": "walk",
+   "to": "crowd_wolf_copse_c_3",
+   "fight": true,
+   "timeout": 60,
+   "note": "Wolf Copse: the nest"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 4,
+   "note": "Wolf Copse: the nest"
+  },
+  {
+   "do": "shot",
+   "name": "h14_nest_wolf"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 20"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 23",
+   "note": "Old Quarry (level 23): Howling Rock / Upper Cut, near part"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1272,
+    1144,
+    6
+   ],
+   "note": "Old Quarry (level 23): near part"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1262,
+    1148,
+    6
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry: near part"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 6,
+   "note": "Old Quarry: near part"
+  },
+  {
+   "do": "heal",
+   "note": "Old Quarry: the nest"
+  },
+  {
+   "do": "walk",
+   "to": "crowd_old_quarry_c_3",
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry: the nest"
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 4,
+   "note": "Old Quarry: the nest"
+  },
+  {
+   "do": "shot",
+   "name": "h14_nest_old"
+  }
+ ]
+}
