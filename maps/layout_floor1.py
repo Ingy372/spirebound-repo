@@ -738,6 +738,11 @@ def build(m):
            "click a rat to attack it. When it falls, open the body (right-click) and take the cheese it carries.")
     DG.hang(m, cx0, cy0, cw, ch, CZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
     DG.hang(m, cx0, yy + 8, cw, 9, CZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)   # the rat rooms' north walls
+    # Claude's live walk-through (2026-11-26): the bays were too dark. Torches on the stub walls (the bays' west walls)
+    # and a coal basin in the west hall.
+    for sx_ in (21, 27):
+        m.put(yx + sx_, yy + 13, CZ, DG.TORCH_V)
+    S.prop(m, yx + 17, yy + 14, CZ, DG.COAL_BASIN)
     for px_, py_, pid in ((9, 4, 2523), (19, 4, 2519), (9, 7, 117), (19, 7, 116), (32, 4, 2523), (32, 5, 116), (21, 4, 2519),
                           (9, 15, 2519), (32, 15, 2523), (22, 15, 117), (26, 15, 116), (28, 15, 2519), (9, 9, 116)):
         S.prop(m, yx + px_, yy + py_, CZ, pid)             # barrels and crates in the corners
