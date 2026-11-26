@@ -31,6 +31,10 @@ def main():
     name = argv[0] if argv else "rat"
     only = argv[1] if len(argv) > 1 else None          # optional: one direction, for quick tests
     creature = importlib.import_module(name)
+    # a part's number is stored as index * 8 in the red channel of the id pass: 0-32 survive, anything above 32
+    # is read back as 32 (it silently takes part 32's colours). Found when the Hedge Hexer's glow came out bone-white.
+    if len(creature.PARTS) > 33:
+        raise SystemExit(f"{name}: {len(creature.PARTS)} parts; at most 33 (reuse a hidden base part, art/README.md)")
     out = ART / "output" / name / "passes"
     out.mkdir(parents=True, exist_ok=True)
 

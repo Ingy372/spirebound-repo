@@ -227,6 +227,21 @@ OUTFITS["sentinel"]["eye"] = [[170, 230, 255]] * 8      # pale-blue glow in the 
 OUTFITS["sentinel"]["brow"] = ramp(*STONE)
 OUTFITS["sentinel"]["nose"] = ramp(*STONE)
 
+# Bandit Crossbowman and Hedge Hexer (2026-11-25): the approved bandit's colours with their own gear
+OLIVE_DRAB = ((20, 22, 12), (140, 140, 96), (66, 68, 40))
+OUTFITS["crossbowman"] = {**OUTFITS["bandit"], "hood": ramp(*OLIVE_DRAB), "cape": ramp(*OLIVE_DRAB),
+    "rim": ramp((10, 12, 6), (80, 80, 50)), "scarf": ramp((40, 22, 12), (180, 120, 70), (110, 66, 34)),
+    "xbow": ramp((30, 16, 8), (150, 100, 56), (76, 46, 22)), "arm": ramp((26, 28, 34), (200, 204, 214), (100, 104, 116)),
+    "string": ramp((150, 140, 120), (236, 230, 214)), "bolt": ramp((70, 46, 20), (230, 200, 150)), "case": ramp(*LEATHER)}
+PLUM = ((30, 14, 28), (170, 120, 160), (90, 50, 86))
+OUTFITS["hexer"] = {**OUTFITS["bandit"], "hair": ramp((60, 60, 64), (226, 224, 220), (140, 138, 136)),
+    "strand": [[100, 98, 96]] * 8, "brow": [[110, 108, 106]] * 8,
+    # her gear reuses hidden bandit parts (models have at most 33 parts): buckler = shawl patches, hilt = staff,
+    # iron = bone charms, scarf = the green mending glow, pouch = herb bundles
+    "shawl": ramp(*PLUM), "buckler": ramp((40, 30, 20), (176, 150, 110), (110, 90, 60)),
+    "hilt": ramp((30, 18, 8), (140, 100, 60), (70, 46, 24)), "iron": ramp((150, 140, 118), (255, 252, 240)),
+    "scarf": [[90, 230, 70]] * 8, "pouch": ramp((20, 40, 14), (140, 180, 90), (70, 100, 40))}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())

@@ -100,6 +100,11 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
 
 ## Rig numbers (why they are what they are)
 
+- **At most 33 parts per model** ("none" plus 32). The id pass stores a part's number as number x 8 in one colour
+  channel, so anything past 32 is read back as 32 and silently takes that part's colours. `render_creature.py` refuses
+  more. A variant built on a frozen base that needs more parts reuses the base parts it hides, recoloured in its own
+  palette (the Hedge Hexer's staff is the bandit's "hilt", her glow is the hidden "scarf").
+
 - 1 tile = 1 Blender unit = 32 px. Two projections, chosen in each model file (`PROJECTION`):
   - **oblique** (standing figures, e.g. Vesper): Tibia's real drawing rule. The camera looks straight down at a
     slanted world, so fronts and faces are seen at full size and height slides up-left at 45°, like hand-made
