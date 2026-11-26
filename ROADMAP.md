@@ -50,6 +50,7 @@ Winning Floor 1 must not lead to a placeholder.
 
 ## Step 7 — Know the real size of the art job
 Art, not code, sets the launch date: only 13 monsters are ours.
+- [ ] **N7 Own corpse art in the game** (split from the corpse task, 2026-11-26): once Jay approves `ART_FOR_JAY/corpses_sheet.png` (Q66), install the three decay steps for each own-art monster as reskinned spare Tibia corpse items with our own names (plan in `art/CORPSE_RULES.md`, "Installing"), and switch those monsters' `corpse=` to them. Also slim the Axe-Lord model under 33 parts and give it a corpse. Done when: a test kill of each in the game leaves our body, which rots and ends as bones or a husk.
 
 ## Step 8 — Accounts, then the friends test
 - [ ] **7.1b The website on a secure public address** (split from 7.1, 2026-11-25): the site, sign-up and make-another-character pages are served by the login service on port 8080 without HTTPS. Friends over Tailscale are already encrypted; a public launch needs a real web address with HTTPS (free certificate) in front of it. Done when: a player off Jay's network opens the site over https:// and signs up.

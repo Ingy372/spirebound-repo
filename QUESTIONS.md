@@ -8,6 +8,11 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q66. Approve the dead bodies for our own monsters? (2026-11-26, art)
+Every monster now leaves a body that matches it (no more boars leaving a dead crocodile): the ones on borrowed looks use the right Tibia corpse already. For the 20 monsters with our own art I drew their own dead bodies from the approved models, each in three steps: fresh, rotting, then bones (or a dried husk for stone, insects, plants and spirits). Sheet: `ART_FOR_JAY/corpses_sheet.png` (living monster, then the three steps, on plain grey). The Axe-Lord keeps the armoured-knight corpse for now.
+- **Recommendation:** approve all. Until you do, they keep the closest Tibia corpse.
+- Your answer: (approve all / approve all except ... / changes)
+
 ### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
 The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
 - **Recommendation:** keep +50%. If parties feel too strong in your playtest, +40% still beats solo (about 1.3 to 1.7 times).

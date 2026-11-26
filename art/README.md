@@ -61,6 +61,8 @@ then `python art/pipeline/check_creature.py <name>` must print ALL PASS before t
 Insects, crawlers and plants follow `art/CRAWLER_RULES.md` as well.
 Every creature then gets the refinement pass in `art/DETAIL_RULES.md`. Player outfits follow `art/OUTFIT_RULES.md`
 and are built on `art/models/humanoid.py` (colours in `art/pipeline/outfit_palettes.py`).
+Dead bodies follow `art/CORPSE_RULES.md`: `art/models/corpse_<name>.py` lays the approved model down
+(`art/pipeline/corpse_kit.py`), `tools/make_corpse_sheets.py` makes the decay steps and the review sheet.
 `AUTO_PLACE = (1, 1)` in a model file places each direction against the tile's right and bottom edges.
 
 ## Client sprite rules (Canary 3.6.1 + OTClient Redemption 4.2, client 15.11)
