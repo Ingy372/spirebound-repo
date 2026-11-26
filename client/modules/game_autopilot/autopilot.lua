@@ -233,7 +233,10 @@ local function fight(player, radius)
     end
     local list = monsters(player)
     if list[1] and list[1].d <= radius then
-        g_game.setChaseMode(ChaseOpponent)
+        -- casters (Arcanist, Mystic) hold their ground and cast from range instead of walking into melee
+        local voc = player:getVocation()
+        local caster = voc == 1 or voc == 2 or voc == 5 or voc == 6
+        g_game.setChaseMode((caster or plan.ranged) and DontChase or ChaseOpponent)
         g_game.attack(list[1].c)
         return true
     end
@@ -1189,6 +1192,17 @@ local function tick()
     end
     useKit(player)
     eat(player)
+    -- (2026-11-26, Jay: "they teleported in, stood there and got slaughtered") whatever the step, a character that
+    -- is next to a monster and not fighting fights back, like a player would
+    local d = step['do']
+    if d ~= 'walk' and d ~= 'hunt' and d ~= 'assist' and d ~= 'cast' and not g_game.isAttacking() and not plan.noDefend then
+        local list = monsters(player)
+        if list[1] and list[1].d <= 2 then
+            g_game.setChaseMode(ChaseOpponent)
+            g_game.attack(list[1].c)
+            log('defending against ' .. list[1].c:getName())
+        end
+    end
     local h = handlers[step['do']]
     if not h then
         log('unknown step "' .. tostring(step['do']) .. '"')

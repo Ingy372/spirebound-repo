@@ -195,6 +195,33 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
     can't buy mana potions). The bank's "transfer X to name" works (the test party used it), but nobody will know.
     Teach it, or add a shared-loot party option.
 
+## P0 for Jay: the bosses (added 18:20, end of the playtest)
+Jay asked to skip the rest of the levelling: the three were set to level 30 with `/pilot level 30`, given Floor 1
+gear at tier 3 (`/pilot gear 3`: Hearthguard Sword + Hearthward Mail, Reedroot Rod + Thornward Robe, Wand of Hearth
+Sparks + Millward Mantle), 40 health and 40 mana potions each, and the Stair Key with `/pilot stairkey`, then jumped
+to the bosses. The labyrinth was skipped (not tested).
+
+21. **Gate Hound (level-30 party of three): killed, no deaths.** About one minute; lowest health 36-40% for all three;
+    the tank took ~1,800 damage; potions used 2/2/1 health, 13/6/17 mana. Each got 18,555 experience, a Stair Key
+    piece, 3 cut Hearth Shards and a Boss Sigil. Feels right for a field boss.
+22. **Axe-Lord of the Stair: two wipes. As tuned it cannot be beaten by a level-30 party of three.**
+    - Attempt 1: all three landed next to him; dead in 15-20 seconds. Attempt 2 (casters three tiles back on the
+      diagonals): survived about 45 seconds and did **2,263 of his 12,000 health (19%)**: tank 430, healer 1,344,
+      Arcanist 489. His `changeTarget` (20% every 4 s) walks him straight to the casters.
+    - His numbers (`monster/floor1/axe_lord_of_the_stair.lua`): 12,000 health; melee up to 260 every 2 s; a 3-tile line
+      for 150-300 (25% every 2 s); summons Ruin Sentinels. Two hits landing together took the tank from full to dead
+      (128 + 246 in the same instant); the casters (295 health at level 30) die to one line plus one swing.
+    - To kill him in ~3 minutes a party needs ~65 damage per second sustained and must out-heal ~100 per second on
+      the tank: roughly 8-10 level-30 players, or 5 at level 34 with tier-4 gear (what `tools/party_run.py axelord`
+      assumed). DESIGN.md allows up to 20 in the room. **Decision for Jay:** is the Axe-Lord a party boss (3-5
+      players) or a raid (8+)? If a party boss, lower his health and his melee/line damage (generator, not the file
+      by hand), and consider a smaller `changeTarget`. Either way, tell players in the offer and the Journal how many
+      to bring ("gather a party of 3 or more" is what the Journal says about the Gate Hound).
+23. **The Arcanist did the least damage of the party** against the Axe-Lord (489 in 45 s, less than the Mystic's
+    1,344). Check Arcanist spell damage at level 30 against Floor 1 bosses (`tools/balance.py`); the "hardest
+    hitters" pitch at the Registrar doesn't match what the test saw. (Caveat: the test client's spell choice was
+    only improved at level 21, and it may not use area spells well on one target.)
+
 ## Things checked and fine (no work needed)
 - Guide Pell's quest and report with three players at once; every attacker in the pen gets First Blood credit.
 - Starter kits (5 health, 5 mana potions, 5 ham, path weapon) arrive; the Registrar handles three players.
@@ -203,6 +230,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
 - Wolf Copse's Grey Alpha elite (7,425 experience each), Rally Cry, Mend Other, Hearth Ration all work in play.
 - Death and respawn at the temple, and the "young climber" no-loss message.
 
-## Not yet tested (the playtest session is doing these now)
-Stonehorn Ram, Gate Hound, the labyrinth, the Axe-Lord, Old Quarry, Fallen Bastion, Smugglers' Ridge, Bramble Run,
-the Watchtower, the escort quest, the Old Sluice puzzle. Their findings will be added to the playtest notes file.
+## Not tested in this playtest (worth a later run)
+The labyrinth (skipped with a jump), the Stonehorn Ram, the Watchtower, Old Quarry, Fallen Bastion, Smugglers' Ridge,
+Bramble Run, Thornsnap Hollow, Reedmarsh, the escort quest, the Old Sluice puzzle, Floor 2 opening (test characters
+never open floors). Also: whether looted coins go to the bank now (PT1).

@@ -295,6 +295,9 @@ def run_lap(gid, title):
     return rec
 
 
+LAST_BANK = {}                # each character's bank balance at the last town trip
+
+
 def needs_town():
     """A town trip when someone is nearly out of potions, a bag is full, or someone can afford a real restock."""
     for t in TAGS:
@@ -303,7 +306,8 @@ def needs_town():
         mp = sum(bag_count(st, n) for n in POTIONS["mana"])
         if len(st.get("backpack", [])) >= 18:
             return f"{t}'s backpack is nearly full"
-        if hp < 2 or (t != "tank" and mp < 2):
+        broke = gold(st) + LAST_BANK.get(t, 9999) < 150      # nothing to buy with: hunt first
+        if (hp < 2 or (t != "tank" and mp < 2)) and not broke:
             return f"{t} is nearly out of potions"
         if gold(st) >= 400 and (hp < 8 or (t != "tank" and mp < 10)):
             return f"{t} can afford a restock"
@@ -344,6 +348,7 @@ def town():
                     if m:
                         funds[t] = max(funds[t], int(m.group(1).replace(",", "")))
             print("  bank: " + ", ".join(f"{t} {funds[t]} gold" for t in TAGS), flush=True)
+            LAST_BANK.update(funds)
             # a party shares: whoever got the loot (the kill credit) tops up the others through the bank
             rich = max(TAGS, key=lambda t: funds[t])
             need = {t: 600 - funds[t] for t in TAGS if t != rich and funds[t] < 600}

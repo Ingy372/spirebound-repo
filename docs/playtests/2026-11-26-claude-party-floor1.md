@@ -198,6 +198,19 @@ Axe-Lord kill can't spoil the real race.
   weaker Captain, or saying "bring a group of four" in the offer. (Same caveat: the test party clumps, so the healer
   stands in reach.)
 
+- **After the wipe: a death spiral.** The second wipe (before fix 5c) took every backpack: all potions, pocket gold,
+  the tank's longsword and spare sword, the Arcanist's armour. With 0-8 gold in the bank the party couldn't restock,
+  went back out, and the healer and Arcanist died again in the Shard Fields cave (eight shardlings on the party, no
+  potions). Jay, watching: "the vanguards normal attacks arent doing anything to the field shardlings": the tank
+  was fighting bare-handed (3-27 damage) because the death had taken his only weapons. Field Shardlings themselves
+  are fine (physical 0%, armour 10). Nothing warns a player who has no weapon in hand; a line like "You are
+  fighting with your bare hands" once per fight would help.
+- **Fixes 5b and 5c checked in the live client (after the 17:24 restart):** "You are already blessed" at login; a
+  death at level 25 then said "Your death cost you no experience (you would have lost 9056) and none of your
+  items", and the character really kept level 25 (226,184 experience) and every item.
+- **Test correction (not a shortcut):** to undo what the fixed bug took, the test command gave back exactly the
+  lost items (three backpacks, the longsword, studded armour, the potions they had carried). Nothing else was given.
+
 ### Weight and junk
 - **Autoloot fills your capacity with meat.** Moles, boars and wolves drop meat (13 oz each), autoloot takes it, and
   no Hearthgate NPC buys it. By level 15 the tank carried 25 meat, couldn't buy potions ("Bought 0x"), and then
