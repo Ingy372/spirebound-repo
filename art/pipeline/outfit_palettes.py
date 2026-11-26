@@ -161,6 +161,32 @@ OUTFITS["brannoch"] = {
     "knife": ramp((50, 54, 64), (230, 234, 240), (140, 146, 158)),
 }
 
+# Road Bandit (Floor 1 monster on the humanoid figure, 2026-11-25)
+MUD = ((30, 20, 12), (170, 134, 92), (92, 66, 40))
+OUTFITS["bandit"] = {
+    **base(hair=((16, 10, 8), (100, 70, 46)), arms=((18, 18, 22), (130, 128, 126), (54, 54, 58)),
+           legs=((36, 24, 14), (150, 110, 70), (84, 58, 34)), boots=((16, 10, 6), (110, 76, 46), (54, 36, 20)),
+           torso=((18, 18, 22), (130, 128, 126), (54, 54, 58)), cuff=LEATHER, belt=((20, 12, 8), (110, 76, 46)),
+           buckle=((60, 60, 66), (200, 200, 206))),
+    "hood": ramp(*MUD), "rim": ramp((16, 10, 6), (96, 70, 44)), "cape": ramp(*MUD),
+    "scarf": ramp((60, 8, 10), (236, 90, 70), (170, 30, 30)), "lace": ramp((20, 12, 8), (120, 86, 56)),
+    "pouch": ramp(*LEATHER), "buckler": ramp((40, 24, 12), (176, 124, 76), (100, 64, 34)),
+    "iron": ramp((26, 28, 34), (190, 194, 204), (90, 94, 104)), "blade": ramp((60, 66, 78), (240, 244, 250), (160, 168, 182)),
+    "hilt": ramp((30, 18, 10), (140, 100, 60)),
+}
+
+# Bandit Captain (Floor 1 boss on the humanoid figure, 2026-11-25)
+COAL = ((10, 10, 12), (110, 104, 100), (40, 38, 38))
+OUTFITS["captain"] = {
+    **base(hair=((8, 6, 6), (80, 66, 60), (30, 24, 22)), arms=COAL, legs=((30, 22, 18), (140, 110, 86), (74, 56, 42)),
+           boots=((8, 6, 6), (90, 78, 70), (34, 28, 26)), torso=((70, 10, 12), (236, 96, 80), (160, 30, 30)),
+           cuff=GOLD, belt=COAL, buckle=GOLD),
+    "coat": ramp(*COAL), "trim": ramp(*GOLD), "sash": ramp((60, 8, 10), (240, 96, 76), (176, 30, 30)), "button": ramp(*GOLD),
+    "beard": ramp((8, 6, 6), (80, 66, 60), (30, 24, 22)), "hat": ramp((8, 8, 10), (96, 92, 96), (32, 30, 34)),
+    "brass": ramp(*GOLD), "plume": ramp((90, 8, 10), (255, 120, 96), (210, 40, 36)),
+    "blade": ramp((70, 80, 100), (252, 254, 255), (186, 198, 214)), "guard": ramp(*GOLD), "earring": ramp(*GOLD),
+}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())

@@ -1,8 +1,19 @@
-"""Bandit captain (Floor 1, the Bandit Road boss): model + walk cycle, built on the road bandit.
+"""Bandit Captain (Floor 1 boss of the Bandit Road), built on art/models/humanoid.py (second draft, 2026-11-25).
 
-ART_REQUESTS.md: "a bandit leader with a red sash, a feathered hat and a curved sabre". Original design: wide
-dark hat with a red feather, black beard, dark leather coat with a broad red sash at the waist and across the
-chest, curved sabre held out in the right hand, boots. Faces +X; sizes in tiles.
+ART_REQUESTS.md: "a bandit leader with a red sash, a feathered hat and a curved sabre".
+The first draft (2026-11-15) had its own copied body; this one follows art/OUTFIT_RULES.md.
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: a three-cornered hat (brim turned up on three sides: Vesper owns the round wide hat, O14) with a red
+              plume laid back along it (O15), a long dark coat with flared skirts, a curved sabre held out and up
+              in the right hand, the left fist on his hip.
+  Colours:    near-black leather coat, a broad red sash at the waist and across the chest, brass buttons; black
+              beard; a bright steel sabre with a brass guard.
+  Details:    the hat's turned-up brim with a brass edge, the plume, sash ends hanging at the hip, brass buttons,
+              coat hem, cuffs, the sabre's curved blade and knuckle guard, a gold earring.
+Look-alike: Tibia's Pirate Buccaneer / Pirate Corsair (hat, coat, sabre): ours is a land outlaw in black and red
+with a red plume and no eyepatch.
+Addons: none (a monster, rule A1).
 """
 from __future__ import annotations
 
@@ -10,170 +21,112 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "captain"
 WALK_FRAMES = 8
 PALETTE = "captain"
-REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only, never shipped)
+REFERENCE = "outfit_128.png"
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
-PIXEL_RULES = {
-    "weight": {"hat": 1.2, "feather": 3.0, "sash": 2.0, "eye": 9.0, "hand": 2.4, "blade": 3.0, "hilt": 2.6, "belt": 2.0, "pelt": 1.4, "boot": 1.4,
-               "beard": 1.8},
-    "thin": {"feather": 3, "sash": 3, "eye": 3, "hand": 3, "blade": 2, "hilt": 2, "belt": 3},
-    "soft": [["tunic", "belt", "sash"], ["skin", "hair", "beard", "eye"], ["hat", "feather"], ["hand", "skin"], ["pants", "boot"],
-             ["blade", "hilt"]],
-    "no_outline": [],
-    "fur": [],
-    "selout": ["tunic", "pelt", "skin", "hair"],
-}
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["hat", "sash"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose", "beard", "hat", "brass"]
+LEG_PARTS = ["leg_a", "leg_b", "boot_a", "boot_b"]
+CHECK = {"size": (0.85, 1.50), "head": 0.08, "legs_side": 0.05, "eye": 1}
 
-PARTS = ["none", "skin", "eye", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand", "blade", "hilt",
-         "hat", "feather", "sash"]
+PARTS = H.PARTS + ["coat", "trim", "sash", "button", "beard", "hat", "brass", "plume", "blade", "guard", "earring"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"trim": 2.4, "sash": 1.8, "button": 4.0, "beard": 1.4, "hat": 1.3, "brass": 2.6, "plume": 2.2,
+            "blade": 3.0, "guard": 3.0, "earring": 5.0},
+    thin={"trim": 2, "button": 2, "brass": 2, "plume": 3, "blade": 2, "guard": 2, "earring": 2},
+    soft=[["torso", "coat", "trim", "button", "sash"], ["skin", "beard", "earring"], ["hat", "brass"],
+          ["blade", "guard"]],
+    texture={"coat": [0.35, 0.15], "sash": [0.35, 0.12], "beard": [0.35, 0.15], "hat": [0.25, 0.0]},
+    selout=["coat", "hat", "sash"],
+)
 
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
-HIP_Y = 0.074
-LEG_R = 0.056
-TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.110, 0.170, 0.190)
-SKIRT_TOP, SKIRT_BOTTOM = 0.58, 0.40                      # short tunic: legs show
-SKIRT_R = (0.130, 0.175)
-HEAD = Vector((0.010, 0.0, 0.975)); HEAD_R = (0.148, 0.140, 0.158)
-SHOULDER = Vector((0.0, 0.172, 0.825))
-UPPER_ARM, FOREARM = 0.19, 0.18
-ARM_R = 0.054
-STRIDE, LIFT, STANCE = 0.13, 0.060, 0.5
-BODY_SCALE = (1.15, 1.22, 0.80)
+SPEC = H.spec(torso_r=(0.108, 0.160, 0.188), arm_r=0.052, leg_r=0.052, stride=0.12, lift=0.055, bob=0.016,
+              strands=(-1.2, -0.2, 0.8))
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
-    for k in ("l", "r"):
-        m.capsule(f"thigh_{k}", "pants")
-        m.capsule(f"shin_{k}", "pants")
-        m.capsule(f"bootleg_{k}", "boot")
-        m.ellipsoid(f"boot_{k}", "boot", radii=(0.072, 0.046, 0.050), segments=12, rings=8)
-        m.capsule(f"upper_{k}", "tunic")
-        m.capsule(f"fore_{k}", "tunic")
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.038, 0.032, 0.040), segments=10, rings=8)
-    m.ellipsoid("torso", "tunic", radii=TORSO_R)
-    m.frustum("skirt", "tunic", top_ratio=0.80)
-    m.frustum("belt", "sash", top_ratio=1.0)
-    m.capsule("sash_x", "sash")
-    m.ellipsoid("brim", "hat", radii=(0.195, 0.185, 0.022), segments=24, rings=8)
-    m.frustum("crown", "hat", top_ratio=0.80)
-    m.tube("feather", "feather", points=9)
-    m.ellipsoid("pelt", "tunic", radii=(0.130, 0.195, 0.070), segments=18, rings=10)   # coat shoulders
-    m.ellipsoid("pelt_back", "pelt", radii=(0.060, 0.150, 0.150), segments=14, rings=8)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.150, 0.152, 0.140))
-    m.ellipsoid("beard", "beard", radii=(0.075, 0.115, 0.075), segments=14, rings=8)
-    for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.018), segments=8, rings=6)
-    m.capsule("blade", "blade")
-    m.capsule("blade_tip", "blade")
-    m.capsule("guard", "hilt")
-    m.capsule("grip", "hilt")
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("beard", "beard", radii=(0.064, 0.086, 0.056), segments=12, rings=8)
+    m.ellipsoid("earring", "earring", radii=(0.010, 0.010, 0.012), segments=6, rings=4)
+    for k in ("f_l", "f_r", "b"):
+        m.box(f"skirt_{k}", "coat", size=(0.026, 0.120 if k != "b" else 0.290, 0.250))
+        m.box(f"hem_{k}", "trim", size=(0.030, 0.124 if k != "b" else 0.294, 0.026))
+    m.frustum("sash", "sash", top_ratio=1.0, segments=18)
+    m.capsule("baldric", "sash")
+    for i in range(2):
+        m.capsule(f"sashend{i}", "sash")
+    for i in range(3):
+        m.ellipsoid(f"button{i}", "button", radii=(0.013, 0.013, 0.013), segments=6, rings=4)
+    # three-cornered hat: a flat crown and three upturned brim flaps
+    m.frustum("crown", "hat", top_ratio=0.86, segments=16)
+    for i in range(3):
+        m.box(f"flap{i}", "hat", size=(0.030, 0.150, 0.060))
+        m.box(f"edge{i}", "brass", size=(0.034, 0.154, 0.010))
+    m.tube("plume", "plume", points=7)
+    m.tube("blade", "blade", points=6)
+    m.capsule("grip", "guard")
+    m.tube("knuckle", "guard", points=5)
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
+def _sabre_hand(sh, a, walking):
+    swing = 0.05 * math.sin(a) if walking else 0.0
+    return sh + Vector((0.160 + swing, -0.080, -0.160))
 
 
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
-
-
-def _frustum(o, base, radii, height, rot=(0.0, 0.0, 0.0)):
-    o.location = base
-    o.rotation_mode = "XYZ"
-    o.rotation_euler = Euler(rot)
-    o.scale = (radii[0], radii[1], height)
+def _hip_hand(sh, a, walking):
+    return sh + Vector((0.020, 0.110, -0.300))            # fist on the hip, elbow out: a swaggering outline
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.014 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    _frustum(m.objects["skirt"], Vector((0, 0, SKIRT_BOTTOM)) + up, SKIRT_R, SKIRT_TOP - SKIRT_BOTTOM,
-             (0.04 * math.sin(a) if walking else 0.0, 0, 0))
-    _frustum(m.objects["belt"], Vector((0, 0, 0.540)) + up, (TORSO_R[0] * 1.04, TORSO_R[1] * 0.99), 0.060)
-    m.put_segment("sash_x", Vector((0.100, -0.140, 0.830)) + up, Vector((0.095, 0.150, 0.560)) + up, 0.026)
-    m.objects["pelt"].location = Vector((-0.010, 0, 0.835)) + up
-    m.objects["pelt_back"].location = Vector((-0.085, 0, 0.740)) + up
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.055, 0, 0.040))
-    m.objects["beard"].location = head + Vector((0.085, 0, -0.090))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.128, 0.046 * s, 0.092))
-    tilt = Euler((0.10, -0.42, 0.0))
-    hat_base = head + Vector((-0.045, 0.0, 0.118))
-    for name in ("brim", "crown"):
-        o = m.objects[name]
-        o.rotation_mode = "XYZ"
-        o.rotation_euler = tilt
-    m.objects["brim"].location = hat_base
-    crown = m.objects["crown"]
-    crown.location = hat_base
-    crown.scale = (0.115, 0.108, 0.120)
-    sway = 0.012 * math.sin(a) if walking else 0.0
-    root = hat_base + Vector((-0.030, 0.105, 0.040))
-    pts, radii = [], []
-    for i in range(9):
-        u = i / 8
-        pts.append(root + Vector((-0.17 * u, 0.09 * u * u, 0.07 * math.sin(math.pi * u * 0.8) + sway * u)))
-        radii.append(0.022 * (1 - u) ** 0.6 + 0.004)
-    m.set_tube("feather", [tuple(p) for p in pts], radii)
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.055 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"thigh_{k}", hip, knee, LEG_R)
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.11)), LEG_R * 1.12)
-        m.objects[f"boot_{k}"].location = ankle + Vector((0.030, 0, -0.012))
-    for s, k, phase in ((1, "l", 0.5), (-1, "r", 0.0)):       # arms swing against the legs
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        swing = 0.12 * math.sin(a + math.pi * 2 * phase) if walking else 0.0
-        hand = sh + Vector((swing, 0.030 * s, -0.34 + 0.02 * abs(swing) / 0.12))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, Vector((-1, 0, 0)))
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        m.put_segment(f"fore_{k}", elbow, hand, ARM_R * 0.92)
-        d = (hand - elbow).normalized()
-        m.objects[f"hand_{k}"].location = hand + d * 0.018
-        if k == "r":
-            grip = hand + d * 0.020
-            fwd = Vector((0.75, -0.15, 0.65)).normalized()       # blade angled forward and up
-            m.put_segment("grip", grip - fwd * 0.040, grip + fwd * 0.020, 0.014)
-            side = Vector((0, 1, 0))
-            m.put_segment("guard", grip + fwd * 0.025 - side * 0.040, grip + fwd * 0.025 + side * 0.040, 0.012)
-            m.put_segment("blade", grip + fwd * 0.030, grip + fwd * 0.180, 0.018)
-            tip = grip + fwd * 0.180 + (fwd * 0.120 + Vector((-0.060, 0, -0.030)))   # the blade curves back
-            m.put_segment("blade_tip", grip + fwd * 0.175, tip, 0.015)
+    p = H.pose(m, t, hands={"r": _sabre_hand, "l": _hip_hand})
+    up, head, a, walking = p["up"], p["head"], p["a"], p["walking"]
+    s = m.spec
+    m.objects["beard"].location = head + Vector((0.074, 0, -0.072))
+    m.objects["earring"].location = head + Vector((0.010, 0.120, -0.040))
+    flap = 0.24 * abs(math.sin(a)) if walking else 0.0
+    for k, (x, y, rot) in (("f_l", (0.098, 0.070, flap)), ("f_r", (0.098, -0.070, flap)), ("b", (-0.102, 0.0, -flap))):
+        for name, z in ((f"skirt_{k}", 0.420), (f"hem_{k}", 0.300)):
+            o = m.objects[name]
+            o.rotation_mode = "XYZ"
+            o.rotation_euler = Euler((0, rot, 0))
+            o.location = Vector((x, y, z)) + up
+    H.frustum(m, "sash", Vector((0, 0, s["belt_z"] - 0.010)) + up, (s["torso_r"][0] * 1.10, s["torso_r"][1] * 1.04), 0.070)
+    m.put_segment("baldric", Vector((s["torso_r"][0] * 0.80, 0.120, 0.870)) + up,
+                  Vector((s["torso_r"][0] * 1.05, -0.110, 0.590)) + up, 0.022)
+    sway = 0.03 * math.sin(a) if walking else 0.0
+    for i in range(2):
+        top = Vector((0.020, -s["torso_r"][1] * 1.02, s["belt_z"] - 0.020 - 0.010 * i)) + up
+        m.put_segment(f"sashend{i}", top, top + Vector((0.030 - 0.040 * i + sway, -0.020, -0.130 + 0.020 * i)), 0.022, 0.016)
+    for i in range(3):
+        m.objects[f"button{i}"].location = Vector((s["torso_r"][0] * 1.03, 0.040, 0.800 - 0.065 * i)) + up
+    hat = head + Vector((-0.020, 0, 0.130))
+    H.frustum(m, "crown", hat, (0.090, 0.088), 0.090, rot=(0, -0.30, 0))
+    for i in range(3):
+        ang = math.pi / 3 + 2 * math.pi * i / 3                 # corners at front-left, front-right, back
+        out = Vector((math.cos(ang + math.pi / 3), math.sin(ang + math.pi / 3), 0))
+        for name, dz in ((f"flap{i}", 0.020), (f"edge{i}", 0.052)):
+            o = m.objects[name]
+            o.rotation_mode = "XYZ"
+            o.rotation_euler = Euler((0, -0.50, ang + math.pi / 3))  # each flap leans out and up
+            o.location = hat + out * 0.090 + Vector((0, 0, dz))
+    pts = [hat + Vector((-0.010 - 0.034 * k, 0.050 + 0.012 * k, 0.060 + 0.012 * k - 0.0030 * k * k + sway * k / 6)) for k in range(7)]
+    m.set_tube("plume", [tuple(q) for q in pts], [0.012, 0.022, 0.026, 0.026, 0.022, 0.016, 0.008])
+    # curved sabre held out and up from the right hand
+    hand = p["hand_r"]
+    fwd = Vector((0.70, -0.40, 0.60)).normalized()
+    side = fwd.cross(Vector((0, 0, 1))).normalized()
+    m.put_segment("grip", hand - fwd * 0.040, hand + fwd * 0.030, 0.014)
+    knuckle = [hand + fwd * 0.030 - side * 0.010, hand + fwd * 0.010 - side * 0.040, hand - fwd * 0.020 - side * 0.045,
+               hand - fwd * 0.045 - side * 0.030, hand - fwd * 0.045]
+    m.set_tube("knuckle", [tuple(q) for q in knuckle], [0.008] * 5)
+    curve = [hand + fwd * (0.040 + 0.055 * k) + side * (0.006 * k * k) for k in range(6)]
+    m.set_tube("blade", [tuple(q) for q in curve], [0.022, 0.022, 0.020, 0.017, 0.012, 0.005])
 
 
 def assign_depth_parts(m, depth_of):

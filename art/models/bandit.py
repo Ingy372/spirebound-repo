@@ -1,8 +1,18 @@
-"""Road bandit (Floor 1, the Bandit Road): model + walk cycle, built on Brannoch's body.
+"""Road Bandit (Floor 1 monster, the Bandit Road), built on art/models/humanoid.py (second draft, 2026-11-25).
 
-ART_REQUESTS.md: "a human bandit with a brown hood, a face scarf and a short sword". Original design: brown
-hood and short shoulder cape, dark red scarf over the nose and mouth (only the eyes show), worn leather
-jerkin with a belt, short sword held low in the right hand, boots. Faces +X; sizes in tiles.
+ART_REQUESTS.md: "a human bandit with a brown hood, a face scarf and a short sword".
+The first draft (2026-11-15) had its own copied body; this one follows art/OUTFIT_RULES.md.
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: a ROUND brown hood (the Ranger player class owns the pointed hood: a monster must never pass for
+              a player, rule O14), a red scarf over nose and mouth so only the eyes show, a short sword held low and
+              forward in the right hand, a small round buckler on the left forearm.
+  Colours:    mud-brown hood and short cape, a charcoal jerkin (brown on brown read as one blob), a red scarf,
+              brown trousers; iron sword.
+  Details:    scarf knot with two hanging tails at the back of the neck, hood rim, jerkin laces, a coin pouch at the
+              belt, the buckler's iron rim and boss, the sword's crossguard.
+Look-alike: Tibia's Bandit and Smuggler (human outlaws): ours is masked and hooded, theirs bare-headed.
+Addons: none (a monster, rule A1).
 """
 from __future__ import annotations
 
@@ -10,143 +20,95 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "bandit"
 WALK_FRAMES = 8
 PALETTE = "bandit"
-REFERENCE = "outfit_128.png"       # Tibia's male citizen, grey (comparison only, never shipped)
+REFERENCE = "outfit_128.png"
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
-PIXEL_RULES = {
-    "weight": {"eye": 9.0, "hand": 2.4, "blade": 3.0, "hilt": 2.6, "belt": 2.0, "pelt": 1.4, "boot": 1.4,
-               "beard": 1.8},
-    "thin": {"eye": 3, "hand": 3, "blade": 2, "hilt": 2, "belt": 3},
-    "soft": [["tunic", "belt"], ["skin", "hair", "beard", "eye", "pelt"], ["hand", "skin"], ["pants", "boot"],
-             ["blade", "hilt"]],
-    "no_outline": [],
-    "fur": [],
-    "selout": ["tunic", "pelt", "skin", "hair"],
-}
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["scarf", "hood"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose", "hood", "scarf"]
+LEG_PARTS = ["leg_a", "leg_b", "boot_a", "boot_b"]
+CHECK = {"size": (0.85, 1.45), "head": 0.08, "legs_side": 0.05, "eye": 1}
 
-PARTS = ["none", "skin", "eye", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand", "blade", "hilt"]
+PARTS = H.PARTS + ["hood", "rim", "cape", "scarf", "lace", "pouch", "buckler", "iron", "blade", "hilt"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"hood": 1.3, "rim": 2.2, "scarf": 1.8, "lace": 3.0, "pouch": 2.4, "buckler": 1.8, "iron": 3.0,
+            "blade": 3.0, "hilt": 3.0},
+    thin={"rim": 2, "lace": 2, "iron": 2, "blade": 2, "hilt": 2},
+    soft=[["hood", "rim", "cape"], ["torso", "lace"], ["belt", "pouch"], ["buckler", "iron"], ["blade", "hilt"]],
+    texture={"hood": [0.45, 0.2], "cape": [0.45, 0.25], "scarf": [0.35, 0.12]},
+    selout=["hood", "cape", "scarf"],
+)
 
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
-HIP_Y = 0.074
-LEG_R = 0.056
-TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.110, 0.170, 0.190)
-SKIRT_TOP, SKIRT_BOTTOM = 0.58, 0.40                      # short tunic: legs show
-SKIRT_R = (0.130, 0.175)
-HEAD = Vector((0.010, 0.0, 0.975)); HEAD_R = (0.148, 0.140, 0.158)
-SHOULDER = Vector((0.0, 0.172, 0.825))
-UPPER_ARM, FOREARM = 0.19, 0.18
-ARM_R = 0.054
-STRIDE, LIFT, STANCE = 0.13, 0.060, 0.5
-BODY_SCALE = (1.15, 1.22, 0.80)
+SPEC = H.spec(torso_r=(0.100, 0.150, 0.182), arm_r=0.048, leg_r=0.050, stride=0.13, lift=0.060, bob=0.016,
+              strands=(-1.0, 0.0, 1.0))
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
-    for k in ("l", "r"):
-        m.capsule(f"thigh_{k}", "pants")
-        m.capsule(f"shin_{k}", "pants")
-        m.capsule(f"bootleg_{k}", "boot")
-        m.ellipsoid(f"boot_{k}", "boot", radii=(0.072, 0.046, 0.050), segments=12, rings=8)
-        m.capsule(f"upper_{k}", "tunic")
-        m.capsule(f"fore_{k}", "tunic")
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.038, 0.032, 0.040), segments=10, rings=8)
-    m.ellipsoid("torso", "tunic", radii=TORSO_R)
-    m.frustum("skirt", "tunic", top_ratio=0.80)
-    m.frustum("belt", "belt", top_ratio=1.0)
-    m.ellipsoid("pelt", "pelt", radii=(0.140, 0.200, 0.080), segments=18, rings=10)   # short hooded cape
-    m.ellipsoid("pelt_back", "pelt", radii=(0.060, 0.150, 0.150), segments=14, rings=8)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.160, 0.160, 0.158))   # the hood
-    m.ellipsoid("beard", "beard", radii=(0.090, 0.140, 0.070), segments=14, rings=8)   # face scarf
-    for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.018), segments=8, rings=6)
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("hood", "hood", radii=(0.132, 0.136, 0.120), segments=18, rings=10)
+    m.tube("hood_rim", "rim", points=7)
+    m.ellipsoid("cape", "cape", radii=(0.110, 0.180, 0.070), segments=16, rings=8)
+    m.box("cape_back", "cape", size=(0.026, 0.240, 0.200))
+    m.ellipsoid("scarf", "scarf", radii=(0.076, 0.120, 0.052), segments=14, rings=8)
+    for i in range(2):
+        m.capsule(f"tail{i}", "scarf")
+        m.capsule(f"lace{i}", "lace")
+    m.ellipsoid("pouch", "pouch", radii=(0.030, 0.030, 0.034), segments=8, rings=6)
+    m.ellipsoid("buckler", "buckler", radii=(0.090, 0.022, 0.090), segments=16, rings=8)
+    m.ellipsoid("buckler_rim", "iron", radii=(0.100, 0.010, 0.100), segments=16, rings=8)
+    m.ellipsoid("boss", "iron", radii=(0.026, 0.022, 0.026), segments=8, rings=6)
     m.capsule("blade", "blade")
     m.capsule("guard", "hilt")
     m.capsule("grip", "hilt")
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
+def _sword_hand(sh, a, walking):
+    swing = 0.06 * math.sin(a) if walking else 0.0
+    return sh + Vector((0.120 + swing, -0.040, -0.270))
 
 
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
-
-
-def _frustum(o, base, radii, height, rot=(0.0, 0.0, 0.0)):
-    o.location = base
-    o.rotation_mode = "XYZ"
-    o.rotation_euler = Euler(rot)
-    o.scale = (radii[0], radii[1], height)
+def _buckler_hand(sh, a, walking):
+    return sh + Vector((0.120, 0.060, -0.230))
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.014 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    _frustum(m.objects["skirt"], Vector((0, 0, SKIRT_BOTTOM)) + up, SKIRT_R, SKIRT_TOP - SKIRT_BOTTOM,
-             (0.04 * math.sin(a) if walking else 0.0, 0, 0))
-    _frustum(m.objects["belt"], Vector((0, 0, 0.555)) + up, (TORSO_R[0] * 1.02, TORSO_R[1] * 0.97), 0.030)
-    m.objects["pelt"].location = Vector((-0.010, 0, 0.835)) + up
-    m.objects["pelt_back"].location = Vector((-0.085, 0, 0.740)) + up
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.058, 0, 0.050))
-    m.objects["beard"].location = head + Vector((0.085, 0, -0.075))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.128, 0.046 * s, 0.092))
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.055 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"thigh_{k}", hip, knee, LEG_R)
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.11)), LEG_R * 1.12)
-        m.objects[f"boot_{k}"].location = ankle + Vector((0.030, 0, -0.012))
-    for s, k, phase in ((1, "l", 0.5), (-1, "r", 0.0)):       # arms swing against the legs
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        swing = 0.12 * math.sin(a + math.pi * 2 * phase) if walking else 0.0
-        hand = sh + Vector((swing, 0.030 * s, -0.34 + 0.02 * abs(swing) / 0.12))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, Vector((-1, 0, 0)))
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        m.put_segment(f"fore_{k}", elbow, hand, ARM_R * 0.92)
-        d = (hand - elbow).normalized()
-        m.objects[f"hand_{k}"].location = hand + d * 0.018
-        if k == "r":
-            grip = hand + d * 0.020
-            fwd = Vector((0.75, -0.15, 0.65)).normalized()       # blade angled forward and up
-            m.put_segment("grip", grip - fwd * 0.040, grip + fwd * 0.020, 0.014)
-            side = Vector((0, 1, 0))
-            m.put_segment("guard", grip + fwd * 0.025 - side * 0.040, grip + fwd * 0.025 + side * 0.040, 0.012)
-            m.put_segment("blade", grip + fwd * 0.030, grip + fwd * 0.300, 0.018)
+    p = H.pose(m, t, hands={"r": _sword_hand, "l": _buckler_hand})
+    up, head, a, walking = p["up"], p["head"], p["a"], p["walking"]
+    hood_c, hood_r = head + Vector((-0.052, 0, 0.034)), (0.132, 0.136, 0.120)   # set back: the eyes must show (O3)
+    m.objects["hood"].location = hood_c
+    rim = [H.on_ellipsoid(hood_c, hood_r, (0.55, math.sin(u), math.cos(u) * 0.8), 1.02) for u in (-1.5, -1.0, -0.5, 0.0, 0.5, 1.0, 1.5)]
+    m.set_tube("hood_rim", [tuple(q) for q in rim], [0.010] * 7)
+    m.objects["cape"].location = Vector((-0.010, 0, 0.860)) + up
+    cb = m.objects["cape_back"]
+    cb.rotation_mode = "XYZ"
+    cb.rotation_euler = Euler((0, 0.15 + (0.08 * abs(math.sin(a)) if walking else 0.0), 0))
+    cb.location = Vector((-0.128, 0, 0.740)) + up
+    m.objects["scarf"].location = head + Vector((0.058, 0, -0.060))          # over nose and mouth: eyes stay clear
+    flap = 0.03 * math.sin(a) if walking else 0.0
+    for i, sgn in enumerate((1, -1)):
+        knot = head + Vector((-0.100, 0.020 * sgn, -0.050))
+        m.put_segment(f"tail{i}", knot, knot + Vector((-0.050 - flap, 0.030 * sgn, -0.090)), 0.014, 0.008)
+        z = 0.780 - 0.070 * i
+        m.put_segment(f"lace{i}", Vector((0.104, -0.030, z)) + up, Vector((0.104, 0.030, z - 0.020)) + up, 0.005)
+    s = m.spec
+    m.objects["pouch"].location = Vector((s["torso_r"][0] * 0.7, s["torso_r"][1] * 0.9, s["belt_z"] - 0.030)) + up
+    hand = p["hand_l"]
+    for name, dy in (("buckler_rim", 0.0), ("buckler", 0.004), ("boss", 0.020)):
+        o = m.objects[name]
+        o.rotation_mode = "XYZ"
+        o.rotation_euler = Euler((0.0, 0.10, 0.30))
+        o.location = hand + Vector((-0.010, 0.040 + dy, 0.020))
+    hand = p["hand_r"]
+    fwd = Vector((0.75, -0.35, -0.10)).normalized()                      # held low and forward, point out
+    side = fwd.cross(Vector((0, 0, 1))).normalized()
+    m.put_segment("grip", hand - fwd * 0.040, hand + fwd * 0.030, 0.014)
+    m.put_segment("guard", hand + fwd * 0.032 - side * 0.045, hand + fwd * 0.032 + side * 0.045, 0.012)
+    m.put_segment("blade", hand + fwd * 0.036, hand + fwd * 0.250, 0.020, 0.010)
 
 
 def assign_depth_parts(m, depth_of):
