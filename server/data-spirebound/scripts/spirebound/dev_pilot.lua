@@ -350,6 +350,44 @@ function pilot.onSay(player, words, param)
 			it:decay()
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: wall " .. (it and "placed" or "failed"))
+	elseif cmd == "notice" then
+		-- (H0b) "/pilot notice on|off": every second, write each wild monster in view to the server log
+		-- (distance, clear line of sight, whether it is after you); "/pilot notice ghost" also makes you invisible,
+		-- so monsters ignore you and wander as if nobody were there
+		local pid = player:getId()
+		SpirePilotNotice = SpirePilotNotice or {}
+		if rest:find("ghost") then
+			local c = Condition(CONDITION_INVISIBLE)
+			c:setParameter(CONDITION_PARAM_TICKS, 15 * 60 * 1000)
+			player:addCondition(c)
+		elseif rest:find("off") then
+			player:removeCondition(CONDITION_INVISIBLE)
+			SpirePilotNotice[pid] = nil
+			player:sendTextMessage(MESSAGE_STATUS, "pilot: notice off")
+			return true
+		end
+		if not SpirePilotNotice[pid] then
+			SpirePilotNotice[pid] = true
+			local function tick()
+				local p = Player(pid)
+				if not p or not SpirePilotNotice[pid] then
+					SpirePilotNotice[pid] = nil
+					return
+				end
+				local here = p:getPosition()
+				for _, c in ipairs(Game.getSpectators(here, false, false, 9, 9, 7, 7)) do
+					if c:isMonster() and not c:getMaster() then
+						local cp = c:getPosition()
+						local t = c:getTarget()
+						logger.info(string.format("NOTICE %d %s %d %d %d %d %d %d %d", os.time(), c:getName(), c:getId(),
+							cp.x, cp.y, here.x, here.y, here:isSightClear(cp) and 1 or 0, (t and t:getId() == pid) and 1 or 0))
+					end
+				end
+				addEvent(tick, 1000)
+			end
+			tick()
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: notice on")
 	elseif cmd == "unsummon" then
 		for _, m in ipairs(player:getSummons()) do
 			m:remove()

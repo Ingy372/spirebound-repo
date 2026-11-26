@@ -480,6 +480,8 @@ Jay, 2026-11-16: *"i think each spawn should be a little different. there should
 - Some grounds (not all) have an overwhelming spot: a nest, a deep room or a far end that a player at the ground's level can't hold and must back out of to the previous spawn, and comes back to once stronger.
 - The danger budget is a ceiling against floods, not a target for emptiness; the numbers in `tools/balance.py` are set for challenge **(Claude's call on the numbers, Jay can veto)**.
 
+**How monsters notice you (measured in the client, H0 and H0b, 2026-11-26).** Monsters on your floor notice you from at least 12 tiles, as soon as you come into view. A wall or corner between you does not delay them: every monster with a clear line went for the test character at once (270 of 270), and so did most behind a wall or round a corner (62 of 79). The rest (17) never came, because they had no way round to you. Monsters let go when you change level. Idle monsters (nobody to fight) drift about 3 to 5 tiles from where they stood within 40 seconds, at most 9. So map design, not wall cover, decides when a spawn wakes: a gate stays quiet only if its monsters are out of view (more than about 9 tiles across, 7 up or down) or walled off with no short way round.
+
 ## 10. Economy
 
 - Gold / platinum / crystal coins. Gold enters from monster loot, quests, secrets sold to the broker, fishing. Gold leaves through: blessings, rent, travel fees, NPC supplies, guild/war fees, Fortune Hall cut, skull fines, repair costs **(Claude's call on sink list)**.

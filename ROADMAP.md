@@ -19,10 +19,6 @@ Every real tester has hit a blocker in the first 30 minutes. Fix what is left, o
 - [ ] **G6 Rerun with Grok on a calm PC**: items 5-8 of the session 1 report (invisible attackers, dropped clicks and chat), and `!hunt` refused in town (could not reproduce from the code). Done when: a Grok report with no lag caveat, on the current client package, including a Ranger and a Vanguard past the cheese gate.
 - [ ] **1.5 Windows one-click setup.** *(built and checked in the cloud; waiting for Jay's first run)* Done when: 🧑 Jay double-clicks it once and reaches the login screen (logged in PLAYTEST.md).
 
-## Step 2 — Finish Floor 1's last third (levels 19 to 35)
-The end of the floor, right before the boss, is its weakest part: two grounds still swarm at the gate and the group hunting isn't built.
-- [ ] **H0b How walls and wandering change noticing** (cut from H0, 2026-11-26): does a monster behind a wall or round a corner notice you as early as one in the open, and how far do idle monsters wander from their spot? Done when: measured with the autopilot's `watch` step and written into DESIGN.md 9.4's notes.
-
 ## Step 3 — The milestone: a real party clears Floor 1 🧑
 The moment the whole game is built around has never been played. **Nothing new until this passes.**
 - [ ] **N1 The full run** (new, 2026-11-25): a party of real characters (Jay plus Grok testers or friends; several Pilots in one party as the rehearsal) goes yard → Registrar → the grounds → Stair Key → Gate Hound → labyrinth → Axe-Lord, in the real client with no GM shortcuts, and Floor 2 opens with the announcement, the Monument names and the head-start window. Done when: it happens, and every note from it is fixed or filed.

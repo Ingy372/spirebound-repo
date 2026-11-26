@@ -1,0 +1,162 @@
+{
+ "name": "h0b_wander",
+ "character": "Pilot Vanguard",
+ "timeout": 1800,
+ "about": "H0b: the Pilot is invisible; how far idle monsters wander (NOTICE lines in the server log).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 35"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 80"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot notice ghost"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_a_1",
+   "note": "starter_west: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "starter_west: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_a_1",
+   "note": "starter_east: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "starter_east: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_a_1",
+   "note": "starter_south: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "starter_south: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_a_1",
+   "note": "wasp_fields: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "wasp_fields: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_a_1",
+   "note": "boar_meadow: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "boar_meadow: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_a_1",
+   "note": "burrow_hills: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "burrow_hills: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_a_1",
+   "note": "wolf_copse: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "wolf_copse: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_a_1",
+   "note": "reed_marsh: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "reed_marsh: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_a_1",
+   "note": "thornsnap_hollow: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "thornsnap_hollow: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_a_1",
+   "note": "shard_fields: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "shard_fields: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_a_1",
+   "note": "bandit_road: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "bandit_road: route a spot 1"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_4",
+   "note": "bandit_road: route d spot 4"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "bandit_road: route d spot 4"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_1",
+   "note": "old_quarry: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 45,
+   "note": "old_quarry: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot notice off"
+  }
+ ]
+}
