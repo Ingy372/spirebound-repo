@@ -142,6 +142,8 @@ LOOKALIKES = {
     "shardling": [(294, "Wisp"), (263, "Crystal Spider")],
     "thornsnap": [(120, "Carniphila"), (221, "Spit Nettle")],
     "azhrakkar": [(35, "Demon"), (55, "Behemoth")],
+    "gate_hound": [(240, "Hellhound"), (3, "War Wolf")],
+    "axe_lord": [(131, "Knight (outfit)"), (55, "Behemoth")],
 }
 
 
