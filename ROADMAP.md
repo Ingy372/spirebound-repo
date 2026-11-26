@@ -46,6 +46,7 @@ Winning Floor 1 must not lead to a placeholder.
 
 ## Step 7 — Know the real size of the art job
 Art, not code, sets the launch date: only 13 monsters are ours.
+- [ ] **N7b The Gate Hound's own corpse in the game** (Jay, 2026-11-26: "give the gate hound its own corpse"): once Jay approves `ART_FOR_JAY/gate_hound_corpse.png` (Q67), install it like N7 (art/output/corpse_gate_hound/item/) and switch its `corpse=`. Done when: a test kill in the client leaves it.
 
 ## Step 8 — Accounts, then the friends test
 - [ ] **7.1b The website on a secure public address** (split from 7.1, 2026-11-25): the site, sign-up and make-another-character pages are served by the login service on port 8080 without HTTPS. Friends over Tailscale are already encrypted; a public launch needs a real web address with HTTPS (free certificate) in front of it. Done when: a player off Jay's network opens the site over https:// and signs up.

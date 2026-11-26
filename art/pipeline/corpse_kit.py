@@ -41,7 +41,7 @@ def is_quadruped(m):
     return hasattr(m, "spec") and "fl_up" in m.objects
 
 
-def make(g, base_name, drop=0.62, head_drop=1.0, splay=1.0, lie_tilt=0.0, bones=False, mode="slump", fall=0.8,
+def make(g, base_name, drop=0.62, head_drop=1.0, splay=1.0, lie_tilt=0.0, bones=False, reach=0.03, mode="slump", fall=0.8,
          seed=1, keep=(1.0, 0.7, 0.4), pile=(1.35, 0.28), scatter=0.25,
          cloth=(1.25, 0.22), hide=(), soft=()):
     """mode: "slump" (an animal with no fitting Tibia corpse: dies in its own pose, see slump()), "shatter" (golems,
@@ -49,7 +49,8 @@ def make(g, base_name, drop=0.62, head_drop=1.0, splay=1.0, lie_tilt=0.0, bones=
     shatter/pile render three decay steps as frames 0-2: keep = share of the pieces still there at each step;
     fall = how far the pieces land from where they stood (in tiles per tile of height); pile = (spread, height).
     drop: how far the torso sinks (share of its standing height above the ground it keeps: lower = flatter).
-    head_drop: 1 = chin on the ground. splay: how far the folded legs stick out. lie_tilt: roll toward the viewer."""
+    head_drop: 1 = chin on the ground. splay: how far the folded legs stick out. lie_tilt: roll toward the viewer
+    (degrees; spreads side-by-side parts such as the Gate Hound's three heads). reach: how far the head flops forward."""
     base = importlib.import_module(base_name)
     for k in COPY:
         if hasattr(base, k):
@@ -87,8 +88,8 @@ def make(g, base_name, drop=0.62, head_drop=1.0, splay=1.0, lie_tilt=0.0, bones=
         s["chest"] = (s0["chest"][0], sink(s0["chest"][1], s0["chest_r"][2] * 0.9))
         s["hip"] = (s0["hip"][0] - 0.01, sink(s0["hip"][1], s0["hip_r"][2] * 0.95))
         hz = s0["head_r"][2] * (1.0 + 0.4 * (1 - head_drop))
-        s["head"] = (s0["head"][0] + 0.03, sink(s0["head"][1], hz) if head_drop < 1 else hz)
-        s["snout_tip"] = (s0["snout_tip"][0] + 0.035, max(s0["snout_r"][0] * 0.9, s["head"][1] - 0.03))
+        s["head"] = (s0["head"][0] + reach, sink(s0["head"][1], hz) if head_drop < 1 else hz)
+        s["snout_tip"] = (s0["snout_tip"][0] + reach + 0.005, max(s0["snout_r"][0] * 0.9, s["head"][1] - 0.03))
         dz = s0["chest"][1] - s["chest"][1]
         s["leg_top_z"] = s0["leg_top_z"] - dz
         s["tail_raise"] = min(s0["tail_raise"], 0.95)          # limp, along the ground

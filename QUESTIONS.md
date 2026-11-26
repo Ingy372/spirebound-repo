@@ -29,6 +29,11 @@ Also: the walk test in the client found that Floor 2's ordinary monsters were fa
 - **Recommendation:** keep the twists. When you reach Floor 2 in a playtest, tell me whether Grazing Downs feels right for a fresh level 35.
 - Jay's answer:
 
+### Q67. Approve the Gate Hound's own corpse? (2026-11-26, art)
+You asked for it: Tibia's dead hellhound has three heads but is red, yellow and green, and our hound is slate-blue. Drawn the way Tibia does animal corpses: slumped with its three heads flopped on the ground, gashes and a blood pool, then rotting with the ribs showing, then its three-skulled skeleton. Sheet: `ART_FOR_JAY/gate_hound_corpse.png`.
+- **Recommendation:** approve. Until then it keeps the Tibia hellhound corpse.
+- Your answer:
+
 ### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
 Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
 - **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).

@@ -31,6 +31,8 @@ CORPSES = {
     "sentinel": ("Ruin Sentinel / Granite Warden", "S", "pieces", (1.0, 0.92)),
     "underkeeper": ("The Underkeeper", "S", "pieces", (0.88, 0.78)),
     "vault_wraith": ("Vault Wraith", "E", "pieces", (0.85, 0.72)),
+    # Tibia's dead hellhound has three heads too, but it is red, yellow and green; ours is slate-blue (Jay, 2026-11-26)
+    "gate_hound": ("Gate Hound", "W", "flesh", None),
 }
 
 # blood (C4): Tibia's corpse blood is a deep red with a brighter wet line, never orange

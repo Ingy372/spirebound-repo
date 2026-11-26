@@ -20,8 +20,7 @@ if __name__ == "__main__":
     data = json.loads(path.read_text())
     bone = data["ramps"]["archer"]["skin"]
     far = [[max(0, int(c * 0.78)) for c in col] for col in bone]
-    bases = sorted({p.stem[len("corpse_"):] for p in (ART / "models").glob("corpse_*.py")
-                    if not p.stem.endswith("_bones") and p.stem not in ("corpse_kit",)})
+    bases = sorted(p.stem[len("corpse_"):-len("_bones")] for p in (ART / "models").glob("corpse_*_bones.py"))
     made = []
     for b in bases:
         src = (ART / "models" / f"{b}.py")

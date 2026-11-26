@@ -28,7 +28,7 @@ example, would need their own corpse art drawn." So the order is:
    antelopes, lizards, boars, wolves, beetles, wasps, the skeleton archer and the briar plant all have one.
 2. **Draw our own** only when nothing fits. Today: the Ruin Sentinel / Granite Warden (our stone golem), the
    Underkeeper (a caged-skull jailer in a robe, with lantern and chain) and the Vault Wraith (a hooded purple spirit:
-   Tibia's "betrayed wraith" corpse is an armoured knight). Later floors' golems and constructs will join them.
+   Tibia's "betrayed wraith" corpse is an armoured knight). Also the Gate Hound (Jay, 2026-11-26): Tibia's three-headed hellhound corpse is red, yellow and green, ours is slate-blue; drawn with `mode="slump"`, `lie_tilt` spreading its three heads. Later floors' golems and constructs will join them.
 
 ### What Tibia's corpses look like (studied 2026-11-26 from the client: boar, wolf, lion, deer, buffalo, bandit,
 ### human, black knight, wasp, beetle, carniphila, stone golem, skeleton, hellhound, draptor)
