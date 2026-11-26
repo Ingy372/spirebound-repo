@@ -782,7 +782,12 @@ local function useKit(player)
             end
         end
     end
-    if mana / maxMana < 0.3 and not plan.noPotions and t - lastManaPotion > 2 and t - lastPotion > 1 then
+    -- mana potions the way players use them: casters (a big mana pool) top up in a fight; fighters, whose small pool
+    -- refills on its own, drink one only when hurt and short of the mana for their healing spell
+    local cheapestHeal = kit.heal[1] and kit.heal[1].mana or math.huge
+    local wantMana = (maxMana >= 200 and mana / maxMana < 0.3 and g_game.isAttacking())
+        or (hp < 0.5 and mana < cheapestHeal and maxMana >= cheapestHeal)
+    if wantMana and not plan.noPotions and t - lastManaPotion > 2 and t - lastPotion > 1 then
         lastManaPotion = t
         pcall(function() g_game.useInventoryItemWith(MANA_POTION, player) end)
         st.manaPots, total.manaPots = st.manaPots + 1, total.manaPots + 1

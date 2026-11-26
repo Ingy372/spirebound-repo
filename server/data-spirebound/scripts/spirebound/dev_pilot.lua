@@ -97,7 +97,7 @@ function pilot.onSay(player, words, param)
 		end
 		local fam = SwordSkills.heldFamily(player)
 		for _, s in ipairs(SwordSkills.list) do
-			if fam and s.family == fam then
+			if fam and s.family == fam and (s.level or 1) <= lvl and (not s.twinFang or SwordSkills.hasTwinFang(player)) then
 				table.insert(skills, string.format("%s/%d", s.words, math.floor((s.cd or 4000) / 1000)))
 			end
 		end
