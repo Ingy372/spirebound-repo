@@ -191,3 +191,11 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
 - P3b ticked: seen at night in the client (`p3b_night`, a screenshot every 5 minutes for an hour; the first try was cut off by the game's 15-minute idle logout, so the test character now takes a step between shots). Street lamps light the avenue, braziers burn at the gates. No server restart (a playtest is on, Jay: "no restarts").
 - N2 ticked (second session): how many hunters Floor 1 feeds, measured with bots on all twelve grounds at once (crowd system on). About 30 at once get 200+ kills an hour each, only about 9 of them in the level 9-30 grounds (target 150). From Boar Meadow up, a ground's total kills barely grow with more players: monsters return at a fixed pace. Boar Meadow is under 200 even for one player. Table and map suggestions for the lead session's 10.4 in `docs/N2_capacity.md`; question Q72 (a launch-week crowd boost).
 - R18 ticked (second session): the GitHub boot test runs on every push. Its occasional failure was one taskmaster test (made sturdier), and failures now show their reason on the run page. GitHub also runs a new network test: one character per class takes both outfit-addon quests from the real NPCs (passed). The separate balance check had failed on every push since this morning on line endings alone; fixed. Boot test 267 in-game tests, 0 errors.
+
+### Summary for Jay from the second session (2026-11-26, afternoon)
+While the lead session worked on the map, a second session did the non-map jobs on Floor 1:
+- **Your PC can carry a launch crowd:** 150 scripted players hunted at once on a test copy with no lag (`docs/LOAD_TEST.md`).
+- **The map can't yet:** Floor 1 feeds about 30 hunters at a good pace, only about 9 in the level 9-30 grounds. The lead session will enlarge the grounds (10.4) using these numbers (`docs/N2_capacity.md`). Question Q72 for you.
+- **Outfit addons are now quest rewards:** say "outfit" to Captain Dorrow, Hunter Brannoch, Vesper or Fisher Corwin (Q71). Tested through the real NPCs; you'll see them after the next server restart.
+- **The GitHub checks are green again** and now also test a quest over the real network.
+- Floor 2 economy (J5b) was dropped when you paused Floor 2+ work. Your live server was never stopped or restarted by this session.
