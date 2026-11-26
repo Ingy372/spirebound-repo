@@ -1,14 +1,57 @@
 {
  "name": "g12b_checks",
- "about": "G12b: listen to the six townsfolk round the Hearth Square for 10 minutes (each should talk about once every 3 minutes), then log out and read the character list (it should show the level set here, 23).",
+ "about": "G12b and the Floor 1 polish: look at the Arrival Yard and the Hearth Square, listen to the townsfolk for 4 minutes (each about once every 3 minutes; shopkeepers too), then log out and read the character list (it should show level 23).",
  "character": "Pilot Ranger",
  "timeout": 900,
  "home": false,
  "steps": [
-  {"do": "say", "text": "/pilot level 23"},
-  {"do": "jump", "to": [1230, 1295, 7], "note": "the Hearth Square, among the townsfolk"},
-  {"do": "watch", "seconds": 600, "note": "listening to the townsfolk"},
-  {"do": "shot", "name": "g12b_square"},
-  {"do": "charlist", "note": "the character list after logging out"}
+  {
+   "do": "say",
+   "text": "/pilot level 23"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1278,
+    1342,
+    7
+   ],
+   "note": "the Arrival Yard, by the Spire"
+  },
+  {
+   "do": "shot",
+   "name": "p7_yard"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1302,
+    7
+   ],
+   "note": "the Hearth Square market"
+  },
+  {
+   "do": "shot",
+   "name": "n3_square"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1230,
+    1295,
+    7
+   ],
+   "note": "the Hearth Square, among the townsfolk"
+  },
+  {
+   "do": "watch",
+   "seconds": 240,
+   "note": "listening to the townsfolk"
+  },
+  {
+   "do": "charlist",
+   "note": "the character list after logging out"
+  }
  ]
 }
