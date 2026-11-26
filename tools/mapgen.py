@@ -101,6 +101,10 @@ ROOF_IDS = {i for r in ROOFS.values() for i in r.values()}
 ROOF_FOR = {"brick": "shingle", "stone": "shingle", "timber": "straw", "sand": "straw", "white": "red", "pale": "red"}
 MOUNTAIN = 1128                         # mountain ground: solid rock; Map.edge_grounds adds its rock faces
 STAIRS_UP, STAIRS_DOWN = 5258, 413      # stairs item on the lower level (walk on: up and north); stair tile above it
+# 413 is an open frame: you see the stairs on the level below through it. The client never draws underground levels
+# from the surface, so on z 7 over a cellar it showed an empty blue square (Jay, 2026-11-26: "fix the blue square on the
+# stairs"). From the surface down, use 414: the same frame with the steps painted in (also floorchange down).
+STAIRS_DOWN_SURFACE = 414
 LADDER, TRAPDOOR = 1948, 369            # ladder on the lower level (use it: up); trapdoor tile above it (walk on: down)
 # Outdoor hills (FLOOR1_HUNTING_PLAN.md 6.3), read from Canary's hand-made map (2026-11-14):
 #   a hill top on level z stands on mountain ground at z + 1; its edge tiles carry "rocks" pieces 1100-1111 (they do not
@@ -236,7 +240,7 @@ class Map:
         rectangle, standing in the air on its top and left side (as the hand-made maps do), with a floor inside."""
         for y in range(y0 + 1, y0 + h):
             for x in range(x0 + 1, x0 + w):
-                if self.ground.get((x, y, z)) in (STAIRS_DOWN, TRAPDOOR):
+                if self.ground.get((x, y, z)) in (STAIRS_DOWN, STAIRS_DOWN_SURFACE, TRAPDOOR):
                     continue                  # a stairwell or trapdoor already opened from below stays open
                 self.ground[(x, y, z)] = self.pick(floor)
                 self.clear_items(x, y, z)
@@ -253,7 +257,7 @@ class Map:
             self.points["stairs_" + name] = (x, y, z)
         self.clear_items(x, y, z)
         self.put(x, y, z, STAIRS_UP)
-        self.ground[(x, y, z - 1)] = STAIRS_DOWN
+        self.ground[(x, y, z - 1)] = STAIRS_DOWN_SURFACE if z - 1 == 7 else STAIRS_DOWN
         self.clear_items(x, y, z - 1)
         if (x, y - 1, z - 1) not in self.ground:
             self.ground[(x, y - 1, z - 1)] = self.pick(floor)
