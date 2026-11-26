@@ -73,7 +73,8 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	if not hitter and attacker and attacker:getMaster() then
 		hitter = attacker:getMaster():getPlayer() -- summons count as their owner
 	end
-	local amount = math.max(0, primaryDamage) + math.max(0, secondaryDamage)
+	-- the size of the hit (the engine hands damage over as negative numbers, some spells as positive ones)
+	local amount = primaryType == COMBAT_HEALING and 0 or (math.abs(primaryDamage) + math.abs(secondaryDamage))
 	if victim and amount > 0 and attacker and attacker:isMonster() and not attacker:getMaster() then
 		SpireDeathGame.noteMonsterHit(attacker:getId(), victim:getGuid(), os.time()) -- for the "dragged in" rule
 	end

@@ -10,7 +10,7 @@ local lastHit = {} -- player guid -> os.time() of the last damage taken or the l
 
 local hits = CreatureEvent("SpireFightTimerHit")
 function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
-	if attacker and (primaryType ~= COMBAT_HEALING) and (primaryDamage > 0 or secondaryDamage > 0) then
+	if attacker and (primaryType ~= COMBAT_HEALING) and (primaryDamage ~= 0 or secondaryDamage ~= 0) then -- (either sign: see bosses_floor1.lua)
 		lastHit[creature:getGuid()] = os.time()
 	end
 	return primaryDamage, primaryType, secondaryDamage, secondaryType

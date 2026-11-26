@@ -142,7 +142,9 @@ function health.onHealthChange(creature, attacker, primaryDamage, primaryType, s
 		if not state.started then
 			state.started = now
 		end
-		SpireBoss.recordHit(state, player:getName(), primaryDamage + secondaryDamage, now)
+		-- the engine hands most hits over as negative numbers and some spells as positive ones: count the size of the
+		-- hit (2026-11-26: summing the signs cancelled out and the Gate Hound credited nobody)
+		SpireBoss.recordHit(state, player:getName(), math.abs(primaryDamage) + math.abs(secondaryDamage), now)
 	end
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
@@ -270,13 +272,13 @@ function enrage.onHealthChange(creature, attacker, primaryDamage, primaryType, s
 		for _, st in pairs(SpireBoss.fights) do
 			local h = st.started and st.hits[creature:getName()]
 			if h and now - h.last <= SpireBoss.CREDIT_WINDOW then
-				SpireBoss.recordHit(st, attacker:getName(), math.max(0, primaryDamage), now)
+				SpireBoss.recordHit(st, attacker:getName(), math.abs(primaryDamage), now)
 			end
 		end
 	end
 	if state and primaryType ~= COMBAT_HEALING and creature:isPlayer() then
 		-- soaking the boss's hits counts half (R9)
-		SpireBoss.recordHit(state, creature:getName(), math.floor((math.max(0, primaryDamage) + math.max(0, secondaryDamage)) * SpireBoss.TAKEN_WEIGHT), now)
+		SpireBoss.recordHit(state, creature:getName(), math.floor((math.abs(primaryDamage) + math.abs(secondaryDamage)) * SpireBoss.TAKEN_WEIGHT), now)
 	end
 	if state and primaryType ~= COMBAT_HEALING then
 		local mult = SpireBoss.enrageMultiplier(state, os.time())
