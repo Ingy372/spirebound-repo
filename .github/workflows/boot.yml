@@ -19,6 +19,12 @@ jobs:
         run: |
           set -o pipefail
           sudo -E env "PATH=$PATH" SPIRE_SETUP_DB=1 bash tools/test_boot.sh 180 2>&1 | tee boot-output.txt
+      # R18: a test through the real network path: a character per class logs in with the real game handshake, talks
+      # to the real NPCs, takes and finishes both outfit-addon quests (tools/loadtest.py addon, 6.5c)
+      - name: End-to-end test over the network (outfit addon quests)
+        run: |
+          set -o pipefail
+          sudo -E env "PATH=$PATH" python3 tools/loadtest.py addon 2>&1 | tee -a boot-output.txt
       # The run's logs need a GitHub sign-in to read, but annotations show on the run page for anyone (and for
       # Claude's browser): put the reason for a failure there.
       - name: Show why it failed
