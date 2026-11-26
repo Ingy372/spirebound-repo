@@ -27,6 +27,7 @@ python3 "$ROOT/tools/check_names.py" >/dev/null || { echo "FAIL: banned names"; 
 python3 "$ROOT/tools/gen_site.py" --check || { echo "FAIL: website build"; exit 1; }
 python3 "$ROOT/tools/login_server.py" --selftest || { echo "FAIL: login service safety checks"; exit 1; }
 python3 "$ROOT/tools/name_rules.py" --selftest || { echo "FAIL: name checker"; exit 1; }
+python3 "$ROOT/tools/account_security.py" --selftest || { echo "FAIL: account security"; exit 1; }
 python3 "$ROOT/tools/player_rules.py" --selftest || { echo "FAIL: rulebook (run python tools/player_rules.py --write-md)"; exit 1; }
 python3 "$ROOT/tools/site_snapshot.py" --selftest || { echo "FAIL: website snapshot"; exit 1; }
 python3 "$ROOT/tools/check_commands.py" || { echo "FAIL: a player command has no button (R19)"; exit 1; }

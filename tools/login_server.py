@@ -11,7 +11,8 @@ and answers with the characters of that account. The session key it hands out is
 (authType = "session") lets the client in with it for 24 hours. The password is never sent back.
 
 It also serves a small sign-up page at /signup so friends can make their own account, the rules at /rules, a page to
-make another character at /newchar, and the website itself at / (tools/gen_site.py's pages, rebuilt every 5 minutes
+make another character at /newchar, account security at /security (two-step login, new password), and the
+website itself at / (tools/gen_site.py's pages, rebuilt every 5 minutes
 from the game's records by tools/site_snapshot.py into .local/site). Every new account and character name goes
 through tools/name_rules.py, and players must agree to the rules.
 
@@ -26,6 +27,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import gen_site  # noqa: E402  the website's frame, shared by the sign-up pages
 import site_snapshot  # noqa: E402  the website's live pages (Hall of Fame, characters, online...)
+import account_security as sec  # noqa: E402  password storage, password rules, two-step codes
 import name_rules  # noqa: E402  the name checker (rude words, names from other games, staff titles, our NPCs)
 import player_rules  # noqa: E402  the rulebook new players agree to
 
@@ -112,14 +114,66 @@ def game_host_for(host_header):
     return GAME_HOST
 
 
-def login(email, password, game_host=None):
+def check_account(account, password):
+    """The account id if the password is right, else None. An old SHA1 password is upgraded to the strong format."""
+    if not valid_name(account) or not password or len(password) > 200:
+        return None
+    rows = sql(f"SELECT id, password FROM accounts WHERE (email={hexlit(account)} OR name={hexlit(account)}) LIMIT 1")
+    if not rows:
+        sec.hash_password(password)                  # same time either way: no hint whether the account exists
+        return None
+    ok, upgrade = sec.check_password(rows[0][1], password)
+    if not ok:
+        return None
+    if upgrade:
+        sql(f"UPDATE accounts SET password={hexlit(sec.hash_password(password))} WHERE id={int(rows[0][0])}")
+    return int(rows[0][0])
+
+
+TWO_FACTOR_TABLE = ("CREATE TABLE IF NOT EXISTS spirebound_twofactor (account_id INT UNSIGNED NOT NULL PRIMARY KEY, "
+                    "secret VARCHAR(64) NOT NULL, last_step BIGINT NOT NULL DEFAULT 0, backup TEXT NOT NULL, created BIGINT NOT NULL)")
+_table_ready = []
+
+
+def two_factor(acc):
+    """(secret, last used step, [hashed backup codes]) if the account has two-step login on, else None."""
+    if not _table_ready:
+        sql(TWO_FACTOR_TABLE)
+        _table_ready.append(True)
+    rows = sql(f"SELECT secret, last_step, backup FROM spirebound_twofactor WHERE account_id={int(acc)}")
+    if not rows:
+        return None
+    return rows[0][0], int(rows[0][1]), [b for b in rows[0][2].split(",") if b]
+
+
+def check_second_step(acc, code, now=None):
+    """True if the account has no two-step login, or the code (or an unused backup code) is right. Uses it up."""
+    tf = two_factor(acc)
+    if tf is None:
+        return True
+    secret, last, backups = tf
+    step = sec.check_code(secret, code, now=now, last_step=last)
+    if step >= 0:
+        sql(f"UPDATE spirebound_twofactor SET last_step={step} WHERE account_id={int(acc)}")
+        return True
+    h = sec.hash_backup(code or "")
+    if code and h in backups:
+        backups.remove(h)
+        sql(f"UPDATE spirebound_twofactor SET backup={hexlit(','.join(backups))} WHERE account_id={int(acc)}")
+        return True
+    return False
+
+
+def login(email, password, game_host=None, token=""):
     game_host = game_host or GAME_HOST
-    if not valid_name(email) or not password or len(password) > 200:
+    acc = check_account(email, password)
+    if acc is None:
         return None
-    rows = sql(f"SELECT id, password FROM accounts WHERE (email={hexlit(email)} OR name={hexlit(email)}) LIMIT 1")
-    if not rows or not hmac.compare_digest(rows[0][1], hashlib.sha1(password.encode()).hexdigest()):
-        return None
-    acc = rows[0][0]
+    if two_factor(acc) is not None:
+        if not token:
+            return {"errorCode": 6, "errorMessage": "Enter the 6-digit code from your authenticator app."}
+        if not check_second_step(acc, token):
+            return {"errorCode": 6, "errorMessage": "That code is not right. Codes change every 30 seconds.", "wrongCode": True}
     chars = sql("SELECT name, level, vocation, looktype, lookhead, lookbody, looklegs, lookfeet, lookaddons, sex "
                 f"FROM players WHERE account_id={int(acc)} AND deletion=0 ORDER BY name")
     return {
@@ -168,12 +222,11 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
         return False, why
     if not EMAIL_RULE.match(email or ""):
         return False, "Please give a real e-mail address."
-    if len(password or "") < 8 or len(password) > 100:
-        return False, "The password must be 8 to 100 characters."
+    problem = sec.password_problem(password or "", name, email, character)
+    if problem:
+        return False, problem
     if password != password2:
         return False, "The two passwords are not the same."
-    if password.lower() in (name.lower(), email.lower()):
-        return False, "The password must not be your account name or e-mail."
     character = " ".join((character or "").split())
     if not (3 <= len(character) <= 20 and CHAR_RULE.match(character)):
         return False, "The character name must be 3 to 20 letters, each word starting with a capital (e.g. Mira or Tom Reed)."
@@ -189,7 +242,7 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
     if sql(f"SELECT id FROM players WHERE name={hexlit(character)} LIMIT 1"):
         return False, "That character name is already taken."
     sql("INSERT INTO accounts (name, email, password, type, creation) VALUES "
-        f"({hexlit(name)}, {hexlit(email)}, {hexlit(hashlib.sha1(password.encode()).hexdigest())}, 1, {int(now)})")
+        f"({hexlit(name)}, {hexlit(email)}, {hexlit(sec.hash_password(password))}, 1, {int(now)})")
     acc = sql(f"SELECT id FROM accounts WHERE name={hexlit(name)} LIMIT 1")
     sql(NEW_CHAR.format(name=hexlit(character), acc=int(acc[0][0]) if acc else 0, look=128 if sex == "1" else 136, sex=int(sex)))
     _signups.setdefault(addr, []).append(now)
@@ -199,7 +252,7 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
 _newchars = {}
 
 
-def new_character(account, password, character, sex, addr, agree=False, now=None):
+def new_character(account, password, character, sex, addr, agree=False, now=None, code=""):
     """Make another character on an existing account (roadmap 7.1). Returns (ok, message)."""
     now = now or time.time()
     if too_many_fails(addr, now):
@@ -207,13 +260,13 @@ def new_character(account, password, character, sex, addr, agree=False, now=None
     recent = [t for t in _newchars.get(addr, []) if now - t < 3600]
     if len(recent) >= 5:
         return False, "You have made five characters in the last hour. Please wait."
-    if not valid_name(account) or not password or len(password) > 200:
-        return False, "Account name or password is not correct."
-    rows = sql(f"SELECT id, password FROM accounts WHERE (email={hexlit(account)} OR name={hexlit(account)}) LIMIT 1")
-    if not rows or not hmac.compare_digest(rows[0][1], hashlib.sha1(password.encode()).hexdigest()):
+    acc = check_account(account, password)
+    if acc is None:
         note_fail(addr, now)
         return False, "Account name or password is not correct."
-    acc = int(rows[0][0])
+    if not check_second_step(acc, code):
+        note_fail(addr, now)
+        return False, "This account has two-step login: enter the code from your authenticator app (or a backup code)."
     character = " ".join((character or "").split())
     if not (3 <= len(character) <= 20 and CHAR_RULE.match(character)):
         return False, "The character name must be 3 to 20 letters, each word starting with a capital (e.g. Mira or Tom Reed)."
@@ -238,6 +291,7 @@ NEWCHAR_FORM = """<p>Extra characters are welcome: up to 10 on one account, and 
 {msg}<form class="form" method="post" action="/newchar">
 <label>Account name or e-mail<input name="account" value="{account}"></label>
 <label>Password<input name="password" type="password"></label>
+<label>Two-step code (only if you switched two-step login on)<input name="code" autocomplete="one-time-code" inputmode="numeric"></label>
 <label>New character's name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
 <p><label class="choice"><input name="sex" type="radio" value="1" checked> Male</label>
 <label class="choice"><input name="sex" type="radio" value="0"> Female</label></p>
@@ -251,6 +305,116 @@ def newchar_page(msg="", account="", character=""):
     box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
     return gen_site.shell("Make another character", NEWCHAR_FORM.format(
         msg=box, account=html.escape(account), character=html.escape(character)))
+
+
+_pending = {}                 # setup token -> (account id, account name, secret, expires): two-step login being switched on
+SETUP_MINUTES = 10
+
+
+def security_page(msg="", account="", extra=""):
+    box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
+    a = html.escape(account)
+    body = f"""{box}{extra}
+<h2>Two-step login</h2>
+<p>With two-step login on, logging in needs your password <b>and</b> a 6-digit code from an authenticator app on your
+phone (Google Authenticator, Microsoft Authenticator, Authy or any other). Someone who learns your password still
+cannot get in. The game client asks for the code after your password.</p>
+<form class="form" method="post" action="/security"><input type="hidden" name="do" value="start">
+<label>Account name or e-mail<input name="account" value="{a}"></label>
+<label>Password<input name="password" type="password"></label>
+<button class="btn">Switch two-step login on</button></form>
+<h3>Switch it off</h3>
+<form class="form" method="post" action="/security"><input type="hidden" name="do" value="off">
+<label>Account name or e-mail<input name="account" value="{a}"></label>
+<label>Password<input name="password" type="password"></label>
+<label>Code from your app, or a backup code<input name="code" autocomplete="one-time-code"></label>
+<button class="btn small">Switch two-step login off</button></form>
+<h2>Change your password</h2>
+<form class="form" method="post" action="/security"><input type="hidden" name="do" value="password">
+<label>Account name or e-mail<input name="account" value="{a}"></label>
+<label>Current password<input name="password" type="password"></label>
+<label>Two-step code (only if it is on)<input name="code" autocomplete="one-time-code" inputmode="numeric"></label>
+<label>New password (at least 8 characters; a few unrelated words make a strong one)<input name="new" type="password"></label>
+<label>New password again<input name="new2" type="password"></label>
+<button class="btn small">Change password</button></form>
+<p>Lost your phone? Use one of your backup codes in place of the app's code, then switch two-step login off and on
+again. Lost those too? Ask a gamemaster.</p>"""
+    return gen_site.shell("Account security", body)
+
+
+def security_post(form, addr, now=None):
+    """The /security forms: switch two-step login on (two stages), off, or change the password. Returns the page."""
+    now = now or time.time()
+    do, account = form.get("do", ""), form.get("account", "")
+    if do == "confirm":
+        token = form.get("setup", "")
+        pending = _pending.get(token)
+        if not pending or pending[3] < now:
+            _pending.pop(token, None)
+            return security_page("That setup took too long. Please start again.")
+        acc, name, secret, _exp = pending
+        step = sec.check_code(secret, form.get("code", ""), now=now)
+        if step < 0:
+            note_fail(addr, now)
+            return security_page("That code is not right. Check the key you typed, and that your phone's clock is correct.", name,
+                                 setup_box(token, secret, name))
+        codes = sec.backup_codes()
+        two_factor(acc)                                # makes sure the table exists
+        sql(f"DELETE FROM spirebound_twofactor WHERE account_id={acc}")
+        sql("INSERT INTO spirebound_twofactor (account_id, secret, last_step, backup, created) VALUES "
+            f"({acc}, {hexlit(secret)}, {step}, {hexlit(','.join(sec.hash_backup(c) for c in codes))}, {int(now)})")
+        _pending.pop(token, None)
+        listed = "".join(f"<li><code>{c}</code></li>" for c in codes)
+        return security_page("Two-step login is on. From now on the game asks for your app's code after your password.", name,
+                             f'<div class="card"><b>Your backup codes.</b> Each works once, in place of the app\'s code, if you '
+                             f'lose your phone. Write them down now: they are not shown again.<ul>{listed}</ul></div>')
+    if too_many_fails(addr, now):
+        return security_page("Too many wrong tries. Wait a few minutes and try again.", account)
+    acc = check_account(account, form.get("password", ""))
+    if acc is None:
+        note_fail(addr, now)
+        return security_page("Account name or password is not correct.", account)
+    if do == "start":
+        if two_factor(acc) is not None:
+            return security_page("Two-step login is already on for this account.", account)
+        for t in [t for t, p in _pending.items() if p[3] < now]:
+            _pending.pop(t, None)
+        token, secret = secrets.token_urlsafe(24), sec.new_secret()
+        _pending[token] = (acc, account, secret, now + SETUP_MINUTES * 60)
+        return security_page("", account, setup_box(token, secret, account))
+    if do == "off":
+        if two_factor(acc) is None:
+            return security_page("Two-step login is not on for this account.", account)
+        if not check_second_step(acc, form.get("code", ""), now=now):
+            note_fail(addr, now)
+            return security_page("That code is not right.", account)
+        sql(f"DELETE FROM spirebound_twofactor WHERE account_id={acc}")
+        return security_page("Two-step login is off. Logging in needs only your password now.", account)
+    if do == "password":
+        if not check_second_step(acc, form.get("code", ""), now=now):
+            note_fail(addr, now)
+            return security_page("This account has two-step login: enter the code from your app.", account)
+        new = form.get("new", "")
+        names = [r[0] for r in sql(f"SELECT name FROM players WHERE account_id={acc}")]
+        problem = sec.password_problem(new, account, *names)
+        if problem:
+            return security_page(problem, account)
+        if new != form.get("new2", ""):
+            return security_page("The two new passwords are not the same.", account)
+        sql(f"UPDATE accounts SET password={hexlit(sec.hash_password(new))} WHERE id={acc}")
+        sql(f"DELETE FROM account_sessions WHERE account_id={acc}")      # log out everywhere else
+        return security_page("Your password is changed. Use the new one next time you log in.", account)
+    return security_page()
+
+
+def setup_box(token, secret, account):
+    return f"""<div class="card"><b>Step 1.</b> In your authenticator app, add an account and choose <i>enter a setup key</i>.
+Name it Spirebound and type this key (spaces don't matter):<p style="font-size:1.3rem;letter-spacing:.08em"><code>{sec.pretty_secret(secret)}</code></p>
+<b>Step 2.</b> Type the 6-digit code the app now shows, within {SETUP_MINUTES} minutes:
+<form class="form" method="post" action="/security"><input type="hidden" name="do" value="confirm">
+<input type="hidden" name="setup" value="{html.escape(token)}">
+<label>Code from the app<input name="code" autocomplete="one-time-code" inputmode="numeric"></label>
+<button class="btn">Switch it on</button></form></div>"""
 
 
 def refresh_site():
@@ -339,11 +503,21 @@ class Handler(BaseHTTPRequestHandler):
                     return self.page(newchar_page("That request was too large."))
                 form = {k: v[0] for k, v in parse_qs(self.rfile.read(size).decode("utf-8", "replace")).items()}
                 ok, msg = new_character(form.get("account", ""), form.get("password", ""), form.get("character", ""),
-                                        form.get("sex", "1"), addr, agree=form.get("agree") == "yes")
+                                        form.get("sex", "1"), addr, agree=form.get("agree") == "yes", code=form.get("code", ""))
                 return self.page(newchar_page(msg, form.get("account", ""), "" if ok else form.get("character", "")))
             except Exception as e:
                 print("newchar error:", e, flush=True)
                 return self.page(newchar_page("Something went wrong. Please try again."))
+        if self.path.split("?", 1)[0] in ("/security", "/security/"):
+            try:
+                size = int(self.headers.get("Content-Length", 0))
+                if size < 0 or size > MAX_BODY:
+                    return self.page(security_page("That request was too large."))
+                form = {k: v[0] for k, v in parse_qs(self.rfile.read(size).decode("utf-8", "replace")).items()}
+                return self.page(security_post(form, addr))
+            except Exception as e:
+                print("security error:", e, flush=True)
+                return self.page(security_page("Something went wrong. Please try again."))
         if self.path.split("?", 1)[0] in ("/signup", "/signup/"):
             try:
                 size = int(self.headers.get("Content-Length", 0))
@@ -366,10 +540,13 @@ class Handler(BaseHTTPRequestHandler):
                 return self.reply(200, {"errorCode": 1, "errorMessage": "Not supported."})
             if too_many_fails(addr):
                 return self.reply(200, {"errorCode": 3, "errorMessage": "Too many wrong passwords. Wait a few minutes and try again."})
-            res = login(str(data.get("email", "")), str(data.get("password", "")), game_host_for(self.headers.get("Host")))
+            token = str(data.get("token") or data.get("authenticatorToken") or "")
+            res = login(str(data.get("email", "")), str(data.get("password", "")), game_host_for(self.headers.get("Host")), token)
             if res is None:
                 note_fail(addr)
                 return self.reply(200, {"errorCode": 3, "errorMessage": "Account name or password is not correct."})
+            if res.pop("wrongCode", False):
+                note_fail(addr)
             self.reply(200, res)
         except Exception as e:  # keep the service alive whatever happens
             print("login error:", e, flush=True)  # details stay in the server window, not in the reply
@@ -382,10 +559,101 @@ class Handler(BaseHTTPRequestHandler):
             return self.page(rules_page())
         if self.path.split("?", 1)[0] in ("/newchar", "/newchar/"):
             return self.page(newchar_page())
+        if self.path.split("?", 1)[0] in ("/security", "/security/"):
+            return self.page(security_page())
         found = site_file(self.path)
         if found:
             return self.page(*found)
         self.reply(200, {"service": "Spirebound local login"})
+
+
+def selftest_security():
+    """Two-step login and password changes against a small pretend database (no real database needed)."""
+    import re as _re
+    global sql
+    real = sql
+    unhex = lambda s: bytes.fromhex(s[2:]).decode() if s.startswith("0x") else s  # noqa: E731
+    db = {"pw": hashlib.sha1(b"old pass word").hexdigest(), "tf": None, "sessions": 1}
+
+    def fake(q):
+        if q.startswith("SELECT id, password FROM accounts"):
+            return [["7", db["pw"]]] if "0x" + "tomr".encode().hex() in q else []
+        m = _re.match(r"UPDATE accounts SET password=(0x[0-9a-f]+) WHERE id=7", q)
+        if m:
+            db["pw"] = unhex(m.group(1)); return []
+        if q.startswith("CREATE TABLE"):
+            return []
+        if q.startswith("SELECT secret"):
+            return [list(map(str, db["tf"]))] if db["tf"] else []
+        m = _re.match(r"INSERT INTO spirebound_twofactor .* VALUES \(7, (0x[0-9a-f]+), (\d+), (0x[0-9a-f]*), \d+\)", q)
+        if m:
+            db["tf"] = [unhex(m.group(1)), int(m.group(2)), unhex(m.group(3)) if len(m.group(3)) > 2 else ""]; return []
+        if q.startswith("DELETE FROM spirebound_twofactor"):
+            db["tf"] = None; return []
+        m = _re.match(r"UPDATE spirebound_twofactor SET last_step=(\d+)", q)
+        if m:
+            db["tf"][1] = int(m.group(1)); return []
+        m = _re.match(r"UPDATE spirebound_twofactor SET backup=(0x[0-9a-f]*)", q)
+        if m:
+            db["tf"][2] = unhex(m.group(1)) if len(m.group(1)) > 2 else ""; return []
+        if q.startswith("SELECT name FROM players"):
+            return [["Tom Reed"]]
+        if q.startswith("DELETE FROM account_sessions"):
+            db["sessions"] = 0; return []
+        return []
+    sql = fake
+    _fails.clear()
+    _pending.clear()
+    try:
+        # an old SHA1 password works once and is upgraded on the spot
+        assert check_account("tomr", "old pass word") == 7 and db["pw"].startswith("pbkdf2$"), "old passwords are upgraded"
+        assert check_account("tomr", "old pass word") == 7 and check_account("tomr", "wrong") is None
+        assert check_account("nobody", "old pass word") is None
+        # switch two-step login on: password, then a code from the app
+        page = security_post({"do": "start", "account": "tomr", "password": "old pass word"}, "a", now=1000.0)
+        token, secret = next(iter(_pending.items()))[0], next(iter(_pending.values()))[2]
+        assert sec.pretty_secret(secret) in page and db["tf"] is None, "the key is shown, nothing is on yet"
+        page = security_post({"do": "confirm", "setup": token, "code": "000000"}, "a", now=1001.0)
+        assert db["tf"] is None and "not right" in page
+        page = security_post({"do": "confirm", "setup": token, "code": sec.code_at(secret, 1002.0)}, "a", now=1002.0)
+        assert db["tf"] and "backup codes" in page, "two-step login is on, backup codes shown once"
+        assert check_second_step(7, sec.code_at(secret, 1002.0 + 30), now=1002.0 + 30), "the next code works right after switching on"
+        assert not check_second_step(7, sec.code_at(secret, 1002.0), now=1003.0), "the switch-on code itself does not"
+        backups = _re.findall(r"<code>([a-z0-9]{4}-[a-z0-9]{4})</code>", page)
+        assert len(backups) == 6 and backups[0] not in db["tf"][2], "only the backup codes' hashes are stored"
+        # the game login now needs the code (errorCode 6 makes the client ask for it)
+        r = login("tomr", "old pass word")
+        assert r == {"errorCode": 6, "errorMessage": "Enter the 6-digit code from your authenticator app."}
+        r = login("tomr", "old pass word", token="123456")
+        assert r["errorCode"] == 6 and r.get("wrongCode")
+        good = sec.code_at(secret, time.time())
+        r = login("tomr", "old pass word", token=good)
+        assert "session" in r, "the right code lets the player in"
+        r = login("tomr", "old pass word", token=good)
+        assert r.get("errorCode") == 6, "the same code does not work twice"
+        r = login("tomr", "old pass word", token=backups[0])
+        assert "session" in r, "a backup code works"
+        assert login("tomr", "old pass word", token=backups[0]).get("errorCode") == 6, "a backup code works only once"
+        assert login("tomr", "wrong", token=sec.code_at(secret, time.time() + 30)) is None
+        # another character needs the code too
+        ok, msg = new_character("tomr", "old pass word", "Ash Varrow", "1", "b", agree=True)
+        assert not ok and "two-step" in msg
+        # change the password: rules, the code, sessions cleared
+        page = security_post({"do": "password", "account": "tomr", "password": "old pass word", "code": backups[1],
+                              "new": "password123", "new2": "password123"}, "c", now=time.time())
+        assert "first ones people guess" in page
+        page = security_post({"do": "password", "account": "tomr", "password": "old pass word", "code": backups[2],
+                              "new": "yellow kite river", "new2": "yellow kite river"}, "c", now=time.time())
+        assert "changed" in page and db["sessions"] == 0 and check_account("tomr", "yellow kite river") == 7
+        # switch it off with a backup code
+        page = security_post({"do": "off", "account": "tomr", "password": "yellow kite river", "code": backups[3]}, "d", now=time.time())
+        assert db["tf"] is None and "off" in page
+        assert "session" in login("tomr", "yellow kite river"), "only the password again"
+        assert "<script>" not in security_page("<script>x</script>")
+    finally:
+        sql = real
+        _fails.clear()
+        _pending.clear()
 
 
 def selftest():
@@ -460,7 +728,8 @@ def selftest():
     assert game_host_for("100.101.102.103:8080") == "100.101.102.103", "a Tailscale client gets the Tailscale address"
     assert game_host_for("127.0.0.1:8080") == GAME_HOST and game_host_for("evil.example.com") == GAME_HOST, "anything else: this PC"
     assert game_host_for("100.200.1.1:8080") == GAME_HOST, "only Tailscale's 100.64.0.0/10"
-    print("login_server selftest: OK")
+    selftest_security()
+    print("login_server selftest: OK (with two-step login)")
 
 
 if __name__ == "__main__":

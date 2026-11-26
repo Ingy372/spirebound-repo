@@ -231,7 +231,8 @@ def page(name: str, title: str, body: str) -> str:
     for group, items in MENU:
         links = "".join(f'<a href="{href}"{" class=here" if href == name else ""}>{e(label)}</a>' for href, label in items)
         if group == "Play" and SIGNUP_URL:
-            links += f'<a href="{e(SIGNUP_URL)}">Create account</a><a href="{e(newchar_url())}">New character</a>'
+            links += (f'<a href="{e(SIGNUP_URL)}">Create account</a><a href="{e(newchar_url())}">New character</a>'
+                      f'<a href="{e(security_url())}">Account security</a>')
         groups.append(f'<div class="menu-group">{e(group)}</div>{links}')
     top = "".join(f'<a href="{h}"{" class=here" if h == name else ""}>{e(l)}</a>' for h, l in
                   [("index.html", "Home"), ("floors.html", "The tower"), ("hall-of-fame.html", "Hall of Fame"),
@@ -472,6 +473,11 @@ def taken() -> str:
     return f'<p class="pill">Updated {e(when(ts))}</p>' if ts else ""
 
 
+def security_url() -> str:
+    """The account security page (two-step login, new password) of tools/login_server.py."""
+    return SIGNUP_URL.rsplit("signup", 1)[0] + "security" if "signup" in SIGNUP_URL else ""
+
+
 def newchar_url() -> str:
     """The make-another-character page sits next to the sign-up page (tools/login_server.py /newchar)."""
     return SIGNUP_URL.rsplit("signup", 1)[0] + "newchar" if "signup" in SIGNUP_URL else ""
@@ -505,7 +511,9 @@ your difficulty. You will know how fighting feels before you choose.</li>
 <h2>Keeping your account safe</h2>
 <ul><li>Use a password you use nowhere else.</li>
 <li>Staff will never ask for your password, in game or anywhere else.</li>
-<li>Too many wrong passwords from one address make that address wait a few minutes.</li></ul>
+<li>Too many wrong passwords from one address make that address wait a few minutes.</li>
+<li>Switch on <b>two-step login</b> on the Account security page: logging in then also needs a code from an
+authenticator app on your phone.</li></ul>
 """
 
 
@@ -677,7 +685,7 @@ def check(out: Path, names: list[str]) -> list[str]:
     for name in names:
         text = (out / name).read_text(encoding="utf8")
         for href in re.findall(r'href="([^"#]+)"', text):
-            if SIGNUP_URL and html.unescape(href) in (SIGNUP_URL, newchar_url()):
+            if SIGNUP_URL and html.unescape(href) in (SIGNUP_URL, newchar_url(), security_url()):
                 continue
             if href.startswith("http"):
                 problems.append(f"{name}: external link {href}")
