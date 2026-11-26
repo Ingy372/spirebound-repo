@@ -186,6 +186,27 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: quest " .. tostring(id) .. " " .. tostring(st))
+	elseif cmd == "gear" then -- (boss tests) "/pilot gear n": wear the class's Floor 1 weapon and armour at tier n, familiarity full
+		local t = tonumber(rest:match("%d+")) or 3
+		local voc = player:getVocation():getBaseId()
+		local worn = {}
+		local family = ({ [4] = "sword", [3] = "bow" })[voc] -- the weapon the fight kit's skills need
+		for _, spec in ipairs({ { src = "main", slot = CONST_SLOT_LEFT }, { src = "quest", slot = voc == 3 and CONST_SLOT_LEGS or CONST_SLOT_ARMOR } }) do
+			local d = spec.src == "main" and family and SpireGear.mainFor(voc, 1, family) or SpireGear.find(voc, 1, spec.src)
+			if d then
+				local old = player:getSlotItem(spec.slot)
+				if old then
+					old:remove()
+				end
+				local item = player:addItem(d.base, 1, false, 1, spec.slot)
+				if item then
+					item:setCustomAttribute("sb_gear", d.id)
+					SpireGear.setState(item, { tier = t, famPoints = 10 ^ 6, awakened = false })
+					table.insert(worn, d.name)
+				end
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: gear tier " .. t .. ": " .. table.concat(worn, ", "))
 	elseif cmd == "stairkey" then -- (boss tests) open the Axe-Lord's hall without the three pieces; "/pilot stairkey off" undoes it
 		local k = player:kv():scoped("spirebound")
 		if rest:find("off") then

@@ -41,7 +41,7 @@ PLACES = {
     # needs the Stair Key, which the test grants with /pilot stairkey (the real path is N1's job).
     "gatehound": dict(title="the Gate Hound", level=30, meet="gate_pass_1", landing=None, spots=[[1232, 1076, 7]], hunt=240),
     "axelord": dict(title="the Axe-Lord of the Stair", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
-                    spots=[[1231, 1026, 4]], hunt=360, stairkey=True),
+                    spots=[[1231, 1026, 4]], hunt=360, stairkey=True, gear=4),
 }
 
 
@@ -62,6 +62,8 @@ def route(name, place, level):
         steps.append({"do": "say", "text": "/pilot kit"})
     if p.get("stairkey"):
         steps.append({"do": "say", "text": "/pilot stairkey"})
+    if p.get("gear"):                                         # what a party arrives with: upgraded Floor 1 gear
+        steps.append({"do": "say", "text": f"/pilot gear {p['gear']}"})
     steps += [{"do": "jump", "to": here, "note": "meet at the hub"}, {"do": "wait", "seconds": 4}]
     if name == LEADER:
         steps += [{"do": "wait", "seconds": 25},
