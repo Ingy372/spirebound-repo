@@ -258,6 +258,25 @@ OUTFITS["dorrow"] = {**OUTFITS["watchguard"], "hair": ramp((50, 50, 54), (220, 2
     "cape": ramp((40, 6, 6), (200, 80, 60), (120, 24, 20)), "epaulette": ramp(*GOLD),
     "scabbard": ramp((20, 12, 8), (120, 84, 56), (60, 38, 24))}
 
+# Alchemist Ivo and Runewright Mael (Hearthgate crafters, 2026-11-25)
+MUSTARD = ((40, 30, 6), (230, 200, 110), (160, 126, 40))
+OUTFITS["alchemist"] = {
+    **base(hair=((60, 20, 6), (250, 150, 80), (190, 80, 30)), arms=MUSTARD, legs=((10, 26, 16), (90, 140, 100), (30, 70, 44)),
+           boots=((18, 10, 6), (120, 80, 48), (60, 38, 20)), torso=MUSTARD, cuff=MUSTARD, belt=LEATHER, buckle=GOLD),
+    "smock": ramp(*MUSTARD), "stain": [[110, 120, 40]] * 8, "hem": ramp((60, 46, 10), (200, 170, 90)),
+    "goggle": ramp(*GOLD), "lens": [[140, 220, 230]] * 8, "flask": ramp((20, 70, 30), (190, 255, 160), (80, 200, 90)),
+    "vapour": [[200, 255, 190]] * 8, "vial": ramp((70, 10, 14), (255, 140, 120), (196, 40, 40)),
+    "cork": ramp((60, 40, 20), (210, 170, 120)),
+}
+SLATE_BLUE = ((14, 20, 34), (150, 170, 200), (60, 76, 106))
+OUTFITS["runewright"] = {
+    **base(hair=((20, 14, 10), (110, 80, 56), (50, 34, 22)), arms=SLATE_BLUE, legs=((36, 24, 14), (150, 110, 70), (84, 58, 34)),
+           boots=((18, 10, 6), (120, 80, 48), (60, 38, 20)), torso=SLATE_BLUE, cuff=LEATHER, belt=LEATHER, buckle=GOLD),
+    "tunic": ramp(*SLATE_BLUE), "dust": [[220, 216, 206]] * 8, "tablet": ramp((16, 18, 22), (130, 136, 146), (50, 54, 62)),
+    "rune": [[130, 240, 255]] * 8, "beard": ramp((20, 14, 10), (110, 80, 56), (50, 34, 22)), "bead": ramp(*GOLD),
+    "tool": ramp((40, 40, 46), (210, 214, 222), (110, 114, 124)), "wrap": ramp((150, 140, 118), (240, 232, 214)),
+}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())
