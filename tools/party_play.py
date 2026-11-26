@@ -252,10 +252,31 @@ def lowest_hp_since(tag, since):
     return low
 
 
+def regroup():
+    """Anyone left behind (a walk the client refused, a fight that ran long) walks back to the leader."""
+    lead = TAGS[0]
+    ls = state(lead) or {}
+    if not ls:
+        return
+    goal = (ls["x"], ls["y"], ls["z"])
+    def steps(t, st):
+        if t == lead or not st:
+            return []
+        if st["z"] == goal[2] and max(abs(st["x"] - goal[0]), abs(st["y"] - goal[1])) <= 8:
+            return []
+        if st["z"] != goal[2]:
+            return []                      # another floor: the next segment's stairs bring them together
+        print(f"  regroup: {t} walks back to {lead}", flush=True)
+        return walk_steps((st["x"], st["y"], st["z"]), goal)
+    everyone(steps, "regroup")
+
+
 def run_lap(gid, title):
     before, t0 = snapshot(), time.time()
     for kind, p in lap_plan(gid):
         everyone(lambda t, st: segment_steps(kind, p, (st["x"], st["y"], st["z"])), f"{kind} {p}")
+        if len(TAGS) > 1:
+            regroup()
     after = snapshot()
     secs = time.time() - t0
     rec = {"t": time.strftime("%H:%M"), "ground": title, "secs": int(secs), "chars": {}}
