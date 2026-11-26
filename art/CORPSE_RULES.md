@@ -18,67 +18,85 @@ the game**: for a borrowed look, the Tibia creature it borrows; for a look we re
 - **K4 Floors 2-10 placeholders** take their corpse with their look (`LOOKS` pairs in `tools/gen_monsters.py`);
   monsters with their own look get theirs from `OWN_CORPSES`.
 
-## Part 2 — monsters with our own art (looks 2201+, 2301+)
+## Part 2 — own corpse art, only where Tibia has nothing that fits
 
-Their own dead body, made with the Blender pipeline from the approved monster model.
+Jay, 2026-11-26: "corpses that already exist in tibia do not need to be re-drawn for a custom corpse. simple use
+what tibia has already created. but for monster that dont have anything that would work, our custom golems for
+example, would need their own corpse art drawn." So the order is:
 
-- **C1 Same model, lying down.** `art/models/corpse_<monster>.py` is two lines (`corpse_kit.make(globals(), "<monster>")`).
-  It reuses the approved model untouched (parts, palette, pixel rules), so the body matches the living monster
-  exactly. It rests on the ground (nothing floats or sinks) and is centred on its tile.
-- **C2 Placement.** Like the animals: against the tile's right and bottom edges, spilling up-left (`AUTO_PLACE`).
-  A normal monster's body fits one tile plus spill; a 2x2 boss's body fills the 64x64 canvas.
-- **C3 How each body lies.** Four-legged animals roll onto their side and are seen from the west: legs in the air,
-  the classic "dead" read. People lie on their back, seen from the east (head to the left). Insects flip belly-up,
-  legs in the air. Plants and floating spirits sink flat where they were.
-- **C4 Three steps of decay.** 1 fresh (the body), 2 rotting (the body sunk flatter, its colours greyed toward a
-  dull green-brown and darkened: `decay()` in `tools/make_corpse_sheets.py`), 3 the end (C5). The outline stays.
-- **C5 The end step.** Flesh-and-blood monsters end as a small bone pile (`corpse_bones.py`; `corpse_bones_big.py`
-  for big animals and 2x2 bosses): skull with sockets and a dropped jaw, ribcage over a spine, two crossed long
-  bones. Monsters with no bones (stone, chitin, plants, spirits) end as a dried husk: the body flatter still and darker.
-- **C6 Weapons stay with the body** (the bandit's blade, the sentinel's spear): Tibia's people corpses do the same,
-  and it tells you who died.
-- **C7 Parts limit.** The 33-part limit applies (`render_creature.py` refuses more). The Axe-Lord's approved model
-  has 34 parts, so it keeps the Tibia "dead black knight" (an armoured warrior: a fair match) until its model is
-  slimmed.
-- **C8 Approval first.** Corpse art goes in the game only after Jay approves the sheet in writing (quote in
-  `art/APPROVED.txt`). Until then the monster keeps the best-matching Tibia corpse from Part 1.
+1. **Use a Tibia corpse** whenever one fits what the monster looks like (Part 1). Our own-art bandits, cats, bulls,
+   antelopes, lizards, boars, wolves, beetles, wasps, the skeleton archer and the briar plant all have one.
+2. **Draw our own** only when nothing fits. Today: the Ruin Sentinel / Granite Warden (our stone golem), the
+   Underkeeper (a caged-skull jailer in a robe, with lantern and chain) and the Vault Wraith (a hooded purple spirit:
+   Tibia's "betrayed wraith" corpse is an armoured knight). Later floors' golems and constructs will join them.
+
+### What Tibia's corpses look like (studied 2026-11-26 from the client: boar, wolf, lion, deer, buffalo, bandit,
+### human, black knight, wasp, beetle, carniphila, stone golem, skeleton, hellhound, draptor)
+
+- **C1 Never the living sprite turned over.** Jay rejected the first draft for exactly that ("it looks like you just
+  rotated the living body and slightly recolor'd"). A corpse is a new pose of the same creature, in the same
+  camera view and at the same size as the living sprite, usually facing left.
+- **C2 Animals slump.** The chest and belly sink to the ground, the legs buckle under and splay out, the head drops
+  to the ground with the mouth open, the tail lies limp. People collapse onto their knees and hands, head down.
+  (`mode="slump"` in `art/pipeline/corpse_kit.py` does the animal pose, for a future animal with no Tibia match.)
+- **C3 Blood.** Red gashes on the flank and a small pool by the head, deep red with a brighter wet line, never
+  orange (`wounds()` and `pool()` in `tools/make_corpse_sheets.py`).
+- **C4 Four items, three looks.** Tibia's chain is a 10-second item and a 300-second item that look the same (the
+  fresh body), then an older look, then the last remains. Flesh: rotting (duller, darker, wounds opened, ribs
+  showing through), then the skeleton in the same pose, skull still recognisable (the buffalo keeps its horns).
+- **C5 Things without flesh break apart.** A stone golem becomes a spread of its own stone chunks over its tile and
+  the ones up-left of it, fewer at each step. Insects burst or snap, with bits scattered; plants collapse into a
+  heap of torn leaves. Spirits leave what they wore.
+- **C6 Dead means no glow.** Glowing eyes, visors and lanterns go dark after the fresh step.
+
+### How ours are made
+
+- **C7 Shatter** (`mode="shatter"`): the approved model falls apart where it stood. Every solid piece lands on the
+  ground, thrown up-left by its height plus a random spread (`fall`, `scatter`), long pieces lying flat; cloth
+  (robe, hood, shroud) sinks into a flat crumpled heap where it hung, and parts hidden under it (`soft=`) sink
+  with it. Steps 2 and 3 keep fewer pieces (`keep`); things that should vanish with the creature are `hide=`n
+  (the wraith's claws, its gold).
+- **C8 The model is reused untouched** (two-line file `art/models/corpse_<monster>.py`), so colours and parts
+  match the living monster. Each corpse sits against its tile's right and bottom edges like the animals.
+- **C9 Look before showing.** Put the three steps beside Tibia's own corpse of the closest kind
+  (`.local/corpseref/`, local only, never shipped) and ask: is it a new pose, not the living sprite? Does each
+  step read older than the last? Could you name the monster from the remains?
+- **C10 Approval first.** Corpse art goes in the game only after Jay approves the sheet in writing (quote in
+  `art/APPROVED.txt`). Until then the monster keeps the closest Tibia corpse from Part 1.
 
 ### Make and check
 
 ```bash
-sh art/pipeline/render.sh corpse_<monster>        # also corpse_bones and corpse_bones_big, once
-python tools/make_corpse_sheets.py                # decay steps + ART_FOR_JAY/corpses_sheet.png (plain grey)
+sh art/pipeline/render.sh corpse_<monster>        # frames 0-2 = the three steps
+python tools/make_corpse_sheets.py                # item/1_fresh, 2_rot, 3_end + ART_FOR_JAY/corpses_sheet.png
 ```
-
-The sheet shows each monster standing, then its three steps, at 2x on plain grey. Look at each row and ask: could I
-name the monster from its body alone? Is step 2 clearly the same body, older? Is step 3 small and quiet?
 
 ### Installing (after approval; roadmap task N7)
 
-Corpses are items, not outfits. Plan: for each approved monster take one Tibia corpse chain that no Spirebound
-monster or map uses, reskin those item ids in the client with our three steps (steps 1 and 2 of Tibia's four-item
-chain both show our fresh body), rename them through `data/item_renames.json` ("dead ridge cat"), and point the
-monster's `corpse=` at the first item. Same install path as the creature looks (`tools/install_effects.py`).
+Corpses are items, not outfits. For each approved monster take one Tibia corpse chain that no Spirebound monster or
+map uses, reskin those four item ids in the client with our three steps (the first two both show the fresh step),
+rename them through `data/item_renames.json` ("broken ruin sentinel"), and point the monster's `corpse=` at the
+first item. Same install path as the creature looks (`tools/install_effects.py`).
 
 ## The audit (2026-11-26)
 
 | Monster | Look | Old corpse | Now |
 |---|---|---|---|
 | Bristle Boar, Bramblejaw, Old Bristleback | 119 (our boar) | dead crocodile | dead boar 12321 |
-| Old Tusk | 2311 (boar) | dead crocodile | dead boar 12321 (own art drafted) |
+| Old Tusk | 2311 (boar) | dead crocodile | dead boar 12321 |
 | Burrow Mole | 26 (our mole) | dead crocodile | dead mole 27646 |
 | Meadow Wasp | 44 (our wasp) | dead rat | dead wasp 5989 |
 | Reed Snapper, Mossback Snapper | 112 (our snapping turtle) | dead toad | dead thornback tortoise 6073 |
 | Thornsnap, Blackthorn | 28 (our snapping plant) | dead snake (holds no loot) | dead carniphila 6047 |
-| Briar Mother | 2313 (plant) | dead snake | dead carniphila 6047 (own art drafted) |
+| Briar Mother | 2313 (plant) | dead snake | dead carniphila 6047 |
 | Sproutling | 19 (our walking plant) | poison gas (holds no loot) | dead swampling 17622 |
 | Field Shardling, Prism Shardling | 122 (our crystal) | dead bat | dead crystal golem 16177 |
-| Ruin Sentinel, Granite Warden | 2204 (stone guardian) | dead black knight | split stone golem 6005 |
+| Ruin Sentinel, Granite Warden | 2204 (stone guardian) | dead black knight | split stone golem 6005 (own art drafted) |
 | Ruin Archer | 2203 (skeleton) | dead hunter | slain skeleton 5963 |
 | Stonehorn Ram | 607 (our ram) | dead moohtant | dead sheep 5994 |
 | Black Crawler | 2301 (cave beetle) | dead rat | dead lancer beetle 10458 |
-| Vault Wraith | 2324 (wraith) | dead assassin | slain betrayed wraith 6315 |
-| The Underkeeper | 2323 (skeletal jailer) | dead black knight | slain skeleton 5972 |
+| Vault Wraith | 2324 (wraith) | dead assassin | slain betrayed wraith 6315 (own art drafted) |
+| The Underkeeper | 2323 (skeletal jailer) | dead black knight | slain skeleton 5972 (own art drafted) |
 | Hollowfang | 2312 (wolf) | dead wolf (winter) | dead war wolf 6009 |
 | Blight Wasp (F2) | 2302 | (rotation) | dead waspoid 13983 |
 | Ridge Cat (F2) | 2303 | (rotation) | dead lion 5986 |

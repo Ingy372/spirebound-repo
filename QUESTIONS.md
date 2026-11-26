@@ -8,9 +8,9 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
-### Q66. Approve the dead bodies for our own monsters? (2026-11-26, art)
-Every monster now leaves a body that matches it (no more boars leaving a dead crocodile): the ones on borrowed looks use the right Tibia corpse already. For the 20 monsters with our own art I drew their own dead bodies from the approved models, each in three steps: fresh, rotting, then bones (or a dried husk for stone, insects, plants and spirits). Sheet: `ART_FOR_JAY/corpses_sheet.png` (living monster, then the three steps, on plain grey). The Axe-Lord keeps the armoured-knight corpse for now.
-- **Recommendation:** approve all. Until you do, they keep the closest Tibia corpse.
+### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
+Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
+- **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).
 - Your answer: (approve all / approve all except ... / changes)
 
 ### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
