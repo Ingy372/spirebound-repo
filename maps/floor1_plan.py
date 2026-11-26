@@ -263,6 +263,8 @@ BURROW = dict(
     gate=(0, 29), crowd_group=[("Burrow Mole", 2)],
     routes={"a": "a1", "b": "b1", "c": "l1", "d": "mw"},
     route_names={"a": "The North Hollow", "b": "The South Hollow", "c": "The Crown", "d": "The Molework"},
+    # party playtest 2026-11-26 (hand-off P2-13): players on the quiet west side thought the ground was empty
+    sign_hint="The warrens are east: follow the hollows away from the gate.",
     levels={
         # The hollows: a quiet meadow inside the gate, then a north and a south valley between the outer wall and the
         # Crown. Groups come in twos with a quiet stretch (q1..q4) between, so a rest is never far.

@@ -11,8 +11,8 @@ npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter
 npcConfig.outfit = { lookType = 57, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {
-	interval = 15000,
-	chance = 30,
+	interval = 45000, -- G12b: about once every 3 minutes, like the townsfolk (was every 30-50 s: the Hearth never went quiet)
+	chance = 25,
 }
 
 local keywordHandler = KeywordHandler:new()
@@ -24,7 +24,14 @@ npcType.onMove = function(npc, creature, from, to) npcHandler:onMove(npc, creatu
 npcType.onSay = function(npc, creature, type, message) npcHandler:onSay(npc, creature, type, message) end
 npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, player) end
 npcType.onBuyItem = function(npc, player, itemId, subType, amount, ignore, inBackpacks, totalCost)
-	npc:sellItem(player, itemId, amount, subType, 0, ignore, inBackpacks)
+	-- Party playtest 2026-11-26 (hand-off P1-2): with "ignore capacity" ticked the engine took the gold and the item
+	-- vanished, so the tick is never passed on; a purchase too heavy to carry is refused in words instead.
+	local it = ItemType(itemId)
+	if it and it:getWeight(amount) > player:getFreeCapacity() then
+		player:sendCancelMessage("You can't carry that much. Make room or lighten your load first.")
+		return
+	end
+	npc:sellItem(player, itemId, amount, subType, 0, false, inBackpacks)
 end
 npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name, totalCost)
 	player:sendTextMessage(MESSAGE_TRADE, string.format("Sold %ix %s for %i gold.", amount, name, totalCost))

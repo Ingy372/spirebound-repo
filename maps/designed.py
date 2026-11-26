@@ -342,7 +342,7 @@ def build(m, c):
     hx, hy = named7["hub"]
     names = ", ".join(d["route_names"][r] for r in sorted(d["route_names"]))
     m.sign(hx + 3, hy - 3, Z, f"{c['title']}. Levels {lo} to {hi}. Calm near the gate; the deeper you go, the more of them "
-           f"there are. Hunting routes: {names}.")
+           f"there are. Hunting routes: {names}." + (" " + d["sign_hint"] if d.get("sign_hint") else ""))
     for link in d["links"]:
         kind, x, y, zl = link[:4]
         wx, wy = ox + x, oy + y

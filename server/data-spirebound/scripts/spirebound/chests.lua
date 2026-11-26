@@ -50,8 +50,8 @@ function open.onUse(player, item)
 	if kind == "first" then
 		local r = SpireChests.reward(g.lo, g.hi)
 		player:addMoney(r.gold)
-		player:addItem(r.potions[1], r.potions[2])
-		player:addItem(SpireGearData.tokens[1].rough, 1)
+		SpireGive.reward(player, r.potions[1], r.potions[2])
+		SpireGive.reward(player, SpireGearData.tokens[1].rough, 1)
 		rec.first = now
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold, %d %s and a rough Hearth Shard. It fills again every 20 hours.",
 			g.title, r.gold, r.potions[2], ItemType(r.potions[1]):getPluralName()))

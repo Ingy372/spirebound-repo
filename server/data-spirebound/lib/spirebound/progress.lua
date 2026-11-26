@@ -75,6 +75,30 @@ function SpireProgress.sharers(killer, where)
 	return #out > 0 and out or { killer }
 end
 
+-- Party playtest 2026-11-26 (hand-off P1-3): kill quests counted only for the engine's killer (most damage or last
+-- hit), so in a party of three the tank finished Iron for the Stair and the other two were locked out of the Stair Key.
+-- Now every member who shares the kill (SpireProgress.sharers) gets it, once per kill: onKill fires for both the last
+-- hitter and the top damage dealer, so each counter (key) remembers who was already credited for that monster.
+local creditedFor = {} -- key .. monster id -> { [player id] = true }
+function SpireProgress.killCredit(key, killer, target)
+	local k = key .. ":" .. target:getId()
+	local done = creditedFor[k]
+	if not done then
+		done = {}
+		creditedFor[k] = done
+		addEvent(function() creditedFor[k] = nil end, 5000)
+	end
+	local out = {}
+	for _, m in ipairs(SpireProgress.sharers(killer, target:getPosition())) do
+		local id = m:getId()
+		if not done[id] then
+			done[id] = true
+			table.insert(out, m)
+		end
+	end
+	return out
+end
+
 -- Give one member its share: familiarity to the weapon in hand, points to the style tree
 function SpireProgress.credit(player, target, share)
 	local item, d = SpireGear.mainWeapon(player)

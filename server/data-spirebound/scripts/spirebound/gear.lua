@@ -147,8 +147,12 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 			if not SpireGear.playerWallet(player).pay(fee) then
 				return string.format("A new one costs %d gold.", fee)
 			end
-			local item = SpireGear.make(player, id)
-			return item and ("Here: a new " .. item:getName() .. ", tier 0. Look after this one.") or "You have no room for it."
+			local item, where = SpireGear.equip(player, id)
+			if not item then
+				player:setBankBalance(player:getBankBalance() + fee) -- never keep the money for nothing
+				return "You have no room for it. I've put your gold back in your bank account."
+			end
+			return "Here: a new " .. item:getName() .. ", tier 0. Look after this one." .. SpireGear.whereLine(where)
 		end
 		say(string.format("Lost it? I can make you a new one, tier 0, for %d gold. Say {yes}.", fee))
 		return true
@@ -166,12 +170,46 @@ function SpireGear.giveMain(player, family)
 	if not d then
 		return nil
 	end
-	local item = SpireGear.make(player, d.id)
+	local item, where = SpireGear.equip(player, d.id)
 	if item then
 		player:kv():scoped("spirebound"):set("gear_main_1", d.id)
 		player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
 	end
-	return item
+	return item, where
+end
+
+-- Party playtest 2026-11-26 (hand-off P1-5, P2-8): Mastery and familiarity only grow while the barracks weapon is in
+-- hand, and a tank who never moved it out of the backpack had no Mastery at level 21. So the weapon goes straight into
+-- the weapon hand; whatever was there moves to the backpack. If that can't be done (no room for the old weapon, or a
+-- two-handed weapon and a full shield hand), it goes to the backpack (or the Store Inbox) as before.
+-- Second result: "hand", "bag" or "inbox".
+function SpireGear.equip(player, id)
+	local backpack = player:getSlotItem(CONST_SLOT_BACKPACK)
+	local old = player:getSlotItem(CONST_SLOT_LEFT)
+	if old and backpack and backpack:isContainer() and backpack:getEmptySlots(false) > 0 then
+		old:moveTo(backpack)
+		old = player:getSlotItem(CONST_SLOT_LEFT)
+	end
+	if not old then
+		local item = SpireGear.create(id)
+		if item and player:addItemEx(item, false, CONST_SLOT_LEFT, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+			return item, "hand"
+		end
+		if item then
+			item:remove()
+		end
+	end
+	return SpireGear.make(player, id)
+end
+
+-- What Dorrow / Garrick add about where the weapon went
+function SpireGear.whereLine(where)
+	if where == "hand" then
+		return " I've put it in your hand; anything you held is in your backpack. Keep holding it: your familiarity and Mastery only grow while it's in your hand."
+	elseif where == "inbox" then
+		return " Your backpack was full, so it's in your Store Inbox. Hold it in your hand: your familiarity and Mastery only grow while you do."
+	end
+	return " It's in your backpack: drag it into your weapon hand. Your familiarity and Mastery only grow while you hold it."
 end
 
 function SpireGear.dorrowTalk(npc, handler, player, msg)
@@ -186,9 +224,9 @@ function SpireGear.dorrowTalk(npc, handler, player, msg)
 		for family in SpireGear.familiesOf(voc, 1):gmatch("%a+") do
 			if MsgContains(lower, family) or (family == "club" and MsgContains(lower, "mace")) then
 				choosing[pid] = nil
-				local item = SpireGear.giveMain(player, family)
+				local item, where = SpireGear.giveMain(player, family)
 				if item then
-					say("The " .. item:getName() .. ". It's yours: the more you fight with it, the better you'll know it. When you're ready, ask me for a {quest} to temper it.")
+					say("The " .. item:getName() .. ". It's yours: the more you fight with it, the better you'll know it." .. SpireGear.whereLine(where) .. " When you're ready, ask me for a {quest} to temper it.")
 				else
 					say("Make room in your backpack first, then ask me for a {weapon} again.")
 				end
@@ -200,11 +238,21 @@ function SpireGear.dorrowTalk(npc, handler, player, msg)
 	local asksWeapon = MsgContains(lower, "weapon")
 	local asksQuest = MsgContains(lower, "quest") or MsgContains(lower, "mission") or MsgContains(lower, "help")
 	if offer == "offer" and (asksWeapon or asksQuest) then
-		choosing[pid] = true
-		local fams = {}
+		local fams, only = {}, nil
 		for family in SpireGear.familiesOf(voc, 1):gmatch("%a+") do
 			table.insert(fams, "{" .. family .. "}")
+			only = family
 		end
+		if #fams == 1 then -- party playtest 2026-11-26 (hand-off P2-9): "Which kind: {rod}?" with one choice
+			local item, where = SpireGear.giveMain(player, only)
+			if item then
+				say("Level " .. player:getLevel() .. "! Every climber who gets this far earns a weapon from the barracks. Here: the " .. item:getName() .. ". It's yours: the more you fight with it, the better you'll know it." .. SpireGear.whereLine(where) .. " When you're ready, ask me for a {quest} to temper it.")
+			else
+				say("Make room in your backpack first, then ask me for a {weapon} again.")
+			end
+			return true
+		end
+		choosing[pid] = true
 		say("Level " .. player:getLevel() .. "! Every climber who gets this far earns a weapon from the barracks. Which kind: " .. table.concat(fams, " or ") .. "?")
 		return true
 	end

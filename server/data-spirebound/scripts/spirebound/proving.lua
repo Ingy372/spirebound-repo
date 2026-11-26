@@ -23,6 +23,17 @@ local function scope(player)
 	return player:kv():scoped("spirebound-proving")
 end
 
+-- Party playtest 2026-11-26 (hand-off P2-11): the Proving is underground and new characters carry no light, so half
+-- the screen was solid black. The Warden's lantern light lasts long enough for the hall and the pit.
+SpireProving.LIGHT_SECONDS = 20 * 60
+function SpireProving.light(player)
+	local c = Condition(CONDITION_LIGHT)
+	c:setParameter(CONDITION_PARAM_LIGHT_LEVEL, 8)
+	c:setParameter(CONDITION_PARAM_LIGHT_COLOR, 215)
+	c:setTicks(SpireProving.LIGHT_SECONDS * 1000)
+	player:addCondition(c)
+end
+
 function SpireProving.done(player)
 	return scope(player):get("done") == true
 end
@@ -94,6 +105,7 @@ function SpireProving.enter(player)
 	if pitOf("pid", player:getId()) then
 		return true
 	end
+	SpireProving.light(player)
 	local i = SpireProving.freePit(SpireProving.pits, SpireProving.PITS)
 	if not i then
 		player:sendCancelMessage("All three pits are in use. Wait a moment and step on the stone again.")
@@ -311,6 +323,10 @@ function login.onLogin(player)
 		if to then
 			player:teleportTo(to)
 		end
+	end
+	local hall = point("proving_arrival")
+	if hall and not SpireProving.done(player) and player:getPosition().z == hall.z and player:getPosition():getDistance(hall) <= 40 then
+		SpireProving.light(player) -- back in the dark hall after a logout
 	end
 	return true
 end

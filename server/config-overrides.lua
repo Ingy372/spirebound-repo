@@ -35,6 +35,9 @@ rateUseStages = true
 rateLoot = 2
 -- Autoloot and rare drops first (DESIGN.md 15)
 autoLoot = true
+-- Party playtest 2026-11-26 (hand-off P2-7): looted coins filled half a level-15 backpack (stacks of 100 gold), and the
+-- next purchase failed. Coins from monsters now go straight to the bank; shops already take the price from the bank.
+autoBank = true
 sortLootByChance = true
 
 -- Accounts: up to 2 characters online per account (DESIGN.md 12)

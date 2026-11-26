@@ -148,6 +148,9 @@ local function creatureSayCallback(npc, player, type, msg)
 			local proving = WorldPoints.proving_arrival
 			player:teleportTo(proving and Position(proving.x, proving.y, proving.z) or Town(1):getTemplePosition())
 			player:getPosition():sendMagicEffect(CONST_ME_TELEPORT)
+			if proving and SpireProving and SpireProving.light then
+				SpireProving.light(player) -- the hall is underground: light it (hand-off P2-11)
+			end
 			if proving then -- the hall's rats come straight at you (Grok session 2: "unannounced")
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The Proving. A few rats live in this hall and will come for you: try your attack spell on them. Your spells are on the action bar; the row of buttons at the bottom of the screen holds your weapon skills (Ctrl+1, 2, 3, or click them), which come with the weapon in your hand. Warden Ketta can heal you.")
 			end

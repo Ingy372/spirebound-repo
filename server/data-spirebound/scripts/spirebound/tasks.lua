@@ -1,23 +1,20 @@
 -- Hunting task kill counting and rare-drop announcements.
-local kill = CreatureEvent("SpireTaskKill")
-function kill.onKill(player, target)
-	if not target or not target:isMonster() or target:getMaster() then
-		return true
-	end
+-- One kill of a monster by this name counts for this player's hunting task
+function SpireTasks.countKill(player, name)
 	local s = SpireTasks.scope(player)
 	local active = s:get("active")
 	if not active then
 		return true
 	end
 	local t = SpireTasks.get(active)
-	if t and t.monster == target:getName() and SpireCavebot.botting(player) then
+	if t and t.monster == name and SpireCavebot.botting(player) then
 		local half = (s:get("botHalf") or 0) + 1 -- R15: while botting, only every second kill counts
 		s:set("botHalf", half % 2)
 		if half % 2 == 1 then
 			return true
 		end
 	end
-	if t and t.monster == target:getName() then
+	if t and t.monster == name then
 		local n = (s:get("kills") or 0) + 1
 		s:set("kills", n)
 		if n == t.count then
@@ -27,6 +24,18 @@ function kill.onKill(player, target)
 		elseif n < t.count and n % 10 == 0 then
 			player:sendTextMessage(MESSAGE_STATUS, string.format("Task: %d of %d %ss.", n, t.count, t.monster))
 		end
+	end
+	return true
+end
+
+local kill = CreatureEvent("SpireTaskKill")
+function kill.onKill(player, target)
+	if not target or not target:isMonster() or target:getMaster() then
+		return true
+	end
+	local name = target:getName()
+	for _, member in ipairs(SpireProgress.killCredit("task", player, target)) do -- the whole party nearby (P1-3)
+		SpireTasks.countKill(member, name)
 	end
 	return true
 end

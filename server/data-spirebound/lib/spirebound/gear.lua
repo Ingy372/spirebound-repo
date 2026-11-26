@@ -129,10 +129,42 @@ function SpireGear.setState(item, new)
 	return true
 end
 
--- Make a piece by its id into a player or a container
+-- A new piece that is not anywhere yet (the caller places it)
+function SpireGear.create(id)
+	local d = defs[id]
+	local item = d and Game.createItem(d.base, 1)
+	if not item then
+		return nil
+	end
+	item:setCustomAttribute(A_ID, d.id)
+	SpireGear.setState(item, { tier = 0, famPoints = 0, awakened = false })
+	return item
+end
+
+-- Make a piece by its id into a player or a container.
+-- Party playtest 2026-11-26 (hand-off P1-1): a plain player:addItem drops the item on the floor when the player is over
+-- their carrying limit, so quest armour and the barracks weapon silently lay at the player's feet and decayed. For a
+-- player the piece now ignores carrying weight (like the starter kit, lib/spirebound/give.lua); if the backpack has no
+-- free slot either, it goes to the Store Inbox (always carried, never on the floor). Second result: "bag" or "inbox".
 function SpireGear.make(into, id)
 	local d = defs[id]
 	if not d then
+		return nil
+	end
+	if into.isPlayer and into:isPlayer() then
+		local item = SpireGear.create(id)
+		if not item then
+			return nil
+		end
+		if into:addItemEx(item, false, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+			return item, "bag"
+		end
+		local inbox = into.getStoreInbox and into:getStoreInbox()
+		if inbox and inbox:addItemEx(item, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+			into:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your backpack is full: " .. item:getName() .. " was put in your Store Inbox (the box in your equipment).")
+			return item, "inbox"
+		end
+		item:remove()
 		return nil
 	end
 	local item = into:addItem(d.base, 1)
@@ -171,9 +203,9 @@ function SpireGear.give(player, floor, source)
 	if not d then
 		return nil
 	end
-	local item = SpireGear.make(player, d.id)
-	if item then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You received " .. d.name .. ".")
+	local item, where = SpireGear.make(player, d.id)
+	if item and where == "bag" then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You received " .. d.name .. ". It is in your backpack: drag it onto your character to wear it.")
 	end
 	return item
 end
@@ -292,6 +324,13 @@ function SpireGear.carried(player)
 		local it = player:getSlotItem(slot)
 		if it then
 			walk(it)
+		end
+	end
+	-- the Store Inbox too: a reward that found no room waits there (SpireGear.make)
+	local inbox = player.getStoreInbox and player:getStoreInbox()
+	if inbox then
+		for i = 0, inbox:getSize() - 1 do
+			walk(inbox:getItem(i))
 		end
 	end
 	return out
@@ -418,7 +457,7 @@ function SpireGear.giveBossReward(p, boss)
 				SpireStairKey.update(p) -- one piece of the Stair Key
 			end
 			if plan.shards > 0 then
-				p:addItem(SpireGearData.tokens[plan.floor][plan.grade], plan.shards)
+				SpireGive.reward(p, SpireGearData.tokens[plan.floor][plan.grade], plan.shards)
 				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s leaves you %d %s.", boss, plan.shards, SpireGearData.tokenNames[SpireGearData.tokens[plan.floor][plan.grade]][2]))
 			end
 			if plan.awaken then

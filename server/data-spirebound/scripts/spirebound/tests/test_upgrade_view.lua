@@ -66,3 +66,18 @@ SpireTest.add("upgrade view: the familiarity bar fills toward the next level", f
 	SpireTest.eq(SpireUpgrade.famBar(0, 0):find("%[%-%-%-%-%-%-%-%-%-%-%]") ~= nil, true, "empty bar")
 	SpireTest.eq(SpireUpgrade.famBar(10, nil), "FAMILIARITY [##########] 10/10, mastered", "maxed")
 end)
+
+-- Party playtest 2026-11-26 (hand-off P1-5): a weapon in the bag grows nothing, and the window now says so
+SpireTest.add("upgrade view: a barracks weapon not in hand, or lost, is pointed out", function()
+	local w = weapon(1)
+	w.held = false
+	local text = table.concat(SpireUpgrade.lines(base({ level = 12, weapon = w, style = { stageName = "Vanguard Mastery", level = 0 } })), "\n")
+	SpireTest.eq(text:find("not in your hand", 1, true) ~= nil, true, "weapon line warns: " .. text)
+	SpireTest.eq(text:find("Mastery only grows while you hold", 1, true) ~= nil, true, "style line warns")
+	w.held = true
+	text = table.concat(SpireUpgrade.lines(base({ level = 12, weapon = w, style = { stageName = "Vanguard Mastery", level = 2 } })), "\n")
+	SpireTest.eq(text:find("not in your hand", 1, true), nil, "held: no warning")
+	SpireTest.eq(text:find("Mastery only grows", 1, true), nil, "held: no style warning")
+	text = table.concat(SpireUpgrade.lines(base({ level = 21, weaponLost = true })), "\n")
+	SpireTest.eq(text:find("Garrick can {replace} it", 1, true) ~= nil, true, "lost weapon: where to replace it")
+end)

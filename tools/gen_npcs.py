@@ -94,9 +94,10 @@ NPCS = {
         voices=["Buy low, sell to a climber in a hurry."]),
     "hearthgate_innkeeper": dict(
         name="Innkeeper Roan", desc="the innkeeper of Hearthgate", look=(128, 78, 96, 59, 115, 0),
-        greet="Welcome to the Lantern & Lark, |PLAYERNAME|. Food and drink, or ask me where to {hunt}. Ask for a {trade}.",
+        greet="Welcome to the Lantern & Lark, |PLAYERNAME|. Food and drink, or ask me where to {hunt}. Ask for a {trade}: I'll buy the meat and ham you bring back from the hunt, too.",
         voices=["Hot food! Cold ale!"],
-        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None), ("cheese", 3607, 6, None), ("fish", 3578, 6, None)]),
+        # party playtest 2026-11-26 (hand-off P2-6): looted meat and ham filled a tank's capacity and nobody bought it
+        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, 3), ("meat", 3577, 5, 2), ("cheese", 3607, 6, None), ("fish", 3578, 6, None)]),
     "hearthgate_coachman": dict(
         name="Coachman Ferro", desc="the coachman", look=(128, 58, 68, 109, 115, 0),
         greet="Need a ride, |PLAYERNAME|? I drive to {Millcross} and back to {Hearthgate}.",
@@ -109,7 +110,7 @@ NPCS = {
         name="Innkeeper Bess", desc="the innkeeper of Millcross", look=(2015, 0, 0, 0, 0, 0),
         greet="Welcome to the Millcross Inn, |PLAYERNAME|. Hot food, cold ale and good advice. Ask for a {trade}, or ask me where to {hunt}.",
         voices=["Stew's hot!", "Climbers eat free if they bring the boars home. Well, nearly free."],
-        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None), ("cheese", 3607, 6, None)]),
+        shop=[("bread", 3600, 4, None), ("ham", 3582, 8, 3), ("meat", 3577, 5, 2), ("cheese", 3607, 6, None)]),
     "hearthgate_housewright": dict(
         name="Housewright Orla", desc="the housewright", look=(128, 58, 68, 109, 115, 0),
         greet="A house should do things, |PLAYERNAME|. Furniture kits, tapestries and an exercise dummy for your own training room: ask for a {trade}. Kits are built by using them on your house floor.",
@@ -268,7 +269,14 @@ npcType.onMove = function(npc, creature, from, to) npcHandler:onMove(npc, creatu
 npcType.onSay = function(npc, creature, type, message) npcHandler:onSay(npc, creature, type, message) end
 npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, player) end
 npcType.onBuyItem = function(npc, player, itemId, subType, amount, ignore, inBackpacks, totalCost)
-	npc:sellItem(player, itemId, amount, subType, 0, ignore, inBackpacks)
+	-- Party playtest 2026-11-26 (hand-off P1-2): with "ignore capacity" ticked the engine took the gold and the item
+	-- vanished, so the tick is never passed on; a purchase too heavy to carry is refused in words instead.
+	local it = ItemType(itemId)
+	if it and it:getWeight(amount) > player:getFreeCapacity() then
+		player:sendCancelMessage("You can't carry that much. Make room or lighten your load first.")
+		return
+	end
+	npc:sellItem(player, itemId, amount, subType, 0, false, inBackpacks)
 end
 npcType.onSellItem = function(npc, player, itemId, subtype, amount, ignore, name, totalCost)
 	player:sendTextMessage(MESSAGE_TRADE, string.format("Sold %ix %s for %i gold.", amount, name, totalCost))

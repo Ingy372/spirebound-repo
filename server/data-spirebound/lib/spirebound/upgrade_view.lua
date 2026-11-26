@@ -78,6 +78,11 @@ function SpireUpgrade.lines(view)
 		if not w.shop then
 			table.insert(L, SpireUpgrade.famBar(w.fam, w.famPct))
 		end
+		if not w.held then
+			table.insert(L, "      not in your hand: hold it, or familiarity and Mastery stop growing")
+		end
+	elseif view.weaponLost then
+		table.insert(L, "WEAPON  lost: Weaponsmith Garrick can {replace} it (say replace)")
 	else
 		table.insert(L, "WEAPON  none yet: Captain Dorrow gives one at level 10")
 	end
@@ -100,6 +105,9 @@ function SpireUpgrade.lines(view)
 	local st = view.style
 	if st then
 		table.insert(L, string.format("STYLE  %s %d/10", st.stageName, st.level))
+		if not (w and w.held) and (view.level or 0) >= SpireGear.MAIN_LEVEL then
+			table.insert(L, "      Mastery only grows while you hold your class's barracks weapon")
+		end
 		if st.choiceReady and st.options then
 			table.insert(L, "      choice ready: " .. table.concat(st.options, " or ") .. " (say !style)")
 		elseif st.stanceOpen then
@@ -131,6 +139,10 @@ function SpireUpgrade.viewFor(player)
 	if s then
 		view.weapon = { name = item:getName(), floor = s.floor, tier = s.tier, fam = s.fam, awakened = s.awakened,
 			shop = s.shop, power = SpireGear.power(s), famPct = not s.shop and SpireGear.famProgress(s.famPoints, s.floor) or nil }
+		local held, hd = SpireGear.mainWeapon(player)
+		view.weapon.held = held ~= nil and hd.vocation == player:getVocation():getBaseId()
+	elseif SpireGear.earnedMain and SpireGear.earnedMain(player, 1) then
+		view.weaponLost = true
 	end
 	for _, it in ipairs(SpireGear.carried(player)) do
 		local d = SpireGear.defOf(it)

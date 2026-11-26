@@ -209,6 +209,13 @@ for _, q in ipairs({
 	table.insert(SpireQuests.list, q)
 end
 
+-- Party playtest 2026-11-26 (hand-off P1-1): quest gold goes to the bank, so a full or overloaded backpack never drops
+-- the coins on the floor (and coins don't fill the backpack, P2-7).
+function SpireQuests.payGold(player, gold)
+	player:setBankBalance(player:getBankBalance() + gold)
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold was paid into your bank account.", gold))
+end
+
 -- Pure: does this giver have outfit-addon quests for this class?
 function SpireQuests.anyAddonQuest(giver, vocation)
 	for _, q in ipairs(SpireQuests.list) do
@@ -405,7 +412,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				player:removeItem(q.item, 1)
 				player:setStorageValue(q.storage, 3)
 				local r = choice.reward
-				if r.gold then player:addMoney(r.gold) end
+				if r.gold then SpireQuests.payGold(player, r.gold) end
 				if r.exp then player:addExperience(r.exp, true) end
 				if r.title then player:kv():scoped("spirebound-titles"):set(r.title, os.time()) end
 				player:kv():scoped("spirebound-choices"):set(q.id, giver)
@@ -437,7 +444,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				if st == 2 then
 					player:setStorageValue(q.storage, 3)
 					SpireChronicle.add(player, "quest", 1)
-					if q.reward.gold then player:addMoney(q.reward.gold) end
+					if q.reward.gold then SpireQuests.payGold(player, q.reward.gold) end
 					if q.reward.exp then player:addExperience(q.reward.exp, true) end -- FLOOR1_REVIEW.md F1-21: about 10 minutes of hunting
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
 					if q.reward.gear then SpireGear.give(player, q.floor, "quest") end -- R12: a reward that isn't gold
@@ -505,7 +512,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		player:setStorageValue(q.storage, 1)
 		player:setStorageValue(q.killStorage, 0)
 		if q.kind == "deliver" then
-			player:addItem(q.item, 1)
+			SpireGive.item(player, q.item, 1) -- ignores carrying weight: an overloaded player still gets the parcel (P1-1)
 		end
 		npcHandler:say("Thank you! It's in your quest log.", npc, player)
 		if q.kind == "collect" then

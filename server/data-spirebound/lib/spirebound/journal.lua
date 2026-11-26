@@ -129,13 +129,15 @@ end
 -- "How do I..." (R11): the questions new players ask most, answered in a line each
 SpireJournal.HOWTO = {
 	"How do I attack? Click a monster in the Battle List (Ctrl+B), or right-click it and choose Attack.",
-	"How do I loot? Right-click the body and drag what you want into your backpack. !autoloot can do it for you.",
+	"How do I loot? Autoloot is on: what you kill drops straight into your backpack. Say !autoloot off to loot by hand.",
 	"How do I heal? Drink a health potion, or use your path's healing spell (say !spells). Rest in town to regain health.",
 	"Where do I hunt? Say !hunt: it names the best ground for your level, and the signposts on the roads point the way.",
 	"How do Rangers use arrows? Put them in a quiver and wear the quiver in your shield hand: the bow fires from it. Fletcher Tamsin sells both.",
 	"How do sword skills work? Hold the right weapon and press Ctrl+1..6 (or click them). Opener, then Link, then Finisher for a combo.",
 	"Where do I learn spells? Nobody sells them: you learn them on your own as you level. Say !spells for the list.",
-	"Where is my gold? At Banker Tolliver in the Hearth. Say balance, deposit or withdraw. The account vault is shared by your characters.",
+	"Where is my gold? Looted coins go straight to your bank (Banker Tolliver in the Hearth: say balance). Shops take what you pay from it.",
+	"How do we share gold in a party? At any banker say transfer, then the amount and the name (e.g. transfer 200 to Fern).",
+	"My backpack is too heavy! Sell meat and ham to Innkeeper Roan, loot to Trader Osric, and deposit coins at the bank.",
 	"How do I sell loot? Trader Osric in the Hearth buys what monsters drop. Players pay more on the market (any depot locker).",
 	"What are hunting tasks? Every town has a taskmaster (Floor 1: Taskmaster Rhen) with a task menu of that floor's monsters. Each task pays gold and task points once a day. Spend points with !taskshop.",
 	"How do I get home fast? A temple teleport scroll (Runewright Mael, 300 gold) takes you to your temple outside a fight.",

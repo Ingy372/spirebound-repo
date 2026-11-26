@@ -230,7 +230,7 @@ function levers.onUse(player, item)
 	if SpireQuests.find(player, "sluice", "gate") then
 		player:addMoney(600)
 		if SpireGearData and SpireGearData.tokens and SpireGearData.tokens[1] then
-			player:addItem(SpireGearData.tokens[1].rough, 1)
+			SpireGive.reward(player, SpireGearData.tokens[1].rough, 1)
 		end
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The sluice gate grinds open and the water drains away. In the mud lies an old strongbox: 600 gold and a rough Hearth Shard.")
 	else

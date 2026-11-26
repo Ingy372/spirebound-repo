@@ -8,6 +8,24 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q76. Looted coins go straight to the bank (2026-11-26, party playtest)
+In the party playtest a level-15 tank's backpack was half full of coin stacks and the next purchase failed. I switched on the engine's "coins to the bank" option: gold from monsters goes into your bank account, quest gold too, and shops already take the price from the bank. (My call; you can veto.)
+- **Recommendation:** keep it. Less clutter, and nobody loses coins on the floor.
+- Assumed until you answer: yes (it is on after the next restart).
+- Jay's answer:
+
+### Q75. Should the solo grounds stay this safe for a party, and dying cost nothing below level 50? (2026-11-26, party playtest)
+Three test characters went from level 3 to 21 as a party without one death; the first deaths came at the Bandit Road (a group ground), which matches the design. On Normal, dying below level 50 costs no experience ("young climber"), so on Floor 1 a death only costs the walk back.
+- **Recommendation:** keep both for now. The solo grounds are meant for one player; a party there is supposed to be comfortable. Your "challenge" lives in the group grounds, caves and bosses. Revisit after your solo playthrough.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q74. A "share the gold" option for parties? (2026-11-26, party playtest)
+Loot goes to whoever gets the kill credit, so the tank ended with 1,250 gold and the healer with 56 (not enough for mana potions). The bank's "transfer 200 to Fern" works, and the Journal now teaches it.
+- **Recommendation:** later (after Step 3, per the "nothing new" rule), add a party switch that splits looted gold evenly between nearby members, straight into their banks.
+- Assumed until you answer: only the Journal tip for now.
+- Jay's answer:
+
 ### Q73. Let Bristle Boars come in twos? (2026-11-26, 10.4)
 Boar Meadow (levels 9-15) is the one ground that still can't feed a crowd: the measurement gave four hunters only 57-89 kills an hour each (200 is the aim). Boars are "loners" (my call when the spawn habits were set): always alone, never doubled, so the meadow can only grow by adding more single boars, and the danger and rest-spot rules allowed just two more.
 - **Recommendation:** make boars a "pair" (ones and twos). The meadow would roughly double without changing its layout, and the Vanguard ground keeps hard hitters that walk up to you. The elite (Old Bristleback) stays alone.

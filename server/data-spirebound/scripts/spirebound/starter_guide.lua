@@ -101,14 +101,40 @@ guide:separator(" ")
 guide:groupType("normal")
 guide:register()
 
+-- Pure: before a path is chosen, each path's first spells (the Arrival Yard's gate sends new players here)
+SpireGuide.PREVIEW_LEVEL = 10
+function SpireGuide.previewLines()
+	local lines = { "What each path learns first. Choose your path with Registrar Maelis at the end of the stone path;", "after that, !spells lists everything your path will learn.", "" }
+	for _, voc in ipairs({ 4, 3, 1, 2 }) do -- Vanguard, Ranger, Arcanist, Mystic
+		local v = Vocation(voc)
+		table.insert(lines, (v and v:getName() or ("Path " .. voc)) .. ":")
+		local rows = {}
+		for _, row in ipairs(SpireSpells.list) do
+			if not row.lostArt and not row.style and SpireSpells.allowed(row, voc) and SpireSpells.levelFor(row, voc) <= SpireGuide.PREVIEW_LEVEL then
+				table.insert(rows, row)
+			end
+		end
+		table.sort(rows, function(a, b)
+			local la, lb = SpireSpells.levelFor(a, voc), SpireSpells.levelFor(b, voc)
+			if la ~= lb then return la < lb end
+			return a.name < b.name
+		end)
+		for _, row in ipairs(rows) do
+			table.insert(lines, string.format("  %-18s (level %d)", row.name, SpireSpells.levelFor(row, voc)))
+		end
+		table.insert(lines, "")
+	end
+	return lines
+end
+
 local spells = TalkAction("!spells")
 function spells.onSay(player, words, param)
 	if SpireTutorial then
 		SpireTutorial.mark(player, "spells") -- the Arrival Yard's third gate (R11)
 	end
 	local base = player:getVocation():getBaseId()
-	if base == 0 then
-		player:sendTextMessage(MESSAGE_STATUS, "Choose a path with Registrar Maelis at the end of the stone path first.")
+	if base == 0 then -- party playtest 2026-11-26 (hand-off P2-12): the yard gate promises this list before the Registrar
+		player:showTextDialog(LETTER_ID, table.concat(SpireGuide.previewLines(), "\n"))
 		return false
 	end
 	local lines = SpireGuide.spellLines(base, player:getLevel(), SpireStyle.get(player))

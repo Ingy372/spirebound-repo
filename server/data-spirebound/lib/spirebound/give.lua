@@ -53,3 +53,24 @@ function SpireGive.into(container, id, count)
 	end
 	return nil
 end
+
+-- A reward that must reach the player (shards, chest prizes): ignores carrying weight; with no free backpack slot it
+-- goes to the Store Inbox instead of the floor (party playtest 2026-11-26, hand-off P1-1). Returns the item or nil.
+function SpireGive.reward(player, id, count)
+	local item = Game.createItem(id, count or 1)
+	if not item then
+		return nil
+	end
+	if player:addItemEx(item, false, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+		return item
+	end
+	local inbox = player.getStoreInbox and player:getStoreInbox()
+	if inbox and inbox:addItemEx(item, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your backpack is full: " .. item:getName() .. " was put in your Store Inbox (the box in your equipment).")
+		return item
+	end
+	if player:addItemEx(item, true) == RETURNVALUE_NOERROR then
+		return item
+	end
+	return nil
+end
