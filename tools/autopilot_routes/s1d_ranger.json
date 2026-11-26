@@ -1,0 +1,73 @@
+{
+ "name": "s1d_ranger",
+ "about": "S1d: a Ranger hunting Bandit Road for 3 minutes at levels 21 and 25 (was it too fragile there?).",
+ "character": "Pilot Ranger",
+ "timeout": 700,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag",
+   "note": "a full bag drops the potions on the floor"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 100"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 268, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 21",
+   "note": "Bandit Road, level 21"
+  },
+  {
+   "do": "say",
+   "text": "/pilot kit"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_a",
+   "note": "Bandit Road, level 21"
+  },
+  {
+   "do": "hunt",
+   "seconds": 180,
+   "radius": 8,
+   "note": "Ranger at Bandit Road, level 21"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 25",
+   "note": "Bandit Road, level 25"
+  },
+  {
+   "do": "say",
+   "text": "/pilot kit"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_a",
+   "note": "Bandit Road, level 25"
+  },
+  {
+   "do": "hunt",
+   "seconds": 180,
+   "radius": 8,
+   "note": "Ranger at Bandit Road, level 25"
+  }
+ ]
+}

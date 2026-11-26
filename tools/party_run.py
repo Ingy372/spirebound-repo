@@ -59,7 +59,8 @@ def route(name, place, level):
     meet = pts[p["meet"]]
     off = ([LEADER] + MEMBERS).index(name)
     here = [meet[0] - 2 + off, meet[1] - 1, meet[2]]           # side by side at the hub, all in sight of each other
-    steps = [{"do": "say", "text": "/pilot heal"}, {"do": "say", "text": f"/pilot level {level}"},
+    steps = [{"do": "say", "text": "/pilot emptybag"},             # a full bag drops the potions on the floor
+             {"do": "say", "text": "/pilot heal"}, {"do": "say", "text": f"/pilot level {level}"},
              {"do": "say", "text": "/pilot give 266, 40"}, {"do": "say", "text": "/pilot give 268, 40"}]
     if name == "Pilot Scout":
         steps.append({"do": "say", "text": "/pilot kit"})
