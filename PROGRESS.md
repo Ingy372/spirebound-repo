@@ -176,3 +176,5 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
   - The second session was told to drop J5b (Floor 2 economy) and keep to Floor 1 / launch work.
 
 - Jay approved the Gate Hound corpse ("Approve it"); installed as "slain gate hound" like the other three. Boot test passed (265 in-game tests). Needs a server restart; the check is route n7b_gate_hound.
+
+- N7b ticked: the Gate Hound leaves its own corpse in the client. The restart had not refreshed the client's sprites (it showed the old Tibia picture), so I ran the client install by hand; a restart must go through Restart-Server.ps1 or Start-Spirebound.ps1, which do it.
