@@ -1,0 +1,170 @@
+{
+ "name": "art65_npcs",
+ "about": "6.5 (2026-11-25): the approved NPC art and class outfits in the client after the restart: one screenshot per NPC, and the Pilot in its class outfit.",
+ "character": "Pilot Ranger",
+ "timeout": 300,
+ "noSpells": true,
+ "steps": [
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_self_ranger"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1224,
+    1293,
+    7
+   ],
+   "note": "tolliver"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_tolliver"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1237,
+    1292,
+    7
+   ],
+   "note": "odran"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_odran"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1304,
+    7
+   ],
+   "note": "vesper"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_vesper"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1184,
+    1280,
+    7
+   ],
+   "note": "wenna"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_wenna"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1258,
+    1244,
+    7
+   ],
+   "note": "veyra"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_veyra"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1143,
+    1192,
+    7
+   ],
+   "note": "corwin"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_corwin"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1063,
+    1206,
+    7
+   ],
+   "note": "bess"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_bess"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1276,
+    1349,
+    7
+   ],
+   "note": "pell"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_pell"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1325,
+    1343,
+    7
+   ],
+   "note": "maelis"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art65_maelis"
+  }
+ ]
+}
