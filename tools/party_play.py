@@ -358,6 +358,7 @@ def town():
             near = beside(goal)
             return walk_steps(here, near, fight=True) + [{"do": "trade", **tr}, {"do": "wait", "seconds": 2}]
         everyone(steps, f"town {npc}")
+    gear()                       # a player looks at the shops and the new things in the bag on every trip
     print("town: " + "; ".join(f"{t} gold {gold(state(t))} hp-pots {bag_count(state(t), 'health potion')} "
                                f"mana-pots {bag_count(state(t), 'mana potion')} ham {bag_count(state(t), 'ham')}" for t in TAGS), flush=True)
 
@@ -431,6 +432,63 @@ def quests(givers=None):
             print(f"  [{t}] {npc[4:]}: " + " / ".join(m[:160] for m in said[-6:]), flush=True)
 
 
+# a curious player's gear: best first per slot (name, item id, slot, price at Hearthgate or None if loot only).
+# Casters stay in light armour (Arcanist/Mystic); the barracks weapons share their base item's look and name.
+GEAR = {
+    "tank": {"body": [("brass armor", 3359, 450), ("studded armor", 3378, 90), ("leather armor", 3361, 12)],
+             "legs": [("brass legs", 3372, 195), ("studded legs", 3362, 50), ("leather legs", 3559, 10)],
+             "head": [("chain helmet", 3352, 52), ("studded helmet", 3376, 63), ("leather helmet", 3355, 12)],
+             "right": [("brass shield", 3411, 65), ("studded shield", 3426, 50), ("wooden shield", 3412, 15)],
+             "left": [("longsword", 3285, 160), ("sword", 3264, 85)]},
+    "caster": {"body": [("studded armor", 3378, 90), ("leather armor", 3361, 12)],
+               "legs": [("studded legs", 3362, 50), ("leather legs", 3559, 10)],
+               "head": [("studded helmet", 3376, 63), ("leather helmet", 3355, 12)]},
+}
+SHOP_OF = {3359: "NPC Armorer Hesta", 3378: "NPC Armorer Hesta", 3372: "NPC Armorer Hesta", 3362: "NPC Armorer Hesta",
+           3352: "NPC Armorer Hesta", 3376: "NPC Armorer Hesta", 3411: "NPC Armorer Hesta", 3426: "NPC Armorer Hesta",
+           3285: "NPC Weaponsmith Garrick"}
+
+
+def gear():
+    """Buy the best gear the bank allows from the armorer and weaponsmith, then wear whatever beats what you have."""
+    pl = GT.places(wp())
+    want = {}
+    for t in TAGS:
+        st = state(t) or {}
+        worn, budget, buy = st.get("worn", []), max(gold(st), 0) + 99999, []      # the shops take it from the bank
+        for slot, ladder in GEAR["tank" if t == "tank" else "caster"].items():
+            names = [n for n, _, _ in ladder]
+            cur = next((i for i, n in enumerate(names) if n in worn), len(names))
+            if cur > 0 and ladder[0][2]:
+                buy.append(ladder[0])
+        want[t] = buy
+    for shop in ("NPC Armorer Hesta", "NPC Weaponsmith Garrick"):
+        def steps(t, st, shop=shop):
+            items = [[n, 1] for n, iid, price in want[t] if SHOP_OF.get(iid) == shop]
+            if not items:
+                return []
+            here = (st["x"], st["y"], st["z"])
+            return walk_steps(here, beside(pl[shop])) + [{"do": "trade", "buy": items}, {"do": "wait", "seconds": 2}]
+        everyone(steps, f"gear {shop}")
+    wear()
+
+
+def wear():
+    """Equip anything in the bag that is better than what is worn (a player looks at new things in the bag)."""
+    def steps(t, st):
+        out, bag = [], [e.split(" x")[0] for e in st.get("backpack", [])]
+        for slot, ladder in GEAR["tank" if t == "tank" else "caster"].items():
+            names = [n for n, _, _ in ladder]
+            cur = next((i for i, n in enumerate(names) if n in st.get("worn", [])), len(names))
+            for i, (n, iid, _) in enumerate(ladder[:cur]):
+                if n in bag:
+                    out += [{"do": "equip", "id": iid, "slot": slot}, {"do": "wait", "seconds": 1}]
+                    break
+        return out
+    out = everyone(steps, "wear")
+    print("gear: " + "; ".join(f"{t} wears {', '.join(state(t).get('worn', []))}" for t in TAGS), flush=True)
+
+
 def form():
     """The tank invites, the others accept, shared experience on: the way players do it."""
     names = {t: CP.load(t)["char"] for t in TAGS}
@@ -444,10 +502,15 @@ def main(argv):
     if not argv:
         sys.exit(__doc__)
     cmd, rest = argv[0], list(argv[1:])
+    global TAGS
+    if cmd != "run" and "--tags" in rest:
+        TAGS = CP.opt(rest, "--tags").split(",")
     if cmd == "run":
         run(rest)
     elif cmd == "quests":
         quests(rest or None)
+    elif cmd == "gear":
+        gear()
     elif cmd == "form":
         form()
     elif cmd == "town":

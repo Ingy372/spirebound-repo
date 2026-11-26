@@ -75,6 +75,34 @@ Axe-Lord kill can't spoil the real race.
   With one family, just hand it over.
 - The new weapon has the same look and market name as the starter one (the bag shows two "snakebite rod"s), so a
   player can't tell which is which without looking at each one.
+- **The tank's Hearthguard Sword vanished (unexplained, needs tracing).** Dorrow gave it at level 10 ("It's
+  yours"), tempered it at level 17 ("one tier stronger"), but at level 21 the Journal says "WEAPON: none yet" and
+  the saved character has no Spirebound-tagged item anywhere (bag, hand, inbox, depot): only the plain starter sword
+  and a looted mace. In between: a solo death on the Bandit Road at level 21 (with all five blessings, so no item
+  drop expected) and several sell trips (Trader Osric doesn't buy plain swords). Dorrow only hands it out once, so
+  a player who loses it is stuck without the Floor 1 weapon path. Worth a log line whenever a Spirebound item is
+  removed, and a way to get it back from Dorrow.
+- **Jay watching (2026-11-26): "he still has the basic sword and gear that he started with".** True up to level 21:
+  my test script bought only potions and food, never armour, so the party played under-geared (partly the test,
+  partly that nothing in the game nudges you to the armorer). Fixed from level 21 on: the script now buys the best
+  affordable gear each town trip and wears anything better found in the bag. The tank went from leather to brass
+  armour and legs, chain helmet, brass shield and longsword for about 920 gold. The armorer's best is brass at
+  level 21; nothing between brass and the 8,000-gold spike sword for a Vanguard's weapon.
+
+- **Mastery and weapon familiarity only grow while the barracks weapon is in your hand** (`SpireProgress.countsPure`
+  needs a Spirebound weapon of your class). The tank never held his (it went to the bag, then vanished), so at level
+  21 he has no Mastery points at all: "Vanguard Mastery 0/10", no stance at Mastery 5, nothing. The healer and the
+  damage dealer, who equipped theirs, are earning points. A player who leaves the weapon in the bag silently gets
+  no style progress for the whole floor. Show "equip the Hearthguard Sword to grow Mastery" in the Journal's
+  STYLE line when it isn't held.
+
+### Test method note (so the numbers are read right)
+- Up to level 21 the test client cast mostly its first, cheapest attack spell plus weapon skills: the Arcanist never
+  cast forked arc, ember barrage or fireburst wave, the Mystic never cast hailshards or frost wave, the Vanguard
+  never cast shield bash or rending blow. Experience per hour up to level 21 is therefore a floor, not a ceiling.
+  Fixed at level 21 (Jay asked: "is everyone using all the best spells?"): the client now picks an area spell for
+  crowds and the strongest affordable spell otherwise, and the healer keeps a mana reserve. Gear was fixed at the
+  same point (see above).
 
 ### Money in the first hours
 - **Characters are broke at levels 3-10.** After the Proving they had ~250 gold each; one restock (5 health potions

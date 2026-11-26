@@ -1119,14 +1119,39 @@ local function useKit(player)
     if not g_game.isAttacking() or t - lastAttackCast < 2.1 then return end
     local target = g_game.getAttackingCreature()
     if not target or target:getHealthPercent() <= 0 then return end
-    local d = dist(player:getPosition(), target:getPosition())
+    -- (2026-11-26, Jay: "is everyone using all the best spells?") choose like a player: an area spell when two or more
+    -- monsters are close, else the strongest single-target spell (its mana cost as the measure) or a free weapon
+    -- skill; a character with party heals keeps 35% of its mana for them
+    local me = player:getPosition()
+    local d = dist(me, target:getPosition())
+    local close = 0
+    for _, m in ipairs(monsters(player)) do
+        if m.d <= 2 then close = close + 1 end
+    end
+    local reserve = (#(kit.ally or {}) > 0) and 0.35 * maxMana or 0
+    local best, bestScore
     for _, list in ipairs({ kit.skills, kit.attack }) do
         for _, e in ipairs(list) do
-            if t >= (ready[e.words] or 0) and mana >= e.mana and d <= math.max(1, e.range) then
-                lastAttackCast = t
-                return cast(e, 'cast')
+            local short = (e.range or 1) <= 1
+            local ok = t >= (ready[e.words] or 0) and mana >= e.mana and d <= math.max(1, e.range)
+                and (e.mana == 0 or mana - e.mana >= reserve)
+            if ok then
+                local score = e.mana == 0 and 18 or e.mana
+                if short and list == kit.attack then -- waves, bursts and strikes: worth it on a crowd
+                    score = close >= 2 and (e.mana + 60) or (d <= 1 and e.mana * 0.5 or -1)
+                end
+                if score >= 0 and (not bestScore or score > bestScore) then best, bestScore = e, score end
             end
         end
+    end
+    if best then
+        if (best.range or 1) <= 1 then -- face the target, as for a wave
+            local a, b = me, target:getPosition()
+            local dx, dy = b.x - a.x, b.y - a.y
+            g_game.turn(math.abs(dx) > math.abs(dy) and (dx > 0 and East or West) or (dy > 0 and South or North))
+        end
+        lastAttackCast = t
+        return cast(best, 'cast')
     end
 end
 
