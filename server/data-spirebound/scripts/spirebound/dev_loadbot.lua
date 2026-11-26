@@ -39,7 +39,14 @@ local function readPlan()
 	end
 	f:close()
 	for _, g in ipairs(SpireWilds.grounds) do
-		L.ground[g.id] = g
+		-- patrol only the spots on levels that count as the ground (a party cave below is a different place)
+		local spots = {}
+		for _, sp in ipairs(g.spots or {}) do
+			if sp.z == g.z or (g.zs and g.zs[sp.z]) then
+				table.insert(spots, sp)
+			end
+		end
+		L.ground[g.id] = { id = g.id, z = g.z, zs = g.zs, x1 = g.x1, y1 = g.y1, x2 = g.x2, y2 = g.y2, spots = spots }
 	end
 end
 readPlan()
@@ -69,7 +76,9 @@ local function pickTarget(player, b)
 		if c:isMonster() and not c:getMaster() and c:getHealth() > 0 then
 			local cp = c:getPosition()
 			local owner = L.claims[c:getId()]
-			if cp.z == pos.z and inside(b.g, cp) and (not owner or owner == player:getId() or not Creature(owner)) then
+			local skip = b.skip[c:getId()]
+			if cp.z == pos.z and inside(b.g, cp) and (not owner or owner == player:getId() or not Creature(owner))
+				and not (skip and skip > systemTime()) then
 				local d = dist(pos, cp)
 				if not bd or d < bd then
 					best, bd = c, d
@@ -118,6 +127,7 @@ local function think(pid)
 	if not inside(b.g, pos) then -- first tick (or pushed out): start at the ground's first spot
 		local s = b.g.spots[1]
 		player:teleportTo(Position(s.x, s.y, s.z))
+		b.n.reset = b.n.reset + 1
 		return
 	end
 	local t = b.target and Creature(b.target)
@@ -130,7 +140,7 @@ local function think(pid)
 		if t then
 			L.claims[t:getId()] = pid
 			player:setFollowCreature(t)
-			b.idleSince = nil
+			b.chased = 0
 		end
 	end
 	if t then
@@ -138,8 +148,20 @@ local function think(pid)
 		if dist(pos, t:getPosition()) <= reach then
 			local dmg = math.max(1, math.floor(b.dps * THINK / 1000 + math.random()))
 			doTargetCombatHealth(player, t, COMBAT_PHYSICALDAMAGE, -dmg, -dmg, CONST_ME_NONE)
-		elseif reach > 1 then
-			stepToward(player, t:getPosition())
+			b.n.hit = b.n.hit + 1
+		else
+			b.n.chase = b.n.chase + 1
+			b.chased = (b.chased or 0) + 1
+			if b.chased > 10 then -- 5 s without reaching it: out of reach (water, a wall): leave it for 30 s
+				b.skip[t:getId()] = now + 30000
+				L.claims[t:getId()] = nil
+				b.target = nil
+				player:setFollowCreature(nil)
+				return
+			end
+			if reach > 1 then
+				stepToward(player, t:getPosition())
+			end
 		end
 		return
 	end
@@ -149,14 +171,26 @@ local function think(pid)
 	local to = Position(s.x, s.y, s.z)
 	if s.z ~= pos.z or not player:getPathTo(to, 0, 1, true, true, 60) then
 		b.travelTo = to
+		b.n.travel = b.n.travel + 1
 		b.travelUntil = now + math.max(2, dist(pos, to)) * STEP + 4000 -- the walk, plus finding the stairs
 		b.spot = b.spot % #b.g.spots + 1
 		return
 	end
 	if dist(pos, to) <= 2 then
 		b.spot = b.spot % #b.g.spots + 1
+		b.walkStart = nil
 		return
 	end
+	-- stuck on the way (a blocked path, a door): after twice the walking time, go there as if the way round was found
+	if b.walkSpot ~= b.spot then
+		b.walkSpot, b.walkStart, b.walkFrom = b.spot, now, dist(pos, to)
+	elseif now - b.walkStart > b.walkFrom * STEP * 2 + 3000 then
+		b.travelTo, b.travelUntil = to, now + 1000
+		b.n.travel = b.n.travel + 1
+		b.spot = b.spot % #b.g.spots + 1
+		return
+	end
+	b.n.walk = b.n.walk + 1
 	-- walk a few steps during this think
 	for i = 0, math.floor(THINK / STEP) - 1 do
 		addEvent(function()
@@ -180,7 +214,8 @@ function login.onLogin(player)
 		return true
 	end
 	local voc = player:getVocation():getId()
-	L.bots[player:getId()] = { g = g, dps = plan.dps, spot = math.random(#g.spots), range = (voc == 4) and 1 or 3 }
+	L.bots[player:getId()] = { g = g, dps = plan.dps, spot = math.random(#g.spots), range = (voc == 4) and 1 or 3,
+		n = { reset = 0, travel = 0, hit = 0, walk = 0, chase = 0 }, skip = {} } -- what it spent its thinks on (the minute report)
 	player:registerEvent("SpireLoadbotKill")
 	addEvent(think, 1000 + math.random(THINK), player:getId())
 	return true
@@ -242,6 +277,16 @@ function every60.onThink()
 	local per = {}
 	for _, b in pairs(L.bots) do
 		per[b.g.id] = (per[b.g.id] or 0) + 1
+	end
+	if os.getenv("SPIRE_LOADTEST_DEBUG") == "1" then
+		for pid, b in pairs(L.bots) do
+			local p = Player(pid)
+			if p then
+				local pos = p:getPosition()
+				logger.info("[LOADTEST] bot {} ground={} pos={},{},{} hp={} target={} thinks: hit={} chase={} walk={} travel={} reset={}", p:getName(), b.g.id, pos.x, pos.y, pos.z, p:getHealth(), b.target and Creature(b.target) and Creature(b.target):getName() or "-", b.n.hit, b.n.chase, b.n.walk, b.n.travel, b.n.reset)
+				b.n = { reset = 0, travel = 0, hit = 0, walk = 0, chase = 0 }
+			end
+		end
 	end
 	for id, n in pairs(per) do
 		local rec = SpireCrowd.grounds[id]

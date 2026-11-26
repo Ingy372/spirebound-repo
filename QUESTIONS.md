@@ -8,6 +8,16 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q72. A launch-week crowd boost for the harder hunting grounds? (2026-11-26, N2)
+The measurement (docs/N2_capacity.md) says Floor 1 feeds about 30 hunters at once at a good pace, about 9 of them in the
+level 9-30 grounds; the launch target is 150. The lead session will make the grounds bigger (10.4). Separately: you
+decided the crowd system lets harder grounds grow only to 1.5 times "so good spots stay worth competing for" (Q31). In
+the test it added 20-60% when a ground filled up.
+- **Recommendation:** keep your rule, and let the bigger map (10.4) do the work. Optionally, for the first week of a
+  season only, let the harder grounds grow to 2-3 times, when everyone is on Floor 1 at once.
+- Assumed until you answer: no change (your rule stays).
+- Jay's answer:
+
 ### Q71. Outfit addons: who gives them and what they ask (2026-11-26, 6.5c)
 You approved all sixteen addon drawings. Now each one is a quest reward (my calls, you can veto any of them):
 - **Who:** Vanguards ask Captain Dorrow, Rangers Hunter Brannoch, Arcanists Vesper, Mystics Fisher Corwin. Say "outfit" to them. A class only gets its own two quests; the second needs the first. At level 14 the game tells each player who to ask.

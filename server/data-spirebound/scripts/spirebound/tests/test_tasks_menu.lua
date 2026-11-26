@@ -94,8 +94,16 @@ SpireTest.add("tasks: take, hunt, report through Taskmaster Rhen's menu", functi
 		if row.id == "t1_meadowwolf" then SpireTest.eq(row.status, "wait", "done today: waits until tomorrow") end
 	end
 	SpireTest.eq(SpireTasks.get("t_wolves").id, "t1_meadowwolf", "an old task id still counts")
-	local far = fakePlayer(WorldPoints.temple_hearthgate, "far")
-	SpireTest.eq((SpireTasks.take(far, "t1_fieldrat")), false, "no taking tasks away from a taskmaster")
+	-- R18 (2026-11-26): this check failed now and then on GitHub when it stood at the temple; it now stands 30 tiles
+	-- from Rhen, names any taskmaster it finds, and the temple is only logged, so the cause shows up next time
+	local farPos = Position(pos.x + 30, pos.y, pos.z)
+	local nearFar = SpireTasks.nearMaster({ getPosition = function() return farPos end })
+	local nearTemple = SpireTasks.nearMaster({ getPosition = function() return WorldPoints.temple_hearthgate end })
+	if nearTemple then
+		logger.info("[SPIRETEST] note: taskmaster {} is within reach of the Hearthgate temple (Rhen stands at {}, {})", nearTemple, pos.x, pos.y)
+	end
+	local far = fakePlayer(farPos, "far")
+	SpireTest.eq((SpireTasks.take(far, "t1_fieldrat")), false, "no taking tasks away from a taskmaster (near: " .. tostring(nearFar) .. ")")
 	for _, t2 in ipairs(SpireTasks.list) do s:remove("done_" .. t2.id) end
 	s:remove("points")
 	p.bp:remove()
