@@ -34,9 +34,10 @@
   "wrap",
   "steel",
   "edge",
-  "line"
+  "line",
+  "glow"
  ],
- "palette": "axe_lord",
+ "palette": "axe_lord_blade",
  "walk_frames": 8,
  "order": [
   "N",
@@ -89,7 +90,8 @@
    "line": 2.6,
    "wrap": 2.2,
    "haft": 1.8,
-   "knee": 1.8
+   "knee": 1.8,
+   "glow": 6.0
   },
   "thin": {
    "eye": 3,
@@ -109,7 +111,8 @@
    "visor": 2,
    "line": 2,
    "wrap": 2,
-   "haft": 3
+   "haft": 3,
+   "glow": 2
   },
   "soft": [
    [
@@ -177,7 +180,9 @@
     "knee"
    ]
   ],
-  "no_outline": [],
+  "no_outline": [
+   "glow"
+  ],
   "fur": [],
   "texture": {
    "torso": [

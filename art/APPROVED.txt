@@ -44,3 +44,5 @@ bandit
 captain
 archer
 sentinel
+gate_hound
+axe_lord

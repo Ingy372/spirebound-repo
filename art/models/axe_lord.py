@@ -44,17 +44,18 @@ LEG_PARTS = ["leg_a", "leg_b", "boot_a", "boot_b", "knee"]
 CHECK = {"size": (0.80, 1.05), "head": 0.07, "legs_side": 0.03, "legs_updown": 0.02, "eye": 1}
 
 PARTS = H.PARTS + ["helm", "visor", "horn", "bronze", "patina", "cloth", "trim", "emblem", "rivet", "knee",
-                   "haft", "wrap", "steel", "edge", "line"]
+                   "haft", "wrap", "steel", "edge", "line", "glow"]
 PIXEL_RULES = H.pixel_rules(
     weight={"eye": 9.0, "horn": 2.4, "steel": 2.0, "edge": 3.0, "trim": 2.4, "emblem": 4.0, "rivet": 4.0,
-            "patina": 1.6, "visor": 3.0, "line": 2.6, "wrap": 2.2, "haft": 1.8, "knee": 1.8},
-    thin={"horn": 3, "edge": 2, "trim": 2, "emblem": 2, "rivet": 2, "visor": 2, "line": 2, "wrap": 2, "haft": 3},
+            "patina": 1.6, "visor": 3.0, "line": 2.6, "wrap": 2.2, "haft": 1.8, "knee": 1.8, "glow": 6.0},
+    thin={"horn": 3, "edge": 2, "trim": 2, "emblem": 2, "rivet": 2, "visor": 2, "line": 2, "wrap": 2, "haft": 3, "glow": 2},
     soft=[["helm", "visor", "eye", "nose", "brow", "strand", "hair"], ["torso", "bronze", "patina", "emblem", "rivet", "line"],
           ["cloth", "trim"], ["steel", "edge"], ["haft", "wrap"], ["leg_a", "knee"], ["leg_b", "knee"]],
     texture={"torso": [0.30, 0.30], "bronze": [0.30, 0.30], "helm": [0.25, 0.25], "patina": [0.4, 0.3],
              "cloth": [0.40, 0.20], "arm_a": [0.3, 0.25], "arm_b": [0.3, 0.25], "leg_a": [0.35, 0.1], "leg_b": [0.35, 0.1],
              "steel": [0.15, 0.1], "haft": [0.5, 0.0], "horn": [0.4, 0.0]},
     selout=["bronze", "cloth", "helm", "horn"],
+    no_outline=["glow"],                     # the last phase's fire shows THROUGH the plate: no dark rim round it
 )
 
 SPEC = H.spec(
@@ -69,6 +70,12 @@ SPEC = H.spec(
     stride=0.11, lift=0.050, bob=0.018, arm_swing=0.08, belt_z=0.470,
 )
 HORN_N = 7
+# the last phase: fire burning through cracks in the plate (anchor, offset from it, length vector), wide enough to
+# read at game size: breastplate, belly, helm, the remaining pauldron, both thighs
+CRACKS = [("torso", (0.17, 0.10, 0.14), (0.01, -0.07, -0.09)), ("torso", (0.17, -0.06, 0.05), (0.01, 0.09, -0.08)),
+          ("torso", (0.15, 0.13, -0.06), (0.00, -0.05, -0.08)), ("torso", (0.12, -0.18, 0.12), (0.03, -0.02, -0.10)),
+          ("head", (0.10, 0.07, 0.07), (0.03, -0.06, -0.05)), ("hip_l", (0.07, 0.01, -0.03), (0.01, 0.01, -0.10)),
+          ("hip_r", (0.07, -0.01, -0.05), (0.01, -0.02, -0.09))]
 
 
 def build(model_cls, facing):
@@ -102,8 +109,8 @@ def build(model_cls, facing):
         m.box(f"hem_{k}", "trim", size=(1, 1, 1))
         m.box(f"rag_{k}", "cloth", size=(1, 1, 1))
     if DAMAGED:
-        for i in range(3):
-            m.capsule(f"crack{i}", "line", segments=6)
+        for i in range(len(CRACKS)):
+            m.capsule(f"crack{i}", "glow", segments=6)
     if WEAPON == "axe":
         m.capsule("haft", "haft", segments=10)
         for i in range(3):
@@ -173,6 +180,7 @@ def pose(m, t):
         # pauldrons with a gold rim, three rivets and a patina streak
         sh = p[f"shoulder_{k}"]
         pa = m.objects[f"pauldron_{k}"]
+        torn = DAMAGED and k == "l"                          # the last phase: the left pauldron is torn away
         pa.location = sh + Vector((-0.005, 0.030 * sign, 0.055))
         pa.rotation_mode = "XYZ"
         pa.rotation_euler = Euler((0.55 * sign, 0, 0))
@@ -181,9 +189,14 @@ def pose(m, t):
         p2.rotation_mode = "XYZ"
         p2.rotation_euler = Euler((0.85 * sign, 0, 0))
         H.frustum(m, f"prim_{k}", pa.location + Vector((0, 0.030 * sign, -0.034)), (0.100, 0.108), 0.016, rot=(0.55 * sign, 0, 0))
+        if torn:
+            for name in (f"pauldron_{k}", f"pauldron2_{k}", f"prim_{k}", f"ppatina_{k}"):
+                m.objects[name].scale = (1e-4, 1e-4, 1e-4)
         m.objects[f"ppatina_{k}"].location = pa.location + Vector((0.030, 0.050 * sign, 0.045))
         for j in range(3):
             m.objects[f"rivet{j}_{k}"].location = pa.location + Vector((0.065 - 0.065 * j, 0.072 * sign, 0.020))
+            if torn:
+                m.objects[f"rivet{j}_{k}"].scale = (1e-4, 1e-4, 1e-4)
         ta = m.objects[f"tasset_{k}"]
         ta.rotation_mode = "XYZ"
         ta.rotation_euler = Euler((0.22 * sign, 0, 0))
@@ -199,15 +212,17 @@ def pose(m, t):
     for k, x, lean in (("f", tr[0] * 0.95, 0.10), ("b", -tr[0] * 0.95, -0.10)):
         top = Vector((x, 0, SPEC["belt_z"])) + up
         tilt = lean + (sway if k == "f" else -sway)
-        bottom = top + Vector((0.250 * math.sin(tilt), 0, -0.270))
+        bottom = top + Vector((0.250 * math.sin(tilt), 0, -0.170 if DAMAGED else -0.270))   # ripped short in the last phase
         _slab(m.objects[f"tabard_{k}"], bottom, top, Vector((0, 1, 0)), 0.230, 0.026)
         _slab(m.objects[f"hem_{k}"], bottom, bottom + (top - bottom).normalized() * 0.030, Vector((0, 1, 0)), 0.236, 0.032)
         rag0 = bottom + Vector((0, 0.060, 0))
         _slab(m.objects[f"rag_{k}"], rag0 + Vector((0.020 * math.sin(tilt), 0, -0.070)), rag0, Vector((0, 1, 0)), 0.060, 0.024)
     if DAMAGED:
-        for i, (y, z) in enumerate(((0.090, 0.130), (-0.060, 0.020), (0.150, -0.060))):
-            q = torso + Vector((tr[0] * 0.96, y, z))
-            m.put_segment(f"crack{i}", q, q + Vector((0.004, -0.050, -0.060)), 0.007)
+        anchors = {"torso": torso, "head": head, "hip_l": p["hip_l"], "hip_r": p["hip_r"]}
+        flick = (0.004 * math.sin(4 * a)) if walking else 0.0      # the fire breathes as he walks
+        for i, (anchor, off, vec) in enumerate(CRACKS):
+            q = anchors[anchor] + Vector(off)
+            m.put_segment(f"crack{i}", q, q + Vector(vec), 0.014 + flick)
     hand = p["hand_r"]
     if WEAPON == "axe":
         # upright haft, a little forward; twin crescent blades rising beside the helm, turned 45 degrees so their

@@ -59,7 +59,24 @@ AXE_LORD = {
     "edge": ramp((140, 150, 166), (255, 255, 255)), "line": ramp((16, 8, 4), (70, 40, 20)), "knee": ramp(*BRONZE),
 }
 
-BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD}
+EMBER_GLOW = ((150, 40, 6), (255, 236, 160), (255, 128, 30))
+AXE_LORD["glow"] = ramp(*EMBER_GLOW)
+
+# The last phase must read as a different fight at a glance (Jay, 2026-11-25: "If there is supposed to be a visual
+# phase shift, my eyes can't pick it up"): scorched, blackened bronze, fire glowing through cracks in the plate,
+# red eyes, a red-hot edge on the blade, a darker, burnt tabard.
+SCORCHED = ((16, 10, 8), (150, 104, 66), (66, 40, 22))
+SCORCHED_DARK = ((10, 7, 6), (106, 74, 48), (42, 26, 16))
+AXE_LORD_BLADE = {**AXE_LORD,
+    "helm": ramp(*SCORCHED), "skin": ramp(*SCORCHED), "torso": ramp(*SCORCHED), "bronze": ramp(*SCORCHED),
+    "nose": ramp(*SCORCHED), "knee": ramp(*SCORCHED), "hair": ramp(*SCORCHED_DARK), "strand": ramp(*SCORCHED_DARK),
+    "arm_a": ramp(*SCORCHED_DARK), "arm_b": ramp(*SCORCHED_DARK), "hand": ramp(*SCORCHED_DARK),
+    "boot_a": ramp(*SCORCHED_DARK), "boot_b": ramp(*SCORCHED_DARK),
+    "patina": ramp((20, 30, 26), (96, 120, 104), (44, 62, 54)), "cloth": ramp((28, 6, 8), (150, 46, 34), (84, 16, 18)),
+    "eye": [[255, 60, 30]], "edge": ramp(*EMBER_GLOW), "glow": ramp(*EMBER_GLOW),
+}
+
+BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE}
 
 
 def main():

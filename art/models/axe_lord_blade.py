@@ -1,5 +1,6 @@
 """Axe-Lord of the Stair, last phase (below 25%): the same warlord with a long curved blade instead of the axe,
-a horn snapped off and cracks in his plate. All the drawing lives in axe_lord.py; this file only switches it."""
+a horn snapped off, the left pauldron torn away, the tabard ripped short, the plate scorched black
+with fire burning through its cracks, red eyes and a red-hot edge (Jay: the first version's change was too subtle). All the drawing lives in axe_lord.py; this file only switches it."""
 from __future__ import annotations
 
 import axe_lord as _A
@@ -9,7 +10,7 @@ _A.DAMAGED = True
 
 NAME = "axe_lord_blade"
 WALK_FRAMES = _A.WALK_FRAMES
-PALETTE = _A.PALETTE
+PALETTE = "axe_lord_blade"        # scorched plate, fire in the cracks, red eyes (boss_palettes.py)
 REFERENCE = _A.REFERENCE
 HEIGHT_SHEAR = _A.HEIGHT_SHEAR
 LEAN = _A.LEAN
