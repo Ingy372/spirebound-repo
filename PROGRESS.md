@@ -168,3 +168,9 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
 - Hearthgate dressed (N3, P3b): market parasols and goods, flower pots, a well, a covered wagon, braziers at the gates, two campfires, and a notice board in the Hearth Square with live news. Server restarted at 11:33 and 11:41 (backups taken).
 
 - Drew the Gate Hound its own corpse (Jay asked): slumped with its three heads on the ground, blood, then rotting with ribs showing, then a three-skulled skeleton. Waiting for Jay (Q67); installing it is N7b.
+- **Paused all Floor 2+ work (Jay, 2026-11-26: "didnt realize you were working on floor 2+ content. were still getting floor 1 finished and ready.").** State at the pause, all committed and pushed:
+  - Built: `maps/floor2_plan.py`, `floor3_plan.py`, `floor4_plan.py` (eight walled grounds each, via `maps/wilds.py`, which now works on any floor), the recipe check (`balance.floor_recipe_problems`), the twists (`TWISTS` in `tools/gen_monsters.py`), Floor 2-10 hunting monster damage at 60% (`HUNT_DAMAGE`). Boot test passes (265 tests). Nothing here changes Floor 1's monsters or grounds.
+  - Not finished: the client walk `r13b_floors23` (first run: the test Vanguard died in Grazing Downs, which led to the damage cut; the rerun was stopped part way). R13b, S6 stay `[~]`; Floors 5-10 not started.
+  - Live server: has Floors 2-3 and the Hearthgate dressing (restart 11:41). Floor 4 and the two Hearthgate campfires are only in the repo until the next restart.
+  - Floor 1 work from this session that stays: Hearthgate dressing and the notice board (N3), braziers and campfires (P3b).
+  - The second session was told to drop J5b (Floor 2 economy) and keep to Floor 1 / launch work.
