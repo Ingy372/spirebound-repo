@@ -42,6 +42,9 @@ PLACES = {
     "gatehound": dict(title="the Gate Hound", level=30, meet="gate_pass_1", landing=None, spots=[[1232, 1076, 7]], hunt=240),
     "axelord": dict(title="the Axe-Lord of the Stair", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
                     spots=[[1231, 1026, 4]], hunt=360, stairkey=True, gear=4),
+    # the awakening check (P1): the same fight with the Axe-Lord dropped to 15% by the leader; the kill is still the party's
+    "axelord15": dict(title="the Axe-Lord of the Stair (at 15%)", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
+                      spots=[[1231, 1026, 4]], hunt=240, stairkey=True, gear=4, bosshp=15),
 }
 
 
@@ -76,6 +79,9 @@ def route(name, place, level):
         land = list(p["landing"])
         land[0] += off - 2
         steps += [{"do": "jump", "to": land, "note": f"into {p['title']}"}, {"do": "wait", "seconds": 3}]
+    if p.get("bosshp") and name == LEADER:
+        steps += [{"do": "walk", "to": p["spots"][0], "fight": False, "timeout": 20, "note": "close to the boss"},
+                  {"do": "say", "text": f"/pilot bosshp {p['bosshp']}", "note": "test: the boss starts low"}]
     for k, spot in enumerate(p["spots"]):
         steps += [{"do": "walk", "to": spot, "fight": True, "timeout": 90, "note": f"{p['title']}: spot {k + 1}"},
                   {"do": "hunt", "seconds": p.get("hunt", 90), "radius": 8},

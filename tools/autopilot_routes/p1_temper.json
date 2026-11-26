@@ -1,0 +1,162 @@
+{
+ "name": "p1_temper",
+ "about": "P1: the temper quest. Take it from Captain Dorrow, kill 15 Meadow Wolves with a Floor 1 weapon, report: the weapon goes up one tier.",
+ "character": "Pilot Vanguard",
+ "timeout": 600,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot unsummon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 1",
+   "note": "a tier 1 Floor 1 weapon in hand"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest q1_temper -1"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Captain Dorrow: take the temper quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 60",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 60",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 60",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 60",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 60",
+   "note": "blood the weapon on 15 meadow wolves"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Captain Dorrow: report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  }
+ ]
+}

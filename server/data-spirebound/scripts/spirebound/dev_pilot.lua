@@ -275,6 +275,16 @@ function pilot.onSay(player, words, param)
 		SpireBeacons.put(n, { slots = {} })
 		SpireBeacons.syncBowls(n, os.time())
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: beacon " .. n .. " dark")
+	elseif cmd == "bosshp" then -- (boss tests) "/pilot bosshp n": a boss within 9 tiles drops to n% health; the kill stays real
+		local pct = math.max(1, math.min(100, tonumber(rest:match("%d+")) or 10))
+		local n = 0
+		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 9, 9)) do
+			if c:isMonster() and SpireBoss and SpireBoss.defs[c:getName()] then
+				c:addHealth(math.floor(c:getMaxHealth() * pct / 100) - c:getHealth())
+				n = n + 1
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: bosshp " .. pct .. "% on " .. n .. " boss(es)")
 	elseif cmd == "hp" then
 		-- (PvP tests) set your health, to test what saves you from a killing blow
 		local n = tonumber(rest:match("(%d+)")) or player:getMaxHealth()

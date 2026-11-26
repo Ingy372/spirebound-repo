@@ -375,3 +375,16 @@ function startup.onStartup()
 	return true
 end
 startup:register()
+
+-- a fighter who fell before the boss did gets their share on the next login (lib/spirebound/gear.lua)
+local pendingLogin = CreatureEvent("SpireBossPendingLogin")
+function pendingLogin.onLogin(player)
+	addEvent(function(pid)
+		local p = Player(pid)
+		if p then
+			SpireGear.collectPending(p)
+		end
+	end, 2000, player:getId())
+	return true
+end
+pendingLogin:register()

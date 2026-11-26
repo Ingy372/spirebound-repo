@@ -375,7 +375,11 @@ function SpireGear.temperFor(player, floor)
 	end
 end
 
--- Give every credited fighter its boss reward (public and private kills alike)
+-- Give every credited fighter its boss reward (public and private kills alike). A fighter who died during the fight
+-- (or logged out) is not in the game at the kill: the reward waits and arrives when they next log in (2026-11-26: two
+-- test characters who fell before the Axe-Lord died lost their awakening).
+local PENDING = "spirebound-boss-pending"
+
 function SpireGear.grantBoss(boss, creditNames)
 	if not SpireGear.BOSS_REWARDS[boss] then
 		return
@@ -383,6 +387,29 @@ function SpireGear.grantBoss(boss, creditNames)
 	for _, name in ipairs(creditNames) do
 		local p = Player(name)
 		if p then
+			SpireGear.giveBossReward(p, boss)
+		else
+			local waiting = kv.scoped(PENDING):get(name)
+			kv.scoped(PENDING):set(name, (waiting and (waiting .. ";") or "") .. boss)
+		end
+	end
+end
+
+function SpireGear.collectPending(p)
+	local waiting = kv.scoped(PENDING):get(p:getName())
+	if not waiting then
+		return
+	end
+	kv.scoped(PENDING):remove(p:getName())
+	for boss in tostring(waiting):gmatch("[^;]+") do
+		p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You fell before the " .. boss .. " did, but your party finished the fight: your share is here.")
+		SpireGear.giveBossReward(p, boss)
+	end
+end
+
+function SpireGear.giveBossReward(p, boss)
+	do
+		do
 			local k = p:kv():scoped("spirebound")
 			local flag = "boss_credit_" .. boss
 			local plan = SpireGear.bossReward(boss, k:get(flag) ~= nil)
