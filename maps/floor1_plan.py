@@ -87,6 +87,11 @@ CAMPS = [
          levels=(14, 19), role="money", wall="water", core="pool", trail="mud", decor="marsh",
          groups=same(6, "Reed Snapper"), respawn=100, design="MARSH",
          note="Snappers carry more coins than their level suggests. Good first money run; fishing works on every pool."),
+    dict(id="bramble_run", type="mixed", title="The Bramble Run", x=140, y=30, w=60, h=48, gate="s", size="std", zone="open", design="BRAMBLE",
+         levels=(14, 20), role="xp", wall="ferns", core="firs", trail="dirt",
+         groups=[G(("Meadow Wolf", 3)), G(("Thornsnap", 1)), G(("Meadow Wolf", 3)), G(("Thornsnap", 2)),
+                 G(("Grey Alpha", 1), ("Meadow Wolf", 2)), G(("Thornsnap", 1))], respawn=100,
+         note="Wolf packs and thornsnaps share the bramble trails. North of Thornsnap Hollow, below the Pass."),
     dict(id="thornsnap_hollow", type="class", cls="Mystic", title="Thornsnap Hollow", x=158, y=132, w=60, h=40, gate="e", size="std", zone="open",
          levels=(14, 20), role="xp", wall="thorns", core="thorns", trail="dirt", decor="thorns",
          groups=same(5, "Thornsnap") + same(1, "Bristle Boar"), respawn=70, design="THORNS",
@@ -110,6 +115,20 @@ CAMPS = [
          den="The Lower Works", den_groups=[G(("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Field Shardling", 1))] * 4
          + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2), ("Field Shardling", 1))] * 4,
          note="Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well."),
+    # 10.4 (N2, docs/N2_capacity.md): three more grounds for the levels where Floor 1 ran short (14-30), built on the
+    # same skeleton with Floor 1's own monsters, in open land that held nothing but scenery.
+    dict(id="smugglers_ridge", type="mixed", title="Smugglers' Ridge", x=330, y=8, w=52, h=48, gate="s", size="std", design="SMUGGLERS",
+         zone="open", levels=(19, 26), role="money", wall="firs", core="banditcamp", trail="dirt",
+         groups=[G(("Road Bandit", 2), ("Bandit Crossbowman", 1)), G(("Hedge Hexer", 1), ("Road Bandit", 1)),
+                 G(("Road Bandit", 3)), G(("Bandit Crossbowman", 2)), G(("Bandit Captain", 1), ("Road Bandit", 2)),
+                 G(("Road Bandit", 2), ("Hedge Hexer", 1))], respawn=140,
+         note="The bandits' second camp, up in the north-east firs. Coins, crossbows and hexers who mend their friends."),
+    dict(id="fallen_bastion", type="mixed", title="The Fallen Bastion", x=335, y=110, w=52, h=48, gate="s", size="std", design="BASTION",
+         zone="open", levels=(23, 30), role="money", wall="boulders", core="cutstone", trail="gravel", ruin_walls=True,
+         groups=[G(("Ruin Archer", 1)), G(("Ruin Sentinel", 1)), G(("Ruin Archer", 1)),
+                 G(("Ruin Sentinel", 1), ("Ruin Archer", 1)), G(("Ruin Sentinel", 1)), G(("Ruin Archer", 1))],
+         respawn=150,
+         note="An old fort's broken walls, held by stone sentinels and their archers. North of the Bandit Road."),
 ]
 
 # ---- Designed grounds (FLOOR1_HUNTING_PLAN.md Part 6): a ground drawn from a list of clearings and paths on several
@@ -686,8 +705,81 @@ QUARRY = dict(
     },
     links=[("ramp", 30, 29, 7, "n"), ("stairs", 11, 26, 8)],
 )
+# 10.4 (N2): layouts for the three new grounds. The Bramble Run is drawn here; Smugglers' Ridge is the Bandit Road's
+# surface turned east-west, the Fallen Bastion the Shard Fields' surface turned north-south, each with its own monsters,
+# dressing and gate. Surface only: no party caves.
+def _flip(level, w, h, fx, fy, swap=None):
+    swap = swap or {}
+    X = (lambda x: w - 1 - x) if fx else (lambda x: x)
+    Y = (lambda y: h - 1 - y) if fy else (lambda y: y)
+    cl = [(n, X(x), Y(y), r, band, route, swap.get(n, content)) for n, x, y, r, band, route, content in level["clearings"]]
+    out = dict(level, clearings=cl, box=(0, 0, w, h))
+    if level.get("ruins"):
+        out["ruins"] = [((X(rx + rw - 1) if fx else rx), (Y(ry + rh - 1) if fy else ry), rw, rh, [(X(a), Y(b)) for a, b in gaps])
+                        for rx, ry, rw, rh, gaps in level["ruins"]]
+    return out
+
+
+_W2, _W3, _TS1, _TS2 = (("Meadow Wolf", 2),), (("Meadow Wolf", 3),), (("Thornsnap", 1),), (("Thornsnap", 2),)
+_GA = (("Grey Alpha", 1), ("Meadow Wolf", 2))
+BRAMBLE = dict(
+    gate=(29, 47), crowd_group=[("Meadow Wolf", 1)],
+    routes={"a": "a1", "b": "b1", "c": "c0", "d": "dq"},
+    route_names={"a": "The West Brambles", "b": "The East Brambles", "c": "The Wolf Run", "d": "The Alpha's Clearing"},
+    levels={
+        7: dict(name="The Bramble Run", box=(0, 0, 60, 48), clearings=[
+            ("hub", 29, 41, 4, "approach", None, "hub"), ("sw", 18, 40, 4, "calm", None, None), ("se", 40, 40, 4, "calm", None, None),
+            ("qa", 5, 37, 3, "calm", "a", "rest"), ("a1", 5, 26, 3, "calm", "a", [_W2]), ("a2", 6, 14, 3, "middle", "a", [_TS1]),
+            ("qb", 54, 37, 3, "calm", "b", "rest"), ("b1", 54, 26, 3, "calm", "b", [_TS1]), ("b2", 53, 14, 3, "middle", "b", [_TS1]),
+            ("c0", 29, 35, 3, "calm", "c", "rest"), ("c1", 29, 26, 3, "middle", "c", [_W2]), ("cs", 29, 15, 3, "deep", "c", "rest"),
+            ("dq", 15, 3, 2, "deep", "d", "rest"), ("d1", 29, 4, 3, "deep", "d", [_GA]), ("de", 44, 3, 2, "deep", "d", [_TS2]),
+            ("ca1", 10, 37, 1, "calm", "a", "crowd"), ("ca2", 10, 30, 1, "calm", "a", "crowd"), ("ca3", 10, 9, 1, "middle", "a", "crowd"),
+            ("cb1", 49, 37, 1, "calm", "b", "crowd"), ("cb2", 49, 30, 1, "calm", "b", "crowd"), ("cb3", 49, 9, 1, "middle", "b", "crowd"),
+            ("cc1", 23, 28, 1, "calm", "c", "crowd"), ("cc2", 35, 28, 1, "calm", "c", "crowd"), ("cc3", 29, 20, 1, "middle", "c", "crowd"),
+            ("cd1", 22, 7, 1, "deep", "d", "crowd"), ("cd2", 37, 7, 1, "deep", "d", "crowd"), ("cd3", 29, 9, 1, "deep", "d", "crowd"),
+        ], paths=[("hub", "sw", 4), ("sw", "qa", 3), ("qa", "a1", 3), ("a1", "a2", 3), ("a2", "dq", 3), ("dq", "d1", 3),
+                  ("d1", "de", 3), ("de", "b2", 3), ("b2", "b1", 3), ("b1", "qb", 3), ("qb", "se", 3), ("se", "hub", 4),
+                  ("hub", "c0", 4), ("c0", "c1", 3), ("c1", "cs", 3), ("cs", "d1", 3)]),
+    },
+    links=[],
+)
+_SB1 = (("Road Bandit", 1), ("Bandit Crossbowman", 1))
+_SB2 = (("Bandit Crossbowman", 1), ("Hedge Hexer", 1))
+SMUGGLERS = dict(
+    gate=(51 - BANDITS["gate"][0], 47), crowd_group=[("Road Bandit", 1)],
+    routes=BANDITS["routes"],
+    route_names={"a": "The East Firs", "b": "The West Firs", "c": "The Smugglers' Path", "d": "The Ridge Camp"},
+    levels={7: dict(_flip(BANDITS["levels"][7], 52, 48, True, False,
+                          swap={"a1": [_RB1], "a2": [_SB2], "b1": [_RB1], "b2": [_SB1], "c1": [_SB2], "d1": [_CAP1]}),
+                    name="Smugglers' Ridge")},
+    links=[],
+)
+_RS1 = (("Ruin Sentinel", 1),)
+_RA1 = (("Ruin Archer", 1),)
+_RAM = (("Stonehorn Ram", 1),)
+_s7 = SHARDS["levels"][7]
+# the Shard Fields' east half was its ramp up to the Terraces; here it is the bastion's old keep, a path of its own
+_KEEP = [("e1", 41, 10, 3, "middle", "c", [(("Ruin Sentinel", 1),)]), ("e2", 46, 22, 3, "deep", "c", [(("Ruin Sentinel", 1), ("Ruin Archer", 1))]),
+         ("e3", 45, 31, 3, "deep", "c", "rest"),
+         ("kc1", 45, 14, 1, "middle", "c", "crowd"), ("kc2", 49, 26, 1, "deep", "c", "crowd"), ("kc3", 37, 6, 1, "middle", "c", "crowd"),
+         ("kd1", 9, 4, 1, "deep", "d", "crowd"), ("kd2", 19, 4, 1, "deep", "d", "crowd"), ("kd3", 14, 8, 1, "deep", "d", "crowd")]
+BASTION = dict(
+    gate=(SHARDS["gate"][0], 47), crowd_group=[("Ruin Archer", 1)],
+    routes={"a": "a1", "b": "b1", "c": "qb", "d": "s0"},
+    route_names={"a": "The West Wall", "b": "The Inner Yard", "c": "The Keep Steps", "d": "The Fallen Gate"},
+    levels={7: dict(_flip(dict(_s7, clearings=[cl for cl in _s7["clearings"]]), 52, 48, False, True,
+                          swap={"a1": [_RA1], "a2": [_RS1], "b1": [_RA1], "b2": [_RS1, _RA1]}),
+                    name="The Fallen Bastion")},
+    links=[],
+)
+_bl = BASTION["levels"][7]
+_bl["clearings"] = list(_bl["clearings"]) + _KEEP
+_bl["paths"] = list(_bl["paths"]) + [("rf", "e1", 3), ("e1", "e2", 3), ("e2", "e3", 3), ("e3", "qb", 3)]
+DESIGNS_NEW = {"BRAMBLE": BRAMBLE, "SMUGGLERS": SMUGGLERS, "BASTION": BASTION}
+
 DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS, "SHARDS": SHARDS,
            "BANDITS": BANDITS, "QUARRY": QUARRY}
+DESIGNS.update(DESIGNS_NEW)
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

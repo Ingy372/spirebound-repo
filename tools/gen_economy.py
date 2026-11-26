@@ -38,7 +38,8 @@ def stage(level):
 # the ladder (FLOOR1_WILDS_PLAN.md 3.2): base experience per hour (before the stage) for a Vanguard at the middle level
 LADDER_TARGET = {"starter_west": 1800, "starter_east": 2500, "starter_south": 3500, "wasp_fields": 5000, "boar_meadow": 7500,
                  "burrow_hills": 9000, "wolf_copse": 11000, "reed_marsh": 9000, "thornsnap_hollow": 13000, "shard_fields": 16000,
-                 "bandit_road": 14500, "old_quarry": 19000}
+                 "bandit_road": 14500, "old_quarry": 19000,
+                 "bramble_run": 12500, "smugglers_ridge": 15000, "fallen_bastion": 19000}   # 10.4: the three new grounds
 # S1b: how fast each class kills against a Vanguard, measured 2026-11-26 in the client (routes s1b_<class>: three minutes
 # each at Wolf Copse, level 15, and Bandit Road, level 23, fight kit on): kills 16 / 21 / 20 / 19.
 CLASS_SPEED = {"Vanguard": 1.0, "Ranger (arrows)": 1.3, "Ranger (spears)": 1.3, "Arcanist/Mystic": 1.2}

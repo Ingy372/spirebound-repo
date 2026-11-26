@@ -539,6 +539,12 @@ def build(m):
     for a, b in (((153, 284), (153, 282)), ((323, 284), (323, 282)), ((231, 335), (206, 335)), ((206, 335), (206, 337)), ((230, 205), (228, 205)),
                  ((234, 199), (239, 199)), ((230, 152), (218, 152)), ((92, 282), (88, 282))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
+    # 10.4: trails to the three new grounds (the Bramble Run from the north road; Smugglers' Ridge and the Fallen Bastion
+    # down the east edge to the Bandit Track)
+    for a, b in (((169, 78), (169, 100)), ((169, 100), (233, 100)),
+                 ((360, 158), (360, 163)), ((360, 163), (388, 163)), ((388, 163), (388, 226)), ((388, 226), (368, 226)),
+                 ((355, 56), (355, 60)), ((355, 60), (391, 60)), ((391, 60), (391, 163)), ((391, 163), (388, 163))):
+        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # Copse Road: Millcross's south side down past Wolf Copse to the Reedmarsh gate
     for a, b in (((70, 239), (92, 250)), ((92, 250), (92, 310)), ((92, 310), (70, 318)), ((70, 318), (70, 321))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=3, wind=False)

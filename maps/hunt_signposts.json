@@ -5,7 +5,7 @@
    1285,
    7
   ],
-  "text": "Hunting grounds. Shard Fields: east. The Bandit Road: east. Toad Pond: north."
+  "text": "Hunting grounds. Shard Fields: east. Smugglers' Ridge: east. The Bandit Road: east. The Fallen Bastion: east. Toad Pond: north."
  },
  {
   "at": [
@@ -21,7 +21,7 @@
    1208,
    7
   ],
-  "text": "Hunting grounds. Burrow Hills: north-east. The Old Quarry: north. Thornsnap Hollow: north. Waspgrass Fields: west."
+  "text": "Hunting grounds. Burrow Hills: north-east. The Bramble Run: north. The Old Quarry: north. Thornsnap Hollow: north. Waspgrass Fields: west."
  },
  {
   "at": [
@@ -37,7 +37,7 @@
    1200,
    7
   ],
-  "text": "Hunting grounds. Burrow Hills: east. The Old Quarry: north. Thornsnap Hollow: north."
+  "text": "Hunting grounds. Burrow Hills: east. The Bramble Run: north. The Old Quarry: north. Thornsnap Hollow: north."
  },
  {
   "at": [
@@ -69,15 +69,23 @@
    1195,
    7
   ],
-  "text": "Hunting grounds. The Old Quarry: north. Thornsnap Hollow: north."
+  "text": "Hunting grounds. The Bramble Run: north. The Old Quarry: north. Thornsnap Hollow: north."
  },
  {
   "at": [
-   1227,
-   1153,
+   1231,
+   1148,
    7
   ],
-  "text": "Hunting grounds. Thornsnap Hollow: west."
+  "text": "Hunting grounds. The Bramble Run: north. The Old Quarry: north-east."
+ },
+ {
+  "at": [
+   1232,
+   1101,
+   7
+  ],
+  "text": "Hunting grounds. The Bramble Run: west."
  },
  {
   "at": [
@@ -85,7 +93,7 @@
    1286,
    7
   ],
-  "text": "Hunting grounds. Shard Fields: south-east. The Bandit Road: east."
+  "text": "Hunting grounds. Shard Fields: south-east. Smugglers' Ridge: east. The Bandit Road: east. The Fallen Bastion: east."
  },
  {
   "at": [
@@ -109,7 +117,15 @@
    1286,
    7
   ],
-  "text": "Hunting grounds. The Bandit Road: north."
+  "text": "Hunting grounds. Smugglers' Ridge: north. The Bandit Road: north. The Fallen Bastion: north."
+ },
+ {
+  "at": [
+   1366,
+   1228,
+   7
+  ],
+  "text": "Hunting grounds. Smugglers' Ridge: east. The Bandit Road: west. The Fallen Bastion: east."
  },
  {
   "at": [
@@ -117,7 +133,23 @@
    1144,
    7
   ],
-  "text": "Hunting grounds. The Old Quarry: east."
+  "text": "Hunting grounds. The Bramble Run: north. The Old Quarry: east."
+ },
+ {
+  "at": [
+   1386,
+   1164,
+   7
+  ],
+  "text": "Hunting grounds. Smugglers' Ridge: north. The Fallen Bastion: west."
+ },
+ {
+  "at": [
+   1356,
+   1058,
+   7
+  ],
+  "text": "Hunting grounds. Smugglers' Ridge: north."
  },
  {
   "at": [

@@ -6,7 +6,7 @@ For a hunter at the middle level of each floor, hunting by hand. Floor 1 in deta
 
 | Floor | Levels | Kills/h | Base XP/h | Gold/h | Supplies/h | Hours to climb | Typical house | Hours to afford it |
 |---|---|---|---|---|---|---|---|---|
-| 1 | 9-35 | 292 | 12,655 | 2,420 | 453 | 14.9 | 31,000 | 15.8 |
+| 1 | 9-35 | 296 | 12,477 | 2,236 | 432 | 15.3 | 31,000 | 17.2 |
 | 2 | 35-60 | 216 | 39,559 | 11,000 | 1,154 | 14.0 | 79,550 | 8.1 |
 | 3 | 60-90 | 197 | 33,651 | 14,000 | 1,766 | 16.0 | 98,900 | 8.1 |
 | 4 | 90-120 | 185 | 79,480 | 18,000 | 3,540 | 18.0 | 116,100 | 8.0 |

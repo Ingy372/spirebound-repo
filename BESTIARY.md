@@ -27,11 +27,14 @@ Level ranges overlap on purpose, so there is always a choice. Type `!hunt` in ga
 | 6 | 11-16 | **Burrow Hills** | experience | Burrow Mole, Bristle Boar | leave Hearthgate by the north gate, follow the road north about 35 steps, then follow the road east about 10 steps to its west entrance |
 | 7 | 12-18 | **Wolf Copse** | experience | Meadow Wolf, Grey Alpha | leave Hearthgate by the west gate, follow the road west about 55 steps, then follow the road north about 25 steps, then walk west about 20 steps, then follow the road south about 25 steps to its east entrance |
 | 8 | 14-19 | **Reedmarsh** | money | Reed Snapper | leave Hearthgate by the west gate, follow the road west about 100 steps, then follow the road south about 75 steps to its north entrance |
-| 9 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | leave Hearthgate by the north gate, follow the road north about 70 steps, then follow the road north-west about 15 steps, then follow the road west about 10 steps to its east entrance |
-| 10 | 17-24 | **Shard Fields** | experience | Field Shardling | leave Hearthgate by the east gate, follow the road east about 45 steps, then follow the road south-east about 5 steps, then follow the road east about 25 steps, then follow the road south about 10 steps to its north entrance |
-| 11 | 19-27 | **The Bandit Road** | money | Road Bandit, Bandit Captain | leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 55 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance |
-| 12 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | leave Hearthgate by the north gate, follow the road north about 90 steps, then follow the road east about 10 steps to its west entrance |
-| 13 | 28-40 | **The Old Watchtower** | experience and money | Stonehorn Ram | leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance |
+| 9 | 14-20 | **The Bramble Run** | experience | Meadow Wolf, Thornsnap, Grey Alpha | leave Hearthgate by the north gate, follow the road north about 135 steps, then follow the road west about 65 steps, then follow the road north about 25 steps to its south entrance |
+| 10 | 14-20 | **Thornsnap Hollow** | experience | Thornsnap, Bristle Boar | leave Hearthgate by the north gate, follow the road north about 70 steps, then follow the road north-west about 15 steps, then follow the road west about 10 steps to its east entrance |
+| 11 | 17-24 | **Shard Fields** | experience | Field Shardling | leave Hearthgate by the east gate, follow the road east about 45 steps, then follow the road south-east about 5 steps, then follow the road east about 25 steps, then follow the road south about 10 steps to its north entrance |
+| 12 | 19-26 | **Smugglers' Ridge** | money | Road Bandit, Bandit Crossbowman, Hedge Hexer, Bandit Captain | leave Hearthgate by the east gate, follow the road east about 75 steps, then follow the road north about 240 steps, then follow the road west about 35 steps to its south entrance |
+| 13 | 19-27 | **The Bandit Road** | money | Road Bandit, Bandit Captain | leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 55 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance |
+| 14 | 23-30 | **The Old Quarry** | money | Ruin Sentinel, Ruin Archer, Field Shardling | leave Hearthgate by the north gate, follow the road north about 90 steps, then follow the road east about 10 steps to its west entrance |
+| 15 | 23-30 | **The Fallen Bastion** | money | Ruin Archer, Ruin Sentinel | leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 135 steps, then follow the road west about 30 steps to its south entrance |
+| 16 | 28-40 | **The Old Watchtower** | experience and money | Stonehorn Ram | leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance |
 
 ### The suggested route
 
@@ -147,6 +150,21 @@ Snappers carry more coins than their level suggests. Good first money run; fishi
 
 - **Reed Snapper:** Tough shell, slow. It carries more coins than anything else at this level.
 
+### The Bramble Run  (levels 14-20, experience)
+*leave Hearthgate by the north gate, follow the road north about 135 steps, then follow the road west about 65 steps, then follow the road north about 25 steps to its south entrance. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+Wolf packs and thornsnaps share the bramble trails. North of Thornsnap Hollow, below the Pass.
+
+| Monster | Health | Experience | Kills per level (start / end) | Drops |
+|---|---|---|---|---|
+| Meadow Wolf | 85 | 36 | 9 / 19 | gold (up to 10), wolf paws (rare, 10%), meat (30%) |
+| Thornsnap | 140 | 56 | 6 / 12 | gold (up to 22), health potions (rare, 5%), item 5879 (rare, 13%) |
+| Grey Alpha | 260 | 107 | 3 / 6 | gold (up to 40), wolf paws (50%), health potions (rare, 8%), item 3012 (rare, 6%) |
+
+- **Meadow Wolf:** Comes in packs and fights in a crowd. Fight with your back to a wall.
+- **Thornsnap:** Poisons you. Carry a health potion or two, or the Cleanse spell.
+- **Grey Alpha:** Leads a wolf pack and calls two wolves when hurt. Worth killing first: the drops are better.
+
 ### Thornsnap Hollow  (levels 14-20, experience)
 *leave Hearthgate by the north gate, follow the road north about 70 steps, then follow the road north-west about 15 steps, then follow the road west about 10 steps to its east entrance. Safety: open. Who it is for: best for a Mystic; other classes can hunt it, just slower.*
 
@@ -174,6 +192,21 @@ Shardlings hit with energy and resist it; wands are weak here. Strong experience
 | Field Shardling | 120 | 58 | 8 / 18 | gold (up to 20), mana potions (rare, 6%), item 3033 (rare, 6%) |
 
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
+
+### Smugglers' Ridge  (levels 19-26, money)
+*leave Hearthgate by the east gate, follow the road east about 75 steps, then follow the road north about 240 steps, then follow the road west about 35 steps to its south entrance. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+The bandits' second camp, up in the north-east firs. Coins, crossbows and hexers who mend their friends.
+
+| Monster | Health | Experience | Kills per level (start / end) | Drops |
+|---|---|---|---|---|
+| Road Bandit | 160 | 50 | 12 / 24 | gold (up to 60), platinum coins (rare, 6%), short swords (rare, 5%), leather armor (rare, 4%), maces (rare, 5%), item 11492 (rare, 13%), item 5913 (rare, 6%) |
+| Bandit Crossbowman | 190 | 72 | 9 / 17 | gold (up to 55), platinum coins (rare, 5%), item 3446 (30%), item 11492 (rare, 10%) |
+| Hedge Hexer | 170 | 78 | 8 / 15 | gold (up to 55), platinum coins (rare, 6%), strong health potions (rare, 12%), item 5879 (rare, 8%), item 3738 (rare, 15%) |
+| Bandit Captain | 450 | 201 | 3 / 6 | gold (up to 80), platinum coins (rare, 15%), brass armor (rare, 4%), chain helmets (rare, 5%), health potions (rare, 15%), item 5909 (rare, 12%) |
+
+- **Road Bandit:** Carries coins and gear you can sell. Often in groups of three or four.
+- **Bandit Captain:** A tough leader who calls two bandits. Drops platinum coins. Take friends the first time.
 
 ### The Bandit Road  (levels 19-27, money)
 *leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 55 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
@@ -207,6 +240,19 @@ Stone sentinels and archers guard the old works. Tough, but arrows and gear sell
 - **Ruin Archer:** Keeps its distance and shoots. Close the gap or fight around corners.
 - **Field Shardling:** Hits with energy and shrugs off energy: Arcanist wands do little here. Use fire or melee.
 
+### The Fallen Bastion  (levels 23-30, money)
+*leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 135 steps, then follow the road west about 30 steps to its south entrance. Safety: open. Who it is for: mixed, fine alone and better as a pair.*
+
+An old fort's broken walls, held by stone sentinels and their archers. North of the Bandit Road.
+
+| Monster | Health | Experience | Kills per level (start / end) | Drops |
+|---|---|---|---|---|
+| Ruin Archer | 220 | 83 | 11 / 20 | gold (up to 75), platinum coins (rare, 6%), arrows (30%), bows (rare, 3%), item 11492 (rare, 8%) |
+| Ruin Sentinel | 300 | 96 | 10 / 17 | gold (up to 85), platinum coins (rare, 6%), chain helmets (rare, 6%), axes (rare, 5%), item 5880 (rare, 8%) |
+
+- **Ruin Archer:** Keeps its distance and shoots. Close the gap or fight around corners.
+- **Ruin Sentinel:** Slow, hits hard, takes little damage from plain weapons. Holy damage works best.
+
 ### The Old Watchtower  (levels 28-40, experience and money)
 *leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance. Safety: contested. Who it is for: a big group of 4 to 8 players.*
 
@@ -235,15 +281,17 @@ The floor's apex spawn, for 4 to 8: an easy outer ring of rams, then bandits wit
 | Meadow Wasp | 45 | 17 | Waspgrass Fields |
 | Bristle Boar | 90 | 28 | Boar Meadow, Burrow Hills, Thornsnap Hollow |
 | Burrow Mole | 130 | 39 | Burrow Hills |
-| Meadow Wolf | 85 | 36 | Wolf Copse |
-| Grey Alpha | 260 | 107 | Wolf Copse |
+| Meadow Wolf | 85 | 36 | Wolf Copse, The Bramble Run |
+| Grey Alpha | 260 | 107 | Wolf Copse, The Bramble Run |
 | Reed Snapper | 150 | 39 | Reedmarsh |
-| Thornsnap | 140 | 56 | Thornsnap Hollow |
+| Thornsnap | 140 | 56 | The Bramble Run, Thornsnap Hollow |
 | Field Shardling | 120 | 58 | Shard Fields, The Old Quarry |
-| Road Bandit | 160 | 50 | The Bandit Road |
-| Bandit Captain | 450 | 201 | The Bandit Road |
-| Ruin Sentinel | 300 | 96 | The Old Quarry |
-| Ruin Archer | 220 | 83 | The Old Quarry |
+| Road Bandit | 160 | 50 | Smugglers' Ridge, The Bandit Road |
+| Bandit Crossbowman | 190 | 72 | Smugglers' Ridge |
+| Hedge Hexer | 170 | 78 | Smugglers' Ridge |
+| Bandit Captain | 450 | 201 | Smugglers' Ridge, The Bandit Road |
+| Ruin Sentinel | 300 | 96 | The Old Quarry, The Fallen Bastion |
+| Ruin Archer | 220 | 83 | The Old Quarry, The Fallen Bastion |
 | Stonehorn Ram | 900 | 480 | The Old Watchtower |
 
 ## How the progression rules work (for the developers)

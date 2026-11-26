@@ -47,6 +47,10 @@
 | Reedmarsh | 14-19 | Ranger (arrows) | 261 | 40,787 | 5,344 | 2,005 | 3,339 | 16,387 |
 | Reedmarsh | 14-19 | Ranger (spears) | 261 | 40,787 | 5,344 | 1,455 | 3,889 | 16,938 |
 | Reedmarsh | 14-19 | Arcanist/Mystic | 253 | 39,411 | 5,164 | 2,352 | 2,812 | 15,420 |
+| The Bramble Run | 14-20 | Vanguard | 267 | 50,810 | 2,586 | 852 | 1,734 | 6,908 |
+| The Bramble Run | 14-20 | Ranger (arrows) | 294 | 56,080 | 2,855 | 1,475 | 1,380 | 7,091 |
+| The Bramble Run | 14-20 | Ranger (spears) | 294 | 56,080 | 2,855 | 1,020 | 1,834 | 7,545 |
+| The Bramble Run | 14-20 | Arcanist/Mystic | 286 | 54,509 | 2,775 | 1,928 | 847 | 6,398 |
 | Thornsnap Hollow | 14-20 | Vanguard | 252 | 51,802 | 2,795 | 1,021 | 1,774 | 3,485 |
 | Thornsnap Hollow | 14-20 | Ranger (arrows) | 281 | 57,647 | 3,110 | 1,698 | 1,412 | 3,316 |
 | Thornsnap Hollow | 14-20 | Ranger (spears) | 281 | 57,647 | 3,110 | 1,204 | 1,906 | 3,811 |
@@ -63,6 +67,14 @@
 | The Old Quarry | 23-30 | Ranger (arrows) | 262 | 64,209 | 11,255 | 1,959 | 9,297 | 10,275 |
 | The Old Quarry | 23-30 | Ranger (spears) | 262 | 64,209 | 11,255 | 1,409 | 9,846 | 10,825 |
 | The Old Quarry | 23-30 | Arcanist/Mystic | 253 | 62,046 | 10,876 | 2,292 | 8,584 | 9,529 |
+| Smugglers' Ridge | 19-26 | Vanguard | 238 | 47,916 | 9,101 | 1,211 | 7,889 | 9,980 |
+| Smugglers' Ridge | 19-26 | Ranger (arrows) | 267 | 53,756 | 10,210 | 1,942 | 8,267 | 10,612 |
+| Smugglers' Ridge | 19-26 | Ranger (spears) | 267 | 53,756 | 10,210 | 1,409 | 8,801 | 11,146 |
+| Smugglers' Ridge | 19-26 | Arcanist/Mystic | 258 | 51,996 | 9,875 | 2,316 | 7,559 | 9,827 |
+| The Fallen Bastion | 23-30 | Vanguard | 218 | 58,058 | 10,775 | 1,450 | 9,325 | 10,094 |
+| The Fallen Bastion | 23-30 | Ranger (arrows) | 248 | 65,879 | 12,226 | 2,258 | 9,968 | 10,841 |
+| The Fallen Bastion | 23-30 | Ranger (spears) | 248 | 65,879 | 12,226 | 1,668 | 10,558 | 11,431 |
+| The Fallen Bastion | 23-30 | Arcanist/Mystic | 239 | 63,503 | 11,786 | 2,574 | 9,212 | 10,053 |
 
 Net with trading counts what the materials are worth when sold to other players (the gold a crafted item saves).
 
@@ -97,10 +109,13 @@ Base experience per hour is before the stage (levels 1-8: 10x, 9-20: 4x, 21-50: 
 | Burrow Hills | 11-16 | experience | 8,907 | 9,000 |
 | Wolf Copse | 12-18 | experience | 11,074 | 11,000 |
 | Reedmarsh | 14-19 | money | 9,058 | 9,000 |
+| The Bramble Run | 14-20 | experience | 12,703 | 12,500 |
 | Thornsnap Hollow | 14-20 | experience | 12,950 | 13,000 |
 | Shard Fields | 17-24 | experience | 16,062 | 16,000 |
 | The Bandit Road | 19-27 | money | 14,474 | 14,500 |
 | The Old Quarry | 23-30 | money | 19,016 | 19,000 |
+| Smugglers' Ridge | 19-26 | money | 15,972 | 15,000 |
+| The Fallen Bastion | 23-30 | money | 19,353 | 19,000 |
 | The Old Watchtower | 28-40 | both | not modelled | 26,000 |
 
 ## What each ground pays per person, by class and in a party (S1b)
@@ -112,21 +127,24 @@ Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanis
 | Toad Pond | solo | training | 2,475 | 1,087 | 0.87 |  |
 | Sproutling Glade | solo | training | 3,600 | 1,354 | 0.9 |  |
 | Waspgrass Fields | solo | class | 5,100 | 1,763 | 0.99 |  |
-| Boar Meadow | solo | class | 7,924 | 2,774 | 1.19 |  |
+| Boar Meadow | solo | class | 7,924 | 2,774 | 1.2 |  |
 | Burrow Hills | solo | mixed | 9,663 | 3,653 | 1.29 |  |
-| Burrow Hills: The Deep Molework | party | group | 15,403 | 2,086 | 1.4 | 1.59 |
-| Wolf Copse | solo | mixed | 11,718 | 2,144 | 0.99 |  |
-| Wolf Copse: The Alpha's Den | party | group | 17,347 | 1,151 | 1.17 | 1.48 |
-| Reedmarsh | solo | class | 9,826 | 5,150 | 1.13 |  |
-| Thornsnap Hollow | solo | class | 13,937 | 3,008 | 1.01 |  |
-| Thornsnap Hollow: The Rootcellar | party | group | 22,694 | 1,641 | 1.26 | 1.63 |
-| Shard Fields | solo | mixed | 17,006 | 6,135 | 1.06 |  |
-| Shard Fields: The Shard Grotto | party | group | 25,018 | 3,224 | 1.08 | 1.47 |
-| The Bandit Road | solo | mixed | 15,604 | 10,468 | 1.05 |  |
-| The Bandit Road: The Smugglers' Cellar | party | group | 29,301 | 5,388 | 1.07 | 1.88 |
-| The Old Quarry | solo | mixed | 20,626 | 10,846 | 0.83 |  |
-| The Old Quarry: The Lower Works | party | group | 32,335 | 5,991 | 0.82 | 1.57 |
-| The Old Watchtower (a party of six) | party | large | 105,376 | 6,157 | 0.95 | 1.67 |
+| Burrow Hills: The Deep Molework | party | group | 15,403 | 2,086 | 1.41 | 1.59 |
+| Wolf Copse | solo | mixed | 11,718 | 2,144 | 1.0 |  |
+| Wolf Copse: The Alpha's Den | party | group | 17,347 | 1,151 | 1.18 | 1.48 |
+| Reedmarsh | solo | class | 9,826 | 5,150 | 1.14 |  |
+| The Bramble Run | solo | mixed | 13,592 | 2,768 | 0.98 |  |
+| Thornsnap Hollow | solo | class | 13,937 | 3,008 | 1.02 |  |
+| Thornsnap Hollow: The Rootcellar | party | group | 22,694 | 1,641 | 1.28 | 1.63 |
+| Shard Fields | solo | mixed | 17,006 | 6,135 | 1.07 |  |
+| Shard Fields: The Shard Grotto | party | group | 25,018 | 3,224 | 1.1 | 1.47 |
+| The Bandit Road | solo | mixed | 15,604 | 10,468 | 1.06 |  |
+| The Bandit Road: The Smugglers' Cellar | party | group | 29,301 | 5,388 | 1.1 | 1.88 |
+| The Old Quarry | solo | mixed | 20,626 | 10,846 | 0.84 |  |
+| The Old Quarry: The Lower Works | party | group | 32,335 | 5,991 | 0.85 | 1.57 |
+| Smugglers' Ridge | solo | mixed | 17,286 | 9,849 | 1.13 |  |
+| The Fallen Bastion | solo | mixed | 21,110 | 11,753 | 0.89 |  |
+| The Old Watchtower (a party of six) | party | large | 105,376 | 6,157 | 1.04 | 1.84 |
 
 Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):
 
@@ -141,7 +159,7 @@ Hours of hunting by hand to reach each level, by the model (real play is about 4
 | 25 | 3.9 |
 | 30 | 6.4 |
 | 35 | 9.4 |
-| 40 | 13.5 |
+| 40 | 13.4 |
 
 ## Checks
 All checks pass.

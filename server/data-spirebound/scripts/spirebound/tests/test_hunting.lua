@@ -7,7 +7,7 @@ SpireTest.add("hunting: the ladder sends each level to a sensible ground", funct
 	SpireTest.eq(r12.next.lo, 14, "the next step is level 14")
 	local r20 = SpireHunt.recommend(20)
 	SpireTest.eq(r20.xp.id, "shard_fields", "level 20 experience: shard fields")
-	SpireTest.eq(r20.money.id, "bandit_road", "level 20 money: bandits")
+	SpireTest.eq(r20.money.id == "bandit_road" or r20.money.id == "smugglers_ridge", true, "level 20 money: bandits (the Bandit Road or Smugglers' Ridge, 10.4)")
 	SpireTest.eq(SpireHunt.recommend(100).beyond, true, "level 100 has outgrown floor 1")
 end)
 

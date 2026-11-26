@@ -114,6 +114,14 @@
      7
     ],
     "north"
+   ],
+   [
+    [
+     1367,
+     1227,
+     7
+    ],
+    "west"
    ]
   ],
   "gate": [
@@ -263,6 +271,114 @@
    ]
   ]
  },
+ "bramble_run": {
+  "exit": "north",
+  "forks": [
+   [
+    [
+     1232,
+     1197,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1230,
+     1149,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1234,
+     1102,
+     7
+    ],
+    "west"
+   ]
+  ],
+  "gate": [
+   1168,
+   1077,
+   7
+  ],
+  "legs": [
+   [
+    "north",
+    135,
+    true
+   ],
+   [
+    "west",
+    65,
+    true
+   ],
+   [
+    "north",
+    25,
+    true
+   ]
+  ],
+  "steps": 269,
+  "text": "leave Hearthgate by the north gate, follow the road north about 135 steps, then follow the road west about 65 steps, then follow the road north about 25 steps to its south entrance",
+  "title": "The Bramble Run",
+  "turns": [
+   [
+    1234,
+    1102,
+    7
+   ],
+   [
+    1171,
+    1100,
+    7
+   ]
+  ],
+  "via": [
+   [
+    1232,
+    1255,
+    7
+   ],
+   [
+    1232,
+    1225,
+    7
+   ],
+   [
+    1233,
+    1195,
+    7
+   ],
+   [
+    1235,
+    1165,
+    7
+   ],
+   [
+    1230,
+    1135,
+    7
+   ],
+   [
+    1234,
+    1105,
+    7
+   ],
+   [
+    1207,
+    1100,
+    7
+   ],
+   [
+    1177,
+    1100,
+    7
+   ]
+  ]
+ },
  "burrow_hills": {
   "exit": "north",
   "forks": [
@@ -311,6 +427,119 @@
    [
     1232,
     1225,
+    7
+   ]
+  ]
+ },
+ "fallen_bastion": {
+  "exit": "east",
+  "forks": [
+   [
+    [
+     1365,
+     1285,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1367,
+     1228,
+     7
+    ],
+    "east"
+   ],
+   [
+    [
+     1387,
+     1164,
+     7
+    ],
+    "west"
+   ]
+  ],
+  "gate": [
+   1360,
+   1157,
+   7
+  ],
+  "legs": [
+   [
+    "east",
+    80,
+    true
+   ],
+   [
+    "north",
+    135,
+    true
+   ],
+   [
+    "west",
+    30,
+    true
+   ]
+  ],
+  "steps": 301,
+  "text": "leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 135 steps, then follow the road west about 30 steps to its south entrance",
+  "title": "The Fallen Bastion",
+  "turns": [
+   [
+    1367,
+    1283,
+    7
+   ],
+   [
+    1387,
+    1164,
+    7
+   ]
+  ],
+  "via": [
+   [
+    1262,
+    1286,
+    7
+   ],
+   [
+    1292,
+    1286,
+    7
+   ],
+   [
+    1322,
+    1286,
+    7
+   ],
+   [
+    1352,
+    1285,
+    7
+   ],
+   [
+    1367,
+    1268,
+    7
+   ],
+   [
+    1367,
+    1238,
+    7
+   ],
+   [
+    1387,
+    1224,
+    7
+   ],
+   [
+    1387,
+    1194,
+    7
+   ],
+   [
+    1387,
+    1164,
     7
    ]
   ]
@@ -564,6 +793,147 @@
    [
     1350,
     1291,
+    7
+   ]
+  ]
+ },
+ "smugglers_ridge": {
+  "exit": "east",
+  "forks": [
+   [
+    [
+     1365,
+     1285,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1367,
+     1228,
+     7
+    ],
+    "east"
+   ],
+   [
+    [
+     1387,
+     1164,
+     7
+    ],
+    "north"
+   ],
+   [
+    [
+     1358,
+     1060,
+     7
+    ],
+    "north"
+   ]
+  ],
+  "gate": [
+   1357,
+   1055,
+   7
+  ],
+  "legs": [
+   [
+    "east",
+    75,
+    true
+   ],
+   [
+    "north",
+    240,
+    true
+   ],
+   [
+    "west",
+    35,
+    true
+   ]
+  ],
+  "steps": 410,
+  "text": "leave Hearthgate by the east gate, follow the road east about 75 steps, then follow the road north about 240 steps, then follow the road west about 35 steps to its south entrance",
+  "title": "Smugglers' Ridge",
+  "turns": [
+   [
+    1365,
+    1285,
+    7
+   ],
+   [
+    1390,
+    1061,
+    7
+   ]
+  ],
+  "via": [
+   [
+    1262,
+    1286,
+    7
+   ],
+   [
+    1292,
+    1286,
+    7
+   ],
+   [
+    1322,
+    1286,
+    7
+   ],
+   [
+    1352,
+    1285,
+    7
+   ],
+   [
+    1367,
+    1268,
+    7
+   ],
+   [
+    1367,
+    1238,
+    7
+   ],
+   [
+    1387,
+    1224,
+    7
+   ],
+   [
+    1387,
+    1194,
+    7
+   ],
+   [
+    1387,
+    1164,
+    7
+   ],
+   [
+    1390,
+    1134,
+    7
+   ],
+   [
+    1390,
+    1104,
+    7
+   ],
+   [
+    1390,
+    1074,
+    7
+   ],
+   [
+    1373,
+    1060,
     7
    ]
   ]
