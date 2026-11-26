@@ -135,6 +135,20 @@ function Floors.announceClear(n, creditNames)
 end
 
 -- GM/testing only
+-- Pure: true when every credited name is a test character (the autopilot's Pilots and spell testers). Their boss kills on
+-- Jay's server must never open a floor or claim a first clear (2026-11-26: "Pilot Warden" opened Floor 2 in a test).
+function Floors.onlyTesters(names)
+	if not names or #names == 0 then
+		return false
+	end
+	for _, name in ipairs(names) do
+		if not (name:find("^Pilot ") or name:find("^Spell ")) then
+			return false
+		end
+	end
+	return true
+end
+
 function Floors.reset(n)
 	store():remove("floor-" .. n)
 end

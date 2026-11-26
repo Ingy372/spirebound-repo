@@ -255,8 +255,8 @@ npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter
 npcConfig.outfit = {{ lookType = {l0}, lookHead = {l1}, lookBody = {l2}, lookLegs = {l3}, lookFeet = {l4}, lookAddons = {l5} }}
 npcConfig.flags = {{ floorchange = false }}
 npcConfig.voices = {{
-	interval = 15000,
-	chance = 30,
+	interval = 45000, -- G12b: about once every 3 minutes, like the townsfolk (was every 30-50 s: the Hearth never went quiet)
+	chance = 25,
 {voices}}}
 {shop}
 local keywordHandler = KeywordHandler:new()

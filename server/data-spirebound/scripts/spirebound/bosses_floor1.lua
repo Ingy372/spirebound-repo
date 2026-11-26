@@ -39,7 +39,7 @@ SpireBoss.register("Gate Hound", {
 		end
 	end,
 	onFirstKill = function(credit, lastHit)
-		if Floors.markFieldBoss(FLOOR, credit) then
+		if not Floors.onlyTesters(credit) and Floors.markFieldBoss(FLOOR, credit) then
 			openGate("gate_pass")
 			Game.broadcastMessage("The Gate Hound has fallen! The labyrinth of Floor 1 is open to all.", MESSAGE_EVENT_ADVANCE)
 		end
@@ -105,7 +105,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 		end
 	end,
 	onFirstKill = function(credit, lastHit, duration)
-		if Floors.recordClear(FLOOR, credit, lastHit, duration) then
+		if not Floors.onlyTesters(credit) and Floors.recordClear(FLOOR, credit, lastHit, duration) then
 			openGate("gate_floor2")
 			Floors.announceClear(FLOOR, credit)
 			local town = SpireHouses.floorTown[FLOOR + 1]

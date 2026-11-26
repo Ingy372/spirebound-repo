@@ -11,8 +11,8 @@ npcConfig.walkRadius = 1  -- NPCs only listen within 3 tiles: 1 behind a counter
 npcConfig.outfit = { lookType = 128, lookHead = 78, lookBody = 96, lookLegs = 59, lookFeet = 115, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = {
-	interval = 15000,
-	chance = 30,
+	interval = 45000, -- G12b: about once every 3 minutes, like the townsfolk (was every 30-50 s: the Hearth never went quiet)
+	chance = 25,
 	{ text = "Hot food! Cold ale!" },
 }
 npcConfig.shop = {

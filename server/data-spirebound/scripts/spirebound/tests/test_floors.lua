@@ -55,3 +55,10 @@ SpireTest.add("floors: the login line says which floor is sealed and what opens 
 	SpireTest.eq(Floors.raceLine(1, { fieldBossDeadAt = 1, fieldBossCredit = { "Ana", "Bo" } }), "The tower: Floor 2 is sealed. The Pass on Floor 1 was first broken by Ana. The first party to defeat the floor boss opens Floor 2 for everyone.", "pass open")
 	SpireTest.eq(Floors.raceLine(10, {}), "The tower: all 10 floors are open.", "the end")
 end)
+
+SpireTest.add("floors: test characters never open a floor (2026-11-26)", function()
+	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Pilot Ranger" }), true, "a party of Pilots is only testers")
+	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Jay" }), false, "one real player makes it count")
+	SpireTest.eq(Floors.onlyTesters({}), false, "nobody credited is not 'only testers'")
+end)
+

@@ -254,7 +254,7 @@ local function registerFloor(n, f)
 		room = { nw = P .. "pass_arena", radius = 12 },
 		onThink = function(boss, state, now) PATTERNS[f.fieldPattern](boss, state, now, SpireBoss.defs[f.field]) end,
 		onFirstKill = function(credit)
-			if Floors.markFieldBoss(n, credit) then
+			if not Floors.onlyTesters(credit) and Floors.markFieldBoss(n, credit) then
 				SpireGates.open(P .. "gate_pass")
 				Game.broadcastMessage(string.format("%s has fallen! The labyrinth of Floor %d is open to all.", f.field, n), MESSAGE_EVENT_ADVANCE)
 			end
@@ -265,7 +265,7 @@ local function registerFloor(n, f)
 		roomNW = P .. "boss_nw", roomSE = P .. "boss_se",
 		onThink = function(boss, state, now) PATTERNS[f.bossPattern](boss, state, now, SpireBoss.defs[f.boss]) end,
 		onFirstKill = function(credit, lastHit, duration)
-			if Floors.recordClear(n, credit, lastHit, duration) then
+			if not Floors.onlyTesters(credit) and Floors.recordClear(n, credit, lastHit, duration) then
 				SpireGates.open(P .. "gate_next")
 				Floors.announceClear(n, credit)
 				for _, name in ipairs(credit) do
