@@ -55,10 +55,10 @@
 | Shard Fields | 17-24 | Ranger (arrows) | 277 | 64,246 | 5,795 | 1,216 | 4,579 | 5,825 |
 | Shard Fields | 17-24 | Ranger (spears) | 277 | 64,246 | 5,795 | 710 | 5,084 | 6,330 |
 | Shard Fields | 17-24 | Arcanist/Mystic | 277 | 64,246 | 5,795 | 1,523 | 4,272 | 5,518 |
-| The Bandit Road | 19-27 | Vanguard | 248 | 43,422 | 9,711 | 1,452 | 8,259 | 10,307 |
-| The Bandit Road | 19-27 | Ranger (arrows) | 248 | 43,422 | 9,711 | 2,260 | 7,451 | 9,498 |
-| The Bandit Road | 19-27 | Ranger (spears) | 248 | 43,422 | 9,711 | 1,670 | 8,041 | 10,088 |
-| The Bandit Road | 19-27 | Arcanist/Mystic | 248 | 43,422 | 9,711 | 2,664 | 7,047 | 9,095 |
+| The Bandit Road | 19-27 | Vanguard | 231 | 40,539 | 9,066 | 1,355 | 7,711 | 9,622 |
+| The Bandit Road | 19-27 | Ranger (arrows) | 231 | 40,539 | 9,066 | 2,110 | 6,956 | 8,868 |
+| The Bandit Road | 19-27 | Ranger (spears) | 231 | 40,539 | 9,066 | 1,559 | 7,507 | 9,419 |
+| The Bandit Road | 19-27 | Arcanist/Mystic | 231 | 40,539 | 9,066 | 2,487 | 6,579 | 8,491 |
 | The Old Quarry | 23-30 | Vanguard | 233 | 57,049 | 10,000 | 1,206 | 8,794 | 9,664 |
 | The Old Quarry | 23-30 | Ranger (arrows) | 233 | 57,049 | 10,000 | 2,075 | 7,925 | 8,794 |
 | The Old Quarry | 23-30 | Ranger (spears) | 233 | 57,049 | 10,000 | 1,440 | 8,560 | 9,429 |
@@ -99,7 +99,7 @@ Base experience per hour is before the stage (levels 1-8: 10x, 9-20: 4x, 21-50: 
 | Reedmarsh | 14-19 | money | 9,058 | 9,000 |
 | Thornsnap Hollow | 14-20 | experience | 12,950 | 13,000 |
 | Shard Fields | 17-24 | experience | 16,062 | 16,000 |
-| The Bandit Road | 19-27 | money | 14,474 | 14,500 |
+| The Bandit Road | 19-27 | money | 13,513 | 14,500 |
 | The Old Quarry | 23-30 | money | 19,016 | 19,000 |
 | The Old Watchtower | 28-40 | both | not modelled | 26,000 |
 

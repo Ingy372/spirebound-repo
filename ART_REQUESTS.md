@@ -131,9 +131,10 @@ Moving sprites (the mini-bosses) are made by Claude with the Blender pipeline; t
 
 ## Batch 7 (2026-11-24): Floor 1 elites (no art needed yet)
 Five rare elites now borrow their ground's monster sprite and glow (a coloured light): Old Bristleback (boar), Moonhowl
-(wolf), Mossback Snapper, Blackthorn (thornsnap), Prism Shardling. Later, each could get a variant of its base creature
-from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal) so players spot
-them at a glance. Not needed for the alpha.
+(wolf), Mossback Snapper, Blackthorn (thornsnap), Prism Shardling, and (2026-11-25) the Granite Warden on the Old
+Quarry's Upper Cut (a grey-gold Ruin Sentinel outfit). Later, each could get a variant of its base creature
+from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal, a cracked granite
+shield) so players spot them at a glance. Not needed for the alpha.
 
 ## Batch 8 (2026-11-24): the Proving (Priority: low, placeholders work)
 Made by Claude with the Blender pipeline when the art queue reaches them; until then they borrow stock looks.

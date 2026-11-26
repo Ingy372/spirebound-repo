@@ -937,9 +937,14 @@ def build(m):
         secret("s2", tusk[0] + 1, tusk[1], tusk[2])      # a step into the mud from the chamber's middle
     secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
-    qne = next(lp for L in m.wilds if L["id"] == "old_quarry" for lp in L["loops"] if lp["name"] == "ne")
-    s5 = max(qne["ring"] - qne["patches"], key=lambda t: ((t[0] - qne["mouth_pt"][0]) ** 2 + (t[1] - qne["mouth_pt"][1]) ** 2, t))
-    secret("s5", *s5)                                   # a cracked stone on the far side of the Quarry's north-east loop
+    qL = next(L for L in m.wilds if L["id"] == "old_quarry")
+    if qL.get("design"):                                # H8: beside the quiet ledge at the far north-east of the pit
+        ne = next(p for p, v in qL["clearings"].items() if v[0] == "ne")
+        secret("s5", ne[0] + 1, ne[1] - 1)
+    else:
+        qne = next(lp for lp in qL["loops"] if lp["name"] == "ne")
+        s5 = max(qne["ring"] - qne["patches"], key=lambda t: ((t[0] - qne["mouth_pt"][0]) ** 2 + (t[1] - qne["mouth_pt"][1]) ** 2, t))
+        secret("s5", *s5)                               # a cracked stone on the far side of the Quarry's north-east loop
     m.points["north_crack_exit"] = (mx + 25, my + 20, Z)
     secret("s6", mx + 44, my + 2)                       # hollow behind the Millcross well (night only)
     secret("s7", X0 + 352, Y0 + 186)                    # ruined shrine on the bandit road

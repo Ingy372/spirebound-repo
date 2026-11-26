@@ -28,7 +28,8 @@ SIZES = {
     "tall": dict(loop=(18, 24), cross=3, hub=6, groups=6, crowd=3),
 }
 ELITE_RESPAWN = 900                               # Grey Alpha, Bandit Captain: 15 minutes
-ELITES = {"Grey Alpha", "Bandit Captain", "Old Bristleback", "Moonhowl", "Mossback Snapper", "Blackthorn", "Prism Shardling"}
+ELITES = {"Grey Alpha", "Bandit Captain", "Old Bristleback", "Moonhowl", "Mossback Snapper", "Blackthorn", "Prism Shardling",
+          "Granite Warden"}
 CAVE_RESPAWN = 160
 
 
@@ -93,13 +94,13 @@ CAMPS = [
          note="Shardlings hit with energy and resist it; wands are weak here. Strong experience."),
     dict(id="bandit_road", type="mixed", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
          levels=(19, 27), role="money", wall="broadleaf", core="banditcamp", trail="dirt", decor="bandits",
-         groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=210, ruin_walls=True,
+         groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=140, design="BANDITS",
          den="Smugglers' Cellar", den_groups=same(6, "Road Bandit", 4) + [G(("Bandit Captain", 1), ("Road Bandit", 3))] * 2,
          note="Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money."),
     dict(id="old_quarry", type="mixed", title="The Old Quarry", x=240, y=124, w=60, h=40, gate="w", size="std", zone="open",
          levels=(23, 30), role="money", wall="boulders", core="cutstone", trail="gravel", decor="quarry",
          groups=[G(("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Field Shardling", 1))] * 4
-         + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2))] * 2, respawn=220,
+         + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2))] * 2, respawn=150, design="QUARRY",
          den="The Lower Works", den_groups=[G(("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Field Shardling", 1))] * 4
          + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2), ("Field Shardling", 1))] * 4,
          note="Stone sentinels and archers guard the old works. Tough, but arrows and gear sell well."),
@@ -578,7 +579,97 @@ SHARDS = dict(
     },
     links=[("ramp", 33, 42, 7, "n"), ("stairs", 11, 45, 8)],
 )
-DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS, "SHARDS": SHARDS}
+# The Bandit Road (H8, 2026-11-25): the old road runs north from the gate through broadleaf woods past a ruined waystation
+# and a roadside shrine to the bandits' camp in a ruined watch-house. Bandits are sentries: ones and twos at the ruins,
+# far apart (spots 20+ tiles apart: NOTICE 10; a pair stands side by side, east-west). The Bandit Captain (the ground's
+# elite) holds the camp. The shrine sits in a quiet strip between the waystation and the camp. The Smugglers' Cellar
+# (z 8) is the party cave, a built cellar down the stair on the road.
+DGP_RUBBLE = [5866, 5708, 2264, 1822]                      # rubble and cut blocks (maps/dungeon.py RUBBLE + stones)
+_RB1, _RB2, _RB4 = (("Road Bandit", 1),), (("Road Bandit", 2),), (("Road Bandit", 4),)
+_CAP1, _CAP4 = (("Bandit Captain", 1),), (("Bandit Captain", 1), ("Road Bandit", 3))   # the elite stands alone (H8 client walk)
+BANDITS = dict(
+    gate=(25, 47), crowd_group=[("Road Bandit", 1)],
+    routes={"a": "a1", "b": "b1", "c": "c0", "d": "dq"},
+    route_names={"a": "The West Woods", "b": "The East Woods", "c": "The Old Road", "d": "The Bandit Camp"},
+    levels={
+        7: dict(name="The Bandit Road", box=(0, 0, 52, 48), clearings=[
+            ("hub", 25, 41, 4, "approach", None, "hub"), ("sw", 16, 40, 4, "calm", None, None), ("se", 35, 40, 4, "calm", None, None),
+            ("qa", 4, 37, 3, "calm", "a", "rest"), ("a1", 4, 26, 3, "calm", "a", [_RB1]), ("a2", 5, 15, 2, "middle", "a", [_RB2]),
+            ("qb", 47, 37, 3, "calm", "b", "rest"), ("b1", 47, 26, 3, "calm", "b", [_RB1]), ("b2", 47, 15, 2, "middle", "b", [_RB2]),
+            ("c0", 25, 35, 3, "calm", "c", "rest"), ("c1", 25, 27, 3, "middle", "c", [_RB2]), ("cs", 25, 15, 3, "deep", "c", "rest"),
+            ("dq", 13, 3, 2, "deep", "d", "rest"), ("d1", 26, 3, 3, "deep", "d", [_CAP1]), ("de", 38, 3, 2, "deep", "d", "rest"),
+            ("ca1", 10, 37, 1, "calm", "a", "crowd"), ("ca2", 9, 30, 1, "calm", "a", "crowd"), ("ca3", 9, 9, 1, "middle", "a", "crowd"),
+            ("cb1", 41, 37, 1, "calm", "b", "crowd"), ("cb2", 42, 30, 1, "calm", "b", "crowd"), ("cb3", 42, 9, 1, "middle", "b", "crowd"),
+            ("cc1", 19, 32, 1, "calm", "c", "crowd"), ("cc2", 31, 32, 1, "calm", "c", "crowd"), ("cc3", 25, 20, 1, "middle", "c", "crowd"),
+            ("cd1", 19, 7, 1, "deep", "d", "crowd"), ("cd2", 33, 7, 1, "deep", "d", "crowd"), ("cd3", 26, 9, 1, "deep", "d", "crowd"),
+        ], paths=[("hub", "sw", 4), ("sw", "qa", 3), ("qa", "a1", 3), ("a1", "a2", 3), ("a2", "dq", 3), ("dq", "d1", 3),
+                  ("d1", "de", 3), ("de", "b2", 3), ("b2", "b1", 3), ("b1", "qb", 3), ("qb", "se", 3), ("se", "hub", 4),
+                  ("hub", "c0", 4), ("c0", "c1", 3), ("c1", "cs", 3), ("cs", "d1", 3)],
+                # ruins (x, y, w, h, doorways): the farmhouse (west), the guard post (east), the waystation, the shrine
+                # and the watch-house the bandits camp in
+                ruins=[(2, 12, 7, 7, [(5, 12), (8, 15), (5, 18)]), (44, 12, 7, 7, [(47, 12), (44, 15), (47, 18)]),
+                       (21, 24, 9, 7, [(25, 24), (25, 30), (21, 27), (29, 27)]), (23, 13, 5, 5, [(25, 13), (25, 17)]),
+                       (20, 2, 12, 5, [(26, 6), (20, 4), (31, 4)])], ruin_props=[2519, 2523, 116, 117]),   # barrels, crates
+        8: dict(name="The Smugglers' Cellar", party=True, built=True, box=(4, 4, 46, 42),
+                props=[2519, 2523, 116, 117, 2519, 2523] + [5866, 5708], clearings=[
+            ("pe", 25, 35, 3, "party", None, "rest"),
+            ("p1", 9, 9, 4, "party", None, [_RB4]), ("p2", 26, 8, 4, "party", None, [_CAP4]),
+            ("p3", 43, 9, 4, "party", None, [_RB4]), ("p4", 44, 25, 4, "party", None, [_RB4]),
+            ("p5", 40, 40, 3, "party", None, [_CAP4]), ("p6", 11, 40, 3, "party", None, [_RB4]),
+            ("p7", 9, 25, 4, "party", None, [_RB4]),
+            ("cd1", 17, 8, 1, "party", "d", "crowd"), ("cd2", 35, 8, 1, "party", "d", "crowd"), ("cd3", 33, 40, 1, "party", "d", "crowd"),
+        ], paths=[("pe", "p5", 3), ("pe", "p6", 3), ("p1", "p2", 3), ("p2", "p3", 3), ("p3", "p4", 3),
+                  ("p4", "p5", 3), ("p6", "p7", 3), ("p7", "p1", 3), ("pe", "p2", 3)]),
+    },
+    links=[("stairs", 25, 33, 8)],
+)
+# The Old Quarry (H8, 2026-11-25): a worked pit round a great block of uncut stone. A gravel ring runs round the block
+# (the North and South Pits, the Deep Cut at the far east end, quiet ledges in its corners); the Upper Cut (z 6) is the
+# block's top, up a ramp from the south pit: an archer at its west end, the Granite Warden (the ground's elite) at the
+# east end, a quiet plaza between. The Lower Works (z 8) is the party cave: the old mine, built with stone walls, down
+# the pit-head stair by the gate.
+_A1, _QS1 = (("Ruin Archer", 1),), (("Field Shardling", 1),)
+_SA, _SF = (("Ruin Sentinel", 1), ("Ruin Archer", 1)), (("Ruin Sentinel", 1), ("Field Shardling", 1))
+_LW1, _LW2 = (("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Field Shardling", 1)), (("Ruin Sentinel", 1), ("Ruin Archer", 2), ("Field Shardling", 1))
+QUARRY = dict(
+    gate=(0, 19), crowd_group=[("Ruin Archer", 1)],
+    routes={"a": "a1", "b": "b1", "c": "kl", "d": "dq"},
+    route_names={"a": "The North Pit", "b": "The South Pit", "c": "The Upper Cut", "d": "The Deep Cut"},
+    levels={
+        7: dict(name="The Old Quarry", box=(0, 0, 60, 40), clearings=[
+            ("hub", 6, 19, 4, "approach", None, "hub"), ("n0", 9, 8, 3, "calm", None, "rest"), ("s0", 9, 31, 3, "calm", None, None),
+            ("mw", 11, 26, 2, "calm", None, "rest"),
+            ("a1", 18, 4, 3, "calm", "a", [_A1]), ("qa", 30, 4, 2, "calm", "a", "rest"), ("a2", 42, 4, 3, "deep", "a", [_SA]),
+            ("b1", 18, 35, 3, "calm", "b", [_QS1]), ("qb", 30, 35, 2, "calm", "b", "rest"), ("b2", 42, 35, 3, "deep", "b", [_SF]),
+            ("ne", 54, 5, 3, "deep", None, "rest"), ("dq", 55, 12, 2, "deep", "d", "rest"),
+            ("d1", 55, 20, 3, "deep", "d", [_SA]), ("se", 54, 34, 3, "deep", None, "rest"),
+            ("ca1", 17, 8, 1, "calm", "a", "crowd"), ("ca2", 25, 7, 1, "calm", "a", "crowd"), ("ca3", 35, 7, 1, "deep", "a", "crowd"),
+            ("cb1", 14, 36, 1, "calm", "b", "crowd"), ("cb2", 25, 32, 1, "calm", "b", "crowd"), ("cb3", 35, 32, 1, "deep", "b", "crowd"),
+            ("cd1", 50, 12, 1, "deep", "d", "crowd"), ("cd2", 50, 27, 1, "deep", "d", "crowd"), ("cd3", 57, 26, 1, "deep", "d", "crowd"),
+        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "ne", 3), ("ne", "dq", 3),
+                  ("dq", "d1", 3), ("d1", "se", 3), ("se", "b2", 3), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "s0", 4),
+                  ("s0", "hub", 4), ("hub", "mw", 3)],
+                ruins=[(9, 2, 7, 5, [(12, 6), (15, 4)])], ruin_props=DGP_RUBBLE),     # the old quarry office by the north pit
+        6: dict(name="The Upper Cut", box=(16, 9, 34, 22), clearings=[
+            ("kl", 31, 26, 2, "middle", "c", "rest"), ("km", 32, 20, 5, "middle", None, "rest"),
+            ("k1", 19, 19, 3, "middle", "c", [_A1]), ("kq", 32, 14, 3, "deep", "c", "rest"),
+            ("k2", 46, 18, 3, "nest", "c", [(("Granite Warden", 1),)]),
+            ("kc1", 22, 24, 1, "middle", "c", "crowd"), ("kc2", 40, 12, 1, "deep", "c", "crowd"), ("kc3", 44, 24, 1, "nest", "c", "crowd"),
+        ], paths=[("kl", "km", 3), ("km", "k1", 3), ("km", "kq", 3), ("kq", "k2", 3), ("km", "k2", 3)]),
+        8: dict(name="The Lower Works", party=True, built=True, box=(2, 1, 57, 37), clearings=[
+            ("pe", 12, 28, 3, "party", None, "rest"),
+            ("p1", 8, 8, 4, "party", None, [_LW1]), ("p2", 24, 6, 4, "party", None, [_LW2]),
+            ("p3", 40, 6, 4, "party", None, [_LW1]), ("p4", 53, 10, 4, "party", None, [_LW2]),
+            ("p5", 53, 28, 4, "party", None, [_LW1]), ("p6", 40, 32, 3, "party", None, [_LW2]),
+            ("p7", 26, 32, 3, "party", None, [_LW1]),
+            ("cd1", 16, 6, 1, "party", "d", "crowd"), ("cd2", 47, 6, 1, "party", "d", "crowd"), ("cd3", 47, 33, 1, "party", "d", "crowd"),
+        ], paths=[("pe", "p1", 3), ("pe", "p7", 3), ("p1", "p2", 3), ("p2", "p3", 3), ("p3", "p4", 3), ("p4", "p5", 3),
+                  ("p5", "p6", 3), ("p6", "p7", 3)]),
+    },
+    links=[("ramp", 30, 29, 7, "n"), ("stairs", 11, 26, 8)],
+)
+DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS, "SHARDS": SHARDS,
+           "BANDITS": BANDITS, "QUARRY": QUARRY}
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

@@ -109,6 +109,13 @@ MONSTERS = {
                             events=["SpireShardBurst"],
                             elements={"energy": 50, "earth": -10},
                             loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
+    # H8 (2026-11-25): the Old Quarry's elite, on top of the Upper Cut. A grey-gold sentinel that keeps its shield wall.
+    "Granite Warden": dict(desc="the granite warden", look=(131, 114, 114, 79, 114, 2), corpse=18074, hp=1100, xp=380, speed=90,
+                           race="undead", attacks=[("melee", 0, -95), ("cleave", 0, -80, 1)], armor=30, defense=30,
+                           light=(3, 79), elements={"physical": 10, "holy": -15},
+                           loot=[(GOLD, 100000, 95), (PLAT, 40000, 2), (3352, 20000, 1), (5880, 40000, 2), (236, 25000, 1)],
+                           voices=["The works are closed."],
+                           events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=20996, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),

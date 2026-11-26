@@ -124,7 +124,7 @@ RESPEC_ITEM = (28650, "Mastery Respec Scroll", "Mastery Respec Scrolls",
                "Use it to choose your style again: your Mastery points stay. Sold only in the shop; one use.")
 CUT_FROM_LEVEL = 12            # Floor 1 grounds whose lowest level is 12 or more drop cut shards
 FLAWLESS_MONSTERS = {1: ["Grey Alpha", "Bandit Captain", "Stonehorn Ram", "Old Bristleback", "Moonhowl", "Mossback Snapper",
-                         "Blackthorn", "Prism Shardling"]}
+                         "Blackthorn", "Prism Shardling", "Granite Warden"]}
 NO_SHARDS = {"Pen Rat"}       # the Arrival Yard's tutorial rats
 REFORGE_FEE = 1000             # change family at the Weaponsmith (per floor of the weapon); tier kept, familiarity 0
 REISSUE_FEE = 2000             # a lost main weapon replaced by its quest giver (per floor), tier 0

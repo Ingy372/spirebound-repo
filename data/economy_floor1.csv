@@ -39,10 +39,10 @@ shard_fields,16062,Shard Fields,17-24,xp,Vanguard,277,64246,2472,3323,1246,523,5
 shard_fields,16062,Shard Fields,17-24,xp,Ranger (arrows),277,64246,2472,3323,1246,1216,4579,5825
 shard_fields,16062,Shard Fields,17-24,xp,Ranger (spears),277,64246,2472,3323,1246,710,5084,6330
 shard_fields,16062,Shard Fields,17-24,xp,Arcanist/Mystic,277,64246,2472,3323,1246,1523,4272,5518
-bandit_road,14474,The Bandit Road,19-27,money,Vanguard,248,43422,8596,1115,2047,1452,8259,10307
-bandit_road,14474,The Bandit Road,19-27,money,Ranger (arrows),248,43422,8596,1115,2047,2260,7451,9498
-bandit_road,14474,The Bandit Road,19-27,money,Ranger (spears),248,43422,8596,1115,2047,1670,8041,10088
-bandit_road,14474,The Bandit Road,19-27,money,Arcanist/Mystic,248,43422,8596,1115,2047,2664,7047,9095
+bandit_road,13513,The Bandit Road,19-27,money,Vanguard,231,40539,8025,1041,1911,1355,7711,9622
+bandit_road,13513,The Bandit Road,19-27,money,Ranger (arrows),231,40539,8025,1041,1911,2110,6956,8868
+bandit_road,13513,The Bandit Road,19-27,money,Ranger (spears),231,40539,8025,1041,1911,1559,7507,9419
+bandit_road,13513,The Bandit Road,19-27,money,Arcanist/Mystic,231,40539,8025,1041,1911,2487,6579,8491
 old_quarry,19016,The Old Quarry,23-30,money,Vanguard,233,57049,8807,1193,869,1206,8794,9664
 old_quarry,19016,The Old Quarry,23-30,money,Ranger (arrows),233,57049,8807,1193,869,2075,7925,8794
 old_quarry,19016,The Old Quarry,23-30,money,Ranger (spears),233,57049,8807,1193,869,1440,8560,9429

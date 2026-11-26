@@ -129,6 +129,7 @@ SpireGearData.shardMonsters = {
 	["Burrow Mole"] = { rough = true },
 	["Field Rat"] = { rough = true },
 	["Field Shardling"] = { rough = true, cut = true },
+	["Granite Warden"] = { rough = true, cut = true, flawless = true },
 	["Grey Alpha"] = { rough = true, cut = true, flawless = true },
 	["Hopper Toad"] = { rough = true },
 	["Meadow Wasp"] = { rough = true },

@@ -8,6 +8,10 @@ levels are natural caves. tools/hunt_check.py measures how many monsters can rea
 Level kinds: the surface (z 7); a hill top above it (z 6: a raised plateau on mountain ground, reached by ramps,
 Map.hill / Map.ramp); caves below (z 8, 9); and at most one party cave (a level marked party=True: groups of four, the
 cavebot rule, the den_<id> points and tools/hunt_check.py's party limits).
+Built places (H8, 2026-11-25): a lower level marked built=True is dug as a stone-walled cellar or mine (stone floor,
+Map.autowall stone walls, wall torches, rubble and pillars) instead of a natural cave; the surface may list ruins
+[(x, y, w, h, gaps)]: roofless broken stone buildings (outline by Map.autowall, gaps = doorways, some stretches fallen),
+each standing in a clearing that is widened to fit it.
 
 build(m, c) paints it; check(m) is its walk test (gate -> every level -> every group and crowd spot).
 """
@@ -85,6 +89,8 @@ def _carve(c, d, z, lv, rng, below=None):
             cells |= _blobby(wx, wy, r, rng)
     for a, b, w in lv["paths"]:
         cells |= WI._tunnel(named[a], named[b], rng, width=w)
+    for (rx, ry, rw, rh, _gaps) in lv.get("ruins", []):   # a ruin and one tile of open ground round it
+        cells |= {(ox + rx + u, oy + ry + v) for u in range(-1, rw + 1) for v in range(-1, rh + 1)}
     for (name, x, y, r, band, route, content) in lv["clearings"]:
         if content == "crowd":                       # a crowd pocket: a short side passage to the nearest clearing
             p = named[name]
@@ -110,6 +116,45 @@ def _carve(c, d, z, lv, rng, below=None):
         for _r, _f, _a, landing in ramps:
             cells |= landing
     return cells, named, box, gate
+
+
+def _ruins(m, c, ruins, cells7, rng, L, props=()):
+    """Roofless broken stone buildings on the surface: the outline is Map.autowall stone, minus the doorways and a few
+    fallen stretches; inside, cracked stone floor with the trail showing through. The wall tiles leave the open set."""
+    ox, oy = X0 + c["x"], Y0 + c["y"]
+    allw = set()
+    for (rx, ry, rw, rh, gaps) in ruins:
+        x0, y0, x1, y1 = ox + rx, oy + ry, ox + rx + rw - 1, oy + ry + rh - 1
+        gap = {(ox + gx, oy + gy) for gx, gy in gaps}
+        ring = [(x, y0) for x in range(x0, x1 + 1)] + [(x1, y) for y in range(y0 + 1, y1 + 1)] +                [(x, y1) for x in range(x1 - 1, x0 - 1, -1)] + [(x0, y) for y in range(y1 - 1, y0, -1)]
+        corners = {(x0, y0), (x1, y0), (x0, y1), (x1, y1)}
+        fallen, k = set(), 0
+        while k < len(ring):                      # now and then a 1-2 tile stretch has fallen (never a corner)
+            if ring[k] not in corners and rng.random() < 0.12:
+                fallen |= set(ring[k:k + rng.choice((1, 2))]) - corners
+                k += 4
+            k += 1
+        wall = [t for t in ring if t not in gap and t not in fallen]
+        for (x, y) in {(x, y) for x in range(x0 + 1, x1) for y in range(y0 + 1, y1)} | gap | fallen:
+            m.clear_items(x, y, Z)
+            if rng.random() < 0.85:
+                m.ground[(x, y, Z)] = m.pick("stonefloor")
+        for (x, y) in fallen:                     # the fallen stones lie where the wall stood
+            if rng.random() < 0.6:
+                m.put(x, y, Z, rng.choice(WI.WALKOVER["gravel"]))
+        for (x, y) in wall:
+            m.clear_items(x, y, Z)
+            m.ground[(x, y, Z)] = m.pick("stonefloor")
+        m.autowall(wall, Z, "stone")
+        allw |= set(wall)
+        if props:                                 # a barrel, a crate or a heap of rubble in two inside corners (never by a door)
+            inside = [(x0 + 1, y0 + 1), (x1 - 1, y0 + 1), (x0 + 1, y1 - 1), (x1 - 1, y1 - 1)]
+            for (x, y) in rng.sample(inside, 2):
+                if not any(abs(x - gx) + abs(y - gy) <= 1 for gx, gy in gap):
+                    m.put(x, y, Z, rng.choice(props))
+                    allw.add((x, y))
+    cells7.difference_update(allw)
+    L["ruin_walls"] = allw
 
 
 def build(m, c):
@@ -150,6 +195,7 @@ def build(m, c):
         if t not in L["hub"] and t not in L["gate"] and t not in ramp_keep \
                 and any((t[0] + a, t[1] + b) not in cells7 for a, b in D4) and rng.random() < 0.08:
             m.put(t[0], t[1], Z, rng.choice(WI.WALKOVER[trail]))
+    _ruins(m, c, d["levels"][Z].get("ruins", []), cells7, rng, L, d["levels"][Z].get("ruin_props", []))
     L["open"] = cells7
     # ---- ponds (plan Part 5, Toad Pond): water over the wall mass; where a path crosses a pond it becomes a bridge
     inner7 = {(ox + u, oy + v) for u in range(2, c["w"] - 2) for v in range(2, c["h"] - 2)}
@@ -184,6 +230,14 @@ def build(m, c):
     for z, (cells, named, box) in lv_cells.items():
         if z <= Z:
             continue
+        if d["levels"][z].get("built"):                       # a cellar or a mine: stone floor, stone walls
+            for (x, y) in cells:
+                m.ground[(x, y, z)] = m.pick("stonefloor")
+            wall = {(x + a, y + b) for x, y in cells for a, b in D8} - cells
+            for (x, y) in wall:
+                m.ground[(x, y, z)] = m.pick("stonefloor")
+            m.autowall(sorted(wall), z, "stone")
+            continue
         DG.cave(m, cells, z)                                  # (zones for these levels: maps/layout_floor1.py)
     # ---- stairs between levels: stairs up at (x, y, z_low), the way down above it
     party_z = next((z for z, lv in d["levels"].items() if lv.get("party")), None)
@@ -203,7 +257,8 @@ def build(m, c):
             if (tx, ty) not in lv_cells[tz][0]:
                 raise ValueError(f"{gid}: the stairs at {(x, y, zl)} need open floor at {(tx - ox, ty - oy, tz)}")
         den = zl == party_z and not den_done
-        m.stairs(wx, wy, zl, floor="cavefloor", name=f"den_{gid}" if den else f"{gid}_{x}_{y}_{zl}")
+        m.stairs(wx, wy, zl, floor="stonefloor" if d["levels"][zl].get("built") else "cavefloor",
+                 name=f"den_{gid}" if den else f"{gid}_{x}_{y}_{zl}")
         m.clear_items(wx, wy + 1, zl)
         m.clear_items(wx, wy - 1, zl - 1)
         if zl - 1 == Z:
@@ -258,7 +313,8 @@ def build(m, c):
                 routes[route]["crowd"].append((wx, wy, z))
                 m.points[f"crowd_{gid}_{route}_{len(routes[route]['crowd'])}"] = (wx, wy, z)
             elif content == "rest" and z <= Z:
-                spot = next(((wx + a, wy + b) for a, b in ((2, -1), (-2, -1), (1, -2), (-1, -2)) if (wx + a, wy + b) in cells), None)
+                spot = next(((wx + a, wy + b) for a, b in ((2, -1), (-2, -1), (1, -2), (-1, -2))
+                             if (wx + a, wy + b) in cells and not m.items.get((wx + a, wy + b, z))), None)
                 if spot:
                     m.clear_items(spot[0], spot[1], z)
                     m.put(spot[0], spot[1], z, rng.choice([2370, 1996]))
@@ -319,6 +375,12 @@ def build(m, c):
         x0_, y0_, w_, h_ = min(xs), min(ys), max(xs) - min(xs) + 1, max(ys) - min(ys) + 1
         avoid = DG.keep_clear(m, z) | {(a[0] + i, a[1] + j) for pair in L["landings"] for a in pair if a[2] == z
                                        for i in (-1, 0, 1) for j in (-1, 0, 1)}
+        if d["levels"][z].get("built"):            # a cellar or mine: torches on the walls, rubble, crates, cobwebs
+            DG.hang_maze(m, x0_, y0_, w_, h_, z, share=0.12, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+            props = d["levels"][z].get("props", DG.RUBBLE + DG.PILLARS)
+            DG.scatter(m, x0_, y0_, w_, h_, z, props, len(cells) // 70, solid=True, avoid=avoid)
+            DG.scatter(m, x0_, y0_, w_, h_, z, DG.COBWEBS + DG.BONES + DG.DEBRIS, len(cells) // 40, avoid=avoid)
+            continue
         # fewer than at first: the client walk showed the Warren landing cluttered (2026-11-14)
         DG.scatter(m, x0_, y0_, w_, h_, z, DG.STALAGMITES, len(cells) // 80, solid=True, avoid=avoid)
         DG.scatter(m, x0_, y0_, w_, h_, z, DG.BONES + DG.DEBRIS, len(cells) // 50, avoid=avoid)

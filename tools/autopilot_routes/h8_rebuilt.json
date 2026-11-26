@@ -1,0 +1,384 @@
+{
+ "name": "h8_rebuilt",
+ "about": "H8 (2026-11-25): a solo Pilot at the low end of each rebuilt ground (Bandit Road level 21, Old Quarry level 26) walks in from the gate, hunts every surface route, looks at the elite from a safe distance (elites are for pairs), opens the chest, and steps down into the party cave.",
+ "character": "Pilot Vanguard",
+ "timeout": 1800,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 50",
+   "note": "a real hunter brings health potions"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 21",
+   "note": "Bandit Road (level 21): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_bandit_road",
+   "note": "Bandit Road (level 21): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_a",
+   "fight": true,
+   "timeout": 90,
+   "note": "Bandit Road: the West Woods"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_a"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: the farmhouse"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1337,
+    1187,
+    7
+   ],
+   "fight": true,
+   "timeout": 90,
+   "note": "Bandit Road: the farmhouse"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 6
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_farmhouse"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: chest (out of the Captain's sight)"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_d",
+   "fight": true,
+   "timeout": 90,
+   "note": "Bandit Road: chest (out of the Captain's sight)"
+  },
+  {
+   "do": "use",
+   "at": [1342, 1176, 7]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_chest"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: the Old Road"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_c",
+   "fight": true,
+   "timeout": 150,
+   "note": "Bandit Road: the Old Road"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1353,
+    1198,
+    7
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Bandit Road: the waystation"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_waystation"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: the shrine (the Captain's camp in view)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1353,
+    1188,
+    7
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Bandit Road: the shrine (the Captain's camp in view)"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_shrine"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: the East Woods"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_b",
+   "fight": true,
+   "timeout": 150,
+   "note": "Bandit Road: the East Woods"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_b"
+  },
+  {
+   "do": "heal",
+   "note": "Bandit Road: the Smugglers' Cellar"
+  },
+  {
+   "do": "walk",
+   "to": "camp_bandit_road",
+   "fight": true,
+   "timeout": 120,
+   "note": "Bandit Road: the Smugglers' Cellar"
+  },
+  {
+   "do": "jump",
+   "to": "stairs_den_bandit_road",
+   "note": "Bandit Road: the Smugglers' Cellar"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "h8_bandit_cellar"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 30"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 26",
+   "note": "Old Quarry (level 26): gate"
+  },
+  {
+   "do": "jump",
+   "to": "gate_old_quarry",
+   "note": "Old Quarry (level 26): gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_gate"
+  },
+  {
+   "do": "walk",
+   "to": "loop_old_quarry_a",
+   "fight": true,
+   "timeout": 90,
+   "note": "Old Quarry: the North Pit"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1280,
+    1128,
+    7
+   ],
+   "fight": true,
+   "timeout": 90,
+   "note": "Old Quarry: the North Pit"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_a"
+  },
+  {
+   "do": "heal",
+   "note": "Old Quarry: the Deep Cut"
+  },
+  {
+   "do": "walk",
+   "to": "loop_old_quarry_d",
+   "fight": true,
+   "timeout": 90,
+   "note": "Old Quarry: the Deep Cut"
+  },
+  {
+   "do": "use",
+   "at": [1296, 1137, 7]
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_chest"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1294,
+    1144,
+    7
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry: the Deep Cut"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_d"
+  },
+  {
+   "do": "heal",
+   "note": "Old Quarry: the South Pit"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1282,
+    1159,
+    7
+   ],
+   "fight": true,
+   "timeout": 120,
+   "note": "Old Quarry: the South Pit"
+  },
+  {
+   "do": "hunt",
+   "seconds": 45,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_b"
+  },
+  {
+   "do": "heal",
+   "note": "Old Quarry: the Upper Cut"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1270,
+    1156,
+    7
+   ],
+   "fight": true,
+   "timeout": 120,
+   "note": "Old Quarry: the Upper Cut"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1270,
+    1150,
+    6
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry: the Upper Cut"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1272,
+    1144,
+    6
+   ],
+   "fight": true,
+   "timeout": 60,
+   "note": "Old Quarry: the Upper Cut (the Warden in view)"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_upper"
+  },
+  {
+   "do": "heal",
+   "note": "Old Quarry: the Lower Works"
+  },
+  {
+   "do": "jump",
+   "to": "stairs_den_old_quarry",
+   "note": "Old Quarry: the Lower Works"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "h8_quarry_works"
+  }
+ ]
+}

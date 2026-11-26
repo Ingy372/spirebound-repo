@@ -56,7 +56,7 @@ HABITS = {
     "Stonehorn Ram": ("pack", 2.0),
     # Floor 1 elites (FLOOR1_REVIEW.md F1-11): alone, rare, each counts for about two and a half
     "Old Bristleback": ("loner", 2.5), "Moonhowl": ("loner", 2.5), "Mossback Snapper": ("loner", 2.5),
-    "Blackthorn": ("loner", 2.5), "Prism Shardling": ("loner", 2.5),
+    "Blackthorn": ("loner", 2.5), "Prism Shardling": ("loner", 2.5), "Granite Warden": ("loner", 2.5),
 }
 # Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}
@@ -337,6 +337,8 @@ def floor_tasks(monsters, floors):
             m = monsters.get(name)
             if not m or m.get("boss") or name in NOT_TASKS:
                 continue
+            if HABITS.get(name, ("",))[0] == "loner" and HABITS[name][1] >= 2.5:
+                continue                     # a lone elite (one every 15 minutes) can't be a 20-kill task (H8, 2026-11-25)
             if n == 1 and name in camps1:
                 kph, gph, low = camps1[name]
                 count = max(20, min(100, int(kph * 0.25) // 5 * 5))
