@@ -8,6 +8,13 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q73. Let Bristle Boars come in twos? (2026-11-26, 10.4)
+Boar Meadow (levels 9-15) is the one ground that still can't feed a crowd: the measurement gave four hunters only 57-89 kills an hour each (200 is the aim). Boars are "loners" (my call when the spawn habits were set): always alone, never doubled, so the meadow can only grow by adding more single boars, and the danger and rest-spot rules allowed just two more.
+- **Recommendation:** make boars a "pair" (ones and twos). The meadow would roughly double without changing its layout, and the Vanguard ground keeps hard hitters that walk up to you. The elite (Old Bristleback) stays alone.
+- Other option: keep them loners and add a second small boar ground for levels 9-15.
+- Assumed until you answer: no change (boars stay loners).
+- Jay's answer:
+
 ### Q72. A launch-week crowd boost for the harder hunting grounds? (2026-11-26, N2)
 The measurement (docs/N2_capacity.md) says Floor 1 feeds about 30 hunters at once at a good pace, about 9 of them in the
 level 9-30 grounds; the launch target is 150. The lead session will make the grounds bigger (10.4). Separately: you

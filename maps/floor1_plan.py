@@ -457,11 +457,13 @@ BOARS = dict(
             ("b1", 35, 20, 3, "calm", "b", [_BB]), ("qb", 34, 31, 3, "calm", "b", "rest"), ("b2", 34, 42, 3, "middle", "b", [_BB]),
             ("sw", 8, 52, 3, "middle", "a", [_BB]), ("se", 30, 52, 3, "middle", "b", [_BB]), ("sf", 19, 53, 3, "middle", None, [_BB]),
             ("mw", 12, 30, 2, "middle", None, "rest"), ("me", 26, 30, 2, "middle", None, "rest"),
+            # 10.4 (N2 rerun: the meadow fed under 100 kills an hour each to four hunters): two more boars, each alone (more broke the rest-spot rule)
+            ("wb", 12, 43, 2, "middle", None, [_BB]), ("eb", 26, 43, 2, "middle", None, [_BB]),
             ("ca1", 5, 25, 1, "calm", "a", "crowd"), ("ca2", 2, 47, 1, "middle", "a", "crowd"), ("ca3", 5, 36, 1, "middle", "a", "crowd"),
             ("cb1", 33, 25, 1, "calm", "b", "crowd"), ("cb2", 36, 47, 1, "middle", "b", "crowd"), ("cb3", 33, 36, 1, "middle", "b", "crowd"),
         ], paths=[("hub", "nw", 4), ("nw", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "sw", 4), ("sw", "sf", 4),
                   ("sf", "se", 4), ("se", "b2", 4), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4),
-                  ("qa", "mw", 3), ("qb", "me", 3)]),
+                  ("qa", "mw", 3), ("qb", "me", 3), ("a2", "wb", 3), ("b2", "eb", 3)]),
         6: dict(name="Oak Ridge", box=(12, 12, 15, 37), clearings=[
             ("kl", 19, 44, 3, "middle", "c", "rest"), ("k1", 19, 34, 3, "deep", "c", "rest"), ("kq", 19, 26, 3, "deep", "c", "rest"),
             ("k2", 19, 15, 3, "deep", "c", [(("Old Bristleback", 1),)]),
@@ -780,6 +782,17 @@ DESIGNS_NEW = {"BRAMBLE": BRAMBLE, "SMUGGLERS": SMUGGLERS, "BASTION": BASTION}
 DESIGNS = {"RATWARREN": RATWARREN, "BURROW": BURROW, "TOADPOND": TOADPOND, "GLADE": GLADE, "WASPS": WASPS, "BOARS": BOARS, "WOLVES": WOLVES, "MARSH": MARSH, "THORNS": THORNS, "SHARDS": SHARDS,
            "BANDITS": BANDITS, "QUARRY": QUARRY}
 DESIGNS.update(DESIGNS_NEW)
+# 10.4 (N2 rerun, 2026-11-26): on the mid grounds half or more of the monsters stood alive while hunters walked between
+# thin spawns, so speed of return was no longer the limit; spread was. Each ground's clearings now repeat their groups as
+# often as its danger limits allow (found ground by ground with tools/hunt_check.py --strict; loners still stand alone).
+N2_DENSITY = {
+    "BOARS": dict(calm=2, middle=3, deep=3, nest=3), "WOLVES": dict(deep=3),
+    "THORNS": dict(middle=3, deep=3, nest=3), "SHARDS": dict(calm=2, middle=2, deep=2),
+    "BANDITS": dict(middle=2, deep=3, nest=3), "QUARRY": dict(middle=3, deep=3, nest=3),
+    "SMUGGLERS": dict(middle=2, deep=3, nest=3), "BASTION": dict(calm=2, middle=2, deep=2),
+}
+for _k, _d in N2_DENSITY.items():
+    DESIGNS[_k]["density"] = dict(DESIGNS[_k].get("density", {}), **_d)
 
 APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", levels=(28, 40), role="xp+money",
             x=30, y=30, w=44, h=44,

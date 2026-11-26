@@ -740,6 +740,12 @@
 	<monster centerx="1159" centery="1391" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
 	</monster>
+	<monster centerx="1152" centery="1381" centerz="7" radius="2">
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
+	</monster>
+	<monster centerx="1166" centery="1381" centerz="7" radius="2">
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
+	</monster>
 	<monster centerx="1159" centery="1353" centerz="6" radius="2">
 		<monster name="Old Bristleback" x="0" y="0" z="6" spawntime="450" />
 	</monster>
@@ -1124,6 +1130,11 @@
 		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="28" />
 		<monster name="Meadow Wolf" x="0" y="1" z="7" spawntime="28" />
 	</monster>
+	<monster centerx="1038" centery="1270" centerz="7" radius="2">
+		<monster name="Moonhowl" x="0" y="0" z="7" spawntime="450" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="28" />
+		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="28" />
+	</monster>
 	<monster centerx="1066" centery="1297" centerz="7" radius="2">
 		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="28" />
 		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="28" />
@@ -1137,6 +1148,11 @@
 	<monster centerx="1035" centery="1297" centerz="7" radius="2">
 		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="28" />
 		<monster name="Meadow Wolf" x="0" y="-1" z="7" spawntime="28" />
+		<monster name="Meadow Wolf" x="0" y="1" z="7" spawntime="28" />
+	</monster>
+	<monster centerx="1038" centery="1294" centerz="7" radius="2">
+		<monster name="Meadow Wolf" x="0" y="0" z="7" spawntime="28" />
+		<monster name="Meadow Wolf" x="-1" y="0" z="7" spawntime="28" />
 		<monster name="Meadow Wolf" x="0" y="1" z="7" spawntime="28" />
 	</monster>
 	<monster centerx="1039" centery="1281" centerz="6" radius="2">
@@ -1354,6 +1370,10 @@
 		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="20" />
 		<monster name="Thornsnap" x="0" y="1" z="7" spawntime="20" />
 	</monster>
+	<monster centerx="1175" centery="1139" centerz="7" radius="2">
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="20" />
+	</monster>
 	<monster centerx="1198" centery="1168" centerz="7" radius="2">
 		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="20" />
 	</monster>
@@ -1362,6 +1382,10 @@
 		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
 	<monster centerx="1178" centery="1168" centerz="7" radius="2">
+		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="20" />
+	</monster>
+	<monster centerx="1175" centery="1165" centerz="7" radius="2">
 		<monster name="Thornsnap" x="0" y="0" z="7" spawntime="20" />
 		<monster name="Thornsnap" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
@@ -1468,6 +1492,10 @@
 		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="20" />
 		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
+	<monster centerx="1346" centery="1314" centerz="7" radius="2">
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
+	</monster>
 	<monster centerx="1344" centery="1340" centerz="7" radius="2">
 		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="20" />
 		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
@@ -1477,6 +1505,10 @@
 		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
 	<monster centerx="1366" centery="1326" centerz="7" radius="2">
+		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
+	</monster>
+	<monster centerx="1369" centery="1326" centerz="7" radius="2">
 		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="20" />
 		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
@@ -1631,6 +1663,9 @@
 	<monster centerx="1357" centery="1175" centerz="7" radius="2">
 		<monster name="Bandit Captain" x="0" y="0" z="7" spawntime="450" />
 	</monster>
+	<monster centerx="1354" centery="1178" centerz="7" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="7" spawntime="450" />
+	</monster>
 	<monster centerx="1337" centery="1181" centerz="8" radius="2">
 		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
 		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
@@ -1726,6 +1761,10 @@
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
 	</monster>
+	<monster centerx="1282" centery="1131" centerz="7" radius="2">
+		<monster name="Ruin Sentinel" x="-1" y="0" z="7" spawntime="30" />
+		<monster name="Ruin Archer" x="0" y="-1" z="7" spawntime="30" />
+	</monster>
 	<monster centerx="1258" centery="1159" centerz="7" radius="2">
 		<monster name="Field Shardling" x="0" y="0" z="7" spawntime="30" />
 	</monster>
@@ -1737,6 +1776,10 @@
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="30" />
 	</monster>
+	<monster centerx="1282" centery="1159" centerz="7" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
+		<monster name="Field Shardling" x="-1" y="0" z="7" spawntime="30" />
+	</monster>
 	<monster centerx="1295" centery="1144" centerz="7" radius="2">
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
@@ -1745,10 +1788,17 @@
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
 	</monster>
+	<monster centerx="1295" centery="1147" centerz="7" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
+		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
+	</monster>
 	<monster centerx="1259" centery="1143" centerz="6" radius="2">
 		<monster name="Ruin Archer" x="0" y="0" z="6" spawntime="30" />
 	</monster>
 	<monster centerx="1262" centery="1143" centerz="6" radius="2">
+		<monster name="Ruin Archer" x="0" y="0" z="6" spawntime="30" />
+	</monster>
+	<monster centerx="1259" centery="1140" centerz="6" radius="2">
 		<monster name="Ruin Archer" x="0" y="0" z="6" spawntime="30" />
 	</monster>
 	<monster centerx="1286" centery="1142" centerz="6" radius="2">
@@ -1874,7 +1924,13 @@
 	<monster centerx="1352" centery="1011" centerz="7" radius="2">
 		<monster name="Bandit Captain" x="0" y="0" z="7" spawntime="450" />
 	</monster>
+	<monster centerx="1355" centery="1014" centerz="7" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="7" spawntime="450" />
+	</monster>
 	<monster centerx="1338" centery="1143" centerz="7" radius="2">
+		<monster name="Ruin Archer" x="0" y="0" z="7" spawntime="30" />
+	</monster>
+	<monster centerx="1341" centery="1143" centerz="7" radius="2">
 		<monster name="Ruin Archer" x="0" y="0" z="7" spawntime="30" />
 	</monster>
 	<monster centerx="1339" centery="1117" centerz="7" radius="2">
@@ -1884,6 +1940,9 @@
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 	</monster>
 	<monster centerx="1361" centery="1131" centerz="7" radius="2">
+		<monster name="Ruin Archer" x="0" y="0" z="7" spawntime="30" />
+	</monster>
+	<monster centerx="1364" centery="1131" centerz="7" radius="2">
 		<monster name="Ruin Archer" x="0" y="0" z="7" spawntime="30" />
 	</monster>
 	<monster centerx="1359" centery="1115" centerz="7" radius="2">

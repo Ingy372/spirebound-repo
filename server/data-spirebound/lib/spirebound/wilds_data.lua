@@ -59,7 +59,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1201, y = 1182, z = 8, group = { { "Meadow Wasp", 1 } } },
 		{ n = 12, loop = "d", x = 1226, y = 1203, z = 8, group = { { "Meadow Wasp", 1 } } },
 	} },
-	{ id = "boar_meadow", title = "Boar Meadow", type = "class", want = 14, guarded = false, respawn = 40, lo = 9, hi = 15, x1 = 1134, y1 = 1338, x2 = 1178, y2 = 1401, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "boar_meadow", title = "Boar Meadow", type = "class", want = 16, guarded = false, respawn = 40, lo = 9, hi = 15, x1 = 1134, y1 = 1338, x2 = 1178, y2 = 1401, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1145, y = 1363, z = 7, group = { { "Bristle Boar", 1 } } },
 		{ n = 2, loop = "a", x = 1142, y = 1385, z = 7, group = { { "Bristle Boar", 1 } } },
 		{ n = 3, loop = "a", x = 1145, y = 1374, z = 7, group = { { "Bristle Boar", 1 } } },
@@ -87,7 +87,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1273, y = 1178, z = 8, group = { { "Burrow Mole", 2 } } },
 		{ n = 12, loop = "d", x = 1305, y = 1178, z = 8, group = { { "Burrow Mole", 2 } } },
 	} },
-	{ id = "wolf_copse", title = "Wolf Copse", type = "mixed", want = 26, guarded = false, respawn = 56, lo = 12, hi = 18, x1 = 1028, y1 = 1262, x2 = 1087, y2 = 1301, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "wolf_copse", title = "Wolf Copse", type = "mixed", want = 32, guarded = false, respawn = 56, lo = 12, hi = 18, x1 = 1028, y1 = 1262, x2 = 1087, y2 = 1301, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1078, y = 1266, z = 7, group = { { "Meadow Wolf", 2 } } },
 		{ n = 2, loop = "a", x = 1052, y = 1264, z = 7, group = { { "Meadow Wolf", 2 } } },
 		{ n = 3, loop = "a", x = 1069, y = 1302, z = 8, group = { { "Meadow Wolf", 2 } } },
@@ -129,7 +129,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1177, y = 1037, z = 7, group = { { "Meadow Wolf", 1 } } },
 		{ n = 12, loop = "d", x = 1169, y = 1039, z = 7, group = { { "Meadow Wolf", 1 } } },
 	} },
-	{ id = "thornsnap_hollow", title = "Thornsnap Hollow", type = "class", want = 11, guarded = false, respawn = 40, lo = 14, hi = 20, x1 = 1158, y1 = 1132, x2 = 1217, y2 = 1171, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
+	{ id = "thornsnap_hollow", title = "Thornsnap Hollow", type = "class", want = 15, guarded = false, respawn = 40, lo = 14, hi = 20, x1 = 1158, y1 = 1132, x2 = 1217, y2 = 1171, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1205, y = 1135, z = 7, group = { { "Thornsnap", 1 } } },
 		{ n = 2, loop = "a", x = 1182, y = 1134, z = 7, group = { { "Thornsnap", 1 } } },
 		{ n = 3, loop = "a", x = 1167, y = 1138, z = 7, group = { { "Thornsnap", 1 } } },
@@ -143,7 +143,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1199, y = 1129, z = 8, group = { { "Thornsnap", 1 } } },
 		{ n = 12, loop = "d", x = 1177, y = 1166, z = 8, group = { { "Thornsnap", 1 } } },
 	} },
-	{ id = "shard_fields", title = "Shard Fields", type = "mixed", want = 17, guarded = false, respawn = 40, lo = 17, hi = 24, x1 = 1340, y1 = 1300, x2 = 1391, y2 = 1347, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "shard_fields", title = "Shard Fields", type = "mixed", want = 21, guarded = false, respawn = 40, lo = 17, hi = 24, x1 = 1340, y1 = 1300, x2 = 1391, y2 = 1347, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1343, y = 1308, z = 7, group = { { "Field Shardling", 1 } } },
 		{ n = 2, loop = "a", x = 1348, y = 1327, z = 7, group = { { "Field Shardling", 1 } } },
 		{ n = 3, loop = "a", x = 1349, y = 1345, z = 7, group = { { "Field Shardling", 1 } } },
@@ -157,7 +157,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1377, y = 1312, z = 8, group = { { "Field Shardling", 1 } } },
 		{ n = 12, loop = "d", x = 1377, y = 1351, z = 8, group = { { "Field Shardling", 1 } } },
 	} },
-	{ id = "bandit_road", title = "The Bandit Road", type = "mixed", want = 16, guarded = false, respawn = 56, lo = 19, hi = 27, x1 = 1328, y1 = 1172, x2 = 1379, y2 = 1219, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
+	{ id = "bandit_road", title = "The Bandit Road", type = "mixed", want = 17, guarded = false, respawn = 56, lo = 19, hi = 27, x1 = 1328, y1 = 1172, x2 = 1379, y2 = 1219, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1338, y = 1209, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 2, loop = "a", x = 1337, y = 1202, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 3, loop = "a", x = 1337, y = 1181, z = 7, group = { { "Road Bandit", 1 } } },
@@ -174,7 +174,7 @@ SpireWilds = { grounds = {
 		{ n = 14, loop = "d", x = 1363, y = 1180, z = 8, group = { { "Road Bandit", 1 } } },
 		{ n = 15, loop = "d", x = 1361, y = 1212, z = 8, group = { { "Road Bandit", 1 } } },
 	} },
-	{ id = "old_quarry", title = "The Old Quarry", type = "mixed", want = 17, guarded = false, respawn = 60, lo = 23, hi = 30, x1 = 1240, y1 = 1124, x2 = 1299, y2 = 1163, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "old_quarry", title = "The Old Quarry", type = "mixed", want = 24, guarded = false, respawn = 60, lo = 23, hi = 30, x1 = 1240, y1 = 1124, x2 = 1299, y2 = 1163, z = 7, zs = { [6] = true, [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1257, y = 1132, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 2, loop = "a", x = 1265, y = 1131, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 3, loop = "a", x = 1275, y = 1131, z = 7, group = { { "Ruin Archer", 1 } } },
@@ -191,7 +191,7 @@ SpireWilds = { grounds = {
 		{ n = 14, loop = "d", x = 1287, y = 1130, z = 8, group = { { "Ruin Archer", 1 } } },
 		{ n = 15, loop = "d", x = 1287, y = 1157, z = 8, group = { { "Ruin Archer", 1 } } },
 	} },
-	{ id = "smugglers_ridge", title = "Smugglers' Ridge", type = "mixed", want = 16, guarded = false, respawn = 56, lo = 19, hi = 26, x1 = 1330, y1 = 1008, x2 = 1381, y2 = 1055, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
+	{ id = "smugglers_ridge", title = "Smugglers' Ridge", type = "mixed", want = 17, guarded = false, respawn = 56, lo = 19, hi = 26, x1 = 1330, y1 = 1008, x2 = 1381, y2 = 1055, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "calm", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1371, y = 1045, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 2, loop = "a", x = 1372, y = 1038, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 3, loop = "a", x = 1372, y = 1017, z = 7, group = { { "Road Bandit", 1 } } },
@@ -205,7 +205,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1348, y = 1015, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 12, loop = "d", x = 1355, y = 1017, z = 7, group = { { "Road Bandit", 1 } } },
 	} },
-	{ id = "fallen_bastion", title = "The Fallen Bastion", type = "mixed", want = 14, guarded = false, respawn = 60, lo = 23, hi = 30, x1 = 1335, y1 = 1110, x2 = 1386, y2 = 1157, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "fallen_bastion", title = "The Fallen Bastion", type = "mixed", want = 16, guarded = false, respawn = 60, lo = 23, hi = 30, x1 = 1335, y1 = 1110, x2 = 1386, y2 = 1157, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1338, y = 1149, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 2, loop = "a", x = 1343, y = 1130, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 3, loop = "a", x = 1344, y = 1112, z = 7, group = { { "Ruin Archer", 1 } } },
