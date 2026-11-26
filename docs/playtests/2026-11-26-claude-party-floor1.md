@@ -181,6 +181,16 @@ Axe-Lord kill can't spoil the real race.
 - **Healer and damage dealer as a pair at Burrow Hills (level 19-21):** 16-minute lap, 81-92k experience per hour
   each, no deaths, the healer used 10 mana potions keeping both up, both earned their own loot (+565, +281 gold).
 
+- **The Bandit Road, full party at level 23-25 (first real challenge of the run):** 20.6-minute lap, 119-151k
+  experience per hour each, the healer and the tank died once each in the cave; the healer used 21 mana potions,
+  the damage dealer 23 mana and 9 health potions. The healer died to the **Bandit Captain** (elite) with 8
+  monsters in sight and 4 on her: the Captain hit a 260-health Mystic for 55-61 per swing. This is what Jay's
+  "challenge, not calm" asks for. Caveats: the test party walks as a clump, so the healer stood in front instead
+  of behind the tank, and the damage dealer had been split off upstairs; a well-played party would do better. Still,
+  a 2-elite group ground for levels 19-27 that kills a level-25 party of three looks about right for "group" content.
+  Note "From level 50 on, a death costs experience": below 50 these deaths cost nothing, so the challenge has no
+  sting until Floor 2.
+
 ### Weight and junk
 - **Autoloot fills your capacity with meat.** Moles, boars and wolves drop meat (13 oz each), autoloot takes it, and
   no Hearthgate NPC buys it. By level 15 the tank carried 25 meat, couldn't buy potions ("Bought 0x"), and then
