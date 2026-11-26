@@ -68,3 +68,16 @@ Grok Bot (its cloud computer runs Linux; the setup script installs the client wi
 3. When the bot sends its report, save it in `docs\playtests\` or paste it to Claude.
 
 To shut it again: `windows\Close-Friend-Access.bat`.
+
+## The website on a public https:// address (roadmap 7.1b; only when you decide to go public)
+
+The website (sign-up, make another character, account security) normally only works on this PC and for friends on
+your Tailscale network. To let anyone on the internet sign up, over a secure https:// address:
+
+1. Make sure the server is running.
+2. Double-click `windows\Open-Public-Website.bat`. The first time, Tailscale may show a link asking you to allow
+   "Funnel" for your account: open it, click allow, then run the .bat again.
+3. It prints your public address (it ends in `.ts.net`). That is the link players use. It is free; nothing to buy.
+
+Only the website goes public; the game itself still needs Tailscale (or a host, later). To take the website off the
+internet again: `windows\Close-Public-Website.bat`.

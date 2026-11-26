@@ -8,6 +8,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q70. Put the website on a public https:// address now, or wait? (2026-11-26, 7.1b)
+The scripts are ready (`windows\Open-Public-Website.bat`, steps in `windows\README.md`): free, through Tailscale Funnel, an address ending in `.ts.net` with a real certificate, no domain to buy. Only the website (sign-up and account pages) goes public; the game itself still needs Tailscale. Anyone on the internet could then make accounts on your PC.
+- **Recommendation:** wait until the friends test (9.3) is close; switch it on that day, and off again after. A proper domain name comes with picking a host (10.1).
+- Assumed until you answer: wait; nothing is public.
+- Jay's answer:
+
 ### Q69. Hearthgate's buildings: reshape them, or leave that to the final polish? (2026-11-26, N3)
 I dressed Hearthgate (market parasols, goods and a cart by the stalls, flower pots round the Hearth, a well, a covered wagon, braziers at the gates, two campfires, and a notice board in the square with live news: the floor race, the beacon, the weekend bonus, the biggest bounties). What's left of N3 is "varied building shapes": today every house is the same square box. The houses are saved in the database (the game restores their doors on boot), so reshaping them can break owned houses.
 - **Recommendation:** leave the houses' shapes to the Cowork polish near the end, as planned; I reshape only the shops and public buildings (an L-shaped inn, a tower over the gate) if you say the town still looks generated after you walk it.
