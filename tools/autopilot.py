@@ -154,13 +154,18 @@ def plan_steps(route, wp, planner):
 
 
 SUM = re.compile(r"step (\d+): in sight max (\d+) \(avg ([\d.]+)\), next to you max (\d+) \(avg ([\d.]+)\), damage taken (\d+), "
-                 r"kills (\d+), potions (\d+), lowest health (\d+)%")
+                 r"kills (\d+), potions (\d+), lowest health (\d+)%(?:, spells (\d+), mana spent (\d+), mana potions (\d+))?")
+XP = re.compile(r"xp step (\d+): \+(\d+) experience")
 DONE = re.compile(r"== step (\d+) done in (\d+)s")
 
 
 def report(lines, steps):
     """One line per place: the steps of a route that share a note."""
     took = {int(m.group(1)): int(m.group(2)) for m in map(DONE.search, lines) if m}
+    xp = {}
+    for m in map(XP.search, lines):
+        if m:
+            xp[int(m.group(1))] = xp.get(int(m.group(1)), 0) + int(m.group(2))
     order, by = [], {}
     for m in map(SUM.search, lines):
         if not m:
@@ -169,7 +174,7 @@ def report(lines, steps):
         sec = steps[i - 1].get("sec", "?") if i <= len(steps) else "?"
         if sec not in by:
             order.append(sec)
-            by[sec] = dict(t=0, seen=0, avg=0.0, nxt=0, navg=0.0, dmg=0, kills=0, pots=0, hp=100)
+            by[sec] = dict(t=0, seen=0, avg=0.0, nxt=0, navg=0.0, dmg=0, kills=0, pots=0, hp=100, casts=0, mana=0, mpots=0, xp=0)
         r, t = by[sec], max(1, took.get(i, 1))
         r["avg"] += float(m.group(3)) * t
         r["navg"] += float(m.group(5)) * t
@@ -177,11 +182,15 @@ def report(lines, steps):
         r["seen"], r["nxt"] = max(r["seen"], int(m.group(2))), max(r["nxt"], int(m.group(4)))
         r["dmg"] += int(m.group(6)); r["kills"] += int(m.group(7)); r["pots"] += int(m.group(8))
         r["hp"] = min(r["hp"], int(m.group(9)))
-    out = [f"{'place':34s} {'time':>5s} {'in sight':>12s} {'next to you':>12s} {'damage':>7s} {'kills':>5s} {'potions':>7s} {'lowest hp':>9s}"]
+        r["casts"] += int(m.group(10) or 0); r["mana"] += int(m.group(11) or 0); r["mpots"] += int(m.group(12) or 0)
+        r["xp"] += xp.get(i, 0)
+    out = [f"{'place':34s} {'time':>5s} {'in sight':>12s} {'next to you':>12s} {'damage':>7s} {'kills':>5s} {'potions':>7s} {'lowest hp':>9s}"
+           f" {'spells':>6s} {'mana':>6s} {'mana pots':>9s} {'xp':>7s} {'xp/hour':>8s}"]
     for sec in order:
         r = by[sec]
         out.append(f"{sec[:34]:34s} {r['t']:4d}s {r['seen']:4d} (avg {r['avg'] / r['t']:.1f}) {r['nxt']:3d} (avg {r['navg'] / r['t']:.1f}) "
-                   f"{r['dmg']:7d} {r['kills']:5d} {r['pots']:7d} {r['hp']:8d}%")
+                   f"{r['dmg']:7d} {r['kills']:5d} {r['pots']:7d} {r['hp']:8d}% {r['casts']:6d} {r['mana']:6d} {r['mpots']:9d} "
+                   f"{r['xp']:7d} {int(r['xp'] * 3600 / r['t']):8d}")
     return out
 
 
@@ -239,7 +248,9 @@ def main(argv):
     shutil.copytree(ROOT / "client" / "modules", CLIENT / "modules", dirs_exist_ok=True)
     run = MODULE_DST / "run.json"
     run.write_text(json.dumps({"name": name, "account": ACCOUNT, "password": PASSWORD, "character": char, "exit": True, "steps": steps,
-                                "noPotions": bool(route.get("noPotions", False)), "loginShot": bool(route.get("loginShot", False))}), encoding="utf-8")
+                                "noPotions": bool(route.get("noPotions", False)), "loginShot": bool(route.get("loginShot", False)),
+                                # fight like a player (spells, weapon skills, heals, mana) unless the route casts by itself
+                                "noSpells": bool(route.get("noSpells", any(s.get("do") == "cast" for s in route.get("steps", []))))}), encoding="utf-8")
     started = time.time()
     proc = subprocess.Popen([str(exe)], cwd=str(CLIENT))
     limit = time.time() + route.get("timeout", 1200)

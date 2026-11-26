@@ -41,7 +41,7 @@ def start(route, mark):
     r = json.loads((ROOT / "tools" / "autopilot_routes" / f"{route}.json").read_text())
     (LOGS / f"autopilot_log_{route}.txt").unlink(missing_ok=True)
     RUN.write_text(json.dumps({"name": route, "account": "autopilot@localhost", "password": "spirebound",
-                               "character": r["character"], "log": f"autopilot_log_{route}.txt", "exit": True, "noPotions": r.get("noPotions", False),
+                               "character": r["character"], "log": f"autopilot_log_{route}.txt", "exit": True, "noPotions": r.get("noPotions", False), "noSpells": True,
                                "steps": r["steps"]}))
     subprocess.Popen([str(CLIENT / "otclient.exe")], cwd=str(CLIENT))
     ok = wait_for(f"{r['character']} has logged in", 60, mark)

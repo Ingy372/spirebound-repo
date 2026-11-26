@@ -6,7 +6,7 @@ SpireTest.add("r20: per-player memory is forgotten at logout", function()
 	SpireTest.eq(SpirePvP.damage[777001], nil, "a logged-out player's damage record is gone")
 end)
 
-SpireTest.add("r20: the Rapid Respawn weekend fills every ground and brings extra groups back faster", function()
+SpireTest.add("r20: the Rapid Respawn weekend is a weekend bonus and never fills an empty ground (H10)", function()
 	local found = false
 	for _, w in ipairs(SpireEvents.WEEKEND) do
 		found = found or w.id == "respawn"
@@ -18,7 +18,7 @@ SpireTest.add("r20: the Rapid Respawn weekend fills every ground and brings extr
 	local state = SpireCrowd.update(g, 7000000, 0, function() return true end)
 	SpireCrowd.forceRapid = nil
 	SpireCrowd.grounds[g.id] = nil
-	SpireTest.eq(state, "packed", "with nobody there, the ground still counts as packed")
+	SpireTest.eq(state, "quiet", "with nobody there, the ground stays quiet (H10: the head count decides)")
 end)
 
 SpireTest.add("r20: the Derby pays a winner who logged off", function()

@@ -72,6 +72,22 @@ SpireTest.add("crowd: 12 players is a Rush only on a Guarded ground", function()
 	SpireTest.eq(spots, guarded.zs and 12 or 16, "a starter ground's crowd spots (12 on a designed ground, 16 on a loop ground)")
 end)
 
+SpireTest.add("crowd: the Rapid Respawn weekend does not fill a ground for a lone player (H10)", function()
+	local g = SpireCrowd.ground("boar_meadow")
+	reset(g)
+	SpireCrowd.forceRapid = true
+	local ok, err = pcall(function()
+		local state, n = SpireCrowd.update(g, 4000000, 1, far)
+		SpireTest.eq(state, "quiet", "one player on the weekend: still quiet")
+		SpireTest.eq(n, 0, "one player on the weekend: no extra groups")
+		state, n = SpireCrowd.update(g, 4000030, 5, far)
+		SpireTest.eq(state, "busy", "five players on the weekend: busy, as on any day")
+	end)
+	SpireCrowd.forceRapid = nil
+	reset(g)
+	if not ok then error(err, 0) end
+end)
+
 SpireTest.add("crowd: no group appears within 7 tiles of a player", function()
 	local g = SpireCrowd.ground("wolf_copse")
 	reset(g)

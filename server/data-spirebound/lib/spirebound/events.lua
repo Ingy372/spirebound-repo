@@ -13,7 +13,7 @@ SpireEvents = {
 		{ id = "loot", name = "Double Loot" },
 		{ id = "skill", name = "Double Skill Training" },
 		{ id = "fishing", name = "Double Fishing Luck" },
-		{ id = "respawn", name = "Rapid Respawn" }, -- R20: every ground packed, extra groups back twice as fast
+		{ id = "respawn", name = "Rapid Respawn" }, -- R20 / H10: extra crowd groups back twice as fast (head count unchanged)
 	},
 	active = nil, -- { kind = row, floor = n, untilTime = t }
 	derby = nil, -- { untilTime, best = { name, kg } }

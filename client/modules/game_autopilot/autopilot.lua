@@ -32,6 +32,7 @@ local LOG = '/autopilot_log.txt'
 local TICK = 250 -- ms
 local stepXp
 local POTION = 266 -- health potion
+local MANA_POTION = 268
 local NEAR = 2 -- a monster this close (tiles) gets fought on a walk
 
 local plan, lines, t0
@@ -39,6 +40,10 @@ local idx, step, stepT, stepData
 local tickEvent, loginEvent
 local st, total
 local lastPotion, lastSample, lastHp = 0, 0, nil
+-- the fight kit (Jay, 2026-11-25: the pilot only swung its weapon, so kill speed and mana use were never measured):
+-- what this character can cast, from "/pilot fightkit"; asked at login and after every level change
+local kit, kitAsked, lastAttackCast, lastHealCast, lastManaPotion = nil, 0, 0, 0, 0
+local ready = {}
 local finished = false
 
 local function now()
@@ -67,7 +72,8 @@ local function dist(a, b)
 end
 
 local function newStats()
-    return { samples = 0, seenSum = 0, seenMax = 0, nextMax = 0, nextSum = 0, dmg = 0, kills = 0, potions = 0, minHp = 100 }
+    return { samples = 0, seenSum = 0, seenMax = 0, nextMax = 0, nextSum = 0, dmg = 0, kills = 0, potions = 0, minHp = 100,
+        casts = 0, mana = 0, manaPots = 0 }
 end
 
 local function monsters(player)
@@ -100,8 +106,8 @@ end
 local function summary(s, title)
     local avg = s.samples > 0 and s.seenSum / s.samples or 0
     local avgNext = s.samples > 0 and s.nextSum / s.samples or 0
-    return string.format('%s: in sight max %d (avg %.1f), next to you max %d (avg %.1f), damage taken %d, kills %d, potions %d, lowest health %d%%',
-        title, s.seenMax, avg, s.nextMax, avgNext, s.dmg, s.kills, s.potions, s.minHp)
+    return string.format('%s: in sight max %d (avg %.1f), next to you max %d (avg %.1f), damage taken %d, kills %d, potions %d, lowest health %d%%, spells %d, mana spent %d, mana potions %d',
+        title, s.seenMax, avg, s.nextMax, avgNext, s.dmg, s.kills, s.potions, s.minHp, s.casts, s.mana, s.manaPots)
 end
 
 local function finish(reason)
@@ -732,6 +738,70 @@ local function sample(player)
     end
 end
 
+-- "pilot fightkit: attack=words/mana/cd/range,...; heal=words/mana/cd,...; skills=words/cd,..."
+local function parseKit(text)
+    local function part(name)
+        return text:match(name .. '=([^;]*)') or ''
+    end
+    local k = { attack = {}, heal = {}, skills = {} }
+    for e in part('attack'):gmatch('[^,]+') do
+        local w, m, cd, r = e:match('^%s*(.-)/(%d+)/(%d+)/(%d+)$')
+        if w then table.insert(k.attack, { words = w, mana = tonumber(m), cd = tonumber(cd), range = tonumber(r) }) end
+    end
+    for e in part('heal'):gmatch('[^,]+') do
+        local w, m, cd = e:match('^%s*(.-)/(%d+)/(%d+)$')
+        if w then table.insert(k.heal, { words = w, mana = tonumber(m), cd = tonumber(cd) }) end
+    end
+    for e in part('skills'):gmatch('[^,]+') do
+        local w, cd = e:match('^%s*(.-)/(%d+)$')
+        if w then table.insert(k.skills, { words = w, mana = 0, cd = tonumber(cd), range = 1 }) end
+    end
+    return k
+end
+
+local function cast(e, kind)
+    g_game.talk(e.words)
+    ready[e.words] = now() + e.cd + 0.2
+    for _, s in ipairs({ st, total }) do
+        s.casts, s.mana = s.casts + 1, s.mana + (e.mana or 0)
+    end
+    log(kind .. ': ' .. e.words)
+end
+
+-- fight like a player: heal when hurt, drink mana when low, and weave attack spells and weapon skills into the fight
+local function useKit(player)
+    if plan.noSpells or not kit then return end
+    local hp = player:getHealth() / math.max(1, player:getMaxHealth())
+    local mana, maxMana = player:getMana(), math.max(1, player:getMaxMana())
+    local t = now()
+    if hp < 0.6 and t - lastHealCast >= 1.1 then
+        for _, e in ipairs(kit.heal) do
+            if mana >= e.mana and t >= (ready[e.words] or 0) then
+                lastHealCast = t
+                return cast(e, 'heal spell')
+            end
+        end
+    end
+    if mana / maxMana < 0.3 and not plan.noPotions and t - lastManaPotion > 2 and t - lastPotion > 1 then
+        lastManaPotion = t
+        pcall(function() g_game.useInventoryItemWith(MANA_POTION, player) end)
+        st.manaPots, total.manaPots = st.manaPots + 1, total.manaPots + 1
+        log('mana ' .. math.floor(100 * mana / maxMana) .. '%: drinking a mana potion')
+    end
+    if not g_game.isAttacking() or t - lastAttackCast < 2.1 then return end
+    local target = g_game.getAttackingCreature()
+    if not target or target:getHealthPercent() <= 0 then return end
+    local d = dist(player:getPosition(), target:getPosition())
+    for _, list in ipairs({ kit.skills, kit.attack }) do
+        for _, e in ipairs(list) do
+            if t >= (ready[e.words] or 0) and mana >= e.mana and d <= math.max(1, e.range) then
+                lastAttackCast = t
+                return cast(e, 'cast')
+            end
+        end
+    end
+end
+
 local function tick()
     tickEvent = scheduleEvent(tick, TICK)
     local player = g_game.getLocalPlayer()
@@ -739,6 +809,11 @@ local function tick()
     -- a character's first login opens the outfit window; it would cover every screenshot
     if modules.game_outfit and modules.game_outfit.destroy then pcall(modules.game_outfit.destroy) end
     sample(player)
+    if not plan.noSpells and not kit and now() - kitAsked > 10 then
+        kitAsked = now()
+        g_game.talk('/pilot fightkit')
+    end
+    useKit(player)
     local h = handlers[step['do']]
     if not h then
         log('unknown step "' .. tostring(step['do']) .. '"')
@@ -761,6 +836,13 @@ end
 local function onText(mode, text)
     if not st then return end
     if plan.live then remember(text) end
+    if text:find('^pilot fightkit:') then
+        kit = parseKit(text)
+        log(string.format('fight kit: %d attack spells, %d heals, %d weapon skills (%s)', #kit.attack, #kit.heal, #kit.skills, text))
+        return
+    elseif text:find('^pilot: level') then
+        kit, kitAsked = nil, 0 -- a new level may unlock spells: ask again
+    end
     if text:find('^Loot of') then
         st.kills, total.kills = st.kills + 1, total.kills + 1
         log('loot: ' .. text)

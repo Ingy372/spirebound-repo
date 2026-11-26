@@ -112,10 +112,10 @@ function SpireCrowd.update(g, now, count, near)
 	local rec = SpireCrowd.grounds[g.id] or { state = "quiet" }
 	SpireCrowd.grounds[g.id] = rec
 	local state = SpireCrowd.step(rec, count or SpireCrowd.countPlayers(g), g.guarded, now)
+	-- the Rapid Respawn weekend only brings switched-on crowd groups back twice as fast; which spots are on still comes
+	-- from the real head count (H10, FLOOR1_HUNTING_PLAN.md Part 7.3: it used to force every ground to "packed", which
+	-- filled a ground for a player who was alone)
 	local rapid = SpireCrowd.rapidRespawn()
-	if rapid and state ~= "rush" then
-		state = "packed" -- R20: the Rapid Respawn weekend fills every ground
-	end
 	local isNear = near or SpireCrowd.playerNear
 	local spawned = 0
 	for _, s in ipairs(g.spots) do

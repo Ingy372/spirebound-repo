@@ -79,6 +79,30 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: gear reset")
+	elseif cmd == "fightkit" then -- what this character can really cast now, for the autopilot to fight like a player
+		-- "pilot fightkit: attack=words/mana/cd/range,...; heal=words/mana/cd,...; skills=words/cd,..."
+		-- (Jay, 2026-11-25: the autopilot only swung its weapon, so kill speed and mana use were never measured)
+		local base, lvl = player:getVocation():getBaseId(), player:getLevel()
+		local atk, heal, skills = {}, {}, {}
+		for _, row in ipairs(SpireSpells.list) do
+			if not row.lostArt and not row.style and not row.path and not row.final and SpireSpells.allowed(row, base)
+					and SpireSpells.levelFor(row, base) <= lvl and (row.mana or 0) <= player:getMaxMana() then
+				if row.kind == "attack_target" or row.kind == "attack_area" or row.kind == "strike" then
+					table.insert(atk, string.format("%s/%d/%d/%d", row.words, row.mana or 0, row.cd or 2,
+						row.kind == "attack_target" and (row.range or 4) or 1))
+				elseif row.kind == "heal_self" or row.kind == "heal" or row.kind == "heal_burst" then
+					table.insert(heal, string.format("%s/%d/%d", row.words, row.mana or 0, row.cd or 1))
+				end
+			end
+		end
+		local fam = SwordSkills.heldFamily(player)
+		for _, s in ipairs(SwordSkills.list) do
+			if fam and s.family == fam then
+				table.insert(skills, string.format("%s/%d", s.words, math.floor((s.cd or 4000) / 1000)))
+			end
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot fightkit: attack=" .. table.concat(atk, ",") .. "; heal="
+			.. table.concat(heal, ",") .. "; skills=" .. table.concat(skills, ","))
 	elseif cmd == "heal" then
 		player:addHealth(player:getMaxHealth())
 		player:addMana(player:getMaxMana())
