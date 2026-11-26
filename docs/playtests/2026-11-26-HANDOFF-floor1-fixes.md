@@ -103,6 +103,24 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
 - **Check:** a Normal test character at level 30 dies to a monster -> level and experience unchanged after respawn,
   and the message is still shown. In-game test plus one real death in the client.
 
+### 5c. At levels 22-49 a death loses the whole backpack and some gear (the free blessings stop at 21)
+(added 17:20)
+- **Seen:** all three characters had all five blessings at level 21 (database `blessings1-5 = 1`). Their first death
+  (level 23-25) used them up; at the second death they had only `blessings1`, and each lost its whole backpack
+  (every potion, the gold coins in it, the loot) and roughly one piece of equipment in ten: the tank lost his
+  longsword and backpack (respawned with a plain "bag"), the Arcanist her studded armour, the healer all her health
+  potions. Meanwhile our message says "climbers below level 50 on the Normal rules are spared".
+- **Why it matters:** a level-22+ party that wipes once loses its pocket gold, potions and some gear with no warning,
+  right at the hardest part of Floor 1 (Bandit Road, Gate Hound, Axe-Lord). Players will feel cheated by the
+  "spared" line.
+- **Fix (Claude's call, Jay can veto):** match the promise: Normal climbers below 50 keep their items too (give them
+  full blessings at login and after each death while level < 50 and Normal, or skip the drop in the death hook), and
+  keep `Difficulty.ITEM_DROP_BASE` for 50+. If Jay prefers real item risk before 50, then the death message and the
+  Registrar's "normal" pitch must say so, and the priest should be pointed out at level 20 ("blessings keep your
+  backpack").
+- **Check:** a Normal test character at level 30 with no blessings dies -> keeps backpack and gear (or, if the rule
+  is kept, is told clearly before and after).
+
 ---
 
 ## P2: new-player traps and economy
