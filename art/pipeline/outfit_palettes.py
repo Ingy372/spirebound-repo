@@ -242,6 +242,22 @@ OUTFITS["hexer"] = {**OUTFITS["bandit"], "hair": ramp((60, 60, 64), (226, 224, 2
     "hilt": ramp((30, 18, 8), (140, 100, 60), (70, 46, 24)), "iron": ramp((150, 140, 118), (255, 252, 240)),
     "scarf": [[90, 230, 70]] * 8, "pouch": ramp((20, 40, 14), (140, 180, 90), (70, 100, 40))}
 
+# Hearthgate Watch (town guards and their captain, 2026-11-25): ember red, iron, a gold hearth badge
+EMBER_RED = ((50, 10, 8), (230, 110, 80), (160, 40, 30))
+IRON_W = ((24, 26, 32), (210, 214, 222), (104, 108, 120))
+OUTFITS["watchguard"] = {
+    **base(hair=((16, 10, 8), (100, 70, 46)), arms=EMBER_RED, legs=((36, 24, 14), (150, 110, 70), (84, 58, 34)),
+           boots=((18, 10, 6), (120, 80, 48), (60, 38, 20)), torso=EMBER_RED, cuff=LEATHER, belt=LEATHER, buckle=IRON_W),
+    "helm": ramp(*IRON_W), "brim": ramp(*IRON_W), "gambeson": ramp(*EMBER_RED), "quilt": [[90, 20, 16]] * 8,
+    "hem": ramp(*GOLD), "badge": ramp(*GOLD), "spear": ramp((40, 24, 10), (176, 124, 76), (100, 64, 34)),
+    "tip": ramp(*IRON_W), "whistle": ramp((150, 140, 118), (255, 252, 240)),
+}
+
+OUTFITS["dorrow"] = {**OUTFITS["watchguard"], "hair": ramp((50, 50, 54), (220, 218, 214), (130, 128, 126)),
+    "strand": [[96, 94, 92]] * 8, "brow": [[110, 108, 106]] * 8,
+    "cape": ramp((40, 6, 6), (200, 80, 60), (120, 24, 20)), "epaulette": ramp(*GOLD),
+    "scabbard": ramp((20, 12, 8), (120, 84, 56), (60, 38, 24))}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())
