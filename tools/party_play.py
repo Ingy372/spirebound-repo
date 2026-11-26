@@ -41,8 +41,11 @@ GROUNDS = [
     ("reed_marsh", "Reedmarsh", 14, 19),
     ("thornsnap_hollow", "Thornsnap Hollow", 14, 20),
     ("shard_fields", "Shard Fields", 17, 24),
+    ("bramble_run", "The Bramble Run", 14, 20),
     ("bandit_road", "The Bandit Road", 19, 27),
+    ("smugglers_ridge", "Smugglers' Ridge", 19, 26),
     ("old_quarry", "The Old Quarry", 23, 30),
+    ("fallen_bastion", "The Fallen Bastion", 23, 30),
 ]
 HUNT = 75                    # seconds at each loop point
 COINS = {"item 3031": 1, "gold coin": 1, "item 3035": 100, "platinum coin": 100, "item 3043": 10000, "crystal coin": 10000}
@@ -150,18 +153,63 @@ def stairs_for(gid, near):
     return min(pts, key=lambda p: abs(p[0] - near[0]) + abs(p[1] - near[1])) if pts else None
 
 
+_SPAWNS = None
+
+
+def spawns():
+    global _SPAWNS
+    if _SPAWNS is None:
+        t = (ROOT / "server/data-spirebound/world/spirebound-monster.xml").read_text(encoding="utf-8")
+        _SPAWNS = [(int(x), int(y), int(z), len(re.findall(r"<monster name=", body)))
+                   for x, y, z, body in re.findall(r'<monster centerx="(\d+)" centery="(\d+)" centerz="(\d+)"[^>]*>(.*?)</monster>', t, re.S)]
+    return _SPAWNS
+
+
+def ground_box(gid):
+    """The ground's walled box (maps/floor1_plan.py CAMPS, plan coordinates + 1000)."""
+    from floor1_plan import CAMPS
+    c = next(c for c in CAMPS if c["id"] == gid)
+    return 1000 + c["x"], 1000 + c["x"] + c["w"], 1000 + c["y"], 1000 + c["y"] + c["h"]
+
+
+def hunt_spots(gid, z, start, n):
+    """Up to n spots where the ground's monsters really spawn on floor z, reachable from start, the busiest first,
+    at least 9 tiles apart, then ordered as a walk from start."""
+    x0, x1, y0, y1 = ground_box(gid)
+    mine = lambda sp: x0 <= sp[0] <= x1 and y0 <= sp[1] <= y1
+    cand = sorted((sp for sp in spawns() if sp[2] == z and mine(sp)), key=lambda sp: -sp[3])
+    picked = []
+    for x, y, zz, k in cand:
+        if all(max(abs(x - a), abs(y - b)) >= 9 for a, b, _ in picked):
+            near = next(((x + dx, y + dy, z) for r in range(0, 4) for dx in range(-r, r + 1) for dy in range(-r, r + 1)
+                         if planner().ok((x + dx, y + dy, z))), None)
+            if near and planner().path(tuple(start), near, lim=200) is not None:
+                picked.append(near)
+        if len(picked) >= n:
+            break
+    out, here = [], tuple(start)
+    while picked:
+        nxt = min(picked, key=lambda p: abs(p[0] - here[0]) + abs(p[1] - here[1]))
+        picked.remove(nxt)
+        out.append(nxt)
+        here = nxt
+    return out
+
+
 def lap_plan(gid):
-    """The ground's loop: [(kind, point)], kind = walk (surface hunt spot), down/up (cave stairs), cave (cave spot)."""
+    """The ground's lap: [(kind, point)]: the gate, the busiest surface spawns, then down the cave stairs nearest the
+    cave's spawns, its busiest spots, and back up."""
     w = wp()
-    loops = sorted((k, v) for k, v in w.items() if k.startswith(f"loop_{gid}_"))
-    surface = [v for k, v in loops if v[2] == 7]
-    cave = [v for k, v in loops if v[2] == 8]
-    plan = [("walk", w[f"gate_{gid}"])] + [("hunt", p) for p in surface]
-    for c in cave:
-        st = stairs_for(gid, c)
-        if st:
-            plan += [("down", st), ("hunt", c), ("up", st)]
-    plan.append(("walk", w[f"gate_{gid}"]))
+    gate = w.get(f"gate_{gid}") or w[f"camp_{gid}"]
+    plan = [("walk", gate)] + [("hunt", p) for p in hunt_spots(gid, 7, gate, 4)]
+    cave = [v for k, v in w.items() if (k.startswith(f"stairs_{gid}_") or k == f"stairs_den_{gid}") and v[2] == 8]
+    if cave:
+        here = plan[-1][1]
+        st = min(cave, key=lambda p: abs(p[0] - here[0]) + abs(p[1] - here[1]))
+        spots = hunt_spots(gid, 8, (st[0], st[1] + 1, 8), 3)
+        if spots:
+            plan += [("down", st)] + [("hunt", p) for p in spots] + [("up", st)]
+    plan.append(("walk", gate))
     return plan
 
 
@@ -241,9 +289,13 @@ def needs_town():
     return None
 
 
+JUNK = [3577]                # meat: autoloot picks it up, no Hearthgate NPC buys it, 13 oz each
+
+
 def town():
     """Sell loot, buy potions and food, the way a player does."""
     pl = GT.places(wp())
+    everyone(lambda t, st: [{"do": "drop", "ids": JUNK}, {"do": "wait", "seconds": 1}], "drop junk")
     funds = {}
     def bank(t, st):
         here = (st["x"], st["y"], st["z"])
@@ -319,6 +371,11 @@ def pick_ground(force=None):
 
 
 def run(argv):
+    global TAGS, LAPS
+    tags = CP.opt(argv, "--tags")                 # a split party: e.g. --tags heal,dps (each group its own process)
+    if tags:
+        TAGS = tags.split(",")
+        LAPS = LAPS.with_name(f"party_laps_{'_'.join(TAGS)}.jsonl")
     minutes = float(CP.opt(argv, "--minutes", 120))
     force = CP.opt(argv, "--ground")
     plan = [g for g in (CP.opt(argv, "--plan", "") or "").split(",") if g]   # e.g. boar_meadow,wasp_fields: these laps first

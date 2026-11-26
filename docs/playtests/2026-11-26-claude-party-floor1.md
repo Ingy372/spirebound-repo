@@ -88,6 +88,12 @@ Axe-Lord kill can't spoil the real race.
   shared-loot party setting, or check whether one exists and teach it.
 
 ### Party play
+- **The Stair Key can't be earned in a party (blocks the floor's main path).** The Axe-Lord's hall needs each
+  character's own Stair Key, and one of its three pieces is Hunter Brannoch's "Iron for the Stair" (25 Burrow Moles,
+  then 30 bandits), credited per kill. Hunting as a party, the tank lands the kills: after a lap of 79 moles the
+  tank's count was done, the healer's 8/25 and the damage dealer's 0/25. A real party that hunts together will
+  find two of its members locked out of the floor boss. (The test party split up to finish it, as real players
+  would once they work it out.) Same fix as below, and it matters more here than anywhere.
 - **Quest kills don't count for the party.** `SpireQuestKill` (scripts/spirebound/quests.lua) credits only the
   character the engine gives the kill to (most damage / last hit). After hunting together, Dorrow's wasp quest stood
   at 12/12 for the tank, 4/12 for the healer and 0/12 for the damage dealer. Floor 1 tells players to group up, but a
@@ -115,6 +121,23 @@ Axe-Lord kill can't spoil the real race.
 - **Wolf Copse, party at level 13:** 8.6-minute lap, 47-51k experience per hour each, one mana potion, no deaths.
   Nearly twice Boar Meadow. A party of three is never in danger on the solo grounds; Jay's "challenge, not calm"
   note (2026-11-25) can only be judged on the group grounds (Bandit Road, Old Quarry, the Watchtower) and solo.
+  A later lap gave one kill worth 7,425 experience each (an elite, Grey Alpha by the `!hunt` tip), plus a rough
+  Hearth Shard drop.
+- **Burrow Hills, party at level 16-19, through its east end and caves:** 17-minute lap, **138-143k experience per
+  hour each**, 79 moles and one boar, a handful of potions, no deaths. That is almost three times Wolf Copse for the
+  same party, on a ground banded 11-16, with no elite. **Likely over-rewarding** (maybe today's faster respawns,
+  commit 558b8779, on a ground built as a swarm). Re-measure solo before changing. (A first lap that only walked the
+  quiet west side near the gate gave 5k per hour: the gate area is quiet by design, so a player who doesn't explore
+  east will think the ground is empty. A sign at the gate pointing east would help.)
+- **Levelling speed:** the party went from level 3 to 19-20 in about 2 hours 45 minutes of play, including town
+  trips and quest walks. The balance target is about 12 hours to level 35 solo; a party with shared experience runs
+  far ahead of it.
+
+### Weight and junk
+- **Autoloot fills your capacity with meat.** Moles, boars and wolves drop meat (13 oz each), autoloot takes it, and
+  no Hearthgate NPC buys it. By level 15 the tank carried 25 meat, couldn't buy potions ("Bought 0x"), and then
+  couldn't loot ("The loot you are trying to pick up is too heavy for you to carry"). Either let an NPC buy meat
+  (the innkeeper, for the stew pot), or keep food out of autoloot.
 
 ### Quests and the Stair Key
 

@@ -731,6 +731,26 @@ function handlers.assist(player)
     end
 end
 
+-- (party playtests) drop junk on the floor under you, as a player does: { "do": "drop", "ids": [3577] }
+function handlers.drop(player)
+    if not stepData.t then
+        stepData.t = now()
+        local pos = player:getPosition()
+        for _, c in pairs(g_game.getContainers()) do
+            for _, it in ipairs(c:getItems()) do
+                for _, id in ipairs(step.ids or {}) do
+                    if it:getId() == id then
+                        g_game.move(it, pos, math.max(1, it:getCount()))
+                        log('dropped item ' .. id .. ' x' .. it:getCount())
+                    end
+                end
+            end
+        end
+        return
+    end
+    if now() - stepData.t > 1.5 then nextStep() end
+end
+
 -- (party playtests) buy and sell at an NPC's trade window, as a player does:
 -- { "do": "trade", "buy": [["health potion", 50]], "sell": ["rat tail"] }   "sell": ["*"] sells all loot the NPC buys
 -- (never potions, food, ammunition or what you wear); walk next to the NPC first
