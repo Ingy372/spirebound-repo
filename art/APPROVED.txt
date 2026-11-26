@@ -37,3 +37,10 @@ arcanist_a2
 mystic_a1
 mystic_a2
 warden
+guildwarden
+quartermaster
+brannoch
+bandit
+captain
+archer
+sentinel

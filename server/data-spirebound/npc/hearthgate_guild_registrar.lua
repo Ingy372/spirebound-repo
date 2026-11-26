@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-npcConfig.outfit = { lookType = 138, lookHead = 79, lookBody = 86, lookLegs = 95, lookFeet = 114, lookAddons = 1 }
+npcConfig.outfit = { lookType = 2020, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 
 local FOUND_COST, FOUND_LEVEL = 20000, 30

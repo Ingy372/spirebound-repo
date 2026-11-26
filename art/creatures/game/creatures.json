@@ -670,6 +670,279 @@
    ],
    "addons": 0,
    "size": 37
+  },
+  {
+   "name": "guildwarden",
+   "file": "guildwarden.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2020,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     19,
+     22,
+     45,
+     41
+    ],
+    [
+     26,
+     22,
+     35,
+     42
+    ],
+    [
+     27,
+     29,
+     37,
+     35
+    ],
+    [
+     19,
+     30,
+     41,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 45
+  },
+  {
+   "name": "quartermaster",
+   "file": "quartermaster.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2021,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     30,
+     36,
+     32
+    ],
+    [
+     22,
+     29,
+     39,
+     35
+    ],
+    [
+     26,
+     25,
+     36,
+     39
+    ],
+    [
+     27,
+     29,
+     32,
+     35
+    ]
+   ],
+   "addons": 0,
+   "size": 39
+  },
+  {
+   "name": "brannoch",
+   "file": "brannoch.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2022,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     24,
+     26,
+     38,
+     36
+    ],
+    [
+     23,
+     26,
+     38,
+     38
+    ],
+    [
+     26,
+     26,
+     36,
+     38
+    ],
+    [
+     23,
+     29,
+     36,
+     35
+    ]
+   ],
+   "addons": 0,
+   "size": 38
+  },
+  {
+   "name": "bandit",
+   "file": "bandit.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2201,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     30,
+     36,
+     32
+    ],
+    [
+     25,
+     29,
+     36,
+     35
+    ],
+    [
+     26,
+     28,
+     36,
+     36
+    ],
+    [
+     27,
+     29,
+     32,
+     35
+    ]
+   ],
+   "addons": 0,
+   "size": 36
+  },
+  {
+   "name": "captain",
+   "file": "captain.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2202,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     24,
+     25,
+     38,
+     37
+    ],
+    [
+     21,
+     27,
+     40,
+     37
+    ],
+    [
+     15,
+     24,
+     47,
+     40
+    ],
+    [
+     22,
+     18,
+     37,
+     46
+    ]
+   ],
+   "addons": 0,
+   "size": 47
+  },
+  {
+   "name": "archer",
+   "file": "archer.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2203,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     25,
+     30,
+     37,
+     31
+    ],
+    [
+     28,
+     28,
+     33,
+     36
+    ],
+    [
+     28,
+     31,
+     34,
+     33
+    ],
+    [
+     27,
+     31,
+     31,
+     33
+    ]
+   ],
+   "addons": 0,
+   "size": 37
+  },
+  {
+   "name": "sentinel",
+   "file": "sentinel.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2204,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     25,
+     22,
+     37,
+     40
+    ],
+    [
+     25,
+     28,
+     36,
+     36
+    ],
+    [
+     12,
+     28,
+     50,
+     36
+    ],
+    [
+     19,
+     15,
+     40,
+     49
+    ]
+   ],
+   "addons": 0,
+   "size": 50
   }
  ]
 }

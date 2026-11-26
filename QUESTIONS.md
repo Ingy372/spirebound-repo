@@ -8,6 +8,11 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q64. The guild official's new look has a beard; the NPC is "Guildwarden Sela" (2026-11-25, art)
+You approved the redrawn Guild Warden (navy robe, banner staff, short beard). In the game that job belongs to Guildwarden Sela, who wore a woman's outfit until now.
+- **Recommendation (assumed):** Sela wears the approved look now, so no borrowed Tibia look is left on her. If you'd rather keep Sela as a woman, say so and I'll make a beardless version (one short art job); or rename the NPC to fit the art.
+- Jay's answer:
+
 ### Q63. Class outfits: only your own class, and for women too? (2026-11-25, art)
 Your four approved class outfits are going into the game (task 6.5). My calls:
 - each class can wear only its own outfit (Vanguards the Vanguard outfit...), given when you pick the class and put on once; you can still change back to the other outfits. A glance then tells the classes apart in PvP;

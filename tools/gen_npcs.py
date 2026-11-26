@@ -35,7 +35,7 @@ NPCS = {
               ("backpack", 2854, 20, None), ("fishing rod", 3483, 150, 40), ("worm", 3492, 1, None),
               ("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None)]),
     "hearthgate_quartermaster": dict(
-        name="Quartermaster Bryn", desc="the quartermaster", look=(131, 95, 95, 95, 95, 0),
+        name="Quartermaster Bryn", desc="the quartermaster", look=(2021, 0, 0, 0, 0, 0),
         greet="Supplies, |PLAYERNAME|? Potions and ammunition. Nobody conjures arrows in this tower. Ask for a {trade}.",
         voices=["Potions and arrows! Don't climb without them!"],
         shop=[("health potion", 266, 50, None), ("mana potion", 268, 56, None),

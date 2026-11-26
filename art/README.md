@@ -78,7 +78,8 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
 **new look number** of its own (`NEW_LOOKS`). Rules:
 
 - **Numbers start at 2001** (the client's highest outfit is 1875) and only ever grow. 2001-2009 class outfits,
-  2010-2099 NPCs, 2100+ shop outfits and later people. Never renumber one in use: saved characters keep their number.
+  2010-2099 NPCs, 2100-2199 shop outfits, 2200-2499 monsters built on the humanoid body (they wore borrowed
+  looks 129/131 that NPCs share too, so they cannot reskin them like the animals). Never renumber one in use: saved characters keep their number.
 - **Ours go last, in rising order.** OTClient sizes its outfit table from the LAST outfit in the appearances file; a
   lower number after a higher one is written past the end of the table (a crash). `install_effects.py check` tests this.
 - **People keep Tibia's 8 px shift.** Our figures are drawn 8 px low-right on the canvas (`CANVAS_OFFSET`), exactly

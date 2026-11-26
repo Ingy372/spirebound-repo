@@ -122,3 +122,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: seven Floor 1 people redrawn on the outfit body
 - Guild Warden, Quartermaster, Hunter Brannoch, Road Bandit, Bandit Captain, Ruin Archer and Ruin Sentinel are rebuilt on `art/models/humanoid.py` (their old drafts used copied bodies); all ALL PASS and sent to Jay as one overview. New rules O18-O22 in `art/OUTFIT_RULES.md` (colour neighbours, where props go, monsters never look like a player class, hidden eyes, canvas edges). Not in the game until approved.
 
+### 2026-11-25 night: the seven Floor 1 redraws approved and in the install
+- Jay: "huge improvement on everything. approved". New looks: Guild Warden 2020 (Guildwarden Sela, see Q64), Quartermaster 2021 (Quartermaster Bryn), Brannoch 2022 (Hunter Brannoch), look fields only; monsters on the humanoid body get 2201-2204 (Road Bandit, Bandit Captain, Ruin Archer, Ruin Sentinel). The monster files belong to the Step 2 session, which was asked to switch their look fields. Checked on a copy of the client files; boot test in my own copy: 263 in-game tests, 0 errors.
+

@@ -36,10 +36,13 @@ CREATURES = {"rat": [56], "boar": [119], "mole": [26], "toad": [222], "wasp": [4
 # Rules (art/README.md "Own look numbers"): numbers start at 2001, above the client's highest outfit (1875), and only
 # ever grow; the NPC and outfit files use these numbers (tools/gen_npcs.py, server/data-spirebound/npc/*.lua,
 # lib/spirebound/class_outfits.lua). Never renumber one that is in use: saved characters keep their look number.
-#   2001-2009 player class outfits, 2010-2099 NPCs, 2100+ shop outfits and later people.
+#   2001-2009 player class outfits, 2010-2099 NPCs, 2100-2199 shop outfits, 2200-2499 monsters on the humanoid body.
 NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "vesper": 2010, "priest": 2011, "registrar": 2012, "banker": 2013, "merchant": 2014, "bess": 2015,
-             "corwin": 2016, "pell": 2017, "veyra": 2018, "warden": 2019}
+             "corwin": 2016, "pell": 2017, "veyra": 2018, "warden": 2019,
+             "guildwarden": 2020, "quartermaster": 2021, "brannoch": 2022,
+             # monsters on the humanoid body (2201+): they shared borrowed look 129/131 with NPCs, so no reskin
+             "bandit": 2201, "captain": 2202, "archer": 2203, "sentinel": 2204}
 
 
 def cip_sheet(img: Image.Image) -> bytes:

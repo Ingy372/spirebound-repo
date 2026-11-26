@@ -27,6 +27,8 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
   (`art/output/floor1_people_preview.png`): Guild Warden (banner staff), Quartermaster (crate of arrows on his back),
   Brannoch (wolf-pelt cap, bow on his back), Road Bandit (round hood, red scarf), Bandit Captain (three-cornered hat,
   sabre), Ruin Archer (skeleton with a bow), Ruin Sentinel (stone guard with a spear). All pass the checker.
+  All seven approved 2026-11-25 ("huge improvement on everything. approved"): looks 2020-2022 (NPCs) and 2201-2204
+  (monsters).
 - **2026-11-25: outfit addons.** Outfits can now have Tibia's addon 1 and addon 2 (overlays, rules A1-A7 in
   `art/OUTFIT_RULES.md`). First pair for Jay's OK: the Vanguard's Crested Helm (addon 1) and Knight's Mantle (addon 2).
   Next: two addons each for the Ranger, Arcanist and Mystic, then quests that give them (roadmap 6.5c).
