@@ -31,9 +31,70 @@
    "note": "boar charge"
   },
   {
-   "do": "watch",
-   "seconds": 40,
-   "note": "boar charge"
+   "do": "walk",
+   "to": [
+    1165,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1153,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1165,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1153,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1165,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1153,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "boar charge: keep walking away"
   },
   {
    "do": "shot",
@@ -151,33 +212,28 @@
   },
   {
    "do": "jump",
+   "to": "crowd_wolf_copse_c_2",
+   "note": "wolf pack: from the near part"
+  },
+  {
+   "do": "walk",
    "to": [
-    1049,
+    1050,
     1286,
     6
    ],
-   "note": "wolf pack: watch the Grey Alpha's pack from 8 tiles"
+   "fight": false,
+   "timeout": 30,
+   "note": "wolf pack: walk toward the nest"
   },
   {
    "do": "watch",
-   "seconds": 30,
-   "note": "wolf pack"
+   "seconds": 24,
+   "note": "wolf pack: do they come together?"
   },
   {
    "do": "shot",
    "name": "s5_pack"
-  },
-  {
-   "do": "walk",
-   "to": "crowd_wolf_copse_c_3",
-   "fight": true,
-   "timeout": 40,
-   "note": "wolf pack: pull one"
-  },
-  {
-   "do": "watch",
-   "seconds": 12,
-   "note": "wolf pack: do the others join?"
   },
   {
    "do": "hunt",

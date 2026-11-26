@@ -120,9 +120,14 @@ local function finish(reason)
     log(summary(total, 'WHOLE RUN'))
     log('DONE ' .. reason)
     if tickEvent then removeEvent(tickEvent) tickEvent = nil end
-    if g_game.isOnline() then g_game.safeLogout() end
+    -- a character still in a fight stays in the game after its client closes (and spoils the next test run), so test
+    -- characters first jump home to Hearthgate (a safe zone) and log out from there
+    local name = g_game.isOnline() and g_game.getCharacterName() or ''
+    local home = plan.home ~= false and (name:find('^Pilot ') or name:find('^Spell '))
+    if home then g_game.talk('/pilot jump 1225, 1279, 7') end
+    scheduleEvent(function() if g_game.isOnline() then g_game.safeLogout() end end, home and 1500 or 0)
     if plan.exit ~= false then
-        scheduleEvent(function() g_app.exit() end, 3000)
+        scheduleEvent(function() g_app.exit() end, home and 4500 or 3000)
     end
 end
 
@@ -902,13 +907,21 @@ local function onStatesChange(player, states, oldStates)
     lastStates = states
 end
 
+-- P6: an invisible monster leaves the map for players who can't see it: one close by that vanishes alive burrowed
+local function onDisappear(creature)
+    if not st or not creature:isMonster() or creature:getHealthPercent() <= 0 then return end
+    local p = g_game.getLocalPlayer()
+    local a, b = p and p:getPosition(), creature:getPosition()
+    if a and b and a.z == b.z and math.max(math.abs(a.x - b.x), math.abs(a.y - b.y)) <= 3 then
+        log('trick: ' .. creature:getName() .. ' vanished beside you (' .. creature:getHealthPercent() .. '% health)')
+    end
+end
+
 -- P6: a monster that goes invisible (the mole burrows) gets an empty outfit
 local function onOutfitChange(creature, outfit, oldOutfit)
     if not st or not creature:isMonster() then return end
     if outfit and outfit.type == 0 and (not outfit.auxType or outfit.auxType == 0) and oldOutfit and oldOutfit.type ~= 0 then
         log('trick: ' .. creature:getName() .. ' vanished (invisible)')
-    elseif oldOutfit and oldOutfit.type == 0 and outfit and outfit.type ~= 0 then
-        log('trick: ' .. creature:getName() .. ' reappeared')
     end
 end
 
@@ -1000,7 +1013,7 @@ function Autopilot.init()
     log('autopilot run "' .. (plan.name or '?') .. '": ' .. #plan.steps .. ' steps; log folder ' .. g_resources.getWriteDir())
     connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
     connect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
-    connect(Creature, { onOutfitChange = onOutfitChange })
+    connect(Creature, { onOutfitChange = onOutfitChange, onDisappear = onDisappear })
     scheduleEvent(function() login(0) end, 2000)
 end
 
@@ -1008,6 +1021,6 @@ function Autopilot.terminate()
     if not plan then return end
     disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
     disconnect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
-    disconnect(Creature, { onOutfitChange = onOutfitChange })
+    disconnect(Creature, { onOutfitChange = onOutfitChange, onDisappear = onDisappear })
     if tickEvent then removeEvent(tickEvent) end
 end
