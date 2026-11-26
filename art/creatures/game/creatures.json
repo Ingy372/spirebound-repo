@@ -152,8 +152,13 @@
   {
    "name": "ranger",
    "file": "ranger.bmp.lzma",
-   "count": 36,
+   "count": 108,
    "looks": [],
+   "files": [
+    "ranger.bmp.lzma",
+    "ranger_2.bmp.lzma",
+    "ranger_3.bmp.lzma"
+   ],
    "new_look": 2002,
    "shift": [
     8,
@@ -185,14 +190,19 @@
      35
     ]
    ],
-   "addons": 0,
+   "addons": 2,
    "size": 41
   },
   {
    "name": "arcanist",
    "file": "arcanist.bmp.lzma",
-   "count": 36,
+   "count": 108,
    "looks": [],
+   "files": [
+    "arcanist.bmp.lzma",
+    "arcanist_2.bmp.lzma",
+    "arcanist_3.bmp.lzma"
+   ],
    "new_look": 2003,
    "shift": [
     8,
@@ -224,14 +234,19 @@
      35
     ]
    ],
-   "addons": 0,
+   "addons": 2,
    "size": 38
   },
   {
    "name": "mystic",
    "file": "mystic.bmp.lzma",
-   "count": 36,
+   "count": 108,
    "looks": [],
+   "files": [
+    "mystic.bmp.lzma",
+    "mystic_2.bmp.lzma",
+    "mystic_3.bmp.lzma"
+   ],
    "new_look": 2004,
    "shift": [
     8,
@@ -263,7 +278,7 @@
      49
     ]
    ],
-   "addons": 0,
+   "addons": 2,
    "size": 52
   },
   {

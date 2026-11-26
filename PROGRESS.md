@@ -112,3 +112,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - Jay spotted that the autopilot only swings its weapon: it now fights like a player (asks the server what it can cast, weaves attack spells and weapon skills, heals with spells, drinks mana potions) and the report shows spells, mana and experience per hour per place.
 - S4 built (party size 8, two new bandits for mixed packs, the autopilot forms parties, `tools/party_run.py`); party run still to do. H9 and H10 ticked (see ROADMAP_DONE.md). 6.5 ticked after the restart: the art session's NPC and outfit art seen in the client.
 - Restarts: 19:46, 19:58, 20:34, 20:57, 21:03 (with the website session's work), 21:36 (with the art session's work); backups each time. One restart at 20:34 had one character online I didn't identify first; I now check names before every restart. Boot test 263 pass.
+
+### 2026-11-25 night: all four class outfits have approved addons
+- Jay approved the Ranger, Arcanist and Mystic addons ("Looks great to me"): all four class outfits now carry addon 1 and addon 2 in their looks (2001-2004), installed at the next restart (checked on a copy of the client files; boot test 263 in-game tests, 0 errors). Players can't earn them yet: task 6.5c (addon quests).
+

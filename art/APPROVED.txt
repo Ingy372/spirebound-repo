@@ -30,3 +30,9 @@ wasp
 wolf
 vanguard_a1
 vanguard_a2
+ranger_a1
+ranger_a2
+arcanist_a1
+arcanist_a2
+mystic_a1
+mystic_a2
