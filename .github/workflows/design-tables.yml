@@ -14,4 +14,6 @@ jobs:
       - name: Floor 1 economy (fails if a vocation loses money)
         run: python3 tools/gen_economy.py
       - name: Fail if committed tables are stale
-        run: git diff --exit-code -- data/ BALANCE.md ECONOMY.md server/data-spirebound/lib/spirebound/tasks_floors.lua
+        # --ignore-cr-at-eol: the tables are generated on Windows (CRLF line endings) and here on Linux (LF); only
+        # a real change of content should fail (R18, 2026-11-26: every run failed on line endings alone since 09a6c7f)
+        run: git diff --ignore-cr-at-eol --exit-code -- data/ BALANCE.md ECONOMY.md server/data-spirebound/lib/spirebound/tasks_floors.lua
