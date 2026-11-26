@@ -1,0 +1,302 @@
+{
+ "name": "h0_notice",
+ "about": "H0: how far away monsters notice a player (12, 9 and 6 tiles from a group, open ground), and whether they let go when the player changes level.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 30"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1350,
+    1209,
+    7
+   ],
+   "note": "notice: 12 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 12 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1347,
+    1209,
+    7
+   ],
+   "note": "notice: 9 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 9 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1344,
+    1209,
+    7
+   ],
+   "note": "notice: 6 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 6 tiles from crowd_bandit_road_a_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1253,
+    1156,
+    7
+   ],
+   "note": "notice: 12 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 12 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1256,
+    1156,
+    7
+   ],
+   "note": "notice: 9 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 9 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1259,
+    1156,
+    7
+   ],
+   "note": "notice: 6 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 6 tiles from crowd_old_quarry_b_2"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1059,
+    1264,
+    8
+   ],
+   "note": "notice: 12 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 12 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1056,
+    1264,
+    8
+   ],
+   "note": "notice: 9 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 9 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1053,
+    1264,
+    8
+   ],
+   "note": "notice: 6 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "notice: 6 tiles from crowd_wolf_copse_d_1"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal",
+   "note": "level change"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1353,
+    1207,
+    8
+   ],
+   "note": "level change: in the cellar, get noticed"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "level change: cellar"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_bandit_road",
+   "note": "level change: up the stairs"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "level change: on the surface, do they follow?"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_bandit_road",
+   "note": "level change: back down"
+  },
+  {
+   "do": "watch",
+   "seconds": 8,
+   "note": "level change: back in the cellar"
+  }
+ ]
+}

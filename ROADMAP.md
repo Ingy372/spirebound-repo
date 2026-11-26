@@ -22,7 +22,7 @@ Every real tester has hit a blocker in the first 30 minutes. Fix what is left, o
 ## Step 2 — Finish Floor 1's last third (levels 19 to 35)
 The end of the floor, right before the boss, is its weakest part: two grounds still swarm at the gate and the group hunting isn't built.
 - [ ] **S1c Model the Old Watchtower** (cut from S1b, 2026-11-26): the large-group ground's reward per person for a party of 4-8 in `tools/gen_economy.py`, checked against the 1.75x target in `balance.py --check`. Also: a Ranger at level 23 on Bandit Road nearly died in the measuring run (5% health, 81 potions in 3 minutes) while the other classes stayed above 30%; look at whether the Ranger is too fragile there.
-- [~] **H0 Measure how monsters notice players** in the client (range, walls, changing level, wandering). *(2026-11-14: weekend bonus checked; the engine's view range is 11 tiles each way; the in-client measurement is still open.)*
+- [ ] **H0b How walls and wandering change noticing** (cut from H0, 2026-11-26): does a monster behind a wall or round a corner notice you as early as one in the open, and how far do idle monsters wander from their spot? Done when: measured with the autopilot's `watch` step and written into DESIGN.md 9.4's notes.
 - [ ] **H11 In-game tests on the real map** (monsters in range at each route's start, middle and end; monsters let go when you change level); regenerate documents and pictures (FLOOR1.md still says "about 1,000 monsters").
 - [ ] **H13 Walk every ground and level in the real client** (takes over W12: each ground's gate, hub signs, routes and cave, and one party-sized fight in a cave); playtest list for Jay.
 
