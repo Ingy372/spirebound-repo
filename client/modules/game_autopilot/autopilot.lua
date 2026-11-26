@@ -1288,6 +1288,17 @@ login = function(tries)
                 list:focusChild(w)
                 log('picked character ' .. plan.character)
                 CharacterList.doLogin()
+                if reconnecting then -- (live) the server may still be starting: try again if this login went nowhere
+                    scheduleEvent(function()
+                        if not g_game.isOnline() and reconnecting then
+                            loginEvent = nil
+                            for _, w in ipairs(rootWidget:getChildren()) do
+                                pcall(function() if w:getStyleName() == 'MessageBox' then w:destroy() end end)
+                            end
+                            login(0)
+                        end
+                    end, 20000)
+                end
                 return
             end
         end
