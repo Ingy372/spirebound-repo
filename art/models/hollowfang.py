@@ -48,17 +48,17 @@ PIXEL_RULES = wolf.fur_rules(
 PIXEL_RULES["selout"] = [p for p in PIXEL_RULES["selout"] if p != "saddle"]   # a dark coat: tufts blend (QUADRUPED_RULES lessons)
 
 SPEC = Q.spec(
-    hip=(-0.115, 0.292), hip_r=(0.114, 0.088, 0.078),
-    chest=(0.050, 0.312), chest_r=(0.126, 0.100, 0.100),
+    hip=(-0.115, 0.312), hip_r=(0.110, 0.086, 0.076),
+    chest=(0.050, 0.332), chest_r=(0.122, 0.098, 0.096),
     belly_r=(0.152, 0.072, 0.046), belly_drop=0.058,
-    head=(0.245, 0.290), head_r=(0.110, 0.094, 0.082),             # low and level with the back: stalking
-    snout_tip=(0.440, 0.248), snout_r=(0.054, 0.035),
+    head=(0.245, 0.306), head_r=(0.110, 0.094, 0.082),             # low and level with the back: stalking
+    snout_tip=(0.440, 0.264), snout_r=(0.054, 0.035),
     nose_r=(0.020, 0.020, 0.017),
     eye=(0.052, 0.054, 0.036), eye_r=0.011,
     ear_root=(-0.030, 0.048, 0.052), ear_tip=(-0.040, 0.062, 0.140), ear_r=0.028,
-    front_x=0.080, hind_x=-0.140, leg_top_z=0.258,
-    front_y=0.064, hind_y=0.062, front_feet_y=0.096, hind_feet_y=0.090,
-    upper=0.150, lower=0.140, leg_r=0.029, paw_r=(0.032, 0.023, 0.016),
+    front_x=0.080, hind_x=-0.140, leg_top_z=0.278,
+    front_y=0.070, hind_y=0.066, front_feet_y=0.122, hind_feet_y=0.112,   # wider than the chest: both front legs show facing south
+    upper=0.160, lower=0.152, leg_r=0.030, paw_r=(0.033, 0.024, 0.016),   # long timber-wolf legs
     shoulder_r=(0.058, 0.036, 0.078), haunch_r=(0.064, 0.038, 0.078),
     stride=0.100, lift=0.060, bob=0.010, nod=0.010,
     tail_len=0.230, tail_r=(0.032, 0.020), tail_raise=0.95, tail_curl=0.04, tail_split=0.72,
