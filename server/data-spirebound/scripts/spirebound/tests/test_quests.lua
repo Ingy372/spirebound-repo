@@ -11,7 +11,7 @@ SpireTest.add("quests: floor 1 story quests with a next step for every state", f
 			if not q.kind and not MonsterType(q.target) then error(q.id .. " targets unknown monster " .. tostring(q.target)) end
 		end
 	end
-	SpireTest.eq(n, 18, "eighteen floor 1 quests: nine story (with the weapon temper and the armour line), eight side (four not about killing: stones, sluice, flour, the Stair Key) and the tutorial quest")
+	SpireTest.eq(n, 19, "nineteen floor 1 quests: nine story (with the weapon temper and the armour line), nine side (five not about killing: stones, sluice, flour, the Stair Key, the escort) and the tutorial quest")
 	local story = 0
 	for _, q in ipairs(SpireQuests.list) do
 		if q.floor == 1 and not q.side then story = story + 1 end

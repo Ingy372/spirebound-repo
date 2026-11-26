@@ -23,6 +23,14 @@ SpireQuests = {
 			step = "Defeat Bandit Captains on the bandit road (east of Hearthgate): %d of %d.",
 			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
 			thanks = "Then my men are avenged. Take this, 1,200 gold, and my thanks." },
+		-- P9b (FLOOR1_REVIEW.md: "find the patrol's survivor and walk him home"): an escort. Patrolman Teodric waits in the
+		-- Smugglers' Cellar under the Bandit Road; say "follow" to him and he walks with you (scripts/spirebound/escort.lua).
+		{ id = "q1_2b", floor = 1, name = "The Last of the Patrol", giver = "Captain Dorrow", storage = 50235, killStorage = 50236,
+			kind = "escort", side = true, requires = "q1_2", minLevel = 19, count = 1, reward = { exp = 9000, gold = 1500 },
+			offer = "One of my patrol is alive: Patrolman Teodric. The bandits keep him in their cellar under the bandit road. Cut him loose and walk him home to me, alive?",
+			step = "Free Patrolman Teodric in the Smugglers' Cellar under the bandit road, say 'follow' to him, and walk him back to Captain Dorrow alive (%d of %d).",
+			report = "Bring Patrolman Teodric to Captain Dorrow at Hearthgate's north gate and say 'report'.",
+			thanks = "Teodric! You brought him home. The watch owes you, climber: 1,500 gold, and a place at our fire." },
 		{ id = "q1_3", floor = 1, name = "Millstone", giver = "Miller Agna", storage = 50103, killStorage = 50113,
 			target = "Thornsnap", count = 20, reward = { exp = 8650, gold = 900, title = "Millhand" }, requires = "q1_1",
 			offer = "Thornsnaps have overgrown the old mill road in the hollow north of town. Clear 20 of them so the millstones can come through?",
@@ -351,6 +359,11 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		for _, q in ipairs(order) do
 			if q.giver == giver then
 				local st = SpireQuests.state(player, q)
+				if st == 1 and q.kind == "escort" and SpireEscort and SpireEscort.arrived(player, npc) then
+					SpireEscort.finish(player) -- P9b: the one you walked home is here
+					player:setStorageValue(q.killStorage, 1)
+					st = 2
+				end
 				if st == 2 then
 					player:setStorageValue(q.storage, 3)
 					SpireChronicle.add(player, "quest", 1)

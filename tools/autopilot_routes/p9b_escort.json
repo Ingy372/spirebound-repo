@@ -1,0 +1,154 @@
+{
+ "name": "p9b_escort",
+ "about": "P9b: take The Last of the Patrol from Captain Dorrow, free Patrolman Teodric in the Smugglers' Cellar, walk him home alive and report.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot unsummon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 26"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest q1_2 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest q1_2b -1"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Captain Dorrow: take the quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1343,
+    1182,
+    8
+   ],
+   "note": "the Smugglers' Cellar: free Teodric"
+  },
+  {
+   "do": "hunt",
+   "seconds": 20,
+   "radius": 5,
+   "note": "the Smugglers' Cellar: clear the guards"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1343,
+    1181,
+    8
+   ],
+   "fight": true,
+   "timeout": 30,
+   "note": "the Smugglers' Cellar: free Teodric"
+  },
+  {
+   "do": "npc",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "follow"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "p9b_freed"
+  },
+  {
+   "do": "heal",
+   "note": "out of the cellar"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_bandit_road",
+   "note": "out of the cellar"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "walk",
+   "to": "camp_bandit_road",
+   "fight": true,
+   "timeout": 90,
+   "note": "back to the Bandit Road's gate"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1238,
+    1248,
+    7
+   ],
+   "fight": true,
+   "timeout": 240,
+   "note": "home to Captain Dorrow"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "p9b_home"
+  },
+  {
+   "do": "npc",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  }
+ ]
+}

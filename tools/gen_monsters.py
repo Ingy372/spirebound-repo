@@ -214,6 +214,9 @@ MONSTERS = {
                          attacks=[("melee", 0, 0)], armor=50, defense=50, summon=True, loot=[]),
     "Wolf Companion": dict(desc="a wolf companion", look=(27,), corpse=0, hp=400, xp=0, speed=160, race="blood",
                            attacks=[("melee", 0, -50)], armor=15, defense=15, summon=True, loot=[]),
+    # P9b: the Lost Patrol's survivor while he walks home with you (scripts/spirebound/escort.lua); dressed like the watch
+    "Patrolman Teodric": dict(desc="Patrolman Teodric", look=(134, 95, 94, 94, 95, 0), corpse=0, hp=900, xp=0, speed=230,
+                              race="blood", attacks=[("melee", 0, -20)], armor=25, defense=25, summon=True, loot=[]),
 }
 
 ELEMENTS = ["physical", "energy", "earth", "fire", "lifedrain", "manadrain", "drown", "ice", "holy", "death"]
