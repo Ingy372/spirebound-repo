@@ -33,28 +33,28 @@ MONSTERS = {
     # purpose: a slow bite, and every few seconds a telegraphed stomp (red smoke first) that teaches stepping aside.
     # It can't kill you: the Proving pulls you out at 1 health (scripts/spirebound/proving.lua). Placeholder look.
     # G7: 6 experience (was 60 = about 1,350 with the engine's bonuses, level 3 to 5 in one fight); the Proving ends at level 3.
-    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=6046, hp=240, xp=6, speed=90, race="blood",
+    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=12321, hp=240, xp=6, speed=90, race="blood",
                        attacks=[("melee", 0, -12)], armor=2, defense=4, boss=True,
                        loot=[(GOLD, 100000, 40), (266, 100000, 2)], voices=["SNORT!", "Bramblejaw paws the ground."],
                        events=["SpireProvingThink", "SpireProvingDeath"]),
     "Hopper Toad": dict(desc="a hopper toad", look=(222,), corpse=6077, hp=28, xp=9, speed=80, race="blood",
                         attacks=[("melee", 0, -10), ("slow", -70, 1500, 3, "CONST_ME_GREEN_RINGS")], armor=2, defense=2,  # F1-10: a sticky spit
                         loot=[(GOLD, 70000, 6), (9640, 12000, 1)], voices=["Ribbit!"]),
-    "Sproutling": dict(desc="a sproutling", look=(19,), corpse=2127, hp=35, xp=13, speed=70, race="venom",
+    "Sproutling": dict(desc="a sproutling", look=(19,), corpse=17622, hp=35, xp=13, speed=70, race="venom",
                        attacks=[("melee", 0, -10), ("earth", 0, -12, 4)], armor=2, defense=3,
                        loot=[(GOLD, 75000, 7), (3577, 20000, 1), (3738, 14000, 1)],
                        events=["SpireSproutMend"]),  # F1-10: mends hurt sproutlings
     # ---------------------------------------------------------------- Floor 1 camps (Open)
-    "Meadow Wasp": dict(desc="a meadow wasp", look=(44,), corpse=5964, hp=45, xp=17, speed=130, race="venom",
+    "Meadow Wasp": dict(desc="a meadow wasp", look=(44,), corpse=5989, hp=45, xp=17, speed=130, race="venom",
                         attacks=[("melee", 0, -16, None, "poison")], armor=2, defense=4, defenses=[("haste", 12, 200)],  # F1-10: darts
                         loot=[(GOLD, 70000, 8), (3577, 25000, 1), (5902, 16000, 1), (14083, 2500, 1)], voices=["Bzzzt!"]),
-    "Burrow Mole": dict(desc="a burrow mole", look=(26,), corpse=6046, hp=130, xp=39, speed=85, race="blood",
+    "Burrow Mole": dict(desc="a burrow mole", look=(26,), corpse=27646, hp=130, xp=39, speed=85, race="blood",
                         attacks=[("melee", 0, -32)], armor=8, defense=8, defenses=[("invisible", 8)],  # F1-10: burrows out of sight
                         loot=[(GOLD, 90000, 26), (3577, 40000, 2), (266, 4000, 1), (5880, 12000, 1)]),  # more gold: an xp camp that must still pay for arrows
-    "Reed Snapper": dict(desc="a reed snapper", look=(112,), corpse=6077, hp=150, xp=39, speed=90, race="blood",
+    "Reed Snapper": dict(desc="a reed snapper", look=(112,), corpse=6073, hp=150, xp=39, speed=90, race="blood",
                          attacks=[("melee", 0, -38), ("slow", -120, 2000, 1, "CONST_ME_WATERSPLASH")], armor=12, defense=12,  # F1-10: drags you down
                          loot=[(GOLD, 100000, 30), (PLAT, 1500, 1), (3582, 20000, 1), (266, 8000, 1), (5899, 10000, 1), (30975, 18000, 1)]),
-    "Bristle Boar": dict(desc="a bristle boar", look=(119,), corpse=6046, hp=90, xp=28, speed=105, race="blood",
+    "Bristle Boar": dict(desc="a bristle boar", look=(119,), corpse=12321, hp=90, xp=28, speed=105, race="blood",
                          attacks=[("melee", 0, -30), ("charge", 0, -36, 4)], armor=6, defense=8,  # F1-10: charges
                          loot=[(GOLD, 85000, 15), (3577, 40000, 2), (3582, 15000, 1), (903, 12000, 1)], voices=["Hrrnk!"]),
     "Meadow Wolf": dict(desc="a meadow wolf", look=(27,), corpse=5968, hp=85, xp=36, speed=115, race="blood",
@@ -65,7 +65,7 @@ MONSTERS = {
                        attacks=[("melee", 0, -60)], armor=12, defense=14,
                        loot=[(GOLD, 100000, 40), (5897, 50000, 2), (266, 8000, 1), (3012, 6000, 1)], voices=["AWOOOO!"],
                        summons=[("Meadow Wolf", 2)], events=["SpirePack"]),  # S5: leads its pack
-    "Field Shardling": dict(desc="a field shardling", look=(122,), corpse=6053, hp=120, xp=58, speed=90, race="undead",
+    "Field Shardling": dict(desc="a field shardling", look=(122,), corpse=16177, hp=120, xp=58, speed=90, race="undead",
                             attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10, events=["SpireShardBurst"],
                             loot=[(GOLD, 85000, 20), (268, 6000, 1), (3033, 6000, 1)], elements={"energy": 50, "earth": -10}),
     # Jay approved our own art for these four (2026-11-25): looks 2201-2204, no colour layer
@@ -77,14 +77,14 @@ MONSTERS = {
                            race="blood", attacks=[("melee", 0, -90), ("physical", 0, -60, 4)], armor=18, defense=20,
                            loot=[(GOLD, 100000, 80), (PLAT, 15000, 1), (3359, 4000, 1), (3352, 5000, 1), (266, 15000, 2), (5909, 12000, 1)],
                            voices=["Get them, boys!"], summons=[("Road Bandit", 2)]),
-    "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=3998, hp=140, xp=56, speed=90, race="venom",
+    "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=6047, hp=140, xp=56, speed=90, race="venom",
                       attacks=[("melee", 0, -35, None, "poison"), ("slow", -90, 2000, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
-    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(2204, 0, 0, 0, 0, 0), corpse=18074, hp=300, xp=96, speed=85,
+    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(2204, 0, 0, 0, 0, 0), corpse=6005, hp=300, xp=96, speed=85,
                           race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
                           loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15},
                           events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),  # F1-10: shield wall
-    "Ruin Archer": dict(desc="a ruin archer", look=(2203, 0, 0, 0, 0, 0), corpse=18138, hp=220, xp=83, speed=95,
+    "Ruin Archer": dict(desc="a ruin archer", look=(2203, 0, 0, 0, 0, 0), corpse=5963, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
     # S4 (2026-11-25): the group grounds' mixed packs need a ranged one and a caster beside the front-liner (DESIGN.md 9.4).
@@ -101,7 +101,7 @@ MONSTERS = {
                         events=["SpireHexMend"]),  # mends a hurt ally nearby now and then: kill her first
     # ---------------------------------------------------------------- Floor 1 elites (FLOOR1_REVIEW.md F1-11): one rare,
     # glowing elite per rebuilt ground, on the ground's own monster sprite (no new art), every 15 minutes (ELITE_RESPAWN)
-    "Old Bristleback": dict(desc="old bristleback", look=(119,), corpse=6046, hp=600, xp=220, speed=115, race="blood",
+    "Old Bristleback": dict(desc="old bristleback", look=(119,), corpse=12321, hp=600, xp=220, speed=115, race="blood",
                             attacks=[("melee", 0, -60), ("charge", 0, -80, 4)], armor=14, defense=14, light=(3, 198),
                             loot=[(GOLD, 100000, 60), (PLAT, 25000, 1), (3577, 60000, 3), (903, 50000, 2), (266, 30000, 2)],
                             voices=["HRRRNK!"]),
@@ -109,28 +109,28 @@ MONSTERS = {
                      attacks=[("melee", 0, -55), ("howl", 0, -40, 2)], armor=10, defense=12, light=(3, 215),
                      loot=[(GOLD, 100000, 50), (PLAT, 25000, 1), (5897, 60000, 3), (266, 30000, 2)], voices=["AWOOOOOO!"],
                      events=["SpirePack"]),  # S5: leads its pack
-    "Mossback Snapper": dict(desc="a mossback snapper", look=(112,), corpse=6077, hp=900, xp=250, speed=95, race="blood",
+    "Mossback Snapper": dict(desc="a mossback snapper", look=(112,), corpse=6073, hp=900, xp=250, speed=95, race="blood",
                              attacks=[("melee", 0, -70), ("slow", -180, 2500, 1, "CONST_ME_WATERSPLASH")], armor=22,
                              defense=22, light=(3, 210),
                              loot=[(GOLD, 100000, 90), (PLAT, 40000, 2), (3582, 50000, 2), (5899, 40000, 2), (236, 25000, 1)]),
-    "Blackthorn": dict(desc="blackthorn", look=(28,), corpse=3998, hp=840, xp=330, speed=95, race="venom",
+    "Blackthorn": dict(desc="blackthorn", look=(28,), corpse=6047, hp=840, xp=330, speed=95, race="venom",
                        attacks=[("melee", 0, -65, None, "poison"), ("slow", -140, 2500, 3, "CONST_ME_CARNIPHILA")],
                        armor=16, defense=16, light=(3, 30), elements={"earth": 100, "fire": -15},
                        loot=[(GOLD, 100000, 80), (PLAT, 30000, 1), (5879, 60000, 3), (236, 25000, 1)]),
-    "Prism Shardling": dict(desc="a prism shardling", look=(122,), corpse=6053, hp=720, xp=340, speed=95, race="undead",
+    "Prism Shardling": dict(desc="a prism shardling", look=(122,), corpse=16177, hp=720, xp=340, speed=95, race="undead",
                             attacks=[("melee", 0, -40), ("energy", 0, -80, 4)], armor=18, defense=18, light=(4, 143),
                             events=["SpireShardBurst"],
                             elements={"energy": 50, "earth": -10},
                             loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
     # H8 (2026-11-25): the Old Quarry's elite, on top of the Upper Cut. A grey-gold sentinel that keeps its shield wall.
-    "Granite Warden": dict(desc="the granite warden", look=(2204, 0, 0, 0, 0, 0), corpse=18074, hp=1100, xp=380, speed=90,
+    "Granite Warden": dict(desc="the granite warden", look=(2204, 0, 0, 0, 0, 0), corpse=6005, hp=1100, xp=380, speed=90,
                            race="undead", attacks=[("melee", 0, -95), ("cleave", 0, -80, 1)], armor=30, defense=30,
                            light=(3, 79), elements={"physical": 10, "holy": -15},
                            loot=[(GOLD, 100000, 95), (PLAT, 40000, 2), (3352, 20000, 1), (5880, 40000, 2), (236, 25000, 1)],
                            voices=["The works are closed."],
                            events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
-    "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=20996, hp=900, xp=480, speed=120, race="blood",
+    "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=5994, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),
                           loot=[(GOLD, 100000, 100), (PLAT, 30000, 2), (266, 20000, 3), (268, 20000, 3), (5880, 10000, 1)],
                           voices=["BAAAH!"], events=["SpireStairKeyRam"]),  # P9: a piece of the Stair Key
@@ -151,7 +151,7 @@ MONSTERS = {
     "Mire Toad": dict(desc="a mire toad", look=(222, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=210, speed=95, race="venom",
                       attacks=[("melee", 0, -70, None, "poison"), ("earth", -30, -90, 4)], armor=18, defense=18,
                       loot=[(GOLD, 100000, 60), (236, 8000, 1), (3032, 2000, 1)], elements={"earth": 100, "fire": -10}),
-    "Black Crawler": dict(desc="a black crawler", look=(2301, 0, 0, 0, 0, 0), corpse=5964, hp=520, xp=260, speed=130, race="blood",
+    "Black Crawler": dict(desc="a black crawler", look=(2301, 0, 0, 0, 0, 0), corpse=10458, hp=520, xp=260, speed=130, race="blood",
                           attacks=[("melee", 0, -110)], armor=22, defense=20,
                           loot=[(GOLD, 100000, 70), (PLAT, 10000, 1), (3029, 2000, 1)], voices=["Skrrrk!"]),
     # ---------------------------------------------------------------- Underkeep Wings 2-6 (tuned to floors 2, 4, 6, 8, 10)
@@ -177,15 +177,15 @@ MONSTERS = {
     "Deep Sentinel": dict(desc="a deep sentinel", look=(131, 86, 86, 86, 86, 3), corpse=18074, hp=8000, xp=4500, speed=140,
                           race="undead", attacks=[("melee", 0, -800), ("physical", -400, -800, 4)], armor=70, defense=70,
                           loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (3360, 1500, 1)]),
-    "Vault Wraith": dict(desc="a vault wraith", look=(2324, 0, 0, 0, 0, 0), corpse=18046, hp=6500, xp=3800, speed=170, race="undead",
+    "Vault Wraith": dict(desc="a vault wraith", look=(2324, 0, 0, 0, 0, 0), corpse=6315, hp=6500, xp=3800, speed=170, race="undead",
                          attacks=[("melee", 0, -400), ("energy", -400, -850, 5)], armor=50, defense=50, dist=3,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 8), (3392, 1500, 1)], elements={"holy": -25}),
-    "The Underkeeper": dict(desc="the Underkeeper", look=(2323, 0, 0, 0, 0, 0), corpse=18074, hp=180000, xp=90000, speed=160,
+    "The Underkeeper": dict(desc="the Underkeeper", look=(2323, 0, 0, 0, 0, 0), corpse=5972, hp=180000, xp=90000, speed=160,
                             race="undead", boss=True, attacks=[("melee", 0, -1600), ("cleave", -900, -1800, 1), ("howl", -600, -1200, 2)],
                             armor=95, defense=95, loot=[(GOLD, 100000, 100), (PLAT, 100000, 100), (3366, 30000, 1)],
                             voices=["You dug too deep."]),
     # ---------------------------------------------------------------- secret bosses (DESIGN.md 8.1)
-    "Old Tusk": dict(desc="Old Tusk", look=(2311, 0, 0, 0, 0, 0), corpse=6046, hp=1800, xp=900, speed=125, race="blood",
+    "Old Tusk": dict(desc="Old Tusk", look=(2311, 0, 0, 0, 0, 0), corpse=12321, hp=1800, xp=900, speed=125, race="blood",
                      attacks=[("melee", 0, -140), ("charge", -60, -160, 4)], armor=25, defense=25,
                      loot=[(GOLD, 100000, 100), (PLAT, 100000, 5), (3582, 100000, 5), (236, 50000, 2)],
                      voices=["HRRROOONK!"], events=["SpireMiniBossDeath"]),
@@ -195,11 +195,11 @@ MONSTERS = {
                          loot=[], elements={"fire": 100, "ice": -20}),
     # Hidden mini-bosses (gear progression spec 4.8): each woken at a Floor 1 secret, each leaves a trophy once.
     # Tuned for a solo player at the ground's top level or a small group below it.
-    "Hollowfang": dict(desc="Hollowfang", look=(2312, 0, 0, 0, 0, 0), corpse=5997, hp=1500, xp=750, speed=150, race="blood",
+    "Hollowfang": dict(desc="Hollowfang", look=(2312, 0, 0, 0, 0, 0), corpse=6009, hp=1500, xp=750, speed=150, race="blood",
                        attacks=[("melee", 0, -110), ("charge", -50, -140, 4)], armor=18, defense=20,
                        loot=[(GOLD, 100000, 100), (PLAT, 100000, 4), (5897, 100000, 3), (236, 40000, 2)],
                        voices=["The copse is mine.", "AWOOOOO!"], events=["SpireMiniBossDeath"]),
-    "Briar Mother": dict(desc="the Briar Mother", look=(2313, 0, 0, 0, 0, 0), corpse=3998, hp=2200, xp=1000, speed=80, race="venom",
+    "Briar Mother": dict(desc="the Briar Mother", look=(2313, 0, 0, 0, 0, 0), corpse=6047, hp=2200, xp=1000, speed=80, race="venom",
                          attacks=[("melee", 0, -120, None, "poison")], armor=22, defense=22,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 6), (5879, 100000, 3), (236, 50000, 2)],
                          voices=["Sssssleep in the thorns."], elements={"earth": 100, "fire": -15}, events=["SpireMiniBossDeath"]),
@@ -353,10 +353,12 @@ import sys as _sys
 _sys.path.insert(0, str(ROOT / "maps"))
 from floors import FLOORS  # noqa: E402
 
-# placeholder looks (Tibia outfits) with matching corpses
-LOOKS = [(27, 5968), (52, 5997), (119, 6046), (122, 6053), (56, 5964), (222, 6077), (28, 3998), (129, 18050), (131, 18074),
-         (15, 5960), (22, 5962), (61, 6002), (55, 5999), (240, 6331), (34, 4025), (121, 6048), (291, 8113), (197, 6072),
-         (607, 20996), (19, 2127), (137, 18042), (152, 18046), (139, 18242), (53, 5998), (280, 771), (238, 6532)]
+# placeholder looks (Tibia outfits) with matching corpses; looks redrawn as our own animals in the client (boar 119,
+# shardling 122, thornsnap 28, sproutling 19, azhrakkar 61, ram 607) leave the corpse of the animal drawn (Jay: no boar
+# leaving "an alligator body")
+LOOKS = [(27, 5968), (52, 5997), (119, 12321), (122, 16177), (56, 5964), (222, 6077), (28, 6047), (129, 18050), (131, 18074),
+         (15, 5960), (22, 5962), (61, 5995), (55, 5999), (240, 6331), (34, 4025), (121, 6048), (291, 8113), (197, 6072),
+         (607, 5994), (19, 17622), (137, 18042), (152, 18046), (139, 18242), (53, 5998), (280, 771), (238, 6532)]
 GEAR = {2: [3352, 3359, 3282], 3: [3357, 3351, 3279, 3065, 3068], 4: [3370, 3371, 3303, 3070, 3072],
         5: [3381, 3382, 3385, 3281, 3067, 3073], 6: [3364, 3392, 3415], 7: [3280, 3422, 3360], 8: [3392, 3364, 3360],
         9: [3366, 3360, 3422], 10: [3366, 3280, 3415]}
@@ -366,6 +368,9 @@ RANGED_WORDS = ("Archer", "Witch", "Wisp", "Imp", "Hag", "Wraith", "Shade", "Gho
 # Our own approved art (Jay, 2026-11-26: "nice. approved all art work"): replaces the placeholder look, keeps the corpse
 OWN_LOOKS = {"Hill Cutthroat": 2210, "Blight Wasp": 2302, "Ridge Cat": 2303, "Herd Bull": 2304, "Stonehide Bull": 2305,
              "Horned Grazer": 2306, "Dust Strider": 2307}
+# ...and the corpse of the animal it was drawn as (Tibia corpse items until our own corpse art is approved)
+OWN_CORPSES = {"Hill Cutthroat": 18050, "Blight Wasp": 13983, "Ridge Cat": 5986, "Herd Bull": 17422, "Stonehide Bull": 17422,
+               "Horned Grazer": 42230, "Dust Strider": 12329}
 
 
 # Floor 2's camp monsters, one trick each (R13). Each returns an attack row from the floor's base damage.
@@ -390,6 +395,7 @@ def floor_monsters():
             lt, corpse = LOOKS[look_i % len(LOOKS)]
             look_i += 1
             lt = OWN_LOOKS.get(name, lt)
+            corpse = OWN_CORPSES.get(name, corpse)
             hp = int(hp0 * mult_hp)
             dmg = int(dmg0 * mult_dmg)
             ranged = any(w in name for w in RANGED_WORDS)
