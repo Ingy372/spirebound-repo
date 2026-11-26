@@ -1,0 +1,238 @@
+{
+ "name": "p3b_night",
+ "about": "P3b: a screenshot of a lamp-lit Hearthgate street every 5 minutes for an hour, so one lands at night (a step between shots, or the game logs an idle character out after 15 minutes).",
+ "character": "Pilot Mystic",
+ "timeout": 4200,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "note": "Hearthgate, south avenue among the door lamps"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_00"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_01"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_02"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_03"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_04"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_05"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_06"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_07"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_08"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_09"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_10"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1232,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_11"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  },
+  {
+   "do": "walk",
+   "to": [
+    1231,
+    1325,
+    7
+   ],
+   "fight": false
+  },
+  {
+   "do": "shot",
+   "name": "p3b_night_12"
+  },
+  {
+   "do": "wait",
+   "seconds": 285
+  }
+ ]
+}
