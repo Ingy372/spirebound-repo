@@ -35,7 +35,31 @@ GATE_HOUND = {
     "maw": ramp(*EMBER), "claw": ramp(*STEEL), "scar": ramp((70, 60, 66), (196, 184, 180)),
 }
 
-BOSSES = {"gate_hound": GATE_HOUND}
+# Axe-Lord of the Stair: rusted bronze plate with teal patina, a ragged crimson tabard, dark leather, bone horns on
+# the helm, pale steel axe blades, a gold glow through the visor slit. (Tibia's knights are steel and blue.)
+BRONZE = ((38, 20, 10), (250, 206, 130), (150, 92, 40))
+BRONZE_DARK = ((24, 13, 8), (190, 140, 80), (96, 58, 28))
+PATINA = ((18, 46, 42), (156, 210, 184), (64, 124, 106))
+CRIMSON = ((48, 8, 14), (232, 90, 76), (150, 28, 34))
+LEATHER = ((20, 12, 8), (130, 88, 56), (64, 40, 24))
+BONE = ((70, 58, 40), (246, 236, 210), (176, 160, 130))
+GOLD = ((110, 70, 12), (255, 236, 150), (222, 168, 44))
+WOOD = ((28, 16, 10), (150, 104, 62), (82, 52, 30))
+BLADE = ((64, 70, 84), (252, 254, 255), (176, 186, 202))
+
+AXE_LORD = {
+    "helm": ramp(*BRONZE), "skin": ramp(*BRONZE), "hair": ramp(*BRONZE_DARK), "strand": ramp(*BRONZE_DARK),
+    "torso": ramp(*BRONZE), "bronze": ramp(*BRONZE), "arm_a": ramp(*BRONZE_DARK), "arm_b": ramp(*BRONZE_DARK),
+    "hand": ramp(*BRONZE_DARK), "cuff": ramp(*GOLD), "leg_a": ramp(*LEATHER), "leg_b": ramp(*LEATHER),
+    "boot_a": ramp(*BRONZE_DARK), "boot_b": ramp(*BRONZE_DARK), "sole": [[14, 10, 8]] * 8,
+    "belt": ramp(*LEATHER), "buckle": ramp(*GOLD), "patina": ramp(*PATINA), "cloth": ramp(*CRIMSON),
+    "trim": ramp(*GOLD), "emblem": ramp(*GOLD), "rivet": ramp(*GOLD), "horn": ramp(*BONE),
+    "visor": ramp((6, 4, 4), (44, 28, 22)), "eye": [[255, 226, 150]], "brow": ramp((6, 4, 4), (44, 28, 22)),
+    "nose": ramp(*BRONZE), "haft": ramp(*WOOD), "wrap": ramp(*LEATHER), "steel": ramp(*BLADE),
+    "edge": ramp((140, 150, 166), (255, 255, 255)), "line": ramp((16, 8, 4), (70, 40, 20)), "knee": ramp(*BRONZE),
+}
+
+BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD}
 
 
 def main():

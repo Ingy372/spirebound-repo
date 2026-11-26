@@ -74,9 +74,9 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 | [~] | `mon_ruin_sentinel_*` (drafted by the pipeline, in ART_FOR_JAY/sentinel, waiting for Jay's OK) | 32×32, 12 | An old animated stone guard statue, cracked and mossy, holding a stone spear. |
 | [~] | `mon_ruin_archer_*` (drafted by the pipeline, in ART_FOR_JAY/archer, waiting for Jay's OK) | 32×32, 12 | A skeletal archer in rotted leather with a bow. |
 | [~] | `mon_stonehorn_ram_*` (drafted by the pipeline, in ART_FOR_JAY/ram, waiting for Jay's OK) | 32×32, 12 | A mountain ram with huge curled stone-grey horns and thick wool. |
-| [ ] | `boss_gate_hound_*` | **64×64**, 12 | A huge three-headed hound with black fur and ember-orange eyes, spiked collar on each neck. |
-| [ ] | `boss_axe_lord_*` | **64×64**, 12 | A towering armored warlord in rusted bronze plate with a horned helm and a giant double-bladed axe. |
-| [ ] | `boss_axe_lord_blade_*` | **64×64**, 12 | The same warlord (rusted bronze plate, horned helm) now holding a long curved blade instead of the axe, battle-damaged armor. |
+| [~] | `boss_gate_hound_*` (drafted by the pipeline 2026-11-25, `art/output/gate_hound`, waiting for Jay's OK) | **64×64**, 12 | A huge three-headed hound with black fur and ember-orange eyes, spiked collar on each neck. |
+| [~] | `boss_axe_lord_*` (drafted by the pipeline 2026-11-25, `art/output/axe_lord`, waiting for Jay's OK) | **64×64**, 12 | A towering armored warlord in rusted bronze plate with a horned helm and a giant double-bladed axe. |
+| [~] | `boss_axe_lord_blade_*` (drafted by the pipeline 2026-11-25, `art/output/axe_lord_blade`: broken horn, cracked plate, waiting for Jay's OK) | **64×64**, 12 | The same warlord (rusted bronze plate, horned helm) now holding a long curved blade instead of the axe, battle-damaged armor. |
 | [ ] | `npc_registrar.png` (registrar drafted by the pipeline, in ART_FOR_JAY/registrar, waiting for Jay's OK), `npc_priest.png` (priest drafted by the pipeline, in ART_FOR_JAY/priest, waiting for Jay's OK), `npc_vesper.png` (Vesper: made by the Blender pipeline, `art/output/vesper/`, approved by Jay 2026-11-14: "it looks flawless to me"), `npc_banker.png` (banker drafted by the pipeline, in ART_FOR_JAY/banker, waiting for Jay's OK), `npc_merchant.png` (merchant drafted by the pipeline, in ART_FOR_JAY/merchant, waiting for Jay's OK) | 32×32, 1 frame each (facing south) | Town NPCs: a clerk with a ledger; a temple priest in white; a sly information broker in a dark purple coat with a feathered hat and a small notebook; a banker with spectacles; a merchant with an apron. |
 
 ## Batch 1b — added overnight 2026-11-08 (Priority: medium)
@@ -192,8 +192,8 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [x] | `azhrakkar` | Floor 10 boss | approved |
 | [x] | `alpha` | Grey Alpha, Floor 1 elite | approved |
 | [x] | `boar` | The "fire boar" is our red-crested Bristle Boar (Jay: "It might be named frenzied boar or just regular boar with the red on top") | approved |
-| [ ] | `gate_hound` | Floor 1 boss (64x64) | not made |
-| [ ] | `axe_lord` | Axe-Lord of the Stair, Floor 1 boss (64x64) | not made |
+| [~] | `gate_hound` | Floor 1 field boss (64x64) | drafted, waiting for Jay |
+| [~] | `axe_lord`, `axe_lord_blade` | Axe-Lord of the Stair, Floor 1 boss (64x64), both phases | drafted, waiting for Jay |
 | [ ] | `underkeeper` | The Underkeeper | not made |
 | [ ] | `old_tusk`, `moonhowl`, `hollowfang`, `briar_mother` | Floor 1 elites and minibosses (now wearing their cousin's sprite) | not made |
 | [ ] | `twin_fang_warden`, `vault_wraith` | Floor 1 vault and trial bosses | not made |

@@ -70,3 +70,14 @@ which adds the grass-contrast rule and the body-plan settings for the checker.
 - If a direction is too big for the canvas (pixelize warns "too big"), lower `SIZE` before `GROUND_STRETCH`.
 - Horns and tusks must contrast with the face behind them (pale horn on a dark face, or the reverse),
   or they merge into one lump at game size.
+- **Big creatures (2x2, e.g. the Gate Hound, 2026-11-25).** The north/south view is set by how TALL the animal stands
+  (raised heads, ears, noses at the far end), not only by its length: if it is cut off at the top, lower the heads and
+  the stride before touching `GROUND_STRETCH`. A dark coat's lowest tone must stay a deep colour (about 40-50), never
+  near-black, or the shading turns into black patches; and on a big body the back tufts get no outline of their own
+  (`selout`), or the ridge reads as cow spots.
+- **Extra copies of a body part need their own names.** A creature that adds heads, mouths or ears on top of a shared
+  coat (wolf.build_fur owns `mouth_l`, `mouth_r`, `brow_l`...) must name its copies differently (`smouth_l`): a clash
+  leaves the shared piece at its unit size, a giant shape that fills the frame.
+- **Never hide the pixel step's errors.** Run `sh art/pipeline/render.sh <name>` and read its last lines: if
+  `pixelize.py` fails, the frames on disk are the OLD ones and the checker happily checks those.
+
