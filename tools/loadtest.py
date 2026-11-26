@@ -194,9 +194,9 @@ def kill_totals(srv, upto):
     out = {}
     for t, line in srv.lines:
         if t <= upto and " kills " in line:
-            m = re.search(r"ground=(\w+) bots=(\d+) kills_total=(\d+) crowd=(\w+)", line)
+            m = re.search(r"ground=(\w+) bots=(\d+) kills_total=(\d+) crowd=(\w+)(?: alive=(\d+))?", line)
             if m:
-                out[m.group(1)] = (t, int(m.group(2)), int(m.group(3)), m.group(4))
+                out[m.group(1)] = (t, int(m.group(2)), int(m.group(3)), m.group(4), int(m.group(5) or -1))
     return out
 
 
@@ -270,7 +270,7 @@ async def run(mode, steps, minutes, warmup, tee=None):
                     if a and b and b[0] > a[0]:
                         hours = (b[0] - a[0]) / 3600
                         per[g["id"]] = dict(bots=b[1], kills=b[2] - a[2], kph_per_bot=round((b[2] - a[2]) / hours / max(1, b[1])),
-                                            crowd=b[3])
+                                            crowd=b[3], alive=b[4])
                 row["grounds"] = per
             results.append(row)
             print(time.strftime("%H:%M:%S"), json.dumps(row), flush=True)

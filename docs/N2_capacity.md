@@ -133,3 +133,61 @@ Q72).
 
 The test can be rerun after the map changes to check (task 10.4's "N2 rerun meets the target"):
 `python3 tools/loadtest.py capacity --steps 4,8,12,16 --minutes 10 --warmup 3` on a test copy.
+
+## After 10.4 (rerun 2026-11-26 14:20-15:02, main at faf337be)
+
+What changed in 10.4: Floor 1 monsters return after 40% of the old wait (at least 40 s), and three new grounds:
+Bramble Run (14-20), Smugglers' Ridge (19-26) and the Fallen Bastion (23-30), so 15 grounds. Same method as above,
+4, 8, 12 and 16 bots on every ground at once (60 to 240 bots). The economy model's estimate was about 125 at once,
+about 80 in levels 9-30.
+
+Kills per player per hour (crowd state: 4 quiet, 8 packed, 12-16 packed; the four starter grounds go to "rush" at 12):
+
+| Ground | Levels | 4 | 8 | 12 | 16 | Whole ground at 16, kills/h | Fits now (before) |
+|---|---|---|---|---|---|---|---|
+| The Ratwarren | 1-4 | 718 | 685 | 608 | 502 | 8,040 | 16 or more (8) |
+| Toad Pond | 3-7 | 392 | 289 | 209 | 191 | 3,060 | 12 (1) |
+| Sproutling Glade | 5-10 | 555 | 288 | 321 | 291 | 4,654 | 16 or more (4) |
+| Waspgrass Fields | 7-12 | 703 | 702 | 641 | 508 | 8,134 | 16 or more (8) |
+| Boar Meadow | 9-15 | 81 | 89 | 61 | 57 | 909 | 0 (0) |
+| Burrow Hills | 11-16 | 394 | 223 | 205 | 170 | 2,726 | 12 (2) |
+| Wolf Copse | 12-18 | 122 | 136 | 82 | 67 | 1,071 | fewer than 4 (2) |
+| Reedmarsh | 14-19 | 163 | 199 | 109 | 104 | 1,663 | fewer than 4, 8 at 199 (1) |
+| Bramble Run (new) | 14-20 | 276 | 216 | 121 | 102 | 1,637 | 8 (new) |
+| Thornsnap Hollow | 14-20 | 144 | 66 | 46 | 37 | 600 | fewer than 4 (1) |
+| Shard Fields | 17-24 | 126 | 138 | 94 | 87 | 1,389 | fewer than 4 (1) |
+| The Bandit Road | 19-27 | 135 | 151 | 104 | 83 | 1,329 | fewer than 4 (1) |
+| The Old Quarry | 23-30 | 135 | 126 | 82 | 61 | 977 | fewer than 4 (1) |
+| Smugglers' Ridge (new) | 19-26 | 184 | 141 | 109 | 72 | 1,149 | fewer than 4 (new) |
+| The Fallen Bastion (new) | 23-30 | 105 | 112 | 78 | 57 | 917 | fewer than 4 (new) |
+
+**Floor 1 now feeds about 100 at once at 200+ kills an hour each (it was about 30), about 40 of them in levels 9-30
+(it was about 9).** The economy model said 125 and 80. Counted: the six grounds that fit 8 or more add up to about 80
+(the four starter grounds, Burrow Hills and Bramble Run); the other nine grounds give each of 4 players 105-185 kills an
+hour, so they fit about 2-3 each (about 20-25 more). The starter grounds have room to spare: 500+ each at 16 players.
+
+**Still short (each player under 200 with 4 on the ground):** Boar Meadow, Wolf Copse, Reedmarsh (just), Thornsnap
+Hollow, Shard Fields, the Bandit Road, the Old Quarry, Smugglers' Ridge and the Fallen Bastion. That is every level
+12-30 ground except Burrow Hills and Bramble Run.
+
+**Why, measured** (a 5-minute check with 4 bots on each ground, counting the monsters alive on the ground every
+minute): on the short grounds half or more of the monsters are standing alive while the hunters are there (Boar
+Meadow 11-16 alive, Wolf Copse 13-24, Shard Fields 12-14, the Bandit Road 8-11, Bramble Run 12-15). So monsters coming
+back is no longer the limit there: the hunters lose their time **finding and walking to** monsters that are spread
+thinly over a big area and two or three levels. Only the Old Quarry (4-7 alive) and Thornsnap Hollow (6-9 alive) also
+run low on monsters. Burrow Hills, the best mid ground, keeps about 120 monsters alive on its levels; Boar Meadow about 15.
+
+**Suggested next map changes (for the lead session):**
+1. **Density, not respawn time, on the level 12-30 grounds:** more monsters per stretch of loop (packs and pairs
+   along the walking route, as Burrow Hills does), fewer monsters off on separate levels, shorter loops between groups.
+   Shorter return times won't help these grounds any more.
+2. **Boar Meadow:** its boars are loners spread over three levels; it stays the weakest ground (57-89 each). Pairs, or
+   a second animal in between, on its main level.
+3. **The Old Quarry and Thornsnap Hollow** also need more monsters (they run low as well as being spread out).
+4. A caveat in the bots' favour of the real game: the bots don't know the map; real players learn where groups stand
+   and walk tighter loops, so real players will do somewhat better on the spread-out grounds than these numbers.
+
+**Server load after 10.4** (same run): faster respawns mean more monsters to run. 60 bots: 1.1 ms average lag;
+120: 4 ms with a few hiccups up to 0.7 s; 180: 9 ms with about one hiccup of more than 0.1 s every 8 seconds (worst
+1.1 s); 240: 14 ms, about one every 4 seconds. Up to about 120 at once is still smooth; from about 180 players feel
+small stutters now and then. See `docs/LOAD_TEST.md`.

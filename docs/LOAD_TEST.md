@@ -50,6 +50,24 @@ At 150, the last two bots to join (148 and 149) lost their connection while logg
 148 bots; the server logged no kicks or errors for them. Every other step had every bot online. The "worst" column is single hiccups of under a tenth of a
 second (the server saving, a crowd of monsters appearing); none came near what a player notices.
 
+## After 10.4 (faster respawns, 15 grounds; 2026-11-26 afternoon)
+
+Floor 1's monsters now return after 40% of the old wait, so the server runs more monsters. Measured during the N2
+rerun (bots spread over all 15 Floor 1 grounds, `docs/N2_capacity.md`):
+
+| Bots hunting | Tick lag, average | Worst | Beats more than 100 ms late (7 minutes) | CPU (one core) | Memory |
+|---|---|---|---|---|---|
+| 60 | 1.1 ms | 338 ms | 1 | 23% | 251 MB |
+| 120 | 4.0 ms | 740 ms | 10 | 31% | 275 MB |
+| 180 | 9.1 ms | 1,118 ms | 52 | 35% | 294 MB |
+| 240 | 14.2 ms | 1,165 ms | 97 | 38% | 313 MB |
+
+So the 9.2 target (100 without lag) still holds, but the headroom shrank: around 120 is smooth, and from about 180
+players notice a short stutter now and then (one heartbeat in 40-80 is late by more than a tenth of a second, the worst by
+about a second). The CPU is far from full, so the stutters are short pauses, not an overloaded processor; likely
+causes are many monsters respawning at once or the server's periodic saves. Worth a look before a launch that
+expects more than about 150 at once.
+
 ## Things found along the way
 
 - **Log noise on every kill (worth fixing before launch, not urgent).** Each kill writes 7 to 8 warning lines to the

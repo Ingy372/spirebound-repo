@@ -272,6 +272,26 @@ end
 every10:interval(10000)
 every10:register()
 
+-- monsters alive inside a ground right now, on its own levels (is the ground empty, or are the bots not finding them?)
+local function aliveIn(g)
+	if not g then
+		return 0
+	end
+	local cx, cy = math.floor((g.x1 + g.x2) / 2), math.floor((g.y1 + g.y2) / 2)
+	local rx, ry = math.ceil((g.x2 - g.x1) / 2) + 1, math.ceil((g.y2 - g.y1) / 2) + 1
+	local n = 0
+	for z = 0, 15 do
+		if z == g.z or (g.zs and g.zs[z]) then
+			for _, c in ipairs(Game.getSpectators(Position(cx, cy, z), false, false, rx, rx, ry, ry)) do
+				if c:isMonster() and not c:getMaster() and SpireCrowd.inside(g, c:getPosition()) then
+					n = n + 1
+				end
+			end
+		end
+	end
+	return n
+end
+
 local every60 = GlobalEvent("SpireLoadbotKills")
 function every60.onThink()
 	local per = {}
@@ -290,7 +310,7 @@ function every60.onThink()
 	end
 	for id, n in pairs(per) do
 		local rec = SpireCrowd.grounds[id]
-		logger.info("[LOADTEST] kills ground={} bots={} kills_total={} crowd={}", id, n, L.kills[id] or 0, rec and rec.state or "quiet")
+		logger.info("[LOADTEST] kills ground={} bots={} kills_total={} crowd={} alive={}", id, n, L.kills[id] or 0, rec and rec.state or "quiet", aliveIn(L.ground[id]))
 	end
 	return true
 end
