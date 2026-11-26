@@ -24,7 +24,15 @@ function lose.playerOnLoseExperience(player, exp)
 	if lost == 0 and exp > 0 and player:getHealth() <= 0 then -- G12 (a real death, not a GM taking levels away): the catch-up rule kept it all; say so after the respawn (the death window doesn't)
 		player:kv():scoped("spirebound"):set("youngGrace", exp)
 	end
-	return math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
+	lost = math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
+	if player:getHealth() <= 0 then
+		-- Party playtest 2026-11-26 (hand-off P1-5b): Canary 3.6.1 takes the engine's loss whatever this callback returns
+		-- (a level-25 Normal Mystic lost 19,757 experience and was told she was spared). So the experience the player
+		-- should end with is written down here and set right at the next login, i.e. after the respawn
+		-- (SpireDifficulty.settleExperience). If the engine ever honours the return, the login finds nothing to fix.
+		player:kv():scoped("spirebound"):set("deathExpTarget", math.max(0, player:getExperience() - lost))
+	end
+	return lost
 end
 lose:register()
 
@@ -188,6 +196,8 @@ function login.onLogin(player)
 	player:registerEvent("SpireHardcorePrepareDeath")
 	player:registerEvent("SpireHardcoreItemDrop")
 	SpireHardcore.settleDeath(player)
+	SpireDifficulty.settleExperience(player)
+	SpireDifficulty.youngBlessings(player)
 	local s = player:kv():scoped("spirebound")
 	local kept = tonumber(s:get("youngGrace"))
 	if kept and kept > 0 then -- G12 (Grok session 3): tell a young climber their death cost no experience, and why
@@ -201,6 +211,48 @@ function login.onLogin(player)
 	return true
 end
 login:register()
+
+-- Party playtest 2026-11-26 (hand-off P1-5b, P1-5c) ------------------------
+SpireDifficulty = SpireDifficulty or {}
+
+-- At login after a death: give back (or, for Hardcore and skulls, take) the difference between what the engine took
+-- and what our rules say. Returns the change made (positive = given back).
+function SpireDifficulty.settleExperience(player)
+	local s = player:kv():scoped("spirebound")
+	local target = tonumber(s:get("deathExpTarget"))
+	if not target then
+		return 0
+	end
+	s:remove("deathExpTarget")
+	local now = player:getExperience()
+	if now < target then
+		player:addExperience(target - now, false)
+		return target - now
+	elseif now > target then
+		player:removeExperience(now - target, false)
+		return target - now
+	end
+	return 0
+end
+
+-- The engine's free "adventurer's blessing" ends at level 21; after that a death without blessings drops the whole
+-- backpack and some gear, while the game promises Normal climbers below level 50 that they are spared. Keep the
+-- promise: a Normal (or Casual) climber below 50 gets every blessing back at each login, so also after each respawn.
+-- Hardcore and Death Game keep their item risk; from level 50 on, blessings are bought from the priest.
+SpireDifficulty.BLESSINGS = 8
+function SpireDifficulty.youngBlessings(player)
+	if Difficulty.get(player) > Difficulty.NORMAL or player:getLevel() >= 50 then
+		return 0
+	end
+	local given = 0
+	for b = 1, SpireDifficulty.BLESSINGS do
+		if not player:hasBlessing(b) then
+			player:addBlessing(b, 1)
+			given = given + 1
+		end
+	end
+	return given
+end
 
 -- Hardcore: skill debt and extra item drops (roadmap 2.14b) --------------
 SpireHardcore = {}

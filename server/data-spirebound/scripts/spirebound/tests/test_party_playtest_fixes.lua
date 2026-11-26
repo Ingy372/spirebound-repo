@@ -164,3 +164,47 @@ SpireTest.add("party fixes P2-12: !spells before a path shows each path's first 
 	end
 	SpireTest.eq(select(2, text:gsub("%(level %d+%)", "")) >= 4, true, "lists spells: " .. text)
 end)
+
+-- A stand-in for the death rules: experience, blessings, level, difficulty in real KV storage under a test name
+local function deathPlayer(tag, mode, level, exp)
+	local p = { exp = exp, level = level, bless = {}, added = 0, removed = 0 }
+	local store = function(name) return kv.scoped("spiretest-" .. tag .. "-" .. name) end
+	function p:kv() return { scoped = function(_, name) return store(name) end } end
+	function p:getExperience() return self.exp end
+	function p:addExperience(n) self.exp = self.exp + n; self.added = self.added + n end
+	function p:removeExperience(n) self.exp = self.exp - n; self.removed = self.removed + n end
+	function p:getLevel() return self.level end
+	function p:hasBlessing(b) return self.bless[b] == true end
+	function p:addBlessing(b) self.bless[b] = true end
+	store("spirebound"):set("difficulty", mode)
+	return p, store
+end
+
+SpireTest.add("party fixes P1-5b: experience the engine took from a young Normal climber comes back after the respawn", function()
+	local tag = "deathxp" .. os.time()
+	local p, store = deathPlayer(tag, Difficulty.NORMAL, 24, 195178)
+	store("spirebound"):set("deathExpTarget", 214935) -- what the loss hook wrote down before the engine took 19,757
+	SpireTest.eq(SpireDifficulty.settleExperience(p), 19757, "the difference is given back")
+	SpireTest.eq(p:getExperience(), 214935, "back where it was")
+	SpireTest.eq(SpireDifficulty.settleExperience(p), 0, "only once")
+	-- the engine honoured the return: nothing to fix
+	store("spirebound"):set("deathExpTarget", 214935)
+	SpireTest.eq(SpireDifficulty.settleExperience(p), 0, "already right: no change")
+	-- Hardcore wants more than the engine took
+	store("spirebound"):set("deathExpTarget", 200000)
+	SpireTest.eq(SpireDifficulty.settleExperience(p), -14935, "the heavier Hardcore loss is taken")
+	SpireTest.eq(p:getExperience(), 200000, "down to the target")
+end)
+
+SpireTest.add("party fixes P1-5c: Normal climbers below 50 get their blessings back at login; others don't", function()
+	local tag = "bless" .. os.time()
+	local p = deathPlayer(tag .. "n", Difficulty.NORMAL, 30, 0)
+	p.bless[1] = true -- what the playtest characters had left after a death
+	SpireTest.eq(SpireDifficulty.youngBlessings(p), SpireDifficulty.BLESSINGS - 1, "the missing ones are given")
+	SpireTest.eq(p:hasBlessing(5), true, "fully blessed")
+	SpireTest.eq(SpireDifficulty.youngBlessings(p), 0, "nothing more next time")
+	local h = deathPlayer(tag .. "h", Difficulty.HARDCORE, 30, 0)
+	SpireTest.eq(SpireDifficulty.youngBlessings(h), 0, "Hardcore keeps its item risk")
+	local old = deathPlayer(tag .. "o", Difficulty.NORMAL, 50, 0)
+	SpireTest.eq(SpireDifficulty.youngBlessings(old), 0, "from level 50 the priest sells them")
+end)

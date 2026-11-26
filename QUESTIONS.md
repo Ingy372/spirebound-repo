@@ -8,6 +8,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q77. Normal climbers below level 50 keep their items when they die (2026-11-26, party playtest)
+The game has always told young Normal climbers "your death cost you nothing", but from level 22 (when Tibia's free starter blessing ends) a death without blessings dropped the whole backpack and some gear, and the engine still took experience. Both are fixed to match the promise: below level 50 on Normal you keep your experience and your items (the game hands out the blessings for free at each login). Hardcore and Death Game keep their risk. (My call; you can veto.)
+- **Recommendation:** keep it. Floor 1 deaths then cost only the walk back; if you want a sting before 50 (your "challenge" goal), say so and I'll make the message and the Registrar say clearly what a death costs instead.
+- Assumed until you answer: yes, keep items and experience below 50 on Normal.
+- Jay's answer:
+
 ### Q76. Looted coins go straight to the bank (2026-11-26, party playtest)
 In the party playtest a level-15 tank's backpack was half full of coin stacks and the next purchase failed. I switched on the engine's "coins to the bank" option: gold from monsters goes into your bank account, quest gold too, and shops already take the price from the bank. (My call; you can veto.)
 - **Recommendation:** keep it. Less clutter, and nobody loses coins on the floor.

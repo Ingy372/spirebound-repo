@@ -107,6 +107,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
   message spam).
 - **Check:** a Normal test character at level 30 dies to a monster -> level and experience unchanged after respawn,
   and the message is still shown. In-game test plus one real death in the client.
+- **Done:** the loss hook now also writes down the experience the player should end with (`deathExpTarget`); at the next login (the respawn) `SpireDifficulty.settleExperience` gives back what the engine took (or takes the extra for Hardcore / skulls, which the engine was ignoring too). If the engine ever honours the return, nothing changes. The engine's own "You lost N experience" line at death can't be stopped from Lua; the "spared" line after the respawn is now true. Test: "party fixes P1-5b". Real death in the client: PT1.
 
 ### 5c. At levels 22-49 a death loses the whole backpack and some gear (the free blessings stop at 21)
 (added 17:20)
@@ -125,6 +126,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
   backpack").
 - **Check:** a Normal test character at level 30 with no blessings dies -> keeps backpack and gear (or, if the rule
   is kept, is told clearly before and after).
+- **Done (Claude's call, Jay can veto: Q77):** `SpireDifficulty.youngBlessings` gives Normal climbers below level 50 every missing blessing at each login, so also after each respawn: no backpack or gear loss before 50. Hardcore and Death Game keep their item risk. The "spared" message now says "no experience and none of your items". Test: "party fixes P1-5c". Real death in the client: PT1.
 
 ---
 
