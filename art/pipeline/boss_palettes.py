@@ -122,8 +122,26 @@ BRIAR_MOTHER = {
     "eye": [[255, 230, 120]],
 }
 
+# The Underkeeper: the jailer of the dungeon under Hearthgate. Bone, black iron, rotted grey-brown cloth, ghost-teal
+# fire in his lantern and eyes, tarnished brass keys, a rust-red padlock.
+BONE2 = ((70, 64, 50), (244, 238, 214), (176, 166, 136))
+ROT = ((22, 20, 18), (146, 134, 114), (70, 64, 54))
+IRON2 = ((16, 18, 22), (160, 166, 172), (64, 68, 76))
+GHOST = ((20, 90, 80), (226, 255, 244), (90, 230, 200))
+UNDERKEEPER = {
+    "skin": ramp(*BONE2), "bone": ramp(*BONE2), "hand": ramp(*BONE2), "arm_a": ramp(*BONE2), "arm_b": ramp(*BONE2),
+    "nose": ramp(*BONE2), "brow": ramp((10, 8, 6), (60, 50, 40)), "hair": ramp(*IRON2), "strand": ramp(*IRON2),
+    "eye": [[150, 255, 226]], "torso": ramp(*ROT), "robe": ramp(*ROT), "hem": ramp((14, 12, 10), (96, 88, 74), (42, 38, 32)),
+    "leg_a": ramp(*BONE2), "leg_b": ramp(*BONE2), "boot_a": ramp((18, 14, 12), (110, 92, 74), (52, 42, 34)),
+    "boot_b": ramp((18, 14, 12), (110, 92, 74), (52, 42, 34)), "sole": [[12, 10, 8]] * 8, "cuff": ramp(*IRON2),
+    "belt": ramp((20, 14, 10), (120, 90, 62), (60, 42, 28)), "buckle": ramp(*IRON2), "iron": ramp(*IRON2),
+    "chain": ramp((26, 28, 32), (196, 200, 206), (96, 100, 108)), "lock": ramp((44, 18, 8), (210, 124, 70), (126, 58, 26)),
+    "lantern": ramp((40, 28, 10), (226, 186, 104), (124, 88, 38)), "flame": ramp(*GHOST), "glow": ramp(*GHOST),
+    "key": ramp((60, 44, 14), (240, 210, 124), (152, 118, 48)), "rib": ramp((90, 84, 66), (240, 234, 210), (180, 170, 140)),
+}
+
 BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK,
-          "hollowfang": HOLLOWFANG, "briar_mother": BRIAR_MOTHER}
+          "hollowfang": HOLLOWFANG, "briar_mother": BRIAR_MOTHER, "underkeeper": UNDERKEEPER}
 
 
 def main():

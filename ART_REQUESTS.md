@@ -194,7 +194,7 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [x] | `boar` | The "fire boar" is our red-crested Bristle Boar (Jay: "It might be named frenzied boar or just regular boar with the red on top") | approved |
 | [x] | `gate_hound` | Floor 1 field boss (64x64) | approved |
 | [x] | `axe_lord`, `axe_lord_blade` | Axe-Lord of the Stair, Floor 1 boss (64x64), both phases | approved |
-| [ ] | `underkeeper` | The Underkeeper | not made |
+| [~] | `underkeeper` | The Underkeeper, boss of the Underkeep: a towering skeletal jailer in a cage-helm with a ghost-teal lantern and a dragging chain and padlock | drafted 2026-11-25, waiting for Jay |
 | [~] | `old_tusk` | Old Tusk, Floor 1 secret boss: the Bristle Boar grown ancient (grizzled, one great tusk, old arrows in his back) | drafted 2026-11-25, waiting for Jay |
 | [~] | `hollowfang` | Hollowfang, Floor 1 hidden mini-boss: a night-black wolf with a pale mane and one great fang | drafted 2026-11-25, waiting for Jay |
 | [~] | `briar_mother` | Briar Mother, Floor 1 hidden mini-boss: a thorny wine-purple mound with three snapping bud heads and a crown of rose petals | drafted 2026-11-25, waiting for Jay |
