@@ -2,8 +2,8 @@
 SpireHouses = SpireHouses or {}
 SpireHouses.PRICE_PER_TILE = {
 	[1] = 1000,
-	[2] = 1850,
-	[3] = 2300,
+	[2] = 1800,
+	[3] = 2200,
 	[4] = 2700,
 	[5] = 3200,
 	[6] = 3750,
