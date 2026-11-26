@@ -212,24 +212,100 @@
   },
   {
    "do": "jump",
-   "to": "crowd_wolf_copse_c_2",
-   "note": "wolf pack: from the near part"
+   "to": "centre_boar_meadow",
+   "note": "wolf pack"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Grey Alpha, 1, 1500",
+   "note": "wolf pack: the leader"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Wolf, 3, 1500",
+   "note": "wolf pack: three wolves"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "wolf pack: where they stand"
   },
   {
    "do": "walk",
    "to": [
-    1050,
-    1286,
-    6
+    1166,
+    1337,
+    7
    ],
    "fight": false,
-   "timeout": 30,
-   "note": "wolf pack: walk toward the nest"
+   "timeout": 12,
+   "note": "wolf pack: walk away, do they follow together?"
   },
   {
    "do": "watch",
-   "seconds": 24,
-   "note": "wolf pack: do they come together?"
+   "seconds": 2,
+   "note": "wolf pack: positions"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1166,
+    1343,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "wolf pack: walk away, do they follow together?"
+  },
+  {
+   "do": "watch",
+   "seconds": 2,
+   "note": "wolf pack: positions"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1159,
+    1343,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "wolf pack: walk away, do they follow together?"
+  },
+  {
+   "do": "watch",
+   "seconds": 2,
+   "note": "wolf pack: positions"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1159,
+    1337,
+    7
+   ],
+   "fight": false,
+   "timeout": 12,
+   "note": "wolf pack: walk away, do they follow together?"
+  },
+  {
+   "do": "watch",
+   "seconds": 2,
+   "note": "wolf pack: positions"
+  },
+  {
+   "do": "watch",
+   "seconds": 10,
+   "note": "wolf pack: together?"
   },
   {
    "do": "shot",
@@ -239,7 +315,7 @@
    "do": "hunt",
    "seconds": 40,
    "radius": 6,
-   "note": "wolf pack"
+   "note": "wolf pack: fight"
   }
  ]
 }

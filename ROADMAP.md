@@ -21,8 +21,6 @@ Every real tester has hit a blocker in the first 30 minutes. Fix what is left, o
 
 ## Step 2 — Finish Floor 1's last third (levels 19 to 35)
 The end of the floor, right before the boss, is its weakest part: two grounds still swarm at the gate and the group hunting isn't built.
-- [~] **S5 Packs stay together and follow their leader in the game** *(2026-11-25: built; in-game test. To tick: watch a pack in the client)*; test on the Meadow Wolf and Grey Alpha.
-- [~] **P6 Monsters that fight differently** *(2026-11-25: seen in the client: thieving rats, the wolf's howl, a sproutling mending a friend, the sentinel's shield. Still to see on screen: the boar's charge, the mole's burrow, the snapper's drag, the bandit's smoke.)* (FLOOR1_REVIEW.md F1-10, F1-11). Done when: each behaviour is seen in the autopilot log or a screenshot, and `tools/balance.py --check` passes.
 - [ ] **P9b Escort or rescue quest** (cut from P9, 2026-11-25): "find the Lost Patrol's survivor in the Bandit Vault and walk him home". Needs H8 and an NPC that follows the player. Done when: autopilot walks the survivor home.
 - [ ] **S1b Class-aware economy model**: `tools/gen_economy.py` models what each class earns at each ground and what a group of 3-4 earns per person; `balance.py --check` then checks the reward targets per ground type (training 100%, class 120%, mixed 110%, group 150%, large group 175%).
 - [~] **H0 Measure how monsters notice players** in the client (range, walls, changing level, wandering). *(2026-11-14: weekend bonus checked; the engine's view range is 11 tiles each way; the in-client measurement is still open.)*
