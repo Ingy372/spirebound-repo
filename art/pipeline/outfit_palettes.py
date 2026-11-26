@@ -302,6 +302,12 @@ OUTFITS["bix"] = {
     "grip": ramp((40, 24, 10), (150, 110, 70)),
 }
 
+# Hill Cutthroat (2026-11-25): the bandit in sun-faded ochre, unmasked with red war paint, two curved knives
+OCHRE = ((50, 34, 10), (230, 196, 120), (160, 120, 50))
+OUTFITS["cutthroat"] = {**OUTFITS["bandit"], "hood": ramp(*OCHRE), "cape": ramp(*OCHRE), "rim": ramp((40, 26, 8), (150, 116, 60)),
+    "knife": ramp((70, 80, 100), (252, 254, 255), (186, 198, 214)), "paint": [[200, 30, 24]] * 8,
+    "fetish": ramp((150, 140, 118), (255, 252, 240))}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())
