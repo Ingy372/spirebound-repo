@@ -39,6 +39,13 @@ def stage(level):
 LADDER_TARGET = {"starter_west": 1800, "starter_east": 2500, "starter_south": 3500, "wasp_fields": 5000, "boar_meadow": 7500,
                  "burrow_hills": 9000, "wolf_copse": 11000, "reed_marsh": 9000, "thornsnap_hollow": 13000, "shard_fields": 16000,
                  "bandit_road": 14500, "old_quarry": 19000}
+# S1b: how fast each class kills against a Vanguard, measured 2026-11-26 in the client (routes s1b_<class>: three minutes
+# each at Wolf Copse, level 15, and Bandit Road, level 23, fight kit on): kills 16 / 21 / 20 / 19.
+CLASS_SPEED = {"Vanguard": 1.0, "Ranger (arrows)": 1.3, "Ranger (spears)": 1.3, "Arcanist/Mystic": 1.2}
+PARTY = ("Vanguard", "Ranger (arrows)", "Arcanist/Mystic", "Arcanist/Mystic")   # the group the party levels are made for
+# a party meets monsters in packs, so it spends less time finding the next kill: measured 2026-11-26 in the Smugglers'
+# Cellar (tools/party_run.py, five Pilots): 56 kills in 353 s of hunting = 6.3 s a kill, about 1.5 s of it fighting
+PARTY_FIND = 4.8
 WATCHTOWER_BASE = 26000                     # not modelled yet: the plan's target for the outer courtyard
 PRICE = {}                                  # item id -> cheapest NPC price (what a player pays)
 BUYBACK = {}                                # item id -> best NPC buy-back (what an NPC pays the player)
@@ -98,19 +105,30 @@ def melee(name):
     return max((-a[2] for a in MONSTERS[name]["attacks"] if a[0] == "melee"), default=0)
 
 
+def placed(design, lv):
+    """The monsters a level really holds: each clearing's groups repeated by band (H14 BAND_DENSITY, as maps/designed.py
+    places them; a lone loner is never repeated)."""
+    from floor1_plan import BAND_DENSITY
+    from balance import HABITS
+    density = dict(BAND_DENSITY, **design.get("density", {}))
+    out = []
+    for cl in lv["clearings"]:
+        if not isinstance(cl[6], list):
+            continue
+        for grp in cl[6]:
+            lone = len(grp) == 1 and grp[0][1] == 1 and HABITS.get(grp[0][0], ("",))[0] == "loner"
+            out += list(grp) * (1 if lone else density.get(cl[4], 1))
+    return out
+
+
 def refill(c):
     """Kills an hour a ground can supply: the monsters on its solo levels times 3600 / respawn. Designed grounds count
     their clearings (the party level is left out); the old loop grounds are dense enough not to limit anyone."""
     from floor1_plan import DESIGNS
     if not c.get("design"):
         return 10 ** 6
-    n = 0
-    for lv in DESIGNS[c["design"]]["levels"].values():
-        if lv.get("party"):
-            continue
-        for cl in lv["clearings"]:
-            if isinstance(cl[6], list):
-                n += sum(k for grp in cl[6] for _m, k in grp)
+    d = DESIGNS[c["design"]]
+    n = sum(k for lv in d["levels"].values() if not lv.get("party") for _m, k in placed(d, lv))
     return n * 3600 / c["respawn"]
 
 
@@ -133,8 +151,9 @@ for c in CAMPS:
     hp_pots = taken * 0.35 / 100                   # regeneration and healing spells cover ~65%; potions the rest (~100 each)
     mp_pots = taken * 0.5 / 120                    # mages heal with spells and refill that mana with potions; wand shots run on regeneration
     runes = kph * 0.3 if lvl >= 15 else 0          # from level 15 mages conjure attack runes: about one per three kills
-    attacks = (hp / dps(lvl)) / 2 * kph
     for voc in ("Vanguard", "Ranger (arrows)", "Ranger (spears)", "Arcanist/Mystic"):
+        kph = min(3600 / (hp / (dps(lvl) * CLASS_SPEED[voc]) + 8), 300, refill(c))   # S1b: each class at its own speed
+        attacks = (hp / (dps(lvl) * CLASS_SPEED[voc])) / 2 * kph
         if voc == "Vanguard":
             cost = hp_pots * PRICE[HP_POT]
         elif voc == "Ranger (arrows)":
@@ -186,7 +205,72 @@ for rc in RECIPES:
     if rc["gold"] >= rc["worth"]:
         problems.append(f"recipe {rc['name']} costs {rc['gold']} gold but is only worth {rc['worth']}: nobody would craft it")
 
+
+
+def party_share(exp, n, vocs):
+    """server/core-overrides/events/scripts/party.lua SpirePartyShare: what each member gets of one kill."""
+    return exp * (1 + 0.50 * (n - 1) + 0.10 * (max(vocs, 1) - 1)) / n
+
+
+# S1b: reward per person against the floor's baseline. A ground pays in experience and in gold (money grounds pay more
+# gold, experience grounds more experience), so its reward is the average of the two ratios. Each baseline is the solo
+# ladder smoothed into one curve: an exponential fitted through every solo ground's class average at its middle level.
+import math  # noqa: E402
+SOLO_XP, SOLO_GOLD = {}, {}
+for r in ROWS:
+    SOLO_XP.setdefault(r["id"], []).append(r["base_xp_h"])
+    SOLO_GOLD.setdefault(r["id"], []).append(r["gold_h"] + r["loot_npc_h"])
+
+
+def avg(v):
+    return sum(v) / len(v)
+
+
+def fit(table):
+    pts = [((c["levels"][0] + c["levels"][1]) / 2, math.log(max(avg(table[c["id"]]), 1))) for c in CAMPS]
+    mx, my = avg([p[0] for p in pts]), avg([p[1] for p in pts])
+    k = sum((x - mx) * (y - my) for x, y in pts) / sum((x - mx) ** 2 for x, _y in pts)
+    return lambda level: math.exp(my + k * (level - mx))
+
+
+BASE_XP, BASE_GOLD = fit(SOLO_XP), fit(SOLO_GOLD)
+REWARDS = []
+
+
+def reward(c, kind, name, gtype, lvl, xp, gold):
+    rx, rg = xp / BASE_XP(lvl), gold / BASE_GOLD(lvl)
+    REWARDS.append(dict(id=c["id"], ground=name, kind=kind, type=gtype, level=lvl, per_person_base_xp_h=round(xp),
+                        per_person_gold_h=round(gold), xp_ratio=round(rx, 2), gold_ratio=round(rg, 2), ratio=round((rx + rg) / 2, 2),
+                        vs_solo=""))
+
+
+from floor1_plan import DESIGNS, CAVE_RESPAWN  # noqa: E402
+for c in CAMPS:
+    lo, hi = c["levels"]
+    lvl = (lo + hi) / 2
+    reward(c, "solo", c["title"], c["type"], lvl, avg(SOLO_XP[c["id"]]), avg(SOLO_GOLD[c["id"]]))
+    # the ground's party level: a group of 3-4 inside any ground (balance.py budget("party"))
+    lv = next((v for v in DESIGNS[c["design"]]["levels"].values() if v.get("party")), None) if c.get("design") else None
+    if not lv:
+        continue
+    mons = placed(DESIGNS[c["design"]], lv)
+    total = sum(k for _m, k in mons)
+    hp = sum(MONSTERS[m]["hp"] * k for m, k in mons) / total
+    bx = sum(MONSTERS[m]["xp"] * k for m, k in mons) / total
+    loot = sum((drop_value(m)[0] + drop_value(m)[1]) * k for m, k in mons) / total
+    group_dps = dps(lvl) * sum(CLASS_SPEED[v] for v in PARTY)
+    kph = min(3600 / (hp / group_dps + PARTY_FIND), 300 * len(PARTY), total * 3600 / CAVE_RESPAWN)
+    solo_xp = avg(SOLO_XP[c["id"]])
+    reward(c, "party", c["title"] + ": " + lv["name"], "group", lvl,
+           party_share(bx, len(PARTY), 4) * kph,             # one of each class: 4 vocations
+           loot * kph / len(PARTY))                          # the loot split evenly
+    REWARDS[-1]["vs_solo"] = round(REWARDS[-1]["per_person_base_xp_h"] / solo_xp, 2)
+
 (ROOT / "data").mkdir(exist_ok=True)
+with open(ROOT / "data/economy_rewards.csv", "w", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=list(REWARDS[0].keys()))
+    w.writeheader()
+    w.writerows(REWARDS)
 with open(ROOT / "data/economy_floor1.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(ROWS[0].keys()))
     w.writeheader()
@@ -228,6 +312,16 @@ L += ["", "## The model (Claude's call, Jay can veto)",
 for c, b, t in ladder:
     L.append(f"| {c['title']} | {c['levels'][0]}-{c['levels'][1]} | {ROLE[c['role']]} | {b:,} | {t:,} |")
 L.append(f"| The Old Watchtower | 28-40 | both | not modelled | {WATCHTOWER_BASE:,} |")
+L += ["", "## What each ground pays per person, by class and in a party (S1b)",
+      "Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanist and Mystic 1.2x; measured in the client, "
+      "2026-11-26). A party level is modelled as one of each class (shared experience, +50% per extra member and +10% per extra "
+      "vocation, split four ways; the loot split evenly; monsters met in packs, about 4.8 s to the next kill, measured in the "
+      "Smugglers' Cellar). The ratio is against the floor's smoothed solo ladder (experience and gold averaged); a party level "
+      "is also compared with a solo hunter on the same ground. Targets (tools/balance.py GROUND_TYPES): training 1.0, class 1.2, "
+      "mixed 1.1, group 1.5, large group 1.75 (the Old Watchtower is not modelled yet).", "",
+      "| Ground | Kind | Type | Base XP/h per person | Gold/h per person | Ratio | Party vs solo |", "|---|---|---|---|---|---|---|"]
+for r in REWARDS:
+    L.append(f"| {r['ground']} | {r['kind']} | {r['type']} | {r['per_person_base_xp_h']:,} | {r['per_person_gold_h']:,} | {r['ratio']} | {r['vs_solo']} |")
 L += ["", "Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):", "",
       "| Level | Hours |", "|---|---|"]
 for lvl in (6, 9, 11, 14, 18, 21, 25, 30, 35, 40):

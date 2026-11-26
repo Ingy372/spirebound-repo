@@ -16,53 +16,53 @@
 | Hunting ground | Levels | Vocation | Kills/h | XP/h | Gold/h | Supplies/h | Net (NPC only) | Net with trading |
 |---|---|---|---|---|---|---|---|---|
 | The Ratwarren | 1-4 | Vanguard | 300 | 18,000 | 1,065 | 151 | 914 | 914 |
-| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 18,000 | 1,065 | 651 | 414 | 414 |
-| The Ratwarren | 1-4 | Ranger (spears) | 300 | 18,000 | 1,065 | 286 | 779 | 779 |
+| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 18,000 | 1,065 | 536 | 529 | 529 |
+| The Ratwarren | 1-4 | Ranger (spears) | 300 | 18,000 | 1,065 | 255 | 810 | 810 |
 | The Ratwarren | 1-4 | Arcanist/Mystic | 300 | 18,000 | 1,065 | 200 | 865 | 865 |
 | Toad Pond | 3-7 | Vanguard | 300 | 24,750 | 1,087 | 156 | 932 | 1,989 |
-| Toad Pond | 3-7 | Ranger (arrows) | 300 | 24,750 | 1,087 | 589 | 499 | 1,556 |
-| Toad Pond | 3-7 | Ranger (spears) | 300 | 24,750 | 1,087 | 273 | 815 | 1,872 |
+| Toad Pond | 3-7 | Ranger (arrows) | 300 | 24,750 | 1,087 | 489 | 599 | 1,656 |
+| Toad Pond | 3-7 | Ranger (spears) | 300 | 24,750 | 1,087 | 246 | 842 | 1,899 |
 | Toad Pond | 3-7 | Arcanist/Mystic | 300 | 24,750 | 1,087 | 206 | 882 | 1,939 |
 | Sproutling Glade | 5-10 | Vanguard | 300 | 36,000 | 1,354 | 171 | 1,182 | 2,847 |
-| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 36,000 | 1,354 | 625 | 729 | 2,394 |
-| Sproutling Glade | 5-10 | Ranger (spears) | 300 | 36,000 | 1,354 | 294 | 1,060 | 2,725 |
+| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 36,000 | 1,354 | 520 | 834 | 2,499 |
+| Sproutling Glade | 5-10 | Ranger (spears) | 300 | 36,000 | 1,354 | 266 | 1,088 | 2,753 |
 | Sproutling Glade | 5-10 | Arcanist/Mystic | 300 | 36,000 | 1,354 | 227 | 1,127 | 2,792 |
 | Waspgrass Fields | 7-12 | Vanguard | 300 | 20,400 | 1,763 | 314 | 1,448 | 3,448 |
-| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 20,400 | 1,763 | 833 | 929 | 2,929 |
-| Waspgrass Fields | 7-12 | Ranger (spears) | 300 | 20,400 | 1,763 | 454 | 1,308 | 3,308 |
+| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 20,400 | 1,763 | 713 | 1,049 | 3,049 |
+| Waspgrass Fields | 7-12 | Ranger (spears) | 300 | 20,400 | 1,763 | 422 | 1,341 | 3,341 |
 | Waspgrass Fields | 7-12 | Arcanist/Mystic | 300 | 20,400 | 1,763 | 415 | 1,347 | 3,347 |
 | Boar Meadow | 9-15 | Vanguard | 264 | 29,593 | 2,590 | 843 | 1,747 | 5,974 |
-| Boar Meadow | 9-15 | Ranger (arrows) | 264 | 29,593 | 2,590 | 1,586 | 1,004 | 5,231 |
-| Boar Meadow | 9-15 | Ranger (spears) | 264 | 29,593 | 2,590 | 1,043 | 1,546 | 5,774 |
-| Boar Meadow | 9-15 | Arcanist/Mystic | 264 | 29,593 | 2,590 | 1,115 | 1,475 | 5,702 |
+| Boar Meadow | 9-15 | Ranger (arrows) | 292 | 32,709 | 2,862 | 1,475 | 1,388 | 6,060 |
+| Boar Meadow | 9-15 | Ranger (spears) | 292 | 32,709 | 2,862 | 1,013 | 1,849 | 6,521 |
+| Boar Meadow | 9-15 | Arcanist/Mystic | 284 | 31,779 | 2,780 | 1,115 | 1,666 | 6,206 |
 | Burrow Hills | 11-16 | Vanguard | 232 | 35,627 | 3,367 | 1,051 | 2,316 | 3,679 |
-| Burrow Hills | 11-16 | Ranger (arrows) | 232 | 35,627 | 3,367 | 1,923 | 1,444 | 2,807 |
-| Burrow Hills | 11-16 | Ranger (spears) | 232 | 35,627 | 3,367 | 1,286 | 2,081 | 3,444 |
-| Burrow Hills | 11-16 | Arcanist/Mystic | 232 | 35,627 | 3,367 | 1,390 | 1,977 | 3,340 |
+| Burrow Hills | 11-16 | Ranger (arrows) | 261 | 40,111 | 3,791 | 1,806 | 1,985 | 3,520 |
+| Burrow Hills | 11-16 | Ranger (spears) | 261 | 40,111 | 3,791 | 1,255 | 2,536 | 4,071 |
+| Burrow Hills | 11-16 | Arcanist/Mystic | 252 | 38,756 | 3,663 | 1,390 | 2,273 | 3,756 |
 | Wolf Copse | 12-18 | Vanguard | 277 | 44,296 | 2,026 | 704 | 1,322 | 6,750 |
-| Wolf Copse | 12-18 | Ranger (arrows) | 277 | 44,296 | 2,026 | 1,395 | 631 | 6,059 |
-| Wolf Copse | 12-18 | Ranger (spears) | 277 | 44,296 | 2,026 | 890 | 1,136 | 6,563 |
-| Wolf Copse | 12-18 | Arcanist/Mystic | 277 | 44,296 | 2,026 | 1,763 | 263 | 5,691 |
+| Wolf Copse | 12-18 | Ranger (arrows) | 300 | 47,933 | 2,192 | 1,279 | 913 | 6,786 |
+| Wolf Copse | 12-18 | Ranger (spears) | 300 | 47,933 | 2,192 | 859 | 1,333 | 7,206 |
+| Wolf Copse | 12-18 | Arcanist/Mystic | 296 | 47,324 | 2,164 | 1,763 | 402 | 6,200 |
 | Reedmarsh | 14-19 | Vanguard | 232 | 36,232 | 4,747 | 1,251 | 3,496 | 15,088 |
-| Reedmarsh | 14-19 | Ranger (arrows) | 232 | 36,232 | 4,747 | 2,122 | 2,625 | 14,217 |
-| Reedmarsh | 14-19 | Ranger (spears) | 232 | 36,232 | 4,747 | 1,486 | 3,261 | 14,852 |
-| Reedmarsh | 14-19 | Arcanist/Mystic | 232 | 36,232 | 4,747 | 2,352 | 2,396 | 13,987 |
+| Reedmarsh | 14-19 | Ranger (arrows) | 261 | 40,787 | 5,344 | 2,005 | 3,339 | 16,387 |
+| Reedmarsh | 14-19 | Ranger (spears) | 261 | 40,787 | 5,344 | 1,455 | 3,889 | 16,938 |
+| Reedmarsh | 14-19 | Arcanist/Mystic | 253 | 39,411 | 5,164 | 2,352 | 2,812 | 15,420 |
 | Thornsnap Hollow | 14-20 | Vanguard | 252 | 51,802 | 2,795 | 1,021 | 1,774 | 3,485 |
-| Thornsnap Hollow | 14-20 | Ranger (arrows) | 252 | 51,802 | 2,795 | 1,812 | 983 | 2,694 |
-| Thornsnap Hollow | 14-20 | Ranger (spears) | 252 | 51,802 | 2,795 | 1,235 | 1,560 | 3,271 |
-| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 252 | 51,802 | 2,795 | 2,108 | 687 | 2,398 |
+| Thornsnap Hollow | 14-20 | Ranger (arrows) | 281 | 57,647 | 3,110 | 1,698 | 1,412 | 3,316 |
+| Thornsnap Hollow | 14-20 | Ranger (spears) | 281 | 57,647 | 3,110 | 1,204 | 1,906 | 3,811 |
+| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 272 | 55,895 | 3,016 | 2,108 | 908 | 2,755 |
 | Shard Fields | 17-24 | Vanguard | 277 | 64,246 | 5,795 | 523 | 5,271 | 6,517 |
-| Shard Fields | 17-24 | Ranger (arrows) | 277 | 64,246 | 5,795 | 1,216 | 4,579 | 5,825 |
-| Shard Fields | 17-24 | Ranger (spears) | 277 | 64,246 | 5,795 | 710 | 5,084 | 6,330 |
-| Shard Fields | 17-24 | Arcanist/Mystic | 277 | 64,246 | 5,795 | 1,523 | 4,272 | 5,518 |
-| The Bandit Road | 19-27 | Vanguard | 231 | 40,539 | 9,066 | 1,355 | 7,711 | 9,622 |
-| The Bandit Road | 19-27 | Ranger (arrows) | 231 | 40,539 | 9,066 | 2,110 | 6,956 | 8,868 |
-| The Bandit Road | 19-27 | Ranger (spears) | 231 | 40,539 | 9,066 | 1,559 | 7,507 | 9,419 |
-| The Bandit Road | 19-27 | Arcanist/Mystic | 231 | 40,539 | 9,066 | 2,487 | 6,579 | 8,491 |
+| Shard Fields | 17-24 | Ranger (arrows) | 300 | 69,600 | 6,277 | 1,100 | 5,177 | 6,527 |
+| Shard Fields | 17-24 | Ranger (spears) | 300 | 69,600 | 6,277 | 679 | 5,598 | 6,948 |
+| Shard Fields | 17-24 | Arcanist/Mystic | 296 | 68,647 | 6,192 | 1,523 | 4,668 | 6,000 |
+| The Bandit Road | 19-27 | Vanguard | 248 | 43,422 | 9,711 | 1,452 | 8,259 | 10,307 |
+| The Bandit Road | 19-27 | Ranger (arrows) | 277 | 48,443 | 10,833 | 2,145 | 8,688 | 10,973 |
+| The Bandit Road | 19-27 | Ranger (spears) | 277 | 48,443 | 10,833 | 1,639 | 9,195 | 11,479 |
+| The Bandit Road | 19-27 | Arcanist/Mystic | 268 | 46,935 | 10,497 | 2,664 | 7,833 | 10,046 |
 | The Old Quarry | 23-30 | Vanguard | 233 | 57,049 | 10,000 | 1,206 | 8,794 | 9,664 |
-| The Old Quarry | 23-30 | Ranger (arrows) | 233 | 57,049 | 10,000 | 2,075 | 7,925 | 8,794 |
-| The Old Quarry | 23-30 | Ranger (spears) | 233 | 57,049 | 10,000 | 1,440 | 8,560 | 9,429 |
-| The Old Quarry | 23-30 | Arcanist/Mystic | 233 | 57,049 | 10,000 | 2,292 | 7,708 | 8,577 |
+| The Old Quarry | 23-30 | Ranger (arrows) | 262 | 64,209 | 11,255 | 1,959 | 9,297 | 10,275 |
+| The Old Quarry | 23-30 | Ranger (spears) | 262 | 64,209 | 11,255 | 1,409 | 9,846 | 10,825 |
+| The Old Quarry | 23-30 | Arcanist/Mystic | 253 | 62,046 | 10,876 | 2,292 | 8,584 | 9,529 |
 
 Net with trading counts what the materials are worth when sold to other players (the gold a crafted item saves).
 
@@ -99,9 +99,33 @@ Base experience per hour is before the stage (levels 1-8: 10x, 9-20: 4x, 21-50: 
 | Reedmarsh | 14-19 | money | 9,058 | 9,000 |
 | Thornsnap Hollow | 14-20 | experience | 12,950 | 13,000 |
 | Shard Fields | 17-24 | experience | 16,062 | 16,000 |
-| The Bandit Road | 19-27 | money | 13,513 | 14,500 |
+| The Bandit Road | 19-27 | money | 14,474 | 14,500 |
 | The Old Quarry | 23-30 | money | 19,016 | 19,000 |
 | The Old Watchtower | 28-40 | both | not modelled | 26,000 |
+
+## What each ground pays per person, by class and in a party (S1b)
+Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanist and Mystic 1.2x; measured in the client, 2026-11-26). A party level is modelled as one of each class (shared experience, +50% per extra member and +10% per extra vocation, split four ways; the loot split evenly; monsters met in packs, about 4.8 s to the next kill, measured in the Smugglers' Cellar). The ratio is against the floor's smoothed solo ladder (experience and gold averaged); a party level is also compared with a solo hunter on the same ground. Targets (tools/balance.py GROUND_TYPES): training 1.0, class 1.2, mixed 1.1, group 1.5, large group 1.75 (the Old Watchtower is not modelled yet).
+
+| Ground | Kind | Type | Base XP/h per person | Gold/h per person | Ratio | Party vs solo |
+|---|---|---|---|---|---|---|
+| The Ratwarren | solo | training | 1,800 | 1,065 | 0.98 |  |
+| Toad Pond | solo | training | 2,475 | 1,087 | 0.87 |  |
+| Sproutling Glade | solo | training | 3,600 | 1,354 | 0.9 |  |
+| Waspgrass Fields | solo | class | 5,100 | 1,763 | 0.99 |  |
+| Boar Meadow | solo | class | 7,924 | 2,774 | 1.19 |  |
+| Burrow Hills | solo | mixed | 9,663 | 3,653 | 1.29 |  |
+| Burrow Hills: The Deep Molework | party | group | 15,403 | 2,086 | 1.4 | 1.59 |
+| Wolf Copse | solo | mixed | 11,718 | 2,144 | 0.99 |  |
+| Wolf Copse: The Alpha's Den | party | group | 17,347 | 1,151 | 1.17 | 1.48 |
+| Reedmarsh | solo | class | 9,826 | 5,150 | 1.13 |  |
+| Thornsnap Hollow | solo | class | 13,937 | 3,008 | 1.01 |  |
+| Thornsnap Hollow: The Rootcellar | party | group | 22,694 | 1,641 | 1.26 | 1.63 |
+| Shard Fields | solo | mixed | 17,006 | 6,135 | 1.06 |  |
+| Shard Fields: The Shard Grotto | party | group | 25,018 | 3,224 | 1.08 | 1.47 |
+| The Bandit Road | solo | mixed | 15,604 | 10,468 | 1.05 |  |
+| The Bandit Road: The Smugglers' Cellar | party | group | 29,301 | 5,388 | 1.07 | 1.88 |
+| The Old Quarry | solo | mixed | 20,626 | 10,846 | 0.83 |  |
+| The Old Quarry: The Lower Works | party | group | 32,335 | 5,991 | 0.82 | 1.57 |
 
 Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):
 

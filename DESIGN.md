@@ -354,7 +354,7 @@ bots and lag can't decide them.
 ## 7. Social and housing
 
 ### 7.1 Parties
-- Shared XP like Tibia, with a bonus so team hunting beats solo (Jay: most servers got this wrong). Party bonus: +30% per extra member and +10% per extra vocation in the party, split evenly **(from the old pack; Claude's call to keep)**. Party size up to 8, so a large-group ground (9.4) fits in one party **(Claude's call, 2026-11-16; was 6)**.
+- Shared XP like Tibia, with a bonus so team hunting beats solo (Jay: most servers got this wrong). Party bonus: +50% per extra member and +10% per extra vocation in the party, split evenly **(Claude's call, 2026-11-26: was +30% from the old pack; the economy model (S1b) showed a party of four in a party cave earning only about 1.25x a solo hunter on the same ground, short of the group target of 1.5x)**. Party size up to 8, so a large-group ground (9.4) fits in one party **(Claude's call, 2026-11-16; was 6)**.
 - Shared XP requires being within 30 tiles and the highest level being no more than 1.5× the lowest (Tibia uses 2/3), unless the leader turns on Mentor mode.
 
 ### 7.2 Guilds

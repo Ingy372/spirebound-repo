@@ -428,6 +428,27 @@ def gear_problems():
     return out
 
 
+def reward_problems():
+    """S1b: what a ground pays per person against its type (GROUND_TYPES reward), from tools/gen_economy.py's model.
+    Solo grounds: experience and gold against the floor's smoothed solo ladder, within 0.75x-1.5x of the type's target.
+    Party levels (a group of 3-4): each member earns at least 0.95x the group target times what a solo hunter earns on
+    the same ground (team hunting beats solo, DESIGN.md 7.1)."""
+    import csv
+    f = ROOT / "data" / "economy_rewards.csv"
+    if not f.exists():
+        return ["data/economy_rewards.csv is missing: run tools/gen_economy.py"]
+    out = []
+    for r in csv.DictReader(open(f, encoding="utf-8")):
+        target = GROUND_TYPES[r["type"]]["reward"]
+        if r["kind"] == "solo":
+            ratio = float(r["ratio"])
+            if not 0.75 * target <= ratio <= 1.5 * target:
+                out.append(f"reward: {r['ground']} ({r['type']}) pays {ratio}x the floor baseline, want {target}x (0.75x-1.5x of it)")
+        elif float(r["vs_solo"]) < 0.95 * target:
+            out.append(f"reward: a party of four in {r['ground']} earns {r['vs_solo']}x a solo hunter there, want {target}x")
+    return out
+
+
 def main(argv):
     monsters, floors, prices, houses, tasks = load_game()
     if "--selftest" in argv:
@@ -443,6 +464,7 @@ def main(argv):
     rows, problems = rows_and_problems(monsters, floors, prices, houses, tasks)
     problems += spawn_rule_problems()
     problems += gear_problems()
+    problems += reward_problems()
     write(rows, problems, tasks)
     print(f"wrote BALANCE.md, data/balance_floors.csv and tasks_floors.lua ({len(rows)} floors, {len(tasks)} tasks)")
     if problems:

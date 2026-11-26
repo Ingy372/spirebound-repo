@@ -68,7 +68,7 @@ end
 -- Spirebound party bonus (DESIGN.md 7.1): team hunting must beat solo.
 -- Multiplier = 1 + 0.30 per extra member + 0.10 per extra vocation; the total is split evenly.
 function SpirePartyShare(exp, partySize, uniqueVocations)
-	local multiplier = 1 + 0.30 * (partySize - 1) + 0.10 * (math.max(uniqueVocations, 1) - 1)
+	local multiplier = 1 + 0.50 * (partySize - 1) + 0.10 * (math.max(uniqueVocations, 1) - 1)
 	return math.ceil((exp * multiplier) / partySize)
 end
 

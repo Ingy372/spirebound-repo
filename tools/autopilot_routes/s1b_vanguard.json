@@ -1,0 +1,60 @@
+{
+ "name": "s1b_vanguard",
+ "about": "S1b: what a Vanguard kills and earns in 3 minutes at Wolf Copse (level 15) and Bandit Road (level 23), for the class-aware economy model.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 268, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15",
+   "note": "wolf_copse (level 15)"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wolf_copse_a",
+   "note": "wolf_copse (level 15)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 180,
+   "radius": 8,
+   "note": "measure wolf_copse"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 23",
+   "note": "bandit_road (level 23)"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_a",
+   "note": "bandit_road (level 23)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 180,
+   "radius": 8,
+   "note": "measure bandit_road"
+  }
+ ]
+}

@@ -11,7 +11,7 @@ SpireTasks.floorList = {
 	{ id = "t1_burrowmole", floor = 1, monster = "Burrow Mole", count = 55, gold = 150, points = 1 },
 	{ id = "t1_thornsnap", floor = 1, monster = "Thornsnap", count = 60, gold = 130, points = 1 },
 	{ id = "t1_reedsnapper", floor = 1, monster = "Reed Snapper", count = 55, gold = 220, points = 1 },
-	{ id = "t1_roadbandit", floor = 1, monster = "Road Bandit", count = 55, gold = 450, points = 2 },
+	{ id = "t1_roadbandit", floor = 1, monster = "Road Bandit", count = 60, gold = 490, points = 2 },
 	{ id = "t1_hedgehexer", floor = 1, monster = "Hedge Hexer", count = 50, gold = 330, points = 2 },
 	{ id = "t1_banditcrossbowman", floor = 1, monster = "Bandit Crossbowman", count = 50, gold = 350, points = 2 },
 	{ id = "t1_ruinarcher", floor = 1, monster = "Ruin Archer", count = 50, gold = 380, points = 2 },

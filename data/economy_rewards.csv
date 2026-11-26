@@ -1,0 +1,19 @@
+id,ground,kind,type,level,per_person_base_xp_h,per_person_gold_h,xp_ratio,gold_ratio,ratio,vs_solo
+starter_west,The Ratwarren,solo,training,2.5,1800,1065,0.77,1.2,0.98,
+starter_east,Toad Pond,solo,training,5.0,2475,1087,0.81,0.94,0.87,
+starter_south,Sproutling Glade,solo,training,7.5,3600,1354,0.91,0.89,0.9,
+wasp_fields,Waspgrass Fields,solo,class,9.5,5100,1763,1.04,0.94,0.99,
+boar_meadow,Boar Meadow,solo,class,12.0,7924,2774,1.25,1.13,1.19,
+burrow_hills,Burrow Hills,solo,mixed,13.5,9663,3653,1.3,1.27,1.29,
+burrow_hills,Burrow Hills: The Deep Molework,party,group,13.5,15403,2086,2.08,0.72,1.4,1.59
+wolf_copse,Wolf Copse,solo,mixed,15.0,11718,2144,1.35,0.63,0.99,
+wolf_copse,Wolf Copse: The Alpha's Den,party,group,15.0,17347,1151,2.0,0.34,1.17,1.48
+reed_marsh,Reedmarsh,solo,class,16.5,9826,5150,0.97,1.3,1.13,
+thornsnap_hollow,Thornsnap Hollow,solo,class,17.0,13937,3008,1.3,0.72,1.01,
+thornsnap_hollow,Thornsnap Hollow: The Rootcellar,party,group,17.0,22694,1641,2.12,0.39,1.26,1.63
+shard_fields,Shard Fields,solo,mixed,20.5,17006,6135,1.1,1.01,1.06,
+shard_fields,Shard Fields: The Shard Grotto,party,group,20.5,25018,3224,1.62,0.53,1.08,1.47
+bandit_road,The Bandit Road,solo,mixed,23.0,15604,10468,0.78,1.32,1.05,
+bandit_road,The Bandit Road: The Smugglers' Cellar,party,group,23.0,29301,5388,1.46,0.68,1.07,1.88
+old_quarry,The Old Quarry,solo,mixed,26.5,20626,10846,0.71,0.94,0.83,
+old_quarry,The Old Quarry: The Lower Works,party,group,26.5,32335,5991,1.12,0.52,0.82,1.57
