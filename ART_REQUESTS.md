@@ -173,14 +173,14 @@ Made by Claude with the Blender pipeline when the art queue reaches them; until 
 | [ ] | `client/images/background.png` | 1920×1080, 1 | "Fantasy painting, wide 16:9 game login background: a colossal stone spire rising from green plains into the clouds, ten faint rings of light around it (one per floor), a walled town with timber houses at its foot, a stone road and a small band of adventurers (a knight, an archer, a mage, a healer) seen from behind walking toward it, warm morning light, painterly but crisp, no text, keep the bottom fifth calm and darker so a title can sit there." Now: OTClient's stock picture (the title says Spirebound since G5). |
 
 ## Batch 11 (2026-11-25): money monsters for the website banner (Priority: with each monster)
-Jay: the website banner is reserved for "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet." Each walks across the banner as soon as its art is approved (`SHOWCASE` in `tools/gen_site.py`; pictures by `tools/site_art.py`). On the banner now: Azhrakkar and the Grey Alpha.
+Jay: the website banner is reserved for "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet." Each walks across the banner as soon as its art is approved (`SHOWCASE` in `tools/gen_site.py`; pictures by `tools/site_art.py`). On the banner now: Azhrakkar, the Bristle Boar and the Grey Alpha.
 Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up like that"). A larger website render from the Blender model comes with roadmap N6.
 
 | ✓ | Art name | What | Status |
 |---|---|---|---|
 | [x] | `azhrakkar` | Floor 10 boss | approved |
 | [x] | `alpha` | Grey Alpha, Floor 1 elite | approved |
-| [ ] | `fire_boar` | The fire boar: new, needs a design first (roadmap N6) | idea |
+| [x] | `boar` | The "fire boar" is our red-crested Bristle Boar (Jay: "It might be named frenzied boar or just regular boar with the red on top") | approved |
 | [ ] | `gate_hound` | Floor 1 boss (64x64) | not made |
 | [ ] | `axe_lord` | Axe-Lord of the Stair, Floor 1 boss (64x64) | not made |
 | [ ] | `underkeeper` | The Underkeeper | not made |

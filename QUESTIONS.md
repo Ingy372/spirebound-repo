@@ -16,6 +16,13 @@ Your four approved class outfits are going into the game (task 6.5). My calls:
 - **Recommendation:** yes to all three. Also: should every floor's priest and banker share the Hearthgate priest and banker looks, or wait for their own art? I recommend **wait** (each town feels different).
 - Jay's answer:
 
+### Q63. Rename the Bristle Boar? (2026-11-25)
+You called the red-crested boar the "fire boar" and said "it might be named frenzied boar or just regular boar". It is our Bristle Boar today (Boar Meadow), and it now walks across the website banner.
+- **Recommendation:** keep "Bristle Boar" for the common one, and save "Frenzied Boar" for a rarer, angrier red variant later (a money monster vets hunt for), so the name means something.
+- Other option: rename the common one to Frenzied Boar now.
+- Assumed until you answer: keep Bristle Boar.
+- Jay's answer:
+
 ### Q62. New rules on the website and sign-up page (2026-11-25)
 You asked for the rules and a "not allowed" list on the website. The full rulebook is now on the Rules page, on the sign-up page (players must tick "I agree" before an account is made) and in `docs/RULES.md`, all written from one file. Most of it was already decided; these lines are new, my call:
 - no sharing anyone's personal details, no sexual harassment, no advertising other servers or things for sale;

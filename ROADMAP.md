@@ -75,7 +75,7 @@ Art, not code, sets the launch date: only 13 monsters are ours.
 Kept so nothing is lost. Several wait on Jay's answers to Q54-Q61 (the review's cuts).
 
 **Money monsters (Jay, 2026-11-25)**
-- [ ] **N6 The fire boar and the other "money monsters"** (new; Jay: "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet"): design the fire boar (and the rest of the list in ART_REQUESTS.md Batch 11), make their art, and give each a website showcase render (a larger, sharp render from the Blender model, never a stretched sprite) for the banner. Done when: the fire boar spawns in game and walks across the website banner.
+- [ ] **N6 The "money monsters"** (new; Jay: "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet"; the fire boar is our red-crested Bristle Boar, already made): make the art for the rest of the list in ART_REQUESTS.md Batch 11 (the bosses first), and give each a website showcase render (a larger, sharp render from the Blender model, never a stretched sprite) for the banner. Possibly rename the Bristle Boar to something like Frenzied Boar (Q63). Done when: every boss on the list walks across the website banner.
 
 **Floors and seasons**
 - [ ] **4.7 🧑 Phase 4 playtest** (Floors 2 to 5). **5.8 🧑 Phase 5 playtest** (Floors 6 to 10 and Azhrakkar). *(How many floors open at launch: Q54.)*

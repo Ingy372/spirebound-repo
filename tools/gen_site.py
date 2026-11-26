@@ -60,9 +60,10 @@ SIGNUP_URL = ""               # the sign-up page of tools/login_server.py, e.g. 
 MODES = {1: "Normal", 2: "Hardcore", 3: "Death Game"}
 # The banner is reserved for the "money monsters" (Jay, 2026-11-25: "monsters that vets will look forward to running
 # into once in the game. Bosses, the fire boar, and a few others that haven't been made yet"). Art names; each one
-# walks across the banner as soon as its approved art is in website/public/img (tools/site_art.py). Not made yet:
-# the floor bosses, the fire boar (an idea under Later in ROADMAP.md) and the other money monsters in ART_REQUESTS.md.
-SHOWCASE = ["azhrakkar", "alpha", "gate_hound", "axe_lord", "underkeeper", "fire_boar", "old_tusk", "moonhowl",
+# walks across the banner as soon as its approved art is in website/public/img (tools/site_art.py). The "fire boar" is
+# our Bristle Boar, the red-crested one (Jay: "It might be named frenzied boar or just regular boar with the red on top").
+# Not made yet: the floor bosses and the other money monsters in ART_REQUESTS.md Batch 11.
+SHOWCASE = ["azhrakkar", "boar", "alpha", "gate_hound", "axe_lord", "underkeeper", "old_tusk", "moonhowl",
             "hollowfang", "briar_mother", "twin_fang_warden", "vault_wraith"]
 IMG = ROOT / "website" / "public" / "img"
 
