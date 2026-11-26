@@ -191,11 +191,15 @@ def build(m):
            "For lasting offers use the market at any depot locker.")
 
     # ---- shops and public buildings (plan section 5)
+    TALL_SHOPS = {"Alchemist", "Fletcher", "Quartermaster's Stores", "General Store", "Weaponsmith"}
+
     def shop(name, rect, style, door, side, npc, kind, floor="wood"):
         x0, y0, w, h = rect
         x1, y1 = x0 + w - 1, y0 + h - 1
         claim(name, *R(x0, y0), w, h)
         m.building(*R(x0, y0), w, h, Z, floor=floor, door_side=side, style=style, doors=True, door=R(*door))
+        if name in TALL_SHOPS:                              # N3: a second storey on some shops, so the roofs vary in height
+            m.storey(*R(x0, y0), w, h, Z - 1, floor=floor, style=style)
         dx, dy = door
         out = {"s": (0, 1), "n": (0, -1), "e": (1, 0), "w": (-1, 0)}[side]
         lat = (abs(out[1]), abs(out[0]))                    # sideways along the wall
@@ -707,11 +711,13 @@ def build(m):
     rng_state_hall = m.rng.getstate()
     m.fill(yx + 53, yy + 10, 6, 4, Z, "pave")                      # the path runs on to the end of the hall
     m.building(yx + 50, yy + 2, 10, 8, Z, floor="marble", door_side="s", style="white", doors=True)
-    S.carpet(m, yx + 52, yy + 4, 6, 3, Z, 2576)
+    S.carpet(m, yx + 55, yy + 6, 1, 3, Z, 2576)               # P7: a runner from the door to the Registrar
     m.sign(yx + 57, yy + 11, Z, "The Registrar's hall: its door is two steps west of here, in the wall on the north side of the path.")
     m.rng.setstate(rng_state_hall)
     m.npcs.append(("Registrar Maelis", (yx + 55, yy + 5, Z)))
     m.points["tutorial_registrar"] = (yx + 55, yy + 5, Z)
+    import hearthgate_dress                       # P7: the yard dressed (the tower's foot, hedges, trees); nothing moves
+    hearthgate_dress.dress_yard(m, yx, yy, YW, YH, Z)
     yard_x, yard_y = yx, yy                       # kept for the zones below (yx/yy are reused as loop names later)
 
     # ------------------------------------------------ the Proving (G2, Jay 2026-11-24: "continue the tutorial after

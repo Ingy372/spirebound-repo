@@ -20,6 +20,7 @@ POTS = [316, 321, 324, 329]
 TREE = 3619
 PARASOLS = [625, 626, 627]
 CAMPFIRE = 1996
+PILLAR = 1296            # grey stone post
 
 
 def _bare(m, x, y, z, r):
@@ -106,6 +107,8 @@ def dress(m, tx, ty, tw, th, z, rng):
             S.prop(m, *R(*spot), z, CAMPFIRE)
             S.prop(m, *R(spot[0] + 1, spot[1]), z, 2370)
 
+    door_lamps(m, tx, ty, tw, th, z)
+
     # ---- braziers at the four gates (P3b), just inside the wall either side of each gap
     mid_x, mid_y = tw // 2, th // 2
     for (x, y) in ((mid_x - 3, 1), (mid_x + 4, 1), (mid_x - 3, th - 2), (mid_x + 4, th - 2),
@@ -113,3 +116,71 @@ def dress(m, tx, ty, tw, th, z, rng):
         if free(x, y):
             S.prop(m, *R(x, y), z, BRAZIER)
     return placed
+
+
+def door_lamps(m, tx, ty, tw, th, z):
+    """P3b: a lit lamp on the outside wall beside each front door that faces south or east (a lamp hung on a south or
+    east wall shows outside; on a north or west wall it would hang inside, see maps/dungeon.py `hang`). At night the
+    streets glow round every doorway. Lamps go only on plain wall pieces, never on a window, corner or door."""
+    from mapgen import FAMILIES
+    lamp_h, lamp_v = 2910, 2908
+    plain_h = {f["h"] for f in FAMILIES.values()}
+    plain_v = {f["v"] for f in FAMILIES.values()}
+    walls = {i for f in FAMILIES.values() for k, i in f.items() if i and not k.startswith("door")}
+    n = 0
+    for b in m.buildings:
+        x0, y0, w, h = b["rect"]
+        if b["z"] != z or not (tx <= x0 and x0 + w <= tx + tw and ty <= y0 and y0 + h <= ty + th):
+            continue
+        ids = lambda x, y: [i for i, _a in m.items.get((x, y, z), [])]        # noqa: E731
+        south = [(x, y0 + h - 1) for x in range(x0 + 1, x0 + w - 1)]
+        east = [(x0 + w - 1, y) for y in range(y0 + 1, y0 + h - 1)]
+        for row, plain, lamp, step in ((south, plain_h, lamp_h, (1, 0)), (east, plain_v, lamp_v, (0, 1))):
+            for (x, y) in row:
+                if any(i in walls for i in ids(x, y)) or (x, y, z) not in m.ground:
+                    continue                                   # a wall piece, not the doorway
+                for d in (-2, 2):
+                    q = (x + d * step[0], y + d * step[1])
+                    have = ids(*q)
+                    if have and have[-1] in plain and lamp not in have:
+                        m.put(q[0], q[1], z, lamp)
+                        n += 1
+    return n
+
+
+def dress_yard(m, yx, yy, yw, yh, z):
+    """P7 (FLOOR1_REVIEW.md F1-01, Q47): the Arrival Yard reads as the foot of the tower, not a fenced field. Only adds
+    things on free grass away from the path, the gates and the pen; its own random numbers (the rest of the map's
+    scenery must not shift). The gates, fences, signs and points stay exactly where maps/layout_floor1.py put them."""
+    import random
+    rng = random.Random(4711)
+
+    def grass_free(x, y):
+        p = (x, y, z)
+        return p in m.ground and m.ground[p] in S.GRASS_IDS and not m.items.get(p)
+
+    # the Spire's forecourt: paved behind the sealed door's wall, a colonnade of pillars along the yard's north wall
+    for x in range(yx + 1, yx + 12):
+        for y in (yy + 1, yy + 2):
+            m.clear_items(x, y, z)
+            m.ground[(x, y, z)] = 416                  # flagstone
+        if (x - yx) % 2 == 0:
+            m.put(x, yy + 1, z, PILLAR)
+    # hedges along the inside of the north and south walls, broken here and there
+    for x in range(yx + 12, yx + yw - 15):
+        for y in (yy + 1, yy + yh - 2):
+            if grass_free(x, y) and rng.random() < 0.7:
+                m.put(x, y, z, rng.choice(S.BUSHES))
+    # a tree in the corners of each stage (between the fences), clear of the path rows (y 9..14)
+    stages = [(yx + 1, yx + 25), (yx + 27, yx + 31), (yx + 33, yx + 37), (yx + 39, yx + 43), (yx + 45, yx + 49)]
+    for (a, b) in stages:
+        for x in (a + 1, b - 1):
+            for y in (yy + 3, yy + yh - 4):
+                if b - a >= 4 and grass_free(x, y):
+                    m.put(x, y, z, rng.choice(S.TREES_BROAD[:3]))
+    # flower beds beside the path, two tiles off it
+    for x in range(yx + 2, yx + 50):
+        for y in (yy + 7, yy + 16):
+            if grass_free(x, y) and rng.random() < 0.35:
+                m.put(x, y, z, rng.choice(S.FLOWERS))
+

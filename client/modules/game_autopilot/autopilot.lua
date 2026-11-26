@@ -239,6 +239,41 @@ local function fight(player, radius)
 end
 
 local handlers = {}
+local charlistPending = false
+
+-- G12b: log out to the character list (the client asks the login service again) and write down what the list shows
+-- for this character; the run ends there. { "do": "charlist" } (last step)
+function handlers.charlist()
+    if not stepData.sent then
+        stepData.sent = true
+        charlistPending = true
+        log('charlist: logging out to the character list')
+        g_game.safeLogout()
+    end
+end
+
+local function readCharlist(tries)
+    local chars = rootWidget:recursiveGetChildById('charactersWindow')
+    local list = chars and chars:isVisible() and chars:getChildById('characters')
+    if not list then
+        if (tries or 0) < 20 then return scheduleEvent(function() readCharlist((tries or 0) + 1) end, 500) end
+        log('charlist: the character list never showed')
+        return finish('route complete')
+    end
+    for _, w in ipairs(list:getChildren()) do
+        if w.characterName == plan.character then
+            local out = {}
+            local function texts(x)
+                local t = x.getText and x:getText()
+                if t and t ~= '' then out[#out + 1] = t end
+                for _, c in ipairs(x:getChildren()) do texts(c) end
+            end
+            texts(w)
+            log('charlist ' .. plan.character .. ': ' .. table.concat(out, ' | '))
+        end
+    end
+    finish('route complete')
+end
 
 function handlers.jump(player)
     local to = toPos(step.to)
@@ -949,6 +984,11 @@ local function onGameStart()
 end
 
 local function onGameEnd()
+    if charlistPending and not finished then
+        charlistPending = false
+        scheduleEvent(readCharlist, 4000)   -- the refreshed list arrives about half a second after the logout
+        return
+    end
     if not finished then
         log('left the game unexpectedly')
         finish('disconnected')
