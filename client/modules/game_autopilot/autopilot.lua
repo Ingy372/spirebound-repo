@@ -731,6 +731,27 @@ function handlers.assist(player)
     end
 end
 
+-- (party playtests) pick up items lying next to you into the backpack: { "do": "pickup", "ids": [3359] } (no ids: anything)
+function handlers.pickup(player)
+    if not stepData.t then
+        stepData.t = now()
+        local pos = player:getPosition()
+        for dx = -1, 1 do
+            for dy = -1, 1 do
+                local tile = g_map.getTile({ x = pos.x + dx, y = pos.y + dy, z = pos.z })
+                local thing = tile and tile:getTopMoveThing()
+                if thing and thing:isItem() and (not step.ids or #step.ids == 0 or table.contains(step.ids, thing:getId())) then
+                    g_game.move(thing, { x = 65535, y = 64, z = 0 }, math.max(1, thing:getCount()))
+                    log('picked up item ' .. thing:getId() .. ' at ' .. fmtPos(tile:getPosition()))
+                    remember('picked up item ' .. thing:getId())
+                end
+            end
+        end
+        return
+    end
+    if now() - stepData.t > 1.5 then nextStep() end
+end
+
 -- (party playtests) drop junk on the floor under you, as a player does: { "do": "drop", "ids": [3577] }
 function handlers.drop(player)
     if not stepData.t then

@@ -465,10 +465,12 @@ def gear():
     for shop in ("NPC Armorer Hesta", "NPC Weaponsmith Garrick"):
         def steps(t, st, shop=shop):
             items = [[n, 1] for n, iid, price in want[t] if SHOP_OF.get(iid) == shop]
-            if not items:
+            junk = len(st.get("backpack", [])) >= 14       # the smiths buy the weapons and armour Osric won't
+            if not items and not junk:
                 return []
             here = (st["x"], st["y"], st["z"])
-            return walk_steps(here, beside(pl[shop])) + [{"do": "trade", "buy": items}, {"do": "wait", "seconds": 2}]
+            return walk_steps(here, beside(pl[shop])) + [{"do": "trade", "buy": items, "sell": ["*"] if junk else []},
+                                                         {"do": "wait", "seconds": 2}]
         everyone(steps, f"gear {shop}")
     wear()
 

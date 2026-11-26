@@ -75,7 +75,17 @@ Axe-Lord kill can't spoil the real race.
   With one family, just hand it over.
 - The new weapon has the same look and market name as the starter one (the bag shows two "snakebite rod"s), so a
   player can't tell which is which without looking at each one.
-- **The tank's Hearthguard Sword vanished (unexplained, needs tracing).** Dorrow gave it at level 10 ("It's
+- **ROOT CAUSE FOUND: quest gear drops on the floor when you are over your carrying limit, with no message.**
+  `SpireGear.make` (lib/spirebound/gear.lua) uses `into:addItem(d.base, 1)`; for a player, Canary's `addItem`
+  defaults to `canDropOnMap = true`, so when the character is over capacity the item lands on the floor under them.
+  Proven: Hunter Brannoch's reward "Hearthward Mail" did not appear in the tank's bag (he was over capacity from
+  looted meat); the test client then found it lying on the tile at his feet and picked it up. This is almost
+  certainly also what happened to his Hearthguard Sword at level 10 (it would have rotted away on the floor of the
+  north gate). Every caller is affected: Dorrow's weapon (gear.lua:174), quest armour, boss rewards, shop sets
+  (shop.lua:15-16), reforges (gear.lua:261). **Fix:** call `addItem(d.base, 1, false)` and, when it returns nil,
+  send it to the player's store inbox or refuse with "Make room or lighten your load first" (Dorrow's handler already
+  has that line for the nil case). Then retest with a character carrying too much.
+- **The tank's Hearthguard Sword vanished (cause above, details kept for the record).** Dorrow gave it at level 10 ("It's
   yours"), tempered it at level 17 ("one tier stronger"), but at level 21 the Journal says "WEAPON: none yet" and
   the saved character has no Spirebound-tagged item anywhere (bag, hand, inbox, depot): only the plain starter sword
   and a looted mace. In between: a solo death on the Bandit Road at level 21 (with all five blessings, so no item
@@ -121,7 +131,9 @@ Axe-Lord kill can't spoil the real race.
   then 30 bandits), credited per kill. Hunting as a party, the tank lands the kills: after a lap of 79 moles the
   tank's count was done, the healer's 8/25 and the damage dealer's 0/25. A real party that hunts together will
   find two of its members locked out of the floor boss. (The test party split up to finish it, as real players
-  would once they work it out.) Same fix as below, and it matters more here than anywhere.
+  would once they work it out.) Same fix as below, and it matters more here than anywhere. The other two pieces are
+  already party-friendly: the Stonehorn Ram and the Gate Hound credit everyone on the boss's damage map
+  (`scripts/spirebound/stair_key.lua`, `SpireGear.giveBossReward`); only the Iron quests use per-kill credit.
 - **Quest kills don't count for the party.** `SpireQuestKill` (scripts/spirebound/quests.lua) credits only the
   character the engine gives the kill to (most damage / last hit). After hunting together, Dorrow's wasp quest stood
   at 12/12 for the tank, 4/12 for the healer and 0/12 for the damage dealer. Floor 1 tells players to group up, but a
@@ -160,6 +172,14 @@ Axe-Lord kill can't spoil the real race.
 - **Levelling speed:** the party went from level 3 to 19-20 in about 2 hours 45 minutes of play, including town
   trips and quest walks. The balance target is about 12 hours to level 35 solo; a party with shared experience runs
   far ahead of it.
+
+- **Bandit Road solo (Vanguard level 21):** died twice. First in starter leather. Second in brass armour, legs,
+  shield and a longsword, starting at 25% health: four Road Bandits at once dealt 40-50 damage every 2 seconds while
+  he drank a health potion every 2 seconds and cast Second Wind; dead in about 20 seconds. The ground is "mixed" and
+  its packs are clearly meant for groups, which matches the design; but a health potion's heal looks small next to
+  a 4-bandit pack's damage at that level. Worth checking potion strength against Floor 1's late-band damage.
+- **Healer and damage dealer as a pair at Burrow Hills (level 19-21):** 16-minute lap, 81-92k experience per hour
+  each, no deaths, the healer used 10 mana potions keeping both up, both earned their own loot (+565, +281 gold).
 
 ### Weight and junk
 - **Autoloot fills your capacity with meat.** Moles, boars and wolves drop meat (13 oz each), autoloot takes it, and
