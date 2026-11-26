@@ -2,15 +2,33 @@
 """Builds the public information website into website/public/ (plain HTML + one CSS file, no tracking,
 no outside scripts). Pages are generated from DESIGN.md's rules, maps/floors.py and data/*.csv so the
 site cannot drift from the game. Account creation, character pages and the Hall of Fame need a live
-database and come from MyAAC (roadmap 7.1); this is the static wiki and rules part.
+database. They are built here from a snapshot of the game's records (roadmap 7.1): the Hall of Fame,
+the character pages, the Memorial, the Exile Ledger and who is online. Without a snapshot those pages say they
+open with the server. Accounts and first characters are made on the sign-up page of tools/login_server.py;
+the Join page explains it and links there.
 
-Usage: python3 tools/gen_site.py            (writes website/public/)
-       python3 tools/gen_site.py --check    (builds into a temp folder and verifies links; used by tests)
+Usage: python3 tools/gen_site.py            (writes website/public/: no player data, safe to commit)
+       python3 tools/gen_site.py --snapshot snap.json [--signup-url URL] [--out DIR]
+                                            (the live site with player data; default DIR .local/site, never committed)
+       python3 tools/gen_site.py --check    (builds into temp folders, with and without the sample snapshot,
+                                             and verifies links; used by tests)
+
+Snapshot (JSON, every part optional):
+  {"taken": unix time,
+   "online": {"characters": 12, "people": 9},
+   "floors": [{"floor": 1, "cleared_at": unix, "credit": ["Name", ...], "last_hit": "Name", "duration": seconds}],
+   "characters": [{"name", "level", "vocation", "mode": 1 Normal / 2 Hardcore / 3 Death Game, "retired": bool,
+                   "online": bool, "titles": [...], "created": unix}],     (sorted by experience, highest first)
+   "memorial": [{"name", "level", "vocation", "cause", "time"}],
+   "exiles": [{"name", "reason", "when": unix, "until": unix, or 0 for permanent}]}
+The fields match the server's own records (lib/spirebound/boards.lua, floors.lua, deathgame.lua).
 """
 from __future__ import annotations
 
 import csv
+import datetime
 import html
+import json
 import re
 import sys
 import tempfile
@@ -24,10 +42,15 @@ SITE = "Spirebound"
 FLOOR1 = dict(name="Hearthgate Plains", town="Hearthgate")
 
 NAV = [
-    ("index.html", "Home"), ("how-to-play.html", "How to play"), ("floors.html", "The tower"),
+    ("index.html", "Home"), ("join.html", "Join"), ("how-to-play.html", "How to play"), ("floors.html", "The tower"),
     ("vocations.html", "Vocations"), ("modes.html", "Difficulty"), ("pvp.html", "PvP rules"),
-    ("events.html", "Events"), ("rules.html", "Rules"),
+    ("events.html", "Events"), ("hall-of-fame.html", "Hall of Fame"), ("characters.html", "Characters"),
+    ("rules.html", "Rules"),
 ]
+
+SNAP: dict | None = None      # the game's records for the live site (set by main); None = no player data
+SIGNUP_URL = ""               # the sign-up page of tools/login_server.py, e.g. https://play.example/signup
+MODES = {1: "Normal", 2: "Hardcore", 3: "Death Game"}
 
 CSS = """
 :root{--bg:#f6f4ef;--fg:#1d2230;--mute:#5a6275;--card:#ffffff;--line:#d9d5c8;--accent:#1f6f8b;--accent2:#b5502a}
@@ -50,6 +73,7 @@ table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.95rem}
 th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
 th{background:var(--card)}
 .scroll{overflow-x:auto}
+.stat{display:flex;flex-wrap:wrap;gap:12px}.stat .card{flex:1 1 180px;margin:0}.stat b{font-size:1.6rem;display:block}
 .pill{display:inline-block;padding:0 8px;border-radius:99px;border:1px solid var(--line);font-size:.8rem;color:var(--mute)}
 footer{border-top:1px solid var(--line);color:var(--mute);font-size:.85rem;padding:16px 0}
 a{color:var(--accent)}
@@ -77,10 +101,16 @@ Building in public; this site is rebuilt from the game's own data files.</div></
 """
 
 
+class Raw:
+    """A table cell that is already HTML (a link built here), so it is not escaped again."""
+    def __init__(self, html_text: str):
+        self.html = html_text
+
+
 def table(head: list[str], rows: list[list]) -> str:
-    th = "".join(f"<th>{e(h)}</th>" for h in head)
-    tr = "".join("<tr>" + "".join(f"<td>{e(c)}</td>" for c in r) + "</tr>" for r in rows)
-    return f'<div class="scroll"><table><tr>{th}</tr>{tr}</table></div>'
+    th = "<tr>" + "".join(f"<th>{e(h)}</th>" for h in head) + "</tr>" if head else ""
+    tr = "".join("<tr>" + "".join(f"<td>{c.html if isinstance(c, Raw) else e(c)}</td>" for c in r) + "</tr>" for r in rows)
+    return f'<div class="scroll"><table>{th}{tr}</table></div>'
 
 
 def csv_rows(name: str) -> list[dict]:
@@ -229,6 +259,184 @@ def events() -> str:
     ])
 
 
+# ---------------------------------------------------------------- accounts and the game's records (roadmap 7.1)
+
+def slug(name: str) -> str:
+    return "char-" + re.sub(r"[^a-z0-9]+", "-", name.lower()).strip("-") + ".html"
+
+
+def when(ts) -> str:
+    if not ts:
+        return "-"
+    return datetime.datetime.fromtimestamp(int(ts), datetime.timezone.utc).strftime("%Y-%m-%d")
+
+
+def span(seconds) -> str:
+    s = int(seconds or 0)
+    return f"{s // 60} min {s % 60:02d} s" if s else "-"
+
+
+def char_link(name: str) -> Raw:
+    known = {c["name"] for c in (SNAP or {}).get("characters", [])}
+    return Raw(f'<a href="{slug(name)}">{e(name)}</a>' if name in known else e(name))
+
+
+def not_yet(what: str, records: bool = True) -> str:
+    tail = " This page is rebuilt from the game's own records while the server runs." if records else ""
+    return f'<div class="card"><b>Opens with the server.</b> {e(what)}{e(tail)}</div>'
+
+
+def taken() -> str:
+    ts = (SNAP or {}).get("taken")
+    return f'<p class="pill">Updated {e(when(ts))}</p>' if ts else ""
+
+
+def join() -> str:
+    if SIGNUP_URL:
+        go = (f'<p><a class="pill" href="{e(SIGNUP_URL)}">Create your account</a></p>'
+              "<p>The sign-up page asks for an e-mail address, a password (8 characters or more) and your first "
+              "character's name.</p>")
+    else:
+        go = not_yet("Account sign-up opens here when the server opens. During the friends test, Jay sends you the address.", records=False)
+    return go + """
+<h2>How joining works</h2>
+<ol>
+<li><b>Make an account.</b> One account per person. Your password is never stored as plain text.</li>
+<li><b>Name your first character</b> on the same page: 3 to 20 letters, each word starting with a capital
+(for example Mira or Tom Reed). Pick a name of your own: names from other games, real people's names and rude
+names break the <a href="rules.html">rules</a>, and a gamemaster will ask you to change them.</li>
+<li><b>Download the Spirebound client</b> and log in with your e-mail and password.</li>
+<li><b>Pick your vocation in the game, not here.</b> Every character wakes in the Arrival Yard with no vocation.
+A short guided path (under ten minutes) ends at the Registrar in Hearthgate, where you choose your vocation and
+your difficulty. You will know how fighting feels before you choose.</li>
+</ol>
+<h2>More characters</h2>
+<p>Each account can hold several characters. Making another one from this site comes with the full account pages;
+until then, ask a gamemaster in game.</p>
+<h2>Keeping your account safe</h2>
+<ul><li>Use a password you use nowhere else.</li>
+<li>Staff will never ask for your password, in game or anywhere else.</li>
+<li>Too many wrong passwords from one address make that address wait a few minutes.</li></ul>
+"""
+
+
+def hall_of_fame() -> str:
+    more = ('<p>See also the <a href="memorial.html">Memorial</a>, the <a href="exile-ledger.html">Exile Ledger</a> and '
+            '<a href="online.html">who is online</a>.</p>')
+    if SNAP is None:
+        return not_yet("The first clear of every floor, the top climbers and the Death Game leaderboard will be listed here.") + more
+    out = [taken(), "<h2>First clears</h2>",
+           "<p>The first group to beat each floor boss opened the next floor for the whole server.</p>"]
+    fl = [f for f in sorted(SNAP.get("floors", []), key=lambda f: f.get("floor", 0)) if f.get("cleared_at")]
+    if fl:
+        out.append(table(["Floor", "Cleared", "By", "Final blow", "Fight time"], [
+            [f["floor"], when(f.get("cleared_at")),
+             Raw(", ".join(char_link(n).html for n in f.get("credit", [])) or "-"),
+             char_link(f["last_hit"]) if f.get("last_hit") else "-", span(f.get("duration"))] for f in fl]))
+    else:
+        out.append("<p>No floor has been cleared yet. Floor 1's boss is waiting.</p>")
+    chars = SNAP.get("characters", [])
+    for title, mode in (("Top climbers", None), ("Hardcore", 2), ("Death Game", 3)):
+        rows = [c for c in chars if mode is None or c.get("mode") == mode][:20]
+        out.append(f"<h2>{e(title)}</h2>")
+        if not rows:
+            out.append("<p>Nobody yet.</p>")
+            continue
+        out.append(table(["#", "Character", "Level", "Vocation", "Difficulty", ""], [
+            [i + 1, char_link(c["name"]), c.get("level", 0), c.get("vocation", "None"), MODES.get(c.get("mode", 1), "Normal"),
+             "fallen" if c.get("retired") else ""] for i, c in enumerate(rows)]))
+    return "\n".join(out) + more
+
+
+def characters() -> str:
+    if SNAP is None:
+        return not_yet("Every character gets a page: level, vocation, difficulty and titles.")
+    chars = sorted(SNAP.get("characters", []), key=lambda c: c["name"].lower())
+    if not chars:
+        return taken() + "<p>No characters yet.</p>"
+    return taken() + f'<p>{len(chars)} characters, A to Z. Ranked lists are in the <a href="hall-of-fame.html">Hall of Fame</a>.</p>' + \
+        table(["Character", "Level", "Vocation", "Difficulty", ""], [
+            [char_link(c["name"]), c.get("level", 0), c.get("vocation", "None"), MODES.get(c.get("mode", 1), "Normal"),
+             "online" if c.get("online") else ("fallen" if c.get("retired") else "")] for c in chars])
+
+
+def character(c: dict) -> str:
+    rank = next((i + 1 for i, x in enumerate(SNAP.get("characters", [])) if x["name"] == c["name"]), None)
+    rows = [["Level", c.get("level", 0)], ["Vocation", c.get("vocation", "None")],
+            ["Difficulty", MODES.get(c.get("mode", 1), "Normal")], ["Rank", f"#{rank} in the tower" if rank else "-"],
+            ["Status", "Online now" if c.get("online") else ("Fallen (Death Game)" if c.get("retired") else "Offline")]]
+    if c.get("created"):
+        rows.append(["Climbing since", when(c["created"])])
+    clears = sorted(f["floor"] for f in SNAP.get("floors", []) if c["name"] in f.get("credit", []))
+    if clears:
+        rows.append(["First clears", ", ".join(f"Floor {n}" for n in clears)])
+    out = [taken(), table([], rows)]
+    if c.get("titles"):
+        out.append("<h2>Titles</h2><p>" + " ".join(f'<span class="pill">{e(x)}</span>' for x in c["titles"]) + "</p>")
+    fell = next((m for m in SNAP.get("memorial", []) if m["name"] == c["name"]), None)
+    if fell:
+        out.append(f"<h2>On the Memorial</h2><p>Fell at level {e(fell.get('level', 0))} to {e(fell.get('cause', 'unknown'))} "
+                   f"on {e(when(fell.get('time')))}.</p>")
+    out.append('<p><a href="characters.html">All characters</a></p>')
+    return "\n".join(out)
+
+
+def memorial() -> str:
+    intro = ("<p>Every Death Game climber who fell this season. Only monsters, bosses, traps and the tower itself can "
+             "put a name here.</p>")
+    if SNAP is None:
+        return intro + not_yet("Fallen Death Game characters will be listed here.")
+    m = sorted(SNAP.get("memorial", []), key=lambda r: (-int(r.get("level", 0)), r.get("time", 0)))
+    if not m:
+        return intro + taken() + "<p>Nobody has fallen yet.</p>"
+    return intro + taken() + table(["#", "Character", "Level", "Vocation", "Fell to", "Date"], [
+        [i + 1, char_link(r["name"]), r.get("level", 0), r.get("vocation", "?"), r.get("cause", "unknown"), when(r.get("time"))]
+        for i, r in enumerate(m)])
+
+
+def exile_ledger() -> str:
+    intro = ("<p>Every ban for cheating (third-party bots, modified clients, selling gold or accounts for money) is "
+             "public, with its reason. A ban covers the person's other accounts too. Mutes and short chat bans are not "
+             'listed. The <a href="rules.html">Rules</a> say what leads where.</p>')
+    if SNAP is None:
+        return intro + not_yet("Bans will be listed here.")
+    x = sorted(SNAP.get("exiles", []), key=lambda r: -int(r.get("when", 0)))
+    if not x:
+        return intro + taken() + "<p>Nobody has been banned. Long may it last.</p>"
+    return intro + taken() + table(["Character", "Reason", "Since", "Until"], [
+        [r["name"], r.get("reason", ""), when(r.get("when")), when(r["until"]) if r.get("until") else "permanent"] for r in x])
+
+
+def online() -> str:
+    intro = ("<p>Characters online and real people online, side by side, so nobody wonders whether the count is padded. "
+             "One person may run up to two clients.</p>")
+    if SNAP is None:
+        return intro + not_yet("The live count will be shown here.")
+    o = SNAP.get("online", {})
+    names = sorted((c for c in SNAP.get("characters", []) if c.get("online")), key=lambda c: -int(c.get("level", 0)))
+    out = [intro, taken(), f'<div class="stat"><div class="card"><b>{e(o.get("characters", len(names)))}</b>characters online</div>'
+           f'<div class="card"><b>{e(o.get("people", "-"))}</b>real people online</div></div>']
+    if names:
+        out.append(table(["Character", "Level", "Vocation"], [[char_link(c["name"]), c.get("level", 0), c.get("vocation", "None")] for c in names]))
+    return "\n".join(out)
+
+
+# A made-up snapshot so --check exercises every data page (no real players in it).
+SAMPLE = {
+    "taken": 1795000000, "online": {"characters": 3, "people": 2},
+    "floors": [{"floor": 1, "cleared_at": 1794900000, "credit": ["Mira Vale", "Tom Reed", "Odessa Thorne"], "last_hit": "Tom Reed", "duration": 1260}],
+    "characters": [
+        {"name": "Tom Reed", "level": 61, "vocation": "Blade Warden", "mode": 1, "online": True, "titles": ["Floor 1 First Clear"], "created": 1794000000},
+        {"name": "Mira Vale", "level": 58, "vocation": "Elder Mystic", "mode": 2, "online": True},
+        {"name": "Odessa Thorne", "level": 55, "vocation": "Far Warden", "mode": 3},
+        {"name": "Pip Hollow", "level": 22, "vocation": "Arcanist", "mode": 3, "retired": True},
+        {"name": "Wren", "level": 3, "vocation": "None", "mode": 1, "online": True},
+    ],
+    "memorial": [{"name": "Pip Hollow", "level": 22, "vocation": "Arcanist", "cause": "a Grey Alpha", "time": 1794950000}],
+    "exiles": [{"name": "Quick Coin", "reason": "Selling gold for real money", "when": 1794960000, "until": 0}],
+}
+
+
 def rules() -> str:
     return """
 <h2>Be decent</h2>
@@ -265,22 +473,38 @@ PAGES = {
     "pvp.html": ("PvP rules", pvp),
     "events.html": ("Events", events),
     "rules.html": ("Rules", rules),
+    "join.html": ("Join the tower", join),
+    "hall-of-fame.html": ("Hall of Fame", hall_of_fame),
+    "characters.html": ("Characters", characters),
+    "memorial.html": ("Memorial", memorial),
+    "exile-ledger.html": ("Exile Ledger", exile_ledger),
+    "online.html": ("Who is online", online),
 }
 
 
 def build(out: Path) -> list[str]:
     out.mkdir(parents=True, exist_ok=True)
     (out / "style.css").write_text(CSS.strip() + "\n", encoding="utf8")
+    for old in out.glob("char-*.html"):          # characters can be renamed or deleted between snapshots
+        old.unlink()
+    names = []
     for name, (title, fn) in PAGES.items():
         (out / name).write_text(page(name, title, fn()), encoding="utf8")
-    return list(PAGES)
+        names.append(name)
+    for c in (SNAP or {}).get("characters", []):
+        name = slug(c["name"])
+        (out / name).write_text(page(name, c["name"], character(c)), encoding="utf8")
+        names.append(name)
+    return names
 
 
-def check(out: Path) -> list[str]:
+def check(out: Path, names: list[str]) -> list[str]:
     problems = []
-    for name in PAGES:
+    for name in names:
         text = (out / name).read_text(encoding="utf8")
         for href in re.findall(r'href="([^"#]+)"', text):
+            if SIGNUP_URL and html.unescape(href) == SIGNUP_URL:
+                continue
             if href.startswith("http"):
                 problems.append(f"{name}: external link {href}")
             elif not (out / href).exists():
@@ -290,18 +514,38 @@ def check(out: Path) -> list[str]:
     return problems
 
 
+def arg(flag: str) -> str | None:
+    i = sys.argv.index(flag) if flag in sys.argv else -1
+    return sys.argv[i + 1] if 0 <= i < len(sys.argv) - 1 else None
+
+
 def main() -> int:
+    global SNAP, SIGNUP_URL
     if "--check" in sys.argv:
-        with tempfile.TemporaryDirectory() as d:
-            names = build(Path(d))
-            problems = check(Path(d))
-        print(f"site: {len(names)} pages, {len(problems)} problems")
+        problems, count = [], 0
+        for snap, url in ((None, ""), (SAMPLE, "https://play.example/signup")):
+            SNAP, SIGNUP_URL = snap, url
+            with tempfile.TemporaryDirectory() as d:
+                names = build(Path(d))
+                problems += [f"{'sample' if snap else 'plain'}: {p}" for p in check(Path(d), names)]
+                count += len(names)
+        SNAP, SIGNUP_URL = None, ""
+        print(f"site: {count} pages (plain + sample snapshot), {len(problems)} problems")
         for p in problems:
             print("  " + p)
         return 1 if problems else 0
-    out = ROOT / "website" / "public"
+    SIGNUP_URL = arg("--signup-url") or ""
+    snap = arg("--snapshot")
+    public = ROOT / "website" / "public"
+    if snap:
+        SNAP = json.loads(Path(snap).read_text(encoding="utf8"))
+        out = Path(arg("--out") or ROOT / ".local" / "site")
+        if out.resolve() == public.resolve():
+            sys.exit("A site with player data must not go into website/public (that folder is committed). Use --out.")
+    else:
+        out = public
     names = build(out)
-    print(f"site: wrote {len(names)} pages to {out.relative_to(ROOT)}")
+    print(f"site: wrote {len(names)} pages to {out}")
     return 0
 
 
