@@ -94,7 +94,24 @@ OLD_TUSK = {
     "scar": ramp((96, 70, 72), (222, 196, 190), (160, 128, 126)),
 }
 
-BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK}
+# Hollowfang: the Wolf Copse's hidden master. Night-black with an indigo cast (Tibia's wolves are grey, our alpha is
+# teal-silver), a bone-white streak from brow to tail, one great ivory fang, yellow-green eyes.
+NIGHTFUR = ((22, 20, 34), (138, 134, 162), (56, 52, 78))
+HOLLOWFANG = {
+    "body": ramp(*NIGHTFUR), "head": ramp(*NIGHTFUR), "tail_base": ramp(*NIGHTFUR),
+    "belly": ramp((26, 24, 36), (120, 116, 136), (60, 56, 74)), "snout": ramp((30, 28, 40), (150, 146, 164), (74, 70, 90)),
+    "bib": ramp((40, 38, 50), (176, 172, 186), (96, 92, 110)), "nose": ramp((6, 6, 10), (60, 58, 70), (24, 22, 30)),
+    "ear": ramp((14, 12, 22), (96, 92, 116), (40, 36, 56)), "eye": [[206, 255, 96]],
+    "leg_near": ramp((18, 16, 28), (110, 106, 132), (44, 40, 62)), "leg_far": ramp((10, 9, 16), (60, 56, 76), (26, 24, 36)),
+    "paw_near": ramp((8, 8, 12), (56, 54, 66), (24, 22, 30)), "paw_far": ramp((5, 5, 8), (30, 28, 36), (14, 13, 18)),
+    "tail_tip": ramp((110, 106, 100), (250, 248, 240), (196, 192, 184)),
+    "saddle": ramp((12, 11, 20), (84, 80, 104), (34, 32, 48)), "brow": ramp((6, 6, 10), (30, 28, 40)),
+    "line": ramp((6, 5, 8), (40, 32, 36)), "stripe": ramp((110, 106, 100), (252, 250, 244), (200, 196, 188)),
+    "fang": ramp((120, 104, 70), (255, 250, 228), (214, 200, 160)), "scar": ramp((90, 76, 84), (206, 190, 196), (150, 132, 140)),
+}
+
+BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK,
+          "hollowfang": HOLLOWFANG}
 
 
 def main():

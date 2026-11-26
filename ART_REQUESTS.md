@@ -196,6 +196,7 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [x] | `axe_lord`, `axe_lord_blade` | Axe-Lord of the Stair, Floor 1 boss (64x64), both phases | approved |
 | [ ] | `underkeeper` | The Underkeeper | not made |
 | [~] | `old_tusk` | Old Tusk, Floor 1 secret boss: the Bristle Boar grown ancient (grizzled, one great tusk, old arrows in his back) | drafted 2026-11-25, waiting for Jay |
-| [ ] | `moonhowl`, `hollowfang`, `briar_mother` | Floor 1 elites and minibosses (now wearing their cousin's sprite) | not made |
+| [~] | `hollowfang` | Hollowfang, Floor 1 hidden mini-boss: a night-black wolf with a pale mane and one great fang | drafted 2026-11-25, waiting for Jay |
+| [ ] | `moonhowl`, `briar_mother` | Floor 1 elites and minibosses (now wearing their cousin's sprite) | not made |
 | [ ] | `twin_fang_warden`, `vault_wraith` | Floor 1 vault and trial bosses | not made |
 
