@@ -1,0 +1,155 @@
+{
+ "name": "g10_tracker",
+ "character": "Pilot Vanguard",
+ "timeout": 240,
+ "about": "G10: a fresh character's Quest Tracker shows Pell's First Blood and counts each kill.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot newbie",
+   "note": "a fresh character: Pell's quest and the tracker's list both new"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": [
+    1278,
+    1347,
+    7
+   ],
+   "note": "Guide Pell"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g10_tracker_taken"
+  },
+  {
+   "do": "jump",
+   "to": "tutorial_pen"
+  },
+  {
+   "do": "hunt",
+   "seconds": 6,
+   "radius": 6,
+   "note": "about one kill"
+  },
+  {
+   "do": "shot",
+   "name": "g10_tracker_one"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "radius": 6,
+   "note": "the rest"
+  },
+  {
+   "do": "shot",
+   "name": "g10_tracker_done"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest t1_1 3"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1325,
+    1343,
+    7
+   ],
+   "note": "the Registrar: back to a Vanguard"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "vanguard"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "normal"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 5
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

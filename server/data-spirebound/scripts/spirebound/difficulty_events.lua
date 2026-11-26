@@ -21,7 +21,7 @@ xp:register()
 local lose = EventCallback("SpireDifficultyLoseXp")
 function lose.playerOnLoseExperience(player, exp)
 	local lost = Difficulty.finalDeathLoss(Difficulty.get(player), exp, player:getLevel(), player:getExperience())
-	if lost == 0 and exp > 0 then -- G12: the catch-up rule kept it all; say so after the respawn (the death window doesn't)
+	if lost == 0 and exp > 0 and player:getHealth() <= 0 then -- G12 (a real death, not a GM taking levels away): the catch-up rule kept it all; say so after the respawn (the death window doesn't)
 		player:kv():scoped("spirebound"):set("youngGrace", exp)
 	end
 	return math.floor(lost * SpirePvP.deathLossMultiplier(player:getSkull()))
@@ -87,6 +87,21 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 hits:register()
+
+-- G12: a Normal climber below level 50 who dies is told after the respawn that it cost no experience. Up to level 21
+-- the engine's own adventurer's blessing takes no experience before our loss hook ever runs, so the death itself is
+-- noted here (the loss hook adds how much was kept when it does run).
+local young = CreatureEvent("SpireYoungDeath")
+function young.onDeath(player)
+	if Difficulty.get(player) <= Difficulty.NORMAL and player:getLevel() < 50 then
+		local s = player:kv():scoped("spirebound")
+		if (tonumber(s:get("youngGrace")) or 0) == 0 then
+			s:set("youngGrace", 1)
+		end
+	end
+	return true
+end
+young:register()
 
 -- Death Game: PvE death retires the character; PvP-saved deaths do not
 local death = CreatureEvent("SpireDeathGameDeath")
@@ -167,15 +182,20 @@ function login.onLogin(player)
 	end
 	player:registerEvent("SpireDeathGameHits")
 	player:registerEvent("SpireDeathGameDeath")
+	player:registerEvent("SpireYoungDeath")
 	player:registerEvent("SpireDeathbound")
 	player:registerEvent("SpireHardcorePrepareDeath")
 	player:registerEvent("SpireHardcoreItemDrop")
 	SpireHardcore.settleDeath(player)
 	local s = player:kv():scoped("spirebound")
-	local kept = s:get("youngGrace")
+	local kept = tonumber(s:get("youngGrace"))
 	if kept and kept > 0 then -- G12 (Grok session 3): tell a young climber their death cost no experience, and why
 		s:set("youngGrace", 0)
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, Difficulty.youngGraceText(kept))
+		local pid = player:getId()
+		addEvent(function() -- after the login messages, so it isn't lost among them
+			local p = Player(pid)
+			if p then p:sendTextMessage(MESSAGE_EVENT_ADVANCE, Difficulty.youngGraceText(kept)) end
+		end, 5000)
 	end
 	return true
 end

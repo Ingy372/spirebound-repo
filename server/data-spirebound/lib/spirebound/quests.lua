@@ -194,6 +194,14 @@ function SpireQuests.find(player, set, piece)
 	return true
 end
 
+-- G10 (Grok session 3): the Quest Tracker showed "0 of 3" through every kill. The engine refreshes tracked missions
+-- only when a quest's own storage is written (data/libs/functions/quests.lua, Player.updateStorage), and kills are
+-- counted in a second storage. Writing the same state again refreshes the count; an unchanged value sends no
+-- "Your questlog has been updated" line, so there is no message per kill.
+function SpireQuests.refreshTracker(player, q)
+	player:setStorageValue(q.storage, player:getStorageValue(q.storage))
+end
+
 function SpireQuests.checkCollect(player)
 	for _, q in ipairs(SpireQuests.list) do
 		if q.kind == "collect" and SpireQuests.state(player, q) == 1 then
@@ -202,6 +210,7 @@ function SpireQuests.checkCollect(player)
 				player:setStorageValue(q.storage, 2)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, q.name .. ": done! " .. q.report)
 			elseif n > 0 then
+				SpireQuests.refreshTracker(player, q)
 				player:sendTextMessage(MESSAGE_STATUS, string.format("%s: %d of %d.", q.name, n, q.count))
 			end
 		end

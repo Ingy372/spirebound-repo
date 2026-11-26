@@ -1,0 +1,24 @@
+{
+ "name": "g12_after_death",
+ "character": "Pilot Mystic",
+ "timeout": 60,
+ "about": "G12: after g12_die, log in and read the no-experience-lost message.",
+ "steps": [
+  {
+   "do": "wait",
+   "seconds": 8
+  },
+  {
+   "do": "shot",
+   "name": "g12_after_death"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 22"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

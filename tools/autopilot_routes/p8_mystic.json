@@ -23,10 +23,23 @@
    "seconds": 2
   },
   {
+   "do": "say",
+   "text": "/pilot spawn Pen Rat, 1, 300",
+   "note": "tough rats, so the spell's own hit shows"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
    "do": "cast",
    "text": "frost strike",
    "target": true,
-   "note": "frost strike at level 2"
+   "note": "frost strike at level 2",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_mystic_cast1"
   },
   {
    "do": "wait",
@@ -36,7 +49,11 @@
    "do": "cast",
    "text": "frost strike",
    "target": true,
-   "note": "frost strike again"
+   "note": "frost strike again",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_mystic_cast2"
   },
   {
    "do": "wait",

@@ -1,0 +1,72 @@
+{
+ "name": "g11_vesper",
+ "character": "Pilot Vanguard",
+ "timeout": 120,
+ "about": "G11: Vesper with her stones quest taken, greeted twice (the second time in the NPCs channel).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1304,
+    7
+   ],
+   "note": "Hearth Square, by Vesper"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g10_minimap_and_skillbar",
+   "note": "minimap '!' on quest givers; skill names unclipped"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest l1_stones 1",
+   "note": "Vesper's stones quest taken"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "npc",
+   "text": "hi",
+   "note": "G11: a second hi while talking"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "g11_vesper"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest l1_stones -1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

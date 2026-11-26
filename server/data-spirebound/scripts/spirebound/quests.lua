@@ -12,8 +12,11 @@ function kill.onKill(player, target)
 			if n >= q.count then
 				player:setStorageValue(q.storage, 2)
 				player:sendTextMessage(MESSAGE_EVENT_ADVANCE, q.name .. ": done! " .. q.report)
-			elseif n % 5 == 0 or q.count <= 5 then
-				player:sendTextMessage(MESSAGE_STATUS, string.format("%s: %d of %d.", q.name, n, q.count))
+			else
+				SpireQuests.refreshTracker(player, q)
+				if n % 5 == 0 or q.count <= 5 then
+					player:sendTextMessage(MESSAGE_STATUS, string.format("%s: %d of %d.", q.name, n, q.count))
+				end
 			end
 		end
 	end

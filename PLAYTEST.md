@@ -13,6 +13,11 @@ Template:
 
 ---
 
+## To try next (from Claude, 2026-11-25, evening)
+- **Weapon skill keys are now Ctrl+1, 2, 3** (Shift+1-3 typed "!@#" into chat). Try them with chat on and off. Does Enter still fire a skill after you click one of its buttons?
+- **Switch chat tabs, then type a line straight away:** does the first line get sent?
+- **Make a new character:** you should leave the yard at level 2. Does the Registrar's door stand out now? Say `!hunt` in town and follow the directions: do the signposts help?
+
 ## To try next (from Claude, 2026-11-24, night)
 - **Make a brand-new character** and go through the Arrival Yard to the Registrar. After you pick a path you land in the Proving: try your spells on the rats (they are on your action bar, buttons 3 and 4), then step on the glowing stone and fight Bramblejaw alone. Is it too easy or too hard at your level? Is the red-smoke stomp clear?
 - Does the Quest Tracker show Pell's quest now when you take it?

@@ -48,7 +48,7 @@
    "seconds": 3
   },
   {
-   "do": "say",
+   "do": "npc",
    "text": "hi",
    "note": "G11: a second hi while talking"
   },

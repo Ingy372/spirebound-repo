@@ -23,10 +23,23 @@
    "seconds": 2
   },
   {
+   "do": "say",
+   "text": "/pilot spawn Pen Rat, 1, 300",
+   "note": "tough rats, so the spell's own hit shows"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
    "do": "cast",
    "text": "heavy strike",
    "target": true,
-   "note": "heavy strike at level 2"
+   "note": "heavy strike at level 2",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_vanguard_cast1"
   },
   {
    "do": "wait",
@@ -36,7 +49,11 @@
    "do": "cast",
    "text": "heavy strike",
    "target": true,
-   "note": "heavy strike again"
+   "note": "heavy strike again",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_vanguard_cast2"
   },
   {
    "do": "wait",

@@ -70,7 +70,7 @@ You said multi-clienting is welcome (extra characters, trainers, playing two at 
 Grok: three rats in the pen took a fresh character from level 1 to 4 (Pen Rats give 135 experience at the early 10x rate, plus Pell's 300), so "levels feel meaningless" and a level 3 tip fired in the yard (the tip is fixed).
 - **Recommendation:** lower the yard's rewards so a new character leaves the yard at level 2-3 and reaches level 4 (first heal) in the first hunting ground. Floor 1's overall length stays the same.
 - Other option: keep it; fast early levels feel good.
-- Assumed until you answer: lower them (not built yet; roadmap G7).
+- Built 2026-11-25 as recommended: a new character now leaves the yard at level 2 and the Proving at level 3 (checked in the client). Say if you want the old fast start back.
 - Jay's answer:
 
 ### Q51. The bot panel on a new player's screen (2026-11-24)

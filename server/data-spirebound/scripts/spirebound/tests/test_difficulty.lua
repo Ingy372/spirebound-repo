@@ -58,4 +58,5 @@ SpireTest.add("difficulty: a young Normal death is free and the player is told (
 	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 500, 12, 5000), 0, "Normal below 50 loses nothing")
 	SpireTest.eq(Difficulty.youngGraceText(500):find("no experience", 1, true) ~= nil, true, "the message says no experience was lost")
 	SpireTest.eq(Difficulty.youngGraceText(500):find("500", 1, true) ~= nil, true, "and how much it would have been")
+	SpireTest.eq(Difficulty.youngGraceText(1):find("would have lost", 1, true), nil, "no amount when the engine's own blessing kept it")
 end)

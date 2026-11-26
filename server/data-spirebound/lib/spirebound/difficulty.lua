@@ -56,8 +56,9 @@ end
 
 -- Pure (G12): what a young Normal climber is told after a death that cost nothing
 function Difficulty.youngGraceText(kept)
-	return string.format("Your death cost you no experience (you would have lost %d): climbers below level 50 on the Normal rules are "
-		.. "spared. From level 50 on, a death costs experience; the temple priest sells blessings that soften it.", kept)
+	local amount = (kept and kept > 1) and string.format(" (you would have lost %d)", kept) or ""
+	return "Your death cost you no experience" .. amount .. ": climbers below level 50 on the Normal rules are spared. "
+		.. "From level 50 on, a death costs experience; the temple priest sells blessings that soften it."
 end
 
 -- Does damage from `attacker` count toward saving `victim` from Death Game deletion?

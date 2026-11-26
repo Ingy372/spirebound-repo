@@ -23,10 +23,23 @@
    "seconds": 2
   },
   {
+   "do": "say",
+   "text": "/pilot spawn Pen Rat, 1, 300",
+   "note": "tough rats, so the spell's own hit shows"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
    "do": "cast",
    "text": "ember strike",
    "target": true,
-   "note": "ember strike at level 2"
+   "note": "ember strike at level 2",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_arcanist_cast1"
   },
   {
    "do": "wait",
@@ -36,7 +49,11 @@
    "do": "cast",
    "text": "ember strike",
    "target": true,
-   "note": "ember strike again"
+   "note": "ember strike again",
+   "shots": [
+    0.6
+   ],
+   "name": "p8_arcanist_cast2"
   },
   {
    "do": "wait",

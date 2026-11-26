@@ -636,7 +636,10 @@ end
 
 -- G4 (Grok playtest, 2026-11-24): saying a target spell with nothing targeted did nothing at all, not even a message.
 -- Talk actions are checked before spells, so each target spell gets one: no target -> a clear line and no cast;
--- a target -> carry on to the spell (return true). Called from the spell registration scripts.
+-- a target -> carry on to the spell. Called from the spell registration scripts.
+-- In Canary a talk action that returns TRUE has handled the words (nothing else runs) and FALSE lets them carry on
+-- to the spells and chat (dev_pilot.lua found the same). This used to be the other way round, so from 2026-11-24
+-- every target spell was swallowed whenever a target WAS set (found 2026-11-25 by P8's mana check in the client).
 SpireSpells.hinted = SpireSpells.hinted or {} -- first word -> { full spell words = true }
 
 -- Pure: is `said` (lower case, spaces squeezed) one of the target spells in `set`?
@@ -657,10 +660,10 @@ function SpireSpells.needTargetHint(words)
 	function ta.onSay(player, w, param)
 		local said = (first .. " " .. (param or "")):lower():gsub("%s+", " "):gsub("%s$", "")
 		if not SpireSpells.isHinted(SpireSpells.hinted[first], said) or player:getTarget() then
-			return true -- not a target spell, or a target is set: carry on (chat or the spell)
+			return false -- not a target spell, or a target is set: carry on (chat or the spell)
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "You need a target: click a monster first (or pick it in the Battle List), then use " .. said .. ".")
-		return false
+		return true -- handled: no cast
 	end
 	ta:separator(" ")
 	ta:groupType("normal")

@@ -1,0 +1,45 @@
+{
+ "name": "g12_die",
+ "character": "Pilot Mystic",
+ "timeout": 150,
+ "noPotions": true,
+ "about": "G12: a Normal character below level 50 dies to a boar (the next route logs in and reads the message).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 6"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "jump",
+   "to": [
+    1158,
+    1342,
+    7
+   ],
+   "note": "Boar Meadow"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "/pilot hp 5",
+   "note": "nearly dead"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 2, 90",
+   "note": "two boars beside you"
+  },
+  {
+   "do": "wait",
+   "seconds": 20,
+   "note": "die to a boar (Normal, below level 50)"
+  }
+ ]
+}

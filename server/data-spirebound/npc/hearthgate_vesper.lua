@@ -104,6 +104,19 @@ npcHandler:setCallback(CALLBACK_GREET, function(npc, player)
 	npcHandler:setMessage(MESSAGE_GREET, VesperGreeting(SpireQuests.state(player, q), SpireQuests.collected(player, "builders")))
 	return true
 end)
+-- G11: the engine's greeting ignores "hi" from someone already talking to her (she said nothing). Her own greeting
+-- keywords come first: talking already -> the short progress line again; otherwise the normal greeting.
+local function vesperHi(npc, player, message)
+	if npcHandler:checkInteraction(npc, player) then
+		local text = VesperGreeting(SpireQuests.state(player, SpireQuests.get("l1_stones")), SpireQuests.collected(player, "builders"))
+		npcHandler:say((text:gsub("|PLAYERNAME|", player:getName())), npc, player)
+	else
+		npcHandler:onGreet(npc, player, message)
+	end
+	return true
+end
+keywordHandler:addKeyword({ "hi", callback = FocusModule.messageMatcher }, vesperHi)
+keywordHandler:addKeyword({ "hello", callback = FocusModule.messageMatcher }, vesperHi)
 npcHandler:setMessage(MESSAGE_FAREWELL, "Keep your eyes open.")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
