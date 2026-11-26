@@ -1,0 +1,217 @@
+{
+ "name": "h13_caves",
+ "about": "H13: walk down the stairs into each Floor 1 party cave and back up; who is waiting below.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 35"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_burrow_hills",
+   "note": "burrow_hills: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_burrow_hills",
+   "note": "burrow_hills: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "burrow_hills: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_burrow_hills"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_burrow_hills",
+   "note": "burrow_hills: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_wolf_copse",
+   "note": "wolf_copse: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_wolf_copse",
+   "note": "wolf_copse: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "wolf_copse: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_wolf_copse"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_wolf_copse",
+   "note": "wolf_copse: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_thornsnap_hollow",
+   "note": "thornsnap_hollow: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_thornsnap_hollow",
+   "note": "thornsnap_hollow: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "thornsnap_hollow: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_thornsnap_hollow"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_thornsnap_hollow",
+   "note": "thornsnap_hollow: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_shard_fields",
+   "note": "shard_fields: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_shard_fields",
+   "note": "shard_fields: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "shard_fields: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_shard_fields"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_shard_fields",
+   "note": "shard_fields: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_bandit_road",
+   "note": "bandit_road: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_bandit_road",
+   "note": "bandit_road: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "bandit_road: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_bandit_road"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_bandit_road",
+   "note": "bandit_road: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_old_quarry",
+   "note": "old_quarry: the cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_old_quarry",
+   "note": "old_quarry: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "old_quarry: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "h13_cave_old_quarry"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_old_quarry",
+   "note": "old_quarry: back up"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "home"
+  }
+ ]
+}

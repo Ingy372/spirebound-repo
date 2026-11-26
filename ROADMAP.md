@@ -22,7 +22,6 @@ Every real tester has hit a blocker in the first 30 minutes. Fix what is left, o
 ## Step 2 — Finish Floor 1's last third (levels 19 to 35)
 The end of the floor, right before the boss, is its weakest part: two grounds still swarm at the gate and the group hunting isn't built.
 - [ ] **H0b How walls and wandering change noticing** (cut from H0, 2026-11-26): does a monster behind a wall or round a corner notice you as early as one in the open, and how far do idle monsters wander from their spot? Done when: measured with the autopilot's `watch` step and written into DESIGN.md 9.4's notes.
-- [ ] **H13 Walk every ground and level in the real client** (takes over W12: each ground's gate, hub signs, routes and cave, and one party-sized fight in a cave); playtest list for Jay.
 
 ## Step 3 — The milestone: a real party clears Floor 1 🧑
 The moment the whole game is built around has never been played. **Nothing new until this passes.**
