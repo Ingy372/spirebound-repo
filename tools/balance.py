@@ -257,7 +257,8 @@ def floor_gold_per_kill(n, hp, band):
 # ---------------------------------------------------------------- the report and the checks
 def potion_for(level, prices):
     """The health potion a hunter of this level drinks: (heal, price). Prices come from the real shops."""
-    table = [(7643, 875, 130), (239, 600, 80), (236, 350, 50), (266, 150, 0)]  # ultimate, great, strong, plain
+    # strong from level 14 (server/core-overrides/scripts/actions/items/potions.lua, PT4 2026-11-26; Tibia says 50)
+    table = [(7643, 875, 130), (239, 600, 80), (236, 300, 14), (266, 150, 0)]  # ultimate, great, strong, plain
     for iid, heal, min_level in table:
         if level >= min_level and iid in prices:
             return heal, prices[iid]

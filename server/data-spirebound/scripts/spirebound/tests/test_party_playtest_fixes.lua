@@ -215,3 +215,12 @@ SpireTest.add("party fixes: fighting with no weapon in hand is noticed", functio
 	SpireTest.eq(SpireProgress.armedPure({ WEAPON_SWORD, WEAPON_SHIELD }), true, "a sword and a shield")
 	SpireTest.eq(SpireProgress.armedPure({ WEAPON_WAND, WEAPON_NONE }), true, "a wand")
 end)
+
+SpireTest.add("party fixes PT4: strong potions can be drunk on Floor 1 (level 14, not Tibia's 50)", function()
+	local f = io.open("data/scripts/actions/items/potions.lua", "r")
+	SpireTest.eq(f ~= nil, true, "the potion script is there")
+	local text = f:read("*a")
+	f:close()
+	SpireTest.eq(text:find("[236] = { health = { 250, 350 }", 1, true) ~= nil and text:find("level = 14, flask = 283, description = \"Only Vanguards", 1, true) ~= nil, true, "strong health from level 14")
+	SpireTest.eq(text:find("[237] = { mana = { 115, 185 }, level = 14,", 1, true) ~= nil, true, "strong mana from level 14")
+end)
