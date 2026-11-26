@@ -29,7 +29,7 @@ SIZES = {
 }
 ELITE_RESPAWN = 900                               # Grey Alpha, Bandit Captain: 15 minutes
 ELITES = {"Grey Alpha", "Bandit Captain", "Old Bristleback", "Moonhowl", "Mossback Snapper", "Blackthorn", "Prism Shardling",
-          "Granite Warden", "Herd Bull"}          # Herd Bull: Floor 2's elite (maps/floor2_plan.py)
+          "Granite Warden", "Herd Bull", "Moss Elder"}   # Floors 2 and 3's elites (maps/floor2_plan.py, floor3_plan.py)
 CAVE_RESPAWN = 160
 # H14 (Jay, 2026-11-25: "i dont want things to be to calm... spawns should be large and support a few people hunting in
 # them at one time. certain points of the spawn can feel overwhelming"): how many times each group of a designed ground

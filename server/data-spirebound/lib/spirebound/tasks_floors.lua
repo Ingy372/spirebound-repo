@@ -40,8 +40,6 @@ SpireTasks.floorList = {
 	{ id = "t3_barkmantis", floor = 3, monster = "Bark Mantis", count = 80, gold = 1450, points = 2 },
 	{ id = "t3_lanternwisp", floor = 3, monster = "Lantern Wisp", count = 80, gold = 1530, points = 2 },
 	{ id = "t3_rootboundhusk", floor = 3, monster = "Rootbound Husk", count = 80, gold = 1800, points = 2 },
-	{ id = "t3_mosselder", floor = 3, monster = "Moss Elder", count = 40, gold = 1250, points = 3 },
-	{ id = "t3_grovehydraling", floor = 3, monster = "Grove Hydraling", count = 25, gold = 1220, points = 4 },
 	{ id = "t4_lakeeel", floor = 4, monster = "Lake Eel", count = 80, gold = 1600, points = 2 },
 	{ id = "t4_drownedfootman", floor = 4, monster = "Drowned Footman", count = 80, gold = 1700, points = 2 },
 	{ id = "t4_reedwitch", floor = 4, monster = "Reed Witch", count = 80, gold = 1800, points = 2 },

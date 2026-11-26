@@ -62,6 +62,10 @@ HABITS = {
     "Horned Grazer": ("pair", 1.0), "Dust Strider": ("swarm", 0.5), "Ridge Cat": ("loner", 1.6),
     "Blight Wasp": ("colony", 0.6), "Hill Cutthroat": ("sentry", 1.1), "Stonehide Bull": ("pack", 1.5),
     "Herd Bull": ("loner", 2.5), "Mesa Wyrmling": ("loner", 3.0),
+    # Floor 3 (maps/floor3_plan.py, S6)
+    "Bark Mantis": ("pair", 1.0), "Spore Bat": ("swarm", 0.5), "Fog Lurker": ("loner", 1.6),
+    "Moss Crawler": ("colony", 0.7), "Lantern Wisp": ("sentry", 1.0), "Rootbound Husk": ("pack", 1.5),
+    "Moss Elder": ("loner", 2.5), "Grove Hydraling": ("loner", 3.0),
 }
 # Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}
@@ -131,7 +135,8 @@ def spawn_rule_problems():
         out.append("Floor 1 has more than one large-group ground (Jay: occasional)")
     if not any(c.get("type") == "group" or c.get("den") for c in grounds):
         out.append("Floor 1 has no group ground")
-    out += floor_recipe_problems(2)
+    for n in range(2, 11):
+        out += floor_recipe_problems(n)
     return out
 
 

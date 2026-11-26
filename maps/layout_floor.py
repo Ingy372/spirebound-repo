@@ -95,8 +95,8 @@ def build(m, n):
     m.points[P + "lake"] = (lx - 1, ly + 7, Z)
 
     grounds = []
-    if n == 2:                                             # R13b: Floor 2's real hunting grounds (maps/floor2_plan.py)
-        grounds = _floor2_grounds(m, X0, Y0, Z, path)
+    if has_plan(n):                                        # R13b/S6: the floor's real hunting grounds (maps/floor<n>_plan.py)
+        grounds = _planned_grounds(m, n, X0, Y0, Z, path)
     # camps (placeholder; floors 3-10 until each gets its own plan)
     camps = [] if grounds else [(X0 + 20, Y0 + 150), (X0 + 70, Y0 + 210), (X0 + SIZE - 80, Y0 + 200), (X0 + SIZE - 70, Y0 + 40),
              (X0 + 160, Y0 + 130), (X0 + 40, Y0 + 90)]
@@ -205,11 +205,18 @@ def build(m, n):
     m.zone("town", tx, ty, tw, th, Z)
 
 
-def _floor2_grounds(m, X0, Y0, Z, path):
-    """Floor 2's walled hunting grounds, their party caves, the road spurs to their gates and the open land between.
-    Returns the grounds' rectangles (world coordinates) so nothing else is placed on them."""
+def has_plan(n):
+    import importlib.util
+    return importlib.util.find_spec(f"floor{n}_plan") is not None
+
+
+def _planned_grounds(m, n, X0, Y0, Z, path):
+    """A floor's walled hunting grounds (maps/floor<n>_plan.py), their party caves, the road spurs to their gates and
+    the open land between. Returns the grounds' rectangles (world coordinates) so nothing else is placed on them."""
+    import importlib
     import wilds
-    from floor2_plan import CAMPS, SPURS
+    plan = importlib.import_module(f"floor{n}_plan")
+    CAMPS, SPURS = plan.CAMPS, plan.SPURS
     rects = []
     for c in CAMPS:
         L = wilds.build(m, c)

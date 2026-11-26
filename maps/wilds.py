@@ -51,8 +51,8 @@ CORE = {
     "banditcamp": ("dirt", [17233], [5543, 116, 2519, 2523, 116], None),      # a fenced heap; the fence is set in build()
     "cutstone": ("gravel", [1822, 2264, 2290, 1859], [], "mountain"),
 }
-TRAIL_GROUND = {"dirt": "dirt", "grass": "grass", "mud": "dirt", "gravel": "gravel"}   # outdoor "mud" = dirt
-WALKOVER = {"dirt": S.STONES + [3114, 3115], "grass": S.FLOWERS + [3737], "gravel": S.STONES + [6475]}
+TRAIL_GROUND = {"dirt": "dirt", "grass": "grass", "mud": "dirt", "gravel": "gravel", "jungle": "jungle"}   # outdoor "mud" = dirt
+WALKOVER = {"dirt": S.STONES + [3114, 3115], "grass": S.FLOWERS + [3737], "gravel": S.STONES + [6475], "jungle": S.FLOWERS}
 SIDE_NAMES = {(0, 0): "nw", (1, 0): "ne", (0, 1): "sw", (1, 1): "se"}
 SIDE_WORDS = {"nw": "north-west", "ne": "north-east", "sw": "south-west", "se": "south-east"}
 D4 = ((1, 0), (-1, 0), (0, 1), (0, -1))
@@ -294,18 +294,20 @@ def build(m, c, extra_points=True):
     rect, opn = L["rect"], L["open"]
     trail_key = TRAIL_GROUND[c["trail"]]
     # clean slate
+    base = c.get("base", "grass")                             # the floor's own ground (Floor 3's jungle) instead of grass
+    over = lambda spec: base if spec[0] == "grass" else None  # noqa: E731
     for (x, y) in rect:
-        m.ground[(x, y, Z)] = m.pick("grass")
+        m.ground[(x, y, Z)] = m.pick(base)
         m.clear_items(x, y, Z)
     cores = set().union(*[lp["core"] for lp in L["loops"]])
     if L.get("wallow"):
         cores -= L["wallow"]["clear"] | L["wallow"]["gap"]
     walls = rect - opn - cores
-    _mass(m, walls, rect, SOLID[c["wall"]], rng, deep=SOLID[c["wall"]][3] == "water")
+    _mass(m, walls, rect, SOLID[c["wall"]], rng, ground_key=over(SOLID[c["wall"]]), deep=SOLID[c["wall"]][3] == "water")
     for lp in L["loops"]:
         core = lp["core"] - (L["wallow"]["clear"] | L["wallow"]["gap"] if L.get("wallow") else set())
         spec = CORE[c["core"]]
-        _mass(m, core, rect, spec, rng)
+        _mass(m, core, rect, spec, rng, ground_key=over(spec))
         inner = _interior(core, rect)
         if c["core"] == "flowerbed" and inner:                 # a tree in the middle of each flower bed
             mid = min(inner, key=lambda t: (t[0] - sum(p[0] for p in inner) / len(inner)) ** 2 + (t[1] - sum(p[1] for p in inner) / len(inner)) ** 2)
