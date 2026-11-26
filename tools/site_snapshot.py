@@ -169,11 +169,14 @@ def build_site(sql, out: Path | None = None, signup_url: str = "/signup") -> Pat
     """Take a snapshot and build the live website from it. Returns the folder."""
     import gen_site
     out = out or ROOT / ".local" / "site"
-    gen_site.SNAP, gen_site.SIGNUP_URL = snapshot(sql), signup_url
-    try:
-        gen_site.build(out)
-    finally:
-        gen_site.SNAP, gen_site.SIGNUP_URL = None, ""
+    snap = snapshot(sql)
+    with gen_site.RENDER_LOCK:
+        gen_site.SNAP, gen_site.SIGNUP_URL = snap, signup_url
+        try:
+            gen_site.build(out)
+        finally:
+            gen_site.SNAP, gen_site.SIGNUP_URL = None, ""
+        gen_site.LAST_SNAP = snap
     return out
 
 

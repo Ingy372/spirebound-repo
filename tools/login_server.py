@@ -24,6 +24,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import gen_site  # noqa: E402  the website's frame, shared by the sign-up pages
 import site_snapshot  # noqa: E402  the website's live pages (Hall of Fame, characters, online...)
 import name_rules  # noqa: E402  the name checker (rude words, names from other games, staff titles, our NPCs)
 import player_rules  # noqa: E402  the rulebook new players agree to
@@ -41,7 +42,8 @@ ROOT = Path(__file__).resolve().parent.parent
 SITE_DIR = ROOT / ".local" / "site"           # the live website (has player names: never committed)
 PUBLIC_DIR = ROOT / "website" / "public"      # the plain website, used until the first live build
 SITE_REFRESH = 300                            # seconds between website rebuilds
-PAGE_NAME = re.compile(r"^/([a-z0-9-]{1,60}\.(html|css))\Z")
+PAGE_NAME = re.compile(r"^/((?:img/)?[a-z0-9_-]{1,60}\.(html|css|gif|png))\Z")
+TYPES = {"html": "text/html; charset=utf-8", "css": "text/css", "gif": "image/gif", "png": "image/png"}
 MAX_BODY = 4096            # bytes: a login request is tiny; anything bigger is refused
 MAX_FAILS = 8              # wrong passwords allowed per address ...
 FAIL_WINDOW = 5 * 60       # ... within this many seconds, then that address must wait
@@ -232,24 +234,23 @@ def new_character(account, password, character, sex, addr, agree=False, now=None
     return True, f"{character} is ready. Log in with your account in the game client and pick {character} from the list."
 
 
-NEWCHAR_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>Spirebound: another character</title><style>body{{font-family:sans-serif;max-width:420px;margin:40px auto;padding:0 16px;
-background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;box-sizing:border-box}}button{{padding:10px 18px}}
-.msg{{padding:10px;background:#333;border-left:4px solid #c9a227}}a{{color:#c9a227}}</style></head><body><h1>Spirebound</h1>
-<h2>Make another character</h2>{msg}<form method="post" action="/newchar">
+NEWCHAR_FORM = """<p>Extra characters are welcome: up to 10 on one account, and they can hunt anywhere.</p>
+{msg}<form class="form" method="post" action="/newchar">
 <label>Account name or e-mail<input name="account" value="{account}"></label>
 <label>Password<input name="password" type="password"></label>
 <label>New character's name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
-<label><input name="sex" type="radio" value="1" style="width:auto" checked> Male</label>
-<label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
-<label><input name="agree" type="checkbox" value="yes" style="width:auto" required> I have read the
-<a href="/rules" target="_blank">rules</a> and agree to them</label><br><br>
-<button>Make character</button></form><p>No account yet? <a href="/signup">Sign up</a>. <a href="/">The website</a></p></body></html>"""
+<p><label class="choice"><input name="sex" type="radio" value="1" checked> Male</label>
+<label class="choice"><input name="sex" type="radio" value="0"> Female</label></p>
+<p><label class="choice"><input name="agree" type="checkbox" value="yes" required> I have read the
+<a href="rules.html" target="_blank">rules</a> and agree to them</label></p>
+<button class="btn">Make character</button></form>
+<p>No account yet? <a href="/signup">Create one</a>.</p>"""
 
 
 def newchar_page(msg="", account="", character=""):
     box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
-    return NEWCHAR_PAGE.format(msg=box, account=html.escape(account), character=html.escape(character))
+    return gen_site.shell("Make another character", NEWCHAR_FORM.format(
+        msg=box, account=html.escape(account), character=html.escape(character)))
 
 
 def refresh_site():
@@ -277,38 +278,36 @@ def site_file(path):
     for folder in (SITE_DIR, PUBLIC_DIR):
         f = folder / m.group(1)
         if f.is_file():
-            return f.read_bytes(), "text/css" if m.group(2) == "css" else "text/html; charset=utf-8"
+            return f.read_bytes(), TYPES[m.group(2)]
     return None
 
 
-SIGNUP_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>Spirebound sign-up</title><style>body{{font-family:sans-serif;max-width:420px;margin:40px auto;padding:0 16px;
-background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;box-sizing:border-box}}button{{padding:10px 18px}}
-.msg{{padding:10px;background:#333;border-left:4px solid #c9a227}}</style></head><body><h1>Spirebound</h1><h2>Make an account</h2>
-{msg}<form method="post" action="/signup"><label>Account name (3-20 letters or digits)<input name="name" value="{name}"></label>
-<label>E-mail<input name="email" type="email" value="{email}"></label><label>Password (at least 8 characters)<input name="password" type="password"></label>
+SIGNUP_FORM = """<p>One account holds all your characters. You pick your vocation in the game, at the end of a short
+guided start, not here.</p>
+{msg}<form class="form" method="post" action="/signup">
+<label>Account name (3-20 letters or digits; only you see it)<input name="name" value="{name}"></label>
+<label>E-mail<input name="email" type="email" value="{email}"></label>
+<label>Password (at least 8 characters)<input name="password" type="password"></label>
 <label>Password again<input name="password2" type="password"></label>
-<label>Character name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
-<label><input name="sex" type="radio" value="1" style="width:auto" checked> Male</label>
-<label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
-<label><input name="agree" type="checkbox" value="yes" style="width:auto" required> I have read the
-<a href="/rules" target="_blank" style="color:#c9a227">rules</a> and agree to them</label><br><br>
-<button>Make account</button></form><p><a href="/rules" style="color:#c9a227">Read the rules</a> -
-<a href="/newchar" style="color:#c9a227">Make another character</a> - <a href="/" style="color:#c9a227">The website</a></p></body></html>"""
-
-RULES_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
-<title>Spirebound rules</title><style>body{{font-family:sans-serif;max-width:760px;margin:40px auto;padding:0 16px;
-background:#1d1b18;color:#eee;line-height:1.5}}h2{{color:#c9a227}}a{{color:#c9a227}}</style></head><body>
-<h1>Spirebound rules</h1>{body}<p><a href="/signup">Back to sign-up</a></p></body></html>"""
+<label>Your first character's name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
+<p><label class="choice"><input name="sex" type="radio" value="1" checked> Male</label>
+<label class="choice"><input name="sex" type="radio" value="0"> Female</label></p>
+<p><label class="choice"><input name="agree" type="checkbox" value="yes" required> I have read the
+<a href="rules.html" target="_blank">rules</a> and agree to them</label></p>
+<button class="btn">Create account</button></form>
+<p>Already have an account? <a href="/newchar">Make another character</a>.</p>"""
 
 
 def rules_page():
-    return RULES_PAGE.format(body=player_rules.to_html())
+    """The rules in the website's frame (the same page as rules.html)."""
+    return gen_site.shell("Rules", player_rules.to_html({"pvp": "pvp.html", "modes": "modes.html", "ledger": "exile-ledger.html"}),
+                          "rules.html")
 
 
 def signup_page(msg="", name="", email="", character=""):
     box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
-    return SIGNUP_PAGE.format(msg=box, name=html.escape(name), email=html.escape(email), character=html.escape(character))
+    return gen_site.shell("Create your account", SIGNUP_FORM.format(
+        msg=box, name=html.escape(name), email=html.escape(email), character=html.escape(character)))
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -453,6 +452,8 @@ def selftest():
         for bad in ("/../config.lua", "/x/../../etc/passwd", "/.local/site/index.html", "/index.html/..", "/A.HTML", "/a.py"):
             assert site_file(bad) is None, bad
         assert site_file("/") and site_file("/rules.html")[1].startswith("text/html") and site_file("/style.css")[1] == "text/css"
+        assert site_file("/img/walk_wolf.gif")[1] == "image/gif" and site_file("/img/../style.css") is None
+        assert 'href="style.css"' in signup_page() and "Create your account" in signup_page(), "sign-up wears the website's look"
     finally:
         sql = real
     assert BIND == "127.0.0.1" or os.environ.get("SPIRE_LOGIN_BIND"), "listens on this PC only by default"

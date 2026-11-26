@@ -32,6 +32,7 @@ import json
 import re
 import sys
 import tempfile
+import threading
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -41,64 +42,226 @@ from floors import FLOORS  # noqa: E402
 SITE = "Spirebound"
 FLOOR1 = dict(name="Hearthgate Plains", town="Hearthgate")
 
-NAV = [
-    ("index.html", "Home"), ("join.html", "Join"), ("how-to-play.html", "How to play"), ("floors.html", "The tower"),
-    ("vocations.html", "Vocations"), ("modes.html", "Difficulty"), ("pvp.html", "PvP rules"),
-    ("events.html", "Events"), ("hall-of-fame.html", "Hall of Fame"), ("characters.html", "Characters"),
-    ("rules.html", "Rules"),
+# The side menu: (group, [(page, label), ...]). Pages not built here (sign-up) are added when SIGNUP_URL is set.
+MENU = [
+    ("Play", [("index.html", "Home"), ("join.html", "Join the tower"), ("how-to-play.html", "How to play")]),
+    ("The game", [("floors.html", "The tower"), ("vocations.html", "Vocations"), ("modes.html", "Difficulty"),
+                  ("pvp.html", "PvP rules"), ("events.html", "Events")]),
+    ("Community", [("hall-of-fame.html", "Hall of Fame"), ("characters.html", "Characters"), ("online.html", "Who is online"),
+                   ("memorial.html", "Memorial"), ("exile-ledger.html", "Exile Ledger")]),
+    ("Support", [("rules.html", "Rules")]),
 ]
+NAV = [item for _g, items in MENU for item in items]
 
 SNAP: dict | None = None      # the game's records for the live site (set by main); None = no player data
+LAST_SNAP: dict | None = None # the latest live snapshot (tools/site_snapshot.py), for pages drawn on request
+RENDER_LOCK = threading.RLock()  # the login service draws pages while its website refresh runs: one at a time
 SIGNUP_URL = ""               # the sign-up page of tools/login_server.py, e.g. https://play.example/signup
 MODES = {1: "Normal", 2: "Hardcore", 3: "Death Game"}
+# Our own approved sprites that walk across the banner (website/public/img, made by tools/site_art.py)
+PARADE = ["wolf", "boar", "vanguard", "toad", "ram", "ranger", "alpha", "sproutling", "mystic", "rat"]
 
 CSS = """
-:root{--bg:#f6f4ef;--fg:#1d2230;--mute:#5a6275;--card:#ffffff;--line:#d9d5c8;--accent:#1f6f8b;--accent2:#b5502a}
-@media (prefers-color-scheme:dark){:root{--bg:#12151d;--fg:#e8e6df;--mute:#9aa3b8;--card:#1a1f2b;--line:#2c3446;--accent:#5fb8d6;--accent2:#e8895f}}
+:root{--night:#07060a;--stone:#15120f;--panel:#1d1813;--panel2:#241e17;--edge:#5c4625;--gold:#e9c36a;--gold2:#ffdf8f;
+--ember:#ff8a3d;--spire:#63d8ef;--fg:#e9e2d0;--mute:#a99f88;--row:#201a14;--row2:#2a2219;--danger:#e0533d}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif}
-header{border-bottom:1px solid var(--line);background:var(--card)}
-.wrap{max-width:900px;margin:0 auto;padding:0 16px}
-header .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;padding-top:12px;padding-bottom:12px}
-.brand{font-weight:700;font-size:1.25rem;color:var(--accent);text-decoration:none;letter-spacing:.04em}
-nav{display:flex;flex-wrap:wrap;gap:4px 14px}
-nav a{color:var(--mute);text-decoration:none;font-size:.95rem}
-nav a:hover,nav a.here{color:var(--fg)}
-nav a.here{border-bottom:2px solid var(--accent2)}
-main{padding:24px 0 56px}
-h1{font-size:2rem;margin:.2em 0 .4em}h2{font-size:1.35rem;margin:1.6em 0 .4em;color:var(--accent)}h3{margin:1.2em 0 .2em}
-p,li{max-width:70ch}
-.card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:12px 16px;margin:12px 0}
-table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.95rem}
-th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
-th{background:var(--card)}
+html{background:var(--night)}
+body{margin:0;color:var(--fg);font:15px/1.6 "Segoe UI",Tahoma,Verdana,sans-serif;
+background:radial-gradient(ellipse at 50% -10%,#2a2140 0,#120e1b 45%,var(--night) 75%) fixed,var(--night)}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.5;
+background-image:radial-gradient(1px 1px at 12% 18%,#fff8 50%,#0000 51%),radial-gradient(1px 1px at 72% 9%,#fff7 50%,#0000 51%),
+radial-gradient(1.5px 1.5px at 38% 30%,#fffa 50%,#0000 51%),radial-gradient(1px 1px at 88% 34%,#fff6 50%,#0000 51%),
+radial-gradient(1px 1px at 55% 14%,#fff6 50%,#0000 51%),radial-gradient(1.5px 1.5px at 22% 40%,#fff5 50%,#0000 51%)}
+a{color:var(--gold);text-decoration:none}a:hover{color:var(--gold2);text-decoration:underline}
+h1,h2,h3,.logo,.box-title,.btn,.menu-group{font-family:"Trajan Pro","Cinzel","Palatino Linotype","Book Antiqua",Palatino,Georgia,serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+/* banner */
+.banner{position:relative;height:290px;overflow:hidden;border-bottom:3px solid var(--edge);
+background:linear-gradient(180deg,#0000 55%,#0b0907 100%),radial-gradient(ellipse at 50% 120%,#3a2a12 0,#0000 60%)}
+.banner .tower{position:absolute;right:9%;bottom:10px;height:270px;opacity:.95;filter:drop-shadow(0 0 18px #63d8ef55)}
+.banner .tower.far{right:auto;left:7%;height:170px;opacity:.45;filter:drop-shadow(0 0 10px #63d8ef33) blur(.5px)}
+.banner .inner{position:relative;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:90px}
+.logo{display:inline-block;font-size:clamp(2.2rem,7vw,4.4rem);font-weight:700;letter-spacing:.12em;line-height:1;color:var(--gold2);
+background:linear-gradient(180deg,#fff3c4 0,#f2c75e 45%,#b9822a 55%,#f7d77f 100%);-webkit-background-clip:text;background-clip:text;
+-webkit-text-fill-color:transparent;filter:drop-shadow(0 3px 0 #3b2709) drop-shadow(0 0 14px #ffb54a66)}
+.logo:hover{text-decoration:none}
+.tagline{margin-top:10px;color:#f4e6c2;font-size:1.05rem;letter-spacing:.06em;text-shadow:0 2px 4px #000}
+.parade{position:absolute;left:0;right:0;bottom:8px;height:128px;pointer-events:none;overflow:hidden}
+.parade img{position:absolute;bottom:0;left:-140px;width:128px;height:128px;image-rendering:pixelated;animation:walk linear infinite;
+filter:drop-shadow(0 4px 2px #000a)}
+@keyframes walk{from{left:-140px}to{left:100%}}
+.ground{position:absolute;left:0;right:0;bottom:0;height:12px;background:linear-gradient(180deg,#3d2e18,#1a130b)}
+/* top bar */
+.topbar{background:linear-gradient(180deg,#2b2117,#1a140e);border-bottom:1px solid #000;box-shadow:0 2px 0 #3d2f1a inset}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-top:8px;padding-bottom:8px;flex-wrap:wrap}
+.topbar .links{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:.92rem}
+.topbar .links a{color:var(--fg)}.topbar .links a:hover,.topbar .links a.here{color:var(--gold2)}
+/* buttons */
+.btn{display:inline-block;padding:10px 26px;border-radius:6px;font-weight:700;letter-spacing:.08em;color:#2a1604!important;
+background:linear-gradient(180deg,#ffe29a,#f0ad3c 50%,#c9741d);border:1px solid #6b3a0a;box-shadow:0 0 0 2px #00000080,0 0 18px #ff9a3c55,inset 0 1px 0 #fff6;
+text-shadow:0 1px 0 #ffe9b0;text-decoration:none!important}
+.btn:hover{filter:brightness(1.1)}
+.btn.small{padding:6px 16px;font-size:.85rem}
+/* three columns */
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr) 240px;gap:18px;padding-top:20px;padding-bottom:40px}
+.box{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--edge);border-radius:6px;
+box-shadow:0 0 0 1px #000,0 8px 24px #0009,inset 0 1px 0 #ffffff10;margin-bottom:18px;overflow:hidden}
+.box-title{position:relative;padding:9px 14px;font-size:1.02rem;font-weight:700;letter-spacing:.08em;color:var(--gold2);
+background:linear-gradient(180deg,#4a3519,#2b1f10);border-bottom:1px solid #000;text-shadow:0 2px 2px #000}
+.box-title:after{content:"";position:absolute;left:10px;right:10px;bottom:-1px;height:1px;background:linear-gradient(90deg,#0000,var(--gold),#0000)}
+.box-body{padding:14px 18px}
+.box-body>:first-child{margin-top:0}
+main .box-title{font-size:1.25rem;padding:12px 18px}
+.menu-group{color:var(--gold);font-size:.8rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 14px 4px;border-top:1px solid #0006}
+.menu-group:first-child{border-top:0}
+.menu a{display:block;padding:5px 14px 5px 26px;color:var(--fg);position:relative;font-size:.95rem}
+.menu a:before{content:"";position:absolute;left:12px;top:50%;width:6px;height:6px;margin-top:-3px;transform:rotate(45deg);background:#6d5530}
+.menu a:hover,.menu a.here{background:#ffffff0d;color:var(--gold2);text-decoration:none}
+.menu a.here:before,.menu a:hover:before{background:var(--ember);box-shadow:0 0 6px var(--ember)}
+.status-line{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px dashed #ffffff14}
+.status-line b{color:var(--gold2)}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;background:#777}
+.dot.on{background:#53e07a;box-shadow:0 0 8px #53e07a}.dot.soon{background:var(--ember);box-shadow:0 0 8px var(--ember)}
+.mini{list-style:none;margin:0;padding:0;counter-reset:n}
+.mini li{counter-increment:n;display:flex;gap:8px;padding:3px 0;border-bottom:1px dashed #ffffff12}
+.mini li:before{content:counter(n);color:var(--ember);font-weight:700;min-width:1.2em}
+.mini span{margin-left:auto;color:var(--mute)}
+.floorbar{height:12px;border-radius:6px;background:#0008;border:1px solid #000;overflow:hidden;margin:6px 0}
+.floorbar i{display:block;height:100%;background:linear-gradient(90deg,var(--spire),#b18cff);box-shadow:0 0 10px var(--spire)}
+/* content */
+h2{color:var(--gold2);font-size:1.3rem;margin:1.5em 0 .5em;padding-bottom:4px;border-bottom:1px solid #5c462566}
+h3{color:var(--gold);margin:1.2em 0 .3em}
+p,li{max-width:75ch}
+ul li::marker{color:var(--ember)}
+b{color:#fff4d6}
+.card{background:#0000004d;border:1px solid #5c462588;border-left:3px solid var(--ember);border-radius:4px;padding:10px 14px;margin:12px 0}
+table{border-collapse:collapse;width:100%;margin:12px 0;font-size:.93rem;border:1px solid #000}
+th,td{padding:6px 10px;text-align:left;vertical-align:top;border-bottom:1px solid #0007}
+th{background:linear-gradient(180deg,#4a3519,#30230f);color:var(--gold2);font-family:Georgia,serif;letter-spacing:.03em}
+tr:nth-child(odd) td{background:var(--row)}tr:nth-child(even) td{background:var(--row2)}
+tr:hover td{background:#3a2e1d}
 .scroll{overflow-x:auto}
-.stat{display:flex;flex-wrap:wrap;gap:12px}.stat .card{flex:1 1 180px;margin:0}.stat b{font-size:1.6rem;display:block}
-.pill{display:inline-block;padding:0 8px;border-radius:99px;border:1px solid var(--line);font-size:.8rem;color:var(--mute)}
-footer{border-top:1px solid var(--line);color:var(--mute);font-size:.85rem;padding:16px 0}
-a{color:var(--accent)}
+.stat{display:flex;flex-wrap:wrap;gap:12px}.stat .card{flex:1 1 180px;margin:0;text-align:center}
+.stat b{font-size:2rem;display:block;color:var(--gold2);font-family:Georgia,serif}
+.pill{display:inline-block;padding:1px 10px;border-radius:99px;border:1px solid var(--edge);background:#0006;font-size:.8rem;color:var(--gold)}
+.hero .lead{font-size:1.12rem;margin-top:0}
+.stage{display:flex;justify-content:center;flex-wrap:wrap;gap:0 10px;margin:4px 0 0;padding:0 0 6px;
+background:radial-gradient(ellipse at 50% 92%,#ff8a3d33 0,#0000 60%);border-bottom:1px solid #5c462566}
+.stage figure{margin:0;text-align:center}.stage img{width:128px;height:128px;image-rendering:pixelated;display:block;margin:-10px auto -14px}
+.stage figcaption{font-family:Georgia,serif;color:var(--gold2);font-size:.95rem}
+.features{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0}
+.feature{display:flex;gap:10px;align-items:flex-start;background:#0000004d;border:1px solid #5c462566;border-radius:6px;padding:10px}
+.feature img{width:64px;height:64px;image-rendering:pixelated;flex:none;margin:-6px 0 -6px -6px}
+.feature b{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:1.02rem}
+.voc{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:14px 0}
+.voc div{text-align:center;background:#0000004d;border:1px solid #5c462566;border-radius:6px;padding:8px 10px 12px}
+.voc img{width:128px;height:128px;image-rendering:pixelated;margin:-16px 0 -18px}
+.voc b{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:1.15rem}
+/* forms (sign-up pages) */
+.form label{display:block;margin:0 0 12px;color:var(--mute);font-size:.92rem}
+.form input[type=text],.form input[type=email],.form input[type=password],.form input:not([type]){display:block;width:100%;margin-top:4px;padding:9px 10px;
+border-radius:4px;border:1px solid var(--edge);background:#0c0a08;color:var(--fg);font-size:1rem}
+.form input:focus{outline:2px solid var(--ember);outline-offset:0}
+.form .choice{display:inline-flex;align-items:center;gap:6px;margin-right:16px;color:var(--fg)}
+.msg{padding:10px 14px;background:#00000066;border:1px solid var(--edge);border-left:4px solid var(--ember);border-radius:4px}
+footer{border-top:3px solid var(--edge);background:#0b0907;color:var(--mute);font-size:.85rem;padding:18px 0;text-align:center}
+@media (max-width:980px){.layout{grid-template-columns:1fr}.layout main{order:1}.layout .side{order:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 18px}
+.layout .side-left{order:3}.banner{height:240px}.banner .tower{right:50%;transform:translateX(50%);height:220px;opacity:.35}.banner .tower.far{display:none}
+.banner .inner{padding-bottom:70px}}
+@media (max-width:560px){.parade img:not(:nth-child(3n+1)){display:none}.topbar .btn{display:none}}
 """
+
+# Our own tower, drawn here (no borrowed art): stacked tiers narrowing upwards, glowing windows, a crystal at the top.
+TOWER_SVG = """<svg class="tower" viewBox="0 0 220 260" aria-hidden="true"><defs>
+<linearGradient id="st" x1="0" x2="1"><stop offset="0" stop-color="#2b2433"/><stop offset=".5" stop-color="#4a3f57"/><stop offset="1" stop-color="#1c1724"/></linearGradient>
+<radialGradient id="gl"><stop offset="0" stop-color="#bff6ff"/><stop offset=".4" stop-color="#63d8ef"/><stop offset="1" stop-color="#63d8ef" stop-opacity="0"/></radialGradient></defs>
+<circle cx="110" cy="26" r="34" fill="url(#gl)" opacity=".8"/>
+<path d="M104 8 L110 0 L116 8 L113 30 L107 30 Z" fill="#9ff0ff"/>
+<path d="M60 260 L66 200 L154 200 L160 260 Z M70 200 L76 150 L144 150 L150 200 Z M80 150 L85 105 L135 105 L140 150 Z M89 105 L93 66 L127 66 L131 105 Z M96 66 L99 34 L121 34 L124 66 Z" fill="url(#st)" stroke="#0a0810" stroke-width="2"/>
+<path d="M62 200 H158 M72 150 H148 M82 105 H138 M91 66 H129" stroke="#8a7650" stroke-width="3"/>
+<g fill="#ffb54a"><rect x="86" y="220" width="8" height="14" rx="4"/><rect x="126" y="220" width="8" height="14" rx="4"/><rect x="106" y="230" width="8" height="30" rx="4" fill="#2a1b08" stroke="#ffb54a"/>
+<rect x="92" y="170" width="7" height="12" rx="3.5"/><rect x="121" y="170" width="7" height="12" rx="3.5"/><rect x="106" y="120" width="8" height="13" rx="4"/>
+<rect x="107" y="80" width="6" height="10" rx="3" fill="#9ff0ff"/><rect x="107" y="42" width="6" height="10" rx="3" fill="#9ff0ff"/></g></svg>"""
 
 
 def e(s) -> str:
     return html.escape(str(s))
 
 
+def side_status() -> str:
+    """The right-hand boxes: server status, how far the tower is open, the top climbers, a join button."""
+    snap = SNAP
+    if snap is None:
+        status = ('<div class="status-line"><span><i class="dot soon"></i>Server</span><b>Opening soon</b></div>'
+                  '<div class="status-line"><span>Floors</span><b>10</b></div>'
+                  '<div class="status-line"><span>Start</span><b>Floor 1</b></div>')
+        opened = 1
+        top = '<p style="margin:0;color:var(--mute)">The race to the top starts on opening day.</p>'
+    else:
+        o = snap.get("online", {})
+        status = (f'<div class="status-line"><span><i class="dot on"></i>Online</span><b>{e(o.get("characters", 0))}</b></div>'
+                  f'<div class="status-line"><span>Real people</span><b>{e(o.get("people", 0))}</b></div>'
+                  f'<div class="status-line"><span>Climbers</span><b>{len(snap.get("characters", []))}</b></div>')
+        opened = 1 + len([f for f in snap.get("floors", []) if f.get("cleared_at")])
+        chars = snap.get("characters", [])[:5]
+        top = ('<ol class="mini">' + "".join(f'<li>{char_link(c["name"]).html}<span>{e(c.get("level", 0))}</span></li>' for c in chars)
+               + "</ol>" + '<p style="margin:8px 0 0"><a href="hall-of-fame.html">Hall of Fame &raquo;</a></p>') if chars else \
+            '<p style="margin:0;color:var(--mute)">Nobody yet. Be the first.</p>'
+    opened = min(opened, 10)
+    return (f'<div class="box"><div class="box-title">Server</div><div class="box-body">{status}</div></div>'
+            f'<div class="box"><div class="box-title">The tower</div><div class="box-body"><div class="status-line"><span>Floors open</span>'
+            f'<b>{opened} / 10</b></div><div class="floorbar"><i style="width:{opened * 10}%"></i></div>'
+            '<p style="margin:6px 0 0;font-size:.88rem;color:var(--mute)">Beat a floor boss first and the next floor opens for everyone.</p></div></div>'
+            f'<div class="box"><div class="box-title">Top climbers</div><div class="box-body">{top}</div></div>'
+            '<div class="box"><div class="box-title">Join the climb</div><div class="box-body" style="text-align:center">'
+            '<img src="img/walk_vesper.gif" alt="" width="128" height="128" style="image-rendering:pixelated;margin:-20px 0 -24px">'
+            '<p style="margin:8px 0 12px">Free to play. Never pay-to-win.</p><a class="btn" href="join.html">Play now</a></div></div>')
+
+
 def page(name: str, title: str, body: str) -> str:
-    nav = "".join(
-        f'<a href="{href}"{" class=here" if href == name else ""}>{e(label)}</a>' for href, label in NAV
-    )
+    groups = []
+    for group, items in MENU:
+        links = "".join(f'<a href="{href}"{" class=here" if href == name else ""}>{e(label)}</a>' for href, label in items)
+        if group == "Play" and SIGNUP_URL:
+            links += f'<a href="{e(SIGNUP_URL)}">Create account</a><a href="{e(newchar_url())}">New character</a>'
+        groups.append(f'<div class="menu-group">{e(group)}</div>{links}')
+    top = "".join(f'<a href="{h}"{" class=here" if h == name else ""}>{e(l)}</a>' for h, l in
+                  [("index.html", "Home"), ("floors.html", "The tower"), ("hall-of-fame.html", "Hall of Fame"),
+                   ("online.html", "Who is online"), ("rules.html", "Rules")])
+    # evenly spaced along the road, each at a slightly different pace
+    walkers = "".join(f'<img src="img/walk_{n}.gif" alt="" style="animation-duration:{d}s;animation-delay:-{d * i / len(PARADE):.1f}s">'
+                      for i, n in enumerate(PARADE) for d in [44 + (i % 3) * 3])
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)} - {SITE}</title><link rel="stylesheet" href="style.css"></head>
-<body><header><div class="wrap"><a class="brand" href="index.html">{SITE.upper()}</a><nav>{nav}</nav></div></header>
-<main><div class="wrap">
-<h1>{e(title)}</h1>
+<body>
+<header class="banner">{TOWER_SVG.replace('class="tower"', 'class="tower far"')}{TOWER_SVG}<div class="inner"><a class="logo" href="index.html">SPIREBOUND</a>
+<div class="tagline">Climb the tower. Open each floor for everyone.</div></div>
+<div class="parade">{walkers}</div><div class="ground"></div></header>
+<div class="topbar"><div class="wrap"><nav class="links">{top}</nav><a class="btn small" href="join.html">Play now</a></div></div>
+<div class="wrap layout">
+<aside class="side-left"><div class="box menu"><div class="box-title">Menu</div>{"".join(groups)}<div style="height:8px"></div></div></aside>
+<main><section class="box"><div class="box-title">{e(title)}</div><div class="box-body">
 {body}
-</div></main>
+</div></section></main>
+<aside class="side">{side_status()}</aside>
+</div>
 <footer><div class="wrap">{SITE} is a fan-made, non-commercial Open Tibia project. Never pay-to-win.
-Building in public; this site is rebuilt from the game's own data files.</div></footer></body></html>
+The creatures on this site are our own art. This site is rebuilt from the game's own data.</div></footer></body></html>
 """
+
+
+def shell(title: str, body: str, here: str = "", signup_url: str = "/signup") -> str:
+    """A page in the website's frame for the login service's own pages (sign-up, another character), drawn on request
+    with the latest live snapshot in the side boxes."""
+    global SNAP, SIGNUP_URL
+    with RENDER_LOCK:
+        old = SNAP, SIGNUP_URL
+        SNAP, SIGNUP_URL = LAST_SNAP, signup_url
+        try:
+            return page(here, title, body)
+        finally:
+            SNAP, SIGNUP_URL = old
 
 
 class Raw:
@@ -121,20 +284,27 @@ def csv_rows(name: str) -> list[dict]:
 # ---------------------------------------------------------------- pages
 
 def home() -> str:
-    return """
-<p>An Open Tibia server shaped like a floating tower. Everyone starts on Floor 1. Each floor ends in a labyrinth
-and a boss. The first time anyone beats a floor boss, the next floor opens <b>for the whole server</b>.</p>
-<div class="card"><b>What makes it different</b><ul>
-<li><b>One shared tower.</b> Floors open for everyone, with a server-wide announcement.</li>
-<li><b>PvP with teeth, not bullying.</b> Newbie protection, level-range protection, outnumbered shields, bounties and harsh red-skull penalties.</li>
-<li><b>Exploration pays.</b> Hidden secrets across every floor, bought by the Info Broker.</li>
-<li><b>Houses do things.</b> Portals, Fortune Halls, trophy halls, training rooms, ponds.</li>
-<li><b>Never pay-to-win.</b> The best gear and spells come only from playing.</li>
-<li><b>Choose your risk.</b> Normal, Hardcore, or Death Game, where dying retires the character.</li></ul></div>
-<p>New here? Start with <a href="how-to-play.html">How to play</a>. Pick your vocation on the
-<a href="vocations.html">Vocations</a> page and your risk level on <a href="modes.html">Difficulty</a>.</p>
-<p>Seasons: each season the tower resets with remixed bosses and secrets. Titles and cosmetics you earn stay on
-your account forever.</p>
+    feats = [
+        ("ram", "One shared tower", "Floors open for everyone, with a server-wide announcement when a boss falls."),
+        ("alpha", "PvP with teeth, not bullying", "Newbie and level-range protection, outnumbered shields, bounties and harsh red skulls."),
+        ("shardling", "Exploration pays", "Secrets hidden on every floor, bought by the Info Broker."),
+        ("mole", "Houses do things", "Portals, trophy halls, training rooms and ponds."),
+        ("sproutling", "Never pay-to-win", "The best gear and spells come only from playing."),
+        ("thornsnap", "Choose your risk", "Normal, Hardcore, or Death Game, where dying retires the character."),
+    ]
+    tiles = "".join(f'<div class="feature"><img src="img/stand_{s}.png" alt=""><div><b>{e(t)}</b>{e(d)}</div></div>' for s, t, d in feats)
+    return f"""
+<div class="hero"><div>
+<p class="lead">An Open Tibia server shaped like a floating tower. Everyone starts on <b>Floor 1</b>.
+Each floor ends in a labyrinth and a boss. The first time anyone beats a floor boss, the next floor opens
+<b>for the whole server</b>.</p>
+<p><a class="btn" href="join.html">Start climbing</a> &nbsp; <a href="how-to-play.html">How to play &raquo;</a></p></div></div>
+<h2>Four vocations</h2>
+<div class="stage">{"".join(f'<figure><img src="img/walk_{v}.gif" alt=""><figcaption>{v.title()}</figcaption></figure>' for v in ("vanguard", "ranger", "arcanist", "mystic"))}</div>
+<h2>What makes it different</h2>
+<div class="features">{tiles}</div>
+<h2>Seasons</h2>
+<p>Each season the tower resets with remixed bosses and secrets. Titles and cosmetics you earn stay on your account forever.</p>
 """
 
 
@@ -192,7 +362,10 @@ def floors() -> str:
 
 
 def vocations() -> str:
-    return "<p>Four familiar vocations. Promotion at level 20 gives the familiar regeneration bump.</p>" + table(
+    cards = "".join(f'<div><img src="img/walk_{n}.gif" alt=""><b>{n.title()}</b>{e(r)}</div>' for n, r in
+                    [("vanguard", "Front line, sword and shield"), ("ranger", "Bows, crossbows and spears"),
+                     ("arcanist", "Big, flashy area spells"), ("mystic", "Healing and nature magic")])
+    return f'<div class="voc">{cards}</div>' + "<p>Four familiar vocations. Promotion at level 20 gives the familiar regeneration bump.</p>" + table(
         ["Vocation", "Like Tibia's", "Weapons", "Role"],
         [
             ["Vanguard", "Knight", "Sword, Axe, Club (+ shield)", "Tank, front line"],
@@ -473,6 +646,11 @@ PAGES = {
 def build(out: Path) -> list[str]:
     out.mkdir(parents=True, exist_ok=True)
     (out / "style.css").write_text(CSS.strip() + "\n", encoding="utf8")
+    img, src = out / "img", ROOT / "website" / "public" / "img"
+    if src.is_dir() and img.resolve() != src.resolve():
+        img.mkdir(exist_ok=True)
+        for f in src.iterdir():
+            (img / f.name).write_bytes(f.read_bytes())
     for old in out.glob("char-*.html"):          # characters can be renamed or deleted between snapshots
         old.unlink()
     names = []
@@ -497,6 +675,9 @@ def check(out: Path, names: list[str]) -> list[str]:
                 problems.append(f"{name}: external link {href}")
             elif not (out / href).exists():
                 problems.append(f"{name}: broken link {href}")
+        for src in re.findall(r'src="([^"]+)"', text):
+            if not (out / src).exists():
+                problems.append(f"{name}: missing picture {src}")
         if "<script" in text.lower():
             problems.append(f"{name}: has a script")
     return problems
