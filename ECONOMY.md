@@ -126,6 +126,7 @@ Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanis
 | The Bandit Road: The Smugglers' Cellar | party | group | 29,301 | 5,388 | 1.07 | 1.88 |
 | The Old Quarry | solo | mixed | 20,626 | 10,846 | 0.83 |  |
 | The Old Quarry: The Lower Works | party | group | 32,335 | 5,991 | 0.82 | 1.57 |
+| The Old Watchtower (a party of six) | party | large | 105,376 | 6,157 | 0.95 | 1.67 |
 
 Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):
 

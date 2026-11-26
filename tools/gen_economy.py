@@ -266,6 +266,27 @@ for c in CAMPS:
            loot * kph / len(PARTY))                          # the loot split evenly
     REWARDS[-1]["vs_solo"] = round(REWARDS[-1]["per_person_base_xp_h"] / solo_xp, 2)
 
+# S1c: the Old Watchtower, the large-group ground (4-8 players), modelled as a party of six: two Vanguards, two Rangers,
+# an Arcanist and a Mystic (4 vocations), at level 34. Its courtyard, inner room and cave all count. With no solo ground
+# at its levels, a member's experience is compared with the solo ladder's curve at that level.
+from floor1_plan import APEX  # noqa: E402
+WT_PARTY = ("Vanguard", "Vanguard", "Ranger (arrows)", "Ranger (arrows)", "Arcanist/Mystic", "Arcanist/Mystic")
+wt_lvl = 34
+wt_mons, wt_refill = [], 0.0
+for part in ("courtyard", "inner", "cave"):
+    groups = APEX[part]["groups"]
+    n = sum(k for g in groups for _m, k in g)
+    wt_mons += [(m, k) for g in groups for m, k in g]
+    wt_refill += n * 3600 / APEX[part]["respawn"]
+wt_total = sum(k for _m, k in wt_mons)
+wt_hp = sum(MONSTERS[m]["hp"] * k for m, k in wt_mons) / wt_total
+wt_bx = sum(MONSTERS[m]["xp"] * k for m, k in wt_mons) / wt_total
+wt_loot = sum((drop_value(m)[0] + drop_value(m)[1]) * k for m, k in wt_mons) / wt_total
+wt_kph = min(3600 / (wt_hp / (dps(wt_lvl) * sum(CLASS_SPEED[v] for v in WT_PARTY)) + PARTY_FIND), 300 * len(WT_PARTY), wt_refill)
+reward(APEX, "party", APEX["title"] + " (a party of six)", "large", wt_lvl,
+       party_share(wt_bx, len(WT_PARTY), 4) * wt_kph, wt_loot * wt_kph / len(WT_PARTY))
+REWARDS[-1]["vs_solo"] = round(REWARDS[-1]["per_person_base_xp_h"] / BASE_XP(wt_lvl), 2)
+
 (ROOT / "data").mkdir(exist_ok=True)
 with open(ROOT / "data/economy_rewards.csv", "w", newline="") as f:
     w = csv.DictWriter(f, fieldnames=list(REWARDS[0].keys()))

@@ -162,3 +162,4 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - H0 ticked (range and stairs): monsters notice a player from at least 12 tiles on open ground, and they don't follow you up or down stairs. Walls and wandering are a new task (H0b). FLOOR1.md now gives the real monster count (about 1,270).
 - H11 part done: every hunting ground's gate checked in the client, and all 12 are quiet; the loop starts have monsters in range. Still to check: the middle and end of each route.
 - H11 ticked: along every hunting route, 126 of 150 checked spots have monsters in range. The quiet ones are the calm stretch by each gate, and over half of the Ratwarren (the level 1-4 starter ground). Jay: say if the Ratwarren should be busier too.
+- S1c ticked: the Old Watchtower (for groups of 4-8) is in the economy model too; a party of six earns each member about 1.7x what a solo hunter earns at that level, on target.
