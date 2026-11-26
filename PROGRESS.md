@@ -156,3 +156,4 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
 - Jay approved five of the six elites and swapped the boars (2026-11-26: "i think old bristleback should be the common npc and the darker with red top boar npc should be the elite. upgrade the darker and red boar just a little more if possible. everything else is approved"). The Bristle Boar now wears the quill boar; Moonhowl, Mossback Snapper, Blackthorn, Prism Shardling and the Granite Warden wear their own looks (2330-2335); Old Bristleback wears the ember-crested boar until its upgrade (taller glowing crest, ember cheeks, heavier tusks) is approved. Shows after the next restart.
 - Jay approved the upgraded Old Bristleback ("approved"): he now wears it (look 2331), and he replaces the old red boar on the website banner.
 
+- Restarted the server (11:12, backup taken first): the Bristle Boar's quills and the six elites' own looks are live.
