@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a mossback snapper"
 monster.experience = 250
 monster.outfit = {
-	lookType = 112, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2332, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 900

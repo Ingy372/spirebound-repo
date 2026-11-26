@@ -10,8 +10,8 @@
    ]
   },
   {
-   "name": "boar",
-   "file": "boar.bmp.lzma",
+   "name": "bristleback",
+   "file": "bristleback.bmp.lzma",
    "count": 36,
    "looks": [
     119
@@ -2055,6 +2055,240 @@
    ],
    "addons": 0,
    "size": 46
+  },
+  {
+   "name": "moonhowl",
+   "file": "moonhowl.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2330,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     35,
+     3,
+     27,
+     59
+    ],
+    [
+     10,
+     29,
+     53,
+     34
+    ],
+    [
+     35,
+     8,
+     27,
+     48
+    ],
+    [
+     5,
+     29,
+     58,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "old_bristleback",
+   "file": "old_bristleback.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2331,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     28,
+     2,
+     34,
+     55
+    ],
+    [
+     9,
+     22,
+     54,
+     41
+    ],
+    [
+     28,
+     3,
+     34,
+     60
+    ],
+    [
+     11,
+     24,
+     46,
+     39
+    ]
+   ],
+   "addons": 0,
+   "size": 60
+  },
+  {
+   "name": "mossback",
+   "file": "mossback.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2332,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     21,
+     4,
+     41,
+     59
+    ],
+    [
+     7,
+     21,
+     56,
+     42
+    ],
+    [
+     21,
+     9,
+     41,
+     54
+    ],
+    [
+     6,
+     21,
+     57,
+     42
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "blackthorn",
+   "file": "blackthorn.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2333,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     25,
+     2,
+     36,
+     61
+    ],
+    [
+     17,
+     23,
+     45,
+     38
+    ],
+    [
+     27,
+     24,
+     34,
+     38
+    ],
+    [
+     7,
+     27,
+     56,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 61
+  },
+  {
+   "name": "prism_shardling",
+   "file": "prism_shardling.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2334,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     28,
+     6,
+     34,
+     56
+    ],
+    [
+     27,
+     8,
+     35,
+     52
+    ],
+    [
+     28,
+     12,
+     34,
+     46
+    ],
+    [
+     28,
+     9,
+     35,
+     49
+    ]
+   ],
+   "addons": 0,
+   "size": 56
+  },
+  {
+   "name": "granite_warden",
+   "file": "granite_warden.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2335,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     24,
+     22,
+     38,
+     40
+    ],
+    [
+     25,
+     27,
+     36,
+     37
+    ],
+    [
+     12,
+     28,
+     50,
+     36
+    ],
+    [
+     19,
+     15,
+     40,
+     49
+    ]
+   ],
+   "addons": 0,
+   "size": 50
   }
  ]
 }

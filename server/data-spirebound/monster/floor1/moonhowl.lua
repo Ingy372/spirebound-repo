@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "moonhowl"
 monster.experience = 240
 monster.outfit = {
-	lookType = 27, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2330, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 520

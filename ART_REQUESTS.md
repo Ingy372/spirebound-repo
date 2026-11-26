@@ -165,6 +165,15 @@ normal monster on the left, elite on the right; all pass the checker):
 - `prism_shardling`: bigger, six shards in six rainbow colours round a pearl-blue core, plus a ring of white chips.
 - `granite_warden`: the Ruin Sentinel in pink-grey granite with gold trim, ochre lichen, amber eyes and a cracked granite tower shield.
 
+**Jay, 2026-11-26:** "love it all. but i think old bristleback should be the common npc and the darker with red top boar
+npc should be the elite. upgrade the darker and red boar just a little more if possible. everything else is approved."
+So: the quill boar (`bristleback`) is now the common **Bristle Boar**; the charcoal boar with the ember crest becomes
+**Old Bristleback**, redrawn a little grander as `old_bristleback` (approved). Moonhowl, Mossback Snapper,
+Blackthorn, Prism Shardling and the Granite Warden are approved.
+In the game (next restart): the Bristle Boar wears the quill boar (look 119); the elites have looks of their own:
+Moonhowl 2330, Old Bristleback 2331 (the upgraded ember-crested boar, approved), Mossback Snapper 2332, Blackthorn 2333,
+Prism Shardling 2334, Granite Warden 2335. Preview of the swap: `art/output/boar_swap_preview.png`.
+
 ## Batch 7b (2026-11-25): two bandits for the group grounds (Priority: low, placeholders work)
 The Smugglers' Cellar and the Old Watchtower now hold mixed packs (DESIGN.md 9.4: a front-liner, a ranged one and a
 caster). Two new monsters borrow outfits for now: the **Bandit Crossbowman** (bandit outfit in green and brown, shoots
@@ -206,7 +215,8 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [~] | `old_tusk` | Old Tusk, Floor 1 secret boss: the Bristle Boar grown ancient (grizzled, one great tusk, old arrows in his back) | drafted 2026-11-25, waiting for Jay |
 | [~] | `hollowfang` | Hollowfang, Floor 1 hidden mini-boss: a night-black wolf with a pale mane and one great fang | drafted 2026-11-25, waiting for Jay |
 | [~] | `briar_mother` | Briar Mother, Floor 1 hidden mini-boss: a thorny wine-purple mound with three snapping bud heads and a crown of rose petals | drafted 2026-11-25, waiting for Jay |
-| [~] | `moonhowl` | Moonhowl, Floor 1 elite: a moon-white wolf with a midnight-blue saddle and a gold crescent on its brow, head high as if about to howl | drafted 2026-11-26, waiting for Jay |
+| [~] | `old_bristleback` | Old Bristleback, Floor 1 elite: the charcoal boar with the ember crest, a little grander (taller crest with glowing coal tips, ember cheek bristles, heavier tusks) | approved 2026-11-26 |
+| [x] | `moonhowl` | Moonhowl, Floor 1 elite: a moon-white wolf with a midnight-blue saddle and a gold crescent on its brow, head high as if about to howl | approved 2026-11-26 |
 | [x] | `vault_wraith` | Vault Wraith: a violet hooded wraith chained to a floating gold-banded strongbox, coins circling | approved 2026-11-26 |
 | [ ] | `twin_fang_warden` | the Twin Fang trial boss (Floor 8) | not made |
 

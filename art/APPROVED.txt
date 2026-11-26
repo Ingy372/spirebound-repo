@@ -80,3 +80,10 @@ grazer
 strider
 underkeeper
 vault_wraith
+moonhowl
+bristleback
+mossback
+blackthorn
+prism_shardling
+granite_warden
+old_bristleback

@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the granite warden"
 monster.experience = 380
 monster.outfit = {
-	lookType = 2204, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2335, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 1100

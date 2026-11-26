@@ -28,7 +28,7 @@ DIRS = ("N", "E", "S", "W")
 # approved sprite -> the placeholder looks it replaces in the client (server/data-spirebound/monster: Field Rat and
 # Pen Rat wear look 56). Only sprites listed in art/APPROVED.txt may go in.
 # (Floors 2-10 still borrow placeholder looks too, so a few of their stand-in monsters share these until their own art.)
-CREATURES = {"rat": [56], "boar": [119], "mole": [26], "toad": [222], "wasp": [44], "snapper": [112], "thornsnap": [28],
+CREATURES = {"rat": [56], "bristleback": [119], "mole": [26], "toad": [222], "wasp": [44], "snapper": [112], "thornsnap": [28],
              "shardling": [122], "wolf": [27], "alpha": [52], "ram": [607], "sproutling": [19], "azhrakkar": [61]}
 
 # approved people (NPCs and player outfits) -> a NEW look number of their own (roadmap 6.5). Many NPCs share one borrowed
@@ -52,7 +52,11 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              # animals redrawn in the wrong-animal cleanup (2300+): placed like the animals, so no people shift
              "crawler": 2301, "blightwasp": 2302, "ridgecat": 2303, "bull": 2304, "stonebull": 2305, "grazer": 2306,
              "strider": 2307, "old_tusk": 2311, "hollowfang": 2312, "briar_mother": 2313,
-             "underkeeper": 2323, "vault_wraith": 2324}
+             "underkeeper": 2323, "vault_wraith": 2324,
+             # Floor 1 ground elites (Jay, 2026-11-26). Look 119 (the Bristle Boar) now wears the quill boar; the
+             # ember-crested boar, redrawn a little grander, is Old Bristleback.
+             "moonhowl": 2330, "old_bristleback": 2331, "mossback": 2332, "blackthorn": 2333, "prism_shardling": 2334,
+             "granite_warden": 2335}
 
 
 def cip_sheet(img: Image.Image) -> bytes:

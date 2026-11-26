@@ -221,7 +221,14 @@ GRANITE_WARDEN = {
     "tip": ramp((60, 60, 66), (246, 242, 232), (160, 156, 150)),
     "shield": ramp(*GRANITE_DARK), "rim": ramp(*GOLD),
 }
-ELITES = {"granite_warden": GRANITE_WARDEN, "moonhowl": MOONHOWL, "bristleback": BRISTLEBACK, "mossback": MOSSBACK, "blackthorn": BLACKTHORN,
+# Old Bristleback (Jay, 2026-11-26: the charcoal ember-crested boar becomes the elite, "just a little more"): the
+# approved boar's colours with a hotter crest, yellow-hot coal tips and a brighter eye.
+OLD_BRISTLEBACK = {**{k: v for k, v in json.loads((Path(__file__).resolve().parent / "palette.json").read_text(
+                        encoding="utf-8"))["ramps"]["boar"].items()},
+                   "crest": ramp((70, 10, 6), (255, 150, 60), (214, 56, 16)),
+                   "ember": ramp((170, 60, 10), (255, 252, 200), (255, 190, 60)),
+                   "eye": [[255, 80, 30]]}
+ELITES = {"old_bristleback": OLD_BRISTLEBACK, "granite_warden": GRANITE_WARDEN, "moonhowl": MOONHOWL, "bristleback": BRISTLEBACK, "mossback": MOSSBACK, "blackthorn": BLACKTHORN,
           "prism_shardling": PRISM_SHARDLING}
 
 

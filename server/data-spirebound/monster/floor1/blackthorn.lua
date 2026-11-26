@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "blackthorn"
 monster.experience = 330
 monster.outfit = {
-	lookType = 28, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2333, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 840
