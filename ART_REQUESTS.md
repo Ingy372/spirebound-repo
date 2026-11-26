@@ -22,6 +22,9 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
   their next login). Floors 2-10 priests and bankers and the second Hearthgate banker still wear borrowed looks.
 - **2026-11-25: the Bounty Warden is redrawn** on the outfit body (`art/models/warden.py`): no hat any more (Vesper owns
   coat + hat), a crossbow on his back, grey beard, wanted poster, manacles. Sent to Jay for approval.
+- **2026-11-25: outfit addons.** Outfits can now have Tibia's addon 1 and addon 2 (overlays, rules A1-A7 in
+  `art/OUTFIT_RULES.md`). First pair for Jay's OK: the Vanguard's Crested Helm (addon 1) and Knight's Mantle (addon 2).
+  Next: two addons each for the Ranger, Arcanist and Mystic, then quests that give them (roadmap 6.5c).
 - **Still to make:** 8 Floor 1 models in progress (archer, bandit, Brannoch, the captain, guild warden, quartermaster,
   sentinel, warden); about 90 Floors 2-10 monsters (perhaps 60 different bodies once shared bodies are counted) and
   about 45 kinds of NPC. At the pace so far (6-8 approved models a long session, including Jay's review), Floors 2-10

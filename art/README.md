@@ -86,6 +86,8 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
   person look gets the same shift, or it stands 8 px off its tile. Animals have no shift.
 - **The server must know the number too.** Canary refuses (with a warning) an NPC, monster or player outfit whose
   look is not in its appearances file; `tools/build_server.py` lists ours there (id only) at every build.
+- **Addons** (base, addon 1, addon 2) are extra pattern rows of the same look, packed from approved
+  `<name>_a1` / `<name>_a2` overlays (`art/pipeline/addon_overlay.py`; rules A1-A7 in `art/OUTFIT_RULES.md`).
 - **Player outfits** also need a line in `outfits.xml` (added by `tools/build_server.py`) and someone to grant them
   (`scripts/spirebound/class_outfits.lua`: each class gets its own when picked at the Registrar).
 - **No colour layer yet:** an NPC's or outfit's head/body/legs/feet colours do nothing on our looks (set them to 0).

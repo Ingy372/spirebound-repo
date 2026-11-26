@@ -78,21 +78,39 @@ def main() -> None:
         if name not in approved:
             sys.exit(f"make_creature_sheets: {name} is not approved (art/APPROVED.txt)")
         frames = ROOT / "art" / "output" / name / "frames"
-        img = Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0))
-        boxes = []
-        for k, fid in enumerate(frame_order()):
-            f = Image.open(frames / f"{fid}.png").convert("RGBA")
+        # addons (Jay, 2026-11-25: base, addon 1, addon 2): approved overlays from art/pipeline/addon_overlay.py.
+        # Addon 2 only goes in with addon 1 (the client ties pattern row 1 to addon 1 and row 2 to addon 2).
+        layers = [frames]
+        for k in (1, 2):
+            ov = ROOT / "art" / "output" / f"{name}_a{k}" / "overlay"
+            if new_look and f"{name}_a{k}" in approved and len(layers) == k and ov.exists():
+                layers.append(ov)
+        # client order: for each frame group / step, every addon row (base, addon 1, addon 2), each N E S W
+        order = [(layer, fid) for group in ([f"{d}_0" for d in DIRS],) + tuple([f"{d}_{k}" for d in DIRS] for k in range(1, 9))
+                 for layer in layers for fid in group]
+        sheets, boxes = [], []
+        for k, (layer, fid) in enumerate(order):
+            if k % 36 == 0:
+                sheets.append(Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0)))
+            f = Image.open(layer / f"{fid}.png").convert("RGBA")
             assert f.size == (64, 64), f"{name} {fid}: {f.size}, want 64x64"
-            img.paste(f, ((k % 6) * 64, (k // 6) * 64))
-            if k < 4:                                      # standing N E S W: the drawn area, like Tibia's own entries
+            sheets[-1].paste(f, ((k % 36 % 6) * 64, (k % 36 // 6) * 64))
+            if layer == frames and fid.endswith("_0"):     # standing N E S W: the drawn area, like Tibia's own entries
                 x0, y0, x1, y1 = f.getchannel("A").getbbox()
                 boxes.append([x0, y0, x1 - x0, y1 - y0])
-        (OUT / f"{name}.bmp.lzma").write_bytes(cip_sheet(img))
-        entry = {"name": name, "file": f"{name}.bmp.lzma", "count": 36, "looks": looks}
+        files = [f"{name}.bmp.lzma"] + [f"{name}_{i + 1}.bmp.lzma" for i in range(1, len(sheets))]
+        for file, img in zip(files, sheets):
+            (OUT / file).write_bytes(cip_sheet(img))
+        for old in OUT.glob(f"{name}_*.bmp.lzma"):          # sheets from an earlier, bigger layout
+            if old.name not in files:
+                old.unlink()
+        entry = {"name": name, "file": files[0], "count": 36, "looks": looks}
+        if len(files) > 1:
+            entry.update({"files": files, "count": len(order)})
         if new_look:
             # people are drawn 8 px low-right on the canvas like Tibia's own outfits (CANVAS_OFFSET), and Tibia's
             # people carry an 8 px shift up-left in the client: the new look gets the same shift
-            entry.update({"new_look": new_look, "shift": [8, 8], "boxes": boxes,
+            entry.update({"new_look": new_look, "shift": [8, 8], "boxes": boxes, "addons": len(layers) - 1,
                           "size": max(max(b[2], b[3]) for b in boxes)})
         manifest.append(entry)
     (OUT / "creatures.json").write_text(json.dumps({

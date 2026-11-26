@@ -1,0 +1,246 @@
+{
+ "name": "vanguard_a2",
+ "parts": [
+  "none",
+  "skin",
+  "eye",
+  "brow",
+  "nose",
+  "hair",
+  "strand",
+  "hand",
+  "torso",
+  "arm_a",
+  "arm_b",
+  "cuff",
+  "leg_a",
+  "leg_b",
+  "boot_a",
+  "boot_b",
+  "sole",
+  "belt",
+  "buckle",
+  "tabard",
+  "trim",
+  "cape",
+  "pauldron",
+  "gorget",
+  "knee",
+  "shield",
+  "rim",
+  "blade",
+  "hilt",
+  "mantle",
+  "fur",
+  "tuft"
+ ],
+ "palette": "vanguard",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 2.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "brow": 3.0,
+   "nose": 2.0,
+   "hand": 2.6,
+   "strand": 1.3,
+   "cuff": 2.2,
+   "buckle": 4.0,
+   "belt": 2.0,
+   "sole": 1.6,
+   "boot_a": 1.4,
+   "boot_b": 1.4,
+   "trim": 2.4,
+   "pauldron": 1.5,
+   "knee": 2.2,
+   "rim": 2.0,
+   "blade": 3.0,
+   "hilt": 3.0,
+   "gorget": 1.4,
+   "fur": 1.8,
+   "tuft": 2.6
+  },
+  "thin": {
+   "eye": 3,
+   "brow": 2,
+   "nose": 3,
+   "hand": 3,
+   "strand": 2,
+   "cuff": 3,
+   "buckle": 2,
+   "belt": 3,
+   "sole": 3,
+   "trim": 2,
+   "knee": 3,
+   "rim": 2,
+   "blade": 2,
+   "hilt": 2,
+   "tuft": 2
+  },
+  "soft": [
+   [
+    "skin",
+    "eye",
+    "brow",
+    "nose"
+   ],
+   [
+    "hair",
+    "strand"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "torso",
+    "belt",
+    "buckle"
+   ],
+   [
+    "boot_a",
+    "sole"
+   ],
+   [
+    "boot_b",
+    "sole"
+   ],
+   [
+    "tabard",
+    "trim"
+   ],
+   [
+    "shield",
+    "rim"
+   ],
+   [
+    "blade",
+    "hilt"
+   ],
+   [
+    "torso",
+    "gorget"
+   ],
+   [
+    "mantle",
+    "trim"
+   ],
+   [
+    "fur",
+    "tuft"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "texture": {
+   "torso": [
+    0.4,
+    0.18
+   ],
+   "arm_a": [
+    0.35,
+    0.12
+   ],
+   "arm_b": [
+    0.35,
+    0.12
+   ],
+   "leg_a": [
+    0.35,
+    0.12
+   ],
+   "leg_b": [
+    0.35,
+    0.12
+   ],
+   "hair": [
+    0.3,
+    0.1
+   ],
+   "boot_a": [
+    0.3,
+    0.0
+   ],
+   "boot_b": [
+    0.3,
+    0.0
+   ],
+   "tabard": [
+    0.35,
+    0.15
+   ],
+   "cape": [
+    0.4,
+    0.2
+   ],
+   "shield": [
+    0.3,
+    0.15
+   ],
+   "mantle": [
+    0.4,
+    0.2
+   ],
+   "fur": [
+    0.6,
+    0.3
+   ]
+  },
+  "bands": [
+   0.38,
+   0.5,
+   0.6,
+   0.69,
+   0.78,
+   0.86,
+   0.93
+  ],
+  "selout": [
+   "torso",
+   "skin",
+   "hair",
+   "tabard",
+   "pauldron",
+   "shield",
+   "cape",
+   "mantle",
+   "fur"
+  ]
+ },
+ "ref": "outfit_128.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  8,
+  8
+ ],
+ "auto_place": null
+}

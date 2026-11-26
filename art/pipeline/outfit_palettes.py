@@ -56,6 +56,13 @@ OUTFITS = {
     },
 }
 
+# Vanguard addons (overlays; the approved base colours above stay untouched)
+OUTFITS["vanguard"].update({
+    "helm": ramp(*BRIGHT_STEEL), "crest": ramp(*ROYAL), "seam": [[12, 18, 50]] * 8,
+    "mantle": ramp((10, 16, 54), (80, 120, 210), (26, 50, 140)), "fur": ramp((96, 84, 70), (250, 246, 236), (196, 184, 164)),
+    "tuft": ramp((120, 108, 92), (255, 252, 244), (220, 210, 192)),
+})
+
 # The Floor 10 boss uses the same figure, so its colours live here too.
 HIDE = ((6, 16, 46), (120, 176, 236), (30, 70, 150))            # cerulean hide
 HIDE_LIT = ((14, 34, 84), (160, 208, 250), (54, 106, 190))      # the paler raised muscle

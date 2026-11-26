@@ -150,9 +150,11 @@ def new_outfit(c: dict, first: int | None) -> bytes:
     server only needs to know the number exists)."""
     if first is None:
         return field(1, c["new_look"])
+    rows = 1 + c.get("addons", 0)                         # pattern rows: base, addon 1, addon 2 (Tibia's addons)
+
     def info(start, phases):
-        b = field(1, 4) + field(2, 1) + field(3, 1) + field(4, 1)
-        for k in range(4 * phases):
+        b = field(1, 4) + field(2, rows) + field(3, 1) + field(4, 1)
+        for k in range(4 * rows * phases):
             b += field(5, start + k)
         if phases > 1:
             anim = field(2, 0) + field(4, 0)
@@ -165,7 +167,7 @@ def new_outfit(c: dict, first: int | None) -> bytes:
         return b
     msg = field(1, c["new_look"])
     msg += field(2, field(1, 0) + field(2, 0) + field(3, info(first, 1)))
-    msg += field(2, field(1, 1) + field(2, 1) + field(3, info(first + 4, 8)))
+    msg += field(2, field(1, 1) + field(2, 1) + field(3, info(first + 4 * rows, 8)))
     sx, sy = c.get("shift", (0, 0))
     return msg + field(3, field(26, field(1, sx) + field(2, sy)) if sx or sy else b"")
 
@@ -260,10 +262,15 @@ def install_client(client: Path) -> None:
         sid += sh["count"]
     creature_first, people_first = {}, {}
     for c in creature_manifest():
-        name = f"{SHEET_PREFIX}creature-{c['name']}.bmp.lzma"
-        (things / name).write_bytes((CREATURES / c["file"]).read_bytes())
-        catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid,
-                        "lastspriteid": sid + c["count"] - 1, "area": 0})
+        files = c.get("files", [c["file"]])               # an outfit with addons spans several 36-sprite sheets
+        left = c["count"]
+        for i, file in enumerate(files):
+            name = f"{SHEET_PREFIX}creature-{c['name']}{'' if i == 0 else '-' + str(i + 1)}.bmp.lzma"
+            (things / name).write_bytes((CREATURES / file).read_bytes())
+            n = min(36, left)
+            catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid + 36 * i,
+                            "lastspriteid": sid + 36 * i + n - 1, "area": 0})
+            left -= n
         for look in c["looks"]:
             creature_first[look] = sid
         if c.get("new_look"):
@@ -352,7 +359,10 @@ def check_client(client: Path) -> None:
     for c in new_looks():
         v = outfits.get(c["new_look"])
         assert v is not None, f"{c['name']}: look {c['new_look']} missing"
-        assert sprite_counts(v) == [4, 32], f"{c['name']}: look {c['new_look']} has the wrong frames"
+        rows = 1 + c.get("addons", 0)
+        n_spr = [sum(1 for n4, w4, x4, _ in top_fields(i3) if n4 == 5) for n, w, x, _ in top_fields(v) if n == 2
+                 for n3, w3, i3, _ in top_fields(x) if n3 == 3]
+        assert n_spr == [4 * rows, 32 * rows], f"{c['name']}: look {c['new_look']} has the wrong frames ({n_spr})"
         sprites = [x4 for n, w, x, _ in top_fields(v) if n == 2
                    for n3, w3, i3, _ in top_fields(x) if n3 == 3 for n4, w4, x4, _ in top_fields(i3) if n4 == 5]
         assert all(lo <= s <= hi for s in sprites), f"{c['name']}: sprites outside our sheets"

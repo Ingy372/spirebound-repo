@@ -58,6 +58,7 @@ Winning Floor 1 must not lead to a placeholder.
 - [ ] **N3 Hearthgate hand polish** (new; Q47, FLOOR1_REVIEW F1-50): the Hearth Square stops being an empty marble slab (stalls, trees, carts, a notice board with live news), varied building shapes, the streets dressed. Done when: rendered, Jay says it looks like a town.
 - [ ] **P3b Fires and more lights in Hearthgate** (cut from P3): a few campfires, braziers at the gates, lit windows. Done when: rendered and seen in the client at night.
 - [~] **6.5 Swap in all art Jay has approved so far.** *(2026-11-25: the 13 approved monsters are in the game. Still to do: NPCs and player outfits (need their own look numbers: ART_REQUESTS.md))*
+- [ ] **6.5c Outfit addons as quest rewards** (Jay, 2026-11-25: "tibia has the base outfit, addon 1 and addon 2... it'll give us more content for quests"). Pipeline and install are ready (art/OUTFIT_RULES.md A1-A7). Done when: each class outfit has two addons Jay approved, each unlocked by its own quest, and a test character earns one through the real quest and sees it in the client.
 
 ## Step 7 — Know the real size of the art job
 Art, not code, sets the launch date: only 13 monsters are ours.

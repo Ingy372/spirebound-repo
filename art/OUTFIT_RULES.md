@@ -46,6 +46,25 @@ Worked examples: `art/models/vanguard.py`, `ranger.py`, `arcanist.py`, `mystic.p
 | O16 | **Light grey hair reads as a steel helmet.** Grey or white hair uses a darker salt-and-pepper ramp (top tone about 170) and five or more strand lines. | Bounty Warden |
 | O17 | **Gear on the back is edge-on from the side.** A crossbow, quiver or shield on the back spans left-right, so facing east or west it hides behind the body: sweep its far ends backward (-X) so it shows from the side, and check the signature count facing E and W. | Bounty Warden's crossbow (1 px facing E before the sweep) |
 
+## Addons: base, addon 1, addon 2 (Jay, 2026-11-25)
+
+Jay: "tibia has the base outfit, addon 1 and addon 2. Not every outfit needs one, but it'll give us more content for
+quests for certain outfits." Worked example: the Vanguard's Crested Helm (`art/models/vanguard_a1.py`) and Knight's
+Mantle (`vanguard_a2.py`).
+
+| # | Rule | How it is enforced |
+|---|---|---|
+| A1 | **Plan addons with the outfit.** Every new player outfit's docstring says "Addons:" with what addon 1 and addon 2 are, or "none" and why. Player and shop outfits normally get both; NPCs never need them. | docstring |
+| A2 | **An addon only adds.** In the client it is an overlay drawn on top of the base, so it can cover the base but never remove or reshape it. Good addons: headgear, a mantle or cloak, shoulder pieces, a back item, a held prop in a free hand. Never: a different weapon in a hand that already holds one, or anything that needs the base's part gone. | `addon_overlay.py` stops if an addon would need to erase more than 12 base pixels |
+| A3 | **Addons never touch the frozen base.** The addon file imports the base model, adds its parts after the base's part list (so the base's part numbers stay the same) and renders as `<base>_a1` / `<base>_a2`. Its colours are NEW keys in the base's palette; the base's own keys never change. | `render.sh` still refuses the approved base; compare palette.json before committing |
+| A4 | **Each addon reads alone and with the other.** Addon 1 at the head or front, addon 2 at the back or shoulders, so both can be worn together without one hiding the other. Judge `art/output/<base>_addons_preview.png` (base, addon 1, addon 2, both) and the both-on walk loops. | look at the preview |
+| A5 | **Checker on each addon render** (`check_creature.py <base>_a1`): its SIGNATURE is the addon's own parts, and headgear counts as the head (put helm parts in HEAD_PARTS). Literal values only in SIGNATURE/CHECK/HEAD_PARTS/LEG_PARTS: the checker reads those lines without importing the model. | ALL PASS before Jay sees it |
+| A6 | **Stay inside the canvas.** Addons widen the figure; nothing may be cut by the 64x64 canvas's right edge (the mantle was narrowed for that). | look at the west view |
+| A7 | **Into the game only when approved.** `tools/make_creature_sheets.py` packs `<base>_a1` (and `_a2`, only together with `_a1`) as the look's addon rows once they are in `art/APPROVED.txt`; a player then needs the addon itself (`player:addOutfitAddon(look, 1 or 2)`), normally from a quest. | approval list |
+
+How to make them: `sh art/pipeline/render.sh vanguard_a1`, `sh art/pipeline/render.sh vanguard_a2`, the checker on
+both, then `python art/pipeline/addon_overlay.py vanguard` (overlays, preview, walk loops).
+
 ## Still to do
 
 - The town NPCs, bandits, sentinel, archer and the boss still use the old copied body; move each onto `humanoid.py`
