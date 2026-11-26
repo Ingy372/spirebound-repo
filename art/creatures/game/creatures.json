@@ -108,8 +108,13 @@
   {
    "name": "vanguard",
    "file": "vanguard.bmp.lzma",
-   "count": 36,
+   "count": 108,
    "looks": [],
+   "files": [
+    "vanguard.bmp.lzma",
+    "vanguard_2.bmp.lzma",
+    "vanguard_3.bmp.lzma"
+   ],
    "new_look": 2001,
    "shift": [
     8,
@@ -141,7 +146,7 @@
      41
     ]
    ],
-   "addons": 0,
+   "addons": 2,
    "size": 42
   },
   {

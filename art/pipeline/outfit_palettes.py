@@ -63,6 +63,30 @@ OUTFITS["vanguard"].update({
     "tuft": ramp((120, 108, 92), (255, 252, 244), (220, 210, 192)),
 })
 
+# Ranger, Arcanist and Mystic addons (overlays: new keys only, the approved base colours stay untouched)
+_ADDON_KEYS = {
+    "ranger": {
+        "band": ramp(*LEATHER), "stud": ramp(*GOLD), "feather": ramp((70, 46, 22), (236, 214, 170), (160, 116, 66)),
+        "bar": [[40, 26, 14]] * 8, "guard": ramp((30, 16, 10), (160, 108, 64), (88, 54, 30)),
+        "edge": ramp((20, 10, 6), (120, 80, 48)), "horn": ramp((110, 90, 60), (250, 240, 214), (206, 184, 140)),
+        "brass": ramp(*GOLD), "strap": ramp(*LEATHER),
+    },
+    "arcanist": {
+        "circlet": ramp(*GOLD), "gem": [[150, 240, 255]] * 8, "stone": ramp((30, 26, 40), (176, 168, 190), (86, 78, 100)),
+        "glow": [[190, 250, 255]] * 8, "cover": ramp((20, 8, 10), (140, 60, 50), (70, 24, 24)),
+        "page": ramp((150, 132, 100), (255, 250, 230), (232, 218, 184)), "corner": ramp(*GOLD), "mark": [[150, 240, 255]] * 8,
+    },
+    "mystic": {
+        "antler": ramp((60, 40, 22), (226, 204, 168), (150, 120, 84)), "tip": ramp((150, 140, 118), (255, 252, 240)),
+        "sprout": ramp(*LEAF), "owl": ramp((70, 72, 84), (255, 255, 252), (196, 198, 204)),
+        "wing": ramp((40, 42, 52), (220, 222, 226), (130, 132, 142)), "disc": ramp((170, 170, 176), (255, 255, 255), (236, 236, 240)),
+        "owl_eye": [[230, 150, 30]] * 8, "beak": ramp((60, 50, 40), (220, 210, 190)), "talon": ramp((40, 34, 30), (180, 170, 150)),
+    },
+}
+for _name, _keys in _ADDON_KEYS.items():
+    assert not set(_keys) & set(OUTFITS[_name]), f"{_name}: an addon colour would replace a base colour"
+    OUTFITS[_name].update(_keys)
+
 # The Floor 10 boss uses the same figure, so its colours live here too.
 HIDE = ((6, 16, 46), (120, 176, 236), (30, 70, 150))            # cerulean hide
 HIDE_LIT = ((14, 34, 84), (160, 208, 250), (54, 106, 190))      # the paler raised muscle

@@ -49,8 +49,9 @@ Worked examples: `art/models/vanguard.py`, `ranger.py`, `arcanist.py`, `mystic.p
 ## Addons: base, addon 1, addon 2 (Jay, 2026-11-25)
 
 Jay: "tibia has the base outfit, addon 1 and addon 2. Not every outfit needs one, but it'll give us more content for
-quests for certain outfits." Worked example: the Vanguard's Crested Helm (`art/models/vanguard_a1.py`) and Knight's
-Mantle (`vanguard_a2.py`).
+quests for certain outfits." Worked examples: the Vanguard's Crested Helm and Knight's Mantle (`vanguard_a1.py`, `vanguard_a2.py`, approved by
+Jay 2026-11-25: "Looks good to me"), and the Ranger's, Arcanist's and Mystic's pairs. `art/models/addon_kit.py` gives
+an addon file the base's moving anchors (head, shoulders, belt, hands).
 
 | # | Rule | How it is enforced |
 |---|---|---|
@@ -61,6 +62,8 @@ Mantle (`vanguard_a2.py`).
 | A5 | **Checker on each addon render** (`check_creature.py <base>_a1`): its SIGNATURE is the addon's own parts, and headgear counts as the head (put helm parts in HEAD_PARTS). Literal values only in SIGNATURE/CHECK/HEAD_PARTS/LEG_PARTS: the checker reads those lines without importing the model. | ALL PASS before Jay sees it |
 | A6 | **Stay inside the canvas.** Addons widen the figure; nothing may be cut by the 64x64 canvas's right edge (the mantle was narrowed for that). | look at the west view |
 | A7 | **Into the game only when approved.** `tools/make_creature_sheets.py` packs `<base>_a1` (and `_a2`, only together with `_a1`) as the look's addon rows once they are in `art/APPROVED.txt`; a player then needs the addon itself (`player:addOutfitAddon(look, 1 or 2)`), normally from a quest. | approval list |
+| A8 | **Headgear goes over or outside the hair, never inside it.** A circlet and gem on the Arcanist's brow sat under her fringe and showed 0 pixels from every side. Big hair (fringes, buns, hoods) hides anything on the head's surface: rise above it (antlers, a crest) or float beside it (runestones), and check after the first render. Small things (horns, books, owls) need to be bigger than feels right: the first owl, book and antlers all vanished at game size. | lesson from the Arcanist, Mystic and Ranger addons |
+| A9 | **Signature parts must face every way; one-sided details are checked only where they face.** An owl's face or a horn at the front hip cannot show from behind: put the whole owl, or the shoulder guard, in SIGNATURE and write why in a comment. A pale animal on a pale-haired figure, or a tan one on sandy hair, merges with the head: give a companion its own colour. | Mystic's owl (tan on sandy hair read as a second head) |
 
 How to make them: `sh art/pipeline/render.sh vanguard_a1`, `sh art/pipeline/render.sh vanguard_a2`, the checker on
 both, then `python art/pipeline/addon_overlay.py vanguard` (overlays, preview, walk loops).
