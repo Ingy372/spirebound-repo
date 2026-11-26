@@ -191,3 +191,54 @@ run low on monsters. Burrow Hills, the best mid ground, keeps about 120 monsters
 120: 4 ms with a few hiccups up to 0.7 s; 180: 9 ms with about one hiccup of more than 0.1 s every 8 seconds (worst
 1.1 s); 240: 14 ms, about one every 4 seconds. Up to about 120 at once is still smooth; from about 180 players feel
 small stutters now and then. See `docs/LOAD_TEST.md`.
+
+## After 10.4, pass 2 (rerun 2026-11-26 15:16-15:40, main at 4f810bad)
+
+What changed: the mid grounds repeat their clearing groups as often as each ground's danger limits allow, and Boar
+Meadow has two more lone boars (Reedmarsh unchanged). Steps 4 and 8 per ground on all 15 grounds (60 and 120 bots, kept
+near 120 because of the stutter found in pass 1). "Alive" = monsters standing on the ground's own levels, counted each
+minute (the last count of the step).
+
+| Ground | Levels | 4 (pass 1) | 8 (pass 1) | Alive at 4 / 8 | Whole ground at 8, kills/h | Fits now |
+|---|---|---|---|---|---|---|
+| The Ratwarren | 1-4 | 716 (718) | 644 (685) | 120 / 112 | 5,151 | 8+ (16+ in pass 1) |
+| Toad Pond | 3-7 | 424 (392) | 305 (289) | 51 / 61 | 2,443 | 8+ (12 in pass 1) |
+| Sproutling Glade | 5-10 | 480 (555) | 538 (288) | 60 / 52 | 4,303 | 8+ (16+ in pass 1) |
+| Waspgrass Fields | 7-12 | 711 (703) | 671 (702) | 142 / 127 | 5,366 | 8+ (16+ in pass 1) |
+| Boar Meadow | 9-15 | 148 (81) | 79 (89) | 14 / 25 | 634 | fewer than 4 |
+| Burrow Hills | 11-16 | 347 (394) | 317 (223) | 131 / 132 | 2,537 | 8+ (12 in pass 1) |
+| Wolf Copse | 12-18 | 244 (122) | 171 (136) | 22 / 23 | 1,371 | 4 (was fewer than 4) |
+| Reedmarsh | 14-19 | 276 (163) | 209 (199) | 17 / 13 | 1,671 | 8 (unchanged map: noise) |
+| Bramble Run | 14-20 | 236 (276) | 190 (216) | 13 / 17 | 1,517 | 4-8 (8 in pass 1) |
+| Thornsnap Hollow | 14-20 | 171 (144) | 77 (66) | 13 / 12 | 617 | fewer than 4 |
+| Shard Fields | 17-24 | 204 (126) | 149 (138) | 8 / 15 | 1,191 | 4 (was fewer than 4) |
+| The Bandit Road | 19-27 | 144 (135) | 144 (151) | 12 / 10 | 1,149 | fewer than 4 |
+| The Old Quarry | 23-30 | 189 (135) | 148 (126) | 12 / 17 | 1,183 | fewer than 4 (189 at 4) |
+| Smugglers' Ridge | 19-26 | 176 (184) | 151 (141) | 10 / 9 | 1,209 | fewer than 4 |
+| The Fallen Bastion | 23-30 | 152 (105) | 118 (112) | 10 / 9 | 943 | fewer than 4 |
+
+**Floor 1 now feeds about 110 at once at 200+ kills an hour each (pass 1: about 100), about 50 in levels 9-30 (pass 1:
+about 40).** Counted from the starter grounds and Burrow Hills at their pass 1 sizes (about 72), Reedmarsh 8, Wolf Copse
+4, Shard Fields 4, Bramble Run about 6, and about 3 on each of the six grounds still under 200 with 4 players.
+
+What the pass changed:
+- **The denser grounds gained clearly at 4 players**: Wolf Copse doubled (122 to 244 each), Shard Fields 126 to 204,
+  the Old Quarry 135 to 189, the Fallen Bastion 105 to 152, Boar Meadow 81 to 148. At 8 players the gains mostly shrink
+  back (Wolf Copse 171, Shard Fields 149): the extra groups are used up and the walk between them returns.
+- **Still under 200 with 4 players:** Boar Meadow, Thornsnap Hollow, the Bandit Road, the Old Quarry (just), Smugglers'
+  Ridge and the Fallen Bastion. Thornsnap Hollow is the weakest mid ground now (77 each at 8): it keeps about 12
+  monsters alive and its thornsnaps stand still as sentries, so hunters walk a long way between them.
+- **Live monsters on the mid grounds stayed about where they were (10-25)**, against about 130 on Burrow Hills. The
+  danger limits (the H14 budgets) cap how many groups a clearing may repeat, so density can't rise much more inside
+  today's grounds. Burrow Hills fits more players because its moles live as a colony (many small groups close together),
+  which the colony habit's budget allows.
+- Run-to-run noise is about plus or minus 15-20% at these small counts (Reedmarsh, unchanged, read 163 then 276 at 4).
+
+Suggestions if 10.4 needs more (for the lead session):
+1. **More ground, not more density, for levels 17-30:** the budgets stop density, so a fourth and fifth ground for
+   levels 19-30 (or a bigger area for Smugglers' Ridge and the Fallen Bastion) is the remaining lever.
+2. **Thornsnap Hollow:** a second, walking monster between the sentries (or the sentries closer to the loop).
+3. **Boar Meadow:** Q73 (boars in twos) would help most; with lone boars it stays under 200.
+
+Server load in this pass: 60 bots 1.1 ms average (worst 0.31 s), 120 bots 3.5 ms (6 beats over 0.1 s in 7 minutes,
+worst 0.55 s), the same as pass 1. Smooth.
