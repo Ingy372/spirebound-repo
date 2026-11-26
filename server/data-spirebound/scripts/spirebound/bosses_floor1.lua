@@ -66,9 +66,9 @@ SpireBoss.register("Axe-Lord of the Stair", {
 		if state.phase == 2 and hpPct <= 0.25 then
 			state.phase = 3
 			boss:say("Enough! Face the blade!", TALKTYPE_MONSTER_YELL)
-			local o = boss:getOutfit()
-			o.lookType = 131
-			o.lookBody, o.lookLegs = 79, 114
+			local o = boss:getOutfit() -- the approved last-phase look (Jay, 2026-11-25: "Yep much better"): its own art
+			o.lookType = 2207
+			o.lookHead, o.lookBody, o.lookLegs, o.lookFeet, o.lookAddons = 0, 0, 0, 0, 0
 			boss:setOutfit(o)
 		end
 		if not state.flags.nextMark or now >= state.flags.nextMark then

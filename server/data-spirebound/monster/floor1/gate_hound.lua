@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Gate Hound"
 monster.experience = 2500
 monster.outfit = {
-	lookType = 240, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2205, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 4000

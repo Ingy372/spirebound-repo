@@ -135,12 +135,12 @@ MONSTERS = {
                           loot=[(GOLD, 100000, 100), (PLAT, 30000, 2), (266, 20000, 3), (268, 20000, 3), (5880, 10000, 1)],
                           voices=["BAAAH!"], events=["SpireStairKeyRam"]),  # P9: a piece of the Stair Key
     # ---------------------------------------------------------------- Floor 1 bosses (behaviour scripts: tasks 1.18 / 1.19)
-    "Gate Hound": dict(desc="the Gate Hound", look=(240,), corpse=6331, hp=4000, xp=2500, speed=150, race="fire",
+    "Gate Hound": dict(desc="the Gate Hound", look=(2205, 0, 0, 0, 0, 0), corpse=6331, hp=4000, xp=2500, speed=150, race="fire",
                        attacks=[("melee", 0, -180), ("howl", -80, -160, 2)], armor=35, defense=35, boss=True,
                        loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (266, 100000, 5)], voices=["GRRROOOAAARRR!"],
                        summons=[("Meadow Wolf", 3)], elements={"fire": 80, "ice": -10},
                        events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
-    "Axe-Lord of the Stair": dict(desc="the Axe-Lord of the Stair", look=(131, 94, 114, 94, 114, 3), corpse=18074,
+    "Axe-Lord of the Stair": dict(desc="the Axe-Lord of the Stair", look=(2206, 0, 0, 0, 0, 0), corpse=18074,
                                   hp=12000, xp=8000, speed=130, race="blood",
                                   attacks=[("melee", 0, -260), ("cleave", -150, -300, 1)], armor=45, defense=45, boss=True,
                                   loot=[(GOLD, 100000, 100), (PLAT, 100000, 40), (266, 100000, 10), (268, 100000, 10)],

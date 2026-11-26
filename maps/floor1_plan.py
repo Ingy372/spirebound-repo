@@ -433,13 +433,16 @@ BOARS = dict(
     levels={
         7: dict(name="Boar Meadow", box=(0, 0, 39, 57), clearings=[
             ("hub", 19, 5, 4, "approach", None, "hub"), ("nw", 8, 6, 3, "calm", None, None), ("ne", 30, 6, 3, "calm", None, None),
+            # H14 (challenge, not calm): boars are loners, never doubled, so the meadow gets more of them, each on its own
             ("a1", 3, 20, 3, "calm", "a", [_BB]), ("qa", 4, 31, 3, "calm", "a", "rest"), ("a2", 4, 42, 3, "middle", "a", [_BB]),
             ("b1", 35, 20, 3, "calm", "b", [_BB]), ("qb", 34, 31, 3, "calm", "b", "rest"), ("b2", 34, 42, 3, "middle", "b", [_BB]),
-            ("sw", 8, 52, 3, "middle", "a", "rest"), ("se", 30, 52, 3, "middle", "b", "rest"), ("sf", 19, 53, 3, "middle", None, [_BB]),
+            ("sw", 8, 52, 3, "middle", "a", [_BB]), ("se", 30, 52, 3, "middle", "b", [_BB]), ("sf", 19, 53, 3, "middle", None, [_BB]),
+            ("mw", 12, 30, 2, "middle", None, "rest"), ("me", 26, 30, 2, "middle", None, "rest"),
             ("ca1", 5, 25, 1, "calm", "a", "crowd"), ("ca2", 2, 47, 1, "middle", "a", "crowd"), ("ca3", 5, 36, 1, "middle", "a", "crowd"),
             ("cb1", 33, 25, 1, "calm", "b", "crowd"), ("cb2", 36, 47, 1, "middle", "b", "crowd"), ("cb3", 33, 36, 1, "middle", "b", "crowd"),
         ], paths=[("hub", "nw", 4), ("nw", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "sw", 4), ("sw", "sf", 4),
-                  ("sf", "se", 4), ("se", "b2", 4), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4)]),
+                  ("sf", "se", 4), ("se", "b2", 4), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "ne", 4), ("ne", "hub", 4),
+                  ("qa", "mw", 3), ("qb", "me", 3)]),
         6: dict(name="Oak Ridge", box=(12, 12, 15, 37), clearings=[
             ("kl", 19, 44, 3, "middle", "c", "rest"), ("k1", 19, 34, 3, "deep", "c", "rest"), ("kq", 19, 26, 3, "deep", "c", "rest"),
             ("k2", 19, 15, 3, "deep", "c", [(("Old Bristleback", 1),)]),
