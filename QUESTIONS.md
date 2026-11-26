@@ -11,7 +11,7 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 ### Q64. The guild official's new look has a beard; the NPC is "Guildwarden Sela" (2026-11-25, art)
 You approved the redrawn Guild Warden (navy robe, banner staff, short beard). In the game that job belongs to Guildwarden Sela, who wore a woman's outfit until now.
 - **Recommendation (assumed):** Sela wears the approved look now, so no borrowed Tibia look is left on her. If you'd rather keep Sela as a woman, say so and I'll make a beardless version (one short art job); or rename the NPC to fit the art.
-- Jay's answer:
+- Jay's answer (2026-11-25): "I honestly don't care on the guildmaster". Sela keeps the approved look.
 
 ### Q63. Class outfits: only your own class, and for women too? (2026-11-25, art)
 Your four approved class outfits are going into the game (task 6.5). My calls:
