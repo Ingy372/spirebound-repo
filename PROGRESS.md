@@ -157,3 +157,5 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
 - Jay approved the upgraded Old Bristleback ("approved"): he now wears it (look 2331), and he replaces the old red boar on the website banner.
 
 - Restarted the server (11:12, backup taken first): the Bristle Boar's quills and the six elites' own looks are live.
+
+- Own corpses installed (Jay approved all three, 2026-11-26). The Ruin Sentinel and Granite Warden now leave a "broken stone guardian", the Underkeeper a "fallen underkeeper", the Vault Wraith a "faded vault wraith", each going through its three looks; the client redraws three unused Tibia corpses with our art at every start. Needs a server restart (lead session) and a kill of each in the client to tick N7.

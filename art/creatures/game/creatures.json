@@ -2289,6 +2289,42 @@
    ],
    "addons": 0,
    "size": 50
+  },
+  {
+   "name": "corpse_sentinel",
+   "file": "corpse_sentinel.bmp.lzma",
+   "count": 3,
+   "looks": [],
+   "items": {
+    "13865": 0,
+    "13866": 0,
+    "13867": 1,
+    "13868": 2
+   }
+  },
+  {
+   "name": "corpse_underkeeper",
+   "file": "corpse_underkeeper.bmp.lzma",
+   "count": 3,
+   "looks": [],
+   "items": {
+    "12340": 0,
+    "12337": 0,
+    "12338": 1,
+    "12339": 2
+   }
+  },
+  {
+   "name": "corpse_vault_wraith",
+   "file": "corpse_vault_wraith.bmp.lzma",
+   "count": 3,
+   "looks": [],
+   "items": {
+    "10430": 0,
+    "10431": 0,
+    "10432": 1,
+    "10433": 2
+   }
   }
  ]
 }

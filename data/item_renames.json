@@ -43,5 +43,65 @@
   "name": "Beacon Ember",
   "plural": "Beacon Embers",
   "description": "Light a fire bowl of a town's Beacon with it: +5% experience and loot for everyone on that floor for an hour. Dropped by field bosses, hidden beasts, and sometimes elites and apex monsters."
+ },
+ "13865": {
+  "name": "broken stone guardian",
+  "plural": "broken stone guardians",
+  "description": "Carved stone and a cracked spear, all that is left of a guardian of the old ruins."
+ },
+ "13866": {
+  "name": "broken stone guardian",
+  "plural": "broken stone guardians",
+  "description": "Carved stone and a cracked spear, all that is left of a guardian of the old ruins."
+ },
+ "13867": {
+  "name": "broken stone guardian",
+  "plural": "broken stone guardians",
+  "description": "Carved stone and a cracked spear, all that is left of a guardian of the old ruins."
+ },
+ "13868": {
+  "name": "broken stone guardian",
+  "plural": "broken stone guardians",
+  "description": "Carved stone and a cracked spear, all that is left of a guardian of the old ruins."
+ },
+ "12340": {
+  "name": "fallen underkeeper",
+  "plural": "fallen underkeepers",
+  "description": "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."
+ },
+ "12337": {
+  "name": "fallen underkeeper",
+  "plural": "fallen underkeepers",
+  "description": "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."
+ },
+ "12338": {
+  "name": "fallen underkeeper",
+  "plural": "fallen underkeepers",
+  "description": "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."
+ },
+ "12339": {
+  "name": "fallen underkeeper",
+  "plural": "fallen underkeepers",
+  "description": "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."
+ },
+ "10430": {
+  "name": "faded vault wraith",
+  "plural": "faded vault wraiths",
+  "description": "An empty purple shroud beside the strongbox it guarded."
+ },
+ "10431": {
+  "name": "faded vault wraith",
+  "plural": "faded vault wraiths",
+  "description": "An empty purple shroud beside the strongbox it guarded."
+ },
+ "10432": {
+  "name": "faded vault wraith",
+  "plural": "faded vault wraiths",
+  "description": "An empty purple shroud beside the strongbox it guarded."
+ },
+ "10433": {
+  "name": "faded vault wraith",
+  "plural": "faded vault wraiths",
+  "description": "An empty purple shroud beside the strongbox it guarded."
  }
 }

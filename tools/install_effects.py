@@ -213,6 +213,22 @@ def reskin_outfit(msg: bytes, first: int) -> bytes:
     return rebuild(msg, outfit_fn)
 
 
+def reskin_object(msg: bytes, sprite: int) -> bytes:
+    """an item (object) Appearance drawn with our one sprite instead: every frame group's sprite ids become `sprite`
+    (our corpses: a 1x1 item, one sprite, no animation), its bounding square the full 64 px of our canvas"""
+    def info_fn(num, wt, v):
+        if num == 5:
+            return sprite
+        if num == 7 and wt == 0:
+            return 64
+        return None
+
+    def group_fn(num, wt, v):
+        return rebuild(v, info_fn) if num == 3 else None
+
+    return rebuild(msg, lambda num, wt, v: rebuild(v, group_fn) if num == 2 else None)
+
+
 def manifest() -> dict:
     return json.loads((GAME / "effects.json").read_text())
 
@@ -260,7 +276,7 @@ def install_client(client: Path) -> None:
         catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid,
                         "lastspriteid": sid + sh["count"] - 1, "area": 0})
         sid += sh["count"]
-    creature_first, people_first = {}, {}
+    creature_first, people_first, item_sprite = {}, {}, {}
     for c in creature_manifest():
         files = c.get("files", [c["file"]])               # an outfit with addons spans several 36-sprite sheets
         left = c["count"]
@@ -271,6 +287,8 @@ def install_client(client: Path) -> None:
             catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid + 36 * i,
                             "lastspriteid": sid + 36 * i + n - 1, "area": 0})
             left -= n
+        for item, k in c.get("items", {}).items():       # our corpses: spare Tibia corpse items drawn with ours
+            item_sprite[int(item)] = sid + k
         for look in c["looks"]:
             creature_first[look] = sid
         if c.get("new_look"):
@@ -284,11 +302,13 @@ def install_client(client: Path) -> None:
     data = strip_effects((things / original).read_bytes(), ids)
     data = strip_outfits(data, {c["new_look"] for c in people})
     check_new_ids(data, people)
-    if creature_first:                            # our approved creatures in place of the placeholder looks
+    if creature_first or item_sprite:             # our approved creatures in place of the placeholder looks
         out = bytearray()
         for num, wt, v, raw in top_fields(data):
-            look = next((x for n, w, x, _ in top_fields(v) if n == 1), None) if num == 2 else None
-            if look in creature_first and sprite_counts(v) == [4, 32]:
+            look = next((x for n, w, x, _ in top_fields(v) if n == 1), None) if num in (1, 2) else None
+            if num == 1:
+                out += field(1, reskin_object(v, item_sprite[look])) if look in item_sprite else raw
+            elif look in creature_first and sprite_counts(v) == [4, 32]:
                 out += field(2, reskin_outfit(v, creature_first[look]))
             elif look in creature_first:                       # another layout: our standard one instead
                 out += field(2, standard_outfit(v, creature_first[look]))
@@ -306,7 +326,7 @@ def install_client(client: Path) -> None:
     state.update({"first_sprite": first, "effects": sorted(ids)})
     state_path.write_text(json.dumps(state, indent=1))
     print(f"install_effects: {len(ids)} spell effects and {len(m['sheets'])} sprite sheets installed in the client "
-          f"(sprites {first}-{sid - 1}); creatures: {', '.join(c['name'] for c in creature_manifest() if not c.get('new_look')) or 'none'}; "
+          f"(sprites {first}-{sid - 1}); creatures: {', '.join(c['name'] for c in creature_manifest() if not c.get('new_look') and not c.get('items')) or 'none'}; corpses: {', '.join(c['name'] for c in creature_manifest() if c.get('items')) or 'none'}; "
           f"people with their own look: {', '.join(str(c['name']) + ' ' + str(c['new_look']) for c in people) or 'none'}")
 
 
@@ -366,6 +386,14 @@ def check_client(client: Path) -> None:
         sprites = [x4 for n, w, x, _ in top_fields(v) if n == 2
                    for n3, w3, i3, _ in top_fields(x) if n3 == 3 for n4, w4, x4, _ in top_fields(i3) if n4 == 5]
         assert all(lo <= s <= hi for s in sprites), f"{c['name']}: sprites outside our sheets"
+    objects = {next(x for n, w, x, _ in top_fields(v) if n == 1): v for num, wt, v, raw in top_fields(data) if num == 1}
+    for c in creature_manifest():
+        for item in c.get("items", {}):
+            v = objects.get(int(item))
+            assert v is not None, f"{c['name']}: item {item} missing"
+            sprites = [x4 for n, w, x, _ in top_fields(v) if n == 2
+                       for n3, w3, i3, _ in top_fields(x) if n3 == 3 for n4, w4, x4, _ in top_fields(i3) if n4 == 5]
+            assert sprites and all(lo <= s <= hi for s in sprites), f"{c['name']}: item {item} does not show our corpse"
     assert order == sorted(order), "outfits are not in rising order (the client would crash on a lower one last)"
     print(f"install_effects check: {len(ours)} sheets decode like the client does; {len(m['effects'])} effects present; "
           f"{len(new_looks())} people with their own look")

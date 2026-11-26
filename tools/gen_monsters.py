@@ -80,7 +80,7 @@ MONSTERS = {
     "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=6047, hp=140, xp=56, speed=90, race="venom",
                       attacks=[("melee", 0, -35, None, "poison"), ("slow", -90, 2000, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
-    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(2204, 0, 0, 0, 0, 0), corpse=6005, hp=300, xp=96, speed=85,
+    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(2204, 0, 0, 0, 0, 0), corpse=13865, hp=300, xp=96, speed=85,
                           race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
                           loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15},
                           events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),  # F1-10: shield wall
@@ -123,7 +123,7 @@ MONSTERS = {
                             elements={"energy": 50, "earth": -10},
                             loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
     # H8 (2026-11-25): the Old Quarry's elite, on top of the Upper Cut. A grey-gold sentinel that keeps its shield wall.
-    "Granite Warden": dict(desc="the granite warden", look=(2335, 0, 0, 0, 0, 0), corpse=6005, hp=1100, xp=380, speed=90,
+    "Granite Warden": dict(desc="the granite warden", look=(2335, 0, 0, 0, 0, 0), corpse=13865, hp=1100, xp=380, speed=90,
                            race="undead", attacks=[("melee", 0, -95), ("cleave", 0, -80, 1)], armor=30, defense=30,
                            light=(3, 79), elements={"physical": 10, "holy": -15},
                            loot=[(GOLD, 100000, 95), (PLAT, 40000, 2), (3352, 20000, 1), (5880, 40000, 2), (236, 25000, 1)],
@@ -177,10 +177,10 @@ MONSTERS = {
     "Deep Sentinel": dict(desc="a deep sentinel", look=(131, 86, 86, 86, 86, 3), corpse=18074, hp=8000, xp=4500, speed=140,
                           race="undead", attacks=[("melee", 0, -800), ("physical", -400, -800, 4)], armor=70, defense=70,
                           loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (3360, 1500, 1)]),
-    "Vault Wraith": dict(desc="a vault wraith", look=(2324, 0, 0, 0, 0, 0), corpse=6315, hp=6500, xp=3800, speed=170, race="undead",
+    "Vault Wraith": dict(desc="a vault wraith", look=(2324, 0, 0, 0, 0, 0), corpse=10430, hp=6500, xp=3800, speed=170, race="undead",
                          attacks=[("melee", 0, -400), ("energy", -400, -850, 5)], armor=50, defense=50, dist=3,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 8), (3392, 1500, 1)], elements={"holy": -25}),
-    "The Underkeeper": dict(desc="the Underkeeper", look=(2323, 0, 0, 0, 0, 0), corpse=5972, hp=180000, xp=90000, speed=160,
+    "The Underkeeper": dict(desc="the Underkeeper", look=(2323, 0, 0, 0, 0, 0), corpse=12340, hp=180000, xp=90000, speed=160,
                             race="undead", boss=True, attacks=[("melee", 0, -1600), ("cleave", -900, -1800, 1), ("howl", -600, -1200, 2)],
                             armor=95, defense=95, loot=[(GOLD, 100000, 100), (PLAT, 100000, 100), (3366, 30000, 1)],
                             voices=["You dug too deep."]),

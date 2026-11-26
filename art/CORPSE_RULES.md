@@ -71,12 +71,25 @@ sh art/pipeline/render.sh corpse_<monster>        # frames 0-2 = the three steps
 python tools/make_corpse_sheets.py                # item/1_fresh, 2_rot, 3_end + ART_FOR_JAY/corpses_sheet.png
 ```
 
-### Installing (after approval; roadmap task N7)
+### Installing (roadmap task N7, built 2026-11-26)
 
-Corpses are items, not outfits. For each approved monster take one Tibia corpse chain that no Spirebound monster or
-map uses, reskin those four item ids in the client with our three steps (the first two both show the fresh step),
-rename them through `data/item_renames.json` ("broken ruin sentinel"), and point the monster's `corpse=` at the
-first item. Same install path as the creature looks (`tools/install_effects.py`).
+Corpses are items, not outfits. Each approved corpse reskins one Tibia corpse chain that no Spirebound monster or
+map uses (four items: fresh 10 s, 300 s, 300 s, 60 s; the first a container big enough for the loot):
+
+| Corpse | Chain (was) | Name in game | Monsters |
+|---|---|---|---|
+| corpse_sentinel | 13865-13868 (dead crawler) | broken stone guardian | Ruin Sentinel, Granite Warden |
+| corpse_underkeeper | 12340, 12337-12339 (dead midnight panther) | fallen underkeeper | The Underkeeper |
+| corpse_vault_wraith | 10430-10433 (dead terramite) | faded vault wraith | Vault Wraith |
+
+- `CORPSE_ITEMS` in `tools/make_creature_sheets.py` packs the three steps into one sheet per corpse (items 1 and 2
+  show the fresh step, item 3 the older one, item 4 the last remains) and lists the items in `creatures.json`.
+- `tools/install_effects.py` redraws those items in the client at every start (`reskin_object`); `check` confirms
+  each item shows our sprite. The server keeps the chain's decay times and containers from items.xml.
+- The names come from `tools/gen_gear.py` (written to `data/item_renames.json`, applied by `tools/build_server.py`).
+- The monster's `corpse=` in `tools/gen_monsters.py` is the first item of its chain.
+- A new corpse: add its chain to `CORPSE_ITEMS`, its names to `gen_gear.py`, its `corpse=`; check the chain is unused
+  (`grep -rw <id> server/data-spirebound tools maps data`).
 
 ## The audit (2026-11-26)
 
@@ -91,12 +104,12 @@ first item. Same install path as the creature looks (`tools/install_effects.py`)
 | Briar Mother | 2313 (plant) | dead snake | dead carniphila 6047 |
 | Sproutling | 19 (our walking plant) | poison gas (holds no loot) | dead swampling 17622 |
 | Field Shardling, Prism Shardling | 122 (our crystal) | dead bat | dead crystal golem 16177 |
-| Ruin Sentinel, Granite Warden | 2204 (stone guardian) | dead black knight | split stone golem 6005 (own art drafted) |
+| Ruin Sentinel, Granite Warden | 2204 (stone guardian) | dead black knight | our broken stone guardian 13865 |
 | Ruin Archer | 2203 (skeleton) | dead hunter | slain skeleton 5963 |
 | Stonehorn Ram | 607 (our ram) | dead moohtant | dead sheep 5994 |
 | Black Crawler | 2301 (cave beetle) | dead rat | dead lancer beetle 10458 |
-| Vault Wraith | 2324 (wraith) | dead assassin | slain betrayed wraith 6315 (own art drafted) |
-| The Underkeeper | 2323 (skeletal jailer) | dead black knight | slain skeleton 5972 (own art drafted) |
+| Vault Wraith | 2324 (wraith) | dead assassin | our faded vault wraith 10430 |
+| The Underkeeper | 2323 (skeletal jailer) | dead black knight | our fallen underkeeper 12340 |
 | Hollowfang | 2312 (wolf) | dead wolf (winter) | dead war wolf 6009 |
 | Blight Wasp (F2) | 2302 | (rotation) | dead waspoid 13983 |
 | Ridge Cat (F2) | 2303 | (rotation) | dead lion 5986 |

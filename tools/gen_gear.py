@@ -360,6 +360,17 @@ def main():
     renames[str(RESPEC_ITEM[0])] = dict(name=RESPEC_ITEM[1], plural=RESPEC_ITEM[2], description=RESPEC_ITEM[3])
     renames[str(CHRONICLE_CUP[0])] = dict(name=CHRONICLE_CUP[1], plural=CHRONICLE_CUP[2], description=CHRONICLE_CUP[3])
     renames[str(BEACON_EMBER[0])] = dict(name=BEACON_EMBER[1], plural=BEACON_EMBER[2], description=BEACON_EMBER[3])
+    # our own corpses (art/CORPSE_RULES.md, Jay approved 2026-11-26): spare Tibia corpse chains drawn with our art
+    # (CORPSE_ITEMS in tools/make_creature_sheets.py), renamed for the monsters that leave them
+    corpses = [([13865, 13866, 13867, 13868], "broken stone guardian", "broken stone guardians",
+                "Carved stone and a cracked spear, all that is left of a guardian of the old ruins."),
+               ([12340, 12337, 12338, 12339], "fallen underkeeper", "fallen underkeepers",
+                "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."),
+               ([10430, 10431, 10432, 10433], "faded vault wraith", "faded vault wraiths",
+                "An empty purple shroud beside the strongbox it guarded.")]
+    for ids, name, plural, desc in corpses:
+        for i in ids:
+            renames[str(i)] = dict(name=name, plural=plural, description=desc)
     (ROOT / "data/item_renames.json").write_text(json.dumps(renames, indent=1) + "\n", encoding="utf-8")
     print(f"wrote {out.name}: {len(WEAPONS)} weapons, {len(ARMOUR)} armour, {len(SHOP)} shop sets; data/item_renames.json")
     print("shard chances per kill: " + ", ".join(f"{g} {v:.2%}" for g, v in ch.items()))

@@ -59,6 +59,16 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "granite_warden": 2335}
 
 
+# approved corpses (art/CORPSE_RULES.md) -> the spare Tibia corpse chain they reskin in the client: four items
+# (fresh 10 s, 300 s, 300 s, 60 s), shown as our steps 1_fresh, 1_fresh, 2_rot, 3_end. No Spirebound monster or map
+# uses these chains; the server keeps their decay times and containers (items.xml), data/item_renames.json renames them.
+CORPSE_ITEMS = {"corpse_sentinel": [13865, 13866, 13867, 13868],       # was "dead crawler"
+                "corpse_underkeeper": [12340, 12337, 12338, 12339],    # was "dead midnight panther"
+                "corpse_vault_wraith": [10430, 10431, 10432, 10433]}   # was "dead terramite"
+CORPSE_STEPS = ["1_fresh", "2_rot", "3_end"]
+CORPSE_OF_ITEM = [0, 0, 1, 2]
+
+
 def cip_sheet(img: Image.Image) -> bytes:
     """One 384x384 sheet in the client's file format (same writer as art/effects/make_fx.py): a 32-byte header, then
     LZMA ("alone" form, with its end marker) holding a 32-bit bottom-up BMP (BITMAPV4 header, BGRA)."""
@@ -134,6 +144,18 @@ def main() -> None:
             entry.update({"new_look": new_look, "shift": shift, "boxes": boxes, "addons": len(layers) - 1,
                           "size": max(max(b[2], b[3]) for b in boxes)})
         manifest.append(entry)
+    for name, items in CORPSE_ITEMS.items():                # corpses: one 3-sprite sheet each, items point into it
+        if name not in approved:
+            sys.exit(f"make_creature_sheets: {name} is not approved (art/APPROVED.txt)")
+        sheet = Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0))
+        for k, step in enumerate(CORPSE_STEPS):
+            f = Image.open(ROOT / "art" / "output" / name / "item" / f"{step}.png").convert("RGBA")
+            assert f.size == (64, 64), f"{name} {step}: {f.size}, want 64x64"
+            sheet.paste(f, (k * 64, 0))
+        file = f"{name}.bmp.lzma"
+        (OUT / file).write_bytes(cip_sheet(sheet))
+        manifest.append({"name": name, "file": file, "count": len(CORPSE_STEPS), "looks": [],
+                         "items": {str(i): CORPSE_OF_ITEM[k] for k, i in enumerate(items)}})
     (OUT / "creatures.json").write_text(json.dumps({
         "about": "Spirebound creature sprites (Blender pipeline, approved by Jay); made by tools/make_creature_sheets.py, "
                  "installed in the client by tools/install_effects.py in place of the listed placeholder looks",
