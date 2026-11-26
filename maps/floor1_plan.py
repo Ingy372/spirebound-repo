@@ -716,6 +716,16 @@ def den_level(c):
     return (lo + hi) // 2 + 1
 
 
+# 10.4 (N2, docs/N2_capacity.md, 2026-11-26): Floor 1 fed only about 30 hunters at once at 200 kills an hour each
+# (target 150), and from Boar Meadow up every ground was limited by how fast its monsters come back. Each monster gives
+# back about 3,600 / respawn kills an hour, so the return times above are cut to 40% (never under 40 seconds): the
+# "fast, OT-style respawn" of Jay's challenge note (DESIGN.md 9.4). A lone hunter's pace does not change; a ground just
+# feeds two and a half times as many. Elites (15 minutes) and the party caves keep their own times.
+RESPAWN_SCALE, RESPAWN_MIN = 0.4, 40
+for _c in CAMPS:
+    _c["respawn_before_n2"] = _c["respawn"]
+    _c["respawn"] = max(RESPAWN_MIN, round(_c["respawn"] * RESPAWN_SCALE))
+
 for _c in CAMPS:
     _c.setdefault("den", None)
     _c.setdefault("den_groups", [])
