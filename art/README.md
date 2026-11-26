@@ -68,7 +68,29 @@ and are built on `art/models/humanoid.py` (colours in `art/pipeline/outfit_palet
 - Asset format: the 15.x "appearances" protobuf file plus LZMA-compressed sprite sheets (`catalog-content.json`).
 - Creature outfits: 4 directions (N, E, S, W), 1 standing frame + 8 walk frames per direction (Tibia's rat: outfit 21).
 - Each frame is stored on a 64×64 canvas; a small creature like the rat fills only the bottom-right 32×32 tile.
-- Getting our own sprite into the client needs a sheet writer + appearances editor (roadmap R22 / 6.4).
+- Getting our own sprite into the client: `tools/make_creature_sheets.py` packs approved frames into sheets,
+  `tools/install_effects.py` puts them in the client at every start and registers them with the server at every build.
+
+## Own look numbers for people (roadmap 6.5, 2026-11-25)
+
+Monsters replace the borrowed Tibia look they wore (`CREATURES` in `tools/make_creature_sheets.py`). People cannot:
+many NPCs share one borrowed look, so reskinning it would change them all. Each approved NPC or player outfit gets a
+**new look number** of its own (`NEW_LOOKS`). Rules:
+
+- **Numbers start at 2001** (the client's highest outfit is 1875) and only ever grow. 2001-2009 class outfits,
+  2010-2099 NPCs, 2100+ shop outfits and later people. Never renumber one in use: saved characters keep their number.
+- **Ours go last, in rising order.** OTClient sizes its outfit table from the LAST outfit in the appearances file; a
+  lower number after a higher one is written past the end of the table (a crash). `install_effects.py check` tests this.
+- **People keep Tibia's 8 px shift.** Our figures are drawn 8 px low-right on the canvas (`CANVAS_OFFSET`), exactly
+  where Tibia's raw outfit sprites sit, and Tibia's people carry an 8 px up-left shift (flag 26) in the client. A new
+  person look gets the same shift, or it stands 8 px off its tile. Animals have no shift.
+- **The server must know the number too.** Canary refuses (with a warning) an NPC, monster or player outfit whose
+  look is not in its appearances file; `tools/build_server.py` lists ours there (id only) at every build.
+- **Player outfits** also need a line in `outfits.xml` (added by `tools/build_server.py`) and someone to grant them
+  (`scripts/spirebound/class_outfits.lua`: each class gets its own when picked at the Registrar).
+- **No colour layer yet:** an NPC's or outfit's head/body/legs/feet colours do nothing on our looks (set them to 0).
+- **Every client needs the update at the same time.** Jay's client gets it at every start; the friends' package
+  must be rebuilt (`windows\Share-Client.bat`) after new looks go in, or a friend's client draws nothing for them.
 
 ## Rig numbers (why they are what they are)
 

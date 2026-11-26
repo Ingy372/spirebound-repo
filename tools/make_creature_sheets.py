@@ -31,6 +31,16 @@ DIRS = ("N", "E", "S", "W")
 CREATURES = {"rat": [56], "boar": [119], "mole": [26], "toad": [222], "wasp": [44], "snapper": [112], "thornsnap": [28],
              "shardling": [122], "wolf": [27], "alpha": [52], "ram": [607], "sproutling": [19], "azhrakkar": [61]}
 
+# approved people (NPCs and player outfits) -> a NEW look number of their own (roadmap 6.5). Many NPCs share one borrowed
+# Tibia look, so reskinning it would change every NPC wearing it; instead each gets a look Tibia never used.
+# Rules (art/README.md "Own look numbers"): numbers start at 2001, above the client's highest outfit (1875), and only
+# ever grow; the NPC and outfit files use these numbers (tools/gen_npcs.py, server/data-spirebound/npc/*.lua,
+# lib/spirebound/class_outfits.lua). Never renumber one that is in use: saved characters keep their look number.
+#   2001-2009 player class outfits, 2010-2099 NPCs, 2100+ shop outfits and later people.
+NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
+             "vesper": 2010, "priest": 2011, "registrar": 2012, "banker": 2013, "merchant": 2014, "bess": 2015,
+             "corwin": 2016, "pell": 2017, "veyra": 2018}
+
 
 def cip_sheet(img: Image.Image) -> bytes:
     """One 384x384 sheet in the client's file format (same writer as art/effects/make_fx.py): a 32-byte header, then
@@ -63,17 +73,28 @@ def main() -> None:
                 if l.strip() and not l.startswith("#")}
     OUT.mkdir(parents=True, exist_ok=True)
     manifest = []
-    for name, looks in CREATURES.items():
+    jobs = [(n, l, None) for n, l in CREATURES.items()] + [(n, [], look) for n, look in NEW_LOOKS.items()]
+    for name, looks, new_look in jobs:
         if name not in approved:
             sys.exit(f"make_creature_sheets: {name} is not approved (art/APPROVED.txt)")
         frames = ROOT / "art" / "output" / name / "frames"
         img = Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0))
+        boxes = []
         for k, fid in enumerate(frame_order()):
             f = Image.open(frames / f"{fid}.png").convert("RGBA")
             assert f.size == (64, 64), f"{name} {fid}: {f.size}, want 64x64"
             img.paste(f, ((k % 6) * 64, (k // 6) * 64))
+            if k < 4:                                      # standing N E S W: the drawn area, like Tibia's own entries
+                x0, y0, x1, y1 = f.getchannel("A").getbbox()
+                boxes.append([x0, y0, x1 - x0, y1 - y0])
         (OUT / f"{name}.bmp.lzma").write_bytes(cip_sheet(img))
-        manifest.append({"name": name, "file": f"{name}.bmp.lzma", "count": 36, "looks": looks})
+        entry = {"name": name, "file": f"{name}.bmp.lzma", "count": 36, "looks": looks}
+        if new_look:
+            # people are drawn 8 px low-right on the canvas like Tibia's own outfits (CANVAS_OFFSET), and Tibia's
+            # people carry an 8 px shift up-left in the client: the new look gets the same shift
+            entry.update({"new_look": new_look, "shift": [8, 8], "boxes": boxes,
+                          "size": max(max(b[2], b[3]) for b in boxes)})
+        manifest.append(entry)
     (OUT / "creatures.json").write_text(json.dumps({
         "about": "Spirebound creature sprites (Blender pipeline, approved by Jay); made by tools/make_creature_sheets.py, "
                  "installed in the client by tools/install_effects.py in place of the listed placeholder looks",

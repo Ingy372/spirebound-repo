@@ -10,7 +10,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-npcConfig.outfit = { lookType = 141, lookHead = 41, lookBody = 72, lookLegs = 39, lookFeet = 76, lookAddons = 0 }
+npcConfig.outfit = { lookType = 2012, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 
 local keywordHandler = KeywordHandler:new()
@@ -132,6 +132,7 @@ local function creatureSayCallback(npc, player, type, msg)
 				return true
 			end
 			player:setVocation(Vocation(c.voc))
+			ClassOutfits.give(player, true) -- the class's own outfit (scripts/spirebound/class_outfits.lua)
 			giveKit(player, c.voc)
 			player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 			npcHandler:say(string.format("It is written: %s, %s. One last step before Hearthgate: the Proving, below us. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)

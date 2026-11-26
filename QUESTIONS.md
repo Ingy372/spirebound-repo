@@ -8,6 +8,14 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q63. Class outfits: only your own class, and for women too? (2026-11-25, art)
+Your four approved class outfits are going into the game (task 6.5). My calls:
+- each class can wear only its own outfit (Vanguards the Vanguard outfit...), given when you pick the class and put on once; you can still change back to the other outfits. A glance then tells the classes apart in PvP;
+- women's characters wear the same outfit until a women's version is made (four more models, next in the art queue if you want them);
+- the outfit colours you pick do nothing on these four yet (that needs a colour layer, a later art job).
+- **Recommendation:** yes to all three. Also: should every floor's priest and banker share the Hearthgate priest and banker looks, or wait for their own art? I recommend **wait** (each town feels different).
+- Jay's answer:
+
 ### Q62. New rules on the website and sign-up page (2026-11-25)
 You asked for the rules and a "not allowed" list on the website. The full rulebook is now on the Rules page, on the sign-up page (players must tick "I agree" before an account is made) and in `docs/RULES.md`, all written from one file. Most of it was already decided; these lines are new, my call:
 - no sharing anyone's personal details, no sexual harassment, no advertising other servers or things for sale;

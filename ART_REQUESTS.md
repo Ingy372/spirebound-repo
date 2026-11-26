@@ -15,6 +15,11 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
   ours needs a new look number of its own, plus the client update in the friends' package at the same time.
   Approved and waiting for this: Bess, Corwin, the merchant, Pell, Vesper, the priest, the Registrar, the banker, Veyra,
   and the four class outfits.
+- **2026-11-25 (task 6.5): ready to go in at the next restart.** The 9 approved NPCs and the 4 class outfits now have
+  look numbers of their own (2001-2018, `NEW_LOOKS` in `tools/make_creature_sheets.py`; rules in `art/README.md`).
+  NPCs wearing them: Vesper, Priest Odran, Registrar Maelis, Banker Tolliver, Merchant Wenna, Innkeeper Bess, Fisher
+  Corwin, Guide Pell, Ascendant Veyra. Players get their class's outfit when they pick a class (older characters at
+  their next login). Floors 2-10 priests and bankers and the second Hearthgate banker still wear borrowed looks.
 - **Still to make:** 8 Floor 1 models in progress (archer, bandit, Brannoch, the captain, guild warden, quartermaster,
   sentinel, warden); about 90 Floors 2-10 monsters (perhaps 60 different bodies once shared bodies are counted) and
   about 45 kinds of NPC. At the pace so far (6-8 approved models a long session, including Jay's review), Floors 2-10

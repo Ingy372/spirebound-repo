@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-npcConfig.outfit = { lookType = 133, lookHead = 95, lookBody = 113, lookLegs = 114, lookFeet = 95, lookAddons = 3 }
+npcConfig.outfit = { lookType = 2010, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = { interval = 20000, chance = 30, { text = "Everything has a price. Especially what nobody else knows." } }
 

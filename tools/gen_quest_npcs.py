@@ -8,7 +8,7 @@ OUT = Path(__file__).resolve().parent.parent / "server" / "data-spirebound" / "n
 NPCS = {
     "quest_brannoch": dict(name="Hunter Brannoch", desc="a hunter of the Hunters' Hall", look=(129, 78, 95, 116, 115, 0),
                            greet="Brannoch, of the Hunters' Hall. Ask me about a {quest}, {report} when one is done, or where to {hunt}."),
-    "quest_corwin": dict(name="Fisher Corwin", desc="a fisher of the river bank", look=(128, 38, 96, 97, 115, 0),
+    "quest_corwin": dict(name="Fisher Corwin", desc="a fisher of the river bank", look=(2016, 0, 0, 0, 0, 0),
                          greet="Corwin. I fish the river and the marsh. Ask me about a {quest}, {report} when you have finished, or where to {hunt}."),
     # P9 delivery with a choice (Flour for the Gate): stands by the Bandit Road's gate, spawned at start-up by
     # scripts/spirebound/quest_objects.lua (no map change)

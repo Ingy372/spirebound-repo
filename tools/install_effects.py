@@ -144,6 +144,54 @@ def standard_outfit(msg: bytes, first: int) -> bytes:
     return bytes(out)
 
 
+def new_outfit(c: dict, first: int | None) -> bytes:
+    """A brand-new outfit Appearance for one of our people (make_creature_sheets.NEW_LOOKS): standing + walking groups
+    like standard_outfit, the drawn area of each direction, and Tibia's 8 px people shift. first None = id only (the
+    server only needs to know the number exists)."""
+    if first is None:
+        return field(1, c["new_look"])
+    def info(start, phases):
+        b = field(1, 4) + field(2, 1) + field(3, 1) + field(4, 1)
+        for k in range(4 * phases):
+            b += field(5, start + k)
+        if phases > 1:
+            anim = field(2, 0) + field(4, 0)
+            for _ in range(phases):
+                anim += field(6, field(1, 300) + field(2, 300))
+            b += field(6, anim)
+        b += field(7, c["size"]) + field(8, 0)
+        for x, y, w, h in c["boxes"]:
+            b += field(9, field(1, x) + field(2, y) + field(3, w) + field(4, h))
+        return b
+    msg = field(1, c["new_look"])
+    msg += field(2, field(1, 0) + field(2, 0) + field(3, info(first, 1)))
+    msg += field(2, field(1, 1) + field(2, 1) + field(3, info(first + 4, 8)))
+    sx, sy = c.get("shift", (0, 0))
+    return msg + field(3, field(26, field(1, sx) + field(2, sy)) if sx or sy else b"")
+
+
+def new_looks() -> list:
+    """our people with a look number of their own, lowest number first (the client sizes its outfit table from the
+    LAST outfit in the file, so ours must come last and in rising order)"""
+    return sorted((c for c in creature_manifest() if c.get("new_look")), key=lambda c: c["new_look"])
+
+
+def strip_outfits(data: bytes, ids: set[int]) -> bytes:
+    """the appearances file without any outfit entry (field 2) whose id is one of ours"""
+    out = bytearray()
+    for num, wt, v, raw in top_fields(data):
+        if num == 2 and next((x for n, w, x, _ in top_fields(v) if n == 1), None) in ids:
+            continue
+        out += raw
+    return bytes(out)
+
+
+def check_new_ids(data: bytes, ours: list) -> None:
+    top = max(next(x for n, w, x, _ in top_fields(v) if n == 1) for num, wt, v, _ in top_fields(data) if num == 2)
+    if ours and ours[0]["new_look"] <= top:
+        sys.exit(f"install_effects: our look numbers must be above the client's highest outfit ({top})")
+
+
 def reskin_outfit(msg: bytes, first: int) -> bytes:
     """an outfit Appearance with its sprites replaced, in order, by first, first+1, ... (R22: our creature art)"""
     counter = [first]
@@ -210,7 +258,7 @@ def install_client(client: Path) -> None:
         catalog.append({"type": "sprite", "file": name, "spritetype": 3, "firstspriteid": sid,
                         "lastspriteid": sid + sh["count"] - 1, "area": 0})
         sid += sh["count"]
-    creature_first = {}
+    creature_first, people_first = {}, {}
     for c in creature_manifest():
         name = f"{SHEET_PREFIX}creature-{c['name']}.bmp.lzma"
         (things / name).write_bytes((CREATURES / c["file"]).read_bytes())
@@ -218,12 +266,17 @@ def install_client(client: Path) -> None:
                         "lastspriteid": sid + c["count"] - 1, "area": 0})
         for look in c["looks"]:
             creature_first[look] = sid
+        if c.get("new_look"):
+            people_first[c["new_look"]] = sid
         sid += c["count"]
     for old in things.glob(SHEET_PREFIX + "*"):
         if not any(c.get("file") == old.name for c in catalog):
             old.unlink()
     ids = {e["id"] for e in m["effects"]}
+    people = new_looks()
     data = strip_effects((things / original).read_bytes(), ids)
+    data = strip_outfits(data, {c["new_look"] for c in people})
+    check_new_ids(data, people)
     if creature_first:                            # our approved creatures in place of the placeholder looks
         out = bytearray()
         for num, wt, v, raw in top_fields(data):
@@ -235,6 +288,8 @@ def install_client(client: Path) -> None:
             else:
                 out += raw
         data = bytes(out)
+    for c in people:                              # our NPCs and outfits: new look numbers (roadmap 6.5)
+        data += field(2, new_outfit(c, people_first[c["new_look"]]))
     for e in m["effects"]:
         data += field(3, effect_message(e, first))
     (things / OURS).write_bytes(data)
@@ -244,7 +299,8 @@ def install_client(client: Path) -> None:
     state.update({"first_sprite": first, "effects": sorted(ids)})
     state_path.write_text(json.dumps(state, indent=1))
     print(f"install_effects: {len(ids)} spell effects and {len(m['sheets'])} sprite sheets installed in the client "
-          f"(sprites {first}-{sid - 1}); creatures: {', '.join(c['name'] for c in creature_manifest()) or 'none'}")
+          f"(sprites {first}-{sid - 1}); creatures: {', '.join(c['name'] for c in creature_manifest() if not c.get('new_look')) or 'none'}; "
+          f"people with their own look: {', '.join(str(c['name']) + ' ' + str(c['new_look']) for c in people) or 'none'}")
 
 
 def check_client(client: Path) -> None:
@@ -288,7 +344,21 @@ def check_client(client: Path) -> None:
         group = next(x for n, w, x, _ in top_fields(found[e["id"]][2]) if n == 3)
         sprites = [x for n, w, x, _ in top_fields(group) if n == 5]
         assert len(sprites) == e["frames"] and all(lo <= s <= hi for s in sprites), e["name"]
-    print(f"install_effects check: {len(ours)} sheets decode like the client does; {len(m['effects'])} effects present")
+    outfits = {}
+    for num, wt, v, raw in top_fields(data):
+        if num == 2:
+            outfits[next(x for n, w, x, _ in top_fields(v) if n == 1)] = v
+    order = [k for k in outfits]
+    for c in new_looks():
+        v = outfits.get(c["new_look"])
+        assert v is not None, f"{c['name']}: look {c['new_look']} missing"
+        assert sprite_counts(v) == [4, 32], f"{c['name']}: look {c['new_look']} has the wrong frames"
+        sprites = [x4 for n, w, x, _ in top_fields(v) if n == 2
+                   for n3, w3, i3, _ in top_fields(x) if n3 == 3 for n4, w4, x4, _ in top_fields(i3) if n4 == 5]
+        assert all(lo <= s <= hi for s in sprites), f"{c['name']}: sprites outside our sheets"
+    assert order == sorted(order), "outfits are not in rising order (the client would crash on a lower one last)"
+    print(f"install_effects check: {len(ours)} sheets decode like the client does; {len(m['effects'])} effects present; "
+          f"{len(new_looks())} people with their own look")
 
 
 # ---------------------------------------------------------------- server
@@ -297,6 +367,12 @@ def patch_server(path: Path) -> int:
     m = manifest()
     ids = {e["id"] for e in m["effects"]}
     data = strip_effects(path.read_bytes(), ids)
+    # our people's new look numbers too: Canary refuses an NPC, monster or player outfit whose look is not listed
+    people = new_looks()
+    data = strip_outfits(data, {c["new_look"] for c in people})
+    check_new_ids(data, people)
+    for c in people:
+        data += field(2, new_outfit(c, None))
     for e in m["effects"]:
         data += field(3, effect_message(e, None))
     path.write_bytes(data)

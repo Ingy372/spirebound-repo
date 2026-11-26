@@ -20,15 +20,15 @@ OUT = ROOT / "server" / "data-spirebound" / "npc"
 # shop rows: (item name shown in trade, client id, buy price or None, sell price or None)
 NPCS = {
     "hearthgate_priest": dict(
-        name="Priest Odran", desc="the priest of Hearthgate", look=(57, 0, 0, 0, 0, 0),
+        name="Priest Odran", desc="the priest of Hearthgate", look=(2011, 0, 0, 0, 0, 0),
         greet="Peace, |PLAYERNAME|. I can {heal} you, and my prayers, the {blessings}, soften the tower's price for death.",
         kind="priest", voices=["The tower takes, the temple gives back.", "Wounded? Come, sit."]),
     "hearthgate_banker": dict(
-        name="Banker Tolliver", desc="the banker of Hearthgate", look=(132, 115, 76, 35, 116, 0),
+        name="Banker Tolliver", desc="the banker of Hearthgate", look=(2013, 0, 0, 0, 0, 0),
         greet="Welcome to the bank, |PLAYERNAME|. Ask about your {balance}, or {deposit} and {withdraw} gold. Your account {vault} is shared by all your characters. Guild members can use the {guild balance} too.",
         kind="bank", voices=["Coins are safer here than in your pockets."]),
     "hearthgate_merchant": dict(
-        name="Merchant Wenna", desc="the general merchant", look=(136, 78, 86, 107, 115, 0),
+        name="Merchant Wenna", desc="the general merchant", look=(2014, 0, 0, 0, 0, 0),
         greet="Hello, |PLAYERNAME|! Rope, shovels, food, fishing gear: ask for a {trade}. Lost? Ask me where to {hunt}.",
         voices=["Ropes! Shovels! Fresh bread!"],
         shop=[("rope", 3003, 50, 15), ("shovel", 3457, 50, 8), ("torch", 2920, 2, None), ("bag", 2853, 4, None),
@@ -106,7 +106,7 @@ NPCS = {
         greet="Back to the city, |PLAYERNAME|? I drive to {Hearthgate}.",
         kind="travel", voices=["Carriage to Hearthgate!"]),
     "millcross_innkeeper": dict(
-        name="Innkeeper Bess", desc="the innkeeper of Millcross", look=(137, 78, 96, 59, 115, 0),
+        name="Innkeeper Bess", desc="the innkeeper of Millcross", look=(2015, 0, 0, 0, 0, 0),
         greet="Welcome to the Millcross Inn, |PLAYERNAME|. Hot food, cold ale and good advice. Ask for a {trade}, or ask me where to {hunt}.",
         voices=["Stew's hot!", "Climbers eat free if they bring the boars home. Well, nearly free."],
         shop=[("bread", 3600, 4, None), ("ham", 3582, 8, None), ("meat", 3577, 5, None), ("cheese", 3607, 6, None)]),

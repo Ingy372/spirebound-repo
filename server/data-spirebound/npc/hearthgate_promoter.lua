@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-npcConfig.outfit = { lookType = 140, lookHead = 0, lookBody = 87, lookLegs = 57, lookFeet = 76, lookAddons = 0 }
+npcConfig.outfit = { lookType = 2018, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 
 local keywordHandler = KeywordHandler:new()
