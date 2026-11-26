@@ -131,4 +131,5 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 
 ### 2026-11-25 night: Gate Hound and Axe-Lord approved; his last phase redrawn
 - Jay: "The bosses themselves look great though" (Gate Hound and the Axe-Lord's main look added to art/APPROVED.txt), but "If there is supposed to be a visual phase shift, my eyes can't pick it up." The last phase now has its own palette (scorched black bronze, fire glowing through seven cracks, red eyes, a red-hot blade edge, a burnt tabard) and a new outline (left pauldron torn away, tabard ripped short, snapped horn). Checker ALL PASS; the approved main look is unchanged (the changes only apply when DAMAGED). Not in the game yet: the bosses need look numbers of their own (look 131 and 240 are shared with other monsters).
+- Jay on the redrawn last phase: "Yep much better". `axe_lord_blade` approved (art/APPROVED.txt). All three Floor 1 boss looks are now approved; next is giving them look numbers of their own and putting them in the game.
 

@@ -46,3 +46,4 @@ archer
 sentinel
 gate_hound
 axe_lord
+axe_lord_blade
