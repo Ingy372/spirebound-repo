@@ -2325,6 +2325,18 @@
     "10432": 1,
     "10433": 2
    }
+  },
+  {
+   "name": "corpse_gate_hound",
+   "file": "corpse_gate_hound.bmp.lzma",
+   "count": 3,
+   "looks": [],
+   "items": {
+    "9001": 0,
+    "9002": 0,
+    "9003": 1,
+    "9004": 2
+   }
   }
  ]
 }

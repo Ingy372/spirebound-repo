@@ -103,5 +103,25 @@
   "name": "faded vault wraith",
   "plural": "faded vault wraiths",
   "description": "An empty purple shroud beside the strongbox it guarded."
+ },
+ "9001": {
+  "name": "slain gate hound",
+  "plural": "slain gate hounds",
+  "description": "Three heads on the ground, each still in its spiked iron collar."
+ },
+ "9002": {
+  "name": "slain gate hound",
+  "plural": "slain gate hounds",
+  "description": "Three heads on the ground, each still in its spiked iron collar."
+ },
+ "9003": {
+  "name": "slain gate hound",
+  "plural": "slain gate hounds",
+  "description": "Three heads on the ground, each still in its spiked iron collar."
+ },
+ "9004": {
+  "name": "slain gate hound",
+  "plural": "slain gate hounds",
+  "description": "Three heads on the ground, each still in its spiked iron collar."
  }
 }

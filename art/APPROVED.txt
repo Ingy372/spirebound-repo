@@ -91,3 +91,5 @@ old_bristleback
 corpse_sentinel
 corpse_underkeeper
 corpse_vault_wraith
+# Gate Hound corpse (Jay, 2026-11-26: "Approve it"; Q67)
+corpse_gate_hound

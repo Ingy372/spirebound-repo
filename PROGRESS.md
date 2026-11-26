@@ -174,3 +174,5 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
   - Live server: has Floors 2-3 and the Hearthgate dressing (restart 11:41). Floor 4 and the two Hearthgate campfires are only in the repo until the next restart.
   - Floor 1 work from this session that stays: Hearthgate dressing and the notice board (N3), braziers and campfires (P3b).
   - The second session was told to drop J5b (Floor 2 economy) and keep to Floor 1 / launch work.
+
+- Jay approved the Gate Hound corpse ("Approve it"); installed as "slain gate hound" like the other three. Boot test passed (265 in-game tests). Needs a server restart; the check is route n7b_gate_hound.

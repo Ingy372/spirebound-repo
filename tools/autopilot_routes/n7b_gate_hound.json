@@ -1,0 +1,52 @@
+{
+ "name": "n7b_gate_hound",
+ "character": "Pilot Arcanist",
+ "timeout": 240,
+ "about": "N7b: kill the Gate Hound (spawned at 1 health); it should leave its own three-headed corpse.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 300"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 4"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "n7 corpses"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Gate Hound, 1, 1"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7b: Gate Hound"
+  },
+  {
+   "do": "shot",
+   "name": "n7b_gate_hound"
+  },
+  {
+   "do": "heal"
+  }
+ ]
+}

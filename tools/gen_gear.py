@@ -367,7 +367,9 @@ def main():
                ([12340, 12337, 12338, 12339], "fallen underkeeper", "fallen underkeepers",
                 "Old bones, a cage-helm and a cold lantern, tangled in the chain he dragged."),
                ([10430, 10431, 10432, 10433], "faded vault wraith", "faded vault wraiths",
-                "An empty purple shroud beside the strongbox it guarded.")]
+                "An empty purple shroud beside the strongbox it guarded."),
+               ([9001, 9002, 9003, 9004], "slain gate hound", "slain gate hounds",
+                "Three heads on the ground, each still in its spiked iron collar.")]
     for ids, name, plural, desc in corpses:
         for i in ids:
             renames[str(i)] = dict(name=name, plural=plural, description=desc)

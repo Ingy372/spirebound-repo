@@ -64,7 +64,8 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
 # uses these chains; the server keeps their decay times and containers (items.xml), data/item_renames.json renames them.
 CORPSE_ITEMS = {"corpse_sentinel": [13865, 13866, 13867, 13868],       # was "dead crawler"
                 "corpse_underkeeper": [12340, 12337, 12338, 12339],    # was "dead midnight panther"
-                "corpse_vault_wraith": [10430, 10431, 10432, 10433]}   # was "dead terramite"
+                "corpse_vault_wraith": [10430, 10431, 10432, 10433],   # was "dead terramite"
+                "corpse_gate_hound": [9001, 9002, 9003, 9004]}         # was "dead nightstalker"
 CORPSE_STEPS = ["1_fresh", "2_rot", "3_end"]
 CORPSE_OF_ITEM = [0, 0, 1, 2]
 
