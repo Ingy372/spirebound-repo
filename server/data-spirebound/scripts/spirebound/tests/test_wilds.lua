@@ -84,7 +84,7 @@ SpireTest.add("wilds: the Old Watchtower has its fixed groups (34 above ground, 
 	SpireTest.eq(cave >= 30 and cave <= 32, true, "cave: " .. cave .. " (want 32)")
 end)
 
-SpireTest.add("wilds: six party caves, each with working stairs and 28 to 32 monsters", function()
+SpireTest.add("wilds: six party caves, each with working stairs and 56 to 64 monsters", function()
 	local n = 0
 	for k, _ in pairs(WorldPoints) do
 		local id = k:match("^den_(.+)_nw$")
@@ -97,8 +97,8 @@ SpireTest.add("wilds: six party caves, each with working stairs and 28 to 32 mon
 			SpireTest.eq(walkable(Position(s.x, s.y - 1, s.z - 1)), true, id .. ": surface landing is clear")
 			SpireTest.eq(walkable(Position(s.x, s.y + 1, s.z)), true, id .. ": cave landing is clear")
 			local c = monstersIn(WorldPoints[k], WorldPoints["den_" .. id .. "_se"])
-			-- eight groups of four, or seven in the built cellars of the Bandit Road and the Old Quarry (H8: the calm checker)
-			SpireTest.eq(c >= 26 and c <= 32, true, id .. ": " .. c .. " monsters in the cave (want 28 to 32)")
+			-- eight groups of four (seven in the built cellars of the Bandit Road and the Old Quarry), each doubled by H14
+			SpireTest.eq(c >= 52 and c <= 64, true, id .. ": " .. c .. " monsters in the cave (want 56 to 64)")
 		end
 	end
 	SpireTest.eq(n, 6, "six caves")

@@ -31,6 +31,11 @@ ELITE_RESPAWN = 900                               # Grey Alpha, Bandit Captain: 
 ELITES = {"Grey Alpha", "Bandit Captain", "Old Bristleback", "Moonhowl", "Mossback Snapper", "Blackthorn", "Prism Shardling",
           "Granite Warden"}
 CAVE_RESPAWN = 160
+# H14 (Jay, 2026-11-25: "i dont want things to be to calm... spawns should be large and support a few people hunting in
+# them at one time. certain points of the spawn can feel overwhelming"): how many times each group of a designed ground
+# is repeated in its clearing, by band. The gate and calm stretch stay as drawn; loners and elites are never repeated.
+# A design may override it with density={...}.
+BAND_DENSITY = {"approach": 1, "calm": 1, "middle": 2, "deep": 2, "nest": 3, "party": 2}
 
 
 def G(*parts):
@@ -351,6 +356,7 @@ TOADPOND = dict(
 _SS, _SP = (("Sproutling", 1),), (("Sproutling", 2),)
 _HS = (("Hopper Toad", 1),)
 GLADE = dict(
+    density={"nest": 2},                    # H14: this ground's own repeat counts (see BAND_DENSITY)
     gate=(22, 0), crowd_group=[("Sproutling", 1)],
     routes={"a": "a1", "b": "b1", "c": "c1", "d": "rt"},
     route_names={"a": "The West Grove", "b": "The East Grove", "c": "The Great Tree", "d": "The Root Hollow"},
@@ -385,6 +391,7 @@ _WS, _WP, _WT = (("Meadow Wasp", 1),), (("Meadow Wasp", 2),), (("Meadow Wasp", 3
 _WN = (("Meadow Wasp", 9),)
 _W4, _W6 = (("Meadow Wasp", 4),), (("Meadow Wasp", 6),)
 WASPS = dict(
+    density={"nest": 2},                    # H14: this ground's own repeat counts (see BAND_DENSITY)
     gate=(67, 25), crowd_group=[("Meadow Wasp", 1)],
     routes={"a": "a1", "b": "b1", "c": "kl", "d": "uw"},
     route_names={"a": "The North Meadow", "b": "The South Meadow", "c": "Hive Knoll", "d": "The Under-Hive"},
@@ -451,6 +458,7 @@ BOARS = dict(
 _W3, _W4 = (("Meadow Wolf", 3),), (("Meadow Wolf", 4),)
 _GA = (("Grey Alpha", 1), ("Meadow Wolf", 3))
 WOLVES = dict(
+    density={"nest": 2},                    # H14: this ground's own repeat counts (see BAND_DENSITY)
     gate=(59, 20), crowd_group=[("Meadow Wolf", 2)],   # crowd spots add two stragglers, not a whole pack (Claude's call)
     routes={"a": "a1", "b": "b1", "c": "kl", "d": "w0"},
     route_names={"a": "The North Firs", "b": "The South Firs", "c": "Howling Rock", "d": "The West Pass"},
@@ -488,6 +496,7 @@ WOLVES = dict(
 # island sits in the big pond, reached by bridges; the far southern islands are the deep part. Surface only.
 _RS1, _RS2, _HT1 = (("Reed Snapper", 1),), (("Reed Snapper", 2),), (("Hopper Toad", 1),)
 MARSH = dict(
+    density={"middle": 1},                    # H14: this ground's own repeat counts (see BAND_DENSITY)
     gate=(26, 0), crowd_group=[("Reed Snapper", 1)],
     routes={"a": "a1", "b": "b1", "c": "cn", "d": "dq"},
     route_names={"a": "The West Islands", "b": "The East Islands", "c": "The Middle Island", "d": "The Far Islands"},

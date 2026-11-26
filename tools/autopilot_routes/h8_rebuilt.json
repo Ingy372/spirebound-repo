@@ -370,11 +370,23 @@
    "do": "walk",
    "to": [
     1270,
-    1150,
-    6
+    1154,
+    7
    ],
    "fight": true,
    "timeout": 60,
+   "note": "Old Quarry: the Upper Cut"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1270,
+    1153,
+    7
+   ],
+   "fight": false,
+   "timeout": 20,
+   "arrive_z": 6,
    "note": "Old Quarry: the Upper Cut"
   },
   {

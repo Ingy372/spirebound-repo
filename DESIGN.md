@@ -475,6 +475,11 @@ Jay, 2026-11-16: *"i think each spawn should be a little different. there should
 
 **One rule is the same everywhere:** the gate and the first stretch of every ground are quiet (Jay, 2026-11-14: no "nonstop monsters flooding to me" on walking in).
 
+**Challenge, not calm (Jay, 2026-11-25).** *"i dont want things to be to calm. there should be challenge to the server and it to feel like a tibia ot, not apples to apples like real tibia."* And: *"spawns should be large and support a few people hunting in them at one time. certain points of the spawn can feel overwhelming (not every spawn) and force you back to the previous spawn. giving players a sense of power growth as well."* So:
+- Only the gate and first stretch stay quiet. Past them, grounds are large and dense enough for a few hunters at once, with fast, OT-style respawn.
+- Some grounds (not all) have an overwhelming spot: a nest, a deep room or a far end that a player at the ground's level can't hold and must back out of to the previous spawn, and comes back to once stronger.
+- The danger budget is a ceiling against floods, not a target for emptiness; the numbers in `tools/balance.py` are set for challenge **(Claude's call on the numbers, Jay can veto)**.
+
 ## 10. Economy
 
 - Gold / platinum / crystal coins. Gold enters from monster loot, quests, secrets sold to the broker, fishing. Gold leaves through: blessings, rent, travel fees, NPC supplies, guild/war fees, Fortune Hall cut, skull fines, repair costs **(Claude's call on sink list)**.

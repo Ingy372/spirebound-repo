@@ -19,7 +19,8 @@ import random
 
 import dungeon as DG
 import wilds as WI
-from floor1_plan import CAVE_RESPAWN, DESIGNS, den_level
+from floor1_plan import BAND_DENSITY, CAVE_RESPAWN, DESIGNS, den_level
+from balance import HABITS
 from mapgen import RAMPS
 
 X0, Y0, Z = WI.X0, WI.Y0, WI.Z
@@ -290,20 +291,31 @@ def build(m, c):
         m.points[f"chest_{gid}"] = best[1]
     # ---- monsters, crowd spots, rest spots
     routes = {r: dict(name=r, groups=[], crowd=[]) for r in d["routes"]}
-    offs = [(0, 0), (3, 0), (0, 3), (-3, 0)]
+    offs = [(0, 0), (3, 0), (0, 3), (-3, 0), (0, -3), (3, 3), (-3, 3), (3, -3), (-3, -3)]
+    density = dict(BAND_DENSITY, **d.get("density", {}))
+
+    def lone(members):                         # a loner or an elite stands alone: never repeated (DESIGN.md 9.4)
+        return len(members) == 1 and members[0][1] == 1 and HABITS.get(members[0][0], ("",))[0] == "loner"
+
     for z, lv in d["levels"].items():
         cells, named, _box = lv_cells[z]
         for (name, x, y, r, band, route, content) in lv["clearings"]:
             wx, wy = named[name]
             L["clearings"][(wx, wy, z)] = (name, band, r)
             if isinstance(content, list):
+                # H14 (Jay, 2026-11-25: "challenge, not calm"): past the calm zone each group is repeated, so a
+                # clearing holds 2 or 3 groups instead of one (BAND_DENSITY in maps/floor1_plan.py)
+                times = density.get(band, 1)
+                content = [g for g in content for _ in range(1 if lone(g) else times)]
                 bxs = [t[0] for t in _box]
                 away = -1 if wx < (min(bxs) + max(bxs)) / 2 else 1   # extra groups stand on the side away from the middle
                 for k, members in enumerate(content):
-                    dx, dy = offs[k]
+                    dx, dy = offs[k % len(offs)]
                     dx *= away
                     if (wx + dx, wy + dy) not in cells:
                         dx, dy = -dx, -dy
+                    if (wx + dx, wy + dy) not in cells:      # neither side is open: stand by the centre
+                        dx, dy = 0, 0
                     WI.group(m, (wx + dx, wy + dy, z), list(members), CAVE_RESPAWN if z == party_z else c["respawn"])
                     if route in routes:
                         routes[route]["groups"].append((wx + dx, wy + dy, z))

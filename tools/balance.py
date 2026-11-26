@@ -63,12 +63,14 @@ HABITS = {
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}
 # Every hunting ground has a type. budget = the most weight that may come at one player at once, by band;
 # reward = target experience/gold per person per hour against the floor's training baseline; players = who it is for.
+# H14 (Jay, 2026-11-25: "challenge, not calm"): roughly double the old budgets past the calm zone; a nest may overwhelm a
+# player of the ground's level on purpose (DESIGN.md 9.4). The gate (approach) stays at 0.
 GROUND_TYPES = {
-    "training": dict(budget=dict(approach=0, calm=2, middle=3, deep=4, nest=6), reward=1.0, players=(1, 1)),
-    "class": dict(budget=dict(approach=0, calm=3, middle=4, deep=6, nest=8), reward=1.2, players=(1, 1)),
-    "mixed": dict(budget=dict(approach=0, calm=3, middle=4, deep=6, nest=8), reward=1.1, players=(1, 2)),
-    "group": dict(budget=dict(approach=0, calm=6, middle=9, deep=12, nest=14), reward=1.5, players=(3, 4)),
-    "large": dict(budget=dict(approach=0, calm=10, middle=16, deep=22, nest=26), reward=1.75, players=(4, 8)),
+    "training": dict(budget=dict(approach=0, calm=5, middle=8, deep=10, nest=16), reward=1.0, players=(1, 1)),
+    "class": dict(budget=dict(approach=0, calm=6, middle=9, deep=16, nest=22), reward=1.2, players=(1, 1)),
+    "mixed": dict(budget=dict(approach=0, calm=6, middle=9, deep=16, nest=22), reward=1.1, players=(1, 2)),
+    "group": dict(budget=dict(approach=0, calm=8, middle=14, deep=22, nest=28), reward=1.5, players=(3, 4)),
+    "large": dict(budget=dict(approach=0, calm=12, middle=20, deep=28, nest=36), reward=1.75, players=(4, 8)),
 }
 CLASSES = ("Vanguard", "Ranger", "Arcanist", "Mystic")
 PARTY_MAX = 8                                   # DESIGN.md 7.1: a large-group ground fits in one party

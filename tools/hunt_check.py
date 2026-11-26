@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""The calm checker for hunting grounds (FLOOR1_HUNTING_PLAN.md Parts 3 and 10, DESIGN.md 9.4).
+"""The danger-limit checker for hunting grounds (FLOOR1_HUNTING_PLAN.md Parts 3 and 10, DESIGN.md 9.4).
 
 For every hunting ground and every level of it, measures how crowded it is from a player's point of view:
   pull of a tile = the danger that can come at a player standing there: the summed weight (tools/balance.py HABITS) of
@@ -31,9 +31,10 @@ D8 = ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (1, -1), (-1, 1), (-1, -1))
 from balance import budget, weight  # noqa: E402
 
 # density = walkable tiles per unit of weight (one weight-1 monster), per level
-DENSITY_MIN = {7: 45, 6: 35, 5: 35, 8: 35, 9: 25}
-STARTER_DENSITY = 50
-PARTY_DENSITY = 20
+# H14 (Jay, 2026-11-25: "challenge, not calm"): about half the old minimums, so grounds may hold twice the monsters
+DENSITY_MIN = {7: 22, 6: 18, 5: 18, 8: 18, 9: 13}
+STARTER_DENSITY = 28
+PARTY_DENSITY = 10
 CROWD_EXTRA = 2                                   # with every crowd spot on, a band may go this much over its budget
 SOLO_TYPES = ("training", "class", "mixed")       # breathing room and rest spots are checked for these
 
@@ -206,16 +207,16 @@ def main(argv):
             if max(vals) > lim:
                 probs.append(f"max pull {max(vals)} > {lim}")
         if kind != "party" and gtype in SOLO_TYPES:
-            if p0 < 0.25:
-                probs.append(f"pull-0 {p0:.0%} < 25%")
-            if rest is None or rest > 20:
-                probs.append(f"rest spot {rest} steps > 20")
+            if p0 < 0.10:                          # H14: a breather somewhere, not a quarter of the ground
+                probs.append(f"pull-0 {p0:.0%} < 10%")
+            if rest is None or rest > 35:
+                probs.append(f"rest spot {rest} steps > 35")
         bad += bool(probs)
         print(f"{gid:18s} {lvl:4s} {n:6d} {len(mons):5d} {dens:9.1f} {max(vals):7.1f} {sum(vals) / max(1, n):7.1f} "
               f"{p0:6.0%} {p2:7.0%} {str(rest):>5s} {str(gap):>4s}  " + ("OK" if not probs else "; ".join(probs)))
         if pictures and tiles:
             heatmap(ROOT / "docs" / "previews" / f"hunt_{gid}_{lvl}.png", tiles, pull, mons)
-    print(f"{bad} area(s) break the calm rules")
+    print(f"{bad} area(s) break the danger limits")
     return 1 if (strict and bad) else 0
 
 
