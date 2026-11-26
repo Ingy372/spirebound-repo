@@ -1,0 +1,120 @@
+{
+ "name": "vault_wraith",
+ "parts": [
+  "none",
+  "shroud",
+  "hood",
+  "face",
+  "eye",
+  "claw",
+  "box",
+  "gold",
+  "chain",
+  "coin"
+ ],
+ "palette": "vault_wraith",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.2899494936611664,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.2899494936611664,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "claw": 3.0,
+   "gold": 3.0,
+   "coin": 4.0,
+   "chain": 2.6,
+   "face": 2.0,
+   "hood": 1.4
+  },
+  "thin": {
+   "eye": 2,
+   "claw": 2,
+   "gold": 2,
+   "coin": 2,
+   "chain": 2
+  },
+  "soft": [
+   [
+    "hood",
+    "face",
+    "eye"
+   ],
+   [
+    "box",
+    "gold"
+   ],
+   [
+    "shroud",
+    "hood"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "texture": {
+   "shroud": [
+    0.7,
+    0.35
+   ],
+   "hood": [
+    0.5,
+    0.2
+   ],
+   "box": [
+    0.4,
+    0.2
+   ]
+  },
+  "bands": [
+   0.4,
+   0.52,
+   0.62,
+   0.71,
+   0.8,
+   0.88,
+   0.95
+  ],
+  "selout": [
+   "shroud",
+   "hood",
+   "box"
+  ]
+ },
+ "ref": "look_48.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

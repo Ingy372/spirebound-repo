@@ -144,4 +144,5 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: bandit cousins and the first wrong-animal fix drafted
 - Bandit Crossbowman and Hedge Hexer drafted from the approved bandit (ALL PASS, sent). Found and fixed a pipeline trap: a model with more than 33 parts silently repaints the extra parts (the Hexer's glow came out white); the renderer now refuses, rule in `art/README.md`.
 - Wrong-animal monsters (Jay: "clean it up"; split agreed with the art-count session, which keeps bosses and variants): the Black Crawler is drafted as a blue-black cave beetle (it wore the rat). Next: Drain Matron, then the Floor 2-3 ones (Blight Wasp, Herd Bull, Horned Grazer, Ridge Cat, Dust Strider, Stonehide Bull, Hill Cutthroat, Sleeping Trunk, Mossback Warden, Moss Crawler).
+- Drafted (checker ALL PASS, sent to Jay): the Underkeeper (towering skeletal jailer in an iron cage-helm, ghost-teal lantern held out at his side, a chain dragging to a great padlock) and the Vault Wraith (violet hooded wraith chained to a floating gold-banded strongbox, coins circling; it borrowed a person's outfit, look 152, until now).
 

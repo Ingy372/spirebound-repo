@@ -199,5 +199,6 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [~] | `hollowfang` | Hollowfang, Floor 1 hidden mini-boss: a night-black wolf with a pale mane and one great fang | drafted 2026-11-25, waiting for Jay |
 | [~] | `briar_mother` | Briar Mother, Floor 1 hidden mini-boss: a thorny wine-purple mound with three snapping bud heads and a crown of rose petals | drafted 2026-11-25, waiting for Jay |
 | [ ] | `moonhowl` | Floor 1 elite (now wearing the wolf's sprite) | not made |
-| [ ] | `twin_fang_warden`, `vault_wraith` | Floor 1 vault and trial bosses | not made |
+| [~] | `vault_wraith` | Vault Wraith: a violet hooded wraith chained to a floating gold-banded strongbox, coins circling | drafted 2026-11-25, waiting for Jay |
+| [ ] | `twin_fang_warden` | the Twin Fang trial boss (Floor 8) | not made |
 

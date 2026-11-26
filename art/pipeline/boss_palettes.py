@@ -141,7 +141,14 @@ UNDERKEEPER = {
 }
 
 BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK,
-          "hollowfang": HOLLOWFANG, "briar_mother": BRIAR_MOTHER, "underkeeper": UNDERKEEPER}
+          "hollowfang": HOLLOWFANG, "briar_mother": BRIAR_MOTHER, "underkeeper": UNDERKEEPER,
+          "vault_wraith": {
+              # a spectral violet shroud (Tibia's ghost is white), a dark hood, amber eyes, bound to an iron strongbox
+              "shroud": ramp((30, 16, 44), (206, 178, 240), (106, 72, 154)), "hood": ramp((16, 8, 26), (128, 98, 170), (56, 36, 86)),
+              "face": ramp((6, 4, 10), (40, 28, 52)), "eye": [[255, 210, 90]],
+              "claw": ramp((80, 70, 90), (238, 230, 248), (162, 152, 182)), "box": ramp((18, 16, 20), (152, 148, 158), (62, 58, 68)),
+              "gold": ramp(*GOLD), "chain": ramp((60, 40, 90), (232, 214, 255), (150, 120, 210)), "coin": ramp(*GOLD),
+          }}
 
 
 def main():

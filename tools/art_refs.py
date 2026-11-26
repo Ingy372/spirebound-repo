@@ -148,6 +148,7 @@ LOOKALIKES = {
     "hollowfang": [(3, "War Wolf"), (52, "Winter Wolf")],
     "briar_mother": [(120, "Carniphila"), (221, "Spit Nettle")],
     "underkeeper": [(35, "Demon"), (33, "Skeleton")],
+    "vault_wraith": [(152, "look 152"), (48, "Ghost")],
 }
 
 
