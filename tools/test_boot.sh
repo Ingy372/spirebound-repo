@@ -72,7 +72,20 @@ for _ in $(seq 1 "$WAIT"); do
   if ! kill -0 $PID 2>/dev/null; then break; fi
   sleep 1
 done
-sleep 5   # let startup scripts and in-game tests finish
+# let startup scripts and in-game tests finish (R18: a fixed 5 s was too short on slow GitHub runners)
+CRASHED=""
+for _ in $(seq 1 60); do
+  grep -q '\[SPIRETEST\] done' "$LOG" && break
+  if ! kill -0 $PID 2>/dev/null; then CRASHED=1; break; fi
+  sleep 1
+done
+sleep 2
+kill -0 $PID 2>/dev/null || CRASHED=1
+if [[ -n "$CRASHED" ]]; then
+  CODE=0; wait $PID 2>/dev/null || CODE=$?
+  echo "FAIL: the server stopped by itself (exit code $CODE) before the test run ended. Last lines of .build/boot.log:"
+  tail -40 "$LOG"; exit 1
+fi
 kill -INT $PID 2>/dev/null || true
 for _ in $(seq 1 20); do kill -0 $PID 2>/dev/null || break; sleep 1; done
 kill -9 $PID 2>/dev/null || true

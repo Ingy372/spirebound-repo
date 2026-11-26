@@ -16,7 +16,16 @@ jobs:
           sudo apt-get install -y -q mariadb-server mariadb-client rsync
           sudo service mariadb start
       - name: Boot test (in-game tests included)
-        run: sudo -E env "PATH=$PATH" SPIRE_SETUP_DB=1 bash tools/test_boot.sh 180
+        run: |
+          set -o pipefail
+          sudo -E env "PATH=$PATH" SPIRE_SETUP_DB=1 bash tools/test_boot.sh 180 2>&1 | tee boot-output.txt
+      # The run's logs need a GitHub sign-in to read, but annotations show on the run page for anyone (and for
+      # Claude's browser): put the reason for a failure there.
+      - name: Show why it failed
+        if: failure()
+        run: |
+          grep -E "FAIL|Error|error|Segmentation|Aborted|core dumped" boot-output.txt | tail -6 | while IFS= read -r l; do echo "::error title=boot test::${l:0:900}"; done
+          [ -f .build/boot.log ] && tail -4 .build/boot.log | while IFS= read -r l; do echo "::error title=last server log line::${l:0:900}"; done || true
       - name: Keep the server log
         if: always()
         uses: actions/upload-artifact@v4
