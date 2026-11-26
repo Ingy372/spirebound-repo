@@ -250,7 +250,7 @@ def build(m):
     # the Ascendancy and the Guild Hall, on Crown Court
     claim("ascendancy", *R(75, 2), 15, 11)
     m.building(*R(75, 2), 15, 11, Z, floor="marble", door_side="s", style="sand", doors=True)
-    S.carpet(m, *R(77, 6), 11, 3, Z, 2576)
+    S.carpet(m, *R(82, 7), 1, 5, Z, 2576)                     # N3: a runner from the door to Veyra, not a flat block
     for px, py in ((77, 4), (87, 4), (77, 10), (87, 10)):
         S.prop(m, *R(px, py), Z, MARBLE_PILLAR)
     m.sign(*R(81, 13), Z, "The Ascendancy. Climbers of level 20 and above may be promoted here.")
@@ -282,7 +282,7 @@ def build(m):
     claim("Hunters' Hall", hhx, hhy, 18, 14)
     m.building(hhx, hhy, 18, 14, Z, floor="wood", door_side="w", style="stone", doors=True)
     m.points["shop_hunters_hall"] = (hhx + 5, hhy + 7, Z)
-    S.carpet(m, hhx + 3, hhy + 8, 11, 4, Z, 2576)
+    S.carpet(m, hhx + 1, hhy + 7, 12, 1, Z, 2576)             # N3: a runner in from the door
     S.prop(m, hhx + 1, hhy + 12, Z, 2033)
     S.prop(m, hhx + 15, hhy + 12, Z, 2030)
     S.prop(m, hhx + 2, hhy + 1, Z, 2322)
@@ -489,6 +489,8 @@ def build(m):
     # ---- street lamps along the avenue and the high roads, on alternating sides
     lamps([(54, 4), (59, 10), (54, 16), (59, 22), (54, 28), (54, 81), (59, 81), (54, 92), (59, 92),
            (11, 47), (25, 51), (35, 47), (80, 47), (90, 47), (108, 47), (2, 47), (109, 51)])
+    import hearthgate_dress                                   # N3: the square, the open cobble and the gates dressed
+    hearthgate_dress.dress(m, tx, ty, tw, th, Z, rng)
 
 
     # ------------------------------------------------ housing outside the walls (cheaper, less safe)

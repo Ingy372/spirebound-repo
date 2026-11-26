@@ -61,11 +61,11 @@ def place(v, wp):
 class Planner:
     """Walkable tiles of the real Floor 1 map, and shortest paths across them."""
 
-    def __init__(self, wp):
+    def __init__(self, wp, floors=()):
         import hunt_check
         import wilds
         print("autopilot: building the map to plan the walks...", flush=True)
-        self.m = hunt_check.build_map()
+        self.m = hunt_check.build_map(floors)
         self.block = wilds.blockers()
         self.walkable = wilds.walkable
         # never path across stairs or holes by accident
@@ -224,7 +224,7 @@ def main(argv):
     if "--char" in argv:
         char = argv[argv.index("--char") + 1]
     wp = world_points()
-    steps = plan_steps(route, wp, Planner(wp))
+    steps = plan_steps(route, wp, Planner(wp, route.get("floors", ())))
     print(f"autopilot: route {name}: {len(route['steps'])} steps -> {len(steps)} client steps")
     if "--report" in argv:                              # re-print the report of the last run
         log = find_log()

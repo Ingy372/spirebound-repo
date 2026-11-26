@@ -965,6 +965,7 @@ WorldPoints = {
 	["ground_wolf_copse_nw"] = Position(1028, 1262, 7),
 	["ground_wolf_copse_se"] = Position(1087, 1301, 7),
 	["hearth_bank"] = Position(1224, 1288, 7),
+	["hearth_notice_board"] = Position(1238, 1299, 7),
 	["hearth_trader"] = Position(1228, 1288, 7),
 	["lab1_up"] = Position(1250, 1040, 7),
 	["lab2_down"] = Position(1211, 1013, 6),

@@ -51,11 +51,15 @@ def limit(gtype, band):
     return budget(gtype, band)
 
 
-def build_map():
+def build_map(floors=()):
+    """Floor 1, plus floors 2-10 when asked (the autopilot's routes on higher floors)."""
     import layout_floor1
+    import layout_floor
     from mapgen import Map
     m = Map()
     layout_floor1.build(m)
+    for n in floors:
+        layout_floor.build(m, n)
     m.finish()
     return m
 

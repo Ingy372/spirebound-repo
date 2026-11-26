@@ -1,0 +1,1020 @@
+{
+ "name": "r13b_floors23",
+ "about": "R13b/S6: walk every Floor 2 and Floor 3 ground (hub, four loops, party cave) in the client, at each ground's middle level, in tier 3 Floor 1 gear.",
+ "character": "Pilot Vanguard",
+ "timeout": 2400,
+ "floors": [
+  2,
+  3
+ ],
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 80"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 38"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_downs",
+   "note": "f2_downs: the hub inside the gate (level 38)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_downs: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_downs_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_downs_nw",
+   "note": "f2_downs: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_downs_ne",
+   "note": "f2_downs: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_downs_sw",
+   "note": "f2_downs: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_downs_se",
+   "note": "f2_downs: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_downs_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 40"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_flats",
+   "note": "f2_flats: the hub inside the gate (level 40)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_flats: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_flats_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_flats_nw",
+   "note": "f2_flats: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_flats_ne",
+   "note": "f2_flats: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_flats_sw",
+   "note": "f2_flats: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_flats_se",
+   "note": "f2_flats: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_flats_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 46"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_crags",
+   "note": "f2_crags: the hub inside the gate (level 46)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_crags: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_crags_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_crags_nw",
+   "note": "f2_crags: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_crags_ne",
+   "note": "f2_crags: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_crags_sw",
+   "note": "f2_crags: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_crags_se",
+   "note": "f2_crags: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_crags_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 48"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_gully",
+   "note": "f2_gully: the hub inside the gate (level 48)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_gully: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_gully_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_gully_nw",
+   "note": "f2_gully: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_gully_ne",
+   "note": "f2_gully: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_gully_sw",
+   "note": "f2_gully: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_gully_se",
+   "note": "f2_gully: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_gully_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f2_gully",
+   "note": "f2_gully: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f2_gully",
+   "note": "f2_gully: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_gully: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_gully_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f2_gully",
+   "note": "f2_gully: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 44"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_ridge",
+   "note": "f2_ridge: the hub inside the gate (level 44)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_ridge: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_ridge_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_ridge_nw",
+   "note": "f2_ridge: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_ridge_ne",
+   "note": "f2_ridge: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_ridge_sw",
+   "note": "f2_ridge: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_ridge_se",
+   "note": "f2_ridge: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_ridge_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f2_ridge",
+   "note": "f2_ridge: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f2_ridge",
+   "note": "f2_ridge: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_ridge: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_ridge_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f2_ridge",
+   "note": "f2_ridge: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 50"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_steppe",
+   "note": "f2_steppe: the hub inside the gate (level 50)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_steppe: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_steppe_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_steppe_nw",
+   "note": "f2_steppe: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_steppe_ne",
+   "note": "f2_steppe: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_steppe_sw",
+   "note": "f2_steppe: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_steppe_se",
+   "note": "f2_steppe: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_steppe_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f2_steppe",
+   "note": "f2_steppe: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f2_steppe",
+   "note": "f2_steppe: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_steppe: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_steppe_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f2_steppe",
+   "note": "f2_steppe: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 52"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_mesa",
+   "note": "f2_mesa: the hub inside the gate (level 52)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_mesa: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_mesa_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_mesa_nw",
+   "note": "f2_mesa: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_mesa_ne",
+   "note": "f2_mesa: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_mesa_sw",
+   "note": "f2_mesa: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_mesa_se",
+   "note": "f2_mesa: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_mesa_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 56"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f2_canyon",
+   "note": "f2_canyon: the hub inside the gate (level 56)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_canyon: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_canyon_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_canyon_nw",
+   "note": "f2_canyon: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_canyon_ne",
+   "note": "f2_canyon: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_canyon_sw",
+   "note": "f2_canyon: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f2_canyon_se",
+   "note": "f2_canyon: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_canyon_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f2_canyon",
+   "note": "f2_canyon: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f2_canyon",
+   "note": "f2_canyon: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f2_canyon: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f2_canyon_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f2_canyon",
+   "note": "f2_canyon: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 63"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_lea",
+   "note": "f3_lea: the hub inside the gate (level 63)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_lea: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_lea_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_lea_nw",
+   "note": "f3_lea: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_lea_ne",
+   "note": "f3_lea: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_lea_sw",
+   "note": "f3_lea: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_lea_se",
+   "note": "f3_lea: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_lea_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 66"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_roost",
+   "note": "f3_roost: the hub inside the gate (level 66)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_roost: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_roost_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_roost_nw",
+   "note": "f3_roost: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_roost_ne",
+   "note": "f3_roost: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_roost_sw",
+   "note": "f3_roost: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_roost_se",
+   "note": "f3_roost: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_roost_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 70"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_tangle",
+   "note": "f3_tangle: the hub inside the gate (level 70)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_tangle: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_tangle_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_tangle_nw",
+   "note": "f3_tangle: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_tangle_ne",
+   "note": "f3_tangle: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_tangle_sw",
+   "note": "f3_tangle: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_tangle_se",
+   "note": "f3_tangle: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_tangle_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 73"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_mire",
+   "note": "f3_mire: the hub inside the gate (level 73)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_mire: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_mire_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_mire_nw",
+   "note": "f3_mire: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_mire_ne",
+   "note": "f3_mire: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_mire_sw",
+   "note": "f3_mire: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_mire_se",
+   "note": "f3_mire: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_mire_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f3_mire",
+   "note": "f3_mire: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f3_mire",
+   "note": "f3_mire: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_mire: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_mire_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f3_mire",
+   "note": "f3_mire: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 79"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_glade",
+   "note": "f3_glade: the hub inside the gate (level 79)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_glade: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_glade_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_glade_nw",
+   "note": "f3_glade: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_glade_ne",
+   "note": "f3_glade: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_glade_sw",
+   "note": "f3_glade: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_glade_se",
+   "note": "f3_glade: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_glade_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 68"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_run",
+   "note": "f3_run: the hub inside the gate (level 68)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_run: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_run_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_run_nw",
+   "note": "f3_run: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_run_ne",
+   "note": "f3_run: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_run_sw",
+   "note": "f3_run: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_run_se",
+   "note": "f3_run: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_run_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f3_run",
+   "note": "f3_run: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f3_run",
+   "note": "f3_run: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_run: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_run_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f3_run",
+   "note": "f3_run: back up"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 77"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_dell",
+   "note": "f3_dell: the hub inside the gate (level 77)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_dell: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_dell_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_dell_nw",
+   "note": "f3_dell: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_dell_ne",
+   "note": "f3_dell: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_dell_sw",
+   "note": "f3_dell: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_dell_se",
+   "note": "f3_dell: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_dell_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 85"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_f3_hollows",
+   "note": "f3_hollows: the hub inside the gate (level 85)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_hollows: hub (should be quiet)"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_hollows_hub"
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_hollows_nw",
+   "note": "f3_hollows: nw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_hollows_ne",
+   "note": "f3_hollows: ne loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_hollows_sw",
+   "note": "f3_hollows: sw loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "walk",
+   "to": "loop_f3_hollows_se",
+   "note": "f3_hollows: se loop mouth",
+   "timeout": 90
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_hollows_loop"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "den_f3_hollows",
+   "note": "f3_hollows: cave entrance"
+  },
+  {
+   "do": "down",
+   "at": "stairs_den_f3_hollows",
+   "note": "f3_hollows: down into the party cave"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "f3_hollows: in the party cave"
+  },
+  {
+   "do": "shot",
+   "name": "r13b_f3_hollows_cave"
+  },
+  {
+   "do": "up",
+   "at": "stairs_den_f3_hollows",
+   "note": "f3_hollows: back up"
+  }
+ ]
+}

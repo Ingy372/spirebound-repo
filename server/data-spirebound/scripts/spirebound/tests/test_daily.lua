@@ -39,3 +39,12 @@ SpireTest.add("monument: the first-clears stone at the foot of the Spire", funct
 	local d = Tile(WorldPoints.yard_spire_door)
 	SpireTest.eq(d ~= nil and d:getItemById(1772) ~= nil, true, "the Spire's door is sealed")
 end)
+
+SpireTest.add("notice board: the Hearth Square's board shows live news (N3)", function()
+	local text = SpireNoticeText()
+	SpireTest.eq(text:find("HEARTHGATE NOTICE BOARD") ~= nil, true, "it has its heading")
+	SpireTest.eq(text:find("Floor 1 Beacon") ~= nil, true, "it shows the beacon")
+	SpireTest.eq(text:find("Wanted") ~= nil, true, "it shows the bounties")
+	local t = Tile(WorldPoints.hearth_notice_board)
+	SpireTest.eq(t ~= nil and t:getItemById(2597) ~= nil, true, "the board stands in the square")
+end)

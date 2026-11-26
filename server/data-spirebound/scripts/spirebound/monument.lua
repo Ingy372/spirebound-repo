@@ -59,3 +59,56 @@ if WorldPoints.yard_first_clears then
 	firstClears:position(WorldPoints.yard_first_clears)
 	firstClears:register()
 end
+
+-- N3 (FLOOR1_REVIEW.md F1-50): the notice board in the Hearth Square. Use it to read what is going on in the tower
+-- right now: the floor race, the beacon, this weekend's bonus, the biggest bounties. Each part is guarded, so one broken
+-- system never blanks the board.
+function SpireNoticeText()
+	local lines = { "HEARTHGATE NOTICE BOARD", "" }
+	local function part(f)
+		local ok, out = pcall(f)
+		if ok and out then
+			if type(out) ~= "table" then
+				out = { out, nil }
+			end
+			for _, l in ipairs(out) do
+				table.insert(lines, l)
+			end
+			table.insert(lines, "")
+		end
+	end
+	part(function()
+		local top = Floors.highestOpen()
+		return Floors.raceLine(top, Floors.get(top))
+	end)
+	part(function()
+		return SpireBeacons.statusLine(1, SpireBeacons.get(1), os.time())
+	end)
+	part(function()
+		local w = SpireEvents.currentWeekend()
+		return w and ("This weekend: " .. w.name .. "!") or "Weekend bonus: none today. Every Saturday and Sunday brings one."
+	end)
+	part(function()
+		local out = { "Wanted (the biggest bounties):" }
+		for i, b in ipairs(SpireBounty.list()) do
+			if i > 3 then break end
+			table.insert(out, string.format("  %s: %d gold", b.name or "?", b.total))
+		end
+		if #out == 1 then
+			table.insert(out, "  nobody. The roads are safe, for now.")
+		end
+		return out
+	end)
+	table.insert(lines, "Say !arena for the arena, !beacon for the beacons, !top for the climbers.")
+	return table.concat(lines, "\n")
+end
+
+local notice = Action()
+function notice.onUse(player, item)
+	player:showTextDialog(item:getId(), SpireNoticeText():sub(1, 4000))
+	return true
+end
+if WorldPoints.hearth_notice_board then
+	notice:position(WorldPoints.hearth_notice_board)
+	notice:register()
+end

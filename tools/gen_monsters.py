@@ -397,7 +397,7 @@ def floor_monsters():
             lt = OWN_LOOKS.get(name, lt)
             corpse = OWN_CORPSES.get(name, corpse)
             hp = int(hp0 * mult_hp)
-            dmg = int(dmg0 * mult_dmg)
+            dmg = int(dmg0 * mult_dmg * HUNT_DAMAGE.get(role, 1.0))
             ranged = any(w in name for w in RANGED_WORDS)
             attacks = [("melee", 0, -dmg if not ranged else -dmg // 3)]
             if ranged:
@@ -443,7 +443,7 @@ def floor_monsters():
             m["xp"] = max(1, int(round(m["xp"] * scale)))
             trick = TRICKS.get(name)
             if trick:                                        # R13: one trick each, so every hunt plays differently
-                m["attacks"] = [a for a in m["attacks"] if a[0] == "melee"] + [trick(dmg0 if False else int(40 * n ** 1.3))]
+                m["attacks"] = [a for a in m["attacks"] if a[0] == "melee"] + [trick(int(40 * n ** 1.3 * HUNT_DAMAGE.get(role, 1.0)))]
                 m["voices"] = m.get("voices") or []
             if role in mult:
                 m["loot"] = balance.coin_loot(coins * mult[role]) + [l for l in m["loot"] if l[0] not in (GOLD, PLAT)]
@@ -451,6 +451,12 @@ def floor_monsters():
                 m[key] = val(m) if callable(val) else val
     return out
 
+
+# R13b (2026-11-26): the hunting monsters of floors 2-10 hit at 60% of the old placeholder formula. Their grounds now
+# wake a whole loop at once (6 to 12 monsters, like Floor 1's), and at full strength a level 60 test Vanguard died in
+# Floor 2's training ground in seconds: one grazer hit took 11% of a level 40's health, where Floor 1's toughest
+# ordinary monster takes about 8%. Bosses keep their numbers.
+HUNT_DAMAGE = {"camp": 0.6, "elite": 0.6, "labyrinth": 0.6, "apex": 0.6}
 
 # S6 (DESIGN.md 9.4 layer 3): each floor adds one behaviour the floors below don't have (Claude's call, Jay can veto).
 #   Floor 2: the herd animals run when badly hurt and come back once recovered (the engine's runHealth).
