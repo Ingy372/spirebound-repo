@@ -1,0 +1,189 @@
+{
+ "name": "p6_tricks2",
+ "about": "P6/S5 (2026-11-25 night): stand next to each remaining trick monster without fighting (boar charge from range, mole goes invisible, snapper slows, bandit smoke makes you dizzy) and watch the Grey Alpha's pack keep together and join the fight. The log lines 'trick:', 'state:', '(from N tiles)' and 'watch:' show them.",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 25"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 40"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "boar charge"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bristle Boar, 2, 900",
+   "note": "boar charge"
+  },
+  {
+   "do": "watch",
+   "seconds": 40,
+   "note": "boar charge"
+  },
+  {
+   "do": "shot",
+   "name": "p6b_boar"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6,
+   "note": "boar charge"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "mole burrow"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Burrow Mole, 2, 900",
+   "note": "mole burrow"
+  },
+  {
+   "do": "watch",
+   "seconds": 50,
+   "note": "mole burrow"
+  },
+  {
+   "do": "shot",
+   "name": "p6b_mole"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6,
+   "note": "mole burrow"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "snapper drag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Reed Snapper, 2, 900",
+   "note": "snapper drag"
+  },
+  {
+   "do": "watch",
+   "seconds": 40,
+   "note": "snapper drag"
+  },
+  {
+   "do": "shot",
+   "name": "p6b_snapper"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6,
+   "note": "snapper drag"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "bandit smoke"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Road Bandit, 2, 900",
+   "note": "bandit smoke"
+  },
+  {
+   "do": "watch",
+   "seconds": 40,
+   "note": "bandit smoke"
+  },
+  {
+   "do": "shot",
+   "name": "p6b_bandit"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25,
+   "radius": 6,
+   "note": "bandit smoke"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal",
+   "note": "wolf pack"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1049,
+    1286,
+    6
+   ],
+   "note": "wolf pack: watch the Grey Alpha's pack from 8 tiles"
+  },
+  {
+   "do": "watch",
+   "seconds": 30,
+   "note": "wolf pack"
+  },
+  {
+   "do": "shot",
+   "name": "s5_pack"
+  },
+  {
+   "do": "walk",
+   "to": "crowd_wolf_copse_c_3",
+   "fight": true,
+   "timeout": 40,
+   "note": "wolf pack: pull one"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "wolf pack: do the others join?"
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 6,
+   "note": "wolf pack"
+  }
+ ]
+}

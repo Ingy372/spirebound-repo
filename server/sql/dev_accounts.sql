@@ -79,3 +79,20 @@ ON DUPLICATE KEY UPDATE `account_id` = @pilot, `town_id` = @town, `level` = VALU
  `health` = VALUES(`healthmax`), `healthmax` = VALUES(`healthmax`), `mana` = VALUES(`manamax`), `manamax` = VALUES(`manamax`),
  `maglevel` = VALUES(`maglevel`), `skill_sword` = VALUES(`skill_sword`), `skill_axe` = VALUES(`skill_axe`), `skill_club` = VALUES(`skill_club`),
  `skill_dist` = VALUES(`skill_dist`), `skill_shielding` = VALUES(`skill_shielding`), `posx` = 0, `posy` = 0, `posz` = 0;
+
+-- Party Pilots (roadmap S4, 2026-11-25): the server lets 2 characters per account be online (maxPlayersOnlinePerAccount),
+-- so the five-Pilot party test (tools/party_run.py) needs two more test accounts. Same rules as the autopilot account:
+-- e-mails without a real domain, which the sign-up page never accepts. Level 2; party_run sets their level.
+SET @town = 1;
+INSERT INTO `accounts` (`name`, `email`, `password`, `type`, `creation`)
+VALUES ('autopilot2', 'autopilot2@localhost', '581b7c21c14889b414d7c1cb77e8deb69f7292b6', 1, UNIX_TIMESTAMP()),
+       ('autopilot3', 'autopilot3@localhost', '581b7c21c14889b414d7c1cb77e8deb69f7292b6', 1, UNIX_TIMESTAMP())
+ON DUPLICATE KEY UPDATE `password` = VALUES(`password`), `type` = 1;
+SET @pilot2 = (SELECT `id` FROM `accounts` WHERE `name` = 'autopilot2');
+SET @pilot3 = (SELECT `id` FROM `accounts` WHERE `name` = 'autopilot3');
+INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`)
+VALUES
+ ('Pilot Scout', 1, @pilot2, 2, 3, 160, 160, 100, 68, 76, 78, 58, 129, 70, 70, @town, '', 420, 1),
+ ('Pilot Sage', 1, @pilot2, 2, 1, 150, 150, 100, 68, 76, 78, 58, 130, 70, 70, @town, '', 410, 1),
+ ('Pilot Healer', 1, @pilot3, 2, 2, 150, 150, 100, 68, 76, 78, 58, 131, 70, 70, @town, '', 410, 1)
+ON DUPLICATE KEY UPDATE `account_id` = VALUES(`account_id`), `town_id` = @town, `posx` = 0, `posy` = 0, `posz` = 0;

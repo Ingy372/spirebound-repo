@@ -38,7 +38,7 @@ function pilot.onSay(player, words, param)
 	if q then
 		Result.free(q)
 	end
-	if email ~= "autopilot@localhost" then
+	if not email or not email:match("^autopilot%d*@localhost$") then -- autopilot2/3: the party Pilots (S4)
 		return false -- not a dev account: the words go out as ordinary chat, as if the command did not exist
 	end
 	local cmd, rest = param:match("^%s*(%a+)%s*(.*)$")

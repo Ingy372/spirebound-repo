@@ -28,7 +28,9 @@ LOGS = Path(os.environ.get("APPDATA", "")) / "otcr" / "otclient" / "otclient"
 sys.path.insert(0, str(ROOT / "tools"))
 
 LEADER = "Pilot Vanguard"
-MEMBERS = ["Pilot Warden", "Pilot Ranger", "Pilot Arcanist", "Pilot Mystic"]
+MEMBERS = ["Pilot Warden", "Pilot Scout", "Pilot Sage", "Pilot Healer"]
+# the server lets 2 characters per account be online, so the party is spread over three test accounts (dev_accounts.sql)
+ACCOUNT = {"Pilot Scout": "autopilot2@localhost", "Pilot Sage": "autopilot2@localhost", "Pilot Healer": "autopilot3@localhost"}
 
 # where to meet, where to go in, and the spots to hunt round (world coordinates; from world_points.lua)
 PLACES = {
@@ -51,7 +53,7 @@ def route(name, place, level):
     here = [meet[0] - 2 + off, meet[1] - 1, meet[2]]           # side by side at the hub, all in sight of each other
     steps = [{"do": "say", "text": "/pilot heal"}, {"do": "say", "text": f"/pilot level {level}"},
              {"do": "say", "text": "/pilot give 266, 40"}, {"do": "say", "text": "/pilot give 268, 40"}]
-    if name == "Pilot Ranger":
+    if name == "Pilot Scout":
         steps.append({"do": "say", "text": "/pilot kit"})
     steps += [{"do": "jump", "to": here, "note": "meet at the hub"}, {"do": "wait", "seconds": 4}]
     if name == LEADER:
@@ -92,7 +94,7 @@ def logname(name):
 
 def start(name, steps, mark):
     (LOGS / logname(name)).unlink(missing_ok=True)
-    RUN.write_text(json.dumps({"name": "party_" + name, "account": "autopilot@localhost", "password": "spirebound",
+    RUN.write_text(json.dumps({"name": "party_" + name, "account": ACCOUNT.get(name, "autopilot@localhost"), "password": "spirebound",
                                "character": name, "log": logname(name), "exit": True, "steps": steps}))
     subprocess.Popen([str(CLIENT / "otclient.exe")], cwd=str(CLIENT))
     ok = wait_for(f"{name} has logged in", 60, mark)

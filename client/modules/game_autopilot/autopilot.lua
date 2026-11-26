@@ -473,6 +473,21 @@ function handlers.spellbook()
     end
 end
 
+-- write down where every monster in view stands, every 2 seconds (S5: does a pack keep together round its leader?)
+-- { "do": "watch", "seconds": 30 }
+function handlers.watch(player)
+    if not stepData.last or now() - stepData.last >= 2 then
+        stepData.last = now()
+        local pos, parts = player:getPosition(), {}
+        for _, m in ipairs(monsters(player)) do
+            local p = m.c:getPosition()
+            parts[#parts + 1] = string.format('%s (%+d,%+d)', m.c:getName(), p.x - pos.x, p.y - pos.y)
+        end
+        log('watch: ' .. (#parts > 0 and table.concat(parts, ', ') or 'no monsters in view'))
+    end
+    if now() - stepT >= (step.seconds or 10) then nextStep() end
+end
+
 function handlers.wait()
     if now() - stepT >= (step.seconds or 1) then nextStep() end
 end
@@ -522,7 +537,14 @@ function handlers.party(player)
         for _, name in ipairs(s.invite) do
             local c = namedInSight(player, name)
             local shield = c and c:getShield() or 0
-            if not c or (shield ~= ShieldBlue and shield ~= ShieldBlueSharedExp and shield ~= ShieldBlueNoSharedExpBlink
+            stepData.joined = stepData.joined or {}
+            if c and (shield == ShieldBlue or shield == ShieldBlueSharedExp or shield == ShieldBlueNoSharedExpBlink
+                    or shield == ShieldBlueNoSharedExp) then
+                stepData.joined[name] = true -- once joined, a member may walk out of sight (S4: they head into the cave)
+            end
+            if stepData.joined[name] then
+                -- already in the party
+            elseif not c or (shield ~= ShieldBlue and shield ~= ShieldBlueSharedExp and shield ~= ShieldBlueNoSharedExpBlink
                     and shield ~= ShieldBlueNoSharedExp) then
                 done = false
                 if c and shield ~= ShieldWhiteBlue then
@@ -852,7 +874,41 @@ local function onText(mode, text)
         st.kills, total.kills = st.kills + 1, total.kills + 1
         log('loot: ' .. text)
     else -- every server message (quests, stones, levers, doors...) so a route's report shows what the game said
+        local who = text:match('due to an attack by an? (.-)%.') or text:match('due to an attack by the (.-)%.')
+        local p = who and g_game.getLocalPlayer()
+        if p then -- P6: how far away the hit came from (a charge or a thrown attack lands from range)
+            local best
+            for _, c in ipairs(g_map.getSpectators(p:getPosition(), false)) do
+                if c:getName():lower() == who:lower() then
+                    local d = math.max(math.abs(c:getPosition().x - p:getPosition().x), math.abs(c:getPosition().y - p:getPosition().y))
+                    if not best or d < best then best = d end
+                end
+            end
+            if best then text = text .. string.format(' (from %d tiles)', best) end
+        end
         log('message: ' .. text)
+    end
+end
+
+-- P6: conditions a monster puts on the Pilot (the bandit's smoke makes you dizzy, the snapper slows you)
+local lastStates = 0
+local function onStatesChange(player, states, oldStates)
+    if not st or not PlayerStates then return end
+    for name, bitv in pairs({ dizzy = PlayerStates.Drunk, slowed = PlayerStates.Paralyze }) do
+        if bitv and bit.band(states, bitv) > 0 and bit.band(oldStates or lastStates, bitv) == 0 then
+            log('state: you are ' .. name)
+        end
+    end
+    lastStates = states
+end
+
+-- P6: a monster that goes invisible (the mole burrows) gets an empty outfit
+local function onOutfitChange(creature, outfit, oldOutfit)
+    if not st or not creature:isMonster() then return end
+    if outfit and outfit.type == 0 and (not outfit.auxType or outfit.auxType == 0) and oldOutfit and oldOutfit.type ~= 0 then
+        log('trick: ' .. creature:getName() .. ' vanished (invisible)')
+    elseif oldOutfit and oldOutfit.type == 0 and outfit and outfit.type ~= 0 then
+        log('trick: ' .. creature:getName() .. ' reappeared')
     end
 end
 
@@ -943,13 +999,15 @@ function Autopilot.init()
     pcall(function() g_app.setMaxFps(30) end)
     log('autopilot run "' .. (plan.name or '?') .. '": ' .. #plan.steps .. ' steps; log folder ' .. g_resources.getWriteDir())
     connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
-    connect(LocalPlayer, { onHealthChange = onHealthChange })
+    connect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
+    connect(Creature, { onOutfitChange = onOutfitChange })
     scheduleEvent(function() login(0) end, 2000)
 end
 
 function Autopilot.terminate()
     if not plan then return end
     disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
-    disconnect(LocalPlayer, { onHealthChange = onHealthChange })
+    disconnect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
+    disconnect(Creature, { onOutfitChange = onOutfitChange })
     if tickEvent then removeEvent(tickEvent) end
 end
