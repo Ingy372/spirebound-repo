@@ -18,15 +18,17 @@ SpireQuests = {
 			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
 			thanks = "Good. My smith tempered it while you talked: one tier stronger. And 300 gold for the trouble." },
 		{ id = "q1_2", floor = 1, name = "The Lost Patrol", giver = "Captain Dorrow", storage = 50102, killStorage = 50112,
-			target = "Bandit Captain", count = 2, reward = { exp = 7250, gold = 1200 }, minLevel = 19,
-			offer = "My patrol never came back from the bandit road in the east. Two bandit captains run that road. Bring them down?",
+			-- party playtest 2026-11-26: the Captain and his escort wiped a level 23-25 party of three twice; the Bandit
+			-- Road is a group ground, so the offer says so and waits until level 23
+			target = "Bandit Captain", count = 2, reward = { exp = 7250, gold = 1200 }, minLevel = 23,
+			offer = "My patrol never came back from the bandit road in the east. Two bandit captains run that road, and they never ride alone: take a party of four. Bring them down?",
 			step = "Defeat Bandit Captains on the bandit road (east of Hearthgate): %d of %d.",
 			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
 			thanks = "Then my men are avenged. Take this, 1,200 gold, and my thanks." },
 		-- P9b (FLOOR1_REVIEW.md: "find the patrol's survivor and walk him home"): an escort. Patrolman Teodric waits in the
 		-- Smugglers' Cellar under the Bandit Road; say "follow" to him and he walks with you (scripts/spirebound/escort.lua).
 		{ id = "q1_2b", floor = 1, name = "The Last of the Patrol", giver = "Captain Dorrow", storage = 50235, killStorage = 50236,
-			kind = "escort", side = true, requires = "q1_2", minLevel = 19, count = 1, reward = { exp = 9000, gold = 1500 },
+			kind = "escort", side = true, requires = "q1_2", minLevel = 23, count = 1, reward = { exp = 9000, gold = 1500 },
 			offer = "One of my patrol is alive: Patrolman Teodric. The bandits keep him in their cellar under the bandit road. Cut him loose and walk him home to me, alive?",
 			step = "Free Patrolman Teodric in the Smugglers' Cellar under the bandit road, say 'follow' to him, and walk him back to Captain Dorrow alive (%d of %d).",
 			report = "Bring Patrolman Teodric to Captain Dorrow at Hearthgate's north gate and say 'report'.",

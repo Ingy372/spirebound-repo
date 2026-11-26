@@ -42,9 +42,46 @@ function SpireProgress.trophyBonus(player, ctx)
 	return SpireTrophies and SpireTrophies.bonus and SpireTrophies.bonus(player, ctx) or 0
 end
 
+-- Party playtest 2026-11-26: after losing his weapons the tank fought bare-handed for a long time and nothing said so.
+-- Pure: is any of these weapon types a real weapon (not empty, a shield, ammunition or a quiver)?
+function SpireProgress.armedPure(types)
+	for _, wt in ipairs(types) do
+		if wt and wt ~= WEAPON_NONE and wt ~= WEAPON_SHIELD and wt ~= (WEAPON_AMMO or -1) and wt ~= (WEAPON_QUIVER or -1) then
+			return true
+		end
+	end
+	return false
+end
+
+SpireProgress.UNARMED_WARN_EVERY = 300 -- seconds between reminders
+local unarmedWarned = {} -- player id -> os.time() of the last reminder
+function SpireProgress.warnUnarmed(player)
+	if player:getVocation():getBaseId() == 0 then
+		return false
+	end
+	local types = {}
+	for _, slot in ipairs({ CONST_SLOT_LEFT, CONST_SLOT_RIGHT }) do
+		local it = player:getSlotItem(slot)
+		table.insert(types, it and ItemType(it:getId()):getWeaponType() or WEAPON_NONE)
+	end
+	if SpireProgress.armedPure(types) then
+		return false
+	end
+	local pid, now = player:getId(), os.time()
+	if unarmedWarned[pid] and now - unarmedWarned[pid] < SpireProgress.UNARMED_WARN_EVERY then
+		return false
+	end
+	unarmedWarned[pid] = now
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You are fighting with no weapon in your hand! Put one in your weapon hand (lost yours? Weaponsmith Garrick sells them, and can replace the barracks weapon).")
+	return true
+end
+
 -- Damage a player deals to a monster
 function SpireProgress.onDealt(attacker, target, amount)
 	local player = SpireProgress.owner(attacker)
+	if player and amount ~= 0 and attacker:getId() == player:getId() then -- the player's own hits, not a summon's
+		SpireProgress.warnUnarmed(player)
+	end
 	if not player or amount <= 0 then
 		return amount
 	end

@@ -192,7 +192,17 @@ function SpireGear.equip(player, id)
 	end
 	if not old then
 		local item = SpireGear.create(id)
-		if item and player:addItemEx(item, false, CONST_SLOT_LEFT, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
+		-- worn slots check carrying weight even with FLAG_NOLIMIT (lib/spirebound/give.lua), and the client check on
+		-- 2026-11-26 found an overloaded Vanguard with an empty hand: lift the limit for this one moment
+		local cap = player.getCapacity and player:getCapacity()
+		if cap then
+			player:setCapacity(cap + 1000000 * 100)
+		end
+		local ret = item and player:addItemEx(item, false, CONST_SLOT_LEFT, FLAG_NOLIMIT)
+		if cap then
+			player:setCapacity(cap)
+		end
+		if ret == RETURNVALUE_NOERROR then
 			return item, "hand"
 		end
 		if item then

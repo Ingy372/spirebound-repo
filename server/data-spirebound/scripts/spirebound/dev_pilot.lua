@@ -102,8 +102,11 @@ function pilot.onSay(player, words, param)
 					table.insert(food, string.format("%s/%d/%d", row.words, row.mana or 0, row.cd or 1))
 				end
 				if row.kind == "attack_target" or row.kind == "attack_area" or row.kind == "strike" then
-					table.insert(atk, string.format("%s/%d/%d/%d", row.words, row.mana or 0, row.cd or 2,
-						row.kind == "attack_target" and (row.range or 4) or 1))
+					-- (P0-23, 2026-11-26) beams and waves reach along a line: give their length and a /d mark, so the
+					-- autopilot aims them from range instead of only next to the target
+					local reach = SpireSpells.DIRECTIONAL and SpireSpells.DIRECTIONAL[row.area]
+					table.insert(atk, string.format("%s/%d/%d/%d%s", row.words, row.mana or 0, row.cd or 2,
+						row.kind == "attack_target" and (row.range or 4) or (reach or 1), reach and "/d" or ""))
 				elseif row.kind == "heal_self" or row.kind == "heal" or row.kind == "heal_burst" then
 					table.insert(heal, string.format("%s/%d/%d", row.words, row.mana or 0, row.cd or 1))
 				end

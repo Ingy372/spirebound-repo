@@ -8,14 +8,14 @@ monster.outfit = {
 	lookType = 2206, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
-monster.health = 12000
-monster.maxHealth = 12000
+monster.health = 10000
+monster.maxHealth = 10000
 monster.race = "blood"
 monster.corpse = 18074
 monster.speed = 130
 monster.manaCost = 0
 
-monster.changeTarget = { interval = 4000, chance = 20 }
+monster.changeTarget = { interval = 6000, chance = 10 }
 monster.strategiesTarget = { nearest = 100 }
 
 monster.flags = {
@@ -45,13 +45,13 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -260 },
-	{ name = "combat", type = COMBAT_PHYSICALDAMAGE, interval = 2000, chance = 25, minDamage = -150, maxDamage = -300, length = 3, spread = 0, target = false, effect = CONST_ME_HITAREA },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -160 },
+	{ name = "combat", type = COMBAT_PHYSICALDAMAGE, interval = 2000, chance = 25, minDamage = -80, maxDamage = -170, length = 3, spread = 0, target = false, effect = CONST_ME_HITAREA },
 }
 
 monster.defenses = {
-	defense = 45,
-	armor = 45,
+	defense = 40,
+	armor = 40,
 }
 
 monster.elements = {

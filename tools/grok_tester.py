@@ -117,6 +117,11 @@ def places(wp):
             px, py = int(cx) + int(x), int(cy) + int(y)
             if cz == "7" and 1000 <= px <= 1500 and 1000 <= py <= 1500:
                 out[f"NPC {name}"] = (px, py + 1, 7)      # stand in front of them
+    # party playtest 2026-11-26 (P2-14): the Registrar's point was outside his door ("Come back when you are ready to
+    # choose"); stand where /pilot newbie puts a character, two steps west of him inside the room
+    if "tutorial_registrar" in wp:
+        rx, ry, rz = tuple(wp["tutorial_registrar"])
+        out["tutorial registrar"] = out["NPC Registrar Maelis"] = (rx - 2, ry, rz)
     return out
 
 

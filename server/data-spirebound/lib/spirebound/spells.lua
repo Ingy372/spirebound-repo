@@ -373,6 +373,9 @@ function SpireSpells.stages(row, dir, rnd)
 end
 
 -- Pure: how many tiles an area covers (used by the balance test)
+-- How far the line-shaped areas reach in front of the caster (used by the test autopilot's fight kit)
+SpireSpells.DIRECTIONAL = { beam = 5, bigbeam = 6, wave = 3, beam7 = 7 }
+
 function SpireSpells.areaSize(areaName)
 	return #SpireSpells.areaOffsets(areaName, 0)
 end

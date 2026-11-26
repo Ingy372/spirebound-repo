@@ -141,8 +141,12 @@ MONSTERS = {
                        summons=[("Meadow Wolf", 3)], elements={"fire": 80, "ice": -10},
                        events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
     "Axe-Lord of the Stair": dict(desc="the Axe-Lord of the Stair", look=(2206, 0, 0, 0, 0, 0), corpse=18074,
-                                  hp=12000, xp=8000, speed=130, race="blood",
-                                  attacks=[("melee", 0, -260), ("cleave", -150, -300, 1)], armor=45, defense=45, boss=True,
+                                  # party playtest 2026-11-26 (P0-22, Q78: a party boss for 4-6 at level 30-35): a level-30
+                                  # party of three did 19% of 12,000 health before wiping in 45 s; two hits together (melee
+                                  # 260 + line 300) killed the tank from full, one line + one swing killed a caster. Less
+                                  # health, smaller hits, and he leaves the tank for the casters half as often.
+                                  hp=10000, xp=8000, speed=130, race="blood", change_target=(6000, 10),
+                                  attacks=[("melee", 0, -160), ("cleave", -80, -170, 1)], armor=40, defense=40, boss=True,
                                   loot=[(GOLD, 100000, 100), (PLAT, 100000, 40), (266, 100000, 10), (268, 100000, 10)],
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
                                   elements={"physical": 10},
@@ -249,7 +253,7 @@ def render(name, d):
          "}", "",
          f"monster.health = {d['hp']}", f"monster.maxHealth = {d['hp']}", f'monster.race = "{d["race"]}"',
          f"monster.corpse = {d['corpse']}", f"monster.speed = {d['speed']}", "monster.manaCost = 0", "",
-         "monster.changeTarget = { interval = 4000, chance = %d }" % (20 if boss else 0),
+         "monster.changeTarget = { interval = %d, chance = %d }" % d.get("change_target", (4000, 20 if boss else 0)),
          "monster.strategiesTarget = { nearest = 100 }", "",
          "monster.flags = {",
          f"\tsummonable = {str(d.get('summon', False)).lower()}, attackable = true, hostile = true, convinceable = false, pushable = false,",

@@ -1037,8 +1037,8 @@ local function parseKit(text)
     end
     local k = { attack = {}, heal = {}, skills = {} }
     for e in part('attack'):gmatch('[^,]+') do
-        local w, m, cd, r = e:match('^%s*(.-)/(%d+)/(%d+)/(%d+)$')
-        if w then table.insert(k.attack, { words = w, mana = tonumber(m), cd = tonumber(cd), range = tonumber(r) }) end
+        local w, m, cd, r, dir = e:match('^%s*(.-)/(%d+)/(%d+)/(%d+)(/?d?)%s*$')
+        if w then table.insert(k.attack, { words = w, mana = tonumber(m), cd = tonumber(cd), range = tonumber(r), dir = dir == '/d' }) end
     end
     for e in part('heal'):gmatch('[^,]+') do
         local w, m, cd = e:match('^%s*(.-)/(%d+)/(%d+)$')
@@ -1157,19 +1157,23 @@ local function useKit(player)
     for _, list in ipairs({ kit.skills, kit.attack }) do
         for _, e in ipairs(list) do
             local short = (e.range or 1) <= 1
-            local ok = t >= (ready[e.words] or 0) and mana >= e.mana and d <= math.max(1, e.range)
+            local tp = target:getPosition()
+            local aligned = not e.dir or tp.x == me.x or tp.y == me.y -- a beam or wave only hits along its line
+            local ok = t >= (ready[e.words] or 0) and mana >= e.mana and d <= math.max(1, e.range) and aligned
                 and (e.mana == 0 or mana - e.mana >= reserve)
             if ok then
                 local score = e.mana == 0 and 18 or e.mana
                 if short and list == kit.attack then -- waves, bursts and strikes: worth it on a crowd
                     score = close >= 2 and (e.mana + 60) or (d <= 1 and e.mana * 0.5 or -1)
+                elseif e.dir then -- a beam or wave lined up on the target from range (P0-23)
+                    score = e.mana + 10
                 end
                 if score >= 0 and (not bestScore or score > bestScore) then best, bestScore = e, score end
             end
         end
     end
     if best then
-        if (best.range or 1) <= 1 then -- face the target, as for a wave
+        if (best.range or 1) <= 1 or best.dir then -- face the target, as for a wave
             local a, b = me, target:getPosition()
             local dx, dy = b.x - a.x, b.y - a.y
             g_game.turn(math.abs(dx) > math.abs(dy) and (dx > 0 and East or West) or (dy > 0 and South or North))

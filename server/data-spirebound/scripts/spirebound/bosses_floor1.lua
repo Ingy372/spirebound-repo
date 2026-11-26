@@ -84,7 +84,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 				if state.phase == 2 then
 					table.insert(tiles, Position(p.x + 1, p.y, p.z))
 				end
-				SpireBoss.markTiles(boss:getId(), tiles, -180, -320)
+				SpireBoss.markTiles(boss:getId(), tiles, -110, -200) -- P0-22: was 180-320, one-shot a level-30 caster
 			else
 				-- furthest player, 3-tile line from the boss toward them
 				local bp, far, best = boss:getPosition(), nil, -1
@@ -100,7 +100,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 				for i = 1, 3 do
 					table.insert(tiles, Position(bp.x + dx * i, bp.y + dy * i, bp.z))
 				end
-				SpireBoss.markTiles(boss:getId(), tiles, -260, -420)
+				SpireBoss.markTiles(boss:getId(), tiles, -160, -260) -- P0-22: was 260-420
 			end
 		end
 	end,

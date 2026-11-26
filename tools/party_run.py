@@ -42,6 +42,10 @@ PLACES = {
     "gatehound": dict(title="the Gate Hound", level=30, meet="gate_pass_1", landing=None, spots=[[1232, 1076, 7]], hunt=240),
     "axelord": dict(title="the Axe-Lord of the Stair", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
                     spots=[[1231, 1026, 4]], hunt=360, stairkey=True, gear=4),
+    # PT5 (2026-11-26, Q78: a party boss for 4-6 at level 30-35): five level-30 Pilots in tier-3 Floor 1 gear, as in the
+    # party playtest. Done when they kill him in 2-5 minutes with at most one death.
+    "axelord30": dict(title="the Axe-Lord of the Stair (level 30, five players)", level=30, meet="boss_room_exit",
+                      landing=[1231, 1031, 4], spots=[[1231, 1026, 4]], hunt=420, stairkey=True, gear=3),
     # the awakening check (P1): the same fight with the Axe-Lord dropped to 15% by the leader; the kill is still the party's
     "axelord15": dict(title="the Axe-Lord of the Stair (at 15%)", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
                       spots=[[1231, 1026, 4]], hunt=240, stairkey=True, gear=4, bosshp=15),

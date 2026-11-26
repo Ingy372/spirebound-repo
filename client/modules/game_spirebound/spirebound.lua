@@ -290,7 +290,17 @@ end
 -- changes in a way players must have.
 local CLIENT_VERSION = 2
 
+-- Party playtest 2026-11-26 (P2-14): the Skills panel's "XP Gain Rate" showed 7290% from level 1 (our 10x stage rate
+-- plus the engine's low-level bonus, added up). It told players nothing useful, so the row is hidden.
+local function hideXpRate()
+  local w = modules.game_skills and modules.game_skills.skillsWindow
+  local row = w and w:recursiveGetChildById('xpGainRate')
+  if row and row:isVisible() then row:setVisible(false) end
+end
+
 local function onGameStart()
+  scheduleEvent(hideXpRate, 1500)
+  scheduleEvent(hideXpRate, 6000)
   scheduleEvent(function()
     local protocol = g_game.getProtocolGame()
     if protocol then protocol:sendExtendedJSONOpcode(OPCODE, { t = 'hello', v = CLIENT_VERSION }) end
@@ -407,7 +417,7 @@ end
 
 function init()
   pcall(syncBotScripts)
-  connect(LocalPlayer, { onPositionChange = onPositionChange })
+  connect(LocalPlayer, { onPositionChange = onPositionChange, onExperienceRateChange = hideXpRate })
   ProtocolGame.registerExtendedJSONOpcode(OPCODE, onMessage)
   originalOnSkullChange = Creature.onSkullChange
   Creature.onSkullChange = function(self, skullId)
@@ -453,7 +463,7 @@ function terminate()
   if originalOnSkullChange then
     Creature.onSkullChange = originalOnSkullChange
   end
-  disconnect(LocalPlayer, { onPositionChange = onPositionChange })
+  disconnect(LocalPlayer, { onPositionChange = onPositionChange, onExperienceRateChange = hideXpRate })
   disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd })
   onGameEnd()
 end

@@ -208,3 +208,10 @@ SpireTest.add("party fixes P1-5c: Normal climbers below 50 get their blessings b
 	local old = deathPlayer(tag .. "o", Difficulty.NORMAL, 50, 0)
 	SpireTest.eq(SpireDifficulty.youngBlessings(old), 0, "from level 50 the priest sells them")
 end)
+
+SpireTest.add("party fixes: fighting with no weapon in hand is noticed", function()
+	SpireTest.eq(SpireProgress.armedPure({ WEAPON_NONE, WEAPON_NONE }), false, "empty hands")
+	SpireTest.eq(SpireProgress.armedPure({ WEAPON_NONE, WEAPON_SHIELD }), false, "only a shield")
+	SpireTest.eq(SpireProgress.armedPure({ WEAPON_SWORD, WEAPON_SHIELD }), true, "a sword and a shield")
+	SpireTest.eq(SpireProgress.armedPure({ WEAPON_WAND, WEAPON_NONE }), true, "a wand")
+end)

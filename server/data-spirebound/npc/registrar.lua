@@ -50,7 +50,7 @@ local TOOLS = { [3003] = true, [3457] = true, [2920] = true } -- rope, shovel, t
 local WEAR = { [3361] = CONST_SLOT_ARMOR, [3355] = CONST_SLOT_HEAD, [3559] = CONST_SLOT_LEGS, [3552] = CONST_SLOT_FEET }
 
 local MODES = {
-	["normal"] = { id = Difficulty.NORMAL, text = "Normal: the tower's usual rules. Death costs experience, as it always has." },
+	["normal"] = { id = Difficulty.NORMAL, text = "Normal: the tower's usual rules. Below level 50 a death costs you nothing; from level 50 on it costs experience, as it always has." },
 	["hardcore"] = { id = Difficulty.HARDCORE, text = "Hardcore: deaths cost half again as much, but you earn 25% more experience and 15% more loot." },
 	["death game"] = { id = Difficulty.DEATHGAME, text = "Death Game: if a monster or the tower kills you, this character is gone for good. In return: 50% more experience, 30% more loot, and honours no one else can earn. Another player can never end you this way." },
 }
@@ -111,7 +111,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			end
 		end
 		if topic == 1 and MsgContains(lower, "yes") then
-			npcHandler:say("Good. Now choose how you will live in the tower. {normal}: a death costs you some experience. {hardcore}: deaths cost more, but you earn more. {death game}: one death to a monster and this character is gone for good, for the biggest rewards. Say one to hear the details. You may always step down later, but never up.", npc, player)
+			npcHandler:say("Good. Now choose how you will live in the tower. {normal}: below level 50 a death costs you nothing, after that some experience. {hardcore}: deaths cost more, but you earn more. {death game}: one death to a monster and this character is gone for good, for the biggest rewards. Say one to hear the details. You may always step down later, but never up.", npc, player)
 			npcHandler:setTopic(pid, 2)
 			return true
 		end
