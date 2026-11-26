@@ -148,6 +148,19 @@ OUTFITS["quartermaster"] = {
     "forearm": SKIN, "hat": ramp((16, 16, 22), (150, 150, 162), (60, 60, 72)),   # grey felt: brown merged with the crate, green with the tunic
 }
 
+# Hunter Brannoch (Floor 1 NPC on the humanoid figure, 2026-11-25)
+WOLF = ((34, 34, 40), (210, 206, 200), (110, 108, 108))
+OUTFITS["brannoch"] = {
+    **base(hair=((16, 10, 8), (110, 76, 50), (50, 32, 20)), arms=((40, 22, 12), (176, 120, 72), (100, 62, 34)),
+           legs=((36, 24, 14), (150, 110, 70), (84, 58, 34)), boots=((18, 10, 6), (120, 80, 48), (60, 38, 20)),
+           torso=((40, 22, 12), (176, 120, 72), (100, 62, 34)), cuff=LEATHER, belt=((20, 12, 8), (110, 76, 46)), buckle=GOLD),
+    "pelt": ramp(*WOLF), "muzzle": ramp((120, 116, 108), (250, 248, 240), (206, 202, 194)), "wolfeye": [[30, 20, 14]] * 8,
+    "claw": ramp((150, 140, 118), (255, 252, 240)), "beard": ramp((16, 10, 8), (110, 76, 50), (50, 32, 20)),
+    "scar": [[236, 176, 160]] * 8, "bow": ramp((30, 16, 8), (150, 100, 56), (76, 46, 22)),
+    "string": ramp((150, 140, 120), (236, 230, 214)), "bracer": ramp((20, 12, 8), (130, 90, 58), (66, 42, 24)),
+    "knife": ramp((50, 54, 64), (230, 234, 240), (140, 146, 158)),
+}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())
