@@ -137,3 +137,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - Jay's approved Gate Hound, Axe-Lord and Axe-Lord (blade) (approved through the art-count session) now have looks 2205-2207 with no people shift (they are placed like the animals); the Step 2 session switches the monster files and the blade-phase script. Checked on a copy of the client files.
 - Jay: women's class outfits need fixing. The approved Vanguard and Ranger read as men and the Arcanist and Mystic as women, so the other four are drafted (woman Vanguard and Ranger, man Arcanist and Mystic), each with the same two addons; all ALL PASS, sent for approval.
 
+### 2026-11-25 night: money monsters, first drafts (N6)
+- Drafted with the Blender pipeline, checker ALL PASS, sent to Jay: Old Tusk (secret boss; the Bristle Boar grown ancient and huge, grizzled, one great tusk, old arrows in his back), Hollowfang (hidden mini-boss; night-black wolf with a pale mane and one great fang) and the Briar Mother (hidden mini-boss; wine-purple bramble mound, three snapping bud heads, a crown of rose petals). Each replaces a cousin's sprite it borrowed.
+- Art split agreed with the outfits/NPC art session: it takes the 12 wrong-animal monsters, this session the bosses, money monsters and variant elites. It installed the Floor 1 boss looks as 2205-2207 and found the 33-part limit (the Axe-Lord models are over it; their approved sheets stand, a re-render must merge parts first).
+

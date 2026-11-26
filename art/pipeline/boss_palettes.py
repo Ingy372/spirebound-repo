@@ -110,8 +110,19 @@ HOLLOWFANG = {
     "fang": ramp((120, 104, 70), (255, 250, 228), (214, 200, 160)), "scar": ramp((90, 76, 84), (206, 190, 196), (150, 132, 140)),
 }
 
+# Briar Mother: the thornsnaps' mother (hidden mini-boss in Thornsnap Hollow). Wine-purple bramble (never grass green,
+# CRAWLER_RULES C1), olive leaves, pale thorns, rose-pink blossoms, magenta throats.
+BRIAR_MOTHER = {
+    "briar": ramp((26, 10, 20), (176, 104, 132), (86, 36, 62)), "vine": ramp((22, 12, 18), (150, 96, 112), (70, 36, 52)),
+    "root": ramp((24, 16, 12), (130, 100, 78), (66, 46, 34)), "bud": ramp((22, 26, 16), (150, 160, 104), (62, 72, 40)),   # dark olive jaws, not watermelons
+    "throat": ramp((110, 10, 70), (255, 190, 236), (232, 60, 160)), "petal": ramp((110, 30, 60), (255, 214, 226), (226, 104, 140)),
+    "bloom": ramp((110, 30, 60), (255, 220, 230), (230, 110, 150)), "thorn": ramp((120, 108, 84), (252, 246, 226), (208, 194, 160)),
+    "leaf": ramp((18, 36, 22), (128, 168, 96), (50, 90, 48)), "rib": ramp((100, 130, 80), (220, 236, 190)),
+    "eye": [[255, 230, 120]],
+}
+
 BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK,
-          "hollowfang": HOLLOWFANG}
+          "hollowfang": HOLLOWFANG, "briar_mother": BRIAR_MOTHER}
 
 
 def main():

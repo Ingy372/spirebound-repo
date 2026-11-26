@@ -144,6 +144,9 @@ LOOKALIKES = {
     "azhrakkar": [(35, "Demon"), (55, "Behemoth")],
     "gate_hound": [(240, "Hellhound"), (3, "War Wolf")],
     "axe_lord": [(131, "Knight (outfit)"), (55, "Behemoth")],
+    "old_tusk": [(380, "Boar")],
+    "hollowfang": [(3, "War Wolf"), (52, "Winter Wolf")],
+    "briar_mother": [(120, "Carniphila"), (221, "Spit Nettle")],
 }
 
 
