@@ -100,6 +100,8 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
 
 ## Rig numbers (why they are what they are)
 
+- **palette.json is generated** by `outfit_palettes.py`, `creature_palettes.py` (wrong-animal cleanup) and
+  `boss_palettes.py` (bosses and variants). Never hand-edit it: on a merge conflict take main's copy and rerun all three.
 - **At most 33 parts per model** ("none" plus 32). The id pass stores a part's number as number x 8 in one colour
   channel, so anything past 32 is read back as 32 and silently takes that part's colours. `render_creature.py` refuses
   more. A variant built on a frozen base that needs more parts reuses the base parts it hides, recoloured in its own

@@ -1,0 +1,133 @@
+{
+ "name": "crawler",
+ "parts": [
+  "none",
+  "shell",
+  "pronotum",
+  "head",
+  "eye",
+  "mandible",
+  "inner",
+  "leg",
+  "antenna",
+  "seam",
+  "rim",
+  "pit"
+ ],
+ "palette": "crawler",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.5177669529663687,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.5177669529663687,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 5.0,
+   "mandible": 3.0,
+   "inner": 3.6,
+   "leg": 2.4,
+   "antenna": 3.0,
+   "seam": 3.4,
+   "rim": 2.4,
+   "pit": 3.0,
+   "head": 1.4,
+   "pronotum": 1.2
+  },
+  "thin": {
+   "eye": 2,
+   "mandible": 2,
+   "inner": 2,
+   "leg": 2,
+   "antenna": 2,
+   "seam": 2,
+   "rim": 2,
+   "pit": 2
+  },
+  "soft": [
+   [
+    "shell",
+    "seam",
+    "rim",
+    "pit"
+   ],
+   [
+    "pronotum"
+   ],
+   [
+    "head",
+    "eye"
+   ],
+   [
+    "mandible",
+    "inner"
+   ]
+  ],
+  "no_outline": [
+   "antenna"
+  ],
+  "fur": [],
+  "selout": [
+   "shell",
+   "pronotum"
+  ],
+  "texture": {
+   "shell": [
+    0.25,
+    0.05
+   ],
+   "pronotum": [
+    0.3,
+    0.05
+   ],
+   "head": [
+    0.4,
+    0.05
+   ]
+  },
+  "bands": [
+   0.3,
+   0.42,
+   0.53,
+   0.63,
+   0.72,
+   0.81,
+   0.9
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}
