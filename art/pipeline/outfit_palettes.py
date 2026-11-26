@@ -11,7 +11,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from outfit_palette import base, ramp
+from outfit_palette import SKIN, base, ramp
 
 GOLD = ((120, 76, 10), (255, 236, 150), (226, 170, 40))
 LEATHER = ((36, 20, 12), (170, 116, 70), (100, 62, 36))
@@ -122,6 +122,30 @@ OUTFITS["warden"] = {
     "beard": ramp(*IRON_GREY),
     "poster": ramp((120, 96, 60), (252, 240, 210), (214, 192, 150)), "seal": ramp((90, 8, 10), (240, 90, 70), (170, 24, 24)),
     "iron": ramp((20, 22, 28), (190, 196, 206), (90, 94, 104)),
+}
+
+# Guild Warden (town NPC on the humanoid figure, 2026-11-25)
+NAVY = ((6, 10, 34), (90, 116, 190), (22, 34, 92))
+SILVER = ((60, 66, 80), (250, 252, 255), (176, 184, 198))
+OUTFITS["guildwarden"] = {
+    **base(hair=((20, 14, 10), (130, 96, 70), (64, 44, 30)), arms=NAVY, legs=NAVY, boots=((10, 8, 10), (90, 78, 72)),
+           torso=NAVY, cuff=SILVER, belt=((24, 30, 60), (110, 130, 190)), buckle=SILVER),
+    "robe": ramp(*NAVY), "trim": ramp(*SILVER), "stole": ramp(*SILVER), "badge": ramp(*GOLD),
+    "beard": ramp((20, 14, 10), (130, 96, 70), (64, 44, 30)), "staff": ramp((40, 24, 10), (176, 124, 76), (100, 64, 34)),
+    "finial": ramp(*GOLD), "banner": ramp((10, 16, 54), (96, 130, 214), (30, 50, 140)), "border": ramp(*GOLD),
+}
+
+# Quartermaster (town NPC on the humanoid figure, 2026-11-25)
+OLIVE = ((24, 28, 10), (170, 176, 100), (88, 96, 44))
+OUTFITS["quartermaster"] = {
+    **base(hair=((50, 50, 54), (220, 218, 214), (130, 128, 126)), arms=OLIVE, legs=((60, 46, 30), (206, 180, 138), (132, 108, 76)),
+           boots=((26, 14, 10), (140, 92, 56), (78, 48, 28)), torso=OLIVE, cuff=LEATHER, belt=LEATHER, buckle=GOLD),
+    "vest": ramp((24, 12, 8), (150, 100, 62), (78, 46, 26)), "edge": ramp((14, 8, 4), (100, 66, 40)),
+    "bandolier": ramp(*LEATHER), "vial": ramp((70, 10, 14), (255, 140, 120), (196, 40, 40)),
+    "stopper": ramp((60, 40, 20), (210, 170, 120)), "stache": ramp((50, 50, 54), (220, 218, 214), (130, 128, 126)),
+    "crate": ramp((50, 30, 12), (214, 166, 104), (140, 96, 52)), "slat": ramp((30, 18, 8), (130, 90, 50)),
+    "shaft": ramp((70, 46, 20), (220, 180, 120)), "fletch": ramp((150, 140, 120), (252, 250, 240)),
+    "forearm": SKIN, "hat": ramp((16, 16, 22), (150, 150, 162), (60, 60, 72)),   # grey felt: brown merged with the crate, green with the tunic
 }
 
 if __name__ == "__main__":

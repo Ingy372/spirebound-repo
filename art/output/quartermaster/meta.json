@@ -4,19 +4,34 @@
   "none",
   "skin",
   "eye",
-  "cheek",
+  "brow",
+  "nose",
   "hair",
-  "bun",
-  "dress",
-  "apron",
-  "sleeve",
-  "legs",
-  "shoe",
+  "strand",
   "hand",
-  "ladle",
-  "arrow",
-  "potion_r",
-  "potion_b"
+  "torso",
+  "arm_a",
+  "arm_b",
+  "cuff",
+  "leg_a",
+  "leg_b",
+  "boot_a",
+  "boot_b",
+  "sole",
+  "belt",
+  "buckle",
+  "vest",
+  "edge",
+  "bandolier",
+  "vial",
+  "stopper",
+  "stache",
+  "crate",
+  "slat",
+  "shaft",
+  "fletch",
+  "forearm",
+  "hat"
  ],
  "palette": "quartermaster",
  "walk_frames": 8,
@@ -49,62 +64,170 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "arrow": 2.6,
-   "potion_r": 3.0,
-   "potion_b": 3.0,
    "eye": 9.0,
-   "cheek": 3.0,
-   "hand": 2.4,
-   "ladle": 3.2,
-   "sleeve": 2.2,
-   "shoe": 1.6,
-   "bun": 1.5,
-   "apron": 1.3
+   "brow": 3.0,
+   "nose": 2.0,
+   "hand": 2.6,
+   "strand": 1.3,
+   "cuff": 2.2,
+   "buckle": 4.0,
+   "belt": 2.0,
+   "sole": 1.6,
+   "boot_a": 1.4,
+   "boot_b": 1.4,
+   "edge": 2.4,
+   "bandolier": 2.2,
+   "vial": 4.0,
+   "stopper": 5.0,
+   "stache": 2.0,
+   "slat": 2.6,
+   "shaft": 3.0,
+   "fletch": 4.0,
+   "forearm": 2.0
   },
   "thin": {
-   "arrow": 2,
-   "potion_r": 3,
-   "potion_b": 3,
    "eye": 3,
-   "cheek": 3,
+   "brow": 2,
+   "nose": 3,
    "hand": 3,
-   "ladle": 2,
-   "sleeve": 3,
-   "shoe": 3
+   "strand": 2,
+   "cuff": 3,
+   "buckle": 2,
+   "belt": 3,
+   "sole": 3,
+   "edge": 2,
+   "bandolier": 3,
+   "vial": 2,
+   "stopper": 2,
+   "slat": 2,
+   "shaft": 2,
+   "fletch": 2
   },
   "soft": [
    [
-    "dress",
-    "apron",
-    "sleeve"
+    "skin",
+    "eye",
+    "brow",
+    "nose"
    ],
    [
-    "skin",
-    "cheek",
     "hair",
-    "bun",
-    "eye"
+    "strand"
    ],
    [
     "hand",
-    "ladle"
+    "skin"
    ],
    [
-    "shoe",
-    "legs"
+    "torso",
+    "belt",
+    "buckle"
+   ],
+   [
+    "boot_a",
+    "sole"
+   ],
+   [
+    "boot_b",
+    "sole"
+   ],
+   [
+    "torso",
+    "vest",
+    "edge"
+   ],
+   [
+    "bandolier",
+    "vial",
+    "stopper"
+   ],
+   [
+    "skin",
+    "stache"
+   ],
+   [
+    "crate",
+    "slat"
+   ],
+   [
+    "shaft",
+    "fletch"
    ]
   ],
   "no_outline": [],
   "fur": [],
+  "texture": {
+   "torso": [
+    0.4,
+    0.18
+   ],
+   "arm_a": [
+    0.35,
+    0.12
+   ],
+   "arm_b": [
+    0.35,
+    0.12
+   ],
+   "leg_a": [
+    0.35,
+    0.12
+   ],
+   "leg_b": [
+    0.35,
+    0.12
+   ],
+   "hair": [
+    0.3,
+    0.1
+   ],
+   "boot_a": [
+    0.3,
+    0.0
+   ],
+   "boot_b": [
+    0.3,
+    0.0
+   ],
+   "vest": [
+    0.35,
+    0.12
+   ],
+   "crate": [
+    0.45,
+    0.2
+   ],
+   "hat": [
+    0.3,
+    0.1
+   ]
+  },
+  "bands": [
+   0.38,
+   0.5,
+   0.6,
+   0.69,
+   0.78,
+   0.86,
+   0.93
+  ],
   "selout": [
-   "dress",
-   "apron",
-   "skin"
+   "torso",
+   "skin",
+   "hair",
+   "vest",
+   "crate",
+   "hat"
   ]
  },
  "ref": "outfit_128.png",
  "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
   8,
   8
- ]
+ ],
+ "auto_place": null
 }
