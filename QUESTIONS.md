@@ -8,6 +8,11 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
+The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
+- **Recommendation:** keep +50%. If parties feel too strong in your playtest, +40% still beats solo (about 1.3 to 1.7 times).
+- Your answer: (keep / go back to +30% / other number)
+
 ### Q64. The guild official's new look has a beard; the NPC is "Guildwarden Sela" (2026-11-25, art)
 You approved the redrawn Guild Warden (navy robe, banner staff, short beard). In the game that job belongs to Guildwarden Sela, who wore a woman's outfit until now.
 - **Recommendation (assumed):** Sela wears the approved look now, so no borrowed Tibia look is left on her. If you'd rather keep Sela as a woman, say so and I'll make a beardless version (one short art job); or rename the NPC to fit the art.
