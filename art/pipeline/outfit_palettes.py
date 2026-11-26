@@ -187,6 +187,34 @@ OUTFITS["captain"] = {
     "blade": ramp((70, 80, 100), (252, 254, 255), (186, 198, 214)), "guard": ramp(*GOLD), "earring": ramp(*GOLD),
 }
 
+# Ruin Archer (Floor 1 monster on the humanoid figure, 2026-11-25): a skeleton
+IVORY = ((70, 60, 46), (252, 246, 224), (196, 184, 156))
+ROT = ((16, 12, 10), (110, 90, 70), (50, 40, 32))
+OUTFITS["archer"] = {
+    **base(hair=IVORY, arms=IVORY, legs=IVORY, boots=IVORY, torso=((40, 34, 28), (170, 160, 136), (100, 92, 76)),
+           cuff=ROT, belt=ROT, buckle=((40, 40, 44), (150, 150, 156)), skin=ramp(*IVORY)),
+    "jerkin": ramp(*ROT), "tatter": ramp((10, 8, 6), (80, 64, 50)), "rib": ramp(*IVORY), "jaw": ramp(*IVORY),
+    "tooth": ramp((150, 140, 118), (255, 252, 240)), "knob": ramp(*IVORY), "bow": ramp((30, 16, 8), (150, 100, 56), (76, 46, 22)),
+    "string": ramp((150, 140, 120), (236, 230, 214)), "quiver": ramp(*ROT), "shaft": ramp((70, 46, 20), (220, 180, 120)),
+}
+OUTFITS["archer"]["eye"] = [[14, 30, 18]] * 8          # near-black sockets, a hint of green
+OUTFITS["archer"]["nose"] = [[40, 30, 24]] * 8         # the nose hole
+OUTFITS["archer"]["brow"] = ramp(*IVORY)
+
+# Ruin Sentinel (Floor 1 monster on the humanoid figure, 2026-11-25): a stone statue
+STONE = ((34, 34, 38), (214, 206, 186), (120, 118, 114))
+MOSS_G = ((14, 34, 12), (140, 186, 80), (60, 104, 36))
+OUTFITS["sentinel"] = {
+    **base(hair=STONE, arms=STONE, legs=STONE, boots=STONE, torso=STONE, cuff=STONE, belt=((26, 26, 30), (150, 146, 136)),
+           buckle=STONE, skin=ramp(*STONE)),
+    "helm": ramp(*STONE), "visor": [[16, 18, 24]] * 8, "crest": ramp(*STONE), "block": ramp(*STONE), "moss": ramp(*MOSS_G),
+    "crack": [[24, 22, 24]] * 8, "spear": ramp(*STONE), "tip": ramp((60, 60, 66), (236, 232, 222), (150, 148, 144)),
+    "band": ramp((26, 26, 30), (150, 146, 136)),
+}
+OUTFITS["sentinel"]["eye"] = [[170, 230, 255]] * 8      # pale-blue glow in the visor
+OUTFITS["sentinel"]["brow"] = ramp(*STONE)
+OUTFITS["sentinel"]["nose"] = ramp(*STONE)
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())

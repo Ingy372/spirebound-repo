@@ -119,3 +119,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: Bounty Warden approved and in the install
 - Jay approved the redrawn Bounty Warden ("it looks good to me"): look 2019, worn by Bounty Warden Cass (look fields only); goes in at the next restart (checked on a copy of the client files).
 
+### 2026-11-25 night: seven Floor 1 people redrawn on the outfit body
+- Guild Warden, Quartermaster, Hunter Brannoch, Road Bandit, Bandit Captain, Ruin Archer and Ruin Sentinel are rebuilt on `art/models/humanoid.py` (their old drafts used copied bodies); all ALL PASS and sent to Jay as one overview. New rules O18-O22 in `art/OUTFIT_RULES.md` (colour neighbours, where props go, monsters never look like a player class, hidden eyes, canvas edges). Not in the game until approved.
+

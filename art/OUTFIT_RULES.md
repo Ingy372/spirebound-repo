@@ -45,6 +45,11 @@ Worked examples: `art/models/vanguard.py`, `ranger.py`, `arcanist.py`, `mystic.p
 | O15 | **Hats in this view:** a dome crown with a small brim reads as a helmet, a plume pointing backward stands up like a horn in the south view (lay it along the crown), and a red band under a brim reads as glowing eyes. A hat needs a tall flat-topped crown and a brim tipped back about 0.4 (Vesper). | Bounty Warden first render |
 | O16 | **Light grey hair reads as a steel helmet.** Grey or white hair uses a darker salt-and-pepper ramp (top tone about 170) and five or more strand lines. | Bounty Warden |
 | O17 | **Gear on the back is edge-on from the side.** A crossbow, quiver or shield on the back spans left-right, so facing east or west it hides behind the body: sweep its far ends backward (-X) so it shows from the side, and check the signature count facing E and W. | Bounty Warden's crossbow (1 px facing E before the sweep) |
+| O18 | **Neighbouring garments need different colours.** A brown hood over a brown jerkin and brown trousers reads as one blob: change the value or hue of each neighbour (the bandit got a charcoal jerkin). | Road Bandit first render |
+| O19 | **Where a big prop goes:** at the hip it reads as a third leg; on the shoulder it hides the face; on the back (O8, O17) it reads from every side. A cap sits ON the crown, smaller than the head and above the brow; a cap the size of the head hides the face. | Quartermaster (three tries) |
+| O20 | **A monster must never pass for a player.** Monsters and NPCs never use a class outfit's signature (the Ranger's pointed hood, the Vanguard's kite shield, the Arcanist's high collar, the Mystic's shoulder leaves). | Road Bandit: round hood, not pointed |
+| O21 | **Eyes that a helm or hood would hide:** set hoods back so the eyes show; a full helm gets its own glowing eye parts on the visor; a skull needs big dark sockets, cheekbones and a crack line (a smooth skull reads as an egg), and bone must show from behind too (a spine below a short jerkin). | Ruin Sentinel, Ruin Archer |
+| O22 | **Touching the canvas's right and bottom edges is normal** (every approved figure does, like Tibia's own sprites, rule A6 is about being CUT there). Only the top and left edges must stay clear. | measured on all approved people |
 
 ## Addons: base, addon 1, addon 2 (Jay, 2026-11-25)
 
@@ -71,5 +76,6 @@ both, then `python art/pipeline/addon_overlay.py vanguard` (overlays, preview, w
 ## Still to do
 
 - The town NPCs, bandits, sentinel, archer and the boss still use the old copied body; move each onto `humanoid.py`
-  when it is next touched. Done: the Bounty Warden (`warden.py`, 2026-11-25).
+  when it is next touched. Done 2026-11-25: the Bounty Warden, Guild Warden, Quartermaster, Brannoch, Road Bandit,
+  Bandit Captain, Ruin Archer and Ruin Sentinel.
 - The colour-mask layer for player recolouring (rule O13) is not generated yet (roadmap R22 / 6.4).

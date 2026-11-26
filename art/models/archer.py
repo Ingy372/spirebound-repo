@@ -1,8 +1,19 @@
-"""Ruin archer (Floor 1, the Old Watchtower ruins): model + walk cycle, built on Brannoch's body.
+"""Ruin Archer (Floor 1 monster, the Old Watchtower), built on art/models/humanoid.py (second draft, 2026-11-25).
 
-ART_REQUESTS.md: "a skeletal archer in rotted leather with a bow". Original design: bone-white skull with dark
-eye sockets, thin bony arms and legs, a torn dark leather jerkin and belt, the bow slung across the back,
-a jerky walk. Faces +X; sizes in tiles.
+ART_REQUESTS.md: "a skeletal archer in rotted leather with a bow".
+The first draft (2026-11-15) had its own copied body; this one follows art/OUTFIT_RULES.md.
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: thin bone limbs (much thinner than a living figure), a skull with a hanging jaw, a torn leather jerkin
+              open over the ribs, a short recurve bow held down at the left side, a quiver at the right hip.
+  Colours:    old-ivory bone with brown-grey shadows, near-black eye sockets with a faint green glint, rotted dark
+              leather; the bow dark wood.
+  Details:    ribs showing between the jerkin's torn edges, a spine and back ribs below the short back of the
+              jerkin (bone must show from behind too), cheekbones and big dark sockets (a smooth skull read as an egg), a dropped jaw with a tooth line, knobbly knees and
+              elbows, a tattered hem, the quiver's arrows, the bowstring.
+Look-alike: Tibia's Skeleton and Skeleton Warrior: ours wears rotted leather and carries a bow, with green-glinting
+sockets.
+Addons: none (a monster, rule A1).
 """
 from __future__ import annotations
 
@@ -10,155 +21,110 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "archer"
 WALK_FRAMES = 8
 PALETTE = "archer"
-REFERENCE = "look_33.png"   # Tibia's Skeleton, the closest look-alike (comparison only, never shipped)
+REFERENCE = "outfit_128.png"
 PROJECTION = "oblique"
-CANVAS_OFFSET = (8, 8)
-PIXEL_RULES = {
-    "weight": {"eye": 9.0, "rib": 2.0, "scar": 6.0, "hand": 2.4, "bow": 2.6, "string": 2.0, "belt": 2.0, "pelt": 1.4,
-               "boot": 1.4, "beard": 1.6},
-    "thin": {"eye": 3, "scar": 2, "hand": 3, "bow": 2, "string": 2, "belt": 3},
-    "soft": [["tunic", "belt"], ["skin", "hair", "beard", "eye", "scar"], ["hand", "skin"], ["pants", "boot"],
-             ["bow", "string"]],
-    "no_outline": ["string"],
-    "fur": ["tunic"],
-    "selout": ["tunic", "pelt", "hair"],
-    "texture": {"tunic": [0.9, 0.3], "skin": [0.4, 0.0], "pants": [0.4, 0.0]},
-    "bands": [0.30, 0.42, 0.53, 0.63, 0.72, 0.81, 0.89],
-}
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["rib", "bow"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose", "jaw", "tooth"]
+LEG_PARTS = ["leg_a", "leg_b", "boot_a", "boot_b", "knob"]
+CHECK = {"size": (0.80, 1.45), "head": 0.08, "legs_side": 0.03, "eye": 1}   # thin bone legs show less than cloth ones
 
-PARTS = ["none", "skin", "eye", "scar", "hair", "beard", "pelt", "tunic", "belt", "pants", "boot", "hand",
-         "bow", "string"]
+PARTS = H.PARTS + ["jerkin", "tatter", "rib", "jaw", "tooth", "knob", "bow", "string", "quiver", "shaft"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"jerkin": 1.4, "tatter": 2.2, "rib": 3.0, "jaw": 1.8, "tooth": 4.0, "knob": 2.6, "bow": 3.0, "string": 3.0,
+            "quiver": 1.8, "shaft": 3.0},
+    thin={"tatter": 2, "rib": 2, "tooth": 2, "bow": 2, "string": 2, "shaft": 2},
+    soft=[["skin", "jaw", "tooth"], ["torso", "rib"], ["jerkin", "tatter"], ["bow", "string"], ["quiver", "shaft"]],
+    texture={"jerkin": [0.5, 0.25], "skin": [0.3, 0.1], "torso": [0.3, 0.1]},
+    selout=["jerkin", "skin"],
+)
 
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
-HIP_Y = 0.074
-LEG_R = 0.021
-TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.072, 0.118, 0.165)
-SKIRT_TOP, SKIRT_BOTTOM = 0.58, 0.40                      # short tunic: legs show
-SKIRT_R = (0.110, 0.150)
-HEAD = Vector((0.010, 0.0, 0.965)); HEAD_R = (0.128, 0.120, 0.138)
-SHOULDER = Vector((0.0, 0.172, 0.825))
-UPPER_ARM, FOREARM = 0.19, 0.18
-ARM_R = 0.020
-STRIDE, LIFT, STANCE = 0.13, 0.060, 0.5
-BODY_SCALE = (1.15, 1.22, 0.80)
+# bone figure: thin limbs, a narrow chest; the "hair" cap is set inside the skull so the skull shows
+SPEC = H.spec(torso_r=(0.080, 0.124, 0.176), arm_r=0.026, leg_r=0.028, boot_r=0.034, foot_r=(0.064, 0.036, 0.032),
+              stride=0.13, lift=0.060, bob=0.020, arm_swing=0.14, eye_r=(0.024, 0.028, 0.030),
+              cap=(-0.040, 0.000), cap_r=(0.090, 0.090, 0.090), strands=())
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("jaw", "jaw", radii=(0.060, 0.074, 0.030), segments=12, rings=6)
+    m.tube("crack", "tatter", points=5)          # a dark crack across the crown: breaks up the smooth skull (DETAIL rule 4)
+    m.capsule("teeth", "tooth")
+    for i in range(3):
+        m.capsule(f"rib{i}", "rib")
     for k in ("l", "r"):
-        m.capsule(f"thigh_{k}", "pants")
-        m.capsule(f"shin_{k}", "pants")
-        m.capsule(f"bootleg_{k}", "pants")
-        m.ellipsoid(f"boot_{k}", "pants", radii=(0.060, 0.032, 0.026), segments=12, rings=8)   # bony feet
-        m.capsule(f"upper_{k}", "hand")
-        m.capsule(f"fore_{k}", "hand")
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.038, 0.032, 0.040), segments=10, rings=8)
-    m.ellipsoid("torso", "tunic", radii=TORSO_R)
-    m.frustum("skirt", "tunic", top_ratio=0.80)
-    m.frustum("belt", "belt", top_ratio=1.0)
-    m.ellipsoid("pelt", "tunic", radii=(0.085, 0.140, 0.045), segments=18, rings=10)
-    m.ellipsoid("pelt_back", "tunic", radii=(0.050, 0.120, 0.120), segments=14, rings=8)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "skin", radii=(0.140, 0.132, 0.140))   # skull cap
-    m.ellipsoid("beard", "beard", radii=(0.070, 0.090, 0.050), segments=14, rings=8)   # jaw
+        m.box(f"jerkin_{k}", "jerkin", size=(0.030, 0.070, 0.230))
+        m.box(f"tatter_{k}", "tatter", size=(0.034, 0.074, 0.024))
+        m.ellipsoid(f"knee_{k}", "knob", radii=(0.030, 0.030, 0.030), segments=8, rings=6)
+        m.ellipsoid(f"elbow_{k}", "knob", radii=(0.024, 0.024, 0.024), segments=8, rings=6)
+    m.box("jerkin_b", "jerkin", size=(0.030, 0.220, 0.120))      # short at the back: the spine shows below it
+    m.tube("spine", "rib", points=5)
+    for i in range(2):
+        m.capsule(f"backrib{i}", "rib")
     for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.032, 0.030, 0.034), segments=8, rings=6)   # eye sockets
-    for i in range(4):
-        m.capsule(f"rib{i}", "skin")                    # ribs showing through the rotted jerkin
-    m.tube("bow", "bow", points=9)
-    m.capsule("string", "string")
+        m.ellipsoid(f"cheek_{k}", "jaw", radii=(0.030, 0.024, 0.020), segments=8, rings=6)
+    m.tube("bow", "bow", points=7)
+    m.capsule("bowstring", "string")
+    m.capsule("quiver", "quiver")
+    for i in range(3):
+        m.capsule(f"shaft{i}", "shaft")
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
-
-
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
-
-
-def _frustum(o, base, radii, height, rot=(0.0, 0.0, 0.0)):
-    o.location = base
-    o.rotation_mode = "XYZ"
-    o.rotation_euler = Euler(rot)
-    o.scale = (radii[0], radii[1], height)
+def _bow_hand(sh, a, walking):
+    swing = 0.06 * math.sin(a) if walking else 0.0
+    return sh + Vector((0.030 + swing, 0.110, -0.290))   # out at the side, so the bow shows from behind too
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.014 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    _frustum(m.objects["skirt"], Vector((0, 0, SKIRT_BOTTOM)) + up, SKIRT_R, SKIRT_TOP - SKIRT_BOTTOM,
-             (0.04 * math.sin(a) if walking else 0.0, 0, 0))
-    _frustum(m.objects["belt"], Vector((0, 0, 0.555)) + up, (TORSO_R[0] * 1.02, TORSO_R[1] * 0.97), 0.030)
-    m.objects["pelt"].location = Vector((-0.010, 0, 0.835)) + up
-    m.objects["pelt_back"].location = Vector((-0.085, 0, 0.740)) + up
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.020, 0, 0.030))
-    m.objects["beard"].location = head + Vector((0.070, 0, -0.105))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.104, 0.046 * s, 0.035))
-    for i in range(4):
-        z = 0.775 - 0.055 * i
-        w = 0.105 - 0.010 * i
-        m.put_segment(f"rib{i}", Vector((0.080, -w, z)) + up, Vector((0.080, w, z)) + up, 0.016)
-    # bow across the back, from the right hip up over the left shoulder; the string runs straight between the tips
-    lo = Vector((-0.120, -0.150, 0.420)) + up
-    hi = Vector((-0.110, 0.170, 1.000)) + up
-    pts, radii = [], []
-    for i in range(9):
-        u = i / 8
-        p = lo.lerp(hi, u) + Vector((-0.070 * math.sin(math.pi * u), 0, 0))
-        pts.append(tuple(p))
-        radii.append(0.016 if 0.2 < u < 0.8 else 0.012)
-    m.set_tube("bow", pts, radii)
-    m.put_segment("string", lo + Vector((0.006, 0, 0)), hi + Vector((0.006, 0, 0)), 0.005)
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.055 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"thigh_{k}", hip, knee, LEG_R)
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.06)), LEG_R)
-        m.objects[f"boot_{k}"].location = ankle + Vector((0.030, 0, -0.012))
-    for s, k, phase in ((1, "l", 0.5), (-1, "r", 0.0)):       # arms swing against the legs
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        swing = 0.12 * math.sin(a + math.pi * 2 * phase) if walking else 0.0
-        hand = sh + Vector((swing, 0.030 * s, -0.34 + 0.02 * abs(swing) / 0.12))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, Vector((-1, 0, 0)))
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        m.put_segment(f"fore_{k}", elbow, hand, ARM_R * 0.92)
-        d = (hand - elbow).normalized()
-        m.objects[f"hand_{k}"].location = hand + d * 0.018
+    p = H.pose(m, t, hands={"l": _bow_hand})
+    up, head, a, walking = p["up"], p["head"], p["a"], p["walking"]
+    s = m.spec
+    jaw_drop = 0.012 * abs(math.sin(a)) if walking else 0.0      # the jaw rattles with the step
+    m.objects["jaw"].location = head + Vector((0.050, 0, -0.092 - jaw_drop))
+    cap = head + Vector((s["cap"][0], 0, s["cap"][1]))
+    crack = [H.on_ellipsoid(head, s["head_r"], (0.5 - 0.25 * i, 0.30 - 0.18 * i + 0.06 * (i % 2), 0.85), 1.03) for i in range(5)]
+    m.set_tube("crack", [tuple(q) for q in crack], [0.006] * 5)
+    m.put_segment("teeth", head + Vector((0.104, -0.040, -0.074 - jaw_drop)), head + Vector((0.104, 0.040, -0.074 - jaw_drop)), 0.007)
+    for i in range(3):
+        z = 0.790 - 0.055 * i
+        m.put_segment(f"rib{i}", Vector((0.072, -0.060, z)) + up, Vector((0.072, 0.060, z)) + up, 0.008)
+    for sign, k in ((1, "l"), (-1, "r")):
+        for name, z in ((f"jerkin_{k}", 0.700), (f"tatter_{k}", 0.580)):
+            o = m.objects[name]
+            o.rotation_mode = "XYZ"
+            o.rotation_euler = Euler((0, 0, 0.30 * sign))           # hanging open at the front, ribs between
+            o.location = Vector((0.072, 0.082 * sign, z)) + up
+        m.objects[f"knee_{k}"].location = p[f"knee_{k}"] + Vector((0.016, 0, 0))
+        m.objects[f"elbow_{k}"].location = p[f"elbow_{k}"]
+    m.objects["jerkin_b"].location = Vector((-0.086, 0, 0.770)) + up
+    spine = [Vector((-0.080, 0, 0.700 - 0.040 * i)) + up for i in range(5)]
+    m.set_tube("spine", [tuple(q) for q in spine], [0.016] * 5)
+    for i in range(2):
+        z = 0.680 - 0.050 * i
+        m.put_segment(f"backrib{i}", Vector((-0.078, -0.070, z)) + up, Vector((-0.078, 0.070, z)) + up, 0.009)
+    for sign, k in ((1, "l"), (-1, "r")):
+        m.objects[f"cheek_{k}"].location = head + Vector((0.080, 0.060 * sign, -0.030))
+    # recurve bow held down at the left side, string toward the body
+    hand = p["hand_l"]
+    d = Vector((0.10, 0.08, 1.0)).normalized()
+    lo, hi = hand - d * 0.230, hand + d * 0.260
+    out = Vector((0.060, 0.030, 0))
+    pts = [lo + (hi - lo) * (k / 6) + out * math.sin(math.pi * k / 6) - out * 0.35 * (1 if k in (0, 6) else 0) for k in range(7)]
+    m.set_tube("bow", [tuple(q) for q in pts], [0.008, 0.013, 0.016, 0.018, 0.016, 0.013, 0.008])
+    m.put_segment("bowstring", pts[0], pts[-1], 0.004)
+    # quiver at the right hip, arrows up and back
+    hip = Vector((-0.020, -s["torso_r"][1] * 1.10, s["belt_z"] - 0.020)) + up
+    top = hip + Vector((-0.050, -0.010, 0.170))
+    m.put_segment("quiver", hip, top, 0.030)
+    for i in range(3):
+        b = top + Vector((0.006 * i, -0.010 + 0.010 * i, -0.010))
+        m.put_segment(f"shaft{i}", b, b + Vector((-0.020, 0.004 * (i - 1), 0.060)), 0.006)
 
 
 def assign_depth_parts(m, depth_of):

@@ -41,7 +41,7 @@ PIXEL_RULES = H.pixel_rules(
     selout=["robe", "banner"],
 )
 
-SPEC = H.spec(robe=("robe", "trim", 0.108), torso_r=(0.098, 0.150, 0.184), arm_r=0.052, leg_r=0.044, stride=0.10,
+SPEC = H.spec(robe=("robe", "trim", 0.100), torso_r=(0.098, 0.150, 0.184), arm_r=0.052, leg_r=0.044, stride=0.10,
               lift=0.045, bob=0.012, arm_swing=0.08, strands=(-1.4, -0.6, 0.2, 1.0))
 
 
@@ -66,7 +66,7 @@ def build(model_cls, facing):
 
 def _staff_hand(sh, a, walking):
     swing = 0.03 * math.sin(a) if walking else 0.0
-    return sh + Vector((0.090 + swing, 0.070, -0.240))
+    return sh + Vector((0.100 + swing, 0.020, -0.240))   # close enough that the staff stays inside the canvas (A6)
 
 
 def pose(m, t):
@@ -84,7 +84,7 @@ def pose(m, t):
     m.objects["badge"].location = Vector((0.110, 0.0, 0.770)) + up
     # banner staff: upright, out at the left side, leaning a little forward-out so it is its own shape (O5)
     hand = p["hand_l"]
-    d = Vector((0.12, 0.10, 1.0)).normalized()
+    d = Vector((0.16, 0.02, 1.0)).normalized()
     foot, top = hand - d * 0.390, hand + d * 0.560
     m.put_segment("staff", foot, top, 0.016)
     m.put_segment("shoe", foot, foot + d * 0.040, 0.019)
