@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Underkeeper"
 monster.experience = 90000
 monster.outfit = {
-	lookType = 131, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 3, lookMount = 0,
+	lookType = 2323, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 180000

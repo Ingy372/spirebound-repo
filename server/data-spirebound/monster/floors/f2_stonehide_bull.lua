@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a stonehide bull"
 monster.experience = 329
 monster.outfit = {
-	lookType = 28, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2305, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 720

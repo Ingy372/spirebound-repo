@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Briar Mother"
 monster.experience = 1000
 monster.outfit = {
-	lookType = 28, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2313, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 2200

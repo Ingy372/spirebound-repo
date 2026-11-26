@@ -78,3 +78,5 @@ bull
 stonebull
 grazer
 strider
+underkeeper
+vault_wraith

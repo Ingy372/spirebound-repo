@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a blight wasp"
 monster.experience = 225
 monster.outfit = {
-	lookType = 56, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2302, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 542

@@ -51,7 +51,8 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "crossbowman": 2208, "hexer": 2209, "cutthroat": 2210,
              # animals redrawn in the wrong-animal cleanup (2300+): placed like the animals, so no people shift
              "crawler": 2301, "blightwasp": 2302, "ridgecat": 2303, "bull": 2304, "stonebull": 2305, "grazer": 2306,
-             "strider": 2307, "old_tusk": 2311, "hollowfang": 2312, "briar_mother": 2313}
+             "strider": 2307, "old_tusk": 2311, "hollowfang": 2312, "briar_mother": 2313,
+             "underkeeper": 2323, "vault_wraith": 2324}
 
 
 def cip_sheet(img: Image.Image) -> bytes:

@@ -1977,6 +1977,84 @@
    ],
    "addons": 0,
    "size": 58
+  },
+  {
+   "name": "underkeeper",
+   "file": "underkeeper.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2323,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     17,
+     3,
+     46,
+     59
+    ],
+    [
+     29,
+     7,
+     30,
+     56
+    ],
+    [
+     22,
+     17,
+     41,
+     44
+    ],
+    [
+     19,
+     11,
+     43,
+     52
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "vault_wraith",
+   "file": "vault_wraith.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2324,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     31,
+     16,
+     31,
+     46
+    ],
+    [
+     25,
+     24,
+     38,
+     37
+    ],
+    [
+     32,
+     19,
+     31,
+     42
+    ],
+    [
+     23,
+     24,
+     39,
+     37
+    ]
+   ],
+   "addons": 0,
+   "size": 46
   }
  ]
 }

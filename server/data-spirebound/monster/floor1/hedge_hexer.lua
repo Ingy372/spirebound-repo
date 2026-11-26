@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a hedge hexer"
 monster.experience = 78
 monster.outfit = {
-	lookType = 138, lookHead = 95, lookBody = 116, lookLegs = 94, lookFeet = 114, lookAddons = 0, lookMount = 0,
+	lookType = 2209, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 170

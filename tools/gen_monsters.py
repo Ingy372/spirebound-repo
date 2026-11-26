@@ -89,12 +89,12 @@ MONSTERS = {
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
     # S4 (2026-11-25): the group grounds' mixed packs need a ranged one and a caster beside the front-liner (DESIGN.md 9.4).
     # Bandits in the Smugglers' Cellar and the Old Watchtower; they borrow the bandit outfit in new colours (ART_REQUESTS).
-    "Bandit Crossbowman": dict(desc="a bandit crossbowman", look=(129, 58, 86, 45, 76, 0), corpse=18050, hp=190, xp=72,
+    "Bandit Crossbowman": dict(desc="a bandit crossbowman", look=(2208, 0, 0, 0, 0, 0), corpse=18050, hp=190, xp=72,
                                speed=95, race="blood", attacks=[("melee", 0, -15), ("bolt", 0, -60, 6)], armor=10,
                                defense=10, dist=4,
                                loot=[(GOLD, 90000, 55), (PLAT, 5000, 1), (3446, 30000, 10), (3349, 2500, 1), (11492, 10000, 1)],
                                voices=["Hold still!"]),
-    "Hedge Hexer": dict(desc="a hedge hexer", look=(138, 95, 116, 94, 114, 0), corpse=18050, hp=170, xp=78, speed=90,
+    "Hedge Hexer": dict(desc="a hedge hexer", look=(2209, 0, 0, 0, 0, 0), corpse=18050, hp=170, xp=78, speed=90,
                         race="blood", attacks=[("melee", 0, -10), ("earth", 0, -55, 4)], armor=8, defense=8, dist=3,
                         loot=[(GOLD, 90000, 55), (PLAT, 6000, 1), (236, 12000, 1), (5879, 8000, 1), (3738, 15000, 1)],
                         voices=["Mend, mend!"], elements={"earth": 30, "fire": -10},
@@ -151,7 +151,7 @@ MONSTERS = {
     "Mire Toad": dict(desc="a mire toad", look=(222, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=210, speed=95, race="venom",
                       attacks=[("melee", 0, -70, None, "poison"), ("earth", -30, -90, 4)], armor=18, defense=18,
                       loot=[(GOLD, 100000, 60), (236, 8000, 1), (3032, 2000, 1)], elements={"earth": 100, "fire": -10}),
-    "Black Crawler": dict(desc="a black crawler", look=(56, 0, 0, 0, 0, 0), corpse=5964, hp=520, xp=260, speed=130, race="blood",
+    "Black Crawler": dict(desc="a black crawler", look=(2301, 0, 0, 0, 0, 0), corpse=5964, hp=520, xp=260, speed=130, race="blood",
                           attacks=[("melee", 0, -110)], armor=22, defense=20,
                           loot=[(GOLD, 100000, 70), (PLAT, 10000, 1), (3029, 2000, 1)], voices=["Skrrrk!"]),
     # ---------------------------------------------------------------- Underkeep Wings 2-6 (tuned to floors 2, 4, 6, 8, 10)
@@ -177,15 +177,15 @@ MONSTERS = {
     "Deep Sentinel": dict(desc="a deep sentinel", look=(131, 86, 86, 86, 86, 3), corpse=18074, hp=8000, xp=4500, speed=140,
                           race="undead", attacks=[("melee", 0, -800), ("physical", -400, -800, 4)], armor=70, defense=70,
                           loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (3360, 1500, 1)]),
-    "Vault Wraith": dict(desc="a vault wraith", look=(152,), corpse=18046, hp=6500, xp=3800, speed=170, race="undead",
+    "Vault Wraith": dict(desc="a vault wraith", look=(2324, 0, 0, 0, 0, 0), corpse=18046, hp=6500, xp=3800, speed=170, race="undead",
                          attacks=[("melee", 0, -400), ("energy", -400, -850, 5)], armor=50, defense=50, dist=3,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 8), (3392, 1500, 1)], elements={"holy": -25}),
-    "The Underkeeper": dict(desc="the Underkeeper", look=(131, 0, 0, 0, 0, 3), corpse=18074, hp=180000, xp=90000, speed=160,
+    "The Underkeeper": dict(desc="the Underkeeper", look=(2323, 0, 0, 0, 0, 0), corpse=18074, hp=180000, xp=90000, speed=160,
                             race="undead", boss=True, attacks=[("melee", 0, -1600), ("cleave", -900, -1800, 1), ("howl", -600, -1200, 2)],
                             armor=95, defense=95, loot=[(GOLD, 100000, 100), (PLAT, 100000, 100), (3366, 30000, 1)],
                             voices=["You dug too deep."]),
     # ---------------------------------------------------------------- secret bosses (DESIGN.md 8.1)
-    "Old Tusk": dict(desc="Old Tusk", look=(119,), corpse=6046, hp=1800, xp=900, speed=125, race="blood",
+    "Old Tusk": dict(desc="Old Tusk", look=(2311, 0, 0, 0, 0, 0), corpse=6046, hp=1800, xp=900, speed=125, race="blood",
                      attacks=[("melee", 0, -140), ("charge", -60, -160, 4)], armor=25, defense=25,
                      loot=[(GOLD, 100000, 100), (PLAT, 100000, 5), (3582, 100000, 5), (236, 50000, 2)],
                      voices=["HRRROOONK!"], events=["SpireMiniBossDeath"]),
@@ -195,11 +195,11 @@ MONSTERS = {
                          loot=[], elements={"fire": 100, "ice": -20}),
     # Hidden mini-bosses (gear progression spec 4.8): each woken at a Floor 1 secret, each leaves a trophy once.
     # Tuned for a solo player at the ground's top level or a small group below it.
-    "Hollowfang": dict(desc="Hollowfang", look=(52, 0, 0, 0, 0, 0), corpse=5997, hp=1500, xp=750, speed=150, race="blood",
+    "Hollowfang": dict(desc="Hollowfang", look=(2312, 0, 0, 0, 0, 0), corpse=5997, hp=1500, xp=750, speed=150, race="blood",
                        attacks=[("melee", 0, -110), ("charge", -50, -140, 4)], armor=18, defense=20,
                        loot=[(GOLD, 100000, 100), (PLAT, 100000, 4), (5897, 100000, 3), (236, 40000, 2)],
                        voices=["The copse is mine.", "AWOOOOO!"], events=["SpireMiniBossDeath"]),
-    "Briar Mother": dict(desc="the Briar Mother", look=(28,), corpse=3998, hp=2200, xp=1000, speed=80, race="venom",
+    "Briar Mother": dict(desc="the Briar Mother", look=(2313, 0, 0, 0, 0, 0), corpse=3998, hp=2200, xp=1000, speed=80, race="venom",
                          attacks=[("melee", 0, -120, None, "poison")], armor=22, defense=22,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 6), (5879, 100000, 3), (236, 50000, 2)],
                          voices=["Sssssleep in the thorns."], elements={"earth": 100, "fire": -15}, events=["SpireMiniBossDeath"]),
@@ -363,6 +363,11 @@ GEAR = {2: [3352, 3359, 3282], 3: [3357, 3351, 3279, 3065, 3068], 4: [3370, 3371
 RANGED_WORDS = ("Archer", "Witch", "Wisp", "Imp", "Hag", "Wraith", "Shade", "Ghost", "Bat", "Wasp")
 
 
+# Our own approved art (Jay, 2026-11-26: "nice. approved all art work"): replaces the placeholder look, keeps the corpse
+OWN_LOOKS = {"Hill Cutthroat": 2210, "Blight Wasp": 2302, "Ridge Cat": 2303, "Herd Bull": 2304, "Stonehide Bull": 2305,
+             "Horned Grazer": 2306, "Dust Strider": 2307}
+
+
 # Floor 2's camp monsters, one trick each (R13). Each returns an attack row from the floor's base damage.
 TRICKS = {
     "Horned Grazer": lambda d: ("charge", -d // 2, -int(d * 1.1), 3),     # lowers its horns and charges the tiles around
@@ -384,6 +389,7 @@ def floor_monsters():
             nonlocal look_i
             lt, corpse = LOOKS[look_i % len(LOOKS)]
             look_i += 1
+            lt = OWN_LOOKS.get(name, lt)
             hp = int(hp0 * mult_hp)
             dmg = int(dmg0 * mult_dmg)
             ranged = any(w in name for w in RANGED_WORDS)
