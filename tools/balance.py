@@ -393,7 +393,7 @@ def floor_tasks(monsters, floors):
             m = monsters.get(name)
             if not m or m.get("boss") or name in NOT_TASKS:
                 continue
-            if HABITS.get(name, ("",))[0] == "loner" and HABITS[name][1] >= 2.5 and name != f.get("apex"):
+            if HABITS.get(name, ("",))[0] == "loner" and HABITS[name][1] >= 2.5 and n == 1:
                 continue                     # a lone elite (one every 15 minutes) can't be a 20-kill task (H8, 2026-11-25)
             if n == 1 and name in camps1:
                 kph, gph, low = camps1[name]

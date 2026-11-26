@@ -79,6 +79,7 @@ for _c in CAMPS:
     _c["floor"] = FLOOR
     _c["base"] = "jungle"
     _c.setdefault("den", None)
+    _c["den_repeat"] = 2               # H14 (challenge, not calm): each cave group twice, like Floor 1's party caves
     _c.setdefault("cls", None)
 
 APEX = dict(id="f3_grove", type="large", title="the Hydraling's Grove", levels=(85, 90))

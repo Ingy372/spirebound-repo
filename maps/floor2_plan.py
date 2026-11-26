@@ -86,6 +86,7 @@ for _c in CAMPS:
     _c["org"] = ORG
     _c["floor"] = FLOOR
     _c.setdefault("den", None)
+    _c["den_repeat"] = 2               # H14 (challenge, not calm): each cave group twice, like Floor 1's party caves
     _c.setdefault("cls", None)
 
 # the apex (built by maps/layout_floor.py): the floor's one large-group ground

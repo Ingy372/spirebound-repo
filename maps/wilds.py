@@ -646,7 +646,7 @@ def cave(m, L, z=8, w=36, h=26):
                 m.put(q[0], q[1], Z, 3116)
     # eight groups of four, one per chamber
     for k, spot in enumerate(centres):
-        group(m, (spot[0], spot[1], z), c["den_groups"][k], CAVE_RESPAWN)
+        group(m, (spot[0], spot[1], z), list(c["den_groups"][k]) * c.get("den_repeat", 1), CAVE_RESPAWN)
     out = DG.keep_clear(m, z) | {(sx, sy), (sx, sy + 1), (sx, sy + 2)} | {(x, y) for x, y in entry}
     if built:
         DG.hang_maze(m, x0, y0, w, h, z, share=0.12, h_item=DG.TORCH_H, v_item=DG.TORCH_V)

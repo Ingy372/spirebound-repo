@@ -133,5 +133,10 @@ SpireTest.add("crowd: the !hunt line and the cave rule", function()
 	local s = WorldPoints.stairs_den_burrow_hills
 	SpireTest.eq(SpireCrowd.caveAt(Position(s.x, s.y + 1, s.z)) ~= nil, true, "the Molework counts as a cave")
 	SpireTest.eq(SpireCrowd.caveAt(Position(s.x, s.y, 7)), nil, "the ground above does not")
-	SpireTest.eq(#SpireWilds.caves, 6, "six caves")
+	local floor1 = 0
+	for _, c in ipairs(SpireWilds.caves) do
+		if c.x1 < 2000 then floor1 = floor1 + 1 end
+	end
+	SpireTest.eq(floor1, 6, "six caves on Floor 1")
+	SpireTest.eq(#SpireWilds.caves >= 6, true, "and the higher floors' caves are listed too")
 end)

@@ -21,7 +21,7 @@ monster.strategiesTarget = { nearest = 100 }
 monster.flags = {
 	summonable = false, attackable = true, hostile = true, convinceable = false, pushable = false,
 	rewardBoss = false, illusionable = false, canPushItems = false, canPushCreatures = false,
-	staticAttackChance = 90, targetDistance = 1, runHealth = 0, healthHidden = false, isBlockable = false,
+	staticAttackChance = 90, targetDistance = 1, runHealth = 56, healthHidden = false, isBlockable = false,
 	canWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,
 }
 

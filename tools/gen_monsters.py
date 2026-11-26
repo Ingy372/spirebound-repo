@@ -447,7 +447,18 @@ def floor_monsters():
                 m["voices"] = m.get("voices") or []
             if role in mult:
                 m["loot"] = balance.coin_loot(coins * mult[role]) + [l for l in m["loot"] if l[0] not in (GOLD, PLAT)]
+            for key, val in TWISTS.get(name, {}).items():   # S6: each floor's own twist (maps/floor<n>_plan.py)
+                m[key] = val(m) if callable(val) else val
     return out
+
+
+# S6 (DESIGN.md 9.4 layer 3): each floor adds one behaviour the floors below don't have (Claude's call, Jay can veto).
+#   Floor 2: the herd animals run when badly hurt and come back once recovered (the engine's runHealth).
+#   Floor 3: the plant creatures regrow: they heal 3% of their health every 4 seconds.
+TWISTS = {
+    "Horned Grazer": dict(run=lambda m: m["hp"] // 6), "Dust Strider": dict(run=lambda m: m["hp"] // 5),
+    "Moss Crawler": dict(heal=(0.03, 4000)), "Rootbound Husk": dict(heal=(0.03, 4000)),
+}
 
 
 def main():
