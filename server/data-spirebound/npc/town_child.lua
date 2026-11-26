@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 2000
 npcConfig.walkRadius = 7
-npcConfig.outfit = { lookType = 128, lookHead = 78, lookBody = 88, lookLegs = 88, lookFeet = 95, lookAddons = 0 }
+npcConfig.outfit = { lookType = 2028, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 -- G12 (Grok session 3): six townsfolk at one line per ~57 s each filled the square's chat; now about one every 3 minutes each
 npcConfig.voices = {

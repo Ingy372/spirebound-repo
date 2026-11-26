@@ -44,7 +44,14 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              # monsters on the humanoid body (2201+): they shared borrowed look 129/131 with NPCs, so no reskin
              "bandit": 2201, "captain": 2202, "archer": 2203, "sentinel": 2204,
              # Floor 1 bosses (approved via the art-count session): placed like the animals, so no people shift
-             "gate_hound": 2205, "axe_lord": 2206, "axe_lord_blade": 2207}
+             "gate_hound": 2205, "axe_lord": 2206, "axe_lord_blade": 2207,
+             # the other gender of each class outfit (Jay, 2026-11-26: "Approve all")
+             "vanguard_f": 2005, "ranger_f": 2006, "arcanist_m": 2007, "mystic_m": 2008,
+             "watchguard": 2023, "dorrow": 2024, "smith": 2025, "alchemist": 2026, "runewright": 2027, "bix": 2028,
+             "crossbowman": 2208, "hexer": 2209, "cutthroat": 2210,
+             # animals redrawn in the wrong-animal cleanup (2300+): placed like the animals, so no people shift
+             "crawler": 2301, "blightwasp": 2302, "ridgecat": 2303, "bull": 2304, "stonebull": 2305, "grazer": 2306,
+             "strider": 2307, "old_tusk": 2311, "hollowfang": 2312, "briar_mother": 2313}
 
 
 def cip_sheet(img: Image.Image) -> bytes:

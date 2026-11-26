@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-local l = { 134, 95, 94, 94, 95, 1 }
+local l = { 2024, 0, 0, 0, 0, 0 } -- own look (Jay approved 2026-11-26)
 npcConfig.outfit = { lookType = l[1], lookHead = l[2], lookBody = l[3], lookLegs = l[4], lookFeet = l[5], lookAddons = l[6] }
 npcConfig.flags = { floorchange = false }
 

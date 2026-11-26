@@ -1060,6 +1060,923 @@
    ],
    "addons": 0,
    "size": 54
+  },
+  {
+   "name": "vanguard_f",
+   "file": "vanguard_f.bmp.lzma",
+   "count": 108,
+   "looks": [],
+   "files": [
+    "vanguard_f.bmp.lzma",
+    "vanguard_f_2.bmp.lzma",
+    "vanguard_f_3.bmp.lzma"
+   ],
+   "new_look": 2005,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     25,
+     29,
+     37,
+     33
+    ],
+    [
+     26,
+     28,
+     35,
+     36
+    ],
+    [
+     21,
+     29,
+     41,
+     35
+    ],
+    [
+     26,
+     24,
+     33,
+     40
+    ]
+   ],
+   "addons": 2,
+   "size": 41
+  },
+  {
+   "name": "ranger_f",
+   "file": "ranger_f.bmp.lzma",
+   "count": 108,
+   "looks": [],
+   "files": [
+    "ranger_f.bmp.lzma",
+    "ranger_f_2.bmp.lzma",
+    "ranger_f_3.bmp.lzma"
+   ],
+   "new_look": 2006,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     21,
+     30,
+     41,
+     32
+    ],
+    [
+     24,
+     24,
+     37,
+     40
+    ],
+    [
+     26,
+     27,
+     38,
+     37
+    ],
+    [
+     27,
+     29,
+     32,
+     35
+    ]
+   ],
+   "addons": 2,
+   "size": 41
+  },
+  {
+   "name": "arcanist_m",
+   "file": "arcanist_m.bmp.lzma",
+   "count": 108,
+   "looks": [],
+   "files": [
+    "arcanist_m.bmp.lzma",
+    "arcanist_m_2.bmp.lzma",
+    "arcanist_m_3.bmp.lzma"
+   ],
+   "new_look": 2007,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     30,
+     38,
+     33
+    ],
+    [
+     24,
+     29,
+     37,
+     35
+    ],
+    [
+     26,
+     27,
+     38,
+     37
+    ],
+    [
+     27,
+     29,
+     33,
+     35
+    ]
+   ],
+   "addons": 2,
+   "size": 38
+  },
+  {
+   "name": "mystic_m",
+   "file": "mystic_m.bmp.lzma",
+   "count": 108,
+   "looks": [],
+   "files": [
+    "mystic_m.bmp.lzma",
+    "mystic_m_2.bmp.lzma",
+    "mystic_m_3.bmp.lzma"
+   ],
+   "new_look": 2008,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     20,
+     23,
+     44,
+     40
+    ],
+    [
+     26,
+     23,
+     35,
+     41
+    ],
+    [
+     12,
+     29,
+     52,
+     35
+    ],
+    [
+     20,
+     15,
+     40,
+     49
+    ]
+   ],
+   "addons": 2,
+   "size": 52
+  },
+  {
+   "name": "watchguard",
+   "file": "watchguard.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2023,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     24,
+     36,
+     38
+    ],
+    [
+     26,
+     29,
+     35,
+     35
+    ],
+    [
+     14,
+     29,
+     48,
+     35
+    ],
+    [
+     21,
+     17,
+     38,
+     47
+    ]
+   ],
+   "addons": 0,
+   "size": 48
+  },
+  {
+   "name": "dorrow",
+   "file": "dorrow.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2024,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     27,
+     30,
+     35,
+     32
+    ],
+    [
+     26,
+     30,
+     35,
+     34
+    ],
+    [
+     27,
+     29,
+     35,
+     35
+    ],
+    [
+     27,
+     30,
+     32,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 35
+  },
+  {
+   "name": "smith",
+   "file": "smith.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2025,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     27,
+     30,
+     35,
+     32
+    ],
+    [
+     26,
+     30,
+     35,
+     34
+    ],
+    [
+     21,
+     29,
+     41,
+     35
+    ],
+    [
+     27,
+     24,
+     32,
+     40
+    ]
+   ],
+   "addons": 0,
+   "size": 41
+  },
+  {
+   "name": "alchemist",
+   "file": "alchemist.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2026,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     27,
+     29,
+     35,
+     33
+    ],
+    [
+     25,
+     30,
+     36,
+     34
+    ],
+    [
+     27,
+     28,
+     35,
+     36
+    ],
+    [
+     26,
+     30,
+     33,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 36
+  },
+  {
+   "name": "runewright",
+   "file": "runewright.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2027,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     27,
+     30,
+     35,
+     32
+    ],
+    [
+     26,
+     30,
+     35,
+     34
+    ],
+    [
+     27,
+     29,
+     35,
+     35
+    ],
+    [
+     27,
+     30,
+     32,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 35
+  },
+  {
+   "name": "bix",
+   "file": "bix.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2028,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     33,
+     29,
+     28,
+     32
+    ],
+    [
+     33,
+     36,
+     27,
+     28
+    ],
+    [
+     23,
+     36,
+     38,
+     27
+    ],
+    [
+     26,
+     27,
+     32,
+     37
+    ]
+   ],
+   "addons": 0,
+   "size": 38
+  },
+  {
+   "name": "crossbowman",
+   "file": "crossbowman.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2208,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     27,
+     36,
+     35
+    ],
+    [
+     25,
+     29,
+     36,
+     35
+    ],
+    [
+     26,
+     28,
+     36,
+     36
+    ],
+    [
+     25,
+     29,
+     34,
+     35
+    ]
+   ],
+   "addons": 0,
+   "size": 36
+  },
+  {
+   "name": "hexer",
+   "file": "hexer.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2209,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     25,
+     36,
+     37
+    ],
+    [
+     25,
+     29,
+     36,
+     35
+    ],
+    [
+     18,
+     28,
+     44,
+     36
+    ],
+    [
+     22,
+     21,
+     37,
+     43
+    ]
+   ],
+   "addons": 0,
+   "size": 44
+  },
+  {
+   "name": "cutthroat",
+   "file": "cutthroat.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2210,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     27,
+     30,
+     35,
+     32
+    ],
+    [
+     26,
+     30,
+     35,
+     34
+    ],
+    [
+     27,
+     29,
+     35,
+     35
+    ],
+    [
+     27,
+     30,
+     32,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 35
+  },
+  {
+   "name": "crawler",
+   "file": "crawler.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2301,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     37,
+     31,
+     26,
+     30
+    ],
+    [
+     37,
+     35,
+     26,
+     28
+    ],
+    [
+     37,
+     34,
+     26,
+     29
+    ],
+    [
+     38,
+     35,
+     25,
+     28
+    ]
+   ],
+   "addons": 0,
+   "size": 30
+  },
+  {
+   "name": "blightwasp",
+   "file": "blightwasp.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2302,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     41,
+     13,
+     22,
+     49
+    ],
+    [
+     31,
+     33,
+     32,
+     29
+    ],
+    [
+     41,
+     32,
+     21,
+     31
+    ],
+    [
+     22,
+     33,
+     40,
+     29
+    ]
+   ],
+   "addons": 0,
+   "size": 49
+  },
+  {
+   "name": "ridgecat",
+   "file": "ridgecat.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2303,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     36,
+     3,
+     25,
+     60
+    ],
+    [
+     15,
+     30,
+     47,
+     33
+    ],
+    [
+     33,
+     12,
+     27,
+     46
+    ],
+    [
+     11,
+     30,
+     52,
+     33
+    ]
+   ],
+   "addons": 0,
+   "size": 60
+  },
+  {
+   "name": "bull",
+   "file": "bull.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2304,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     29,
+     7,
+     33,
+     51
+    ],
+    [
+     18,
+     25,
+     44,
+     38
+    ],
+    [
+     28,
+     14,
+     33,
+     49
+    ],
+    [
+     16,
+     25,
+     43,
+     38
+    ]
+   ],
+   "addons": 0,
+   "size": 51
+  },
+  {
+   "name": "stonebull",
+   "file": "stonebull.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2305,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     27,
+     6,
+     35,
+     52
+    ],
+    [
+     18,
+     23,
+     45,
+     39
+    ],
+    [
+     27,
+     10,
+     35,
+     52
+    ],
+    [
+     15,
+     23,
+     44,
+     39
+    ]
+   ],
+   "addons": 0,
+   "size": 52
+  },
+  {
+   "name": "grazer",
+   "file": "grazer.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2306,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     36,
+     8,
+     26,
+     48
+    ],
+    [
+     27,
+     25,
+     36,
+     38
+    ],
+    [
+     36,
+     17,
+     26,
+     39
+    ],
+    [
+     19,
+     25,
+     39,
+     38
+    ]
+   ],
+   "addons": 0,
+   "size": 48
+  },
+  {
+   "name": "strider",
+   "file": "strider.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2307,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     39,
+     8,
+     23,
+     54
+    ],
+    [
+     19,
+     35,
+     44,
+     28
+    ],
+    [
+     39,
+     13,
+     23,
+     44
+    ],
+    [
+     14,
+     36,
+     49,
+     27
+    ]
+   ],
+   "addons": 0,
+   "size": 54
+  },
+  {
+   "name": "old_tusk",
+   "file": "old_tusk.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2311,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     22,
+     4,
+     39,
+     54
+    ],
+    [
+     2,
+     16,
+     61,
+     46
+    ],
+    [
+     27,
+     1,
+     35,
+     62
+    ],
+    [
+     5,
+     16,
+     53,
+     46
+    ]
+   ],
+   "addons": 0,
+   "size": 62
+  },
+  {
+   "name": "hollowfang",
+   "file": "hollowfang.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2312,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     32,
+     3,
+     30,
+     59
+    ],
+    [
+     4,
+     27,
+     59,
+     36
+    ],
+    [
+     32,
+     6,
+     30,
+     57
+    ],
+    [
+     2,
+     27,
+     60,
+     36
+    ]
+   ],
+   "addons": 0,
+   "size": 60
+  },
+  {
+   "name": "briar_mother",
+   "file": "briar_mother.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2313,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     8,
+     3,
+     54,
+     58
+    ],
+    [
+     17,
+     9,
+     44,
+     54
+    ],
+    [
+     7,
+     16,
+     55,
+     45
+    ],
+    [
+     8,
+     6,
+     52,
+     57
+    ]
+   ],
+   "addons": 0,
+   "size": 58
   }
  ]
 }

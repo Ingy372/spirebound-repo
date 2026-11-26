@@ -202,3 +202,5 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [~] | `vault_wraith` | Vault Wraith: a violet hooded wraith chained to a floating gold-banded strongbox, coins circling | drafted 2026-11-25, waiting for Jay |
 | [ ] | `twin_fang_warden` | the Twin Fang trial boss (Floor 8) | not made |
 
+
+Approved 2026-11-26 (Jay: "Approve all"), own looks in tools/make_creature_sheets.py: vanguard_f, ranger_f, arcanist_m, mystic_m (with addons), watchguard, dorrow, smith, alchemist, runewright, bix, crossbowman, hexer, cutthroat, crawler, blightwasp, ridgecat, bull, stonebull, grazer, strider, old_tusk, hollowfang, briar_mother.

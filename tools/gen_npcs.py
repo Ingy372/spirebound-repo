@@ -42,7 +42,7 @@ NPCS = {
               ("strong health potion", 236, 115, None), ("strong mana potion", 237, 108, None),
               ("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("spear", 3277, 10, 3)]),
     "hearthgate_weaponsmith": dict(
-        name="Weaponsmith Garrick", desc="the weaponsmith", look=(131, 76, 76, 38, 76, 0),
+        name="Weaponsmith Garrick", desc="the weaponsmith", look=(2025, 0, 0, 0, 0, 0),
         greet="Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost.",
         voices=["Sharp steel! Fair prices!"],
         shop=[("sword", 3264, 85, 25), ("longsword", 3285, 160, 51), ("sabre", 3273, 35, 12), ("spike sword", 3271, 8000, 240),
@@ -65,14 +65,14 @@ NPCS = {
         voices=["Fresh-cut arrows!", "Bolts, a hundred at a time!"],
         shop=[("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("spear", 3277, 9, 3), ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("quiver", 35562, 150, None)]),
     "hearthgate_alchemist": dict(
-        name="Alchemist Ivo", desc="the alchemist", look=(130, 0, 87, 87, 95, 0),
+        name="Alchemist Ivo", desc="the alchemist", look=(2026, 0, 0, 0, 0, 0),
         greet="Potions, |PLAYERNAME|. Bring back your empty flasks and I'll pay for them, or bring materials and I'll {craft} strong potions cheaply. Ask for a {trade}.",
         voices=["Health and mana, bottled!", "I buy empty flasks!"],
         shop=[("health potion", 266, 45, None), ("mana potion", 268, 50, None), ("strong health potion", 236, 100, None),
               ("strong mana potion", 237, 93, None), ("great health potion", 239, 190, None), ("great mana potion", 238, 144, None),
               ("empty potion flask", 283, None, 5), ("empty potion flask", 284, None, 5), ("empty potion flask", 285, None, 5)]),
     "hearthgate_runewright": dict(
-        name="Runewright Mael", desc="the runewright", look=(130, 76, 94, 94, 114, 0),
+        name="Runewright Mael", desc="the runewright", look=(2027, 0, 0, 0, 0, 0),
         greet="Blank runes for your conjuring, |PLAYERNAME|, made cheaper if you bring gems to {craft} with, and wands and rods for those who need one. Ask for a {trade}.",
         voices=["Blank runes! Ready for your spells!"],
         shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100),

@@ -160,15 +160,18 @@ def patch_core(build: Path) -> None:
     import install_effects
     n = install_effects.patch_server(build / "data" / "items" / "appearances.dat")
     print(f"spell effects: {n} Spirebound effects registered")
-    # the four class outfits (own look numbers 2001-2004, art/creatures/game): locked, each class is given its own
-    # by scripts/spirebound/class_outfits.lua. One body for both sexes until female versions are made.
+    # the class outfits (own look numbers, art/creatures/game): locked, each class is given its own by
+    # scripts/spirebound/class_outfits.lua. Each sex has its own body (Jay approved the other gender 2026-11-26).
+    # Canary: type 0 = female, 1 = male.
     outfits = build / "data" / "XML" / "outfits.xml"
     text = outfits.read_text(encoding="utf-8")
+    by_sex = {1: ((2001, "Vanguard"), (2002, "Ranger"), (2007, "Arcanist"), (2008, "Mystic")),
+              0: ((2005, "Vanguard"), (2006, "Ranger"), (2003, "Arcanist"), (2004, "Mystic"))}
     ours = "".join(f'\t<outfit type="{sex}" looktype="{look}" name="{name}" premium="no" unlocked="no" enabled="yes" />\n'
-                   for sex in (0, 1) for look, name in ((2001, "Vanguard"), (2002, "Ranger"), (2003, "Arcanist"), (2004, "Mystic")))
+                   for sex in (0, 1) for look, name in by_sex[sex])
     if 'looktype="2001"' not in text:
         outfits.write_text(text.replace("</outfits>", ours + "</outfits>"), encoding="utf-8")
-    print("class outfits: 4 Spirebound outfits listed")
+    print("class outfits: 8 Spirebound outfits listed (4 classes x 2 sexes)")
 
 
 def main(argv: list[str]) -> None:
