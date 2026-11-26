@@ -125,12 +125,12 @@ def check_character(name: str) -> tuple[bool, str]:
         return False, "Each word of the name needs at least two letters."
     if re.search(r"(.)\1\1", name.lower()):
         return False, "The same letter three times in a row is not allowed in a name."
+    if any(w in STAFF for w in words):
+        return False, "That name is not allowed: it looks like a staff title (GM, Admin, Tutor...)."
     if not all(re.search(r"[aeiouy]", w) for w in words):
         return False, "That does not look like a name. Each word needs a vowel."
     if _rude(name):
         return False, "That name is not allowed: it contains a rude word. Please pick another."
-    if any(w in STAFF for w in words):
-        return False, "That name is not allowed: it looks like a staff title (GM, Admin, Tutor...)."
     banned, _, ours, personal = lists()
     low, joined = name.lower(), "".join(words)
     for b in banned:

@@ -10,8 +10,10 @@ and answers with the characters of that account. The session key it hands out is
 (roadmap R4): only its SHA-256 goes into the database (account_sessions), and the game server
 (authType = "session") lets the client in with it for 24 hours. The password is never sent back.
 
-It also serves a small sign-up page at /signup so friends can make their own account, and the rules at /rules.
-Every new account and character name goes through tools/name_rules.py, and players must agree to the rules.
+It also serves a small sign-up page at /signup so friends can make their own account, the rules at /rules, a page to
+make another character at /newchar, and the website itself at / (tools/gen_site.py's pages, rebuilt every 5 minutes
+from the game's records by tools/site_snapshot.py into .local/site). Every new account and character name goes
+through tools/name_rules.py, and players must agree to the rules.
 
 Usage:  python3 tools/login_server.py [port]        (default 8080)
 Settings come from the MYSQL_* environment variables (same as the server build).
@@ -22,6 +24,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import site_snapshot  # noqa: E402  the website's live pages (Hall of Fame, characters, online...)
 import name_rules  # noqa: E402  the name checker (rude words, names from other games, staff titles, our NPCs)
 import player_rules  # noqa: E402  the rulebook new players agree to
 
@@ -33,6 +36,12 @@ DB = dict(host=os.environ.get("MYSQL_HOST", "127.0.0.1"), user=os.environ.get("M
 # Only this PC by default (REVIEW 7.1). Set SPIRE_LOGIN_BIND only once the friend tunnel (roadmap 9.1) exists.
 BIND = os.environ.get("SPIRE_LOGIN_BIND", "127.0.0.1")
 SESSION_HOURS = 24
+MAX_CHARACTERS = 10        # characters per account (Claude's call; extra characters are welcome, Jay 2026-11-25)
+ROOT = Path(__file__).resolve().parent.parent
+SITE_DIR = ROOT / ".local" / "site"           # the live website (has player names: never committed)
+PUBLIC_DIR = ROOT / "website" / "public"      # the plain website, used until the first live build
+SITE_REFRESH = 300                            # seconds between website rebuilds
+PAGE_NAME = re.compile(r"^/([a-z0-9-]{1,60}\.(html|css))\Z")
 MAX_BODY = 4096            # bytes: a login request is tiny; anything bigger is refused
 MAX_FAILS = 8              # wrong passwords allowed per address ...
 FAIL_WINDOW = 5 * 60       # ... within this many seconds, then that address must wait
@@ -185,6 +194,93 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
     return True, f"Account {name} is ready with your character {character}. Log in with it in the game client."
 
 
+_newchars = {}
+
+
+def new_character(account, password, character, sex, addr, agree=False, now=None):
+    """Make another character on an existing account (roadmap 7.1). Returns (ok, message)."""
+    now = now or time.time()
+    if too_many_fails(addr, now):
+        return False, "Too many wrong passwords. Wait a few minutes and try again."
+    recent = [t for t in _newchars.get(addr, []) if now - t < 3600]
+    if len(recent) >= 5:
+        return False, "You have made five characters in the last hour. Please wait."
+    if not valid_name(account) or not password or len(password) > 200:
+        return False, "Account name or password is not correct."
+    rows = sql(f"SELECT id, password FROM accounts WHERE (email={hexlit(account)} OR name={hexlit(account)}) LIMIT 1")
+    if not rows or not hmac.compare_digest(rows[0][1], hashlib.sha1(password.encode()).hexdigest()):
+        note_fail(addr, now)
+        return False, "Account name or password is not correct."
+    acc = int(rows[0][0])
+    character = " ".join((character or "").split())
+    if not (3 <= len(character) <= 20 and CHAR_RULE.match(character)):
+        return False, "The character name must be 3 to 20 letters, each word starting with a capital (e.g. Mira or Tom Reed)."
+    ok, why = name_rules.check_character(character)
+    if not ok:
+        return False, why
+    if sex not in ("0", "1"):
+        return False, "Please pick male or female."
+    if not agree:
+        return False, "Please read the rules and tick the box to agree to them."
+    have = sql(f"SELECT COUNT(*) FROM players WHERE account_id={acc} AND deletion=0")
+    if have and int(have[0][0]) >= MAX_CHARACTERS:
+        return False, f"An account can hold {MAX_CHARACTERS} characters."
+    if sql(f"SELECT id FROM players WHERE name={hexlit(character)} LIMIT 1"):
+        return False, "That character name is already taken."
+    sql(NEW_CHAR.format(name=hexlit(character), acc=acc, look=128 if sex == "1" else 136, sex=int(sex)))
+    _newchars.setdefault(addr, []).append(now)
+    return True, f"{character} is ready. Log in with your account in the game client and pick {character} from the list."
+
+
+NEWCHAR_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Spirebound: another character</title><style>body{{font-family:sans-serif;max-width:420px;margin:40px auto;padding:0 16px;
+background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;box-sizing:border-box}}button{{padding:10px 18px}}
+.msg{{padding:10px;background:#333;border-left:4px solid #c9a227}}a{{color:#c9a227}}</style></head><body><h1>Spirebound</h1>
+<h2>Make another character</h2>{msg}<form method="post" action="/newchar">
+<label>Account name or e-mail<input name="account" value="{account}"></label>
+<label>Password<input name="password" type="password"></label>
+<label>New character's name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
+<label><input name="sex" type="radio" value="1" style="width:auto" checked> Male</label>
+<label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
+<label><input name="agree" type="checkbox" value="yes" style="width:auto" required> I have read the
+<a href="/rules" target="_blank">rules</a> and agree to them</label><br><br>
+<button>Make character</button></form><p>No account yet? <a href="/signup">Sign up</a>. <a href="/">The website</a></p></body></html>"""
+
+
+def newchar_page(msg="", account="", character=""):
+    box = f'<p class="msg">{html.escape(msg)}</p>' if msg else ""
+    return NEWCHAR_PAGE.format(msg=box, account=html.escape(account), character=html.escape(character))
+
+
+def refresh_site():
+    """Rebuild the live website from the game's records; a failure keeps the last good pages."""
+    try:
+        site_snapshot.build_site(sql, SITE_DIR, "/signup")
+    except Exception as e:  # never take the login service down over the website
+        print("website refresh failed:", e, flush=True)
+
+
+def site_loop():
+    while True:
+        refresh_site()
+        time.sleep(SITE_REFRESH)
+
+
+def site_file(path):
+    """(bytes, content type) for a website page, or None. Only plain page names: no folders, nothing else on disk."""
+    path = path.split("?", 1)[0]
+    if path == "/":
+        path = "/index.html"
+    m = PAGE_NAME.match(path)
+    if not m:
+        return None
+    for folder in (SITE_DIR, PUBLIC_DIR):
+        f = folder / m.group(1)
+        if f.is_file():
+            return f.read_bytes(), "text/css" if m.group(2) == "css" else "text/html; charset=utf-8"
+    return None
+
+
 SIGNUP_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <title>Spirebound sign-up</title><style>body{{font-family:sans-serif;max-width:420px;margin:40px auto;padding:0 16px;
 background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;box-sizing:border-box}}button{{padding:10px 18px}}
@@ -197,7 +293,8 @@ background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;b
 <label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
 <label><input name="agree" type="checkbox" value="yes" style="width:auto" required> I have read the
 <a href="/rules" target="_blank" style="color:#c9a227">rules</a> and agree to them</label><br><br>
-<button>Make account</button></form><p><a href="/rules" style="color:#c9a227">Read the rules</a></p></body></html>"""
+<button>Make account</button></form><p><a href="/rules" style="color:#c9a227">Read the rules</a> -
+<a href="/newchar" style="color:#c9a227">Make another character</a> - <a href="/" style="color:#c9a227">The website</a></p></body></html>"""
 
 RULES_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
 <title>Spirebound rules</title><style>body{{font-family:sans-serif;max-width:760px;margin:40px auto;padding:0 16px;
@@ -226,17 +323,29 @@ class Handler(BaseHTTPRequestHandler):
         self.end_headers()
         self.wfile.write(body)
 
-    def page(self, text):
-        body = text.encode()
+    def page(self, text, ctype="text/html; charset=utf-8"):
+        body = text if isinstance(text, bytes) else text.encode()
         self.send_response(200)
-        self.send_header("Content-Type", "text/html; charset=utf-8")
+        self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)
 
     def do_POST(self):
         addr = self.client_address[0]
-        if self.path.startswith("/signup"):
+        if self.path.split("?", 1)[0] in ("/newchar", "/newchar/"):
+            try:
+                size = int(self.headers.get("Content-Length", 0))
+                if size < 0 or size > MAX_BODY:
+                    return self.page(newchar_page("That request was too large."))
+                form = {k: v[0] for k, v in parse_qs(self.rfile.read(size).decode("utf-8", "replace")).items()}
+                ok, msg = new_character(form.get("account", ""), form.get("password", ""), form.get("character", ""),
+                                        form.get("sex", "1"), addr, agree=form.get("agree") == "yes")
+                return self.page(newchar_page(msg, form.get("account", ""), "" if ok else form.get("character", "")))
+            except Exception as e:
+                print("newchar error:", e, flush=True)
+                return self.page(newchar_page("Something went wrong. Please try again."))
+        if self.path.split("?", 1)[0] in ("/signup", "/signup/"):
             try:
                 size = int(self.headers.get("Content-Length", 0))
                 if size < 0 or size > MAX_BODY:
@@ -268,10 +377,15 @@ class Handler(BaseHTTPRequestHandler):
             self.reply(200, {"errorCode": 2, "errorMessage": "Login service error. Please try again."})
 
     def do_GET(self):
-        if self.path.startswith("/signup"):
+        if self.path.split("?", 1)[0] in ("/signup", "/signup/"):
             return self.page(signup_page())
-        if self.path.startswith("/rules"):
+        if self.path.split("?", 1)[0] in ("/rules", "/rules/"):
             return self.page(rules_page())
+        if self.path.split("?", 1)[0] in ("/newchar", "/newchar/"):
+            return self.page(newchar_page())
+        found = site_file(self.path)
+        if found:
+            return self.page(*found)
         self.reply(200, {"service": "Spirebound local login"})
 
 
@@ -326,6 +440,19 @@ def selftest():
         assert made and hexlit("Tom Reed") in made[0] and ", 136, " in made[0], "the first character is made with the account"
         assert "<script>" not in signup_page("<script>x</script>")
         assert 'name="agree"' in signup_page() and "What is not allowed" in rules_page()
+        # another character on an existing account: right password, name checks, the rules, the per-account limit
+        _fails.clear()
+        assert not new_character("jay", "wrong", "Ash Varrow", "1", "z", agree=True)[0]
+        assert not new_character("jay", "correct horse", "Kirito", "1", "z", agree=True)[0], "the name checker runs"
+        assert not new_character("jay", "correct horse", "Ash Varrow", "1", "z")[0], "the rules must be agreed"
+        seen.clear()
+        assert new_character("jay", "correct horse", "Ash Varrow", "0", "z", agree=True)[0]
+        made = [q for q in seen if q.startswith("INSERT INTO players")]
+        assert made and hexlit("Ash Varrow") in made[0] and "7, 1, 0" in made[0], "made on the right account"
+        assert "<script>" not in newchar_page("<script>x</script>")
+        for bad in ("/../config.lua", "/x/../../etc/passwd", "/.local/site/index.html", "/index.html/..", "/A.HTML", "/a.py"):
+            assert site_file(bad) is None, bad
+        assert site_file("/") and site_file("/rules.html")[1].startswith("text/html") and site_file("/style.css")[1] == "text/css"
     finally:
         sql = real
     assert BIND == "127.0.0.1" or os.environ.get("SPIRE_LOGIN_BIND"), "listens on this PC only by default"
@@ -339,5 +466,6 @@ if __name__ == "__main__":
     if "--selftest" in sys.argv:
         selftest()
         sys.exit(0)
-    print(f"Spirebound login service on {BIND}:{PORT}", flush=True)
+    print(f"Spirebound login service on {BIND}:{PORT} (website at /, sign-up at /signup)", flush=True)
+    threading.Thread(target=site_loop, daemon=True).start()
     ThreadingHTTPServer((BIND, PORT), Handler).serve_forever()

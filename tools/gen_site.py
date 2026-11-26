@@ -291,6 +291,11 @@ def taken() -> str:
     return f'<p class="pill">Updated {e(when(ts))}</p>' if ts else ""
 
 
+def newchar_url() -> str:
+    """The make-another-character page sits next to the sign-up page (tools/login_server.py /newchar)."""
+    return SIGNUP_URL.rsplit("signup", 1)[0] + "newchar" if "signup" in SIGNUP_URL else ""
+
+
 def join() -> str:
     if SIGNUP_URL:
         go = (f'<p><a class="pill" href="{e(SIGNUP_URL)}">Create your account</a></p>'
@@ -298,6 +303,9 @@ def join() -> str:
               "character's name.</p>")
     else:
         go = not_yet("Account sign-up opens here when the server opens. During the friends test, Jay sends you the address.", records=False)
+    more = ("<p>Extra characters are welcome: up to 10 on one account, and they can hunt anywhere. "
+            + (f'<a href="{e(newchar_url())}">Make another character</a> with your account name and password.</p>'
+               if SIGNUP_URL else "The page to make them opens with the server.</p>"))
     return go + """
 <h2>How joining works</h2>
 <ol>
@@ -312,8 +320,7 @@ A short guided path (under ten minutes) ends at the Registrar in Hearthgate, whe
 your difficulty. You will know how fighting feels before you choose.</li>
 </ol>
 <h2>More characters</h2>
-<p>Each account can hold several characters. Making another one from this site comes with the full account pages;
-until then, ask a gamemaster in game.</p>
+""" + more + """
 <h2>Keeping your account safe</h2>
 <ul><li>Use a password you use nowhere else.</li>
 <li>Staff will never ask for your password, in game or anywhere else.</li>
@@ -484,7 +491,7 @@ def check(out: Path, names: list[str]) -> list[str]:
     for name in names:
         text = (out / name).read_text(encoding="utf8")
         for href in re.findall(r'href="([^"#]+)"', text):
-            if SIGNUP_URL and html.unescape(href) == SIGNUP_URL:
+            if SIGNUP_URL and html.unescape(href) in (SIGNUP_URL, newchar_url()):
                 continue
             if href.startswith("http"):
                 problems.append(f"{name}: external link {href}")
