@@ -66,8 +66,55 @@ Axe-Lord kill can't spoil the real race.
   (5 health and 5 mana potions, 5 ham, path weapon) arrive; Bramblejaw took each character down to 36-44% health
   with one potion each and died in about a minute: about right.
 
+### Level 10: Captain Dorrow's weapon
+- **The barracks weapon lands in the backpack, and nothing says to equip it.** After Dorrow hands it over, the
+  Journal's Upgrade tab ticks "[x] Reach level 10 and get your weapon" but its WEAPON line still says "none yet:
+  Captain Dorrow gives one at level 10". A new player will think it didn't work. Put it in the hand (the old starter
+  weapon into the bag), or have Dorrow say "it's in your backpack: drag it into your hand".
+- For Arcanists and Mystics, Dorrow asks "Which kind: {rod}?" with only one choice, and "yes" is not an answer.
+  With one family, just hand it over.
+- The new weapon has the same look and market name as the starter one (the bag shows two "snakebite rod"s), so a
+  player can't tell which is which without looking at each one.
+
+### Money in the first hours
+- **Characters are broke at levels 3-10.** After the Proving they had ~250 gold each; one restock (5 health potions
+  at 45) took it all. At level 7-9 each had 0-6 gold. At Boar Meadow (level 10, party of 3) the party earned 67 gold
+  in a 9-minute lap, about 430 gold an hour for three players, while a health potion costs 45. Part of this is the
+  auto-loot problem above (the first ~25 kills each were never looted). Re-check gold per hour after the fix, but
+  early loot looks thin next to potion prices.
+- Loot goes to the character who gets the kill credit, so in a party the healer and the tank-swapping damage dealer
+  earned nothing while the tank got everything (heal +0, dps +0, tank +67 in one lap). Normal for Tibia (players
+  split by hand), but unless the party splits, the healer is the poorest member. Worth a thought: an optional
+  shared-loot party setting, or check whether one exists and teach it.
+
+### Party play
+- **Quest kills don't count for the party.** `SpireQuestKill` (scripts/spirebound/quests.lua) credits only the
+  character the engine gives the kill to (most damage / last hit). After hunting together, Dorrow's wasp quest stood
+  at 12/12 for the tank, 4/12 for the healer and 0/12 for the damage dealer. Floor 1 tells players to group up, but a
+  party has to farm each kill quest three times over, and the healer (who never lands the kill) almost never finishes
+  one. **Fix: credit every party member within ~30 tiles who shares experience**, like the experience itself.
+- **Gold piles up on one character.** Loot goes to the kill credit, so the tank had 1,250 gold while the healer had
+  56 and could not buy mana potions. The bank's "transfer X to name" works (used it to share), but a new party won't
+  know it. Teach it, or offer a party loot split.
+- **Coins fill the backpack.** Looted gold arrives as stacks of 100 gold coins; by level 15 the tank's 20-slot bag
+  held nine of them plus loot, and the next shop purchase failed ("There is not enough room"). Canary can send
+  looted gold straight to the bank; worth switching on, or teaching the banker's "deposit all" early (Pell's {gold}
+  topic could say it).
+- **"Bought 0x health potion for 0 gold coin."** When a player can't carry what they buy, the engine prints that
+  instead of saying why. With 25 looted meat the tank was over his carrying limit. Replace it with "You can't carry
+  that much" if the NPC script can check first.
+
 ### Hunting grounds
 (per ground: experience and gold per hour, supplies, deaths, feel)
+- **Boar Meadow, party of 3 at level 10:** 9.4-minute lap (surface loops and the cave), ~25,900 experience per hour
+  each with shared experience, no deaths, one health potion used in the whole lap. Comfortable for a party; the
+  boars drop 1-13 gold plus meat and ham. A second lap at level 11: 7.8 minutes, 25-28k experience per hour each,
+  no potions, no deaths: the party never felt pressure here.
+- **Waspgrass Fields, party at level 12 (top of its band):** 9-minute lap, 13-16k experience per hour each, no
+  potions, no deaths. Half of Boar Meadow's rate at the same level; fine as a ground the party has outgrown.
+- **Wolf Copse, party at level 13:** 8.6-minute lap, 47-51k experience per hour each, one mana potion, no deaths.
+  Nearly twice Boar Meadow. A party of three is never in danger on the solo grounds; Jay's "challenge, not calm"
+  note (2026-11-25) can only be judged on the group grounds (Bandit Road, Old Quarry, the Watchtower) and solo.
 
 ### Quests and the Stair Key
 

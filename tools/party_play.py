@@ -47,8 +47,8 @@ GROUNDS = [
 HUNT = 75                    # seconds at each loop point
 COINS = {"item 3031": 1, "gold coin": 1, "item 3035": 100, "platinum coin": 100, "item 3043": 10000, "crystal coin": 10000}
 POTIONS = {"heal": ("health potion", "strong health potion"), "mana": ("mana potion", "strong mana potion")}
-WANT = {"tank": {"health potion": 30, "mana potion": 10}, "heal": {"health potion": 15, "mana potion": 40},
-        "dps": {"health potion": 15, "mana potion": 40}}
+WANT = {"tank": {"health potion": 30, "mana potion": 10}, "heal": {"mana potion": 40, "health potion": 15},
+        "dps": {"mana potion": 40, "health potion": 15}}   # bought in this order while the gold lasts
 
 
 def wp():
@@ -123,6 +123,24 @@ def walk_steps(here, goal, fight=True):
     if path is None:
         return [{"do": "walk", "to": list(goal), "fight": fight, "timeout": 90}]
     return [{"do": "walk", "to": list(p), "fight": fight, "timeout": 60} for p in AP.hops(path)]
+
+
+_BESIDE = {}
+
+
+def beside(npc):
+    """A tile next to an NPC that can be walked to from the temple (not behind its counter)."""
+    if npc in _BESIDE:
+        return _BESIDE[npc]
+    temple = tuple(wp()["temple_hearthgate"])
+    for r in (1, 2, 3):
+        ring = [(npc[0] + dx, npc[1] + dy, npc[2]) for dy in range(r, -r - 1, -1) for dx in range(-r, r + 1)
+                if max(abs(dx), abs(dy)) == r]
+        for p in ring:
+            if planner().ok(p) and planner().path(temple, p, lim=400) is not None:
+                _BESIDE[npc] = p
+                return p
+    return (npc[0], npc[1] + 1, npc[2])
 
 
 def stairs_for(gid, near):
@@ -209,20 +227,30 @@ def run_lap(gid, title):
 
 
 def needs_town():
+    """A town trip when someone is nearly out of potions, a bag is full, or someone can afford a real restock."""
     for t in TAGS:
         st = state(t) or {}
-        if sum(bag_count(st, n) for n in POTIONS["heal"]) < 5:
-            return f"{t} is low on health potions"
-        if t != "tank" and sum(bag_count(st, n) for n in POTIONS["mana"]) < 8:
-            return f"{t} is low on mana potions"
+        hp = sum(bag_count(st, n) for n in POTIONS["heal"])
+        mp = sum(bag_count(st, n) for n in POTIONS["mana"])
         if len(st.get("backpack", [])) >= 18:
             return f"{t}'s backpack is nearly full"
+        if hp < 2 or (t != "tank" and mp < 2):
+            return f"{t} is nearly out of potions"
+        if gold(st) >= 400 and (hp < 8 or (t != "tank" and mp < 10)):
+            return f"{t} can afford a restock"
     return None
 
 
 def town():
     """Sell loot, buy potions and food, the way a player does."""
     pl = GT.places(wp())
+    funds = {}
+    def bank(t, st):
+        here = (st["x"], st["y"], st["z"])
+        talk = [{"do": "say", "text": "hi"}, {"do": "wait", "seconds": 2}]
+        for w in ("deposit all", "yes", "balance", "bye"):
+            talk += [{"do": "npc", "text": w}, {"do": "wait", "seconds": 2}]
+        return walk_steps(here, beside(pl["NPC Banker Tolliver"])) + talk
     for npc, trade in (("NPC Trader Osric", lambda t, st: {"sell": ["*"]}),
                        ("NPC Alchemist Ivo", lambda t, st: {"sell": ["empty potion flask"],
                                                              "buy": [[k, max(0, n - bag_count(st, k))] for k, n in WANT[t].items()
@@ -232,18 +260,50 @@ def town():
         if not goal:
             print(f"  town: no {npc}")
             continue
+        if npc == "NPC Alchemist Ivo":           # after selling: bank the coins (stacks of 100 fill a 20-slot bag); shops
+            for t in TAGS:                       # take the price from the bank (checked 2026-11-26)
+                funds[t] = gold(state(t) or {})
+            out = everyone(bank, "bank")
+            for t, st in out.items():
+                bal = [m for m in st.get("messages", []) if "balance" in m.lower()]
+                if bal:
+                    m = re.search(r"([\d,]+) gold", bal[-1])
+                    if m:
+                        funds[t] = max(funds[t], int(m.group(1).replace(",", "")))
+            print("  bank: " + ", ".join(f"{t} {funds[t]} gold" for t in TAGS), flush=True)
+            # a party shares: whoever got the loot (the kill credit) tops up the others through the bank
+            rich = max(TAGS, key=lambda t: funds[t])
+            need = {t: 600 - funds[t] for t in TAGS if t != rich and funds[t] < 600}
+            give = {t: min(n, max(0, (funds[rich] - 600) // max(1, len(need)))) for t, n in need.items()}
+            give = {t: g for t, g in give.items() if g >= 50}
+            if give:
+                names = {t: CP.load(t)["char"] for t in TAGS}
+                def share(t, st):
+                    if t != rich:
+                        return []
+                    talk = [{"do": "say", "text": "hi"}, {"do": "wait", "seconds": 2}]
+                    for o, g in give.items():
+                        talk += [{"do": "npc", "text": f"transfer {g} to {names[o]}"}, {"do": "wait", "seconds": 2},
+                                 {"do": "npc", "text": "yes"}, {"do": "wait", "seconds": 2}]
+                    return talk + [{"do": "npc", "text": "bye"}]
+                everyone(share, "share")
+                for o, g in give.items():
+                    funds[o] += g
+                    funds[rich] -= g
+                print(f"  shared: {rich} sent " + ", ".join(f"{g} to {o}" for o, g in give.items()), flush=True)
         def steps(t, st, goal=goal, trade=trade):
             here = (st["x"], st["y"], st["z"])
             tr = trade(t, st)
             tr["buy"] = [b for b in tr.get("buy", []) if b[1] > 0]
             # can't afford it all: buy what the gold allows (potions about 50 each, food 8)
-            g = gold(st)
+            g = funds.get(t, gold(st))
             for b in tr["buy"]:
                 each = 8 if b[0] == "ham" else 50
                 b[1] = min(b[1], max(0, g // each))
                 g -= b[1] * each
+            funds[t] = g
             tr["buy"] = [b for b in tr["buy"] if b[1] > 0]
-            near = (goal[0], goal[1] + 1, goal[2])
+            near = beside(goal)
             return walk_steps(here, near, fight=True) + [{"do": "trade", **tr}, {"do": "wait", "seconds": 2}]
         everyone(steps, f"town {npc}")
     print("town: " + "; ".join(f"{t} gold {gold(state(t))} hp-pots {bag_count(state(t), 'health potion')} "
@@ -261,13 +321,14 @@ def pick_ground(force=None):
 def run(argv):
     minutes = float(CP.opt(argv, "--minutes", 120))
     force = CP.opt(argv, "--ground")
+    plan = [g for g in (CP.opt(argv, "--plan", "") or "").split(",") if g]   # e.g. boar_meadow,wasp_fields: these laps first
     end = time.time() + minutes * 60
     while time.time() < end:
         why = needs_town()
         if why:
             print(f"town trip: {why}", flush=True)
             town()
-        gid, title, lo, hi = pick_ground(force)
+        gid, title, lo, hi = pick_ground(plan.pop(0) if plan else force)
         run_lap(gid, title)
 
 
@@ -306,7 +367,7 @@ def quests(givers=None):
             talk = [{"do": "say", "text": "hi"}, {"do": "wait", "seconds": 2}]
             for w in ("report", "quest", "yes", "quest", "yes", "bye"):
                 talk += [{"do": "npc", "text": w}, {"do": "wait", "seconds": 2}]
-            return walk_steps(here, (goal[0], goal[1] + 1, goal[2])) + talk
+            return walk_steps(here, beside(goal)) + talk
         out = everyone(steps, f"quests {npc}")
         for t, st in out.items():
             said = [m for m in st.get("messages", []) if m.startswith(npc[4:] + ":") or "quest" in m.lower() or "experience" in m]
