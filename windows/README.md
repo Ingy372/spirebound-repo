@@ -48,6 +48,17 @@ Grok Bot (its cloud computer runs Linux; the setup script installs the client wi
    `{"action": "accept", "src": ["tag:grokbot"], "dst": ["YOUR-100-ADDRESS:8080,7172,8090"]}`.
 5. Under **Settings > Keys**, generate an auth key: *Ephemeral* on, *Reusable* off, tag `tag:grokbot`.
 
+**Inviting a friend on Windows:**
+1. In the Tailscale admin console (login.tailscale.com), open **Machines**, click the three dots next to this PC and
+   choose **Share...**, then **Copy share link**. (Sharing shows your friend only this PC, and your access controls
+   still decide which ports they reach.)
+2. Double-click `windows\Share-Client.bat` and leave its window open while they install.
+3. Open `.local\friend_invite.txt`, paste the share link where it says `PASTE-THE-SHARE-LINK-HERE`, and send the whole
+   message to your friend. It walks them through installing Tailscale, making their account on the website, and one
+   line in PowerShell that installs the game with a desktop shortcut. The same steps with pictures are on the download
+   page, `http://<your 100. address>:8090/`.
+4. Running the same PowerShell line again later updates their game to your latest client.
+
 **Each time a tester installs:**
 1. Double-click `windows\Share-Client.bat` and leave its window open (it builds the client package and shares it on
    your Tailscale address). Close it when they've installed.

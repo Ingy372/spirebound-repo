@@ -112,3 +112,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 - Jay: "tibia has the base outfit, addon 1 and addon 2... it'll give us more content for quests". Addons are now part of the art pipeline: an addon file renders the frozen base with its extra parts, `art/pipeline/addon_overlay.py` keeps only the pixels it adds, and once approved `tools/make_creature_sheets.py` packs them as the look's addon rows (tested on a copy of the client files: 3 sheets, check passes). Rules A1-A7 in `art/OUTFIT_RULES.md`; new task 6.5c (addon quests).
 - First pair sent to Jay: the Vanguard's Crested Helm and Knight's Mantle (both ALL PASS). Not in the game until approved.
 
+### 2026-11-25 night: the fire boar, and a Windows install for friends (9.1)
+- Jay: the fire boar "might be named frenzied boar or just regular boar with the red on top": that is our approved Bristle Boar (ember-red crest), so it joined the website banner; N6 and ART_REQUESTS Batch 11 corrected; naming is Q63.
+- 9.1: `tools/make_friend_client.py` now also writes `setup.ps1` (one PowerShell line installs the client in the friend's user folder, sets English, adds a desktop shortcut, starts it; run again to update), a download page (`index.html` on port 8090) and `.local/friend_invite.txt` for Jay to send. Tested here against a stand-in package: install, update, unreachable server, shortcut. Caught on the way: a BOM at the top of the script broke `irm | iex`; it is now plain ASCII, with a boot-test check. README has the invite steps (Tailscale machine sharing).
+
