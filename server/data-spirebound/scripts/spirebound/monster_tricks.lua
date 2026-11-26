@@ -165,6 +165,38 @@ function SpireTricks.mend(mon)
 	return false
 end
 
+-- Hedge Hexer (S4, the group grounds' caster): now and then mends the most hurt ally within 3 tiles, any kind (a bandit, a
+-- crossbowman, a stonehorn ram). At most 120 health a time, so a ram is slowed down, not saved. Kill the hexer first.
+local hexMend = CreatureEvent("SpireHexMend")
+function hexMend.onThink(creature, interval)
+	local mon = creature:getMonster()
+	if mon and mon:getTarget() and chance(7) then
+		SpireTricks.hexMend(mon)
+	end
+	return true
+end
+hexMend:register()
+
+function SpireTricks.hexMend(mon)
+	local best, worst = nil, 0.75
+	for _, c in ipairs(Game.getSpectators(mon:getPosition(), false, false, 3, 3, 3, 3)) do
+		local other = c:getMonster()
+		if other and other ~= mon and not other:getMaster() then
+			local share = other:getHealth() / math.max(1, other:getMaxHealth())
+			if share < worst then
+				best, worst = other, share
+			end
+		end
+	end
+	if not best then
+		return false
+	end
+	best:addHealth(math.min(120, math.max(20, math.floor(best:getMaxHealth() * 0.25))))
+	best:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+	mon:say("*the hexer mutters; a wound closes*", TALKTYPE_MONSTER_SAY)
+	return true
+end
+
 -- Ruin Sentinel: raises its shield for 4 seconds. While it is up, hits from the front do half damage, so walk round it
 -- (or wait). The front is the side the sentinel faces.
 SpireTricks.shield = SpireTricks.shield or {}

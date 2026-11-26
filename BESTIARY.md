@@ -210,7 +210,7 @@ Stone sentinels and archers guard the old works. Tough, but arrows and gear sell
 ### The Old Watchtower  (levels 28-40, experience and money)
 *leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance. Safety: contested. Who it is for: a big group of 4 to 8 players.*
 
-The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden rope to a cave. Contested: players can fight here.
+The floor's apex spawn, for 4 to 8: an easy outer ring of rams, then bandits with their rams in the inner room and a hidden cave. Contested: players can fight here.
 
 | Monster | Health | Experience | Kills per level (start / end) | Drops |
 |---|---|---|---|---|

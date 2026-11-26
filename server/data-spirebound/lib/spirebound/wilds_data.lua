@@ -186,6 +186,7 @@ SpireWilds = { grounds = {
 	{ id = "old_quarry", x1 = 1242, y1 = 1125, x2 = 1298, y2 = 1161, z = 8, exit = Position(1251, 1149, 7) },
 }, weights = {
 	["Bandit Captain"] = 2.5,
+	["Bandit Crossbowman"] = 1.0,
 	["Blackthorn"] = 2.5,
 	["Bristle Boar"] = 1.5,
 	["Burrow Mole"] = 1.0,
@@ -193,6 +194,7 @@ SpireWilds = { grounds = {
 	["Field Shardling"] = 1.0,
 	["Granite Warden"] = 2.5,
 	["Grey Alpha"] = 2.0,
+	["Hedge Hexer"] = 1.1,
 	["Hopper Toad"] = 1.0,
 	["Meadow Wasp"] = 0.5,
 	["Meadow Wolf"] = 1.0,

@@ -938,9 +938,9 @@ def build(m):
     secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
     qL = next(L for L in m.wilds if L["id"] == "old_quarry")
-    if qL.get("design"):                                # H8: beside the quiet ledge at the far north-east of the pit
-        ne = next(p for p, v in qL["clearings"].items() if v[0] == "ne")
-        secret("s5", ne[0] + 1, ne[1] - 1)
+    if qL.get("design"):                                # H8: a dead-end nook off the north-east ledge, never on the trail
+        nook = next(p for p, v in qL["clearings"].items() if v[0] == "nook")   # (the crack drops you near Millcross)
+        secret("s5", nook[0], nook[1])
     else:
         qne = next(lp for lp in qL["loops"] if lp["name"] == "ne")
         s5 = max(qne["ring"] - qne["patches"], key=lambda t: ((t[0] - qne["mouth_pt"][0]) ** 2 + (t[1] - qne["mouth_pt"][1]) ** 2, t))

@@ -1,5 +1,5 @@
--- Party size cap (DESIGN.md 7.1): up to 6 members including the leader.
-SPIRE_PARTY_MAX = 6
+-- Party size cap (DESIGN.md 7.1, 9.4): up to 8 members including the leader, so a large-group ground fits in one party.
+SPIRE_PARTY_MAX = 8
 
 local join = EventCallback("SpirePartyCap")
 function join.partyOnJoin(party, player)

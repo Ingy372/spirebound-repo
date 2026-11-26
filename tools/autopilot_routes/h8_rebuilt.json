@@ -87,7 +87,11 @@
   },
   {
    "do": "use",
-   "at": [1342, 1176, 7]
+   "at": [
+    1342,
+    1176,
+    7
+   ]
   },
   {
    "do": "wait",
@@ -100,6 +104,20 @@
   {
    "do": "heal",
    "note": "Bandit Road: the Old Road"
+  },
+  {
+   "do": "walk",
+   "to": "loop_bandit_road_a",
+   "fight": true,
+   "timeout": 120,
+   "note": "Bandit Road: back south through the West Woods (away from the camp)"
+  },
+  {
+   "do": "walk",
+   "to": "camp_bandit_road",
+   "fight": true,
+   "timeout": 120,
+   "note": "Bandit Road: back south through the West Woods (away from the camp)"
   },
   {
    "do": "walk",
@@ -136,12 +154,12 @@
    "do": "walk",
    "to": [
     1353,
-    1188,
+    1191,
     7
    ],
    "fight": true,
    "timeout": 60,
-   "note": "Bandit Road: the shrine (the Captain's camp in view)"
+   "note": "Bandit Road: below the shrine (the camp out of reach)"
   },
   {
    "do": "wait",
@@ -153,6 +171,13 @@
   },
   {
    "do": "heal",
+   "note": "Bandit Road: the East Woods"
+  },
+  {
+   "do": "walk",
+   "to": "camp_bandit_road",
+   "fight": true,
+   "timeout": 120,
    "note": "Bandit Road: the East Woods"
   },
   {
@@ -184,7 +209,11 @@
   },
   {
    "do": "jump",
-   "to": "stairs_den_bandit_road",
+   "to": [
+    1353,
+    1207,
+    8
+   ],
    "note": "Bandit Road: the Smugglers' Cellar"
   },
   {
@@ -264,7 +293,11 @@
   },
   {
    "do": "use",
-   "at": [1296, 1137, 7]
+   "at": [
+    1296,
+    1137,
+    7
+   ]
   },
   {
    "do": "wait",
@@ -369,7 +402,11 @@
   },
   {
    "do": "jump",
-   "to": "stairs_den_old_quarry",
+   "to": [
+    1251,
+    1152,
+    8
+   ],
    "note": "Old Quarry: the Lower Works"
   },
   {

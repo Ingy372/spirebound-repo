@@ -136,6 +136,14 @@ Quarry's Upper Cut (a grey-gold Ruin Sentinel outfit). Later, each could get a v
 from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal, a cracked granite
 shield) so players spot them at a glance. Not needed for the alpha.
 
+## Batch 7b (2026-11-25): two bandits for the group grounds (Priority: low, placeholders work)
+The Smugglers' Cellar and the Old Watchtower now hold mixed packs (DESIGN.md 9.4: a front-liner, a ranged one and a
+caster). Two new monsters borrow outfits for now: the **Bandit Crossbowman** (bandit outfit in green and brown, shoots
+bolts from range) and the **Hedge Hexer** (a hooded woman in moss colours who casts earth magic and mends hurt allies;
+players should learn to kill her first). For the Blender pipeline later (art/OUTFIT_RULES.md, humanoid base): a
+crossbow held at the hip, a leather hood with a bolt quiver; the hexer with a bundle of herbs and a crooked staff, a
+green glow when she mends.
+
 ## Batch 8 (2026-11-24): the Proving (Priority: low, placeholders work)
 Made by Claude with the Blender pipeline when the art queue reaches them; until then they borrow stock looks.
 - **Bramblejaw** (creature, the Proving's one-person boss): an old, scarred yard boar with brambles tangled in its bristles and a torn ear; bigger and shaggier than the Bristle Boar so it reads as "boss". Closest Tibia look-alike: Boar / War Boar (make ours obviously different: bramble-green and rust colours, the bramble tangle as the signature). Now: Bristle Boar's placeholder look (119).

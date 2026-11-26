@@ -496,6 +496,61 @@ function handlers.inventory(player)
     nextStep()
 end
 
+-- S4: form a party the way players do (the right-click menu's invite / join / share experience):
+--   leader:  { "do": "party", "invite": ["Pilot Ranger", "Pilot Mystic"], "share": true, "seconds": 40 }
+--   member:  { "do": "party", "join": "Pilot Vanguard", "seconds": 40 }
+-- Retries every 2 seconds until done or out of time; logs who is in the party (the shields over their heads).
+local function namedInSight(player, name)
+    for _, e in ipairs(players(player)) do
+        if e.c:getName() == name then return e.c end
+    end
+    return nil
+end
+
+function handlers.party(player)
+    local s = step
+    if now() - (stepData.last or 0) < 2 then return end
+    stepData.last = now()
+    local done = true
+    if s.invite then
+        for _, name in ipairs(s.invite) do
+            local c = namedInSight(player, name)
+            local shield = c and c:getShield() or 0
+            if not c or (shield ~= ShieldBlue and shield ~= ShieldBlueSharedExp and shield ~= ShieldBlueNoSharedExpBlink
+                    and shield ~= ShieldBlueNoSharedExp) then
+                done = false
+                if c and shield ~= ShieldWhiteBlue then
+                    g_game.partyInvite(c:getId())
+                    log('party: invited ' .. name)
+                end
+            end
+        end
+        if done and s.share and not stepData.shared then
+            g_game.partyShareExperience(true)
+            stepData.shared = true
+            log('party: shared experience switched on')
+        end
+    end
+    if s.join then
+        local c = namedInSight(player, s.join)
+        local mine = player:getShield()
+        if mine ~= ShieldBlue and mine ~= ShieldBlueSharedExp and mine ~= ShieldBlueNoSharedExpBlink and mine ~= ShieldBlueNoSharedExp then
+            done = false
+            if c and c:getShield() == ShieldWhiteYellow then
+                g_game.partyJoin(c:getId())
+                log('party: joined ' .. s.join .. "'s party")
+            end
+        end
+    end
+    local names = {}
+    for _, e in ipairs(players(player)) do names[#names + 1] = e.c:getName() .. '=' .. e.c:getShield() end
+    log('party: my shield ' .. player:getShield() .. '; others ' .. table.concat(names, ', '))
+    if done or now() - stepT > (s.seconds or 40) then
+        log(done and 'party: formed' or 'party: NOT formed in time')
+        nextStep()
+    end
+end
+
 -- M5: switch the built-in bot (vBot) on or off for this character: { "do": "bot", "on": true }
 function handlers.bot(player)
     if not stepData.done then

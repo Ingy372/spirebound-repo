@@ -86,6 +86,18 @@ MONSTERS = {
     "Ruin Archer": dict(desc="a ruin archer", look=(129, 79, 79, 79, 79, 0), corpse=18138, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
+    # S4 (2026-11-25): the group grounds' mixed packs need a ranged one and a caster beside the front-liner (DESIGN.md 9.4).
+    # Bandits in the Smugglers' Cellar and the Old Watchtower; they borrow the bandit outfit in new colours (ART_REQUESTS).
+    "Bandit Crossbowman": dict(desc="a bandit crossbowman", look=(129, 58, 86, 45, 76, 0), corpse=18050, hp=190, xp=72,
+                               speed=95, race="blood", attacks=[("melee", 0, -15), ("bolt", 0, -60, 6)], armor=10,
+                               defense=10, dist=4,
+                               loot=[(GOLD, 90000, 55), (PLAT, 5000, 1), (3446, 30000, 10), (3349, 2500, 1), (11492, 10000, 1)],
+                               voices=["Hold still!"]),
+    "Hedge Hexer": dict(desc="a hedge hexer", look=(138, 95, 116, 94, 114, 0), corpse=18050, hp=170, xp=78, speed=90,
+                        race="blood", attacks=[("melee", 0, -10), ("earth", 0, -55, 4)], armor=8, defense=8, dist=3,
+                        loot=[(GOLD, 90000, 55), (PLAT, 6000, 1), (236, 12000, 1), (5879, 8000, 1), (3738, 15000, 1)],
+                        voices=["Mend, mend!"], elements={"earth": 30, "fire": -10},
+                        events=["SpireHexMend"]),  # mends a hurt ally nearby now and then: kill her first
     # ---------------------------------------------------------------- Floor 1 elites (FLOOR1_REVIEW.md F1-11): one rare,
     # glowing elite per rebuilt ground, on the ground's own monster sprite (no new art), every 15 minutes (ELITE_RESPAWN)
     "Old Bristleback": dict(desc="old bristleback", look=(119,), corpse=6046, hp=600, xp=220, speed=115, race="blood",
@@ -210,6 +222,7 @@ SPELL = {
     "physical": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', "CONST_ANI_THROWINGKNIFE", "CONST_ME_HITAREA"),
     "fire": ('name = "combat", type = COMBAT_FIREDAMAGE', "CONST_ANI_FIRE", "CONST_ME_FIREAREA"),
     "arrow": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', "CONST_ANI_ARROW", "CONST_ME_HITAREA"),
+    "bolt": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', "CONST_ANI_BOLT", "CONST_ME_HITAREA"),
     "charge": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_GROUNDSHAKER"),
     "howl": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_SOUND_RED"),
     "cleave": ('name = "combat", type = COMBAT_PHYSICALDAMAGE', None, "CONST_ME_HITAREA"),

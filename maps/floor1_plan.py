@@ -95,7 +95,8 @@ CAMPS = [
     dict(id="bandit_road", type="mixed", title="The Bandit Road", x=328, y=172, w=52, h=48, gate="s", size="std", zone="open",
          levels=(19, 27), role="money", wall="broadleaf", core="banditcamp", trail="dirt", decor="bandits",
          groups=same(5, "Road Bandit") + [G(("Bandit Captain", 1), ("Road Bandit", 2))], respawn=140, design="BANDITS",
-         den="Smugglers' Cellar", den_groups=same(6, "Road Bandit", 4) + [G(("Bandit Captain", 1), ("Road Bandit", 3))] * 2,
+         den="Smugglers' Cellar", den_groups=[G(("Road Bandit", 2), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 5
+         + [G(("Bandit Captain", 1), ("Road Bandit", 1), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 2,
          note="Bandits carry coins and gear you can sell. Captains lead them and drop platinum. Best early money."),
     dict(id="old_quarry", type="mixed", title="The Old Quarry", x=240, y=124, w=60, h=40, gate="w", size="std", zone="open",
          levels=(23, 30), role="money", wall="boulders", core="cutstone", trail="gravel", decor="quarry",
@@ -585,8 +586,11 @@ SHARDS = dict(
 # elite) holds the camp. The shrine sits in a quiet strip between the waystation and the camp. The Smugglers' Cellar
 # (z 8) is the party cave, a built cellar down the stair on the road.
 DGP_RUBBLE = [5866, 5708, 2264, 1822]                      # rubble and cut blocks (maps/dungeon.py RUBBLE + stones)
-_RB1, _RB2, _RB4 = (("Road Bandit", 1),), (("Road Bandit", 2),), (("Road Bandit", 4),)
-_CAP1, _CAP4 = (("Bandit Captain", 1),), (("Bandit Captain", 1), ("Road Bandit", 3))   # the elite stands alone (H8 client walk)
+_RB1, _RB2 = (("Road Bandit", 1),), (("Road Bandit", 2),)
+_CAP1 = (("Bandit Captain", 1),)                                    # the elite stands alone (H8 client walk)
+# the cellar is a group ground (S4): mixed packs of a front-liner, a ranged one and a caster (DESIGN.md 9.4)
+_RB4 = (("Road Bandit", 2), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))
+_CAP4 = (("Bandit Captain", 1), ("Road Bandit", 1), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))
 BANDITS = dict(
     gate=(25, 47), crowd_group=[("Road Bandit", 1)],
     routes={"a": "a1", "b": "b1", "c": "c0", "d": "dq"},
@@ -637,16 +641,18 @@ QUARRY = dict(
     route_names={"a": "The North Pit", "b": "The South Pit", "c": "The Upper Cut", "d": "The Deep Cut"},
     levels={
         7: dict(name="The Old Quarry", box=(0, 0, 60, 40), clearings=[
-            ("hub", 6, 19, 4, "approach", None, "hub"), ("n0", 9, 8, 3, "calm", None, "rest"), ("s0", 9, 31, 3, "calm", None, None),
-            ("mw", 11, 26, 2, "calm", None, "rest"),
+            ("hub", 6, 19, 4, "approach", None, "hub"), ("n0", 10, 11, 4, "calm", None, "rest"), ("s0", 9, 31, 3, "calm", None, None),
+            ("mw", 11, 26, 3, "calm", None, "rest"),
             ("a1", 18, 4, 3, "calm", "a", [_A1]), ("qa", 30, 4, 2, "calm", "a", "rest"), ("a2", 42, 4, 3, "deep", "a", [_SA]),
             ("b1", 18, 35, 3, "calm", "b", [_QS1]), ("qb", 30, 35, 2, "calm", "b", "rest"), ("b2", 42, 35, 3, "deep", "b", [_SF]),
-            ("ne", 54, 5, 3, "deep", None, "rest"), ("dq", 55, 12, 2, "deep", "d", "rest"),
+            ("ne", 52, 6, 3, "deep", None, "rest"), ("dq", 55, 12, 2, "deep", "d", "rest"),
+            ("nook", 57, 2, 1, "deep", None, None),
+            ("bay_n", 4, 9, 3, "calm", None, None), ("bay_s", 4, 30, 3, "calm", None, None),   # quiet bays beside the gate                      # a dead-end nook: the North Crack secret (s5)
             ("d1", 55, 20, 3, "deep", "d", [_SA]), ("se", 54, 34, 3, "deep", None, "rest"),
             ("ca1", 17, 8, 1, "calm", "a", "crowd"), ("ca2", 25, 7, 1, "calm", "a", "crowd"), ("ca3", 35, 7, 1, "deep", "a", "crowd"),
             ("cb1", 14, 36, 1, "calm", "b", "crowd"), ("cb2", 25, 32, 1, "calm", "b", "crowd"), ("cb3", 35, 32, 1, "deep", "b", "crowd"),
             ("cd1", 50, 12, 1, "deep", "d", "crowd"), ("cd2", 50, 27, 1, "deep", "d", "crowd"), ("cd3", 57, 26, 1, "deep", "d", "crowd"),
-        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "ne", 3), ("ne", "dq", 3),
+        ], paths=[("hub", "n0", 4), ("n0", "a1", 4), ("a1", "qa", 4), ("qa", "a2", 4), ("a2", "ne", 3), ("ne", "dq", 3), ("ne", "nook", 1), ("n0", "bay_n", 3), ("s0", "bay_s", 3),
                   ("dq", "d1", 3), ("d1", "se", 3), ("se", "b2", 3), ("b2", "qb", 4), ("qb", "b1", 4), ("b1", "s0", 4),
                   ("s0", "hub", 4), ("hub", "mw", 3)],
                 ruins=[(9, 2, 7, 5, [(12, 6), (15, 4)])], ruin_props=DGP_RUBBLE),     # the old quarry office by the north pit
@@ -675,9 +681,10 @@ APEX = dict(id="apex_watchtower", type="large", title="The Old Watchtower", leve
             x=30, y=30, w=44, h=44,
             # plan Part 6: fixed groups instead of four big spawn areas (real respawn seconds)
             courtyard=dict(groups=same(6, "Stonehorn Ram"), respawn=150),
-            inner=dict(groups=same(4, "Stonehorn Ram", 4), respawn=120),
-            cave=dict(groups=same(8, "Stonehorn Ram", 4), respawn=120),
-            note="The floor's apex spawn: an easy outer ring, a packed inner room, and a hidden rope to a cave. Contested: players can fight here.")
+            # S4: the large-group ground's packs are mixed: rams in front, a bandit crossbowman and a hedge hexer behind
+            inner=dict(groups=[G(("Stonehorn Ram", 2), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 4, respawn=120),
+            cave=dict(groups=[G(("Stonehorn Ram", 2), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 8, respawn=120),
+            note="The floor's apex spawn, for 4 to 8: an easy outer ring of rams, then bandits with their rams in the inner room and a hidden cave. Contested: players can fight here.")
 
 ROLE_TEXT = {"xp": "experience", "money": "money", "xp+money": "experience and money"}
 

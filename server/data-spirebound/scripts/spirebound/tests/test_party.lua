@@ -8,5 +8,5 @@ SpireTest.add("party: shared xp bonus beats solo", function()
 	SpireTest.eq(SpirePartyShare(1000, 3, 2), 567, "3 players, 2 vocations")
 	-- 4 players, 4 vocations: 1000 * (1 + 0.9 + 0.3) / 4 = 550
 	SpireTest.eq(SpirePartyShare(1000, 4, 4), 550, "4 players, 4 vocations")
-	SpireTest.eq(SPIRE_PARTY_MAX, 6, "party cap")
+	SpireTest.eq(SPIRE_PARTY_MAX, 8, "party cap (S4: 8, so a large-group ground fits in one party)")
 end)
