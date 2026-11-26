@@ -148,6 +148,7 @@ end
 -- { "seq": n, "steps": [...] } or { "seq": n, "stop": true }. The script decides each move (a Grok play tester).
 local CMD, STATE = '/autopilot_cmd.json', '/autopilot_state.json'
 local liveSeq, recent = 0, {}
+local diedCount, diedLive, foodEaten, reconnecting = 0, false, 0, false
 
 local function remember(s)
     recent[#recent + 1] = s
@@ -185,16 +186,17 @@ local function writeState(reason)
         end
     end
     local worn = {}
-    for slot = 1, 10 do
+    for slot = 1, 11 do
         local it = p:getInventoryItem(slot)
         if it then worn[#worn + 1] = itemName(it) end
     end
-    local shot = string.format('autopilot_live_%d.png', liveSeq)
+    local shot = string.format('autopilot_live_%s%d.png', plan.tag and (plan.tag .. '_') or '', liveSeq)
     g_app.doScreenshot(shot)
     local state = { seq = liveSeq, reason = reason, x = pos.x, y = pos.y, z = pos.z,
         health = p:getHealth(), maxHealth = p:getMaxHealth(), mana = p:getMana(), maxMana = p:getMaxMana(),
         level = p:getLevel(), experience = p:getExperience(), vocation = p:getVocation(), soul = p:getSoul(),
-        attacking = g_game.isAttacking(), around = around, backpack = bag, worn = worn, messages = recent, screenshot = shot }
+        attacking = g_game.isAttacking(), around = around, backpack = bag, worn = worn, messages = recent, screenshot = shot,
+        shield = p:getShield(), died = diedCount, food = foodEaten }
     recent = {}
     g_resources.writeFileContents(STATE, json.encode(state))
     log('live: state ' .. liveSeq .. ' written (' .. tostring(reason) .. ')')
@@ -690,6 +692,148 @@ function handlers.hunt(player)
     end
 end
 
+-- (party playtests) stay with the leader and fight what is near the leader:
+-- { "do": "assist", "leader": "Pilot Blade", "seconds": 120, "radius": 4, "leash": 5, "ranged": true }
+function handlers.assist(player)
+    local leader = namedInSight(player, step.leader)
+    local me = player:getPosition()
+    local radius, leash = step.radius or 4, step.leash or 5
+    if leader and leader:getPosition().z == me.z then
+        local lp = leader:getPosition()
+        local cur = g_game.getAttackingCreature()
+        local near = dist(me, lp) <= leash
+        if cur and cur:getHealthPercent() > 0 and near and dist(cur:getPosition(), lp) <= radius + 2 then
+            -- keep fighting this one
+        else
+            local best, bd
+            for _, m in ipairs(monsters(player)) do
+                local d = dist(m.c:getPosition(), lp)
+                if d <= radius and (not bd or d < bd) then best, bd = m.c, d end
+            end
+            if best and near then
+                g_game.setChaseMode(step.ranged and DontChase or ChaseOpponent)
+                g_game.attack(best)
+            else
+                if g_game.isAttacking() then g_game.cancelAttack() end
+                if dist(me, lp) > 2 and g_game.getFollowingCreature() ~= leader then g_game.follow(leader) end
+            end
+        end
+    else
+        if not stepData.lost then
+            log('assist: ' .. tostring(step.leader) .. ' is not in sight on this floor')
+            stepData.lost = true
+        end
+        fight(player, radius)
+    end
+    if now() - stepT >= (step.seconds or 60) then
+        pcall(function() g_game.cancelAttackAndFollow() end)
+        nextStep()
+    end
+end
+
+-- (party playtests) buy and sell at an NPC's trade window, as a player does:
+-- { "do": "trade", "buy": [["health potion", 50]], "sell": ["rat tail"] }   "sell": ["*"] sells all loot the NPC buys
+-- (never potions, food, ammunition or what you wear); walk next to the NPC first
+local FOOD = { [3577] = true, [3578] = true, [3582] = true, [3585] = true, [3586] = true, [3587] = true, [3588] = true,
+    [3589] = true, [3590] = true, [3591] = true, [3592] = true, [3593] = true, [3595] = true, [3600] = true, [3601] = true,
+    [3606] = true, [3607] = true, [3725] = true }
+local tradeList
+local KEEP = { [266] = true, [268] = true, [236] = true, [237] = true, [3447] = true, [3446] = true, [3448] = true }
+local function onOpenTrade(...)
+    for _, a in ipairs({ ... }) do
+        if type(a) == 'table' then tradeList = a end
+    end
+end
+local function bagCount(id)
+    local n = 0
+    for _, c in pairs(g_game.getContainers()) do
+        for _, it in ipairs(c:getItems()) do
+            if it:getId() == id then n = n + math.max(1, it:getCount()) end
+        end
+    end
+    return n
+end
+function handlers.trade(player)
+    if not stepData.t0 then
+        stepData.t0, tradeList = now(), nil
+        g_game.talk('hi')
+        return
+    end
+    if not stepData.asked and now() - stepData.t0 > 1.5 then
+        stepData.asked = true
+        g_game.talkChannel(MessageModes.NpcTo, 0, 'trade')
+        return
+    end
+    if not tradeList then
+        if now() - stepData.t0 > 8 then
+            log('trade: no trade window opened')
+            nextStep()
+        end
+        return
+    end
+    if stepData.done then
+        if now() - stepData.done > 2 then
+            pcall(function() g_game.closeNpcTrade() end)
+            g_game.talkChannel(MessageModes.NpcTo, 0, 'bye')
+            nextStep()
+        end
+        return
+    end
+    -- one trade action a second: the server answers "You are exhausted" to a sell and a buy in the same moment
+    if not stepData.queue then
+        local q = {}
+        for _, e in ipairs(step.sell or {}) do
+            for _, it in pairs(tradeList) do
+                local id = it[1] and it[1]:getId()
+                if id and (it[5] or 0) > 0 and ((e == '*' and not KEEP[id] and not FOOD[id]) or it[2]:lower() == e:lower()) then
+                    local n = math.min(bagCount(id), 100)
+                    if n > 0 then
+                        q[#q + 1] = function()
+                            g_game.sellItem(it[1], n, true)
+                            log(string.format('trade: sold %d %s at %d each', n, it[2], it[5]))
+                            remember(string.format('sold %d %s for %d gold', n, it[2], it[5] * n))
+                        end
+                    end
+                end
+            end
+        end
+        for _, b in ipairs(step.buy or {}) do
+            local name, found = b[1]:lower(), nil
+            for _, it in pairs(tradeList) do
+                if it[2]:lower() == name and (it[4] or 0) > 0 then found = it end
+            end
+            if found then
+                local left = b[2]
+                while left > 0 do
+                    local k = math.min(left, 100)
+                    q[#q + 1] = function()
+                        g_game.buyItem(found[1], k, step.ignoreCap == true, false)
+                        log(string.format('trade: bought %d %s at %d each', k, found[2], found[4]))
+                        remember(string.format('bought %d %s for %d gold', k, found[2], k * found[4]))
+                    end
+                    left = left - k
+                end
+            else
+                local names = {}
+                for _, it in pairs(tradeList) do
+                    if (it[4] or 0) > 0 then names[#names + 1] = it[2] .. ' ' .. it[4] end
+                end
+                remember('trade: ' .. name .. ' is not sold here. Sold: ' .. table.concat(names, ', '))
+            end
+        end
+        stepData.queue, stepData.next = q, now() + 0.5
+        return
+    end
+    if now() < stepData.next then return end
+    local f = table.remove(stepData.queue, 1)
+    if f then
+        f()
+        stepData.next = now() + 1.2
+        return
+    end
+    stepData.done = now()
+end
+
 -- closed doors a walk may open on its own: the Arrival Yard's gates (scripts/spirebound/tutorial.lua, C1). Like a
 -- player, the pilot clicks the gate in its way; the server says why if it stays shut.
 local OPENABLE = { [1638] = true }
@@ -776,6 +920,15 @@ function handlers.walk(player)
     end
 end
 
+-- the best potion of a kind in the bag (strongest first); one the server refused (level or class) is not tried again
+local HEALTH_POTIONS, MANA_POTIONS, refusedPotion, lastPotionTried = { 239, 236, 266 }, { 238, 237, 268 }, {}, nil
+local function bestPotion(list)
+    for _, id in ipairs(list) do
+        if not refusedPotion[id] and bagCount(id) > 0 then return id end
+    end
+    return list[#list]
+end
+
 local function sample(player)
     local list = monsters(player)
     local nextTo = 0
@@ -796,9 +949,40 @@ local function sample(player)
     end
     if hp < 45 and not plan.noPotions and now() - lastPotion > 2 then -- PvP tests of killing blows turn this off
         lastPotion = now()
-        local ok = pcall(function() g_game.useInventoryItemWith(POTION, player) end)
+        local ok = pcall(function() lastPotionTried = bestPotion(HEALTH_POTIONS); g_game.useInventoryItemWith(lastPotionTried, player) end)
         st.potions, total.potions = st.potions + 1, total.potions + 1
         log('health ' .. hp .. '%: drinking a potion' .. (ok and '' or ' (failed)'))
+    end
+end
+
+local function isParty(shield)
+    return shield == ShieldBlue or shield == ShieldBlueSharedExp or shield == ShieldBlueNoSharedExpBlink
+        or shield == ShieldBlueNoSharedExp or shield == ShieldYellow or shield == ShieldYellowSharedExp
+        or shield == ShieldYellowNoSharedExpBlink or shield == ShieldYellowNoSharedExp
+end
+
+-- eat like a player (food gives health and mana regeneration): one piece every 20 s until "You are full"; with no food
+-- in the bag, a character that knows Hearth Ration makes some out of a fight
+local lastEat, fullUntil = 0, 0
+local function eat(player)
+    if plan.noFood or not g_game.isOnline() then return end
+    local t = now()
+    if t - lastEat < 20 or t < fullUntil then return end
+    lastEat = t
+    for _, c in pairs(g_game.getContainers()) do
+        for _, it in ipairs(c:getItems()) do
+            if FOOD[it:getId()] then
+                g_game.use(it)
+                foodEaten = foodEaten + 1
+                log('ate item ' .. it:getId())
+                return
+            end
+        end
+    end
+    if kit and kit.food and kit.food[1] and not g_game.isAttacking()
+            and player:getMana() >= kit.food[1].mana + 40 then
+        g_game.talk(kit.food[1].words)
+        log('no food: casting ' .. kit.food[1].words)
     end
 end
 
@@ -816,6 +1000,19 @@ local function parseKit(text)
         local w, m, cd = e:match('^%s*(.-)/(%d+)/(%d+)$')
         if w then table.insert(k.heal, { words = w, mana = tonumber(m), cd = tonumber(cd) }) end
     end
+    k.ally, k.buff, k.food = {}, {}, {}
+    for e in part('ally'):gmatch('[^,]+') do -- heals for party members: kind "target" (say the name) or "party"
+        local w, m, cd, kind = e:match('^%s*(.-)/(%d+)/(%d+)/(%a+)$')
+        if w then table.insert(k.ally, { words = w, mana = tonumber(m), cd = tonumber(cd), kind = kind }) end
+    end
+    for e in part('buff'):gmatch('[^,]+') do -- taunts, party buffs, damage reduction (cast in a fight)
+        local w, m, cd, kind, dur = e:match('^%s*(.-)/(%d+)/(%d+)/([%a_]+)/(%d+)$')
+        if w then table.insert(k.buff, { words = w, mana = tonumber(m), cd = tonumber(cd), kind = kind, dur = tonumber(dur) }) end
+    end
+    for e in part('food'):gmatch('[^,]+') do -- a spell that makes food (Hearth Ration)
+        local w, m, cd = e:match('^%s*(.-)/(%d+)/(%d+)$')
+        if w then table.insert(k.food, { words = w, mana = tonumber(m), cd = tonumber(cd) }) end
+    end
     for e in part('skills'):gmatch('[^,]+') do
         local w, cd = e:match('^%s*(.-)/(%d+)$')
         if w then table.insert(k.skills, { words = w, mana = 0, cd = tonumber(cd), range = 1 }) end
@@ -825,7 +1022,7 @@ end
 
 local function cast(e, kind)
     g_game.talk(e.words)
-    ready[e.words] = now() + e.cd + 0.2
+    ready[e.key or e.words] = now() + math.max(e.cd, (e.dur or 0) - 5) + 0.2
     for _, s in ipairs({ st, total }) do
         s.casts, s.mana = s.casts + 1, s.mana + (e.mana or 0)
     end
@@ -846,6 +1043,32 @@ local function useKit(player)
             end
         end
     end
+    -- (party play) heal a hurt party member: a group heal when two or more are hurt, else the one lowest on health
+    if #(kit.ally or {}) > 0 and t - lastHealCast >= 1.1 then
+        local me, hurt = player:getPosition(), {}
+        for _, c in ipairs(g_map.getSpectators(me, false) or {}) do
+            local cp = c:getPosition()
+            if c:isPlayer() and not c:isLocalPlayer() and isParty(c:getShield()) and cp and cp.z == me.z and dist(cp, me) <= 6
+                    and c:getHealthPercent() < 65 and c:getHealthPercent() > 0 then
+                hurt[#hurt + 1] = c
+            end
+        end
+        table.sort(hurt, function(a, b) return a:getHealthPercent() < b:getHealthPercent() end)
+        if hurt[1] then
+            for _, e in ipairs(kit.ally) do
+                if t >= (ready[e.words] or 0) and mana >= e.mana then
+                    if e.kind == 'party' and (#hurt >= 2 or hp < 0.7) then
+                        lastHealCast = t
+                        return cast(e, 'party heal')
+                    elseif e.kind == 'target' then
+                        lastHealCast = t
+                        return cast({ words = e.words .. ' "' .. hurt[1]:getName() .. '"', key = e.words, mana = e.mana, cd = e.cd },
+                            'heal ' .. hurt[1]:getName() .. ' (' .. hurt[1]:getHealthPercent() .. '%)')
+                    end
+                end
+            end
+        end
+    end
     -- mana potions the way players use them: casters (a big mana pool) top up in a fight; fighters, whose small pool
     -- refills on its own, drink one only when hurt and short of the mana for their healing spell
     local cheapestHeal = kit.heal[1] and kit.heal[1].mana or math.huge
@@ -853,9 +1076,25 @@ local function useKit(player)
         or (hp < 0.5 and mana < cheapestHeal and maxMana >= cheapestHeal)
     if wantMana and not plan.noPotions and t - lastManaPotion > 2 and t - lastPotion > 1 then
         lastManaPotion = t
-        pcall(function() g_game.useInventoryItemWith(MANA_POTION, player) end)
+        pcall(function() lastPotionTried = bestPotion(MANA_POTIONS); g_game.useInventoryItemWith(lastPotionTried, player) end)
         st.manaPots, total.manaPots = st.manaPots + 1, total.manaPots + 1
         log('mana ' .. math.floor(100 * mana / maxMana) .. '%: drinking a mana potion')
+    end
+    -- taunts, party buffs and damage reduction in a fight, keeping enough mana for a heal
+    if g_game.isAttacking() and #(kit.buff or {}) > 0 then
+        for _, e in ipairs(kit.buff) do
+            if t >= (ready[e.words] or 0) and mana >= e.mana + (kit.heal[1] and kit.heal[1].mana or 0) then
+                local want = true
+                if e.kind == 'taunt' or e.kind == 'dr_self' then -- only when several monsters are close
+                    local n = 0
+                    for _, m in ipairs(monsters(player)) do
+                        if m.d <= 3 then n = n + 1 end
+                    end
+                    want = n >= 2 or (e.kind == 'dr_self' and hp < 0.5)
+                end
+                if want then return cast(e, 'buff') end
+            end
+        end
     end
     if not g_game.isAttacking() or t - lastAttackCast < 2.1 then return end
     local target = g_game.getAttackingCreature()
@@ -883,6 +1122,7 @@ local function tick()
         g_game.talk('/pilot fightkit')
     end
     useKit(player)
+    eat(player)
     local h = handlers[step['do']]
     if not h then
         log('unknown step "' .. tostring(step['do']) .. '"')
@@ -896,20 +1136,38 @@ local function onHealthChange(player, health, maxHealth)
         st.dmg, total.dmg = st.dmg + (lastHp - health), total.dmg + (lastHp - health)
     end
     lastHp = health
-    if health <= 0 and not finished then
+    if health <= 0 and not finished and not diedLive then
         log('DEATH at ' .. fmtPos(player:getPosition()))
-        finish('died')
+        if plan.live then -- (party playtests) a death is part of the game: get up at the temple and carry on
+            diedCount, diedLive = diedCount + 1, true
+            remember('YOU DIED at ' .. fmtPos(player:getPosition()))
+            plan.steps, step = {}, nil
+            scheduleEvent(function()
+                if modules.game_playerdeath and modules.game_playerdeath.destroyWindows then
+                    pcall(modules.game_playerdeath.destroyWindows)
+                end
+                pcall(function() CharacterList.doLogin() end)
+            end, 5000)
+        else
+            finish('died')
+        end
     end
 end
 
 local function onText(mode, text)
     if not st then return end
     if plan.live then remember(text) end
+    if lastPotionTried and (text:find('can only be') or text:find('only be consumed')) then
+        refusedPotion[lastPotionTried] = true
+    end
+    if text:find('You are full') then
+        fullUntil, foodEaten = now() + 240, math.max(0, foodEaten - 1)
+    end
     if text:find('^pilot fightkit:') then
         kit = parseKit(text)
         log(string.format('fight kit: %d attack spells, %d heals, %d weapon skills (%s)', #kit.attack, #kit.heal, #kit.skills, text))
         return
-    elseif text:find('^pilot: level') then
+    elseif text:find('^pilot: level') or text:find('You advanced') or text:find('[Mm]astery') or text:find('^You are now an?') then
         kit, kitAsked = nil, 0 -- a new level may unlock spells: ask again
     end
     if text:find('^Loot of') then
@@ -975,6 +1233,10 @@ end
 
 local function onGameStart()
     log('in game as ' .. plan.character)
+    if diedLive then remember('back in the game after dying') end
+    if reconnecting then remember('back in the game after a disconnect') end
+    reconnecting = false
+    diedLive = false
     lastHp = g_game.getLocalPlayer() and g_game.getLocalPlayer():getHealth()
     scheduleEvent(function()
         idx, step, total = 0, nil, newStats()
@@ -983,13 +1245,20 @@ local function onGameStart()
     end, 2500)
 end
 
+local login -- (defined below; onGameEnd logs back in after a server restart)
 local function onGameEnd()
+    if diedLive then return end -- (live) the death window logs back in
     if charlistPending and not finished then
         charlistPending = false
         scheduleEvent(readCharlist, 4000)   -- the refreshed list arrives about half a second after the logout
         return
     end
-    if not finished then
+    if not finished and plan.live then -- (live) a server restart: keep trying to log back in
+        log('left the game unexpectedly: logging back in')
+        remember('disconnected from the server: logging back in')
+        reconnecting, plan.steps, step, loginEvent = true, {}, nil, nil
+        scheduleEvent(function() login(0) end, 10000)
+    elseif not finished then
         log('left the game unexpectedly')
         finish('disconnected')
     end
@@ -997,8 +1266,16 @@ end
 
 -- log in like a player: fill the login window, then pick the character from the list
 local loginShotTaken = false
-local function login(tries)
+login = function(tries)
     tries = tries or 0
+    if tries > 120 and plan.live and reconnecting then -- the server is still down: try again in a while
+        loginEvent = nil
+        for _, w in ipairs(rootWidget:getChildren()) do
+            pcall(function() if w:getStyleName() == 'MessageBox' or w:getId() == 'errorBox' then w:destroy() end end)
+        end
+        scheduleEvent(function() login(0) end, 15000)
+        return
+    end
     if tries > 120 then
         log('could not log in (no login window or character list)')
         return finish('login failed')
@@ -1048,12 +1325,16 @@ function Autopilot.init()
     end
     plan = p
     if p.log then LOG = '/' .. p.log end -- two clients at once (PvP tests) each keep their own log
+    if p.tag then -- several live clients at once (claude_play --as): each has its own command and state files
+        CMD, STATE = '/autopilot_cmd_' .. p.tag .. '.json', '/autopilot_state_' .. p.tag .. '.json'
+    end
     -- with vertical sync on, Windows stalls the client while its window is hidden behind others; a test run must
     -- keep going in the background
     pcall(function() g_window.setVerticalSync(false) end)
     pcall(function() g_app.setMaxFps(30) end)
     log('autopilot run "' .. (plan.name or '?') .. '": ' .. #plan.steps .. ' steps; log folder ' .. g_resources.getWriteDir())
-    connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
+    connect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk,
+        onOpenNpcTrade = onOpenTrade })
     connect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
     connect(Creature, { onOutfitChange = onOutfitChange, onDisappear = onDisappear })
     scheduleEvent(function() login(0) end, 2000)
@@ -1061,7 +1342,8 @@ end
 
 function Autopilot.terminate()
     if not plan then return end
-    disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk })
+    disconnect(g_game, { onGameStart = onGameStart, onGameEnd = onGameEnd, onTextMessage = onText, onTalk = onTalk,
+        onOpenNpcTrade = onOpenTrade })
     disconnect(LocalPlayer, { onHealthChange = onHealthChange, onStatesChange = onStatesChange })
     disconnect(Creature, { onOutfitChange = onOutfitChange, onDisappear = onDisappear })
     if tickEvent then removeEvent(tickEvent) end

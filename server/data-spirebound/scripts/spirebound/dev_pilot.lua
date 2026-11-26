@@ -83,10 +83,24 @@ function pilot.onSay(player, words, param)
 		-- "pilot fightkit: attack=words/mana/cd/range,...; heal=words/mana/cd,...; skills=words/cd,..."
 		-- (Jay, 2026-11-25: the autopilot only swung its weapon, so kill speed and mana use were never measured)
 		local base, lvl = player:getVocation():getBaseId(), player:getLevel()
-		local atk, heal, skills = {}, {}, {}
+		-- (party playtests, 2026-11-26) also: heals for party members, taunts and party buffs, the food spell, and the
+		-- style abilities this character has really earned
+		local atk, heal, skills, ally, buff, food = {}, {}, {}, {}, {}, {}
+		local style = SpireStyle.get(player)
 		for _, row in ipairs(SpireSpells.list) do
-			if not row.lostArt and not row.style and not row.path and not row.final and SpireSpells.allowed(row, base)
+			local earned = (not row.style or SpireStyle.hasAbility(player, row.style)) and (not row.path or style.path == row.path)
+				and (not row.final or style.final == row.final)
+			if not row.lostArt and earned and SpireSpells.allowed(row, base)
 					and SpireSpells.levelFor(row, base) <= lvl and (row.mana or 0) <= player:getMaxMana() then
+				if row.kind == "heal_target" or row.kind == "hot_target" or row.kind == "heal_chain" then
+					table.insert(ally, string.format("%s/%d/%d/target", row.words, row.mana or 0, row.cd or 1))
+				elseif row.kind == "heal_party" or row.kind == "heal_zone" then
+					table.insert(ally, string.format("%s/%d/%d/party", row.words, row.mana or 0, row.cd or 1))
+				elseif row.kind == "taunt" or row.kind == "party_buff" or row.kind == "dr_party" or row.kind == "dr_self" then
+					table.insert(buff, string.format("%s/%d/%d/%s/%d", row.words, row.mana or 0, row.cd or 1, row.kind, row.duration or 0))
+				elseif row.kind == "food" then
+					table.insert(food, string.format("%s/%d/%d", row.words, row.mana or 0, row.cd or 1))
+				end
 				if row.kind == "attack_target" or row.kind == "attack_area" or row.kind == "strike" then
 					table.insert(atk, string.format("%s/%d/%d/%d", row.words, row.mana or 0, row.cd or 2,
 						row.kind == "attack_target" and (row.range or 4) or 1))
@@ -102,7 +116,8 @@ function pilot.onSay(player, words, param)
 			end
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot fightkit: attack=" .. table.concat(atk, ",") .. "; heal="
-			.. table.concat(heal, ",") .. "; skills=" .. table.concat(skills, ","))
+			.. table.concat(heal, ",") .. "; skills=" .. table.concat(skills, ",") .. "; ally=" .. table.concat(ally, ",")
+			.. "; buff=" .. table.concat(buff, ",") .. "; food=" .. table.concat(food, ","))
 	elseif cmd == "heal" then
 		player:addHealth(player:getMaxHealth())
 		player:addMana(player:getMaxMana())
