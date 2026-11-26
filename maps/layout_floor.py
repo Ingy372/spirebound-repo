@@ -26,9 +26,14 @@ def build(m, n):
 
     # ground, accent patches, tree border
     m.fill(X0, Y0, SIZE, SIZE, Z, base)
-    for _ in range(25):
-        ax, ay = X0 + rng.randint(5, SIZE - 30), Y0 + rng.randint(5, SIZE - 30)
-        m.fill(ax, ay, rng.randint(8, 25), rng.randint(8, 25), Z, accent)
+    for _ in range(25):                                    # accent patches: ragged blobs, never hard-edged squares
+        ax, ay = X0 + rng.randint(15, SIZE - 15), Y0 + rng.randint(15, SIZE - 15)
+        rx, ry = rng.randint(4, 12), rng.randint(4, 12)
+        for yy in range(ay - ry - 2, ay + ry + 3):
+            for xx in range(ax - rx - 2, ax + rx + 3):
+                d = ((xx - ax) / (rx + 0.5)) ** 2 + ((yy - ay) / (ry + 0.5)) ** 2
+                if d <= 1.0 - 0.35 * rng.random():
+                    m.ground[(xx, yy, Z)] = m.pick(accent)
     for y in range(Y0, Y0 + SIZE):
         for x in range(X0, X0 + SIZE):
             if x < X0 + 3 or y < Y0 + 3 or x >= X0 + SIZE - 3 or y >= Y0 + SIZE - 3:
@@ -89,8 +94,11 @@ def build(m, n):
     m.fill(lx, ly, 26, 14, Z, "water")
     m.points[P + "lake"] = (lx - 1, ly + 7, Z)
 
-    # camps
-    camps = [(X0 + 20, Y0 + 150), (X0 + 70, Y0 + 210), (X0 + SIZE - 80, Y0 + 200), (X0 + SIZE - 70, Y0 + 40),
+    grounds = []
+    if n == 2:                                             # R13b: Floor 2's real hunting grounds (maps/floor2_plan.py)
+        grounds = _floor2_grounds(m, X0, Y0, Z, path)
+    # camps (placeholder; floors 3-10 until each gets its own plan)
+    camps = [] if grounds else [(X0 + 20, Y0 + 150), (X0 + 70, Y0 + 210), (X0 + SIZE - 80, Y0 + 200), (X0 + SIZE - 70, Y0 + 40),
              (X0 + 160, Y0 + 130), (X0 + 40, Y0 + 90)]
     for i, (sx, sy) in enumerate(camps):
         m.scatter(sx, sy, 40, 35, Z, "bush" if base != "snow" else "boulder", 0.04)
@@ -178,6 +186,9 @@ def build(m, n):
         if placed == 12:
             break
         p = (sx, sy, Z)
+        in_ground = any(gx - 2 <= sx < gx + gw + 2 and gy - 2 <= sy < gy + gh + 2 for gx, gy, gw, gh in grounds)
+        if in_ground or p in m.road_tiles:
+            continue
         if p in m.ground and m.ground[p] not in (4597, 4609) and not m.house.get(p) and not (tx <= sx < tx + tw and ty <= sy < ty + th):
             m.clear_items(*p)
             placed += 1
@@ -192,3 +203,31 @@ def build(m, n):
     m.zone("bossroom", px, py, 24, 20, Z)
     m.zone("bossroom", bx, by, 30, 24, bz)
     m.zone("town", tx, ty, tw, th, Z)
+
+
+def _floor2_grounds(m, X0, Y0, Z, path):
+    """Floor 2's walled hunting grounds, their party caves, the road spurs to their gates and the open land between.
+    Returns the grounds' rectangles (world coordinates) so nothing else is placed on them."""
+    import wilds
+    from floor2_plan import CAMPS, SPURS
+    rects = []
+    for c in CAMPS:
+        L = wilds.build(m, c)
+        if c.get("den"):
+            wilds.cave(m, L)
+        rects.append((X0 + c["x"], Y0 + c["y"], c["w"], c["h"]))
+        pts = [(X0 + x, Y0 + y) for x, y in SPURS[c["id"]]]
+        for a, b in zip(pts, pts[1:]):
+            m.road(a, b, Z, key=path, wind=False)
+
+    def busy(x, y):
+        if (x, y, Z) in m.road_tiles:
+            return True
+        return any(gx - 2 <= x < gx + gw + 2 and gy - 2 <= y < gy + gh + 2 for gx, gy, gw, gh in rects)
+    # the highland between the grounds: copses and stones, never on a road or against a ground's wall
+    m.scatter(X0 + 4, Y0 + 4, 292, 200, Z, "tree", 0.025, avoid=lambda x, y: busy(x, y) or any(
+        (x + a, y + b, Z) in m.road_tiles for a in (-1, 0, 1) for b in (-1, 0, 1)))
+    m.scatter(X0 + 4, Y0 + 4, 292, 200, Z, "bush", 0.015, avoid=lambda x, y: busy(x, y) or any(
+        (x + a, y + b, Z) in m.road_tiles for a in (-1, 0, 1) for b in (-1, 0, 1)))
+    return rects
+

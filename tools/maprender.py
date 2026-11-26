@@ -117,11 +117,15 @@ class Renderer:
         canvas.alpha_composite(s, (x, y))
 
 
-def build_map():
+def build_map(floors=()):
+    """Floor 1 always (the signposts need it); floors 2-10 only when the picture is on them (they are slow to build)."""
     import mapgen
     import layout_floor1
+    import layout_floor
     m = mapgen.Map()
     layout_floor1.build(m)
+    for n in floors:
+        layout_floor.build(m, n)
     m.finish()
     import hunt_routes                     # the !hunt signposts (G9) are placed after the map is finished
     hunt_routes.run(m, write=False)
@@ -130,7 +134,10 @@ def build_map():
 
 if __name__ == "__main__":
     out = sys.argv[1]
-    m = build_map()
+    fl = ()
+    if sys.argv[2] != "town" and int(sys.argv[2]) >= 2000:
+        fl = ((int(sys.argv[2]) - 2000) // 400 + 2,)
+    m = build_map(fl)
     r = Renderer()
     if sys.argv[2] == "town":
         import layout_floor1 as L

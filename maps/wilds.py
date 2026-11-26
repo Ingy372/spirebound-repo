@@ -60,9 +60,25 @@ D8 = D4 + ((1, 1), (1, -1), (-1, 1), (-1, -1))
 
 
 # ------------------------------------------------------------------------------------------------ geometry
+def org(c):
+    """The corner of the floor a ground is on: Floor 1 grounds are relative to 1000,1000; grounds on higher floors carry
+    their floor's corner in c["org"] (maps/floor2_plan.py)."""
+    return c.get("org", (X0, Y0))
+
+
+def floor_box(n):
+    """(x1, y1, x2, y2) of floor n's surface (x2, y2 exclusive)."""
+    if n == 1:
+        return (X0, Y0, X0 + 400, Y0 + 400)
+    from floors import origin, SIZE
+    ox, oy = origin(n)
+    return (ox, oy, ox + SIZE, oy + SIZE)
+
+
 def _frame(c):
     """Local frame: u across the gate side, v inwards from it. Returns (W, D, to_world)."""
-    x, y, w, h = X0 + c["x"], Y0 + c["y"], c["w"], c["h"]
+    ox, oy = org(c)
+    x, y, w, h = ox + c["x"], oy + c["y"], c["w"], c["h"]
     side = c["gate"]
     if side == "n":
         return w, h, lambda u, v: (x + u, y + v)
@@ -456,17 +472,19 @@ def flood(m, starts, block, inside=None, limit=None):
     return seen
 
 
-def check(m, home):
+def check(m, home, floor=1):
     """The walk test (plan Part 5.2.9). Run after Map.finish() so edge pieces and whole objects are in place.
-    Returns a list of problems (empty = every ground passes)."""
+    Checks the grounds of one floor, walking from `home` (that floor's temple). Returns a list of problems."""
     block = blockers()
     problems = []
-    world = flood(m, [home], block, limit=(X0, Y0, X0 + 400, Y0 + 400))
-    for L in getattr(m, "wilds", []):
+    box = floor_box(floor)
+    world = flood(m, [home], block, limit=box)
+    mine = [L for L in getattr(m, "wilds", []) if L["c"].get("floor", 1) == floor]
+    for L in mine:
         gid, rect = L["id"], L["rect"]
         gate = [(x, y, Z) for x, y in L["gate"]]
         if not any(g in world for g in gate):
-            problems.append(f"{gid}: the gate cannot be reached from the Hearthstone")
+            problems.append(f"{gid}: the gate cannot be reached from the floor's temple")
         inside = flood(m, gate, block, inside=rect)
         xs = [p[0] for p in rect]; ys = [p[1] for p in rect]
         edge = {(x, y) for (x, y) in rect if x in (min(xs), max(xs)) or y in (min(ys), max(ys))}
@@ -492,15 +510,15 @@ def check(m, home):
         if outside & inside:
             problems.append(f"{gid}: the inside can be reached without the gate")
     # plan Part 8.3: no monster group on a road or trail outside a ground, or within 8 tiles of a gate
-    gates = [g for L in getattr(m, "wilds", []) for g in L["gate"]]
-    inside_any = set().union(*[L["rect"] for L in getattr(m, "wilds", [])]) if getattr(m, "wilds", None) else set()
+    gates = [g for L in mine for g in L["gate"]]
+    inside_any = set().union(*[L["rect"] for L in mine]) if mine else set()
     for _n, (x, y, z), *_r in m.monsters:
-        if z != Z or not (X0 <= x < X0 + 400 and Y0 <= y < Y0 + 400):
+        if z != Z or not (box[0] <= x < box[2] and box[1] <= y < box[3]):
             continue
         if (x, y, z) in getattr(m, "road_tiles", ()) and (x, y) not in inside_any:
-            problems.append(f"a monster group stands on a road at {(x - X0, y - Y0)}")
+            problems.append(f"floor {floor}: a monster group stands on a road at {(x - box[0], y - box[1])}")
         if any(max(abs(x - gx), abs(y - gy)) < 9 for gx, gy in gates):
-            problems.append(f"a monster group is within 8 tiles of a gate at {(x - X0, y - Y0)}")
+            problems.append(f"floor {floor}: a monster group is within 8 tiles of a gate at {(x - box[0], y - box[1])}")
     return problems
 
 
@@ -517,7 +535,8 @@ if __name__ == "__main__":
         if c["id"] not in only:
             continue
         m = Map()
-        m.fill(X0 + c["x"] - 6, Y0 + c["y"] - 6, c["w"] + 12, c["h"] + 12, Z, "grass")
+        ox, oy = org(c)
+        m.fill(ox + c["x"] - 6, oy + c["y"] - 6, c["w"] + 12, c["h"] + 12, Z, "grass")
         L = build(m, c)
         gx, gy, _ = m.points["gate_" + c["id"]]
         step = {"n": (0, -1), "s": (0, 1), "e": (1, 0), "w": (-1, 0)}[c["gate"]]

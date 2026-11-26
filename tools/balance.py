@@ -58,6 +58,10 @@ HABITS = {
     # Floor 1 elites (FLOOR1_REVIEW.md F1-11): alone, rare, each counts for about two and a half
     "Old Bristleback": ("loner", 2.5), "Moonhowl": ("loner", 2.5), "Mossback Snapper": ("loner", 2.5),
     "Blackthorn": ("loner", 2.5), "Prism Shardling": ("loner", 2.5), "Granite Warden": ("loner", 2.5),
+    # Floor 2 (maps/floor2_plan.py, R13b/S6): every habit once, weights against Floor 2's ordinary monster
+    "Horned Grazer": ("pair", 1.0), "Dust Strider": ("swarm", 0.5), "Ridge Cat": ("loner", 1.6),
+    "Blight Wasp": ("colony", 0.6), "Hill Cutthroat": ("sentry", 1.1), "Stonehide Bull": ("pack", 1.5),
+    "Herd Bull": ("loner", 2.5), "Mesa Wyrmling": ("loner", 3.0),
 }
 # Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}
@@ -127,6 +131,50 @@ def spawn_rule_problems():
         out.append("Floor 1 has more than one large-group ground (Jay: occasional)")
     if not any(c.get("type") == "group" or c.get("den") for c in grounds):
         out.append("Floor 1 has no group ground")
+    out += floor_recipe_problems(2)
+    return out
+
+
+def floor_recipe_problems(n):
+    """DESIGN.md 9.4 layer 3 for a floor with its own plan (maps/floor<n>_plan.py): 1-2 training grounds, one class
+    ground per class, 2-3 mixed, at least one group ground (or party cave), at most one large; every monster has a habit
+    and its group sizes fit that habit; no two grounds share a habit in the same kind of layout."""
+    import importlib
+    sys.path.insert(0, str(ROOT / "maps"))
+    try:
+        plan = importlib.import_module(f"floor{n}_plan")
+    except ImportError:
+        return []
+    out, F = [], f"Floor {n}"
+    grounds = plan.CAMPS + [plan.APEX]
+    count = lambda t: sum(1 for c in grounds if c.get("type") == t)     # noqa: E731
+    if not 1 <= count("training") <= 2:
+        out.append(f"{F}: wants 1 or 2 training grounds, has {count('training')}")
+    if not 2 <= count("mixed") <= 3:
+        out.append(f"{F}: wants 2 or 3 mixed grounds, has {count('mixed')}")
+    if count("large") > 1:
+        out.append(f"{F}: more than one large-group ground")
+    if not (count("group") or any(c.get("den") for c in plan.CAMPS)):
+        out.append(f"{F}: no group ground")
+    have = {c.get("cls") for c in grounds if c.get("type") == "class"}
+    out += [f"{F}: no class ground for the {k}" for k in CLASSES if k not in have]
+    looks = {}
+    for c in plan.CAMPS:
+        if c.get("type") not in GROUND_TYPES:
+            out.append(f"{F} {c['title']}: no ground type")
+        for g in c.get("groups", []) + c.get("den_groups", []):
+            for mname, k in g:
+                if mname not in HABITS:
+                    out.append(f"{F} {c['title']}: {mname} has no habit")
+                    continue
+                lo, hi = HABIT_SIZES[HABITS[mname][0]]
+                if len(g) == 1 and not lo <= k <= hi:
+                    out.append(f"{F} {c['title']}: a group of {k} {mname} does not fit its habit ({HABITS[mname][0]})")
+        lead = max({mn for g in c["groups"] for mn, _k in g}, key=lambda mn: sum(k for g in c["groups"] for x, k in g if x == mn))
+        key = (HABITS.get(lead, ("?",))[0], c["wall"], c["core"])
+        if key in looks:
+            out.append(f"{F}: {c['title']} and {looks[key]} use the same habit in the same kind of layout")
+        looks[key] = c["title"]
     return out
 
 

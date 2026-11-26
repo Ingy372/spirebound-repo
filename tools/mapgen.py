@@ -834,6 +834,8 @@ def main(argv):
         import wilds
         import designed
         problems = wilds.check(m, m.points["temple_hearthgate"]) + wilds.check_caves(m) + designed.check(m)
+        if any(L["c"].get("floor", 1) == 2 for L in m.wilds):   # R13b: Floor 2's grounds, walked from Highrest's temple
+            problems += wilds.check(m, m.points["f2_temple"], floor=2)
         if problems:
             sys.exit("FAIL: hunting-ground walk test:\n" + "\n".join(problems))
         print(f"walk test: {len(m.wilds)} hunting grounds pass")

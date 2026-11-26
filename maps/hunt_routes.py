@@ -221,6 +221,8 @@ def grounds(m):
     by_id = {c["id"]: c for c in CAMPS}
     out = []
     for L in getattr(m, "wilds", []):
+        if L["c"].get("floor", 1) != 1:              # !hunt directions are Floor 1's (from the Hearthstone)
+            continue
         c = by_id.get(L["id"], {})
         side = SIDE_NAMES.get(c.get("gate"))
         out.append((L["id"], c.get("title", L["id"]), [(x, y, Z) for x, y in L["gate"]], side))

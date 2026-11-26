@@ -34,8 +34,6 @@ SpireTasks.floorList = {
 	{ id = "t2_hillcutthroat", floor = 2, monster = "Hill Cutthroat", count = 80, gold = 1030, points = 1 },
 	{ id = "t2_blightwasp", floor = 2, monster = "Blight Wasp", count = 80, gold = 1090, points = 1 },
 	{ id = "t2_stonehidebull", floor = 2, monster = "Stonehide Bull", count = 80, gold = 1290, points = 1 },
-	{ id = "t2_herdbull", floor = 2, monster = "Herd Bull", count = 40, gold = 860, points = 2 },
-	{ id = "t2_mesawyrmling", floor = 2, monster = "Mesa Wyrmling", count = 25, gold = 830, points = 3 },
 	{ id = "t3_sporebat", floor = 3, monster = "Spore Bat", count = 80, gold = 1180, points = 2 },
 	{ id = "t3_mosscrawler", floor = 3, monster = "Moss Crawler", count = 80, gold = 1270, points = 2 },
 	{ id = "t3_foglurker", floor = 3, monster = "Fog Lurker", count = 80, gold = 1360, points = 2 },
