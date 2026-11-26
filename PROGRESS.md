@@ -159,3 +159,5 @@ Overnight the lead session finished Step 2 except one small measurement: H14 (bu
 - Restarted the server (11:12, backup taken first): the Bristle Boar's quills and the six elites' own looks are live.
 
 - Own corpses installed (Jay approved all three, 2026-11-26). The Ruin Sentinel and Granite Warden now leave a "broken stone guardian", the Underkeeper a "fallen underkeeper", the Vault Wraith a "faded vault wraith", each going through its three looks; the client redraws three unused Tibia corpses with our art at every start. Needs a server restart (lead session) and a kill of each in the client to tick N7.
+
+- N7 ticked: the three approved corpses show in the real client. The Ruin Sentinel leaves its stone rubble, the Vault Wraith its robe and strongbox, the Underkeeper a heap of bones with his lantern (routes n7_corpses and n7_corpses_b). Testing the Underkeeper needs an Arcanist: his armour blocks a Vanguard completely.

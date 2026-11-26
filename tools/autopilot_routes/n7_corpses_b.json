@@ -1,0 +1,76 @@
+{
+ "name": "n7_corpses_b",
+ "character": "Pilot Arcanist",
+ "timeout": 300,
+ "about": "N7 second half: the Vault Wraith, then the Underkeeper at 1 health (his armour 95 blocks a Vanguard's hits completely; an Arcanist's spells get through).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 300"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 4"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "n7 corpses"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Vault Wraith, 1, 30"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7: Vault Wraith"
+  },
+  {
+   "do": "shot",
+   "name": "n7_wraith"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn The Underkeeper, 1, 1"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7: The Underkeeper"
+  },
+  {
+   "do": "shot",
+   "name": "n7_underkeeper"
+  },
+  {
+   "do": "heal"
+  }
+ ]
+}

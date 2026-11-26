@@ -1,0 +1,92 @@
+{
+ "name": "n7_corpses",
+ "character": "Pilot Vanguard",
+ "timeout": 300,
+ "about": "N7: kill a Ruin Sentinel, the Underkeeper and a Vault Wraith; each should leave our own corpse with its loot. Level 300: the Underkeeper hits for about 680 a second, which killed a level-35 Pilot before his corpse showed.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 300"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 4"
+  },
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "n7 corpses"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Ruin Sentinel, 1, 30"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7: Ruin Sentinel"
+  },
+  {
+   "do": "shot",
+   "name": "n7_sentinel"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn The Underkeeper, 1, 30"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7: The Underkeeper"
+  },
+  {
+   "do": "shot",
+   "name": "n7_underkeeper"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Vault Wraith, 1, 30"
+  },
+  {
+   "do": "hunt",
+   "seconds": 15,
+   "note": "n7: Vault Wraith"
+  },
+  {
+   "do": "shot",
+   "name": "n7_wraith"
+  },
+  {
+   "do": "heal"
+  }
+ ]
+}
