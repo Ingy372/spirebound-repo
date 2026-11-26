@@ -8,6 +8,27 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q69. Hearthgate's buildings: reshape them, or leave that to the final polish? (2026-11-26, N3)
+I dressed Hearthgate (market parasols, goods and a cart by the stalls, flower pots round the Hearth, a well, a covered wagon, braziers at the gates, two campfires, and a notice board in the square with live news: the floor race, the beacon, the weekend bonus, the biggest bounties). What's left of N3 is "varied building shapes": today every house is the same square box. The houses are saved in the database (the game restores their doors on boot), so reshaping them can break owned houses.
+- **Recommendation:** leave the houses' shapes to the Cowork polish near the end, as planned; I reshape only the shops and public buildings (an L-shaped inn, a tower over the gate) if you say the town still looks generated after you walk it.
+- Assumed until you answer: leave it to the polish.
+- Jay's answer:
+
+### Q68. More tutorial gates in the Arrival Yard (cursors, the Journal, skills)? (2026-11-26, P7)
+The roadmap asks for three more gates in the yard (learn the cursors, open the Journal, use a skill). Every tester so far has got stuck somewhere in the first 30 minutes, and each new gate is one more place to get stuck.
+- **Recommendation:** don't add them until you've played the first hour yourself (R0). If you find yourself not knowing the Journal or the skill keys, I add those two as signs plus one gate.
+- Assumed until you answer: no new gates for now.
+- Jay's answer:
+
+### Q67. Floors 2-4 are real places now; each has its own twist (2026-11-26, R13b / S6)
+Floors 2, 3 and 4 each have eight walled hunting grounds, built like Floor 1's: one training ground beside town, one ground for each class, two mixed, one party ground and party caves, with the apex as the big-group ground. The easiest grounds are next to town, the hardest far north. Each floor has one behaviour the floors below don't (my call):
+  - Floor 2: the herd animals (grazers, striders) run when badly hurt and come back once they've recovered.
+  - Floor 3: the plant creatures (moss crawlers, husks) regrow if you leave them.
+  - Floor 4: Reed Witches mend the monsters around them; kill the witch first.
+Also: the walk test in the client found that Floor 2's ordinary monsters were far too strong once a whole loop woke at once (a level 60 test Vanguard died in the level 35-41 ground). Ordinary monsters on Floors 2-10 now hit at 60% of the old numbers; bosses are unchanged.
+- **Recommendation:** keep the twists. When you reach Floor 2 in a playtest, tell me whether Grazing Downs feels right for a fresh level 35.
+- Jay's answer:
+
 ### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
 Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
 - **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).

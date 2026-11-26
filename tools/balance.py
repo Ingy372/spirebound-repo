@@ -66,6 +66,10 @@ HABITS = {
     "Bark Mantis": ("pair", 1.0), "Spore Bat": ("swarm", 0.5), "Fog Lurker": ("loner", 1.6),
     "Moss Crawler": ("colony", 0.7), "Lantern Wisp": ("sentry", 1.0), "Rootbound Husk": ("pack", 1.5),
     "Moss Elder": ("loner", 2.5), "Grove Hydraling": ("loner", 3.0),
+    # Floor 4 (maps/floor4_plan.py, S6)
+    "Drowned Footman": ("pair", 1.0), "Lake Eel": ("swarm", 0.5), "Helm Knight": ("loner", 1.8),
+    "Tide Crab": ("colony", 0.8), "Reed Witch": ("sentry", 1.0), "Castle Hound": ("pack", 1.2),
+    "Drowned Sergeant": ("loner", 2.5), "Siege Beast": ("loner", 3.0),
 }
 # Group shapes per habit: the sizes a group of that habit may have, by band (nest = the colony's nest or a den).
 HABIT_SIZES = {"loner": (1, 1), "pair": (1, 2), "pack": (3, 5), "swarm": (1, 8), "colony": (1, 12), "sentry": (1, 4)}

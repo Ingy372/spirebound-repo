@@ -461,9 +461,11 @@ HUNT_DAMAGE = {"camp": 0.6, "elite": 0.6, "labyrinth": 0.6, "apex": 0.6}
 # S6 (DESIGN.md 9.4 layer 3): each floor adds one behaviour the floors below don't have (Claude's call, Jay can veto).
 #   Floor 2: the herd animals run when badly hurt and come back once recovered (the engine's runHealth).
 #   Floor 3: the plant creatures regrow: they heal 3% of their health every 4 seconds.
+#   Floor 4: the Reed Witches mend the hurt monsters around them, any kind (Floor 1's Hedge Hexer trick).
 TWISTS = {
     "Horned Grazer": dict(run=lambda m: m["hp"] // 6), "Dust Strider": dict(run=lambda m: m["hp"] // 5),
     "Moss Crawler": dict(heal=(0.03, 4000)), "Rootbound Husk": dict(heal=(0.03, 4000)),
+    "Reed Witch": dict(events=["SpireHexMend"]),          # Floor 4: witches mend the hurt monsters round them
 }
 
 

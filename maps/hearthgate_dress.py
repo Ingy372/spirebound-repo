@@ -19,6 +19,7 @@ BARRELS = [2523, 116]
 POTS = [316, 321, 324, 329]
 TREE = 3619
 PARASOLS = [625, 626, 627]
+CAMPFIRE = 1996
 
 
 def _bare(m, x, y, z, r):
@@ -96,6 +97,14 @@ def dress(m, tx, ty, tw, th, z, rng):
         else:
             m.put(x, y, z, k)
         placed.append((x, y))
+
+    # ---- campfires (P3b): one on Hearthgate Green, one in the Training Yard, each with a bench beside it
+    for (x, y) in ((30, 31), (102, 44)):
+        spot = next(((x + a, y + b) for a in range(-2, 3) for b in range(-2, 3)
+                     if free(x + a, y + b) and free(x + a + 1, y + b)), None)
+        if spot:
+            S.prop(m, *R(*spot), z, CAMPFIRE)
+            S.prop(m, *R(spot[0] + 1, spot[1]), z, 2370)
 
     # ---- braziers at the four gates (P3b), just inside the wall either side of each gap
     mid_x, mid_y = tw // 2, th // 2

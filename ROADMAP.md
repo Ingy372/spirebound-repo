@@ -33,15 +33,15 @@ The calm rebuild left the level 9-24 solo grounds with 7 to 16 monsters each (ab
 
 ## Step 5 — Floor 2 is a real place
 Winning Floor 1 must not lead to a placeholder.
-- [ ] **R13b Floor 2 hand-tuned** (cut from R13, 2026-11-13): its own layout and an easy-to-hard ladder of grounds. Done when: rendered, walk test passes, walked in the client.
-- [ ] **S6 The floor recipe for Floors 2 to 10** (takes over H12: the calm rules become a rule for every floor, in `CLAUDE.md` and the generator): each floor's grounds get types and habits by the recipe, plus the floor's own twist, in `maps/floors.py`. Floor 2 first, then Floor 3.
+- [~] **R13b Floor 2 hand-tuned** *(2026-11-26: built (`maps/floor2_plan.py`): eight walled grounds on an easy-to-hard ladder, rendered, walk test passes. Left: the client walk `r13b_floors23` passing at each ground's level.)* (cut from R13, 2026-11-13): its own layout and an easy-to-hard ladder of grounds. Done when: rendered, walk test passes, walked in the client.
+- [~] **S6 The floor recipe for Floors 2 to 10** *(2026-11-26: Floors 2, 3 and 4 have their plans and twists; `balance.py --check` enforces the recipe on every planned floor; rule written in CLAUDE.md. Left: Floors 5 to 10.)* (takes over H12: the calm rules become a rule for every floor, in `CLAUDE.md` and the generator): each floor's grounds get types and habits by the recipe, plus the floor's own twist, in `maps/floors.py`. Floor 2 first, then Floor 3.
 - [~] **R10c House prices per floor** *(2026-11-25: built and checked on every floor. Still to do: a real !buyhouse on a higher floor in the client)*.
 - [ ] **J5b Economy for the next floors:** materials, recipes and burn-rate check per floor (Floor 2 first; what "recipes" means waits on Q57).
 
 ## Step 6 — Hearthgate and the arrival look hand-made
 - [~] **P7 The first hour shows the tower** *(2026-11-25: the yard has the Spire's sealed door and a first-clears stone; race line at login and lit lamps done. Left: the bigger yard rebuild (Q47) and tutorial gates for cursors, the Journal and skills.)* Done when: rendered, and a fresh autopilot character walks it with every gate passed.
-- [ ] **N3 Hearthgate hand polish** (new; Q47, FLOOR1_REVIEW F1-50): the Hearth Square stops being an empty marble slab (stalls, trees, carts, a notice board with live news), varied building shapes, the streets dressed. Done when: rendered, Jay says it looks like a town.
-- [ ] **P3b Fires and more lights in Hearthgate** (cut from P3): a few campfires, braziers at the gates, lit windows. Done when: rendered and seen in the client at night.
+- [~] **N3 Hearthgate hand polish** *(2026-11-26: market parasols, goods and a cart, flower pots round the Hearth, a well, a covered wagon, and a notice board with live news; carpets now runners. Left: varied building shapes (Q69) and Jay's look.)* (new; Q47, FLOOR1_REVIEW F1-50): the Hearth Square stops being an empty marble slab (stalls, trees, carts, a notice board with live news), varied building shapes, the streets dressed. Done when: rendered, Jay says it looks like a town.
+- [~] **P3b Fires and more lights in Hearthgate** *(2026-11-26: braziers at the four gates and two campfires. Left: lit windows, and a look at night in the client.)* (cut from P3): a few campfires, braziers at the gates, lit windows. Done when: rendered and seen in the client at night.
 - [ ] **6.5c Outfit addons as quest rewards** (Jay, 2026-11-25: "tibia has the base outfit, addon 1 and addon 2... it'll give us more content for quests"). Pipeline and install are ready (art/OUTFIT_RULES.md A1-A7). Done when: each class outfit has two addons Jay approved, each unlocked by its own quest, and a test character earns one through the real quest and sees it in the client.
 
 ## Step 7 — Know the real size of the art job
