@@ -11,7 +11,7 @@ SpireTest.add("quests: floor 1 story quests with a next step for every state", f
 			if not q.kind and not MonsterType(q.target) then error(q.id .. " targets unknown monster " .. tostring(q.target)) end
 		end
 	end
-	SpireTest.eq(n, 19, "nineteen floor 1 quests: nine story (with the weapon temper and the armour line), nine side (five not about killing: stones, sluice, flour, the Stair Key, the escort) and the tutorial quest")
+	SpireTest.eq(n, 27, "twenty-seven floor 1 quests: nine story (with the weapon temper and the armour line), nine side (five not about killing: stones, sluice, flour, the Stair Key, the escort), the tutorial quest and the eight outfit-addon quests (6.5c)")
 	local story = 0
 	for _, q in ipairs(SpireQuests.list) do
 		if q.floor == 1 and not q.side then story = story + 1 end
@@ -146,4 +146,32 @@ SpireTest.add("quests: every Floor 1 quest giver can be found from the temple", 
 			SpireTest.eq(SpireQuests.whereText(q.giver):find("temple") ~= nil, true, q.giver .. ": the directions name the temple")
 		end
 	end
+end)
+
+-- 6.5c: outfit addons as quest rewards: two per class, only for that class, the second after the first
+SpireTest.add("quests: two outfit-addon quests per class, for that class only, addon 2 after addon 1", function()
+	local per = {}
+	for _, q in ipairs(SpireQuests.list) do
+		if q.addon then
+			per[q.vocation] = per[q.vocation] or {}
+			per[q.vocation][q.addon] = q
+			if not MonsterType(q.target) then error(q.id .. " targets unknown monster " .. tostring(q.target)) end
+		end
+	end
+	for voc = 1, 4 do
+		local a1, a2 = per[voc] and per[voc][1], per[voc] and per[voc][2]
+		if not a1 or not a2 then error("class " .. voc .. " is missing an addon quest") end
+		SpireTest.eq(a2.requires, a1.id, "addon 2 needs addon 1 (class " .. voc .. ")")
+		SpireTest.eq(a1.giver, a2.giver, "one giver per class")
+		local other = voc % 4 + 1
+		SpireTest.eq(SpireQuests.available(a1, -1, {}, { vocation = voc, level = 30 }), true, "own class may take addon 1")
+		SpireTest.eq(SpireQuests.available(a1, -1, {}, { vocation = other, level = 30 }), false, "another class may not")
+		SpireTest.eq(SpireQuests.available(a1, -1, {}, { vocation = voc, level = 5 }), false, "level gate")
+		SpireTest.eq(SpireQuests.available(a2, -1, {}, { vocation = voc, level = 30 }), false, "addon 2 waits for addon 1")
+		SpireTest.eq(SpireQuests.available(a2, -1, { [a1.id] = true }, { vocation = voc, level = 30 }), true, "then opens")
+		SpireTest.eq(SpireQuests.anyAddonQuest(a1.giver, voc), true, "the giver knows")
+	end
+	SpireTest.eq(SpireQuests.rewardText({ exp = 6000, addon = 1, addonName = "the Crested Helm" }),
+		"Reward: 6,000 experience, the Crested Helm (outfit addon 1).", "the reward line names the addon")
+	SpireTest.eq(type(ClassOutfits.giveAddon), "function", "the reward can be handed out")
 end)

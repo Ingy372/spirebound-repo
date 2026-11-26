@@ -154,6 +154,71 @@ SpireQuests = {
 	},
 }
 
+-- Outfit addons as quest rewards (roadmap 6.5c; Jay, 2026-11-25: "tibia has the base outfit, addon 1 and addon 2...
+-- it'll give us more content for quests"). Two quests per class, only for that class (vocation = base vocation id:
+-- 1 Arcanist, 2 Mystic, 3 Ranger, 4 Vanguard), each from a townsperson who fits the class. Addon 1 hunts a ground's
+-- elite (the rare lone leader), addon 2 needs addon 1 and a harder ground. The reward unlocks the addon on both the
+-- man's and the woman's body of the class outfit (ClassOutfits.giveAddon). Art approved by Jay 2026-11-25/26.
+-- Levels and targets are Claude's call (Jay can veto).
+for _, q in ipairs({
+	{ id = "o_van1", vocation = 4, addon = 1, addonName = "the Crested Helm", giver = "Captain Dorrow", storage = 51201, killStorage = 51211,
+		target = "Moonhowl", count = 1, minLevel = 14, exp = 6000,
+		offer = "Every watch captain before me earned a crested helm on one beast: the great wolf the trappers call Moonhowl, leader of the Wolf Copse packs. Bring it down and the helm is yours. Will you?",
+		step = "Defeat Moonhowl, the great wolf that leads the packs in Wolf Copse (west of Hearthgate): %d of %d.",
+		thanks = "Moonhowl, by your own hand! Here: the Crested Helm of the watch. Wear it, Vanguard (open your outfit window)." },
+	{ id = "o_van2", vocation = 4, addon = 2, addonName = "the Knight's Mantle", giver = "Captain Dorrow", storage = 51202, killStorage = 51212,
+		target = "Granite Warden", count = 1, minLevel = 24, requires = "o_van1", exp = 12000,
+		offer = "The mantle is for those who have held a line against stone itself. In the Old Quarry a Granite Warden still guards the ruins. Break it, and the knight's mantle is yours. Will you?",
+		step = "Break the Granite Warden that guards the Old Quarry (north-east of Hearthgate): %d of %d.",
+		thanks = "Stone gave way before you did. The Knight's Mantle: you've earned it twice over." },
+	{ id = "o_ran1", vocation = 3, addon = 1, addonName = "the Hawk-Feather Hood", giver = "Hunter Brannoch", storage = 51203, killStorage = 51213,
+		target = "Blackthorn", count = 1, minLevel = 14, exp = 6000,
+		offer = "A ranger's hood carries the feathers of a hunt worth telling. Here's one: Blackthorn, the oldest snapping thorn in Thornsnap Hollow. Cut it down and I'll stitch you a hawk-feather hood. Will you?",
+		step = "Cut down Blackthorn, the oldest thornsnap in Thornsnap Hollow (north-west of Hearthgate): %d of %d.",
+		thanks = "Blackthorn's done? Then here's your Hawk-Feather Hood. The Hall will know you by it, Ranger." },
+	{ id = "o_ran2", vocation = 3, addon = 2, addonName = "the Huntsman's Horn", giver = "Hunter Brannoch", storage = 51204, killStorage = 51214,
+		target = "Bandit Crossbowman", count = 40, minLevel = 20, requires = "o_ran1", exp = 12000,
+		offer = "The bandit crossbowmen on the eastern road shoot at our hunters from cover. Outshoot forty of them, and the huntsman's horn of the Hall is yours. Will you?",
+		step = "Outshoot Bandit Crossbowmen on the Bandit Road (east of Hearthgate): %d of %d.",
+		thanks = "Forty! The road will be quiet for a week. Take the Huntsman's Horn, and blow it proud." },
+	{ id = "o_arc1", vocation = 1, addon = 1, addonName = "the Orbiting Runestones", giver = "Vesper", storage = 51205, killStorage = 51215,
+		target = "Prism Shardling", count = 1, minLevel = 17, exp = 7000,
+		offer = "The builders' stones answer to light. In the Shard Fields lives a prism shardling, grown huge on the tower's light. Shatter it and bring me its heart: I'll set its pieces circling you. Will you?",
+		step = "Shatter the Prism Shardling in the Shard Fields (south-east of Hearthgate): %d of %d.",
+		thanks = "Its heart still hums. There: the Orbiting Runestones. They will follow you now, Arcanist." },
+	{ id = "o_arc2", vocation = 1, addon = 2, addonName = "the Floating Grimoire", giver = "Vesper", storage = 51206, killStorage = 51216,
+		target = "Hedge Hexer", count = 30, minLevel = 22, requires = "o_arc1", exp = 12000,
+		offer = "The hedge hexers on the Bandit Road tear pages from a stolen book of the builders. Take them back from thirty hexers and I'll bind the book for you. Will you?",
+		step = "Take the stolen pages back from Hedge Hexers on the Bandit Road (east of Hearthgate): %d of %d.",
+		thanks = "Every page. The book is bound, and it has chosen you: the Floating Grimoire." },
+	{ id = "o_mys1", vocation = 2, addon = 1, addonName = "the Antler Crown", giver = "Fisher Corwin", storage = 51207, killStorage = 51217,
+		target = "Mossback Snapper", count = 1, minLevel = 14, exp = 6000,
+		offer = "The marsh folk crown a healer who frees the reeds. An old mossback snapper has choked Reedmarsh for years. Free the marsh of it and I'll weave you the antler crown. Will you?",
+		step = "Free Reedmarsh of the old Mossback Snapper (west of Hearthgate): %d of %d.",
+		thanks = "The reeds breathe again. Here is your Antler Crown, Mystic. The marsh folk will bow when you pass." },
+	{ id = "o_mys2", vocation = 2, addon = 2, addonName = "the Owl Companion", giver = "Fisher Corwin", storage = 51208, killStorage = 51218,
+		target = "Field Shardling", count = 40, minLevel = 19, requires = "o_mys1", exp = 11000,
+		offer = "The owls left the Shard Fields when the shardlings spread. Thin out forty shardlings and one owl will come back to you, and stay. Will you?",
+		step = "Thin out the Field Shardlings in the Shard Fields (south-east of Hearthgate): %d of %d.",
+		thanks = "Listen: hoo. One came back, and it's looking at you. The Owl Companion is yours." },
+}) do
+	q.floor, q.side = 1, true
+	q.name = "Outfit: " .. q.addonName:gsub("^the ", ""):gsub("^%l", string.upper)
+	q.reward = { exp = q.exp, addon = q.addon, addonName = q.addonName }
+	q.report = "Return to " .. q.giver .. " and say 'report'."
+	table.insert(SpireQuests.list, q)
+end
+
+-- Pure: does this giver have outfit-addon quests for this class?
+function SpireQuests.anyAddonQuest(giver, vocation)
+	for _, q in ipairs(SpireQuests.list) do
+		if q.giver == giver and q.addon and q.vocation == vocation then
+			return true
+		end
+	end
+	return false
+end
+
 function SpireQuests.get(id)
 	for _, q in ipairs(SpireQuests.list) do
 		if q.id == id then
@@ -254,11 +319,15 @@ function SpireQuests.available(q, state, doneIds, ctx)
 	if ctx and q.requiresWeapon and not ctx.hasWeapon then
 		return false
 	end
+	if ctx and q.vocation and ctx.vocation ~= q.vocation then -- 6.5c: a class's outfit quests are for that class
+		return false
+	end
 	return not q.requires or doneIds[q.requires] == true
 end
 
 function SpireQuests.context(player)
-	return { level = player:getLevel(), hasWeapon = SpireGear.earnedMain ~= nil and SpireGear.earnedMain(player, 1) ~= nil }
+	local voc = player.getVocation and player:getVocation() -- (test stand-ins may have no class)
+	return { vocation = voc and voc:getBaseId() or 0, level = player:getLevel(), hasWeapon = SpireGear.earnedMain ~= nil and SpireGear.earnedMain(player, 1) ~= nil }
 end
 
 function SpireQuests.doneIds(player)
@@ -307,6 +376,7 @@ function SpireQuests.rewardText(r)
 	if r.title then table.insert(parts, "the title \"" .. r.title .. "\"") end
 	if r.gear then table.insert(parts, "a piece of Floor gear") end
 	if r.temper then table.insert(parts, "your weapon tempered one tier") end
+	if r.addon then table.insert(parts, (r.addonName or "an outfit addon") .. " (outfit addon " .. r.addon .. ")") end
 	if #parts == 0 then
 		return ""
 	end
@@ -372,6 +442,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
 					if q.reward.gear then SpireGear.give(player, q.floor, "quest") end -- R12: a reward that isn't gold
 					if q.reward.temper then SpireGear.temperFor(player, q.floor) end -- gear progression: +1 tier
+					if q.reward.addon then ClassOutfits.giveAddon(player, q.reward.addon) end -- 6.5c: outfit addon
 					if q.id == "q1_iron2" then SpireStairKey.update(player) end
 					npcHandler:say(q.thanks, npc, player)
 					SpireQuests.markGivers(player) -- the next quest may be with someone new
@@ -387,6 +458,33 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		end
 		npcHandler:say("You have nothing to report to me.", npc, player)
 		return true
+	end
+	-- 6.5c: "outfit" (or "addon") asks a giver for their outfit-addon quest straight away, past their other quests
+	if MsgContains(lower, "outfit") or MsgContains(lower, "addon") then
+		local mine, other = nil, nil
+		local done = SpireQuests.doneIds(player)
+		local ctx = SpireQuests.context(player)
+		for _, q in ipairs(SpireQuests.list) do
+			if q.giver == giver and q.addon then
+				if q.vocation ~= ctx.vocation then
+					other = other or q
+				elseif not mine and SpireQuests.available(q, SpireQuests.state(player, q), done, ctx) then
+					mine = q
+				end
+			end
+		end
+		if mine then
+			offered[pid] = mine.id
+			npcHandler:say(mine.offer .. " " .. SpireQuests.rewardText(mine.reward) .. " Say {yes} or {no}.", npc, player)
+			return true
+		elseif other and not SpireQuests.anyAddonQuest(giver, ctx.vocation) then
+			local names = { [1] = "Arcanists", [2] = "Mystics", [3] = "Rangers", [4] = "Vanguards" }
+			npcHandler:say("My outfit work is for " .. (names[other.vocation] or "another path") .. " only.", npc, player)
+			return true
+		elseif other or SpireQuests.anyAddonQuest(giver, ctx.vocation) then
+			npcHandler:say("No outfit work for you right now. Some of it needs more experience (level 14 for the first piece), or the first piece done; finished ones I can't give twice.", npc, player)
+			return true
+		end
 	end
 	if MsgContains(lower, "quest") or MsgContains(lower, "mission") or MsgContains(lower, "help") then
 		local done = SpireQuests.doneIds(player)

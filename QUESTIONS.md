@@ -8,6 +8,14 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q71. Outfit addons: who gives them and what they ask (2026-11-26, 6.5c)
+You approved all sixteen addon drawings. Now each one is a quest reward (my calls, you can veto any of them):
+- **Who:** Vanguards ask Captain Dorrow, Rangers Hunter Brannoch, Arcanists Vesper, Mystics Fisher Corwin. Say "outfit" to them. A class only gets its own two quests; the second needs the first. At level 14 the game tells each player who to ask.
+- **Addon 1** (from level 14 to 17): beat one of Floor 1's six elites, the rare lone leaders (Vanguard: Moonhowl; Ranger: Blackthorn; Arcanist: the Prism Shardling; Mystic: the Mossback Snapper).
+- **Addon 2** (from level 19 to 24): a harder job (Vanguard: the Granite Warden; Ranger: 40 bandit crossbowmen; Arcanist: 30 hedge hexers; Mystic: 40 field shardlings).
+- Each pays some experience too, and unlocks the addon on both the man's and the woman's outfit.
+- **Recommendation:** keep it like this. Elites are rare, so addon 1 is a small hunt of its own, and an addon shows you did it.
+- Assumed until you answer: yes.
 ### Q70. Put the website on a public https:// address now, or wait? (2026-11-26, 7.1b)
 The scripts are ready (`windows\Open-Public-Website.bat`, steps in `windows\README.md`): free, through Tailscale Funnel, an address ending in `.ts.net` with a real certificate, no domain to buy. Only the website (sign-up and account pages) goes public; the game itself still needs Tailscale. Anyone on the internet could then make accounts on your PC.
 - **Recommendation:** wait until the friends test (9.3) is close; switch it on that day, and off again after. A proper domain name comes with picking a host (10.1).

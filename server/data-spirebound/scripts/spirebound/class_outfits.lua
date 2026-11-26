@@ -53,8 +53,53 @@ function ClassOutfits.give(player, wear)
 	return true
 end
 
+-- 6.5c: unlock addon n (1 or 2) of the player's class outfit, and say so. Both bodies are given the addon (the engine
+-- only lets a character wear its own sex's body, but older characters are swapped between them at login, see above).
+-- Returns false for a character with no class yet.
+function ClassOutfits.giveAddon(player, n)
+	local voc = player:getVocation()
+	local base = voc and voc:getBaseId()
+	if not base or not ClassOutfits.LOOKS[1][base] then
+		return false
+	end
+	for sex = 0, 1 do
+		local look = ClassOutfits.LOOKS[sex][base]
+		if not player:hasOutfit(look) then
+			player:addOutfit(look)
+		end
+		player:addOutfitAddon(look, n)
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "New outfit addon " .. n .. " for your class outfit. Open your outfit window (right-click yourself, Set Outfit) to wear it.")
+	return true
+end
+
+-- 6.5c: at level 14 (and at login for anyone past it who hasn't heard), tell the player who has their addon quests
+ClassOutfits.ADDON_GIVER = { [1] = "Vesper in Hearthgate", [2] = "Fisher Corwin on the river bank", [3] = "Hunter Brannoch in the Hunters' Hall", [4] = "Captain Dorrow at Hearthgate's north gate" }
+function ClassOutfits.addonHint(player)
+	local voc = player:getVocation()
+	local who = voc and ClassOutfits.ADDON_GIVER[voc:getBaseId()]
+	local k = store(player)
+	if not who or player:getLevel() < 14 or k:get("addon_hint") then
+		return false
+	end
+	k:set("addon_hint", 1)
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your class outfit has two addons to earn. Ask " .. who .. " about an 'outfit'.")
+	return true
+end
+
+local advance = CreatureEvent("SpireClassOutfitAdvance")
+function advance.onAdvance(player, skill, oldLevel, newLevel)
+	if skill == SKILL_LEVEL then
+		ClassOutfits.addonHint(player)
+	end
+	return true
+end
+advance:register()
+
 local login = CreatureEvent("SpireClassOutfitLogin")
 function login.onLogin(player)
+	player:registerEvent("SpireClassOutfitAdvance")
+	ClassOutfits.addonHint(player)
 	ClassOutfits.give(player, false)
 	return true
 end
