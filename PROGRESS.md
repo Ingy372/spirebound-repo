@@ -152,3 +152,7 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: lead session handover, server restart, H14 ticked
 - New lead session took over at 22:25. Restarted the server (boot test passed, 263 in-game tests), which installed the bandit, archer, sentinel, Granite Warden and Floor 1 boss looks and the Boar Meadow change.
 - H14 (Jay: "challenge, not calm") ticked: a test character holds the near parts of the denser grounds with spells, and the Granite Warden's nest in the Old Quarry pushes it back. New test route: `h14_nests`.
+
+### 2026-11-26 early: Floor 2 wrong-animal monsters drafted
+- Seven of the twelve wrong-animal monsters now have drafts of their own (all ALL PASS, sent for Jay's approval): Black Crawler (cave beetle), Blight Wasp (the meadow wasp gone sick), Hill Cutthroat (highland bandit), Ridge Cat, Herd Bull and Stonehide Bull, Horned Grazer (antelope), Dust Strider (lizard). Colours in `art/pipeline/creature_palettes.py`. Still to do: Drain Matron (Underkeep Wing 2 boss), Sleeping Trunk, Mossback Warden, Moss Crawler (Floor 3). None of these floors' areas are open yet.
+

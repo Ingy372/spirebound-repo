@@ -75,6 +75,18 @@ CREATURES["grazer"] = {
     "ridge": ramp((120, 110, 96), (240, 232, 214)), "band": ramp((30, 20, 12), (120, 86, 50), (64, 44, 24)),
     "rump": ramp((140, 130, 116), (255, 252, 244), (226, 220, 206)), "ring": [[250, 246, 236]] * 8,
 }
+# Dust Strider: sand-ochre lizard, dark back bands, rust-red spines, pale throat
+SAND = ((60, 44, 20), (240, 214, 150), (180, 144, 80))
+CREATURES["strider"] = {
+    "body": ramp(*SAND), "belly": ramp((140, 126, 100), (255, 248, 226), (222, 210, 180)), "head": ramp(*SAND),
+    "snout": ramp(*SAND), "nose": [[40, 30, 20]] * 8, "ear": ramp(*SAND), "eye": [[240, 210, 40]] * 8,
+    "leg_near": ramp((50, 36, 18), (220, 190, 130), (150, 116, 64)), "leg_far": ramp((40, 28, 14), (180, 150, 100), (110, 84, 44)),
+    "paw_near": ramp((30, 22, 12), (140, 110, 70)), "paw_far": ramp((24, 18, 10), (110, 86, 54)),
+    "tail_base": ramp(*SAND), "tail_tip": ramp((50, 36, 18), (200, 170, 110)),
+    "spine": ramp((80, 20, 10), (240, 120, 70), (180, 60, 30)), "bandtail": ramp((30, 20, 10), (120, 86, 50), (60, 40, 22)),
+    "stripe": ramp((30, 20, 10), (120, 86, 50), (60, 40, 22)), "line": [[40, 26, 14]] * 8, "brow": [[50, 34, 18]] * 8,
+    "pouch": ramp((140, 126, 100), (255, 248, 226), (222, 210, 180)),
+}
 
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
