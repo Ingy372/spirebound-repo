@@ -58,8 +58,17 @@ LAST_SNAP: dict | None = None # the latest live snapshot (tools/site_snapshot.py
 RENDER_LOCK = threading.RLock()  # the login service draws pages while its website refresh runs: one at a time
 SIGNUP_URL = ""               # the sign-up page of tools/login_server.py, e.g. https://play.example/signup
 MODES = {1: "Normal", 2: "Hardcore", 3: "Death Game"}
-# Our own approved sprites that walk across the banner (website/public/img, made by tools/site_art.py)
-PARADE = ["wolf", "boar", "vanguard", "toad", "ram", "ranger", "alpha", "sproutling", "mystic", "rat"]
+# The banner is reserved for the "money monsters" (Jay, 2026-11-25: "monsters that vets will look forward to running
+# into once in the game. Bosses, the fire boar, and a few others that haven't been made yet"). Art names; each one
+# walks across the banner as soon as its approved art is in website/public/img (tools/site_art.py). Not made yet:
+# the floor bosses, the fire boar (an idea under Later in ROADMAP.md) and the other money monsters in ART_REQUESTS.md.
+SHOWCASE = ["azhrakkar", "alpha", "gate_hound", "axe_lord", "underkeeper", "fire_boar", "old_tusk", "moonhowl",
+            "hollowfang", "briar_mother", "twin_fang_warden", "vault_wraith"]
+IMG = ROOT / "website" / "public" / "img"
+
+
+def parade() -> list[str]:
+    return [n for n in SHOWCASE if (IMG / f"walk_{n}.png").exists()]
 
 CSS = """
 :root{--night:#07060a;--stone:#15120f;--panel:#1d1813;--panel2:#241e17;--edge:#5c4625;--gold:#e9c36a;--gold2:#ffdf8f;
@@ -86,10 +95,9 @@ background:linear-gradient(180deg,#fff3c4 0,#f2c75e 45%,#b9822a 55%,#f7d77f 100%
 -webkit-text-fill-color:transparent;filter:drop-shadow(0 3px 0 #3b2709) drop-shadow(0 0 14px #ffb54a66)}
 .logo:hover{text-decoration:none}
 .tagline{margin-top:10px;color:#f4e6c2;font-size:1.05rem;letter-spacing:.06em;text-shadow:0 2px 4px #000}
-.parade{position:absolute;left:0;right:0;bottom:8px;height:128px;pointer-events:none;overflow:hidden}
-.parade img{position:absolute;bottom:0;left:-140px;width:128px;height:128px;image-rendering:pixelated;animation:walk linear infinite;
-filter:drop-shadow(0 4px 2px #000a)}
-@keyframes walk{from{left:-140px}to{left:100%}}
+.parade{position:absolute;left:0;right:0;bottom:10px;height:64px;pointer-events:none;overflow:hidden}
+.parade img{position:absolute;bottom:0;left:-70px;width:64px;height:64px;animation:walk linear infinite;filter:drop-shadow(0 3px 2px #000c)}
+@keyframes walk{from{left:-70px}to{left:100%}}
 .ground{position:absolute;left:0;right:0;bottom:0;height:12px;background:linear-gradient(180deg,#3d2e18,#1a130b)}
 /* top bar */
 .topbar{background:linear-gradient(180deg,#2b2117,#1a140e);border-bottom:1px solid #000;box-shadow:0 2px 0 #3d2f1a inset}
@@ -147,15 +155,15 @@ tr:hover td{background:#3a2e1d}
 .hero .lead{font-size:1.12rem;margin-top:0}
 .stage{display:flex;justify-content:center;flex-wrap:wrap;gap:0 10px;margin:4px 0 0;padding:0 0 6px;
 background:radial-gradient(ellipse at 50% 92%,#ff8a3d33 0,#0000 60%);border-bottom:1px solid #5c462566}
-.stage figure{margin:0;text-align:center}.stage img{width:128px;height:128px;image-rendering:pixelated;display:block;margin:-10px auto -14px}
+.stage figure{margin:0 10px;text-align:center}.stage img{width:64px;height:64px;display:block;margin:6px auto 0}
 .stage figcaption{font-family:Georgia,serif;color:var(--gold2);font-size:.95rem}
 .features{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:14px 0}
 .feature{display:flex;gap:10px;align-items:flex-start;background:#0000004d;border:1px solid #5c462566;border-radius:6px;padding:10px}
-.feature img{width:64px;height:64px;image-rendering:pixelated;flex:none;margin:-6px 0 -6px -6px}
+.feature img{width:64px;height:64px;flex:none;margin:-6px 0 -6px -6px}
 .feature b{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:1.02rem}
 .voc{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin:14px 0}
 .voc div{text-align:center;background:#0000004d;border:1px solid #5c462566;border-radius:6px;padding:8px 10px 12px}
-.voc img{width:128px;height:128px;image-rendering:pixelated;margin:-16px 0 -18px}
+.voc img{width:64px;height:64px;margin:4px 0 0}
 .voc b{display:block;color:var(--gold2);font-family:Georgia,serif;font-size:1.15rem}
 /* forms (sign-up pages) */
 .form label{display:block;margin:0 0 12px;color:var(--mute);font-size:.92rem}
@@ -168,7 +176,7 @@ footer{border-top:3px solid var(--edge);background:#0b0907;color:var(--mute);fon
 @media (max-width:980px){.layout{grid-template-columns:1fr}.layout main{order:1}.layout .side{order:2;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 18px}
 .layout .side-left{order:3}.banner{height:240px}.banner .tower{right:50%;transform:translateX(50%);height:220px;opacity:.35}.banner .tower.far{display:none}
 .banner .inner{padding-bottom:70px}}
-@media (max-width:560px){.parade img:not(:nth-child(3n+1)){display:none}.topbar .btn{display:none}}
+@media (max-width:560px){.topbar .btn{display:none}}
 """
 
 # Our own tower, drawn here (no borrowed art): stacked tiers narrowing upwards, glowing windows, a crystal at the top.
@@ -214,7 +222,7 @@ def side_status() -> str:
             '<p style="margin:6px 0 0;font-size:.88rem;color:var(--mute)">Beat a floor boss first and the next floor opens for everyone.</p></div></div>'
             f'<div class="box"><div class="box-title">Top climbers</div><div class="box-body">{top}</div></div>'
             '<div class="box"><div class="box-title">Join the climb</div><div class="box-body" style="text-align:center">'
-            '<img src="img/walk_vesper.gif" alt="" width="128" height="128" style="image-rendering:pixelated;margin:-20px 0 -24px">'
+            '<img src="img/walk_vesper.png" alt="" width="64" height="64" style="margin:2px 0 -4px">'
             '<p style="margin:8px 0 12px">Free to play. Never pay-to-win.</p><a class="btn" href="join.html">Play now</a></div></div>')
 
 
@@ -228,9 +236,9 @@ def page(name: str, title: str, body: str) -> str:
     top = "".join(f'<a href="{h}"{" class=here" if h == name else ""}>{e(l)}</a>' for h, l in
                   [("index.html", "Home"), ("floors.html", "The tower"), ("hall-of-fame.html", "Hall of Fame"),
                    ("online.html", "Who is online"), ("rules.html", "Rules")])
-    # evenly spaced along the road, each at a slightly different pace
-    walkers = "".join(f'<img src="img/walk_{n}.gif" alt="" style="animation-duration:{d}s;animation-delay:-{d * i / len(PARADE):.1f}s">'
-                      for i, n in enumerate(PARADE) for d in [44 + (i % 3) * 3])
+    # the money monsters, evenly spaced along the road, each at a slightly different pace
+    walkers = "".join(f'<img src="img/walk_{n}.png" alt="" style="animation-duration:{d}s;animation-delay:-{d * i / len(shown):.1f}s">'
+                      for shown in [parade()] for i, n in enumerate(shown) for d in [52 + (i % 3) * 4])
     return f"""<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>{e(title)} - {SITE}</title><link rel="stylesheet" href="style.css"></head>
@@ -300,7 +308,7 @@ Each floor ends in a labyrinth and a boss. The first time anyone beats a floor b
 <b>for the whole server</b>.</p>
 <p><a class="btn" href="join.html">Start climbing</a> &nbsp; <a href="how-to-play.html">How to play &raquo;</a></p></div></div>
 <h2>Four vocations</h2>
-<div class="stage">{"".join(f'<figure><img src="img/walk_{v}.gif" alt=""><figcaption>{v.title()}</figcaption></figure>' for v in ("vanguard", "ranger", "arcanist", "mystic"))}</div>
+<div class="stage">{"".join(f'<figure><img src="img/walk_{v}.png" alt=""><figcaption>{v.title()}</figcaption></figure>' for v in ("vanguard", "ranger", "arcanist", "mystic"))}</div>
 <h2>What makes it different</h2>
 <div class="features">{tiles}</div>
 <h2>Seasons</h2>
@@ -362,7 +370,7 @@ def floors() -> str:
 
 
 def vocations() -> str:
-    cards = "".join(f'<div><img src="img/walk_{n}.gif" alt=""><b>{n.title()}</b>{e(r)}</div>' for n, r in
+    cards = "".join(f'<div><img src="img/walk_{n}.png" alt=""><b>{n.title()}</b>{e(r)}</div>' for n, r in
                     [("vanguard", "Front line, sword and shield"), ("ranger", "Bows, crossbows and spears"),
                      ("arcanist", "Big, flashy area spells"), ("mystic", "Healing and nature magic")])
     return f'<div class="voc">{cards}</div>' + "<p>Four familiar vocations. Promotion at level 20 gives the familiar regeneration bump.</p>" + table(

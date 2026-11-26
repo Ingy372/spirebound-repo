@@ -452,7 +452,7 @@ def selftest():
         for bad in ("/../config.lua", "/x/../../etc/passwd", "/.local/site/index.html", "/index.html/..", "/A.HTML", "/a.py"):
             assert site_file(bad) is None, bad
         assert site_file("/") and site_file("/rules.html")[1].startswith("text/html") and site_file("/style.css")[1] == "text/css"
-        assert site_file("/img/walk_wolf.gif")[1] == "image/gif" and site_file("/img/../style.css") is None
+        assert site_file("/img/walk_wolf.png")[1] == "image/png" and site_file("/img/../style.css") is None
         assert 'href="style.css"' in signup_page() and "Create your account" in signup_page(), "sign-up wears the website's look"
     finally:
         sql = real
