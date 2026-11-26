@@ -201,6 +201,7 @@ There are 63 houses on the whole server, and most house features need one.
 ### Q21. Art: make everything with Grok, or start from an open sprite pack? [8.1]
 A public launch needs every tile, wall, tree, item and effect replaced, not just the ~150 pieces in ART_REQUESTS.md: thousands of sprites.
 - **Recommendation:** start from an open-licence Tibia-style sprite pack for tiles and items; make monsters, bosses, outfits and the UI yourself with Grok. I'll first prove the pipeline with one sprite (R22) so we know the real cost.
+- *Updated 2026-11-25 (N4, full count in `ART_COUNT.md`): Floors 1-3 show about 900 borrowed looks (65 monster kinds, 47 NPCs, the outfits, 142 items, 79 wall pieces, 42 grounds, 186 map objects, about 100 effects); about 265 hours to make them all. New recommendation: mix. Keep making everything that moves (monsters, NPCs, outfits, mounts) with the Blender pipeline and effects with our effect maker (about 100 hours). For the still world (ground, walls, map objects: about 300 looks, about 100 hours) start from the OpenTibia Sprite Pack, the one open-licence Tibia-style pack (free with credit to the artists, Creative Commons Attribution 4.0). It is small and old, so first check which of our 300 map looks it covers, then make the gaps in a matching style. Items: Grok or Claude still renders, either works.*
 - Jay's answer:
 
 ### Q22. Friends test: Floors 1–2 only? [9.2 of review]

@@ -4,6 +4,9 @@ Ticked tasks moved out of `ROADMAP.md` so each session reads less. Same phase he
 
 ---
 
+## Step 7 — Know the real size of the art job (2026-11-25)
+- [x] **N4 Count every borrowed sprite a player can see on Floors 1 to 3** (new): monsters, NPCs, outfits, items, walls, ground, effects, interface. Done when: a table by kind with counts, an hours estimate per kind, and a recommendation for Q21 (make everything, or start from an open sprite pack) in QUESTIONS.md. *(done 2026-11-25: `ART_COUNT.md`. About 900 borrowed looks on Floors 1-3, about 265 hours to replace; Q21 recommendation updated)*
+
 ## Step 1 — The first hour works for a brand-new player (2026-11-25)
 - [x] **G7 Slower yard levels** (Q52, Grok session 2): Pen Rats and Pell's reward tuned so a new character leaves the yard at level 2-3. Done when: the autopilot's yard run ends at level 2-3. *(2026-11-25: Pen Rats 6 -> 1 experience, Bramblejaw 60 -> 6, Pell's reward 300 -> 100; the engine's +50% low-level and +50% stamina bonuses made each yard rat worth 135. `g7_yard_levels` route: level 2 after Pell's report, level 3 after the Proving.)*
 - [x] **G8 A door on the Registrar**: the stone path ends at a red roof with no visible door (Grok found the way in only by clicking the minimap). Done when: a visible door faces the path, the path-end sign points to it, checked in a render and in the client. *(2026-11-25: the client draws roofs a tile up and to the left, which hides west and north doors. The hall moved north of the path's end with its door in the south wall and a sign at the path's end; rendered, and the `g7_yard_levels` route walked in through it (screenshot g8_registrar_door).)*

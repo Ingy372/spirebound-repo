@@ -61,7 +61,6 @@ Winning Floor 1 must not lead to a placeholder.
 
 ## Step 7 — Know the real size of the art job
 Art, not code, sets the launch date: only 13 monsters are ours.
-- [ ] **N4 Count every borrowed sprite a player can see on Floors 1 to 3** (new): monsters, NPCs, outfits, items, walls, ground, effects, interface. Done when: a table by kind with counts, an hours estimate per kind, and a recommendation for Q21 (make everything, or start from an open sprite pack) in QUESTIONS.md.
 
 ## Step 8 — Accounts, then the friends test
 - [ ] **7.1 Website** (account creation, **character creation** (Jay, 2026-11-14: "players will create characters via the website"), character pages, floor monument, secret list, Hall of Fame, rules). Free software only (MyAAC or similar). *(Part done: static pages built by `tools/gen_site.py`. Still to do: account creation, character pages, Hall of Fame.)*
