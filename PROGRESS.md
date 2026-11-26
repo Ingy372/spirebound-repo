@@ -155,4 +155,4 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 
 ### 2026-11-26 early: Floor 2 wrong-animal monsters drafted
 - Seven of the twelve wrong-animal monsters now have drafts of their own (all ALL PASS, sent for Jay's approval): Black Crawler (cave beetle), Blight Wasp (the meadow wasp gone sick), Hill Cutthroat (highland bandit), Ridge Cat, Herd Bull and Stonehide Bull, Horned Grazer (antelope), Dust Strider (lizard). Colours in `art/pipeline/creature_palettes.py`. Still to do: Drain Matron (Underkeep Wing 2 boss), Sleeping Trunk, Mossback Warden, Moss Crawler (Floor 3). None of these floors' areas are open yet.
-
+- S4 ticked: five test characters formed one party in the client and hunted the Smugglers' Cellar together, sharing experience evenly, no deaths. Fixed on the way: only 2 characters per account may be online, so the party uses three test accounts; test characters now go home to the depot before logging out (one left in a fight stayed online and spoiled the next run). Server restarted once for this.
