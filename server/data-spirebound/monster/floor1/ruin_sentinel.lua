@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a ruin sentinel"
 monster.experience = 96
 monster.outfit = {
-	lookType = 131, lookHead = 79, lookBody = 79, lookLegs = 79, lookFeet = 79, lookAddons = 0, lookMount = 0,
+	lookType = 2204, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 300

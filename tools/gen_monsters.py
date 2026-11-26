@@ -68,22 +68,23 @@ MONSTERS = {
     "Field Shardling": dict(desc="a field shardling", look=(122,), corpse=6053, hp=120, xp=58, speed=90, race="undead",
                             attacks=[("melee", 0, -20), ("energy", 0, -35, 4)], armor=10, defense=10, events=["SpireShardBurst"],
                             loot=[(GOLD, 85000, 20), (268, 6000, 1), (3033, 6000, 1)], elements={"energy": 50, "earth": -10}),
-    "Road Bandit": dict(desc="a road bandit", look=(129, 58, 59, 45, 114, 0), corpse=18050, hp=160, xp=50, speed=100,
+    # Jay approved our own art for these four (2026-11-25): looks 2201-2204, no colour layer
+    "Road Bandit": dict(desc="a road bandit", look=(2201, 0, 0, 0, 0, 0), corpse=18050, hp=160, xp=50, speed=100,
                         race="blood", attacks=[("melee", 0, -45), ("drunk", 0, 4000, 3)], armor=10, defense=12,  # F1-10: smoke bomb
                         loot=[(GOLD, 90000, 60), (PLAT, 6000, 1), (3294, 5000, 1), (3361, 4000, 1), (3286, 5000, 1), (11492, 13000, 1), (5913, 6000, 1)],
                         voices=["Your money or your life!"]),
-    "Bandit Captain": dict(desc="a bandit captain", look=(129, 94, 94, 94, 95, 1), corpse=18050, hp=450, xp=201, speed=110,
+    "Bandit Captain": dict(desc="a bandit captain", look=(2202, 0, 0, 0, 0, 0), corpse=18050, hp=450, xp=201, speed=110,
                            race="blood", attacks=[("melee", 0, -90), ("physical", 0, -60, 4)], armor=18, defense=20,
                            loot=[(GOLD, 100000, 80), (PLAT, 15000, 1), (3359, 4000, 1), (3352, 5000, 1), (266, 15000, 2), (5909, 12000, 1)],
                            voices=["Get them, boys!"], summons=[("Road Bandit", 2)]),
     "Thornsnap": dict(desc="a thornsnap", look=(28,), corpse=3998, hp=140, xp=56, speed=90, race="venom",
                       attacks=[("melee", 0, -35, None, "poison"), ("slow", -90, 2000, 2, "CONST_ME_CARNIPHILA")], armor=8, defense=8,  # F1-10: roots
                       loot=[(GOLD, 85000, 22), (266, 5000, 1), (5879, 13000, 1)], elements={"earth": 100, "fire": -15}),
-    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(131, 79, 79, 79, 79, 0), corpse=18074, hp=300, xp=96, speed=85,
+    "Ruin Sentinel": dict(desc="a ruin sentinel", look=(2204, 0, 0, 0, 0, 0), corpse=18074, hp=300, xp=96, speed=85,
                           race="undead", attacks=[("melee", 0, -70), ("cleave", 0, -55, 1)], armor=25, defense=25,  # F1-10: shield bash
                           loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15},
                           events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),  # F1-10: shield wall
-    "Ruin Archer": dict(desc="a ruin archer", look=(129, 79, 79, 79, 79, 0), corpse=18138, hp=220, xp=83, speed=95,
+    "Ruin Archer": dict(desc="a ruin archer", look=(2203, 0, 0, 0, 0, 0), corpse=18138, hp=220, xp=83, speed=95,
                         race="undead", attacks=[("melee", 0, -20), ("arrow", 0, -60, 6)], armor=12, defense=12, dist=4,
                         loot=[(GOLD, 100000, 75), (PLAT, 6000, 1), (3447, 30000, 15), (3350, 3000, 1), (11492, 8000, 1)], elements={"holy": -15}),
     # S4 (2026-11-25): the group grounds' mixed packs need a ranged one and a caster beside the front-liner (DESIGN.md 9.4).
@@ -122,7 +123,7 @@ MONSTERS = {
                             elements={"energy": 50, "earth": -10},
                             loot=[(GOLD, 100000, 85), (PLAT, 40000, 2), (268, 30000, 2), (3033, 30000, 2)]),
     # H8 (2026-11-25): the Old Quarry's elite, on top of the Upper Cut. A grey-gold sentinel that keeps its shield wall.
-    "Granite Warden": dict(desc="the granite warden", look=(131, 114, 114, 79, 114, 2), corpse=18074, hp=1100, xp=380, speed=90,
+    "Granite Warden": dict(desc="the granite warden", look=(2204, 0, 0, 0, 0, 0), corpse=18074, hp=1100, xp=380, speed=90,
                            race="undead", attacks=[("melee", 0, -95), ("cleave", 0, -80, 1)], armor=30, defense=30,
                            light=(3, 79), elements={"physical": 10, "holy": -15},
                            loot=[(GOLD, 100000, 95), (PLAT, 40000, 2), (3352, 20000, 1), (5880, 40000, 2), (236, 25000, 1)],
