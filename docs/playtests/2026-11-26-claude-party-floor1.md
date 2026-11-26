@@ -190,6 +190,13 @@ Axe-Lord kill can't spoil the real race.
   a 2-elite group ground for levels 19-27 that kills a level-25 party of three looks about right for "group" content.
   Note "From level 50 on, a death costs experience": below 50 these deaths cost nothing, so the challenge has no
   sting until Floor 2.
+- **Second Bandit Road lap: full party wipe** (levels 23/25/25, on the surface by the road at about (1352, 1181)).
+  The Bandit Captain again: the Arcanist died first, out of mana, taking 39-52 per Captain hit; the healer next with
+  four bandits on her (Dewfall healing 39 against 27-per-hit bandits); the tank last, to the Captain, while drinking
+  strong health potions. Two Captain fights, two losses. Dorrow's "The Lost Patrol" asks for two Bandit Captains
+  from level 19 (`quests.lua` q1_2): at 19 that looks out of reach for a normal party; consider minLevel 24-25, a
+  weaker Captain, or saying "bring a group of four" in the offer. (Same caveat: the test party clumps, so the healer
+  stands in reach.)
 
 ### Weight and junk
 - **Autoloot fills your capacity with meat.** Moles, boars and wolves drop meat (13 oz each), autoloot takes it, and

@@ -85,6 +85,24 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
   "Hold your Hearthguard Sword to grow Mastery" on the Journal's STYLE line when it isn't held.
 - **Check:** fresh level-10 character: weapon in hand after Dorrow, Mastery points rise on kills.
 
+### 5b. Young Normal climbers DO lose experience on death (levels 22-49), while being told they didn't
+(added 17:15, after a party wipe on the Bandit Road)
+- **Seen:** Pilot Fern (Mystic, Normal) died at level 25. Server log: "You lost 19757 experience. You were
+  downgraded from Level 25 to Level 24." Ten seconds later our own message: "Your death cost you no experience (you
+  would have lost 19757): climbers below level 50 on the Normal rules are spared." The database confirms the loss
+  (experience 195,178 = before minus 19,757; level 24). Same for Pilot Wick (25 -> 24).
+- **Cause (likely):** `lose.playerOnLoseExperience` (`scripts/spirebound/difficulty_events.lua` ~22) returns 0 via
+  `Difficulty.finalDeathLoss`, but Canary 3.6.1 still applies the engine's loss: either the callback's return value is
+  not used, or another `playerOnLoseExperience` callback (Canary's own data, or ours) runs after it and wins. Below
+  level ~21 the engine's adventurer's blessing hides the bug, which is why the G12 tests passed.
+- **Fix:** find how Canary 3.6.1 really uses that callback's return (search the Canary data folder for other
+  `playerOnLoseExperience` callbacks; check `Player::death` / `onLoseExperience` in the engine source on GitHub at
+  tag v3.6.1). If the return can't zero the loss, give the experience back after the respawn
+  (`player:addExperience(kept, false)` at login/respawn where the youngGrace message is sent, without a level-up
+  message spam).
+- **Check:** a Normal test character at level 30 dies to a monster -> level and experience unchanged after respawn,
+  and the message is still shown. In-game test plus one real death in the client.
+
 ---
 
 ## P2: new-player traps and economy
