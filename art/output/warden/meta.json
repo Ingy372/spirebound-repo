@@ -4,18 +4,34 @@
   "none",
   "skin",
   "eye",
+  "brow",
+  "nose",
   "hair",
-  "hat",
-  "band",
-  "feather",
-  "coat",
-  "trim",
-  "shirt",
-  "pants",
-  "boot",
+  "strand",
   "hand",
-  "book",
-  "page"
+  "torso",
+  "arm_a",
+  "arm_b",
+  "cuff",
+  "leg_a",
+  "leg_b",
+  "boot_a",
+  "boot_b",
+  "sole",
+  "belt",
+  "buckle",
+  "skirt",
+  "trim",
+  "button",
+  "collar",
+  "stock",
+  "bow",
+  "string",
+  "strap",
+  "beard",
+  "poster",
+  "seal",
+  "iron"
  ],
  "palette": "warden",
  "walk_frames": 8,
@@ -49,63 +65,176 @@
  "rules": {
   "weight": {
    "eye": 9.0,
-   "feather": 3.0,
-   "hand": 2.4,
-   "book": 3.0,
-   "page": 3.0,
-   "band": 2.0,
-   "shirt": 2.2,
-   "trim": 1.8,
-   "boot": 1.4,
-   "hair": 1.3
+   "brow": 3.0,
+   "nose": 2.0,
+   "hand": 2.6,
+   "strand": 1.3,
+   "cuff": 2.2,
+   "buckle": 4.0,
+   "belt": 2.0,
+   "sole": 1.6,
+   "boot_a": 1.4,
+   "boot_b": 1.4,
+   "trim": 2.4,
+   "button": 4.0,
+   "collar": 1.6,
+   "bow": 2.6,
+   "string": 3.0,
+   "strap": 2.0,
+   "stock": 1.6,
+   "beard": 1.4,
+   "poster": 2.6,
+   "seal": 4.0,
+   "iron": 3.0
   },
   "thin": {
    "eye": 3,
-   "feather": 3,
+   "brow": 2,
+   "nose": 3,
    "hand": 3,
-   "book": 3,
-   "page": 2,
-   "band": 3,
-   "shirt": 3,
-   "trim": 3
+   "strand": 2,
+   "cuff": 3,
+   "buckle": 2,
+   "belt": 3,
+   "sole": 3,
+   "trim": 2,
+   "button": 2,
+   "bow": 2,
+   "string": 2,
+   "strap": 3,
+   "poster": 3,
+   "seal": 2,
+   "iron": 2
   },
   "soft": [
    [
-    "coat",
-    "trim",
-    "shirt"
+    "skin",
+    "eye",
+    "brow",
+    "nose"
+   ],
+   [
+    "hair",
+    "strand"
+   ],
+   [
+    "hand",
+    "skin"
+   ],
+   [
+    "torso",
+    "belt",
+    "buckle"
+   ],
+   [
+    "boot_a",
+    "sole"
+   ],
+   [
+    "boot_b",
+    "sole"
+   ],
+   [
+    "skirt",
+    "trim"
+   ],
+   [
+    "torso",
+    "button",
+    "collar"
+   ],
+   [
+    "stock",
+    "bow",
+    "string"
+   ],
+   [
+    "torso",
+    "strap"
+   ],
+   [
+    "poster",
+    "seal"
    ],
    [
     "skin",
-    "hair",
-    "eye"
-   ],
-   [
-    "hat",
-    "band"
-   ],
-   [
-    "book",
-    "page",
-    "hand"
-   ],
-   [
-    "pants",
-    "boot"
+    "beard"
    ]
   ],
   "no_outline": [],
   "fur": [],
+  "texture": {
+   "torso": [
+    0.4,
+    0.18
+   ],
+   "arm_a": [
+    0.35,
+    0.12
+   ],
+   "arm_b": [
+    0.35,
+    0.12
+   ],
+   "leg_a": [
+    0.35,
+    0.12
+   ],
+   "leg_b": [
+    0.35,
+    0.12
+   ],
+   "hair": [
+    0.3,
+    0.1
+   ],
+   "boot_a": [
+    0.3,
+    0.0
+   ],
+   "boot_b": [
+    0.3,
+    0.0
+   ],
+   "skirt": [
+    0.38,
+    0.16
+   ],
+   "stock": [
+    0.3,
+    0.1
+   ],
+   "beard": [
+    0.35,
+    0.15
+   ]
+  },
+  "bands": [
+   0.38,
+   0.5,
+   0.6,
+   0.69,
+   0.78,
+   0.86,
+   0.93
+  ],
   "selout": [
-   "coat",
-   "hat",
+   "torso",
    "skin",
-   "feather"
+   "hair",
+   "skirt",
+   "collar",
+   "stock"
   ]
  },
  "ref": "outfit_128.png",
  "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
   8,
   8
- ]
+ ],
+ "auto_place": null
 }

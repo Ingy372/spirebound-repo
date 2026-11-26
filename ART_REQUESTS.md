@@ -20,6 +20,8 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
   NPCs wearing them: Vesper, Priest Odran, Registrar Maelis, Banker Tolliver, Merchant Wenna, Innkeeper Bess, Fisher
   Corwin, Guide Pell, Ascendant Veyra. Players get their class's outfit when they pick a class (older characters at
   their next login). Floors 2-10 priests and bankers and the second Hearthgate banker still wear borrowed looks.
+- **2026-11-25: the Bounty Warden is redrawn** on the outfit body (`art/models/warden.py`): no hat any more (Vesper owns
+  coat + hat), a crossbow on his back, grey beard, wanted poster, manacles. Sent to Jay for approval.
 - **Still to make:** 8 Floor 1 models in progress (archer, bandit, Brannoch, the captain, guild warden, quartermaster,
   sentinel, warden); about 90 Floors 2-10 monsters (perhaps 60 different bodies once shared bodies are counted) and
   about 45 kinds of NPC. At the pace so far (6-8 approved models a long session, including Jay's review), Floors 2-10

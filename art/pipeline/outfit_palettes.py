@@ -76,6 +76,23 @@ OUTFITS["azhrakkar"]["eye"] = [[190, 250, 255]] * 8
 OUTFITS["azhrakkar"]["brow"] = ramp(*BONE)
 OUTFITS["azhrakkar"]["nose"] = ramp((4, 8, 28), (70, 110, 180), (16, 36, 92))
 
+# Bounty Warden (town NPC on the humanoid figure, 2026-11-25)
+OXBLOOD = ((34, 6, 10), (196, 72, 62), (112, 22, 26))
+BRASS = ((96, 62, 14), (255, 230, 150), (206, 156, 52))
+IRON_GREY = ((40, 40, 44), (226, 224, 220), (132, 130, 128))
+SALT_PEPPER = ((22, 20, 22), (170, 166, 160), (82, 78, 76))   # light grey hair read as a steel helmet
+OUTFITS["warden"] = {
+    **base(hair=SALT_PEPPER, arms=OXBLOOD, legs=((18, 20, 28), (124, 130, 146), (60, 64, 78)),
+           boots=((8, 6, 8), (96, 84, 80), (34, 28, 30)), torso=OXBLOOD, cuff=BRASS,
+           belt=((20, 12, 8), (120, 84, 56)), buckle=BRASS),
+    "skirt": ramp(*OXBLOOD), "trim": ramp(*BRASS), "button": ramp(*BRASS), "collar": ramp(*OXBLOOD),
+    "stock": ramp((30, 16, 8), (170, 116, 70), (88, 52, 26)), "bow": ramp((20, 22, 28), (210, 214, 222), (100, 104, 116)),
+    "string": ramp((150, 140, 120), (236, 230, 214)), "strap": ramp((20, 12, 8), (130, 90, 58), (66, 42, 24)),
+    "beard": ramp(*IRON_GREY),
+    "poster": ramp((120, 96, 60), (252, 240, 210), (214, 192, 150)), "seal": ramp((90, 8, 10), (240, 90, 70), (170, 24, 24)),
+    "iron": ramp((20, 22, 28), (190, 196, 206), (90, 94, 104)),
+}
+
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text())

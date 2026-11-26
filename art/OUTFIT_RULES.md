@@ -41,9 +41,13 @@ Worked examples: `art/models/vanguard.py`, `ranger.py`, `arcanist.py`, `mystic.p
 | O11 | **Fixed placement.** Every outfit uses `humanoid.CANVAS_OFFSET` (not AUTO_PLACE), so outfits, add-ons and mounts line up. | `CANVAS_OFFSET = H.CANVAS_OFFSET` |
 | O12 | **Eyes are small** (about 2 px, dark brown, not black). Jay will judge eyes in the game before more changes. | `humanoid.DEFAULTS["eye_r"]` |
 | O13 | **Plan for colour zones.** In the game a player recolours head, body, legs and feet. Keep hair in "hair"; the main garment in torso/arms (or robe); trousers or the second colour in legs; boots in boots. Gear and metal are never recoloured. | part names |
+| O14 | **One outline per character, NPCs included.** Before adding a hat, coat or weapon, look at the approved people (`python tools/art_outfits.py <new> vesper priest ...`): if the new figure's outline matches one of them, change the signature, not the colours. Vesper owns coat + wide hat. | lesson from the Bounty Warden (2026-11-25) |
+| O15 | **Hats in this view:** a dome crown with a small brim reads as a helmet, a plume pointing backward stands up like a horn in the south view (lay it along the crown), and a red band under a brim reads as glowing eyes. A hat needs a tall flat-topped crown and a brim tipped back about 0.4 (Vesper). | Bounty Warden first render |
+| O16 | **Light grey hair reads as a steel helmet.** Grey or white hair uses a darker salt-and-pepper ramp (top tone about 170) and five or more strand lines. | Bounty Warden |
+| O17 | **Gear on the back is edge-on from the side.** A crossbow, quiver or shield on the back spans left-right, so facing east or west it hides behind the body: sweep its far ends backward (-X) so it shows from the side, and check the signature count facing E and W. | Bounty Warden's crossbow (1 px facing E before the sweep) |
 
 ## Still to do
 
 - The town NPCs, bandits, sentinel, archer and the boss still use the old copied body; move each onto `humanoid.py`
-  when it is next touched.
+  when it is next touched. Done: the Bounty Warden (`warden.py`, 2026-11-25).
 - The colour-mask layer for player recolouring (rule O13) is not generated yet (roadmap R22 / 6.4).

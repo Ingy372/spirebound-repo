@@ -1,8 +1,18 @@
-"""Bounty warden (Hearthgate, town NPC): model + walk cycle, a variant of Vesper.
+"""Bounty Warden (Hearthgate town NPC), built on art/models/humanoid.py (second draft, 2026-11-25).
 
-ART_REQUESTS.md: "a stern bounty warden in a dark red coat with a wanted-poster scroll". Original design:
-long dark red coat with brass trim, black wide hat with a short black plume, dark trousers and boots, a rolled
-parchment wanted poster held at the chest. Faces +X; sizes in tiles.
+ART_REQUESTS.md: "a stern bounty warden in a dark red coat with a wanted-poster scroll".
+The first draft (2026-11-15) was a recoloured copy of Vesper's old body; this one follows art/OUTFIT_RULES.md.
+
+Identity (art/OUTFIT_RULES.md step 1):
+  Silhouette: a long coat flaring to the knees with split skirts, bare grey head, a crossbow slung across the
+              back (its bow sticks out past the shoulders), a rolled wanted poster held out in the right hand, iron
+              manacles hanging at the left hip. No hat: Vesper owns the coat-and-hat outline (rule O5).
+  Colours:    oxblood coat, brass trim and buttons, black boots, slate trousers; iron-grey hair and beard; dark wood.
+  Details:    brass hem on every coat skirt, a row of brass buttons, a standing collar with brass piping, turned-back
+              cuffs, a belt with a brass buckle, a strap across the chest, a red wax seal on the poster, manacles on
+              the belt, a short grey beard (stern, older than the other townsfolk).
+Detail (art/DETAIL_RULES.md step 1): long coat, skirts, buttons, collar, cuffs, crossbow (stock, bow, string),
+              strap, beard, poster, manacles, boots with cuffs.
 """
 from __future__ import annotations
 
@@ -10,180 +20,123 @@ import math
 
 from mathutils import Euler, Vector
 
+import humanoid as H
+
 NAME = "warden"
 WALK_FRAMES = 8
 PALETTE = "warden"
-REFERENCE = "outfit_128.png"   # Tibia outfit Vesper borrows today, tinted (comparison only, never shipped)
-PROJECTION = "oblique"             # standing figure: Tibia's own drawing rule (see art/pipeline/rig.py)
-CANVAS_OFFSET = (8, 8)             # px right/down: standing figures sit low-right on the canvas like Tibia's
-PIXEL_RULES = {
-    "weight": {"eye": 9.0, "feather": 3.0, "hand": 2.4, "book": 3.0, "page": 3.0, "band": 2.0, "shirt": 2.2,
-               "trim": 1.8, "boot": 1.4, "hair": 1.3},
-    "thin": {"eye": 3, "feather": 3, "hand": 3, "book": 3, "page": 2, "band": 3, "shirt": 3, "trim": 3},
-    "soft": [["coat", "trim", "shirt"], ["skin", "hair", "eye"], ["hat", "band"], ["book", "page", "hand"],
-             ["pants", "boot"]],
-    "no_outline": [],
-    "fur": [],
-    "selout": ["coat", "hat", "skin", "feather"],
-}
+REFERENCE = "outfit_128.png"
+PROJECTION = "oblique"
+CANVAS_OFFSET = H.CANVAS_OFFSET
+SIGNATURE = ["skirt", "bow"]
+HEAD_PARTS = ["skin", "hair", "strand", "eye", "brow", "nose", "beard"]
+LEG_PARTS = ["leg_a", "leg_b", "boot_a", "boot_b"]
+CHECK = {"size": (0.85, 1.45), "head": 0.08, "legs_side": 0.05, "eye": 1}   # the crossbow adds to the measured size
 
-PARTS = ["none", "skin", "eye", "hair", "hat", "band", "feather", "coat", "trim", "shirt", "pants", "boot",
-         "hand", "book", "page"]
+PARTS = H.PARTS + ["skirt", "trim", "button", "collar", "stock", "bow", "string", "strap", "beard", "poster", "seal", "iron"]
+PIXEL_RULES = H.pixel_rules(
+    weight={"trim": 2.4, "button": 4.0, "collar": 1.6, "bow": 2.6, "string": 3.0, "strap": 2.0, "stock": 1.6, "beard": 1.4, "poster": 2.6,
+            "seal": 4.0, "iron": 3.0},
+    thin={"trim": 2, "button": 2, "bow": 2, "string": 2, "strap": 3, "poster": 3, "seal": 2, "iron": 2},
+    soft=[["skirt", "trim"], ["torso", "button", "collar"], ["stock", "bow", "string"], ["torso", "strap"], ["poster", "seal"],
+          ["skin", "beard"]],
+    texture={"skirt": [0.38, 0.16], "stock": [0.3, 0.1], "beard": [0.35, 0.15]},
+    selout=["skirt", "collar", "stock"],
+)
 
-# body ------------------------------------------------------------------
-HIP_Z, KNEE_LEN, SHIN_LEN = 0.50, 0.25, 0.25
-HIP_Y = 0.070
-LEG_R = 0.054
-TORSO = Vector((0.0, 0.0, 0.70)); TORSO_R = (0.105, 0.165, 0.185)
-SKIRT_TOP, SKIRT_BOTTOM = 0.60, 0.31
-SKIRT_R = (0.140, 0.180)            # x, y radius at the hem (it narrows to 70% at the waist)
-HEAD = Vector((0.010, 0.0, 0.975)); HEAD_R = (0.150, 0.140, 0.160)
-SHOULDER = Vector((0.0, 0.165, 0.825))
-UPPER_ARM, FOREARM = 0.19, 0.18
-ARM_R = 0.050
-STRIDE, LIFT, STANCE = 0.11, 0.055, 0.5
-
-
-BODY_SCALE = (1.15, 1.22, 0.80)   # Tibia proportions: chunkier and shorter than a real person
+SPEC = H.spec(torso_r=(0.104, 0.152, 0.186), arm_r=0.046, leg_r=0.050, stride=0.11, lift=0.050, bob=0.014,
+              strands=(-1.5, -0.8, -0.1, 0.6, 1.3), cap_r=(0.112, 0.116, 0.096))   # more strands, a closer crop
 
 
 def build(model_cls, facing):
-    import bpy
-    body = bpy.data.objects.new("BodyScale", None)      # every part hangs under this to get the chunky build
-    body.parent = facing
-    body.scale = BODY_SCALE
-    bpy.context.scene.collection.objects.link(body)
-    m = model_cls(body, PARTS)
-    for k in ("l", "r"):
-        m.capsule(f"thigh_{k}", "pants")
-        m.capsule(f"shin_{k}", "pants")
-        m.ellipsoid(f"boot_{k}", "boot", radii=(0.070, 0.042, 0.050), segments=12, rings=8)
-        m.capsule(f"bootleg_{k}", "boot")
-        m.capsule(f"upper_{k}", "coat")
-        m.capsule(f"fore_{k}", "coat")
-        m.frustum(f"cuff_{k}", "trim", top_ratio=1.0, segments=10)
-        m.ellipsoid(f"hand_{k}", "hand", radii=(0.036, 0.030, 0.038), segments=10, rings=8)
-    m.ellipsoid("torso", "coat", radii=TORSO_R)
-    m.frustum("skirt", "coat", top_ratio=0.70)
-    m.frustum("hem", "trim", top_ratio=0.97)
-    m.ellipsoid("cravat", "shirt", radii=(0.050, 0.060, 0.070), segments=10, rings=8)
-    m.ellipsoid("collar", "trim", radii=(0.085, 0.140, 0.040), segments=14, rings=8)
-    m.ellipsoid("head", "skin", radii=HEAD_R)
-    m.ellipsoid("hair", "hair", radii=(0.140, 0.148, 0.150))
-    for k in ("l", "r"):
-        m.ellipsoid(f"eye_{k}", "eye", radii=(0.012, 0.012, 0.018), segments=8, rings=6)
-    m.ellipsoid("brim", "hat", radii=(0.195, 0.185, 0.022), segments=24, rings=8)
-    m.frustum("crown", "hat", top_ratio=0.80)
-    m.frustum("band", "band", top_ratio=0.98)
-    m.tube("feather", "feather", points=9)
-    m.capsule("book", "page")          # rolled wanted poster (scroll)
-    m.box("page", "page", size=(0.004, 0.004, 0.004))
+    m = H.build(model_cls, facing, SPEC, PARTS)
+    m.ellipsoid("nape", "hair", radii=(0.048, 0.092, 0.056), segments=12, rings=6)
+    m.ellipsoid("sideburn_l", "hair", radii=(0.028, 0.020, 0.050), segments=8, rings=6)
+    m.ellipsoid("sideburn_r", "hair", radii=(0.028, 0.020, 0.050), segments=8, rings=6)
+    m.ellipsoid("beard", "beard", radii=(0.060, 0.082, 0.050), segments=12, rings=8)
+    # coat skirts: four panels from the waist to the knee, each with a brass hem (split coat, like a frock coat)
+    for k in ("f_l", "f_r", "b", "s_l", "s_r"):
+        wide = 0.115 if k.startswith("f") else (0.290 if k == "b" else 0.026)
+        deep = 0.026 if not k.startswith("s") else 0.170
+        m.box(f"skirt_{k}", "skirt", size=(deep, wide, 0.260))
+        m.box(f"hem_{k}", "trim", size=(deep * 1.10 + 0.004, wide * 1.04 + 0.004, 0.030))
+    for i in range(4):
+        m.ellipsoid(f"button{i}", "button", radii=(0.014, 0.014, 0.014), segments=8, rings=6)
+    m.frustum("collar", "collar", top_ratio=1.08, segments=16)
+    m.frustum("collar_pipe", "trim", top_ratio=1.0, segments=16)
+    # crossbow slung across the back, the bow end up behind the left shoulder (O8: tall things behind the head)
+    m.box("stock", "stock", size=(0.040, 0.050, 0.330))
+    m.capsule("bow_l", "bow")
+    m.capsule("bow_r", "bow")
+    m.capsule("bowstring", "string")
+    m.capsule("strap", "strap")
+    m.ellipsoid("short_hair", "hair", radii=(0.040, 0.070, 0.026), segments=10, rings=6)
+    m.capsule("poster", "poster")
+    m.ellipsoid("seal", "seal", radii=(0.016, 0.020, 0.020), segments=8, rings=6)
+    for i in range(2):
+        m.frustum(f"manacle{i}", "iron", top_ratio=1.0, segments=12)
+    m.capsule("chain", "iron")
     return m
 
 
-def _two_bone(a, target, l1, l2, bend_hint):
-    """Joint position for a two-segment limb from a to target, bending toward bend_hint."""
-    d = target - a
-    dist = min(d.length, l1 + l2 - 1e-4)
-    d.normalize()
-    side = d.cross(bend_hint)
-    if side.length < 1e-6:
-        side = Vector((0, 1, 0))
-    bend = side.cross(d).normalized()
-    x = (l1 ** 2 + dist ** 2 - l2 ** 2) / (2 * dist)
-    h = math.sqrt(max(l1 ** 2 - x ** 2, 0.0))
-    return a + d * x + bend * h, a + d * dist
-
-
-def _foot(t, phase):
-    if t is None:
-        return 0.0, 0.0
-    u = (t + phase) % 1.0
-    if u < STANCE:
-        return STRIDE * (1 - 2 * u / STANCE), 0.0
-    k = (u - STANCE) / (1 - STANCE)
-    ease = 0.5 - 0.5 * math.cos(math.pi * k)
-    return STRIDE * (-1 + 2 * ease), LIFT * math.sin(math.pi * k)
+def _poster_hand(sh, a, walking):
+    return sh + Vector((0.135, 0.030, -0.235))          # held out at the chest, reading off the wanted list
 
 
 def pose(m, t):
-    a = 0.0 if t is None else 2 * math.pi * t
-    walking = t is not None
-    bob = 0.014 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
-    up = Vector((0, 0, bob))
-    m.objects["torso"].location = TORSO + up
-    sk = m.objects["skirt"]
-    sk.location = Vector((0, 0, SKIRT_BOTTOM)) + up
-    sk.rotation_mode = "XYZ"
-    sk.rotation_euler = Euler((0.04 * math.sin(a) if walking else 0.0, 0.0, 0.0))
-    sk.scale = (SKIRT_R[0], SKIRT_R[1], SKIRT_TOP - SKIRT_BOTTOM)
-    hem = m.objects["hem"]
-    hem.location = Vector((0, 0, SKIRT_BOTTOM - 0.004)) + up
-    hem.rotation_mode = "XYZ"
-    hem.rotation_euler = sk.rotation_euler
-    hem.scale = (SKIRT_R[0] + 0.004, SKIRT_R[1] + 0.004, 0.032)
-    m.objects["cravat"].location = Vector((0.085, 0, 0.810)) + up
-    m.objects["collar"].location = Vector((-0.010, 0, 0.870)) + up
-    head = HEAD + up
-    m.objects["head"].location = head
-    m.objects["hair"].location = head + Vector((-0.022, 0, 0.012))
-    for s, k in ((1, "l"), (-1, "r")):
-        m.objects[f"eye_{k}"].location = head + Vector((0.142, 0.046 * s, 0.005))
-    # hat: brim, crown and band sit a little back and tilted to the left side (a rakish angle)
-    tilt = Euler((0.10, -0.42, 0.0))                     # brim tipped back so the face shows
-    hat_base = head + Vector((-0.045, 0.0, 0.118))
-    for name in ("brim", "crown", "band"):
-        o = m.objects[name]
-        o.rotation_mode = "XYZ"
-        o.rotation_euler = tilt
-    m.objects["brim"].location = hat_base
-    crown = m.objects["crown"]
-    crown.location = hat_base
-    crown.scale = (0.115, 0.108, 0.150)
-    band = m.objects["band"]
-    band.location = hat_base + Vector((0, 0, 0.006))
-    band.scale = (0.118, 0.111, 0.034)
-    # feather: from the band on the left side, sweeping back and up, swaying a little with the step
-    sway = 0.012 * math.sin(a) if walking else 0.0
-    root = hat_base + Vector((-0.030, 0.105, 0.040))
-    pts, radii = [], []
-    for i in range(9):
-        u = i / 8
-        pts.append(root + Vector((-0.17 * u, 0.09 * u * u, 0.07 * math.sin(math.pi * u * 0.8) + sway * u)))
-        radii.append(0.022 * (1 - u) ** 0.6 + 0.004)
-    m.set_tube("feather", [tuple(p) for p in pts], radii)
-    # legs
-    for s, k, phase in ((1, "l", 0.0), (-1, "r", 0.5)):
-        hip = Vector((0.0, HIP_Y * s, HIP_Z)) + up
-        fx, fz = _foot(t, phase)
-        ankle = Vector((fx, HIP_Y * s * 1.1, 0.055 + fz))
-        knee, ankle = _two_bone(hip, ankle, KNEE_LEN, SHIN_LEN, Vector((1, 0, 0)))
-        m.put_segment(f"thigh_{k}", hip, knee, LEG_R)
-        m.put_segment(f"shin_{k}", knee, ankle, LEG_R * 0.9)
-        m.put_segment(f"bootleg_{k}", ankle, ankle + Vector((0, 0, 0.09)), LEG_R * 1.12)
-        m.objects[f"boot_{k}"].location = ankle + Vector((0.030, 0, -0.012))
-    # arms: the right arm swings against the left leg; the left hand holds the notebook at the chest
-    for s, k in ((1, "l"), (-1, "r")):
-        sh = Vector((SHOULDER.x, SHOULDER.y * s, SHOULDER.z)) + up
-        if k == "l":
-            hand = Vector((0.150, 0.070, 0.650)) + up + Vector((0, 0, 0.006 * math.sin(2 * a)))
-            hint = Vector((-1, 0.6, 0))
-        else:
-            swing = -0.11 * math.sin(a) if walking else 0.0
-            hand = sh + Vector((swing, -0.030, -0.34 + 0.02 * abs(swing) / 0.11))
-            hint = Vector((-1, 0, 0))
-        elbow, hand = _two_bone(sh, hand, UPPER_ARM, FOREARM, hint)
-        m.put_segment(f"upper_{k}", sh, elbow, ARM_R)
-        m.put_segment(f"fore_{k}", elbow, hand, ARM_R * 0.92)
-        cuff = m.objects[f"cuff_{k}"]
-        d = (hand - elbow).normalized()
-        m.put_segment(f"cuff_{k}", hand - d * 0.045, hand - d * 0.012, ARM_R * 1.12)
-        m.objects[f"hand_{k}"].location = hand + d * 0.018
-        if k == "l":
-            m.put_segment("book", hand + Vector((0.010, -0.080, 0.010)), hand + Vector((0.010, 0.050, 0.030)), 0.026)
-            m.objects["page"].location = hand
+    p = H.pose(m, t, hands={"r": _poster_hand})
+    up, head, cap, a, walking = p["up"], p["head"], p["cap"], p["a"], p["walking"]
+    s = m.spec
+    m.objects["nape"].location = head + Vector((-0.084, 0, -0.028))
+    m.objects["sideburn_l"].location = head + Vector((0.020, 0.100, -0.010))
+    m.objects["sideburn_r"].location = head + Vector((0.020, -0.100, -0.010))
+    m.objects["beard"].location = head + Vector((0.070, 0, -0.072))
+    # skirts swing out with whichever leg is forward, so no knee pokes through
+    flap = 0.24 * abs(math.sin(a)) if walking else 0.0
+    panels = {"f_l": (0.098, 0.062, flap), "f_r": (0.098, -0.062, flap), "b": (-0.100, 0.0, -flap),
+              "s_l": (0.0, 0.150, 0.0), "s_r": (0.0, -0.150, 0.0)}
+    for k, (x, y, rot_y) in panels.items():
+        roll = 0.10 if k == "s_l" else (-0.10 if k == "s_r" else 0.0)
+        for name, z in ((f"skirt_{k}", 0.425), (f"hem_{k}", 0.305)):
+            o = m.objects[name]
+            o.rotation_mode = "XYZ"
+            o.rotation_euler = Euler((roll, rot_y, 0.0))
+            o.location = Vector((x * (1.02 if name.startswith("hem") else 1.0), y, z)) + up
+    for i in range(4):
+        m.objects[f"button{i}"].location = Vector((s["torso_r"][0] * 1.02, 0.0, 0.795 - i * 0.070)) + up
+    H.frustum(m, "collar", Vector((-0.012, 0, 0.840)) + up, (0.090, 0.112), 0.062, rot=(0.0, -0.18, 0.0))
+    H.frustum(m, "collar_pipe", Vector((-0.020, 0, 0.900)) + up, (0.094, 0.118), 0.010, rot=(0.0, -0.18, 0.0))
+    m.objects["short_hair"].location = head + Vector((0.040, 0, 0.122))       # a short swept-back fringe
+    # crossbow on the back: stock diagonal from the right hip up to behind the left shoulder
+    back = Vector((-s["torso_r"][0] * 1.45, 0, 0.0)) + up
+    low, high = back + Vector((0.0, -0.110, 0.520)), back + Vector((-0.030, 0.130, 0.800))
+    stock = m.objects["stock"]
+    d = (high - low).normalized()
+    stock.rotation_mode = "QUATERNION"
+    stock.rotation_quaternion = d.to_track_quat("Z", "X")
+    stock.location = (low + high) / 2
+    side = d.cross(Vector((1, 0, 0))).normalized()
+    tip = high + d * 0.020
+    for k, sgn in (("l", 1), ("r", -1)):
+        end = tip + side * 0.175 * sgn - d * 0.070 + Vector((-0.095, 0, 0))   # swept back: seen from the side too
+        m.put_segment(f"bow_{k}", tip, end, 0.022, 0.013)
+    m.put_segment("bowstring", tip + side * 0.172 - d * 0.072 + Vector((-0.085, 0, 0)),
+                  tip - side * 0.172 - d * 0.072 + Vector((-0.085, 0, 0)), 0.006)
+    # strap across the chest from the right hip to the left shoulder
+    m.put_segment("strap", Vector((s["torso_r"][0] * 0.95, -0.090, 0.600)) + up,
+                  Vector((s["torso_r"][0] * 0.55, 0.120, 0.860)) + up, 0.012)
+    # rolled poster across the right hand, the wax seal facing out
+    hand = p["hand_r"]
+    m.put_segment("poster", hand + Vector((0.010, -0.075, -0.010)), hand + Vector((0.020, 0.070, 0.020)), 0.024)
+    m.objects["seal"].location = hand + Vector((0.040, 0.000, 0.006))
+    # manacles hanging from the belt at the left hip, swinging a little
+    swing = 0.03 * math.sin(a) if walking else 0.0
+    belt = Vector((0.010, s["torso_r"][1] * 0.98, s["belt_z"])) + up
+    for i, dx in enumerate((0.030, -0.030)):
+        H.frustum(m, f"manacle{i}", belt + Vector((dx + swing, 0.020, -0.070 - 0.012 * i)), (0.026, 0.026), 0.014,
+                  rot=(math.pi / 2, 0.0, 0.0))
+    m.put_segment("chain", belt + Vector((0.030 + swing, 0.020, -0.060)), belt + Vector((-0.030 + swing, 0.020, -0.070)), 0.006)
 
 
 def assign_depth_parts(m, depth_of):
-    """Vesper uses depth lines (pixelize.py) to separate limbs; no near/far colour swap needed."""
     return None
