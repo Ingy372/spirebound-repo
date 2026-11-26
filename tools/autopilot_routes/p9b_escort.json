@@ -1,6 +1,6 @@
 {
  "name": "p9b_escort",
- "about": "P9b: take The Last of the Patrol from Captain Dorrow, free Patrolman Teodric in the Smugglers' Cellar, walk him home alive and report.",
+ "about": "P9b: take The Last of the Patrol from Captain Dorrow, free Patrolman Teodric in the Smugglers' Cellar, walk him home alive and report. The cellar is a party cave: the test clears its guards with /pilot clear (a party would fight them).",
  "character": "Pilot Vanguard",
  "timeout": 900,
  "steps": [
@@ -19,6 +19,10 @@
   {
    "do": "say",
    "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot quest q1_temper 3"
   },
   {
    "do": "say",
@@ -67,20 +71,17 @@
    "note": "the Smugglers' Cellar: free Teodric"
   },
   {
-   "do": "hunt",
-   "seconds": 20,
-   "radius": 5,
-   "note": "the Smugglers' Cellar: clear the guards"
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "the Smugglers' Cellar: a party cave; the test clears the guards a party would fight"
   },
   {
-   "do": "walk",
+   "do": "jump",
    "to": [
     1343,
     1181,
     8
    ],
-   "fight": true,
-   "timeout": 30,
    "note": "the Smugglers' Cellar: free Teodric"
   },
   {

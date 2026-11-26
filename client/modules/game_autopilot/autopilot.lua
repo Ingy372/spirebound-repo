@@ -81,7 +81,9 @@ local function monsters(player)
     local out = {}
     for _, c in ipairs(g_map.getSpectators(pos, false) or {}) do
         local p = c:getPosition()
-        if c:isMonster() and p and p.z == pos.z and c:getHealthPercent() > 0 then
+        local mine = (c.getMasterId and c:getMasterId() == player:getId())
+            or (CreatureTypeSummonOwn and c.getType and c:getType() == CreatureTypeSummonOwn)
+        if c:isMonster() and not mine and p and p.z == pos.z and c:getHealthPercent() > 0 then -- (never your own companion)
             out[#out + 1] = { c = c, d = dist(p, pos) }
         end
     end

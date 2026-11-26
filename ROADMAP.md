@@ -21,7 +21,6 @@ Every real tester has hit a blocker in the first 30 minutes. Fix what is left, o
 
 ## Step 2 — Finish Floor 1's last third (levels 19 to 35)
 The end of the floor, right before the boss, is its weakest part: two grounds still swarm at the gate and the group hunting isn't built.
-- [ ] **P9b Escort or rescue quest** (cut from P9, 2026-11-25): "find the Lost Patrol's survivor in the Bandit Vault and walk him home". Needs H8 and an NPC that follows the player. Done when: autopilot walks the survivor home.
 - [ ] **S1c Model the Old Watchtower** (cut from S1b, 2026-11-26): the large-group ground's reward per person for a party of 4-8 in `tools/gen_economy.py`, checked against the 1.75x target in `balance.py --check`. Also: a Ranger at level 23 on Bandit Road nearly died in the measuring run (5% health, 81 potions in 3 minutes) while the other classes stayed above 30%; look at whether the Ranger is too fragile there.
 - [~] **H0 Measure how monsters notice players** in the client (range, walls, changing level, wandering). *(2026-11-14: weekend bonus checked; the engine's view range is 11 tiles each way; the in-client measurement is still open.)*
 - [ ] **H11 In-game tests on the real map** (monsters in range at each route's start, middle and end; monsters let go when you change level); regenerate documents and pictures (FLOOR1.md still says "about 1,000 monsters").
