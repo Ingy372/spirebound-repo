@@ -9,7 +9,7 @@ Written for Jay. This is what Floor 1 is meant to be; the placeholder map in the
 ## The idea
 A new climber starts in a small walled yard, picks a path, and walks into **Hearthgate**: one compact walled city where every service is a short walk from the temple. Around it lies a ring of safe starter fields, then a spread of hunting grounds that get harder and richer the farther you walk, ending in the Old Quarry and the Old Watchtower. To the north, the Pass and the labyrinth lead to the Axe-Lord and Floor 2.
 
-**Small for 20, roomy for 500.** The walk from the Hearthstone to anything in town is short. Since the wilds rebuild (2026-11-13, `FLOOR1_WILDS_PLAN.md`) every hunting ground is a walled place with one gate, a hub and four hunting loops: about 1,000 monsters at rest across the twelve grounds, 66 in the Old Watchtower and 192 in six party caves. When a ground fills up, the crowd system adds extra groups (up to about 1,500 on a packed floor).
+**Small for 20, roomy for 500.** The walk from the Hearthstone to anything in town is short. Since the wilds rebuild (2026-11-13, `FLOOR1_WILDS_PLAN.md`) every hunting ground is a walled place with one gate, a hub and four hunting loops: about 1,270 monsters at rest on the whole floor since the challenge pass (2026-11-25, "challenge, not calm"): about 260 on the surface, 85 on the hill levels and about 920 underground in the dens, cellars and party caves (counted from the server's spawn file, 2026-11-26). When a ground fills up, the crowd system adds extra groups.
 
 ## Hearthgate (the walled city)
 Gates face north, south, west and east. Streets run straight to the plaza.
