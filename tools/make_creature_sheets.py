@@ -39,7 +39,7 @@ CREATURES = {"rat": [56], "boar": [119], "mole": [26], "toad": [222], "wasp": [4
 #   2001-2009 player class outfits, 2010-2099 NPCs, 2100+ shop outfits and later people.
 NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "vesper": 2010, "priest": 2011, "registrar": 2012, "banker": 2013, "merchant": 2014, "bess": 2015,
-             "corwin": 2016, "pell": 2017, "veyra": 2018}
+             "corwin": 2016, "pell": 2017, "veyra": 2018, "warden": 2019}
 
 
 def cip_sheet(img: Image.Image) -> bytes:

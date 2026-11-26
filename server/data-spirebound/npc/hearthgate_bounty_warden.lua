@@ -8,7 +8,7 @@ npcConfig.health = 100
 npcConfig.maxHealth = npcConfig.health
 npcConfig.walkInterval = 0
 npcConfig.walkRadius = 0
-npcConfig.outfit = { lookType = 131, lookHead = 0, lookBody = 94, lookLegs = 94, lookFeet = 94, lookAddons = 0 }
+npcConfig.outfit = { lookType = 2019, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0 }
 npcConfig.flags = { floorchange = false }
 npcConfig.voices = { interval = 20000, chance = 30, { text = "Murderers walk among us. Their heads are worth gold." } }
 

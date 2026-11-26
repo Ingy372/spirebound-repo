@@ -116,3 +116,6 @@ Newest at the bottom. 2–3 lines per finished task, plain English. Entries befo
 ### 2026-11-25 night: all four class outfits have approved addons
 - Jay approved the Ranger, Arcanist and Mystic addons ("Looks great to me"): all four class outfits now carry addon 1 and addon 2 in their looks (2001-2004), installed at the next restart (checked on a copy of the client files; boot test 263 in-game tests, 0 errors). Players can't earn them yet: task 6.5c (addon quests).
 
+### 2026-11-25 night: Bounty Warden approved and in the install
+- Jay approved the redrawn Bounty Warden ("it looks good to me"): look 2019, worn by Bounty Warden Cass (look fields only); goes in at the next restart (checked on a copy of the client files).
+

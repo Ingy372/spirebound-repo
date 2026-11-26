@@ -36,3 +36,4 @@ arcanist_a1
 arcanist_a2
 mystic_a1
 mystic_a2
+warden
