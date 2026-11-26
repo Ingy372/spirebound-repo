@@ -1,0 +1,131 @@
+{
+ "name": "prism_shardling",
+ "parts": [
+  "none",
+  "core",
+  "glow",
+  "chip",
+  "red",
+  "amber",
+  "gold",
+  "green",
+  "blue",
+  "violet"
+ ],
+ "palette": "prism_shardling",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.5798989873223328,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.0
+  ],
+  [
+   0.0,
+   1.5798989873223328,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "core": 4.0,
+   "glow": 1.0,
+   "chip": 3.0,
+   "red": 1.8,
+   "amber": 1.8,
+   "gold": 1.8,
+   "green": 1.8,
+   "blue": 1.8,
+   "violet": 1.8
+  },
+  "thin": {
+   "core": 3,
+   "chip": 2,
+   "red": 3,
+   "amber": 3,
+   "gold": 3,
+   "green": 3,
+   "blue": 3,
+   "violet": 3
+  },
+  "soft": [
+   [
+    "core",
+    "glow"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "texture": {
+   "red": [
+    0.5,
+    0.0
+   ],
+   "amber": [
+    0.5,
+    0.0
+   ],
+   "gold": [
+    0.5,
+    0.0
+   ],
+   "green": [
+    0.5,
+    0.0
+   ],
+   "blue": [
+    0.5,
+    0.0
+   ],
+   "violet": [
+    0.5,
+    0.0
+   ]
+  },
+  "bands": [
+   0.34,
+   0.45,
+   0.55,
+   0.64,
+   0.73,
+   0.82,
+   0.9
+  ],
+  "selout": [
+   "red",
+   "amber",
+   "gold",
+   "green",
+   "blue",
+   "violet"
+  ]
+ },
+ "ref": "look_294.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

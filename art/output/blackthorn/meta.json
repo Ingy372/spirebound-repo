@@ -1,0 +1,123 @@
+{
+ "name": "blackthorn",
+ "parts": [
+  "none",
+  "vine",
+  "jaw",
+  "mouth",
+  "thorn",
+  "leaf",
+  "rib",
+  "lip",
+  "crown",
+  "barb"
+ ],
+ "palette": "blackthorn",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.2899494936611664,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.2899494936611664,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "thorn": 3.0,
+   "mouth": 4.0,
+   "jaw": 1.6,
+   "leaf": 1.2,
+   "rib": 2.4,
+   "lip": 2.6,
+   "crown": 3.0,
+   "barb": 3.0
+  },
+  "thin": {
+   "thorn": 2,
+   "mouth": 3,
+   "leaf": 3,
+   "rib": 2,
+   "lip": 2,
+   "crown": 2,
+   "barb": 2
+  },
+  "soft": [
+   [
+    "jaw",
+    "mouth",
+    "lip"
+   ],
+   [
+    "leaf",
+    "rib"
+   ],
+   [
+    "crown",
+    "barb"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "texture": {
+   "vine": [
+    0.9,
+    0.2
+   ],
+   "jaw": [
+    0.7,
+    0.1
+   ],
+   "leaf": [
+    0.6,
+    0.0
+   ]
+  },
+  "bands": [
+   0.42,
+   0.55,
+   0.66,
+   0.75,
+   0.83,
+   0.9,
+   0.96
+  ],
+  "selout": [
+   "jaw",
+   "vine",
+   "leaf"
+  ]
+ },
+ "ref": "look_120.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

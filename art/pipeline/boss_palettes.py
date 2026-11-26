@@ -151,12 +151,87 @@ BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_
           }}
 
 
+# ---- Floor 1 ground elites (ART_REQUESTS.md Batch 7): each is its ground's monster with one big readable change.
+# Moonhowl: moon-white wolf with lavender shadows, a midnight-blue saddle and tail tip, a gold crescent on the brow.
+MOONFUR = ((58, 56, 86), (252, 250, 242), (176, 176, 200))
+MIDNIGHT = ((12, 14, 36), (104, 118, 178), (34, 42, 88))
+MOONHOWL = {
+    "body": ramp(*MOONFUR), "head": ramp(*MOONFUR), "tail_base": ramp(*MOONFUR),
+    "belly": ramp((70, 68, 96), (240, 238, 236), (160, 158, 182)), "snout": ramp((76, 74, 100), (255, 254, 248), (190, 190, 210)),
+    "bib": ramp((86, 84, 110), (255, 255, 252), (206, 206, 222)), "nose": ramp((8, 8, 16), (60, 60, 80), (24, 24, 38)),
+    "ear": ramp(*MIDNIGHT), "eye": [[150, 230, 255]],
+    "leg_near": ramp((52, 50, 78), (236, 234, 240), (160, 160, 186)), "leg_far": ramp((30, 30, 52), (140, 140, 166), (78, 78, 108)),
+    "paw_near": ramp((40, 40, 66), (200, 200, 220), (120, 120, 150)), "paw_far": ramp((22, 22, 40), (110, 110, 136), (60, 60, 86)),
+    "tail_tip": ramp(*MIDNIGHT), "saddle": ramp(*MIDNIGHT), "brow": ramp((10, 10, 26), (60, 62, 96)),
+    "line": ramp((8, 8, 20), (50, 50, 80)), "crescent": ramp((150, 110, 30), (255, 250, 200), (250, 214, 110)),
+}
+# Old Bristleback: a dark bark-olive boar (Tibia's boar is orange-brown, ours charcoal, Old Tusk grizzled grey) with a
+# blacker face mask, a mantle of near-black quills with bone-pale tips, amber eyes.
+BARK = ((20, 17, 10), (158, 142, 98), (76, 66, 40))
+BRISTLEBACK = {
+    "body": ramp(*BARK), "head": ramp((12, 13, 8), (112, 108, 72), (50, 50, 30)), "tail_base": ramp(*BARK),
+    "belly": ramp((18, 18, 12), (120, 114, 84), (60, 58, 38)), "snout": ramp((26, 24, 18), (150, 140, 112), (82, 76, 58)),
+    "nose": ramp((92, 66, 60), (232, 200, 186), (178, 140, 126)), "ear": ramp((10, 11, 7), (96, 92, 60), (44, 44, 26)),
+    "eye": [[255, 190, 40]],
+    "leg_near": ramp((14, 15, 9), (118, 114, 76), (56, 56, 34)), "leg_far": ramp((8, 9, 6), (62, 60, 40), (30, 30, 20)),
+    "paw_near": ramp((8, 7, 6), (56, 50, 42), (26, 22, 18)), "paw_far": ramp((5, 5, 4), (30, 28, 24), (14, 13, 11)),
+    "tail_tip": ramp((10, 9, 8), (84, 76, 62), (38, 34, 28)),
+    "quill": ramp((8, 7, 6), (92, 82, 66), (36, 32, 26)), "quilltip": ramp((120, 104, 76), (255, 248, 222), (214, 198, 160)),
+    "tusk": ramp((120, 108, 84), (254, 252, 240), (220, 210, 180)), "brow": ramp((6, 5, 4), (30, 26, 18)),
+}
+# Mossback Snapper: peat-brown shell under bright moss cushions, olive-brown skin, orange toadstools, a red eye.
+MOSS = ((22, 30, 8), (226, 232, 110), (112, 136, 30))
+MOSSBACK = {
+    "shell": ramp((20, 14, 10), (130, 100, 70), (62, 44, 30)), "rim": ramp((40, 32, 20), (170, 150, 108), (100, 84, 56)),
+    "seam": ramp((8, 6, 4), (40, 30, 20)), "knob": ramp((110, 100, 76), (246, 238, 214), (196, 184, 150)),
+    "reed": ramp((40, 56, 20), (190, 210, 120), (110, 140, 60)),
+    "head": ramp((22, 22, 12), (150, 140, 92), (72, 68, 40)), "leg": ramp((22, 22, 12), (150, 140, 92), (72, 68, 40)),
+    "beak": ramp((90, 78, 56), (240, 228, 196), (180, 164, 124)), "claw": ramp((90, 78, 56), (240, 228, 196), (180, 164, 124)),
+    "eye": [[255, 70, 40]],
+    "moss": ramp(*MOSS), "drape": ramp((14, 30, 10), (150, 186, 80), (60, 100, 30)),
+    "stem": ramp((120, 108, 86), (250, 242, 224), (206, 194, 168)), "cap": ramp((100, 30, 6), (255, 180, 90), (230, 100, 30)),
+    "spot": ramp((200, 190, 170), (255, 252, 240)),
+}
+# Blackthorn: ink-black vine and leaves with a violet sheen, dark wine jaws, a poison-green throat and lips, a crown
+# of black thorns, bone teeth.
+INK = ((8, 6, 12), (110, 92, 130), (40, 30, 54))
+BLACKTHORN = {
+    "vine": ramp(*INK), "leaf": ramp((8, 6, 12), (96, 84, 120), (34, 28, 48)), "rib": ramp((40, 90, 30), (170, 240, 110), (90, 170, 50)),
+    "jaw": ramp((22, 4, 12), (150, 50, 86), (70, 14, 36)), "mouth": ramp((30, 110, 10), (236, 255, 150), (130, 230, 40)),
+    "lip": ramp((40, 110, 20), (200, 255, 130), (110, 200, 50)), "thorn": ramp((110, 100, 90), (250, 244, 230), (200, 190, 170)),
+    "crown": ramp((10, 2, 6), (200, 70, 96), (60, 14, 30)), "barb": ramp((4, 3, 6), (110, 92, 130), (28, 22, 38)),
+}
+# Prism Shardling: six shards in six hues with pale edges, a white-hot core, a soft pearl glow, white chips.
+PRISM_SHARDLING = {
+    "core": ramp((200, 190, 170), (255, 255, 255), (255, 250, 236)), "glow": ramp((50, 60, 120), (220, 236, 255), (130, 156, 220)),
+    "chip": ramp((150, 150, 170), (255, 255, 255), (226, 230, 240)),
+    "red": ramp((70, 6, 16), (255, 170, 160), (220, 40, 50)), "amber": ramp((90, 34, 4), (255, 214, 150), (244, 120, 20)),
+    "gold": ramp((96, 76, 6), (255, 250, 170), (240, 210, 40)), "green": ramp((6, 60, 24), (170, 255, 170), (40, 190, 80)),
+    "blue": ramp((8, 30, 96), (170, 214, 255), (40, 110, 230)), "violet": ramp((44, 10, 80), (230, 180, 255), (140, 60, 220)),
+}
+# Granite Warden: warm pink-grey speckled granite, gold trim, ochre lichen, amber eyes, a cracked granite tower shield.
+GRANITE = ((40, 32, 34), (236, 214, 204), (140, 120, 118))
+GRANITE_DARK = ((28, 22, 24), (176, 156, 150), (96, 82, 82))
+GRANITE_WARDEN = {
+    **{k: ramp(*GRANITE) for k in ("skin", "hand", "nose", "brow", "hair", "torso", "arm_a", "arm_b", "leg_a", "leg_b",
+                                    "boot_a", "boot_b", "helm", "block", "spear")},
+    "strand": [[70, 58, 60]] * 8, "sole": [[14, 10, 10]] * 8, "eye": [[255, 196, 70]] * 8, "visor": [[18, 12, 10]] * 8,
+    "cuff": ramp(*GRANITE_DARK), "belt": ramp(*GOLD), "buckle": ramp(*GOLD), "crest": ramp(*GOLD), "band": ramp(*GOLD),
+    "moss": ramp((70, 46, 10), (236, 190, 90), (170, 120, 40)), "crack": [[22, 16, 16]] * 8,
+    "tip": ramp((60, 60, 66), (246, 242, 232), (160, 156, 150)),
+    "shield": ramp(*GRANITE_DARK), "rim": ramp(*GOLD),
+}
+ELITES = {"granite_warden": GRANITE_WARDEN, "moonhowl": MOONHOWL, "bristleback": BRISTLEBACK, "mossback": MOSSBACK, "blackthorn": BLACKTHORN,
+          "prism_shardling": PRISM_SHARDLING}
+
+
 def main():
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     data["ramps"].update(BOSSES)
+    data["ramps"].update(ELITES)
     path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    print("wrote", ", ".join(BOSSES), "into", path.name)
+    print("wrote", ", ".join(list(BOSSES) + list(ELITES)), "into", path.name)
 
 
 if __name__ == "__main__":

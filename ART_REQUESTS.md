@@ -156,6 +156,14 @@ Five rare elites now borrow their ground's monster sprite and glow (a coloured l
 Quarry's Upper Cut (a grey-gold Ruin Sentinel outfit). Later, each could get a variant of its base creature
 from the Blender pipeline (a scarred hide, a mossy shell, a darker thorn crown, a prismatic crystal, a cracked granite
 shield) so players spot them at a glance. Not needed for the alpha.
+**2026-11-26: all six drafted with the Blender pipeline, waiting for Jay** (`art/output/floor1_elites_preview.png`,
+normal monster on the left, elite on the right; all pass the checker):
+- `moonhowl`: moon-white wolf, midnight-blue saddle and tail tip, gold crescent on the brow, head held high.
+- `bristleback` (Old Bristleback): a dark bark-olive boar with a mantle of long quills tipped bone-white, long curled tusks, amber eyes.
+- `mossback` (Mossback Snapper): the snapper's shell buried under bright moss with two orange toadstools, olive skin, red eyes.
+- `blackthorn`: an ink-black thornsnap with a blood-dark thorn crown, black barbs and a poison-green throat.
+- `prism_shardling`: bigger, six shards in six rainbow colours round a pearl-blue core, plus a ring of white chips.
+- `granite_warden`: the Ruin Sentinel in pink-grey granite with gold trim, ochre lichen, amber eyes and a cracked granite tower shield.
 
 ## Batch 7b (2026-11-25): two bandits for the group grounds (Priority: low, placeholders work)
 The Smugglers' Cellar and the Old Watchtower now hold mixed packs (DESIGN.md 9.4: a front-liner, a ranged one and a
@@ -194,12 +202,12 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 | [x] | `boar` | The "fire boar" is our red-crested Bristle Boar (Jay: "It might be named frenzied boar or just regular boar with the red on top") | approved |
 | [x] | `gate_hound` | Floor 1 field boss (64x64) | approved |
 | [x] | `axe_lord`, `axe_lord_blade` | Axe-Lord of the Stair, Floor 1 boss (64x64), both phases | approved |
-| [~] | `underkeeper` | The Underkeeper, boss of the Underkeep: a towering skeletal jailer in a cage-helm with a ghost-teal lantern and a dragging chain and padlock | drafted 2026-11-25, waiting for Jay |
+| [x] | `underkeeper` | The Underkeeper, boss of the Underkeep: a towering skeletal jailer in a cage-helm with a ghost-teal lantern and a dragging chain and padlock | approved 2026-11-26 |
 | [~] | `old_tusk` | Old Tusk, Floor 1 secret boss: the Bristle Boar grown ancient (grizzled, one great tusk, old arrows in his back) | drafted 2026-11-25, waiting for Jay |
 | [~] | `hollowfang` | Hollowfang, Floor 1 hidden mini-boss: a night-black wolf with a pale mane and one great fang | drafted 2026-11-25, waiting for Jay |
 | [~] | `briar_mother` | Briar Mother, Floor 1 hidden mini-boss: a thorny wine-purple mound with three snapping bud heads and a crown of rose petals | drafted 2026-11-25, waiting for Jay |
-| [ ] | `moonhowl` | Floor 1 elite (now wearing the wolf's sprite) | not made |
-| [~] | `vault_wraith` | Vault Wraith: a violet hooded wraith chained to a floating gold-banded strongbox, coins circling | drafted 2026-11-25, waiting for Jay |
+| [~] | `moonhowl` | Moonhowl, Floor 1 elite: a moon-white wolf with a midnight-blue saddle and a gold crescent on its brow, head high as if about to howl | drafted 2026-11-26, waiting for Jay |
+| [x] | `vault_wraith` | Vault Wraith: a violet hooded wraith chained to a floating gold-banded strongbox, coins circling | approved 2026-11-26 |
 | [ ] | `twin_fang_warden` | the Twin Fang trial boss (Floor 8) | not made |
 
 
