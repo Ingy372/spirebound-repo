@@ -8,6 +8,17 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q62. New rules on the website and sign-up page (2026-11-25)
+You asked for the rules and a "not allowed" list on the website. The full rulebook is now on the Rules page, on the sign-up page (players must tick "I agree" before an account is made) and in `docs/RULES.md`, all written from one file. Most of it was already decided; these lines are new, my call:
+- no sharing anyone's personal details, no sexual harassment, no advertising other servers or things for sale;
+- no pretending to be staff or one of the tower's NPCs; no names of real, well-known people;
+- no getting into other people's accounts and no attacking the server;
+- no killing your own characters or a friend's to farm bounties, rewards or leaderboard places.
+The sign-up page now refuses rude names, names from other games, staff titles (GM, Admin...) and the names of our own NPCs and monsters. Names it can't judge (a famous person, a clever insult) stay a gamemaster's job.
+- **Recommendation:** keep them all.
+- Assumed until you answer: yes.
+- Jay's answer:
+
 ### Q54. Launch with 3 finished floors instead of 10? (2026-11-25)
 The design says 10 floors at launch. But floors unlock about 6 days apart (the calendar gate), so Floor 4 isn't needed until about week 3 and Floor 10 until about week 8. Ten floors of our own maps and art before launch is most of a year's work; three is a few months.
 - **Recommendation:** launch with Floors 1-3 finished to the standard Floor 1 is getting, and add a floor every week or two during the season. Say "new floors every week" instead of "10 floors".

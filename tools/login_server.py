@@ -10,7 +10,8 @@ and answers with the characters of that account. The session key it hands out is
 (roadmap R4): only its SHA-256 goes into the database (account_sessions), and the game server
 (authType = "session") lets the client in with it for 24 hours. The password is never sent back.
 
-It also serves a small sign-up page at /signup so friends can make their own account.
+It also serves a small sign-up page at /signup so friends can make their own account, and the rules at /rules.
+Every new account and character name goes through tools/name_rules.py, and players must agree to the rules.
 
 Usage:  python3 tools/login_server.py [port]        (default 8080)
 Settings come from the MYSQL_* environment variables (same as the server build).
@@ -18,6 +19,11 @@ Settings come from the MYSQL_* environment variables (same as the server build).
 import hashlib, hmac, html, json, os, re, secrets, subprocess, sys, threading, time
 from urllib.parse import parse_qs
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+import name_rules  # noqa: E402  the name checker (rude words, names from other games, staff titles, our NPCs)
+import player_rules  # noqa: E402  the rulebook new players agree to
 
 PORT = int(sys.argv[1]) if len(sys.argv) > 1 and sys.argv[1].isdigit() else 8080
 DB = dict(host=os.environ.get("MYSQL_HOST", "127.0.0.1"), user=os.environ.get("MYSQL_USER", "spire"),
@@ -137,7 +143,7 @@ NEW_CHAR = ("INSERT INTO players (name, group_id, account_id, level, vocation, h
             "({name}, 1, {acc}, 1, 0, 150, 150, 0, 68, 76, 78, 58, {look}, 55, 55, 1, '', 400, {sex})")
 
 
-def signup(name, email, password, password2, addr, now=None, character="", sex="1"):
+def signup(name, email, password, password2, addr, now=None, character="", sex="1", agree=False):
     """Make a new account with its first character (a new account had no way to make one: the client has no
     create-character button). Returns (ok, message)."""
     now = now or time.time()
@@ -146,6 +152,9 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
         return False, "You have made three accounts in the last hour. Please wait."
     if not NAME_RULE.match(name or ""):
         return False, "The account name must be 3 to 20 letters or digits."
+    ok, why = name_rules.check_account(name)
+    if not ok:
+        return False, why
     if not EMAIL_RULE.match(email or ""):
         return False, "Please give a real e-mail address."
     if len(password or "") < 8 or len(password) > 100:
@@ -157,8 +166,13 @@ def signup(name, email, password, password2, addr, now=None, character="", sex="
     character = " ".join((character or "").split())
     if not (3 <= len(character) <= 20 and CHAR_RULE.match(character)):
         return False, "The character name must be 3 to 20 letters, each word starting with a capital (e.g. Mira or Tom Reed)."
+    ok, why = name_rules.check_character(character)
+    if not ok:
+        return False, why
     if sex not in ("0", "1"):
         return False, "Please pick male or female."
+    if not agree:
+        return False, "Please read the rules and tick the box to agree to them."
     if sql(f"SELECT id FROM accounts WHERE name={hexlit(name)} OR email={hexlit(email)} LIMIT 1"):
         return False, "That account name or e-mail is already taken."
     if sql(f"SELECT id FROM players WHERE name={hexlit(character)} LIMIT 1"):
@@ -181,7 +195,18 @@ background:#1d1b18;color:#eee}}input{{width:100%;padding:8px;margin:4px 0 12px;b
 <label>Character name (e.g. Mira or Tom Reed)<input name="character" value="{character}"></label>
 <label><input name="sex" type="radio" value="1" style="width:auto" checked> Male</label>
 <label><input name="sex" type="radio" value="0" style="width:auto"> Female</label><br><br>
-<button>Make account</button></form></body></html>"""
+<label><input name="agree" type="checkbox" value="yes" style="width:auto" required> I have read the
+<a href="/rules" target="_blank" style="color:#c9a227">rules</a> and agree to them</label><br><br>
+<button>Make account</button></form><p><a href="/rules" style="color:#c9a227">Read the rules</a></p></body></html>"""
+
+RULES_PAGE = """<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>Spirebound rules</title><style>body{{font-family:sans-serif;max-width:760px;margin:40px auto;padding:0 16px;
+background:#1d1b18;color:#eee;line-height:1.5}}h2{{color:#c9a227}}a{{color:#c9a227}}</style></head><body>
+<h1>Spirebound rules</h1>{body}<p><a href="/signup">Back to sign-up</a></p></body></html>"""
+
+
+def rules_page():
+    return RULES_PAGE.format(body=player_rules.to_html())
 
 
 def signup_page(msg="", name="", email="", character=""):
@@ -218,7 +243,7 @@ class Handler(BaseHTTPRequestHandler):
                     return self.page(signup_page("That request was too large."))
                 form = {k: v[0] for k, v in parse_qs(self.rfile.read(size).decode("utf-8", "replace")).items()}
                 ok, msg = signup(form.get("name", ""), form.get("email", ""), form.get("password", ""), form.get("password2", ""), addr,
-                                 character=form.get("character", ""), sex=form.get("sex", "1"))
+                                 character=form.get("character", ""), sex=form.get("sex", "1"), agree=form.get("agree") == "yes")
                 keep = (lambda k: "" if ok else form.get(k, ""))
                 return self.page(signup_page(msg, keep("name"), keep("email"), keep("character")))
             except Exception as e:
@@ -245,6 +270,8 @@ class Handler(BaseHTTPRequestHandler):
     def do_GET(self):
         if self.path.startswith("/signup"):
             return self.page(signup_page())
+        if self.path.startswith("/rules"):
+            return self.page(rules_page())
         self.reply(200, {"service": "Spirebound local login"})
 
 
@@ -284,14 +311,21 @@ def selftest():
         assert not signup("ab", "a@b.cd", "longenough", "longenough", "x")[0]
         assert not signup("friend1", "a@b.cd", "short", "short", "x")[0]
         assert not signup("friend1", "a@b.cd", "longenough", "different", "x")[0]
-        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="")[0], "a character name is needed"
-        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="x'; DROP")[0]
-        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="Mira", sex="2")[0]
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", agree=True, character="")[0], "a character name is needed"
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", agree=True, character="x'; DROP")[0]
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", agree=True, character="Mira", sex="2")[0]
+        assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="Tom Reed")[0], "the rules must be agreed"
         seen.clear()
-        assert signup("friend1", "a@b.cd", "longenough", "longenough", "y", character="Tom  Reed", sex="0")[0]
+        for rude in ("Kirito", "Fucker", "Gm Mira", "Vesper", "Xwhorex"):
+            assert not signup("friend1", "a@b.cd", "longenough", "longenough", "y", agree=True, character=rude)[0], rude
+        assert not signup("admin", "a@b.cd", "longenough", "longenough", "y", agree=True, character="Tom Reed")[0], "staff account name"
+        assert not any(q.startswith("INSERT") for q in seen), "a refused name never reaches the database"
+        seen.clear()
+        assert signup("friend1", "a@b.cd", "longenough", "longenough", "y", agree=True, character="Tom  Reed", sex="0")[0]
         made = [q for q in seen if q.startswith("INSERT INTO players")]
         assert made and hexlit("Tom Reed") in made[0] and ", 136, " in made[0], "the first character is made with the account"
         assert "<script>" not in signup_page("<script>x</script>")
+        assert 'name="agree"' in signup_page() and "What is not allowed" in rules_page()
     finally:
         sql = real
     assert BIND == "127.0.0.1" or os.environ.get("SPIRE_LOGIN_BIND"), "listens on this PC only by default"

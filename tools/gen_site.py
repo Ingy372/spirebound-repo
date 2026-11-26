@@ -301,7 +301,8 @@ def join() -> str:
     return go + """
 <h2>How joining works</h2>
 <ol>
-<li><b>Make an account.</b> One account per person. Your password is never stored as plain text.</li>
+<li><b>Read the <a href="rules.html">rules</a>.</b> The sign-up page asks you to agree to them.</li>
+<li><b>Make an account.</b> Your password is never stored as plain text. Extra accounts are fine (up to 3 game clients on one computer at once).</li>
 <li><b>Name your first character</b> on the same page: 3 to 20 letters, each word starting with a capital
 (for example Mira or Tom Reed). Pick a name of your own: names from other games, real people's names and rude
 names break the <a href="rules.html">rules</a>, and a gamemaster will ask you to change them.</li>
@@ -438,30 +439,10 @@ SAMPLE = {
 
 
 def rules() -> str:
-    return """
-<h2>Be decent</h2>
-<ul><li>No harassment, hate speech or targeted abuse. PvP is fine; stalking someone out of the game is not.</li>
-<li>No scams. Trades are your own risk; staff can see market and trade logs.</li>
-<li>One person, up to two clients at once.</li></ul>
-<h2>Bots and helpers</h2>
-<ul><li>Our own client is the only allowed client. Its built-in <b>cavebot</b> is allowed: while it runs you earn 45% experience and half the loot, and the cut lasts 10 minutes after you switch it off. Manual play is more than twice as good.</li>
-<li>Secrets, rare chests and the Twin Fang trial never trigger while the cavebot is on. Boss rooms do not let a cavebot character in.</li>
-<li>Auto-targeting on its own costs nothing.</li>
-<li>Third-party bots, modified clients, auto-fishing and hiding the cavebot are not allowed. First offense: 7-day ban and gains removed. Second: permanent.</li>
-<li>Suspicious patterns are logged for staff review; no automatic bans.</li></ul>
-<h2>Never pay-to-win</h2>
-<p>The donation shop sells cosmetics, housing decorations and conveniences only. Nothing in it gives damage, defense,
-healing, experience, skill speed, loot or gear stats. No experience boosts, no loot boxes, and shop items can never be gambled.
-Shop items can be traded on the market for gold, so players can earn cosmetics by playing.</p>
-<h2>Fair play for the Death Game</h2>
-<p>Only monsters, bosses, traps and the environment can retire a Death Game character. See <a href="modes.html">Difficulty</a>.</p>
-<h2>Reports and what happens to rule breakers</h2>
-<p>In game, say <b>!report &lt;name&gt;, &lt;what happened&gt;</b>. A gamemaster reads every report. Say <b>!rules</b> to read these rules in game.
-Public chat blocks the worst words in English, Portuguese and Spanish.</p>
-<ol><li>A warning from a gamemaster.</li><li>A mute: 1 hour, then 24 hours, then 7 days.</li>
-<li>A ban of the character: 1 day, then 7 days.</li><li>A ban of the account: 30 days.</li>
-<li>A permanent ban. Cheating with third-party bots, selling accounts or gold for money, or abusing a bug for gain skips straight to step 3 or 5.</li></ol>
-"""
+    """The full rulebook, from tools/player_rules.py (the same text the sign-up page shows)."""
+    sys.path.insert(0, str(ROOT / "tools"))
+    import player_rules
+    return player_rules.to_html({"pvp": "pvp.html", "modes": "modes.html", "ledger": "exile-ledger.html"})
 
 
 PAGES = {

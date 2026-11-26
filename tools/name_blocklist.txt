@@ -1,0 +1,69 @@
+# Words a character or account name may not contain (tools/name_rules.py), on top of the in-game chat filter's list
+# (SpireMod.BLOCKED in server/data-spirebound/lib/spirebound/moderation.lua). One per line, lower case.
+# Words of 5+ letters are also caught inside a longer name; a line starting with = is matched as a whole word only.
+# English
+shit
+bitch
+bastard
+asshole
+dickhead
+=dick
+=cock
+cocksucker
+pussy
+=slut
+=twat
+wanker
+=nigga
+nigger
+=chink
+=spic
+=kike
+tranny
+=nazi
+hitler
+=rape
+rapist
+=porn
+=penis
+vagina
+=anal
+=cum
+=sex
+=tits
+=boobs
+=jizz
+pedo
+paedo
+pedophile
+molester
+=kkk
+=isis
+# Portuguese
+=cu
+=pau
+=rola
+=merda
+=bosta
+=vagabunda
+=safado
+=safada
+=corno
+=otario
+=otário
+=babaca
+=xoxota
+=foder
+# Spanish
+=coño
+=mierda
+=culo
+=verga
+=polla
+=zorra
+=perra
+=cabrona
+=joder
+=chingada
+=chingar
+=pinche
