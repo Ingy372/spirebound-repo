@@ -85,8 +85,8 @@ The four starter grounds and the roads around the city are *Guarded* (players ca
 - **Where to hunt:** `!hunt`, or ask Wenna, Bryn, Bess, Brannoch, Corwin, Dorrow or Guide Pell. You also get a message when a level takes you past your ground.
 
 ## The Arrival Yard (tutorial)
-New characters appear in a walled yard south-east of the city. Guide Pell greets them; a stone path leads east past a rat pen (Stop 1: fighting), a sign about skills, spells and the Journal (Stop 2), and into the Registrar's hall (Stop 3), where they choose a path and a difficulty and are sent to the temple. They also get a letter (`!guide`) with the story and first steps.
-Guide Pell also gives a first quest (*First Blood*: three rats in the pen), and short hints appear at levels 2, 5, 8, 10 and 20.
+New characters appear in a walled yard south-east of the city. Guide Pell greets them; a stone path leads east past the Old Granary, whose cellar is full of rats (Stop 1: fighting), a sign about skills, spells and the Journal (Stop 2), and into the Registrar's hall (Stop 3), where they choose a path and a difficulty and are sent to the temple. They also get a letter (`!guide`) with the story and first steps.
+Guide Pell also gives a first quest (*First Blood*: three rats in the granary cellar), and short hints appear at levels 2, 5, 8, 10 and 20.
 Still to build for the full tutorial (roadmap R11): gates that open only after a step is done, and a walked-through test with a real new character in the client.
 
 ## Look and feel (2026-11-11 pass)

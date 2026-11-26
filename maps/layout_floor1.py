@@ -696,17 +696,58 @@ def build(m):
            "Read the stone beside it: the names of everyone who opened a floor first.")
     S.prop(m, yx + 10, yy + 5, Z, 2199)                 # the first-clears stone
     m.points["yard_first_clears"] = (yx + 10, yy + 5, Z)
-    pen = (yx + 13, yy + 2, 11, 6)
-    m.walls(pen[0], pen[1], pen[2], pen[3], Z, gaps={(pen[0] + 5, pen[1] + 5)}, style="timber")
-    m.fill(pen[0] + 1, pen[1] + 1, pen[2] - 2, pen[3] - 2, Z, "dirt")
-    m.clear_items(pen[0] + 5, pen[1] + 5, Z)
-    m.flag(pen[0] + 5, pen[1] + 5, 1, 1, Z, 0x0001)  # the pen's gap is a safe tile: rats can't cross it, players can
-    m.fill(pen[0] + 5, pen[1] + 6, 1, 4, Z, "pave")  # little path from the gap down to the main path
-    for y2 in range(pen[1] + 6, pen[1] + 8):
-        m.clear_items(pen[0] + 5, y2, Z)
-    m.monsters.append(("Pen Rat", (pen[0] + 5, pen[1] + 3, Z), 3, 3, 15))
-    m.points["tutorial_pen"] = (pen[0] + 5, pen[1] + 4, Z)
-    m.sign(yx + 11, yy + 9, Z, "Stop 1 of 4: Fighting. Click a rat in the pen to attack it. Rats are weak. When it falls, open the body (right-click) and take what it carries.")
+    # Stop 1, the Old Granary (Jay 2026-11-26: the open rat pen was "to basic"; "a house with a basement and the
+    # basement is filled with rats", room for "a few new players joining at the same time"). A timber house on the
+    # path, stairs down to a stone cellar (z 8) of four rat rooms, 13 rats in all. The stair room at the bottom is safe
+    # (protection zone) and its doorway is a safe tile, so rats stay in the cellar and nobody is jumped on arrival.
+    # Monsters never take stairs, so no rat reaches the yard. scripts/spirebound/tutorial.lua counts the cellar as
+    # part of the yard (tutorial_cellar_nw/se).
+    rng_state_granary = m.rng.getstate()                 # rebuilt late: the rest of the map's random scenery must not move
+    CZ = Z + 1
+    cx0, cy0, cw, ch = yx + 8, yy + 3, 26, 14            # the cellar's outer walls: x 8..33, y 3..16 (yard-relative)
+    taken = [(x_, y_) for x_ in range(cx0, cx0 + cw) for y_ in range(cy0, cy0 + ch) if (x_, y_, CZ) in m.ground]
+    assert not taken, f"the granary cellar would overlap something already at z {CZ}: {taken[:3]}"
+    m.fill(cx0, cy0, cw, ch, CZ, "stonefloor")
+    m.walls(cx0, cy0, cw, ch, CZ, style="stone")
+    door_c = (yx + 14, yy + 8)                           # the stair room's doorway into the rat rooms
+    stair_room = [(x_, yy + 8) for x_ in range(yx + 9, yx + 21) if (x_, yy + 8) != door_c] + \
+                 [(yx + 20, y_) for y_ in range(yy + 4, yy + 8)]
+    store_wall = [(x_, yy + 8) for x_ in range(yx + 24, yx + 33)]          # the north-east storeroom, open at x 21..23
+    stubs = [(x_, y_) for x_ in (yx + 21, yx + 27) for y_ in range(yy + 12, yy + 16)]   # two stub walls: three bays
+    m.autowall(stair_room, CZ, "stone")
+    m.autowall(store_wall, CZ, "stone")
+    m.autowall(stubs, CZ, "stone")
+    m.flag(yx + 9, yy + 4, 11, 4, CZ, 0x0001)             # the stair room is safe ...
+    m.flag(door_c[0], door_c[1], 1, 1, CZ, 0x0001)       # ... and so is its doorway: rats can't cross it, players can
+    # the house above, door to the south (G8: doors a player must find face south or east)
+    m.building(yx + 13, yy + 2, 12, 7, Z, floor="wood", door_side="s", style="timber", doors=True)
+    m.stairs(yx + 15, yy + 4, CZ, floor="wood", name="granary")   # down: the hole at (15, 4, 7) -> (15, 5, 8); up: -> (15, 3, 7)
+    m.fill(yx + 19, yy + 9, 1, 1, Z, "pave")              # a step of path from the door down to the stone path
+    m.clear_items(yx + 19, yy + 9, Z)
+    for px_, py_, pid in ((22, 3, 2523), (23, 3, 2519), (23, 4, 116), (14, 7, 117), (23, 7, 2519), (22, 7, 2523), (18, 3, 118)):
+        S.prop(m, yx + px_, yy + py_, Z, pid)              # sacks and stores along the walls, away from the stairs and door
+    m.sign(yx + 17, yy + 9, Z, "The Old Granary. Rats have taken its cellar: go in and take the stairs down.")
+    # four rat rooms: the west hall, two bays between the stub walls, the north-east storeroom
+    for (rx_, ry_), n_ in (((13, 12), 3), ((24, 13), 3), ((30, 13), 3), ((27, 5), 4)):
+        m.monsters.append(("Pen Rat", (yx + rx_, yy + ry_, CZ), 2, n_, 15))    # (radius, count, respawn seconds)
+    m.points["tutorial_pen"] = (yx + 24, yy + 12, CZ)    # the middle of the rat rooms (autopilot routes, the guide)
+    m.points["tutorial_cellar_door"] = (door_c[0], door_c[1], CZ)
+    m.points["tutorial_cellar_nw"] = (cx0, cy0, CZ)
+    m.points["tutorial_cellar_se"] = (cx0 + cw - 1, cy0 + ch - 1, CZ)
+    m.sign(yx + 10, yy + 6, CZ, "Stop 1 of 4: Fighting. This room is safe: rats can't come through the doorway. Go through and "
+           "click a rat to attack it. When it falls, open the body (right-click) and take the cheese it carries.")
+    DG.hang(m, cx0, cy0, cw, ch, CZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
+    DG.hang(m, cx0, yy + 8, cw, 9, CZ, every=5, h_item=DG.TORCH_H, v_item=DG.TORCH_V)   # the rat rooms' north walls
+    for px_, py_, pid in ((9, 4, 2523), (19, 4, 2519), (9, 7, 117), (19, 7, 116), (32, 4, 2523), (32, 5, 116), (21, 4, 2519),
+                          (9, 15, 2519), (32, 15, 2523), (22, 15, 117), (26, 15, 116), (28, 15, 2519), (9, 9, 116)):
+        S.prop(m, yx + px_, yy + py_, CZ, pid)             # barrels and crates in the corners
+    keep_c = DG.keep_clear(m, CZ, spawn_r=0) | {(yx + 15, yy + y_) for y_ in range(4, 9)} | {(door_c[0], door_c[1] + 1)}
+    DG.scatter(m, cx0 + 1, cy0 + 1, cw - 2, ch - 2, CZ, DG.COBWEBS + DG.BONES + DG.DEBRIS, 14, avoid=keep_c)
+    m.rng.setstate(rng_state_granary)
+    for _ in range(36):                                  # the old pen's dirt floor drew 36 random numbers: keep the count
+        m.pick("dirt")
+    m.sign(yx + 11, yy + 9, Z, "Stop 1 of 4: Fighting. Rats have taken the cellar of the Old Granary, the house just along the "
+           "path. Go in, take the stairs down, and beat a rat. When it falls, open the body (right-click) and take what it carries.")
     m.sign(yx + 33, yy + 9, Z, "Stop 2 of 4: Skills and spells. Once you choose a path, the bar on the right holds the skills of the weapon in your hand (Ctrl+1..6), and !spells lists your spells. Press J for your Journal: its 'How do I' page answers most questions.")
     m.sign(yx + 45, yy + 9, Z, "Stop 3 of 4: The Registrar's hall is ahead, on the left where the path ends. Choose your path and how hard you want to live. Then the Proving, below the hall, before Hearthgate.")
     # G8 (Grok session 3): the hall used to close the path's east end with its door in the west wall, but the client
@@ -914,6 +955,7 @@ def build(m):
     m.zone("guarded", X0 + 128, Y0 + 186, 30, 50, 7)                 # the fisher huts
     m.zone("guarded", yard_x - 2, yard_y - 2, 68, 28, 7)              # the Arrival Yard
     m.zone("guarded", yard_x + 3, yard_y, 38, 25, 9)                 # the Proving under it (G2)
+    m.zone("guarded", yard_x + 6, yard_y + 1, 30, 18, 8)              # the Old Granary's rat cellar
     m.zone("guarded", mx - 20, my - 20, mw + 40, mh + 40, 7)         # around Millcross
     for c in CAMPS:                                                   # Open grounds are Open right up to their walls
         if c["zone"] == "open":

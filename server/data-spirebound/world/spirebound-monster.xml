@@ -1971,10 +1971,26 @@
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
 	</monster>
-	<monster centerx="1288" centery="1341" centerz="7" radius="3">
-		<monster name="Pen Rat" x="-1" y="-1" z="7" spawntime="15" />
-		<monster name="Pen Rat" x="0" y="-1" z="7" spawntime="15" />
-		<monster name="Pen Rat" x="1" y="-1" z="7" spawntime="15" />
+	<monster centerx="1283" centery="1348" centerz="8" radius="2">
+		<monster name="Pen Rat" x="-1" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="1" y="-1" z="8" spawntime="15" />
+	</monster>
+	<monster centerx="1294" centery="1349" centerz="8" radius="2">
+		<monster name="Pen Rat" x="-1" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="1" y="-1" z="8" spawntime="15" />
+	</monster>
+	<monster centerx="1300" centery="1349" centerz="8" radius="2">
+		<monster name="Pen Rat" x="-1" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="1" y="-1" z="8" spawntime="15" />
+	</monster>
+	<monster centerx="1297" centery="1341" centerz="8" radius="2">
+		<monster name="Pen Rat" x="-1" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="0" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="1" y="-1" z="8" spawntime="15" />
+		<monster name="Pen Rat" x="-1" y="0" z="8" spawntime="15" />
 	</monster>
 	<monster centerx="1285" centery="1342" centerz="9" radius="3">
 		<monster name="Pen Rat" x="-1" y="-1" z="9" spawntime="15" />

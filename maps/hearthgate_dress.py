@@ -167,9 +167,12 @@ def dress_yard(m, yx, yy, yw, yh, z):
         if (x - yx) % 2 == 0:
             m.put(x, yy + 1, z, PILLAR)
     # hedges along the inside of the north and south walls, broken here and there
+    def by_granary(x, y):                              # nothing natural within a tile of the Old Granary (x 13..24, y 2..8)
+        return yx + 12 <= x <= yx + 25 and yy + 1 <= y <= yy + 9
+
     for x in range(yx + 12, yx + yw - 15):
         for y in (yy + 1, yy + yh - 2):
-            if grass_free(x, y) and rng.random() < 0.7:
+            if grass_free(x, y) and rng.random() < 0.7 and not by_granary(x, y):
                 m.put(x, y, z, rng.choice(S.BUSHES))
     # a tree in the corners of each stage (between the fences), clear of the path rows (y 9..14)
     stages = [(yx + 1, yx + 25), (yx + 27, yx + 31), (yx + 33, yx + 37), (yx + 39, yx + 43), (yx + 45, yx + 49)]
@@ -181,6 +184,6 @@ def dress_yard(m, yx, yy, yw, yh, z):
     # flower beds beside the path, two tiles off it
     for x in range(yx + 2, yx + 50):
         for y in (yy + 7, yy + 16):
-            if grass_free(x, y) and rng.random() < 0.35:
+            if grass_free(x, y) and rng.random() < 0.35 and not by_granary(x, y):
                 m.put(x, y, z, rng.choice(S.FLOWERS))
 

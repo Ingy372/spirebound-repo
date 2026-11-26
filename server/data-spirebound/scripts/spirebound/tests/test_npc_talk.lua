@@ -26,11 +26,14 @@ SpireTest.add("npc talk: quest givers answer 'quest' (Guide Pell first)", functi
 	SpireTest.eq(p:getStorageValue(50121), 1, "First Blood is in the quest log")
 end)
 
-SpireTest.add("newcomer: the Arrival Yard is guarded, the rat pen gap keeps rats in", function()
+SpireTest.add("newcomer: the Arrival Yard is guarded, the granary cellar's doorway keeps rats in", function()
 	SpireTest.eq(SpirePvP.zoneAt(WorldPoints.tutorial_spawn), "guarded", "Arrival Yard zone")
-	local pen = WorldPoints.tutorial_pen
-	local gap = Tile(Position(pen.x, pen.y + 1, pen.z))
-	SpireTest.eq(gap ~= nil and gap:hasFlag(TILESTATE_PROTECTIONZONE), true, "pen gap is a safe tile monsters can't cross")
+	SpireTest.eq(SpirePvP.zoneAt(WorldPoints.tutorial_pen), "guarded", "the rat cellar is guarded too")
+	local door = Tile(WorldPoints.tutorial_cellar_door)
+	SpireTest.eq(door ~= nil and door:hasFlag(TILESTATE_PROTECTIONZONE), true, "cellar doorway is a safe tile monsters can't cross")
+	SpireTest.eq(SpireTutorial.inYard(WorldPoints.tutorial_pen), true, "the cellar counts as the yard (no bounce to the spawn)")
+	local stairs = WorldPoints.stairs_granary
+	SpireTest.eq(Tile(Position(stairs.x, stairs.y, stairs.z - 1)) ~= nil, true, "the granary's stairs lead up into the house")
 end)
 
 SpireTest.add("economy: crafting recipes are real, need materials and gold, and the crafters know them", function()

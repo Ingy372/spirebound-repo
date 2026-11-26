@@ -5,7 +5,7 @@
 
 SpireTutorial = { STEPS = { "kill", "loot", "spells", "potion" } }
 SpireTutorial.HELP = {
-	kill = "Beat a rat in the pen first: click it in the Battle List (Ctrl+B) or right-click it and choose Attack.",
+	kill = "Beat a rat first: they are in the cellar of the Old Granary, the timber house just before this gate (take its stairs down). Click a rat in the Battle List (Ctrl+B) or right-click it and choose Attack.",
 	loot = "Open a rat's body (right-click it, then drag the cheese into your backpack) before you go on. If the body is gone, beat another rat.",
 	spells = "Say !spells to see the skills and spells each path will teach you.",
 	potion = "Drink the health potion in your backpack: right-click it, choose 'Use with...', then click yourself.",
@@ -51,9 +51,14 @@ function SpireTutorial.gateOpen(step, done)
 	return true
 end
 
+local function inBox(pos, nw, se)
+	return nw ~= nil and se ~= nil and pos.z == nw.z and pos.x >= nw.x and pos.x <= se.x and pos.y >= nw.y and pos.y <= se.y
+end
+
+-- the yard, and the Old Granary's rat cellar under it (Jay 2026-11-26)
 function SpireTutorial.inYard(pos)
-	local nw, se = WorldPoints.tutorial_yard_nw, WorldPoints.tutorial_yard_se
-	return nw ~= nil and pos.z == nw.z and pos.x >= nw.x and pos.x <= se.x and pos.y >= nw.y and pos.y <= se.y
+	return inBox(pos, WorldPoints.tutorial_yard_nw, WorldPoints.tutorial_yard_se)
+		or inBox(pos, WorldPoints.tutorial_cellar_nw, WorldPoints.tutorial_cellar_se)
 end
 
 -- Grok session 2: a tester saw the cheese in the loot message but never got it into the backpack (the body decayed
