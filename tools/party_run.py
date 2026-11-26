@@ -37,6 +37,11 @@ PLACES = {
     "cellar": dict(title="the Smugglers' Cellar", level=26, meet="camp_bandit_road", landing=[1353, 1207, 8],
                    spots=[[1342, 1212, 8], [1365, 1212, 8], [1353, 1185, 8]]),
     "watchtower": dict(title="the Old Watchtower", level=34, meet="apex_watchtower", landing=None, spots=[]),
+    # P1 / N1 rehearsal (2026-11-26): the Floor 1 bosses. The Gate Hound is a field boss at the Pass; the Axe-Lord's hall
+    # needs the Stair Key, which the test grants with /pilot stairkey (the real path is N1's job).
+    "gatehound": dict(title="the Gate Hound", level=30, meet="gate_pass_1", landing=None, spots=[[1232, 1076, 7]], hunt=240),
+    "axelord": dict(title="the Axe-Lord of the Stair", level=34, meet="boss_room_exit", landing=[1231, 1031, 4],
+                    spots=[[1231, 1026, 4]], hunt=360, stairkey=True),
 }
 
 
@@ -55,6 +60,8 @@ def route(name, place, level):
              {"do": "say", "text": "/pilot give 266, 40"}, {"do": "say", "text": "/pilot give 268, 40"}]
     if name == "Pilot Scout":
         steps.append({"do": "say", "text": "/pilot kit"})
+    if p.get("stairkey"):
+        steps.append({"do": "say", "text": "/pilot stairkey"})
     steps += [{"do": "jump", "to": here, "note": "meet at the hub"}, {"do": "wait", "seconds": 4}]
     if name == LEADER:
         steps += [{"do": "wait", "seconds": 25},
@@ -69,7 +76,7 @@ def route(name, place, level):
         steps += [{"do": "jump", "to": land, "note": f"into {p['title']}"}, {"do": "wait", "seconds": 3}]
     for k, spot in enumerate(p["spots"]):
         steps += [{"do": "walk", "to": spot, "fight": True, "timeout": 90, "note": f"{p['title']}: spot {k + 1}"},
-                  {"do": "hunt", "seconds": 90, "radius": 8},
+                  {"do": "hunt", "seconds": p.get("hunt", 90), "radius": 8},
                   {"do": "shot", "name": f"party_{place}_{k + 1}_{name.split()[-1].lower()}"}]
     steps += [{"do": "wait", "seconds": 5, "note": "done"}]
     return steps
