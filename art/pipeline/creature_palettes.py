@@ -64,6 +64,17 @@ CREATURES["stonebull"] = {**CREATURES["bull"],
     "leg_near": ramp((14, 14, 16), (120, 120, 120), (50, 52, 54)), "leg_far": ramp((10, 10, 12), (100, 100, 100), (40, 42, 44)),
     "mane": ramp((30, 30, 32), (190, 186, 176), (110, 108, 104)), "plate": ramp((40, 40, 44), (226, 220, 204), (130, 126, 118)),
     "moss": ramp((14, 34, 12), (140, 186, 80), (60, 104, 36))}
+# Horned Grazer: sandy-fawn antelope, dark flank band, white belly and rump, dark ridged lyre horns
+FAWN = ((50, 34, 18), (240, 210, 150), (176, 136, 80))
+CREATURES["grazer"] = {
+    "body": ramp(*FAWN), "belly": ramp((140, 130, 116), (255, 252, 244), (226, 220, 206)), "head": ramp(*FAWN),
+    "snout": ramp((60, 44, 28), (220, 196, 150), (150, 116, 74)), "nose": [[24, 18, 16]] * 8,
+    "ear": ramp(*FAWN), "eye": [[24, 16, 12]] * 8, "leg_near": ramp((30, 22, 16), (170, 140, 100), (90, 70, 46)),
+    "leg_far": ramp((24, 18, 12), (140, 114, 80), (70, 54, 36)), "paw_near": [[20, 16, 14]] * 8, "paw_far": [[16, 12, 10]] * 8,
+    "tail_base": ramp(*FAWN), "tail_tip": [[16, 12, 10]] * 8, "horn": ramp((20, 16, 14), (170, 160, 146), (70, 62, 56)),
+    "ridge": ramp((120, 110, 96), (240, 232, 214)), "band": ramp((30, 20, 12), (120, 86, 50), (64, 44, 24)),
+    "rump": ramp((140, 130, 116), (255, 252, 244), (226, 220, 206)), "ring": [[250, 246, 236]] * 8,
+}
 
 if __name__ == "__main__":
     path = Path(__file__).resolve().parent / "palette.json"
