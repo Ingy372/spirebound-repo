@@ -76,7 +76,25 @@ AXE_LORD_BLADE = {**AXE_LORD,
     "eye": [[255, 60, 30]], "edge": ramp(*EMBER_GLOW), "glow": ramp(*EMBER_GLOW),
 }
 
-BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE}
+# Old Tusk: the Bristle Boar grown ancient (secret boss in the Boar Meadow): grizzled charcoal frosted grey on the
+# back and muzzle, the ember crest burnt down to pale frosted tips, a yellowed tusk, old arrows in his back.
+GRIZZLE = ((24, 20, 18), (172, 164, 154), (70, 62, 56))
+OLD_TUSK = {
+    "body": ramp(*GRIZZLE), "head": ramp(*GRIZZLE), "tail_base": ramp(*GRIZZLE),
+    "belly": ramp((26, 20, 18), (128, 112, 104), (62, 52, 48)), "snout": ramp((44, 38, 36), (196, 184, 176), (112, 100, 94)),
+    "nose": ramp((96, 70, 66), (234, 212, 204), (170, 138, 130)), "ear": ramp((18, 14, 14), (110, 100, 96), (52, 46, 44)),
+    "eye": [[255, 54, 24]],
+    "leg_near": ramp((20, 16, 16), (112, 104, 98), (52, 46, 42)), "leg_far": ramp((12, 10, 10), (60, 54, 52), (30, 26, 24)),
+    "paw_near": ramp((8, 7, 8), (60, 54, 52), (28, 24, 24)), "paw_far": ramp((6, 5, 6), (32, 28, 28), (16, 14, 14)),
+    "tail_tip": ramp((70, 14, 8), (250, 220, 190), (200, 90, 40)),
+    "crest": ramp((70, 14, 8), (255, 206, 150), (224, 92, 34)),       # still ember, a little paler at the tips
+    "frost": ramp((48, 44, 42), (170, 164, 158), (100, 94, 90)),   # grizzle: grey frosting, never white patches
+    "tusk": ramp((110, 88, 54), (252, 240, 204), (200, 176, 124)), "brow": ramp((8, 6, 8), (30, 26, 28)),
+    "shaft": ramp((40, 26, 16), (196, 160, 112), (120, 88, 56)), "fletch": ramp((96, 92, 86), (252, 250, 244), (196, 192, 184)),   # white feathers: not the crest
+    "scar": ramp((96, 70, 72), (222, 196, 190), (160, 128, 126)),
+}
+
+BOSSES = {"gate_hound": GATE_HOUND, "axe_lord": AXE_LORD, "axe_lord_blade": AXE_LORD_BLADE, "old_tusk": OLD_TUSK}
 
 
 def main():
