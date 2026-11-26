@@ -1,0 +1,669 @@
+{
+ "name": "h11_loops",
+ "about": "H11: every Floor 1 ground's gate (should be quiet) and each hunting loop point: which monsters are in range there.",
+ "character": "Pilot Vanguard",
+ "timeout": 1500,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 35"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 80"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_starter_west",
+   "note": "starter_west: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_west: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_west_a",
+   "note": "starter_west: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_west: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_west_b",
+   "note": "starter_west: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_west: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_west_c",
+   "note": "starter_west: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_west: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_west_d",
+   "note": "starter_west: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_west: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_starter_east",
+   "note": "starter_east: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_east: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_east_a",
+   "note": "starter_east: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_east: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_east_b",
+   "note": "starter_east: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_east: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_east_c",
+   "note": "starter_east: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_east: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_east_d",
+   "note": "starter_east: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_east: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_starter_south",
+   "note": "starter_south: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_south: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_south_a",
+   "note": "starter_south: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_south: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_south_b",
+   "note": "starter_south: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_south: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_south_c",
+   "note": "starter_south: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_south: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_starter_south_d",
+   "note": "starter_south: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "starter_south: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_wasp_fields",
+   "note": "wasp_fields: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wasp_fields: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wasp_fields_a",
+   "note": "wasp_fields: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wasp_fields: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wasp_fields_b",
+   "note": "wasp_fields: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wasp_fields: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wasp_fields_c",
+   "note": "wasp_fields: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wasp_fields: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wasp_fields_d",
+   "note": "wasp_fields: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wasp_fields: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_boar_meadow",
+   "note": "boar_meadow: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "boar_meadow: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_boar_meadow_a",
+   "note": "boar_meadow: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "boar_meadow: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_boar_meadow_b",
+   "note": "boar_meadow: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "boar_meadow: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_boar_meadow_c",
+   "note": "boar_meadow: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "boar_meadow: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_boar_meadow_d",
+   "note": "boar_meadow: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "boar_meadow: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_burrow_hills",
+   "note": "burrow_hills: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "burrow_hills: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_burrow_hills_a",
+   "note": "burrow_hills: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "burrow_hills: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_burrow_hills_b",
+   "note": "burrow_hills: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "burrow_hills: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_burrow_hills_c",
+   "note": "burrow_hills: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "burrow_hills: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_burrow_hills_d",
+   "note": "burrow_hills: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "burrow_hills: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_wolf_copse",
+   "note": "wolf_copse: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wolf_copse: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wolf_copse_a",
+   "note": "wolf_copse: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wolf_copse: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wolf_copse_b",
+   "note": "wolf_copse: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wolf_copse: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wolf_copse_c",
+   "note": "wolf_copse: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wolf_copse: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_wolf_copse_d",
+   "note": "wolf_copse: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "wolf_copse: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_reed_marsh",
+   "note": "reed_marsh: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "reed_marsh: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_reed_marsh_a",
+   "note": "reed_marsh: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "reed_marsh: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_reed_marsh_b",
+   "note": "reed_marsh: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "reed_marsh: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_reed_marsh_c",
+   "note": "reed_marsh: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "reed_marsh: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_reed_marsh_d",
+   "note": "reed_marsh: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "reed_marsh: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_thornsnap_hollow",
+   "note": "thornsnap_hollow: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "thornsnap_hollow: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_thornsnap_hollow_a",
+   "note": "thornsnap_hollow: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "thornsnap_hollow: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_thornsnap_hollow_b",
+   "note": "thornsnap_hollow: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "thornsnap_hollow: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_thornsnap_hollow_c",
+   "note": "thornsnap_hollow: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "thornsnap_hollow: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_thornsnap_hollow_d",
+   "note": "thornsnap_hollow: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "thornsnap_hollow: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_shard_fields",
+   "note": "shard_fields: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "shard_fields: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_shard_fields_a",
+   "note": "shard_fields: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "shard_fields: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_shard_fields_b",
+   "note": "shard_fields: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "shard_fields: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_shard_fields_c",
+   "note": "shard_fields: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "shard_fields: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_shard_fields_d",
+   "note": "shard_fields: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "shard_fields: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_bandit_road",
+   "note": "bandit_road: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "bandit_road: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_a",
+   "note": "bandit_road: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "bandit_road: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_b",
+   "note": "bandit_road: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "bandit_road: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_c",
+   "note": "bandit_road: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "bandit_road: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_bandit_road_d",
+   "note": "bandit_road: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "bandit_road: loop d"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "camp_old_quarry",
+   "note": "old_quarry: gate (should be quiet)"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "old_quarry: gate"
+  },
+  {
+   "do": "jump",
+   "to": "loop_old_quarry_a",
+   "note": "old_quarry: loop a"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "old_quarry: loop a"
+  },
+  {
+   "do": "jump",
+   "to": "loop_old_quarry_b",
+   "note": "old_quarry: loop b"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "old_quarry: loop b"
+  },
+  {
+   "do": "jump",
+   "to": "loop_old_quarry_c",
+   "note": "old_quarry: loop c"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "old_quarry: loop c"
+  },
+  {
+   "do": "jump",
+   "to": "loop_old_quarry_d",
+   "note": "old_quarry: loop d"
+  },
+  {
+   "do": "watch",
+   "seconds": 4,
+   "note": "old_quarry: loop d"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "home"
+  }
+ ]
+}
