@@ -26,3 +26,11 @@ def track(o, at, direction, scale):
     o.rotation_mode = "QUATERNION"
     o.rotation_quaternion = direction.normalized().to_track_quat("Z", "Y")
     o.scale = scale
+
+
+def hide(m, name):
+    """Tuck a base part away (shrunk into the ground under the body): used by a men's or women's version that must
+    lose, say, the base's long hair, without editing the frozen base file."""
+    o = m.objects[name]
+    o.location = (0.0, 0.0, 0.0)
+    o.scale = (0.001, 0.001, 0.001)

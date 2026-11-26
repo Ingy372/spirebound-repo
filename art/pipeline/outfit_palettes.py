@@ -87,6 +87,18 @@ for _name, _keys in _ADDON_KEYS.items():
     assert not set(_keys) & set(OUTFITS[_name]), f"{_name}: an addon colour would replace a base colour"
     OUTFITS[_name].update(_keys)
 
+# Men's and women's versions of the class outfits (2026-11-25): the base colours plus their own hair, so the
+# version reads at game size. Their addons use these palettes too (the addon keys are copied with the rest).
+def _with_hair(name, hair):
+    r = ramp(*hair)
+    return {**OUTFITS[name], "hair": r, "strand": [r[1]] * 8, "brow": [[int(c * 0.7) for c in r[1]]] * 8}
+
+
+OUTFITS["vanguard_f"] = _with_hair("vanguard", ((50, 20, 10), (210, 130, 80), (130, 64, 34)))      # chestnut-red
+OUTFITS["ranger_f"] = _with_hair("ranger", ((50, 14, 8), (230, 120, 70), (150, 50, 24)))          # auburn
+OUTFITS["arcanist_m"] = _with_hair("arcanist", ((10, 8, 8), (90, 76, 72), (34, 28, 28)))           # black
+OUTFITS["mystic_m"] = _with_hair("mystic", ((40, 24, 12), (170, 120, 72), (96, 62, 32)))           # brown, darker than her honey
+
 # The Floor 10 boss uses the same figure, so its colours live here too.
 HIDE = ((6, 16, 46), (120, 176, 236), (30, 70, 150))            # cerulean hide
 HIDE_LIT = ((14, 34, 84), (160, 208, 250), (54, 106, 190))      # the paler raised muscle
