@@ -1,0 +1,2121 @@
+{
+ "name": "h11_routes",
+ "about": "H11: monsters in range along each Floor 1 hunting route (its three crowd spots: start, middle, end).",
+ "character": "Pilot Vanguard",
+ "timeout": 2400,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 35"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 80"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_a_1",
+   "note": "starter_west: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_a_2",
+   "note": "starter_west: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_a_3",
+   "note": "starter_west: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_b_1",
+   "note": "starter_west: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_b_2",
+   "note": "starter_west: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_b_3",
+   "note": "starter_west: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_c_1",
+   "note": "starter_west: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_c_2",
+   "note": "starter_west: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_c_3",
+   "note": "starter_west: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_d_1",
+   "note": "starter_west: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_d_2",
+   "note": "starter_west: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_west_d_3",
+   "note": "starter_west: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_west: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_a_1",
+   "note": "starter_east: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_a_2",
+   "note": "starter_east: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_a_3",
+   "note": "starter_east: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_b_1",
+   "note": "starter_east: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_b_2",
+   "note": "starter_east: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_b_3",
+   "note": "starter_east: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_c_1",
+   "note": "starter_east: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_c_2",
+   "note": "starter_east: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_c_3",
+   "note": "starter_east: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_d_1",
+   "note": "starter_east: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_d_2",
+   "note": "starter_east: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_east_d_3",
+   "note": "starter_east: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_east: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_a_1",
+   "note": "starter_south: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_a_2",
+   "note": "starter_south: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_a_3",
+   "note": "starter_south: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_b_1",
+   "note": "starter_south: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_b_2",
+   "note": "starter_south: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_b_3",
+   "note": "starter_south: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_c_1",
+   "note": "starter_south: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_c_2",
+   "note": "starter_south: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_c_3",
+   "note": "starter_south: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_d_1",
+   "note": "starter_south: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_d_2",
+   "note": "starter_south: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_starter_south_d_3",
+   "note": "starter_south: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "starter_south: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_a_1",
+   "note": "wasp_fields: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_a_2",
+   "note": "wasp_fields: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_a_3",
+   "note": "wasp_fields: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_b_1",
+   "note": "wasp_fields: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_b_2",
+   "note": "wasp_fields: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_b_3",
+   "note": "wasp_fields: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_c_1",
+   "note": "wasp_fields: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_c_2",
+   "note": "wasp_fields: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_c_3",
+   "note": "wasp_fields: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_d_1",
+   "note": "wasp_fields: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_d_2",
+   "note": "wasp_fields: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wasp_fields_d_3",
+   "note": "wasp_fields: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wasp_fields: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_a_1",
+   "note": "boar_meadow: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_a_2",
+   "note": "boar_meadow: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_a_3",
+   "note": "boar_meadow: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_b_1",
+   "note": "boar_meadow: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_b_2",
+   "note": "boar_meadow: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_b_3",
+   "note": "boar_meadow: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_c_1",
+   "note": "boar_meadow: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_c_2",
+   "note": "boar_meadow: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_c_3",
+   "note": "boar_meadow: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_d_1",
+   "note": "boar_meadow: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_d_2",
+   "note": "boar_meadow: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_boar_meadow_d_3",
+   "note": "boar_meadow: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "boar_meadow: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_a_1",
+   "note": "burrow_hills: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_a_2",
+   "note": "burrow_hills: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_a_3",
+   "note": "burrow_hills: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_b_1",
+   "note": "burrow_hills: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_b_2",
+   "note": "burrow_hills: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_b_3",
+   "note": "burrow_hills: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_c_1",
+   "note": "burrow_hills: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_c_2",
+   "note": "burrow_hills: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_c_3",
+   "note": "burrow_hills: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_d_1",
+   "note": "burrow_hills: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_d_2",
+   "note": "burrow_hills: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_burrow_hills_d_3",
+   "note": "burrow_hills: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "burrow_hills: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_a_1",
+   "note": "wolf_copse: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_a_2",
+   "note": "wolf_copse: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_a_3",
+   "note": "wolf_copse: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_b_1",
+   "note": "wolf_copse: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_b_2",
+   "note": "wolf_copse: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_b_3",
+   "note": "wolf_copse: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_c_1",
+   "note": "wolf_copse: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_c_2",
+   "note": "wolf_copse: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_c_3",
+   "note": "wolf_copse: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_d_1",
+   "note": "wolf_copse: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_d_2",
+   "note": "wolf_copse: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_wolf_copse_d_3",
+   "note": "wolf_copse: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "wolf_copse: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_a_1",
+   "note": "reed_marsh: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_a_2",
+   "note": "reed_marsh: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_a_3",
+   "note": "reed_marsh: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_b_1",
+   "note": "reed_marsh: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_b_2",
+   "note": "reed_marsh: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_b_3",
+   "note": "reed_marsh: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_c_1",
+   "note": "reed_marsh: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_c_2",
+   "note": "reed_marsh: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_c_3",
+   "note": "reed_marsh: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_d_1",
+   "note": "reed_marsh: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_d_2",
+   "note": "reed_marsh: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_reed_marsh_d_3",
+   "note": "reed_marsh: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "reed_marsh: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_a_1",
+   "note": "thornsnap_hollow: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_a_2",
+   "note": "thornsnap_hollow: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_a_3",
+   "note": "thornsnap_hollow: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_b_1",
+   "note": "thornsnap_hollow: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_b_2",
+   "note": "thornsnap_hollow: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_b_3",
+   "note": "thornsnap_hollow: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_c_1",
+   "note": "thornsnap_hollow: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_c_2",
+   "note": "thornsnap_hollow: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_c_3",
+   "note": "thornsnap_hollow: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_d_1",
+   "note": "thornsnap_hollow: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_d_2",
+   "note": "thornsnap_hollow: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_thornsnap_hollow_d_3",
+   "note": "thornsnap_hollow: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "thornsnap_hollow: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_a_1",
+   "note": "shard_fields: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_a_2",
+   "note": "shard_fields: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_a_3",
+   "note": "shard_fields: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_b_1",
+   "note": "shard_fields: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_b_2",
+   "note": "shard_fields: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_b_3",
+   "note": "shard_fields: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_c_1",
+   "note": "shard_fields: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_c_2",
+   "note": "shard_fields: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_c_3",
+   "note": "shard_fields: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_d_1",
+   "note": "shard_fields: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_d_2",
+   "note": "shard_fields: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_shard_fields_d_3",
+   "note": "shard_fields: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "shard_fields: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_a_1",
+   "note": "bandit_road: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_a_2",
+   "note": "bandit_road: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_a_3",
+   "note": "bandit_road: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_b_1",
+   "note": "bandit_road: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_b_2",
+   "note": "bandit_road: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_b_3",
+   "note": "bandit_road: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_c_1",
+   "note": "bandit_road: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_c_2",
+   "note": "bandit_road: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_c_3",
+   "note": "bandit_road: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_1",
+   "note": "bandit_road: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_2",
+   "note": "bandit_road: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_3",
+   "note": "bandit_road: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_4",
+   "note": "bandit_road: route d spot 4"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 4"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_5",
+   "note": "bandit_road: route d spot 5"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_bandit_road_d_6",
+   "note": "bandit_road: route d spot 6"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "bandit_road: route d spot 6"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_a_1",
+   "note": "old_quarry: route a spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route a spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_a_2",
+   "note": "old_quarry: route a spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route a spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_a_3",
+   "note": "old_quarry: route a spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route a spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_b_1",
+   "note": "old_quarry: route b spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route b spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_b_2",
+   "note": "old_quarry: route b spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route b spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_b_3",
+   "note": "old_quarry: route b spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route b spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_c_1",
+   "note": "old_quarry: route c spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route c spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_c_2",
+   "note": "old_quarry: route c spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route c spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_c_3",
+   "note": "old_quarry: route c spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route c spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_1",
+   "note": "old_quarry: route d spot 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_2",
+   "note": "old_quarry: route d spot 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_3",
+   "note": "old_quarry: route d spot 3"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_4",
+   "note": "old_quarry: route d spot 4"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 4"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_5",
+   "note": "old_quarry: route d spot 5"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": "crowd_old_quarry_d_6",
+   "note": "old_quarry: route d spot 6"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "old_quarry: route d spot 6"
+  },
+  {
+   "do": "jump",
+   "to": "depot_hearthgate",
+   "note": "home"
+  }
+ ]
+}
