@@ -1,7 +1,8 @@
 # Art count: borrowed sprites a player can see on Floors 1 to 3 (roadmap N4)
 
 Counted 2026-11-25 from the game as it stands on GitHub (commit d7b3b437). The map, monster files, NPC list and
-item tables were read by a script; nothing in the game was changed. Monsters the Step 2 session is adding today
+item tables were read by `tools/art_count.py` (rerun it any time to refresh these numbers); nothing in the game
+was changed. Monsters the Step 2 session is adding today
 (for example the Granite Warden) are not in this count yet.
 
 **"Ours"** = art Jay has approved from the Blender pipeline (`art/APPROVED.txt`), or our own spell effects.
