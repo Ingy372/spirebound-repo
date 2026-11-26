@@ -87,3 +87,7 @@ blackthorn
 prism_shardling
 granite_warden
 old_bristleback
+# Corpses for the three monsters with no fitting Tibia corpse (Jay, 2026-11-26: "Approve all three"; art/CORPSE_RULES.md)
+corpse_sentinel
+corpse_underkeeper
+corpse_vault_wraith

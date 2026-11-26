@@ -11,7 +11,7 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 ### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
 Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
 - **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).
-- Your answer: (approve all / approve all except ... / changes)
+- Jay's answer (2026-11-26): "Approve all three". Installing them is roadmap N7.
 
 ### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
 The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
