@@ -8,6 +8,15 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q102. Ground features, cooking and Town Works: my smaller calls (2026-11-27)
+Built (roadmap FD2, FD4, FD5). I assumed each of these; tell me if you want one changed.
+- **Cooking is "drop it on the fire".** The game client cannot "use" food on something, so you drag raw food onto a campfire and it cooks right there; drop a second ingredient on the dish to combine. **Recommendation: keep.**
+- **The three grounds the design left open:** Bramble Run gets berry bushes (berries for cooking, now and then a thornsnap wakes), Smugglers' Ridge gets hidden stashes under loose stones (gold, and two bandits come running), the Fallen Bastion gets an old ballista you can fire at the ruins. **Recommendation: keep.**
+- **Works project 4:** the Old Watchtower has no tower to climb yet, so "repair the collapsed stair" became "clear the keep's fallen north gate" (a second way into the keep). When the tower gets real floors (MR5) it can become the stair again. **Recommendation: keep for now.**
+- **The Stair Camp's healer and seller are objects, not people:** a healer's shrine (full health and mana out of a fight) and a supply crate (health potions at the shop price). **Recommendation: keep; real NPCs later if you want them.**
+- **The Bandit Lieutenant and the signal fire are group-sized:** a lone level 28 dies to either (they sit in the deep loop and the apex). **Recommendation: keep; they are meant to be done with friends.**
+- **NPCs do not buy dishes yet** (the design says "for little"); players can still sell them to each other. Open task FD4b.
+
 ### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
 You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
 - **The prize:** the **Summit Wish**. One wish, for whoever reaches the top of the Spire. Nobody is trapped; everyone came by choice to win it.

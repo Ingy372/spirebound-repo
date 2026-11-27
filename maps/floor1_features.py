@@ -434,6 +434,8 @@ def works(m):
         m.ground[(run[-1], y, Z)] = BRIDGE
         for x in run[1:-1]:
             P[1].append(dict(x=x, y=y, z=Z, op="ground", id=BRIDGE))
+        for x in (run[0] - 1, run[-1] + 1):          # the banks' shoreline stones are solid: cleared off the way on
+            P[1].append(dict(x=x, y=y, z=Z, op="clearblock"))
     m.points["works_bridge"] = (run[0] - 1, 1318, Z)
     # 2. The Road Lanterns: unlit posts along the road from Millcross to the river bank
     for x in range(1062, 1100, 8):

@@ -279,8 +279,13 @@ isle:register()
 
 -- ================================================================ Sproutling Glade: seedlings
 local function growSeedling(pos, itemId)
-	local it = topItem(pos, itemId)
-	if not it or it:getActionId() ~= A.seedling then
+	local it -- the seedling itself (a wild fern of the same kind may lie on the same tile)
+	for _, x in ipairs(Tile(pos) and Tile(pos):getItems() or {}) do
+		if x:getId() == itemId and x:getActionId() == A.seedling then
+			it = x
+		end
+	end
+	if not it then
 		return
 	end
 	it:remove()
@@ -300,7 +305,10 @@ function F.plantSeedling(pos)
 	if it then
 		it:setActionId(A.seedling)
 		it:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "A sproutling seedling, already reaching for the light. Stamp it out (use it), or it will grow.")
-		addEvent(growSeedling, c.grow * 1000, Position(pos.x, pos.y, pos.z), c.item)
+		local at, id = Position(pos.x, pos.y, pos.z), c.item
+		addEvent(function()
+			growSeedling(at, id)
+		end, c.grow * 1000)
 	end
 	return it
 end
@@ -1191,11 +1199,15 @@ function F.place()
 	end
 	tag("feat_ballista", A.ballista, nil, "The bastion's old ballista. It still turns, and there is a bolt in the groove.")
 	-- the island's two tiles count as visiting the night lilies
-	for _, name in ipairs({ "feat_island", "feat_island_2" }) do
-		local p = WorldPoints[name]
-		local t = p and Tile(P(p))
-		if t and t:getGround() then
-			t:getGround():setActionId(47217)
+	local a, b = WorldPoints.feat_island, WorldPoints.feat_island_2
+	if a and b then -- all four tiles of the island
+		for x = math.min(a.x, b.x), math.max(a.x, b.x) do
+			for y = math.min(a.y, b.y), math.max(a.y, b.y) do
+				local t = Tile(Position(x, y, a.z))
+				if t and t:getGround() then
+					t:getGround():setActionId(47217)
+				end
+			end
 		end
 	end
 	return n
@@ -1227,4 +1239,4 @@ function F.berryPicked(player, pos)
 	end
 end
 
-F.stashPick, F.truffleSpot, F.rootThink = stashPick, truffleSpot, rootThink
+F.stashPick, F.truffleSpot, F.rootThink, F.growSeedling = stashPick, truffleSpot, rootThink, growSeedling

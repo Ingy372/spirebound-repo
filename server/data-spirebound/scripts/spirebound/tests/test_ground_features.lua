@@ -59,6 +59,23 @@ SpireTest.add("ground features: the rules (tide, chimes, vines, cool-downs)", fu
 	F.tideSet(false)
 	SpireTest.eq(Tile(WorldPoints.feat_tide_1):getGround():getId() ~= 104, true, "water at high tide")
 	SpireTest.eq(F.vineWalls() > 0, true, "vine walls grow")
+	-- a seedling grows into an Elder Sproutling (the two minutes skipped)
+	local spot = WorldPoints.camp_starter_south
+	local pos = Position(spot.x + 1, spot.y + 2, spot.z)
+	local seed = F.plantSeedling(pos)
+	if seed then
+		F.growSeedling(pos, seed:getId())
+		local elder
+		for _, c in ipairs(Tile(pos):getCreatures() or {}) do
+			if c:getName() == "Elder Sproutling" then
+				elder = c
+			end
+		end
+		SpireTest.eq(elder ~= nil, true, "the seedling grew into an Elder Sproutling")
+		if elder then
+			elder:remove()
+		end
+	end
 end)
 
 SpireTest.add("town works: sizes, the daily cap and the pieces", function()

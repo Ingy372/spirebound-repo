@@ -314,3 +314,26 @@ a cracked oath-stone on his chest). Until then a stand-in look is used.
 | [ ] | `item_archive_seal.png` (now 2834) | "32x32 pixel-art item icon, Tibia style, transparent background: a cream certificate with a big ink-blue wax seal showing a quill over a tower." |
 | [ ] | `item_oathbound_pack.png` (now 5801) | "32x32 pixel-art item icon, Tibia style, transparent background: a sturdy dark-blue backpack with bronze buckles and a small oath-stone sewn on the flap." |
 | [ ] | `object_oath_stone.png` (now stone tile 429) | "32x32 pixel-art floor tile, Tibia style, top-down: a square flagstone with a carved ring and a raised hand in its middle, faint blue in the grooves." |
+
+## Floor 1 depth: ground features, cooking, Town Works (FD2, FD4, FD5; nothing waits on these)
+Placeholders work today. Creatures (Blender pipeline): the **Elder Sproutling** (now the sproutling look; a bigger, older
+sproutling with a woody trunk and a crown of leaves), the **Nest Queen** (now the wasp look; a long-bodied wasp with a
+gold-striped abdomen and torn wings) and the **Bandit Lieutenant** (now the bandit captain look; a red sash and a tin
+badge on his chest).
+
+| ✓ | File name | Grok prompt |
+|---|---|---|
+| [ ] | `object_ratcatcher_bell.png` (now a post 2117) | "32x64 pixel-art object, Tibia style, top-down 3/4 view: a green-bronze hand bell hanging from a short wooden post, rat silhouettes cast into the rim." |
+| [ ] | `object_mole_mound.png` (now rock 1787) | "32x32 pixel-art object, Tibia style: a heap of fresh brown earth with a dark round tunnel mouth at its top." |
+| [ ] | `object_howling_stone.png` (now stone 4850) | "64x64 pixel-art object, Tibia style: a tall grey standing stone worn into hollows by the wind, faint wolf scratches at its base." |
+| [ ] | `object_chime_shard.png` (now crystals 7808-7811) | "32x64 pixel-art object, Tibia style: a tall thin pale crystal shard standing upright, with a soft glow at its tip." |
+| [ ] | `object_wanted_poster.png` (now a sign) | "32x32 pixel-art object, Tibia style: a wooden post with a nailed parchment WANTED poster showing a rough bandit sketch." |
+| [ ] | `object_signal_brazier.png` (now basin 2113) | "32x32 pixel-art object, Tibia style: a big iron signal brazier on three legs, cold and full of black coals." |
+| [ ] | `object_ballista.png` (now 2065) | "64x64 pixel-art object, Tibia style: an old wooden siege ballista on a stone base, a long iron bolt in its groove." |
+| [ ] | `object_lily_pad.png` (now 39548 on mud) | "32x32 pixel-art floor tile, Tibia style, top-down: three broad green lily pads with a white night flower on pond water." |
+| [ ] | `object_turtle_nest.png` (now 14759) | "32x32 pixel-art object, Tibia style: a shallow scrape in wet sand with four leathery white eggs." |
+| [ ] | `item_truffle.png` (now 3728) | "32x32 pixel-art item icon, Tibia style, transparent background: a knobbly black truffle with a little earth on it." |
+| [ ] | `item_turtle_egg.png` (now 5678) | "32x32 pixel-art item icon, Tibia style, transparent background: one leathery off-white turtle egg." |
+| [ ] | `item_lieutenant_badge.png` (now 9218) | "32x32 pixel-art item icon, Tibia style, transparent background: a dented tin badge shaped like a crossed dagger and key." |
+| [ ] | `items_dishes_floor1.png` (13 dishes, now food items) | "A sheet of 13 32x32 pixel-art food icons, Tibia style, transparent background: grilled minnow, smoked perch fillet, seared meat, boar roast, roast truffle, baked turtle egg, carp steak, whiskers fish pie, hunter's roast with truffle, honey-glazed ham, truffle omelette, bramble berry tart, herb-crusted perch." |
+| [ ] | `object_works_board.png` (now notice board 2597) | "32x64 pixel-art object, Tibia style: a tall wooden board with a carpenter's plan pinned to it and a coin slot box at its foot." |

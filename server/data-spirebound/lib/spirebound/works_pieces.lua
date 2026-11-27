@@ -4,9 +4,13 @@ SpireWorksPieces = {
 		{ x = 1117, y = 1318, z = 7, op = "ground", id = 408 },
 		{ x = 1118, y = 1318, z = 7, op = "ground", id = 408 },
 		{ x = 1119, y = 1318, z = 7, op = "ground", id = 408 },
+		{ x = 1115, y = 1318, z = 7, op = "clearblock" },
+		{ x = 1121, y = 1318, z = 7, op = "clearblock" },
 		{ x = 1117, y = 1319, z = 7, op = "ground", id = 408 },
 		{ x = 1118, y = 1319, z = 7, op = "ground", id = 408 },
 		{ x = 1119, y = 1319, z = 7, op = "ground", id = 408 },
+		{ x = 1115, y = 1319, z = 7, op = "clearblock" },
+		{ x = 1121, y = 1319, z = 7, op = "clearblock" },
 	},
 	[2] = {
 		{ x = 1062, y = 1223, z = 7, op = "transform", id = 8660, src = 8659 },

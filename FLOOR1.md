@@ -201,3 +201,36 @@ This replaces the housing counts above. Jay: "the housing options are boring and
 - **Fisher's Huts:** 8 homes on the river bank: 6 huts and 2 boathouses.
 - **Millcross:** 8 cottages, no two alike.
 - **Spire Manor:** the one grand house, four furnished floors, sold only in the Spire Shop (DESIGN.md 7.6).
+
+## Floor 1 depth: one thing only each ground has, cooking, Town Works (2026-11-27, roadmap FD2, FD4, FD5)
+Design: `docs/superpowers/specs/2026-11-27-floor1-depth-design.md` 4.2, 4.4, 4.5. Numbers: `tools/gen_depth.py`. Map spots: `maps/floor1_features.py`. Every feature's first use marks a "Ground lore" row on the Discoveries page, and each hub sign has one plain line about it.
+
+**One feature per hunting ground** (never on the gate side of the hub):
+| Ground | Feature |
+|---|---|
+| The Ratwarren | The Ratcatcher's Bell in the hub: ring it and 12 rats pour up the north-west loop for a minute. Once per player per 20 minutes. |
+| Toad Pond | Night lilies: at night a lily path rises across the north-west pond to a small island with two toads and a fishing spot where rare fish bite three times as often. At dawn the lilies sink and anyone out there wades ashore. |
+| Sproutling Glade | Seedlings: a fallen sproutling sometimes leaves a seedling. Use it to stamp it out, or in two minutes it grows into an Elder Sproutling (tougher, more herbs and coins). |
+| Waspgrass Fields | Four wasp nests. Use one while carrying a torch: three wasps and a Nest Queen come out, and you break off two honeycomb. The nest regrows in ten minutes. |
+| Boar Meadow | Truffles: an unhurt, idle Bristle Boar sometimes roots at the ground. If it is still unhurt eight seconds later it leaves turned earth; dig it with a shovel for a truffle. |
+| Burrow Hills | Mole tunnels: three mounds by the loops link to each other. Use one to crawl out at the next; it caves in behind you for a minute. |
+| Wolf Copse | The Howling Stone in the hub: every wolf of the copse comes for you; at night three more join. 10 minutes per player, 2 minutes between howls. |
+| Reedmarsh | The tide: every 30 minutes the water drops for 10. Sandbars rise along the shore with three turtle nests (two eggs each, once per player per tide) and a washed-up sea chest (a little gold, once per player per tide). Anyone on a sandbar when the water returns splashes ashore. |
+| Thornsnap Hollow | Vine walls: seven cuts across the trails; every 20 minutes about half of them grow shut, a different half each time. Cut a wall with a sword or axe in your hand, or burn it with a torch. (Fire runes do not burn them yet: J15b stays open.) |
+| Shard Fields | Four chime shards by the far loop. Every three minutes the wind sparkles over them in turn; strike them in that order and the crystal cache beside them pays out. Once per player per day. |
+| The Bandit Road | A wanted poster inside the gate. Each hour a Bandit Lieutenant comes out on a random loop; the poster says which. Bring his badge to the poster for the bounty. |
+| The Old Quarry | The lift: one player stands on the platform at the foot of the upper ledge, the other turns the winch beside it; the rider is hauled up to the ledge. Needs two. |
+| The Old Watchtower | The signal brazier in the middle of the keep: light it and stay in the keep for three minutes while rams come at you every 30 seconds. Then it burns for 20 minutes, monsters of the tower drop 10% more gold, and the server hears who lit it. Anyone outside the lighter's party can use it to put it out. |
+| The Bramble Run (not in the design; same rule) | Bramble berries: eight bushes along the loops. Pick one for three bramble berries (a cooking ingredient); now and then a thornsnap sleeping under the bush wakes up. |
+| Smugglers' Ridge (not in the design) | Contraband stashes: one loose stone by each loop; each hour one of them holds a stash and glints now and then. Turn it over for a little gold, and two road bandits come to collect. |
+| The Fallen Bastion (not in the design) | The old ballista in the hub: use it to loose a bolt at the nearest monster within 12 tiles (it hits the 3x3 round it). Once per player per 2 minutes. |
+
+**Cooking** (no bench, no window): drop a raw ingredient on any fire (every hunting ground's hub campfire, coal basins, house ovens, a lit Beacon bowl) and it cooks there. Drop a second ingredient on a dish while it lies on the fire to make a combined dish. Use a combined dish while it lies on the fire to lay it out as a feast: the cook and their party each eat from it (four servings, ten minutes) and its comfort lasts twice as long. 13 dishes, each giving one small comfort out of a fight (faster health or mana, more carrying strength, a light, walking speed in town); never damage, defence, experience or loot. One dish at a time. Recipes are found by trying and kept in the Cookbook row group on the Discoveries page. Three hard ones are hinted by Innkeeper Bess, Innkeeper Roan and Alchemist Ivo (ask them about cooking). Titles: Camp Cook (5 dishes), Hearth Cook (all). Ingredients: fish (fishing; Old Whiskers, the legendary fish, has its own pie), meat and ham, honeycomb (wasps and nests), truffles (Boar Meadow), turtle eggs (Reedmarsh), bramble berries (Bramble Run), sling herbs.
+
+**Town Works**: the Works Board stands beside the notice board in the Hearth. Use it to read the project, the top givers and what comes next; drop coins on it to give (the gold is destroyed). Size follows the accounts active in the last week (about four days of 1,000 gold each; at least 20,000); one account gives at most a quarter of a project a day. When it fills, the map changes for the rest of the season, the top giver gets the project's title, and the next opens:
+1. The River Bridge (Bridgewright): the broken bridge south of the Fisher's Huts.
+2. The Road Lanterns (Lamplighter): the lamp posts on the road from Millcross to the river.
+3. The Stair Camp (Campmaster): beside the north road at the foot of the labyrinth: a campfire to cook on, a healer's shrine (full health and mana out of a fight) and a supply crate (health potions at the shop price).
+4. The Watchtower Gate (Stairwright): the Old Watchtower has no tower to climb yet (MR5), so the design's "collapsed stair" became the keep's fallen north gate: clearing it opens a second way into the keep.
+5. The Monument Garden (Gardener): flowers and benches round the Monument and a plaque naming every giver of the season.
+After the Axe-Lord's first fall each season, banners hang beside Hearthgate's four gates.

@@ -115,6 +115,12 @@ local function applyPiece(p)
 			end
 		end
 		Game.createItem(p.id, 1, pos)
+	elseif p.op == "clearblock" then -- only what blocks the way (shoreline stones), not the grass edges
+		for _, it in ipairs(tile:getItems() or {}) do
+			if not ItemType(it:getId()):isPickupable() and ItemType(it:getId()):isBlocking() then
+				it:remove()
+			end
+		end
 	elseif p.op == "clear" then
 		for _, it in ipairs(tile:getItems() or {}) do
 			it:remove()
