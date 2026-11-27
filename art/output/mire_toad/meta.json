@@ -1,0 +1,147 @@
+{
+ "name": "mire_toad",
+ "parts": [
+  "none",
+  "body",
+  "belly",
+  "blotch",
+  "wart",
+  "eye",
+  "pupil",
+  "leg",
+  "foot",
+  "head",
+  "stripe",
+  "line",
+  "gland",
+  "slime"
+ ],
+ "palette": "mire_toad",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3810764773832473,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.3810764773832473,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 5.0,
+   "pupil": 9.0,
+   "blotch": 1.6,
+   "wart": 2.6,
+   "leg": 1.6,
+   "foot": 2.4,
+   "belly": 1.2,
+   "stripe": 2.0,
+   "line": 3.5,
+   "gland": 2.6,
+   "slime": 3.0
+  },
+  "thin": {
+   "pupil": 2,
+   "eye": 3,
+   "blotch": 4,
+   "wart": 3,
+   "leg": 4,
+   "foot": 2,
+   "stripe": 3,
+   "line": 2,
+   "gland": 2,
+   "slime": 2
+  },
+  "soft": [
+   [
+    "body",
+    "belly",
+    "blotch",
+    "wart",
+    "stripe",
+    "head",
+    "line",
+    "gland"
+   ],
+   [
+    "eye",
+    "pupil"
+   ],
+   [
+    "leg",
+    "foot"
+   ]
+  ],
+  "no_outline": [
+   "slime"
+  ],
+  "fur": [],
+  "texture": {
+   "body": [
+    0.9,
+    0.35
+   ],
+   "head": [
+    0.7,
+    0.25
+   ],
+   "belly": [
+    0.4,
+    0.0
+   ],
+   "leg": [
+    0.6,
+    0.2
+   ],
+   "gland": [
+    0.4,
+    0.0
+   ]
+  },
+  "bands": [
+   0.4,
+   0.52,
+   0.62,
+   0.71,
+   0.79,
+   0.86,
+   0.93
+  ],
+  "selout": [
+   "body",
+   "head"
+  ]
+ },
+ "ref": "look_222.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

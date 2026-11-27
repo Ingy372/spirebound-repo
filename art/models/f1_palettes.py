@@ -117,6 +117,34 @@ PAL["bandit_lieutenant"] = {**_BANDIT,
     "knife": ramp((60, 64, 76), (250, 252, 255), (170, 178, 192)),
 }
 
+# ---------------------------------------------------------------- the Underkeep, Wing 1
+# Mire Toad: a cave-mud toad, slate-violet skin (Tibia's toad is orange-gold, the pond's emerald, the Goldback bottle-green),
+# a dirty lichen-ochre belly, near-black blotches, and glowing poison-green glands: two big ones behind the eyes, a row
+# down each flank and a toxic seam down the spine; sickly yellow-green eyes, glistening slime drips.
+MIRE = ((16, 14, 24), (150, 136, 160), (66, 58, 82))
+PAL["mire_toad"] = {
+    "body": ramp(*MIRE), "head": ramp(*MIRE), "leg": ramp((14, 12, 20), (140, 128, 150), (60, 54, 72)),
+    "belly": ramp((70, 60, 30), (220, 206, 140), (150, 134, 80)), "blotch": ramp((6, 4, 10), (40, 30, 50), (18, 14, 24)),
+    "wart": ramp((50, 44, 60), (200, 190, 206), (120, 110, 130)), "stripe": ramp((20, 50, 14), (150, 210, 90), (60, 130, 34)),
+    "eye": ramp((90, 100, 10), (250, 255, 150), (200, 220, 50)), "pupil": flat((6, 5, 8)),
+    "foot": ramp((60, 54, 50), (200, 190, 170), (130, 120, 108)), "line": flat((6, 4, 10)),
+    "gland": ramp((30, 70, 14), (210, 250, 130), (100, 180, 40)), "slime": ramp((60, 90, 70), (220, 250, 220), (140, 190, 150)),
+}
+
+# Sluice Warden: a giant drowned toad, cold slate-teal skin (no Tibia toad is blue), a pale bone-grey belly, a rusted
+# iron sluice grate grown into its back (rust-orange plate, darker bars, pale rivets), a hanging chain, river moss,
+# pale aqua eyes.
+DROWN = ((10, 22, 28), (150, 186, 190), (52, 84, 94))
+PAL["sluice_warden"] = {**PAL["mire_toad"],
+    "body": ramp(*DROWN), "head": ramp(*DROWN), "leg": ramp((8, 18, 22), (120, 150, 156), (42, 66, 74)),
+    "belly": ramp((80, 84, 80), (236, 232, 214), (170, 170, 156)), "blotch": ramp((4, 10, 14), (34, 56, 64), (16, 30, 36)),
+    "wart": ramp((40, 60, 66), (190, 210, 210), (110, 136, 140)), "stripe": ramp((4, 10, 14), (34, 56, 64), (16, 30, 36)),
+    "eye": ramp((20, 110, 120), (230, 255, 250), (120, 230, 230)), "foot": ramp((50, 60, 60), (200, 204, 196), (120, 130, 126)),
+    "grate": ramp((50, 18, 6), (240, 150, 80), (150, 64, 24)), "bar": ramp((22, 10, 6), (150, 90, 56), (70, 34, 16)),
+    "rivet": ramp((110, 100, 90), (255, 240, 210), (200, 180, 150)), "chain": ramp((30, 24, 22), (190, 170, 150), (96, 80, 70)),
+    "moss": ramp((10, 36, 20), (110, 180, 110), (40, 100, 56)),
+}
+
 
 def main():
     path = PIPE / "palette.json"
