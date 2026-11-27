@@ -18,7 +18,7 @@ function SpireQuests.countKill(player, name)
 	end
 end
 
-local kill = CreatureEvent("SpireQuestKill")
+local kill = {} -- N8: counted through SpireKills
 function kill.onKill(player, target)
 	if not target or not target:isMonster() or target:getMaster() then
 		return true
@@ -32,7 +32,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireQuestKill", kill.onKill)
 
 function SpireQuests.autolootDefault(player)
 	local k = player:kv():scoped("spirebound")
@@ -49,7 +49,6 @@ end
 
 local login = CreatureEvent("SpireQuestLogin")
 function login.onLogin(player)
-	player:registerEvent("SpireQuestKill")
 	SpirePerks.apply(player)
 	SpireQuests.markGivers(player) -- P2: "!" on the minimap where a quest waits
 	-- G3 (Grok playtest, 2026-11-24: Pell's quest never showed in the Quest Tracker): the tracker only lists missions
