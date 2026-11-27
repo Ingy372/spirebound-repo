@@ -1,0 +1,264 @@
+{
+ "name": "late_checks",
+ "character": "Pilot Arcanist",
+ "timeout": 600,
+ "about": "FD4b: Osric buys a dish; J15b/FD2b: a fire rune burns Thornsnap's vine walls (server log: 'fire burned a Thornsnap vine wall').",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 35"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 13992, 1"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1222,
+    1286,
+    6
+   ],
+   "note": "FD4b: sell a dish to Osric"
+  },
+  {
+   "do": "trade",
+   "sell": [
+    "grilled minnow"
+   ],
+   "note": "FD4b: sell a dish to Osric"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "FD4b: sell a dish to Osric"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3191, 8"
+  },
+  {
+   "do": "say",
+   "text": "/depth vines"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": [
+    1169,
+    1140,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 1"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1169,
+    1137,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 1"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 1"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1179,
+    1138,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 2"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1179,
+    1135,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 2"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1184,
+    1170,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 3"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1184,
+    1167,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 3"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 3"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1189,
+    1155,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 4"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 4"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1189,
+    1152,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 4"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 4"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1193,
+    1170,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 5"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1193,
+    1167,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 5"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 5"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1194,
+    1137,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 6"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 6"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1194,
+    1134,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 6"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 6"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1204,
+    1140,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 7"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear",
+   "note": "J15b: fire rune on vine wall 7"
+  },
+  {
+   "do": "usewith",
+   "id": 3191,
+   "at": [
+    1204,
+    1137,
+    7
+   ],
+   "note": "J15b: fire rune on vine wall 7"
+  },
+  {
+   "do": "wait",
+   "seconds": 2,
+   "note": "J15b: fire rune on vine wall 7"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

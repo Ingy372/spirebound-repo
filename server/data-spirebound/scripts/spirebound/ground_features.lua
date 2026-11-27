@@ -726,6 +726,7 @@ function SpireFeatures.burnVineAt(pos)
 	end
 	if SpireFeatures.clearVineWall(pos, c.vine) then
 		pos:sendMagicEffect(CONST_ME_FIREAREA)
+		logger.info("[Spirebound] fire burned a Thornsnap vine wall at {}", pos:toString())
 		return true
 	end
 	return false
