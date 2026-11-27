@@ -168,7 +168,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
    - **Done:** the gate sign now ends "The warrens are east: follow the hollows away from the gate." (`maps/floor1_plan.py` BURROW `sign_hint`, map regenerated).
 14. Small: the Skills panel shows "XP Gain Rate 7290%" from level 1 (confusing); the Registrar's walk-to point is
     outside his door, where talking to him gives "Come back when you are ready to choose."
-   - Not done: the skills panel number is the stock client module (ROADMAP PT2). The Registrar walk-to point lives in the playtest tools, which this session may not edit.
+   - **Done (second round):** the "XP Gain Rate" row is hidden from our own client module (`client/modules/game_spirebound/spirebound.lua`, seen gone in the client 18:49). The number itself was real (10x stage rate plus the engine's low-level bonus) but told players nothing. The test tools' Registrar point is now inside his room, two steps west (`tools/grok_tester.py` places). Also new: a reminder every 5 minutes when you fight with no weapon in hand (`SpireProgress.warnUnarmed`, test added).
 
 ## P3: balance (measure solo before changing; Jay decides big moves)
 
@@ -186,6 +186,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
 18. **Health potions look weak late in the band.** A level-21 Vanguard in brass gear, drinking every 2 seconds and
     casting Second Wind, lost to a pack of four Road Bandits in ~20 seconds (40-50 damage per 2 s). Check potion
     strength against Floor 1's 19-30 band damage (`tools/balance.py`).
+   - **Done:** found the real cause: Tibia's rule let only level-50s drink strong health and strong mana potions, while Floor 1 sells them (Quartermaster Bryn) and hands them out from level-14 chests, so the Vanguard could only drink plain ones. Strong potions now work from level 14 (strong health for Vanguards and Rangers, strong mana for all; `server/core-overrides/scripts/actions/items/potions.lua`), and `tools/balance.py` models it (check passes). Test: "strong potions can be drunk on Floor 1".
 19. **No sting to dying below level 50** on Normal (no experience lost, by design: `Difficulty.youngGraceText`). Note
     for Jay's "challenge" goal: Floor 1 deaths cost only the walk back.
 
@@ -194,6 +195,7 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
 20. **Loot goes to the kill credit**, so the tank ends up with all the gold (1,250 vs 56 for the healer, who then
     can't buy mana potions). The bank's "transfer X to name" works (the test party used it), but nobody will know.
     Teach it, or add a shared-loot party option.
+   - Taught, not built: the Journal now has "How do we share gold in a party? ... transfer 200 to Fern". The shared-gold switch waits on Jay (Q74).
 
 ## P0 for Jay: the bosses (added 18:20, end of the playtest)
 Jay asked to skip the rest of the levelling: the three were set to level 30 with `/pilot level 30`, given Floor 1
@@ -217,10 +219,12 @@ to the bosses. The labyrinth was skipped (not tested).
       players) or a raid (8+)? If a party boss, lower his health and his melee/line damage (generator, not the file
       by hand), and consider a smaller `changeTarget`. Either way, tell players in the offer and the Journal how many
       to bring ("gather a party of 3 or more" is what the Journal says about the Gate Hound).
+    - **Done (Q78 assumed: a party boss for 4-6 at level 30-35):** through `tools/gen_monsters.py`: melee 260 -> 160, the 3-tile line 150-300 -> 80-170, armour 45 -> 40, he switches target 10% every 6 s instead of 20% every 4 s; marked tiles 180-320 -> 110-200 (phase 3 line 260-420 -> 160-260, `bosses_floor1.lua`). Health tuned by measurement: 10,000 and 12,000 died in about 90 s to five, so 20,000. `python tools/party_run.py axelord30` (five level-30 Pilots, tier-3 Floor 1 gear, all jumping in together): **killed in 2 min 23 s, no deaths**, lowest health 14-40%, 15-47 mana potions each. By the same damage rate 4 players take about 3 min and 6 about 2 min. The Journal already says "bring a party of 4 or more".
 23. **The Arcanist did the least damage of the party** against the Axe-Lord (489 in 45 s, less than the Mystic's
     1,344). Check Arcanist spell damage at level 30 against Floor 1 bosses (`tools/balance.py`); the "hardest
     hitters" pitch at the Registrar doesn't match what the test saw. (Caveat: the test client's spell choice was
     only improved at level 21, and it may not use area spells well on one target.)
+   - **Done (cause found):** on paper the Arcanist out-damages the Mystic at level 30 (same single-target strikes, plus Ember Barrage, Fireburst Wave and Arc Beam). The test client only cast area spells when standing next to the target, and the casters stood back, so the Arcanist's best spells never fired. The fight kit now gives beams and waves their reach and the client lines up and casts them from range (`dev_pilot.lua` fightkit, `game_autopilot`). No spell numbers changed.
 
 ## Things checked and fine (no work needed)
 - Guide Pell's quest and report with three players at once; every attacker in the pen gets First Blood credit.

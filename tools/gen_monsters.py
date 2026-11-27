@@ -143,9 +143,9 @@ MONSTERS = {
     "Axe-Lord of the Stair": dict(desc="the Axe-Lord of the Stair", look=(2206, 0, 0, 0, 0, 0), corpse=18074,
                                   # party playtest 2026-11-26 (P0-22, Q78: a party boss for 4-6 at level 30-35): a level-30
                                   # party of three did 19% of 12,000 health before wiping in 45 s; two hits together (melee
-                                  # 260 + line 300) killed the tank from full, one line + one swing killed a caster. Less
-                                  # health, smaller hits, and he leaves the tank for the casters half as often.
-                                  hp=10000, xp=8000, speed=130, race="blood", change_target=(6000, 10),
+                                  # 260 + line 300) killed the tank from full, one line + one swing killed a caster. Smaller hits, more health (five level-30s in tier-3 gear killed 12,000 in 90 s, about 135 damage a second),
+                                  # and he leaves the tank for the casters half as often.
+                                  hp=20000, xp=8000, speed=130, race="blood", change_target=(6000, 10),
                                   attacks=[("melee", 0, -160), ("cleave", -80, -170, 1)], armor=40, defense=40, boss=True,
                                   loot=[(GOLD, 100000, 100), (PLAT, 100000, 40), (266, 100000, 10), (268, 100000, 10)],
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
