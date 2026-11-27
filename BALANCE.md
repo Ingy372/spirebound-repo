@@ -19,6 +19,24 @@ For a hunter at the middle level of each floor, hunting by hand. Floor 1 in deta
 
 Climbing all ten floors by hand: about 261 hours by the model (real play is slower).
 
+## What the real game changes (review A3-1 and E-1, 2026-11-26)
+The engine adds 1.5x experience below level 50 and 1.5x more while stamina is above 39 hours, and multiplies every drop chance by 2 (capped at 100%). The table above and the checks still use the plain numbers; this is what a rested character really gets. Nothing is retuned until Jay answers Q83 (floor length) and Q84 (loot).
+
+| Floor | Hours to climb (plan) | With the engine's bonuses | Gold/h (plan) | With loot rate |
+|---|---|---|---|---|
+| 1 | 15.3 | 6.8 | 2,236 | 2,688 |
+| 2 | 14.0 | 6.9 | 11,000 | 11,071 |
+| 3 | 16.0 | 10.7 | 14,000 | 18,039 |
+| 4 | 18.0 | 12.0 | 18,000 | 26,653 |
+| 5 | 22.0 | 14.7 | 22,000 | 26,944 |
+| 6 | 26.0 | 17.3 | 26,487 | 26,487 |
+| 7 | 30.0 | 20.0 | 35,015 | 35,015 |
+| 8 | 35.0 | 23.3 | 34,954 | 34,954 |
+| 9 | 40.0 | 26.7 | 43,351 | 43,351 |
+| 10 | 45.0 | 30.0 | 51,481 | 51,481 |
+
+No longer within 15% of the hours target once the bonuses are counted: Floor 2 (6.9 h against 14), Floor 3 (10.7 h against 16), Floor 4 (12.0 h against 18), Floor 5 (14.7 h against 22), Floor 6 (17.3 h against 26), Floor 7 (20.0 h against 30), Floor 8 (23.3 h against 35), Floor 9 (26.7 h against 40), Floor 10 (30.0 h against 45).
+
 ## Rules the check enforces
 - Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.
 - Supplies never eat more than 60% of the coins.

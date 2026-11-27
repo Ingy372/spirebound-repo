@@ -201,6 +201,31 @@ def xp_for(level):
     return int(50 / 3 * (level ** 3 - 6 * level ** 2 + 17 * level - 12))
 
 
+# Review A3-1/E-1 (measured on a real character, 2026-11-26): the engine adds its own experience bonuses on top of our
+# stages (Canary data/events/scripts/player.lua): 1.5x below level 50, and 1.5x more while stamina is above 39 hours
+# (a rested character's first 3 hours of the day). The models report both; the targets and generators still use the
+# plain stages until Jay answers Q83 (no retuning before that).
+ENGINE_LOW_LEVEL = (50, 1.5)
+ENGINE_STAMINA = 1.5
+
+
+def engine_bonus(level, rested=True):
+    low = ENGINE_LOW_LEVEL[1] if level < ENGINE_LOW_LEVEL[0] else 1.0
+    return low * (ENGINE_STAMINA if rested else 1.0)
+
+
+def real_stage(level, rested=True):
+    """What a kill really gives, as a multiple of the monster's base experience (measured: 22.5x at levels 1-8, 9x at
+    9-20, 6.75x at 21-50 for a rested character)."""
+    return stage(level) * engine_bonus(level, rested)
+
+
+def rate_loot():
+    """The engine multiplies every drop chance by this (server/config-overrides.lua rateLoot), capped at 100%."""
+    m = re.search(r"^rateLoot\s*=\s*([\d.]+)", (ROOT / "server/config-overrides.lua").read_text(encoding="utf-8"), re.M)
+    return float(m.group(1)) if m else 1.0
+
+
 def dps(level):
     return 4 + level
 
@@ -209,9 +234,10 @@ def kills_per_hour(hp, level):
     return min(3600 / (hp / dps(level) + 8), 300)
 
 
-def band_hours(xp_per_kill, hp, lo, hi):
-    """Hand-hunting hours from level lo to hi at this floor's monsters."""
-    return sum((xp_for(l + 1) - xp_for(l)) / (xp_per_kill * kills_per_hour(hp, l) * stage(l)) for l in range(lo, hi))
+def band_hours(xp_per_kill, hp, lo, hi, stage_fn=None):
+    """Hand-hunting hours from level lo to hi at this floor's monsters (plain stages unless stage_fn is given)."""
+    sf = stage_fn or stage
+    return sum((xp_for(l + 1) - xp_for(l)) / (xp_per_kill * kills_per_hour(hp, l) * sf(l)) for l in range(lo, hi))
 
 
 def xp_scale(n, base_xp_per_kill, hp, band):
@@ -232,13 +258,15 @@ def coin_loot(gold_per_kill):
     return rows
 
 
-def coin_value(loot):
+def coin_value(loot, rate=1.0):
+    """Average coins per kill from loot rows (rate = the engine's loot rate; the generators use the plain 1)."""
     v = 0.0
     for iid, chance, mx in loot:
+        p = min(1.0, chance * rate / 100000)
         if iid == GOLD:
-            v += chance / 100000 * (mx + 1) / 2
+            v += p * (mx + 1) / 2
         elif iid == PLAT:
-            v += chance / 100000 * (mx + 1) / 2 * 100
+            v += p * (mx + 1) / 2 * 100
     return v
 
 
@@ -277,6 +305,8 @@ def rows_and_problems(monsters, floors, prices, houses, tasks):
         gold = sum(coin_value(m["loot"]) for m in camp) / len(camp)
         kph = kills_per_hour(hp, mid)
         hours = band_hours(xp, hp, lo, hi)
+        real_hours = band_hours(xp, hp, lo, hi, real_stage)          # with the engine's bonuses (review A3-1)
+        real_gold = sum(coin_value(m["loot"], rate_loot()) for m in camp) / len(camp)   # with loot rate 2 (review E-1)
         melee = sum(max((-a[2] for a in m["attacks"] if a[0] == "melee"), default=0) for m in camp) / len(camp)
         taken = melee / 2 * 0.6 * 0.8 * (hp / dps(mid)) / 2 * kph
         heal, price = potion_for(mid, prices)
@@ -292,7 +322,7 @@ def rows_and_problems(monsters, floors, prices, houses, tasks):
         house_h = house / net if house else 0
         row = dict(floor=n, levels=f"{lo}-{hi}", kills_h=round(kph), base_xp_h=round(xp * kph), gold_h=round(gold * kph),
                    supplies_h=round(supplies), band_hours=round(hours, 1), house_price=house, house_hours=round(house_h, 1),
-                   house_per_tile=per_tile)
+                   house_per_tile=per_tile, real_band_hours=round(real_hours, 1), real_gold_h=round(real_gold * kph))
         rows.append(row)
         t = TARGETS[n]
         if n >= 2 and abs(hours - t["hours"]) > 0.15 * t["hours"]:
@@ -449,6 +479,16 @@ def write(rows, problems, tasks):
                  f"{r['band_hours']} | {r['house_price']:,} | {r['house_hours']} |")
     total = sum(r["band_hours"] for r in rows)
     L += ["", f"Climbing all ten floors by hand: about {total:.0f} hours by the model (real play is slower).", "",
+          "## What the real game changes (review A3-1 and E-1, 2026-11-26)",
+          f"The engine adds 1.5x experience below level 50 and 1.5x more while stamina is above 39 hours, and multiplies every "
+          f"drop chance by {rate_loot():g} (capped at 100%). The table above and the checks still use the plain numbers; this is "
+          "what a rested character really gets. Nothing is retuned until Jay answers Q83 (floor length) and Q84 (loot).", "",
+          "| Floor | Hours to climb (plan) | With the engine's bonuses | Gold/h (plan) | With loot rate |", "|---|---|---|---|---|"]
+    for r in rows:
+        L.append(f"| {r['floor']} | {r['band_hours']} | {r['real_band_hours']} | {r['gold_h']:,} | {r['real_gold_h']:,} |")
+    off = [r for r in rows if r["floor"] >= 2 and abs(r["real_band_hours"] - TARGETS[r["floor"]]["hours"]) > 0.15 * TARGETS[r["floor"]]["hours"]]
+    L += ["", "No longer within 15% of the hours target once the bonuses are counted: "
+          + (", ".join(f"Floor {r['floor']} ({r['real_band_hours']} h against {TARGETS[r['floor']]['hours']})" for r in off) or "none") + ".", "",
           "## Rules the check enforces", f"- Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.",
           f"- Supplies never eat more than {SUPPLY_MAX_SHARE:.0%} of the coins.",
           f"- A typical house on Floors 1-2 costs {HOUSE_HOURS[0]}-{HOUSE_HOURS[1]} hours of hunting.",

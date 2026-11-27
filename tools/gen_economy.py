@@ -35,6 +35,12 @@ def stage(level):
     return 10 if level <= 8 else 4 if level <= 20 else 3
 
 
+# Review A3-1/E-1: the engine's own bonuses (1.5x below level 50, 1.5x more for a rested character) and its loot rate
+# (every drop chance x rateLoot, capped at 100%). Shared with tools/balance.py.
+from balance import real_stage, rate_loot  # noqa: E402
+RATE_LOOT = rate_loot()
+
+
 # the ladder (FLOOR1_WILDS_PLAN.md 3.2): base experience per hour (before the stage) for a Vanguard at the middle level
 LADDER_TARGET = {"starter_west": 1800, "starter_east": 2500, "starter_south": 3500, "wasp_fields": 5000, "boar_meadow": 7500,
                  "burrow_hills": 9000, "wolf_copse": 11000, "reed_marsh": 9000, "thornsnap_hollow": 13000, "shard_fields": 16000,
@@ -85,11 +91,12 @@ def dps(level):
     return 4 + 1.0 * level
 
 
-def drop_value(name):
-    """Average gold per kill, NPC buy-back of the loot, and player value of crafting materials."""
+def drop_value(name, rate=1.0):
+    """Average gold per kill, NPC buy-back of the loot, and player value of crafting materials. rate = the engine's loot
+    rate (review E-1); the plain 1 feeds the hunting tasks' pay (tools/balance.py), so nothing is retuned before Q84."""
     gold = npc = mat = 0.0
     for iid, chance, maxc in MONSTERS[name].get("loot", []):
-        avg = chance / 100000 * (maxc + 1) / 2
+        avg = min(1.0, chance * rate / 100000) * (maxc + 1) / 2
         if iid == GOLD:
             gold += avg
         elif iid == PLAT:
@@ -140,10 +147,12 @@ for c in CAMPS:
     mons = [(n, share) for n, _g, share in c["mix"]]
     hp = sum(MONSTERS[n]["hp"] * s for n, s in mons)
     base_xp = sum(MONSTERS[n]["xp"] * s for n, s in mons)
-    xp = base_xp * stage(lvl)
+    xp = base_xp * real_stage(lvl)                 # what a rested character really gets (review A3-1; XP/h column)
     g = sum(drop_value(n)[0] * s for n, s in mons)
     npc = sum(drop_value(n)[1] * s for n, s in mons)
     mat = sum(drop_value(n)[2] * s for n, s in mons)
+    g_real = sum(drop_value(n, RATE_LOOT)[0] * s for n, s in mons)   # with the engine's loot rate (review E-1)
+    npc_real = sum(drop_value(n, RATE_LOOT)[1] * s for n, s in mons)
     kill_s = hp / dps(lvl) + 8                     # fighting, then about 8 s to find and reach the next one
     kph = min(3600 / kill_s, 300)                  # a hunting ground can't feed one hunter more than ~300 kills an hour
     kph = min(kph, refill(c))                      # nor more than its monsters can respawn (FLOOR1_REVIEW.md F1-33)
@@ -167,7 +176,8 @@ for c in CAMPS:
         ROWS.append(dict(id=c["id"], base_xp_h=round(base_xp * kph), camp=c["title"], levels=f"{lo}-{hi}", role=c["role"], vocation=voc, kills_h=round(kph),
                          xp_h=round(xp * kph), gold_h=round(g * kph), loot_npc_h=round(npc * kph),
                          materials_market_h=round(mat * kph), supplies_h=round(cost), net_npc_h=round(gross - cost),
-                         net_with_trading_h=round(gross + mat * kph - cost)))
+                         net_with_trading_h=round(gross + mat * kph - cost),
+                         gold_h_real=round(g_real * kph), loot_npc_h_real=round(npc_real * kph)))
 
 problems = []
 # the ladder: each target met within 10%, and experience grounds rise at every step
@@ -190,10 +200,15 @@ def exp_for(level):
 
 # the timeline: at each level hunt the best ground whose level range covers it (the Watchtower from 28)
 timeline, hours = {}, 0.0
+real_timeline, real_hours = {}, 0.0                # review A3-1: with the engine's bonuses (rested and below level 50)
+tired_timeline, tired_hours = {}, 0.0              # ... and with only the low-level bonus (stamina below 39 hours)
 for lvl in range(1, 41):
     best = max([b for c, b, _t in ladder if c["levels"][0] <= lvl <= c["levels"][1]] + ([WATCHTOWER_BASE] if lvl >= 28 else []))
-    hours += (exp_for(lvl + 1) - exp_for(lvl)) / (best * stage(lvl))
-    timeline[lvl + 1] = hours
+    step = exp_for(lvl + 1) - exp_for(lvl)
+    hours += step / (best * stage(lvl))
+    real_hours += step / (best * real_stage(lvl))
+    tired_hours += step / (best * real_stage(lvl, rested=False))
+    timeline[lvl + 1], real_timeline[lvl + 1], tired_timeline[lvl + 1] = hours, real_hours, tired_hours
 for r in ROWS:
     if r["vocation"] == "Ranger (arrows)" and r["levels"].split("-")[0] in ("1", "3", "5"):
         continue                                   # nobody is expected to fire paid arrows at rats: spears are the early ammo
@@ -344,10 +359,22 @@ L += ["", "## What each ground pays per person, by class and in a party (S1b)",
       "| Ground | Kind | Type | Base XP/h per person | Gold/h per person | Ratio | Party vs solo |", "|---|---|---|---|---|---|---|"]
 for r in REWARDS:
     L.append(f"| {r['ground']} | {r['kind']} | {r['type']} | {r['per_person_base_xp_h']:,} | {r['per_person_gold_h']:,} | {r['ratio']} | {r['vs_solo']} |")
-L += ["", "Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow):", "",
-      "| Level | Hours |", "|---|---|"]
+L += ["", "Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow). "
+      "\"Plan\" counts our stages only; the engine also adds 1.5x below level 50 and 1.5x more while stamina is above 39 hours "
+      "(measured, review A3-1), so the real columns are what players get. Nothing is retuned until Jay answers Q83.", "",
+      "| Level | Plan | Real, rested | Real, stamina below 39 h |", "|---|---|---|---|"]
 for lvl in (6, 9, 11, 14, 18, 21, 25, 30, 35, 40):
-    L.append(f"| {lvl} | {timeline[lvl]:.1f} |")
+    L.append(f"| {lvl} | {timeline[lvl]:.1f} | {real_timeline[lvl]:.1f} | {tired_timeline[lvl]:.1f} |")
+L += ["", f"Loot: the engine multiplies every drop chance by {RATE_LOOT:g} (capped at 100%; review E-1, measured 42 coins a Road "
+      "Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: "
+      f"Floor 1 in 11-15 hours by hand) are now missed: level 35 takes {real_timeline[35]:.1f} hours rested, "
+      f"{tired_timeline[35]:.1f} on low stamina, against {timeline[35]:.1f} in the plan. Q83 and Q84 ask Jay what to do.", "",
+      "Coins and NPC loot an hour for a Vanguard, plain tables against the real game (loot rate counted). The checks above and "
+      "the hunting tasks' pay still use the plain column.", "",
+      "| Ground | Gold/h (plan) | Gold/h (real) | NPC loot/h (plan) | NPC loot/h (real) |", "|---|---|---|---|---|"]
+for r in ROWS:
+    if r["vocation"] == "Vanguard":
+        L.append(f"| {r['camp']} | {r['gold_h']:,} | {r['gold_h_real']:,} | {r['loot_npc_h']:,} | {r['loot_npc_h_real']:,} |")
 L += ["", "## Checks", ("All checks pass." if not problems else "**Problems:**\n" + "\n".join("- " + p for p in problems))]
 (ROOT / "ECONOMY.md").write_text("\n".join(L) + "\n", encoding="utf-8")
 print(f"wrote ECONOMY.md and data/economy_floor1.csv ({len(ROWS)} rows, {len(RECIPES)} recipes)")
