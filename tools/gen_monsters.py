@@ -132,9 +132,9 @@ MONSTERS = {
     # ---------------------------------------------------------------- Floor 1 rare roamers (AD4, adventure design 4.4)
     # One per level band; scripts/spirebound/roamers.lua brings one out every 25-45 minutes for 15 minutes, at a random
     # monster spot of its grounds. Tuned like an elite: one player at the top of the band, or two below it. Not in the
-    # map's spawns. Placeholder looks with a coloured glow until the Blender sprites are approved (ART_REQUESTS).
+    # map's spawns. Own looks approved by Jay 2026-11-27 (the boar wears the approved red-crested boar); they keep a glow.
     # Goldback Toad: always hops away (runHealth = its health), so it must be cornered; spits from range while it flees.
-    "Goldback Toad": dict(desc="the Goldback Toad", look=(222,), corpse=6077, hp=420, xp=170, speed=135, race="blood",
+    "Goldback Toad": dict(desc="the Goldback Toad", look=(2340, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=170, speed=135, race="blood",
                           attacks=[("melee", 0, -24), ("earth", -10, -30, 4), ("slow", -80, 1500, 3, "CONST_ME_GREEN_RINGS")],
                           armor=6, defense=8, run=420, light=(4, 210),
                           loot=[(9640, 100000, 3)], voices=["RIBBIT!", "The Goldback Toad puffs up its golden back."],
@@ -145,13 +145,13 @@ MONSTERS = {
                           loot=[(3577, 100000, 4), (903, 60000, 2)], voices=["HRRRNNK!", "The Frenzied Boar's crest flares red."],
                           events=["SpireRoamerDeath", "SpireRoamerHurt"]),
     # Pale Stag: flees at speed (runHealth = its health) and gores with its antlers when you close in.
-    "Pale Stag": dict(desc="the Pale Stag", look=(31,), corpse=4016, hp=1100, xp=430, speed=190, race="blood",
+    "Pale Stag": dict(desc="the Pale Stag", look=(2341, 0, 0, 0, 0, 0), corpse=4016, hp=1100, xp=430, speed=190, race="blood",
                       attacks=[("melee", 0, -70), ("charge", -30, -95, 3)], armor=16, defense=18, run=1100, light=(4, 215),
                       loot=[(3577, 100000, 5)], voices=["The Pale Stag stamps and lowers its antlers."],
                       events=["SpireRoamerDeath"]),
     # The Paymaster: a bandit with the payroll chest; two Road Bandits guard him (roamers.lua), and he runs for the
     # ground's edge once badly hurt. A citizen outfit in bandit colours until his own art.
-    "The Paymaster": dict(desc="the Paymaster", look=(129, 79, 94, 94, 79, 0), corpse=18050, hp=1500, xp=600, speed=115,
+    "The Paymaster": dict(desc="the Paymaster", look=(2211, 0, 0, 0, 0, 0), corpse=18050, hp=1500, xp=600, speed=115,
                           race="blood", attacks=[("melee", 0, -85), ("physical", -40, -90, 4)], armor=20, defense=20,
                           run=450, light=(3, 206),
                           loot=[(3352, 15000, 1), (266, 50000, 2)], voices=["Hands off the payroll!", "Guards! GUARDS!"],

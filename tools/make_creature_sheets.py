@@ -56,7 +56,10 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              # Floor 1 ground elites (Jay, 2026-11-26). Look 119 (the Bristle Boar) now wears the quill boar; the
              # ember-crested boar, redrawn a little grander, is Old Bristleback.
              "moonhowl": 2330, "old_bristleback": 2331, "mossback": 2332, "blackthorn": 2333, "prism_shardling": 2334,
-             "granite_warden": 2335}
+             "granite_warden": 2335,
+             # AD4 rare roamers (Jay, 2026-11-27: "approved, put them in the game"): the toad and stag are placed like the
+             # animals (2340+); the Paymaster is built on the bandit's body, so he takes the people's shift (2211)
+             "goldback_toad": 2340, "pale_stag": 2341, "paymaster": 2211}
 
 
 # approved corpses (art/CORPSE_RULES.md) -> the spare Tibia corpse chain they reskin in the client: four items

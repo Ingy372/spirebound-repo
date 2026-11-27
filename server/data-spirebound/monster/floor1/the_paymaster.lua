@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Paymaster"
 monster.experience = 600
 monster.outfit = {
-	lookType = 129, lookHead = 79, lookBody = 94, lookLegs = 94, lookFeet = 79, lookAddons = 0, lookMount = 0,
+	lookType = 2211, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 1500

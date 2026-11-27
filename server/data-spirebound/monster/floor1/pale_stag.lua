@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Pale Stag"
 monster.experience = 430
 monster.outfit = {
-	lookType = 31, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2341, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 1100

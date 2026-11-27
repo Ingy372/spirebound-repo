@@ -65,7 +65,8 @@ MODES = {1: "Normal", 2: "Hardcore", 3: "Death Game"}
 # 2026-11-26 that boar is the elite Old Bristleback (old_bristleback) and the common Bristle Boar wears quills.
 # Not made yet: the floor bosses and the other money monsters in ART_REQUESTS.md Batch 11.
 SHOWCASE = ["azhrakkar", "old_bristleback", "alpha", "gate_hound", "axe_lord", "underkeeper", "old_tusk", "moonhowl",
-            "hollowfang", "briar_mother", "twin_fang_warden", "vault_wraith"]
+            "hollowfang", "briar_mother", "twin_fang_warden", "vault_wraith",
+            "goldback_toad", "pale_stag", "paymaster"]   # AD4 rare roamers (approved 2026-11-27)
 IMG = ROOT / "website" / "public" / "img"
 
 

@@ -274,9 +274,9 @@ Frenzied Boar uses our approved red-crested boar.
 
 | ✓ | Art name | What | Status |
 |---|---|---|---|
-| [~] | `goldback_toad` | Goldback Toad: a bottle-green, nearly black toad with a gold back studded with nuggets, a tiny gold crown and ruby eyes (Tibia's toad is orange-gold) | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
-| [~] | `pale_stag` | Pale Stag: an ash-white stag with a charcoal face, throat ruff and legs, great pale antlers with frost-blue tips (Tibia's deer is small and red-brown) | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
-| [~] | `paymaster` | The Paymaster: the bandits' banker in a black felt hat with a gold band and a green coat, hugging an iron-banded strongbox | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
+| [x] | `goldback_toad` | Goldback Toad: a bottle-green, nearly black toad with a gold back studded with nuggets, a tiny gold crown and ruby eyes (Tibia's toad is orange-gold) | approved 2026-11-27 ("approved, put them in the game"), in the game |
+| [x] | `pale_stag` | Pale Stag: an ash-white stag with a charcoal face, throat ruff and legs, great pale antlers with frost-blue tips (Tibia's deer is small and red-brown) | approved 2026-11-27 ("approved, put them in the game"), in the game |
+| [x] | `paymaster` | The Paymaster: the bandits' banker in a black felt hat with a gold band and a green coat, hugging an iron-banded strongbox | approved 2026-11-27 ("approved, put them in the game"), in the game |
 | [ ] | `deadeye_sorrel`, `page_thief`, `glasswing`, `ironpurse`, `the_unfinished` | addon-hunt targets and hidden beasts: borrow the crossbowman, hexer, prism shardling, a citizen and the granite warden for now | later |
 
 Still item icons (Grok), 32×32, 1 frame, transparent background. Until drawn, the game borrows the item in brackets.

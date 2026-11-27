@@ -2291,6 +2291,123 @@
    "size": 50
   },
   {
+   "name": "goldback_toad",
+   "file": "goldback_toad.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2340,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     29,
+     11,
+     34,
+     38
+    ],
+    [
+     27,
+     25,
+     33,
+     38
+    ],
+    [
+     28,
+     21,
+     34,
+     38
+    ],
+    [
+     17,
+     25,
+     34,
+     38
+    ]
+   ],
+   "addons": 0,
+   "size": 38
+  },
+  {
+   "name": "pale_stag",
+   "file": "pale_stag.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2341,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     32,
+     8,
+     29,
+     49
+    ],
+    [
+     30,
+     22,
+     33,
+     41
+    ],
+    [
+     33,
+     20,
+     28,
+     36
+    ],
+    [
+     22,
+     22,
+     35,
+     41
+    ]
+   ],
+   "addons": 0,
+   "size": 49
+  },
+  {
+   "name": "paymaster",
+   "file": "paymaster.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2211,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     25,
+     29,
+     37,
+     33
+    ],
+    [
+     26,
+     28,
+     35,
+     36
+    ],
+    [
+     25,
+     29,
+     37,
+     35
+    ],
+    [
+     26,
+     28,
+     33,
+     36
+    ]
+   ],
+   "addons": 0,
+   "size": 37
+  },
+  {
    "name": "corpse_sentinel",
    "file": "corpse_sentinel.bmp.lzma",
    "count": 3,
