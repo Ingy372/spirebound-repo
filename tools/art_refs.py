@@ -168,6 +168,7 @@ LOOKALIKES = {
     "oathkeeper": [(99, "Lich"), (298, "Skeleton Warrior")],
     "bramblejaw": [(380, "Boar")],
     "wolf_companion": [(27, "Wolf")],
+    "drain_matron": [(222, "Toad"), (412, "Bog Frog")],
 }
 
 

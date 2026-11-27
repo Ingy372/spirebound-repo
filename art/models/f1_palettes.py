@@ -201,6 +201,19 @@ PAL["wolf_companion"] = {
     "leaf": ramp((8, 40, 18), (140, 220, 120), (40, 130, 56)), "rune": ramp((40, 160, 110), (220, 255, 230), (110, 240, 180)),
 }
 
+# Drain Matron (the Underkeep's Wing 2 boss): the Mire Toads' monstrous mother: deep plum-bruise skin with ochre mottling
+# (Tibia's toad is orange-gold), a sallow belly and a swollen yellow throat sac, a back pitted with a honeycomb of pale
+# luminous-green egg pockets, drooping jowls, poison-green eyes.
+PLUM = ((18, 8, 20), (170, 120, 160), (76, 40, 74))
+PAL["drain_matron"] = {**PAL["mire_toad"],
+    "body": ramp(*PLUM), "head": ramp(*PLUM), "leg": ramp((14, 6, 16), (130, 90, 124), (58, 30, 56)),
+    "belly": ramp((80, 66, 30), (236, 220, 150), (170, 150, 80)), "blotch": ramp((60, 40, 10), (200, 160, 70), (130, 96, 34)),
+    "wart": ramp((50, 30, 50), (210, 180, 200), (130, 96, 124)), "stripe": ramp((14, 6, 16), (100, 60, 96), (44, 20, 44)),
+    "eye": ramp((40, 120, 20), (220, 255, 140), (130, 230, 60)),
+    "egg": ramp((60, 120, 50), (240, 255, 210), (160, 230, 130)), "pocket": ramp((8, 4, 10), (70, 40, 66), (30, 14, 30)),
+    "sac": ramp((110, 80, 20), (255, 236, 150), (220, 180, 70)),
+}
+
 
 def main():
     path = PIPE / "palette.json"
