@@ -2,13 +2,17 @@
 -- A Death Game character is deleted ("retired") only by a death that really was PvE:
 --   * the killing blow came from a monster (or the world), not a player;
 --   * no outside player (not party, guild or same IP) did real damage (at least 15% of max health) in the last 60 s;
---   * the killing monster was not dragged in: it did not hit another outside player in the last 30 s.
+--   * the killing monster was not dragged in: it did not hit another outside player in the last 30 s (unless the victim
+--     was fighting it too: then it was the victim's own fight, review A8-2);
+--   * outside damage only counts when that player started the fight, or carried a skull (review A8-2: otherwise a
+--     friend from another guild could be "attacked" and hit back to make the victim unkillable).
 -- A player's killing blow never deletes you, unless it was a friend who did almost nothing (a friend can't "save" you
 -- by landing the last hit on a character the monsters were killing).
 -- Retirement frees the house, guild leadership, market offers and the character slot, and saves at once.
 -- Unfair deaths (a server crash or server lag) are put right by a GM with /restore <name> (policy: RULES below).
 
 SpireDeathGame = SpireDeathGame or { hits = {}, monsterHits = {} }
+SpireDeathGame.fights = SpireDeathGame.fights or {}   -- [victimGuid][otherGuid] = { byVictim = bool, last = time }
 
 SpireDeathGame.WINDOW = 60          -- seconds of player damage that are looked at
 SpireDeathGame.DRAG_WINDOW = 30     -- a monster that hit another player this recently was dragged in
@@ -16,11 +20,32 @@ SpireDeathGame.REAL_DAMAGE = 0.15   -- share of max health that counts as "real"
 SpireDeathGame.RULES = "Unfair deaths: a Death Game character killed by a server crash or by lag on the server is restored by "
 	.. "a gamemaster. Your own internet dropping is not unfair: the tower is cruel. Ask a gamemaster with !report within a day."
 
--- Note damage a Death Game victim took from a player. attacker = { guid, outside = bool }
+-- Who started a fight between a Death Game character and another player: a fight is over WINDOW seconds after its
+-- last blow, and the next blow starts a new one.
+local function strike(victimGuid, otherGuid, byVictim, now)
+	local f = SpireDeathGame.fights[victimGuid] or {}
+	SpireDeathGame.fights[victimGuid] = f
+	local cur = f[otherGuid]
+	if not cur or now - cur.last > SpireDeathGame.WINDOW then
+		cur = { byVictim = byVictim }
+		f[otherGuid] = cur
+	end
+	cur.last = now
+	return cur
+end
+
+-- A Death Game character hit another player (so that player is not the aggressor of this fight).
+function SpireDeathGame.noteVictimStrike(victimGuid, otherGuid, now)
+	strike(victimGuid, otherGuid, true, now)
+end
+
+-- Note damage a Death Game victim took from a player. attacker = { guid, outside = bool, skulled = bool }
 function SpireDeathGame.noteHit(victimGuid, attacker, amount, now)
 	local list = SpireDeathGame.hits[victimGuid] or {}
 	SpireDeathGame.hits[victimGuid] = list
-	table.insert(list, { guid = attacker.guid, outside = attacker.outside, amount = amount, time = now })
+	local fight = strike(victimGuid, attacker.guid, false, now)
+	local aggressor = attacker.skulled == true or not fight.byVictim
+	table.insert(list, { guid = attacker.guid, outside = attacker.outside, aggressor = aggressor, amount = amount, time = now })
 	while #list > 0 and now - list[1].time > SpireDeathGame.WINDOW do
 		table.remove(list, 1)
 	end
@@ -60,12 +85,12 @@ function SpireDeathGame.judge(victimGuid, maxHealth, killer, now, isOutside)
 		end
 	end
 	local outside = damageBy(victimGuid, now, function(h)
-		return h.outside
+		return h.outside and h.aggressor ~= false
 	end)
 	if outside >= real then
 		return "saved", "another player did real damage in the last minute"
 	end
-	if killer and killer.monsterId then
+	if killer and killer.monsterId and not killer.victimFought then
 		for guid, t in pairs(SpireDeathGame.monsterHits[killer.monsterId] or {}) do
 			if guid ~= victimGuid and now - t <= SpireDeathGame.DRAG_WINDOW and isOutside(guid) then
 				return "saved", "the monster was dragged in by another player"
@@ -77,6 +102,7 @@ end
 
 function SpireDeathGame.forget(victimGuid)
 	SpireDeathGame.hits[victimGuid] = nil
+	SpireDeathGame.fights[victimGuid] = nil
 end
 
 -- Free everything a retired character held. Works on the database, so it also works right after death.

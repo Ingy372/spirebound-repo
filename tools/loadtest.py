@@ -418,6 +418,13 @@ def _check_skill(lines, all_lines=None):
 _check_skill.needs_all = True
 
 XP_MONSTER = "Thornsnap"
+def _check_dg(kind, want):
+    def check(lines):
+        r = _rv(lines, "dg")[0]
+        return r["verdict"] == want, f"{kind}: {r['verdict']} (want {want}; pvp loss {r.get('pvp_loss')}, partner loss {r.get('other_loss')}, zone {r.get('zone')})"
+    return check
+
+
 REVIEW_CASES = [
     dict(name="B4-0 a maxed weapon really adds its damage", voc=4, level=30,
          logins=[[(3, "say", "/rv hit"), (1, "say", "/rv weapon f1_vanguard_sword 5 1"), (1, "say", "/rv hit")]],
@@ -446,6 +453,14 @@ REVIEW_CASES = [
          logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_hardcore),
     dict(name="A8-1 a level-15 Normal death costs nothing", voc=4, level=15, ground="starter_east",
          logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_normal),
+] + [
+    # A8-2: each Death Game victim dies beside its own real partner character ("{partner}" is that character's name)
+    case for kind, want in (("dragfought", "retire"), ("dragged", "saved"), ("firstvictim", "retire"), ("firstother", "saved"))
+    for case in (
+        dict(name=f"A8-2 DG {kind}: {want}", voc=4, level=60, partner=f"A8-2 partner {kind}",
+             logins=[[(1, "unsecure", ""), (5, "say", "/rv dg " + kind + " {partner}")]], stay=4, check=_check_dg(kind, want)),
+        dict(name=f"A8-2 partner {kind}", voc=4, level=60, logins=[[(1, "unsecure", ""), (1, "say", "/rv state")]], stay=14,
+             check=lambda lines: (True, "partner")))
 ]
 
 
@@ -474,8 +489,12 @@ async def review_test(only=None):
         raise SystemExit("server did not start (see .build/loadtest.log)")
     stats = {"online": 0, "failed": 0, "bytes": 0, "errors": []}
 
+    by_name = {x["name"]: x["char"] for x in cases}
+
     async def play(c):
         for script in c["logins"]:
+            if c.get("partner"):
+                script = [(d, k, t.replace("{partner}", by_name.get(c["partner"], "nobody"))) for d, k, t in script]
             await loadbot.Bot(c["char"], tokens[c["char"]], "127.0.0.1", port, stats, script).run(c.get("stay", 3))
             await asyncio.sleep(3)
 

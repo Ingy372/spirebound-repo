@@ -10,6 +10,8 @@
 --   /rv xp <monster>                       kill one; logs the experience that arrived
 --   /rv bot on|off                         the cavebot switch
 --   /rv loot <monster> <n>                 kill n; logs the coins that reached you (bank and bag)
+--   /rv dg <case> <other player>           review A8-2: a Death Game death next to another real player; logs the verdict
+--                                          (cases: dragfought, dragged, firstvictim, firstother)
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
 	return
 end
@@ -21,6 +23,17 @@ local function isBot(player)
 		Result.free(q)
 	end
 	return email and email:match("^loadbot%d*@localhost$") ~= nil
+end
+
+-- all test characters log in from 127.0.0.1, which would make every one of them a "friend" (same IP) for the Death Game
+-- rules; on test servers the loadbot characters count as coming from different places
+local realInfo = Difficulty.playerInfo
+function Difficulty.playerInfo(p)
+	local info = realInfo(p)
+	if isBot(p) then
+		info.ip = 0
+	end
+	return info
 end
 
 local function blessings(player)
@@ -104,6 +117,46 @@ function rv.onSay(player, words, param)
 	elseif cmd == "bot" then -- the cavebot switch, as the client reports it
 		SpireCavebot.setState(player:getGuid(), rest == "on", os.time())
 		logger.info("[LOADTEST] rv bot {} botting={}", player:getName(), SpireCavebot.botting(player) and 1 or 0)
+	elseif cmd == "dg" then -- "/rv dg <case> <other player>": a real Death Game death beside a real other player
+		local case, otherName = rest:match("^(%a+)%s+(.+)$")
+		local o = otherName and Player(otherName)
+		if not o then
+			logger.info("[LOADTEST] rv dg {} case={} verdict=no_partner", player:getName(), tostring(case))
+			return true
+		end
+		player:kv():scoped("spirebound"):remove("difficulty")
+		Difficulty.set(player, Difficulty.DEATHGAME)
+		local spot = Position(1250, 1055, 7)              -- open meadow east of the labyrinth corridor (open PvP)
+		player:teleportTo(spot, true)
+		o:teleportTo(Position(spot.x + 1, spot.y, spot.z), true)
+		local m = Game.createMonster("Meadow Wolf", Position(spot.x, spot.y + 1, spot.z), true, true)
+		local guid, name, maxhp = player:getGuid(), player:getName(), player:getMaxHealth()
+		local otherHp = o:getHealth()
+		local myHp = player:getHealth()
+		if case == "dragged" or case == "dragfought" then
+			doTargetCombatHealth(m, o, COMBAT_ENERGYDAMAGE, -40, -40, CONST_ME_NONE)      -- the wolf bit the other player
+		end
+		if case == "dragfought" then
+			doTargetCombatHealth(player, m, COMBAT_ENERGYDAMAGE, -5, -5, CONST_ME_NONE)    -- and the victim fought it too
+		end
+		if case == "firstvictim" then
+			doTargetCombatHealth(player, o, COMBAT_ENERGYDAMAGE, -5, -5, CONST_ME_NONE)    -- the victim struck first
+		end
+		if case == "firstvictim" or case == "firstother" then
+			local big = math.floor(maxhp * 0.4)   -- PvP damage arrives halved: about 20% lands
+			doTargetCombatHealth(o, player, COMBAT_ENERGYDAMAGE, -big, -big, CONST_ME_NONE)
+		end
+		local pvpLoss = myHp - player:getHealth()
+		for _, h in ipairs(SpireDeathGame.hits[guid] or {}) do
+			logger.info("[LOADTEST] rv dghit {} amount={} outside={} aggressor={} maxhp={}", name, h.amount, tostring(h.outside), tostring(h.aggressor), maxhp)
+		end
+		local otherLoss = otherHp - o:getHealth()
+		doTargetCombatHealth(m, player, COMBAT_PHYSICALDAMAGE, -maxhp * 3, -maxhp * 3, CONST_ME_NONE)   -- the wolf kills
+		addEvent(function()
+			local retired = kv.scoped("player"):scoped(tostring(guid)):scoped("spirebound"):get("retired") == true
+			logger.info("[LOADTEST] rv dg {} case={} verdict={} pvp_loss={} other_loss={} zone={}", name, case,
+				retired and "retire" or "saved", pvpLoss, otherLoss, SpirePvP.zoneAt(spot))
+		end, 1000)
 	elseif cmd == "loot" then -- "/rv loot <monster> <n>": kill n real monsters; how many coins reached the bank and the bag?
 		local name, n = rest:match("^(.-)%s+(%d+)$")
 		n = tonumber(n) or 1

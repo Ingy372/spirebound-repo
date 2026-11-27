@@ -52,6 +52,30 @@ SpireTest.add("death game: monsters dragged in by another player in the last 30 
 	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 78 }, now, strangers)), "retire", "pulled by a friend: retired")
 end)
 
+SpireTest.add("death game (review A8-2): no save from a monster the victim was fighting, or from a fight the victim started", function()
+	local v, now = 105, 900000
+	fresh(v)
+	SpireDeathGame.noteMonsterHit(79, 906, now - 10) -- an unpartied stranger hunts beside you, the same wolf hit him
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 79, victimFought = true }, now, strangers)), "retire",
+		"side by side, the victim fought it too: retired")
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 79, victimFought = false }, now, strangers)), "saved",
+		"dragged onto a victim who never touched it: still saved")
+	fresh(v)
+	SpireDeathGame.noteVictimStrike(v, 907, now - 8) -- the victim hits a friend from another guild first ...
+	SpireDeathGame.noteHit(v, { guid = 907, outside = true }, 300, now - 5) -- ... who "hits back" 30%
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "retire", "the victim started it: retired")
+	fresh(v)
+	SpireDeathGame.noteVictimStrike(v, 908, now - 8)
+	SpireDeathGame.noteHit(v, { guid = 908, outside = true, skulled = true }, 300, now - 5)
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "saved", "a skulled attacker always counts")
+	fresh(v)
+	SpireDeathGame.noteHit(v, { guid = 909, outside = true }, 300, now - 5) -- a stranger attacks first
+	SpireDeathGame.noteVictimStrike(v, 909, now - 4)                      -- the victim fights back
+	SpireDeathGame.noteHit(v, { guid = 909, outside = true }, 100, now - 3)
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "saved", "a stranger who started it: saved")
+	fresh(v)
+end)
+
 local function makePlayer(name)
 	db.query("DELETE FROM `players` WHERE `name` = " .. db.escapeString(name))
 	db.query("INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, "

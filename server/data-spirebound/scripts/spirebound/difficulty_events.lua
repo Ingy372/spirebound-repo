@@ -82,9 +82,13 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	if victim and amount > 0 and attacker and attacker:isMonster() and not attacker:getMaster() then
 		SpireDeathGame.noteMonsterHit(attacker:getId(), victim:getGuid(), os.time()) -- for the "dragged in" rule
 	end
+	if victim and hitter and hitter ~= victim and amount > 0 and Difficulty.get(hitter) == Difficulty.DEATHGAME then
+		SpireDeathGame.noteVictimStrike(hitter:getGuid(), victim:getGuid(), os.time())   -- the Death Game player struck first
+	end
 	if victim and hitter and hitter ~= victim and amount > 0 and Difficulty.get(victim) == Difficulty.DEATHGAME then
 		local outside = Difficulty.countsAsOutsidePlayer(Difficulty.playerInfo(victim), Difficulty.playerInfo(hitter))
-		SpireDeathGame.noteHit(victim:getGuid(), { guid = hitter:getGuid(), outside = outside }, amount, os.time())
+		SpireDeathGame.noteHit(victim:getGuid(), { guid = hitter:getGuid(), outside = outside,
+			skulled = SpirePvP.isSkulled(hitter:getSkull()) }, amount, os.time())
 		if outside then
 			lastOutsideHit[victim:getGuid()] = os.time()
 		end
@@ -122,7 +126,8 @@ function death.onDeath(player, corpse, killer, mostDamageKiller, unjustified, mo
 	if kp and kp ~= player then
 		k = { guid = kp:getGuid(), outside = Difficulty.countsAsOutsidePlayer(victimInfo, Difficulty.playerInfo(kp)) }
 	elseif killer and killer:isMonster() then
-		k = { monsterId = killer:getId() }
+		local fought = (killer:getDamageMap() or {})[player:getId()] ~= nil   -- the victim was fighting it too
+		k = { monsterId = killer:getId(), victimFought = fought }
 	end
 	local verdict, why = SpireDeathGame.judge(guid, player:getMaxHealth(), k, os.time(), function(otherGuid)
 		local other = Player(otherGuid)

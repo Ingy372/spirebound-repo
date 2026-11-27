@@ -151,7 +151,10 @@ class Bot:
                     await asyncio.sleep(wait)
                     if drainer.done():
                         drainer.result()
-                    self.say(text, npc=(kind == "npc"))
+                    if kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
+                        self.send(bytes([0xA0, 1, 0, 0, 0]))   # unmarked players), pvp mode dove
+                    else:
+                        self.say(text, npc=(kind == "npc"))
                     await self.writer.drain()
                 end = time.time() + stay
                 while time.time() < end:
