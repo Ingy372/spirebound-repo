@@ -55,9 +55,9 @@ SPEC = Q.spec(
     snout_tip=(0.195, 0.228), snout_r=(0.032, 0.024), snout_blunt=True,
     nose_r=(0.010, 0.012, 0.010),
     eye=(0.020, 0.040, 0.016), eye_r=0.013,
-    ear_root=(-0.020, 0.030, 0.040), ear_tip=(-0.026, 0.040, 0.085), ear_r=0.016,
+    ear_root=(-0.020, 0.030, 0.040), ear_tip=(-0.026, 0.046, 0.090), ear_r=0.018,
     front_x=0.055, hind_x=-0.090, leg_top_z=0.130,
-    front_y=0.042, hind_y=0.060, front_feet_y=0.058, hind_feet_y=0.080,
+    front_y=0.042, hind_y=0.060, front_feet_y=0.058, hind_feet_y=0.100,
     upper=0.072, lower=0.070, leg_r=0.014, paw_r=(0.020, 0.014, 0.011),
     shoulder_r=(0.032, 0.026, 0.050), haunch_r=(0.064, 0.036, 0.066),
     stride=0.075, lift=0.060, bob=0.026, nod=0.014,
@@ -73,7 +73,7 @@ def build(model_cls, facing):
     m.ellipsoid("cap", "cap", radii=(0.020, 0.020, 0.010), segments=10, rings=4)
     m.capsule("mouth", "line", segments=6)
     for i in range(BRUSH):
-        m.ellipsoid(f"brush{i}", "tail_tip" if i >= BRUSH - 2 else "tail_base", radii=(1, 1, 1), segments=12, rings=8)
+        m.ellipsoid(f"brush{i}", "tail_tip" if i >= BRUSH - 1 else "tail_base", radii=(1, 1, 1), segments=12, rings=8)
     for k in ("l", "r"):
         m.cone(f"tuft_{k}", "tuft", segments=6)
         m.ellipsoid(f"stripe_{k}", "stripe", radii=(0.080, 0.012, 0.012), segments=10, rings=4)
@@ -90,24 +90,24 @@ def pose(m, t):
     for sign, k in ((1, "l"), (-1, "r")):
         r1 = SPEC["ear_tip"]
         end = head + Vector((r1[0], r1[1] * sign, r1[2]))
-        m.put_segment(f"tuft_{k}", end - Vector((0, 0, 0.012)), end + Vector((-0.010, 0.008 * sign, 0.034)), 0.012, 0.003)
+        m.put_segment(f"tuft_{k}", end - Vector((0, 0, 0.012)), end + Vector((-0.012, 0.012 * sign, 0.046)), 0.015, 0.003)
         s = m.objects[f"stripe_{k}"]
         s.location = hip.lerp(chest, 0.5) + Vector((0, (SPEC["hip_r"][1] * 0.92) * sign, 0.010))
-    # the brush: Q's upright tail, then curled forward over the back at the top
-    # the brush: a curve up from the rump and forward over the back, built of overlapping tufts (never one sausage)
+    # the brush: a plume rising behind the rump, the tip nodding forward, built of overlapping tufts (never one
+    # sausage). It stays BEHIND the body, not over it, so the head and ear tufts still show from behind (north view).
     base = hip + Vector((-SPEC["hip_r"][0] * 0.85, 0, SPEC["hip_r"][2] * 0.10))
     flick = 0.020 * math.sin(p["a"] * 2 + 0.8) if p["walking"] else 0.0
-    curve = lambda u: base + Vector((-0.30 * u * (1 - u) + (0.060 + flick) * u ** 2,   # noqa: E731
-                                     0.020 * p["sway"] * u * u, 0.300 * u - 0.040 * u ** 3))
+    curve = lambda u: base + Vector((-0.060 * u - (0.030 + flick) * u ** 2 + 0.040 * u ** 3,   # noqa: E731
+                                     0.020 * p["sway"] * u * u, 0.250 * u - 0.030 * u ** 3))
     # (Q's tube tail is kept tiny inside the first tuft)
     for i in range(BRUSH):
         u = 0.10 + 0.88 * i / (BRUSH - 1)
         c = curve(u)
-        side = 0.012 * (1 if i % 2 else -1)
+        side = 0.020 * (1 if i % 2 else -1)
         r = 0.034 + 0.030 * math.sin(math.pi * min(1.0, u * 0.85 + 0.1))
         ob = m.objects[f"brush{i}"]
         ob.location = c + Vector((0, side, 0))
-        ob.scale = (r * 1.05, r * 0.95, r * 0.85)
+        ob.scale = (r * 0.85, r * 1.15, r * 0.90)          # a flat fan of fur, wide seen from behind
 
 
 def assign_depth_parts(m, depth_of):

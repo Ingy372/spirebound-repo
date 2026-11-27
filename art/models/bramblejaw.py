@@ -57,13 +57,13 @@ SPEC = Q.spec(
     snout_tip=(0.380, 0.172), snout_r=(0.062, 0.054), snout_blunt=True,
     nose_r=(0.020, 0.056, 0.050),
     eye=(0.066, 0.086, 0.042), eye_r=0.013,
-    ear_root=(-0.040, 0.068, 0.060), ear_tip=(-0.080, 0.112, 0.120), ear_r=0.030,
+    ear_root=(-0.040, 0.066, 0.062), ear_tip=(-0.070, 0.130, 0.140), ear_r=0.033,
     front_x=0.075, hind_x=-0.135, leg_top_z=0.205,
     front_y=0.102, hind_y=0.090, front_feet_y=0.142, hind_feet_y=0.124,
     upper=0.112, lower=0.105, leg_r=0.039, paw_r=(0.040, 0.031, 0.020),
     shoulder_r=(0.068, 0.046, 0.092), haunch_r=(0.068, 0.044, 0.080),
     stride=0.090, lift=0.060, bob=0.012, nod=0.018,
-    tail_len=0.110, tail_r=(0.016, 0.022), tail_raise=0.7, tail_curl=0.04, tail_split=0.55,
+    tail_len=0.120, tail_r=(0.018, 0.030), tail_raise=1.0, tail_curl=0.04, tail_split=0.55,
 )
 MANE = 13
 VINES = [  # (start angle, turns, x from, x to, lift) of each vine loop round the body
@@ -108,8 +108,8 @@ def pose(m, t):
     # small yellowed tusks, forward and a little up
     for sign, k in ((1, "l"), (-1, "r")):
         root = tip + Vector((-0.050, 0.044 * sign, -0.030))
-        pts = [root + Vector((0.050 * u, sign * 0.030 * u, 0.060 * u * u)) for u in (0, 0.25, 0.5, 0.75, 1.0)]
-        m.set_tube(f"tusk_{k}", [tuple(q) for q in pts], [0.018, 0.016, 0.013, 0.009, 0.005])
+        pts = [root + Vector((0.050 * u, sign * 0.075 * u, 0.085 * u * u)) for u in (0, 0.25, 0.5, 0.75, 1.0)]
+        m.set_tube(f"tusk_{k}", [tuple(q) for q in pts], [0.020, 0.018, 0.015, 0.010, 0.005])
         eye = m.objects[f"eye_{k}"].location
         m.put_segment(f"brow_{k}", eye + Vector((-0.040, 0.004 * sign, 0.034)), eye + Vector((0.034, -0.010 * sign, 0.012)), 0.014)
     # the torn left ear: shorter, with a dark bite taken out of its edge
@@ -128,8 +128,8 @@ def pose(m, t):
         q = brow.lerp(hump, u / 0.40) if u < 0.40 else hump.lerp(rump, (u - 0.40) / 0.60)
         tall = 0.120 * (1.0 - 0.6 * abs(u - 0.38))
         flick = 0.012 * math.sin(p["a"] * 2 + i * 1.1) if p["walking"] else 0.0
-        side = 0.045 * (1 if i % 2 else -1) * (0.6 + 0.4 * (i % 3))
-        m.put_segment(f"mane{i}", q - Vector((0, 0, 0.030)), q + Vector((-0.070 - flick, side, tall)), 0.044, 0.028)
+        side = 0.022 * (1 if i % 2 else -1)
+        m.put_segment(f"mane{i}", q - Vector((0, 0, 0.030)), q + Vector((-0.050 - flick, side, tall)), 0.036, 0.020)
     # bramble vines wound round the barrel, and a loop tangled in the mane; thorns and leaves along them
     vine_pts = []
     for i, (a0, turns, x0, x1, lift) in enumerate(VINES):
@@ -140,8 +140,8 @@ def pose(m, t):
             pts.append(_round_body(chest, hip, x0 + (x1 - x0) * u, ang, lift))
         m.set_tube(f"vine{i}", [tuple(q) for q in pts], [0.012] * VINE_N)
         vine_pts += pts
-    tangle = [hump.lerp(rump, 0.05) + Vector((0.070 - 0.150 * u, 0.060 * math.sin(u * 7.0), 0.060 + 0.020 * math.cos(u * 9.0)))
-              for u in [k / 6 for k in range(7)]]
+    tangle = [(brow.lerp(hump, 0.6) if u < 0.2 else hump.lerp(rump, (u - 0.2) / 0.8)) +
+              Vector((0, 0.030 * math.sin(u * 9.0), 0.030)) for u in [k / 6 for k in range(7)]]
     m.set_tube("tangle", [tuple(q) for q in tangle], [0.011] * 7)
     vine_pts += tangle
     for i in range(THORNS):

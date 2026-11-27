@@ -52,15 +52,15 @@ PIXEL_RULES = {
 
 SPECKS = [(0.02, 0.045), (-0.04, 0.030), (-0.07, 0.058), (0.04, 0.020), (-0.01, 0.065), (-0.09, 0.025)]
 CREST = 6
-TAIL = 5
+TAIL = 7
 
 
 def build(model_cls, facing):
     m = model_cls(facing, PARTS)
-    m.ellipsoid("body", "body", radii=(0.105, 0.072, 0.072), segments=18, rings=10)
-    m.ellipsoid("rump", "body", radii=(0.060, 0.060, 0.058), segments=12, rings=8)
+    m.ellipsoid("body", "body", radii=(0.105, 0.084, 0.072), segments=18, rings=10)
+    m.ellipsoid("rump", "body", radii=(0.060, 0.072, 0.058), segments=12, rings=8)
     m.ellipsoid("breast", "breast", radii=(0.064, 0.062, 0.068), segments=14, rings=8)
-    m.ellipsoid("neck", "head", radii=(0.034, 0.032, 0.046), segments=10, rings=6)
+    m.ellipsoid("neck", "head", radii=(0.036, 0.036, 0.040), segments=10, rings=6)
     m.ellipsoid("head", "head", radii=(0.044, 0.040, 0.041), segments=14, rings=8)
     m.cone("beak", "beak", segments=8)
     m.ellipsoid("wattle", "wattle", radii=(0.012, 0.010, 0.016), segments=8, rings=4)
@@ -87,13 +87,13 @@ def pose(m, t):
     a = 2 * math.pi * (t or 0.0)
     bob = 0.008 * (0.5 + 0.5 * math.cos(2 * a)) if walking else 0.0
     thrust = 0.020 * math.sin(2 * a) if walking else 0.0          # the hen's head jerks forward and back each step
-    body = Vector((0, 0, 0.180 + bob))
+    body = Vector((0, 0, 0.194 + bob))
     m.objects["body"].location = body
     m.objects["body"].rotation_mode = "XYZ"
     m.objects["body"].rotation_euler = Euler((0, 0.25, 0))       # tail end raised
     m.objects["rump"].location = body + Vector((-0.070, 0, 0.022))
     m.objects["breast"].location = body + Vector((0.060, 0, 0.000))
-    head = body + Vector((0.110 + thrust, 0, 0.120))
+    head = body + Vector((0.112 + thrust, 0, 0.105))
     m.objects["neck"].location = body.lerp(head, 0.55) + Vector((0.010, 0, 0))
     m.objects["head"].location = head
     m.put_segment("beak", head + Vector((0.030, 0, -0.004)), head + Vector((0.074, 0, -0.016)), 0.016, 0.003)
@@ -109,13 +109,14 @@ def pose(m, t):
         m.objects[f"ctip{i}"].location = tip
     for i in range(TAIL):
         u = (i - (TAIL - 1) / 2) / ((TAIL - 1) / 2)
-        base = body + Vector((-0.110, 0.020 * u, 0.040))
-        tip = base + Vector((-0.060, 0.045 * u, 0.110 - 0.020 * abs(u)))
-        m.put_segment(f"tail{i}", base, tip, 0.026, 0.012)
+        # a cocked fan: the feathers spread wide sideways, so it shows as a fan from behind (north view) too
+        base = body + Vector((-0.105, 0.024 * u, 0.040))
+        tip = base + Vector((-0.020 + 0.010 * abs(u), 0.085 * u, 0.165 - 0.050 * abs(u)))
+        m.put_segment(f"tail{i}", base, tip, 0.024, 0.013)
     for s, k in ((1, "l"), (-1, "r")):
         m.objects[f"eye_{k}"].location = head + Vector((0.018, 0.036 * s, 0.010))
         w = m.objects[f"wing_{k}"]
-        w.location = body + Vector((-0.010, 0.060 * s, 0.018))
+        w.location = body + Vector((-0.010, 0.070 * s, 0.018))
         w.rotation_mode = "XYZ"
         w.rotation_euler = Euler((0.30 * s, 0.30, 0))
         edge = [w.location + Vector((0.060 - 0.030 * j, 0.022 * s, -0.030 + 0.006 * j)) for j in range(6)]
@@ -135,10 +136,10 @@ def pose(m, t):
         else:
             fx, fz = 0.0, 0.0
         hipj = body + Vector((0.005, 0.034 * s, -0.050))
-        foot = Vector((0.010 + fx, 0.044 * s, 0.010 + fz))
+        foot = Vector((0.010 + fx, 0.054 * s, 0.010 + fz))
         knee = hipj.lerp(foot, 0.35) + Vector((-0.010, 0.004 * s, 0))
         m.put_segment(f"thigh_{k}", hipj, knee, 0.024, 0.016)
-        m.put_segment(f"shank_{k}", knee, foot, 0.012)
+        m.put_segment(f"shank_{k}", knee, foot, 0.014)
         for j in range(4):
             fan = (-0.5, 0.0, 0.5, math.pi)[j]
             ln = 0.034 if j < 3 else 0.020
