@@ -3,3 +3,4 @@
 dofile(DATA_DIRECTORY .. "/lib/spirebound/adventure_data.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/roamers.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/treasure_maps.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/floor1_adventure.lua")

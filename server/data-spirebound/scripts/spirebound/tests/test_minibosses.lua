@@ -1,7 +1,7 @@
 -- Gear progression spec 4.8: four hidden mini-bosses on Floor 1, each woken at a secret, each leaving a trophy once.
 
-SpireTest.add("minibosses: four on Floor 1, each a real monster at a real secret", function()
-	SpireTest.eq(#SpireTrophies.LIST, 4, "four mini-bosses")
+SpireTest.add("minibosses: six on Floor 1, each a real monster at a real secret", function()
+	SpireTest.eq(#SpireTrophies.LIST, 6, "six hidden beasts (AD5 added Ironpurse and the Unfinished)")
 	for _, t in ipairs(SpireTrophies.LIST) do
 		SpireTest.eq(MonsterType(t.boss) ~= nil, true, t.boss .. " exists")
 		local found = false

@@ -27,6 +27,15 @@ function SpireTrophies.onSecret(player, secret, first)
 	end
 end
 
+-- AD5 (scripts/spirebound/hidden_places.lua): is this beast up, ready to wake, or resting? -> "up" | "ready" | seconds left
+function SpireTrophies.state(id)
+	if alive[id] and Creature(alive[id]) then
+		return "up"
+	end
+	local left = (restUntil[id] or 0) - os.time()
+	return left > 0 and left or "ready"
+end
+
 local death = CreatureEvent("SpireMiniBossDeath")
 function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, mostDamageUnjustified)
 	local t = SpireTrophies.byBoss(creature:getName())

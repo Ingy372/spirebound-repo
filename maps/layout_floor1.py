@@ -664,6 +664,8 @@ def build(m):
     secret("s10", X0 + 380, Y0 + 380)                   # ruined well in the south-east corner
     secret("s11", X0 + 160, Y0 + 170)                   # bramble ring in the thornsnap hollow
     secret("s12", X0 + 296, Y0 + 60)                    # broken stair of a ruined side tower near the Pass
+    import hidden_places                                # AD5: the Smugglers' Vault (s14) and the Sealed Cut (s15), level 9
+    hidden_places.build(m)
 
     # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
     # a real dungeon since 2026-11-26 (Jay, Q89): rooms, corridors, loops, a secret and a mini-boss (maps/underkeep.py)

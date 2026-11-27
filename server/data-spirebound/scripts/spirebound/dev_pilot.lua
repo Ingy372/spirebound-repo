@@ -312,7 +312,7 @@ function pilot.onSay(player, words, param)
 		local pct = math.max(1, math.min(100, tonumber(rest:match("%d+")) or 10))
 		local n = 0
 		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 9, 9)) do
-			if c:isMonster() and ((SpireBoss and SpireBoss.defs[c:getName()]) or (SpireRoamers and SpireRoamers.byName(c:getName()))) then
+			if c:isMonster() and ((SpireBoss and SpireBoss.defs[c:getName()]) or (SpireRoamers and SpireRoamers.byName(c:getName())) or (SpireTrophies and SpireTrophies.byBoss(c:getName()))) then
 				c:addHealth(math.floor(c:getMaxHealth() * pct / 100) - c:getHealth())
 				n = n + 1
 			end
