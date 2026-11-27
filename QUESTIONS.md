@@ -90,7 +90,7 @@ Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall
 The engine quietly adds 1.5x experience below level 50 and another 1.5x for fresh stamina, on top of our stages. Measured, a kill gives 22.5x at levels 1-8, 9x at 9-20 and 6.75x at 21-50. So Floor 1 is shorter than the 11-15 hours you chose in Q30.
 - **Recommendation:** keep the 11-15 hours: lower our stages so the totals match (I re-measure first; roadmap RV2).
 - Assumed until you answer: no change.
-- Jay's answer:
+- Jay's answer (2026-11-27): "Yes, 11-15 hours". Done the same night: the engine's hidden 1.5x below level 50 is taken back out on every kill; Tibia's rested bonus (1.5x for the first 3 hours of a day) stays. By the model a rested player reaches level 35 in about 6 hours of pure hunting and a tired one in about 9.4; real play is about 40% slower, so most players land in 11-15 hours. RV2 measures it in the game.
 
 ### Q84. Loot is doubled by the engine: keep the richer game or trim drops? (2026-11-26, Floor 1 review E-1)
 The server doubles every drop chance (loot rate 2). Measured, a Road Bandit gives 42 coins a kill against the 33 our economy plan expects, and some items drop twice as often as the tables say.
@@ -175,7 +175,7 @@ The review found that the Hearthguard Sword, Axe and Mace were weaker than sword
 A level-30 party of three in upgraded Floor 1 gear killed the Gate Hound in a minute without a death, then wiped twice on the Axe-Lord: the best try did 19% of his health in 45 seconds. As he is now (12,000 health, hits up to 260 plus a 300 line attack), beating him needs about 8-10 level-30 players, or 5 well-geared level-34s. The room holds 20.
 - **Recommendation:** make him a party boss for 4-6 players around level 30-35 (lower his health and his biggest hits, keep his phases), so the first floor clear at launch is something a guild party can do on the first evening, and say "bring 4 or more" in the Journal. Keep him a raid only if you want Floor 1's first clear to need a whole guild.
 - Assumed until you answer: a party boss for 4-6 (tuning waits for your answer; task PT5).
-- Jay's answer:
+- Jay's answer (2026-11-27, asked again because you may test alone or as a pair): "Keep him a raid". So the Axe-Lord stays a fight for a large group (about 8-10 level-30s). RV1 re-measures him with the weapon bonuses working and keeps him at raid size; a solo or pair playtest stops at the Gate Hound or brings Pilot test characters.
 
 ### Q77. Normal climbers below level 50 keep their items when they die (2026-11-26, party playtest)
 The game has always told young Normal climbers "your death cost you nothing", but from level 22 (when Tibia's free starter blessing ends) a death without blessings dropped the whole backpack and some gear, and the engine still took experience. Both are fixed to match the promise: below level 50 on Normal you keep your experience and your items (the game hands out the blessings for free at each login). Hardcore and Death Game keep their risk. (My call; you can veto.)

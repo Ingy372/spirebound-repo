@@ -12,6 +12,7 @@
 --   /pilot give id, n      items into the backpack (says if they did not fit)
 --   /pilot emptybag        (M1 tests) empty the backpack
 --   /pilot pvphit          (M5 tests) start the player-fight lock, as if a player had hit you
+--   /pilot playtime n      (RV6 tests) count as having played n seconds (test characters otherwise skip the 2-hour shield)
 --   /pilot hp n            set your health (PvP tests)
 --   /pilot beacon n        (M1 tests) put out every fire of floor n's Beacon
 --   /pilot pardon          clear skulls and unjust kills from test fights
@@ -287,6 +288,9 @@ function pilot.onSay(player, words, param)
 		end
 		local m, why = SpireRoamers.spawn(name)
 		player:sendTextMessage(MESSAGE_STATUS, m and ("pilot: roamer " .. m:getName() .. " at " .. m:getPosition():toString()) or ("pilot: roamer " .. tostring(why)))
+	elseif cmd == "playtime" then -- (RV6 tests) "/pilot playtime n": count as having played n seconds (2-hour shield)
+		SpirePvP.setPlayTime(player, tonumber(rest) or 0)
+		player:sendTextMessage(MESSAGE_STATUS, "Play time set to " .. SpirePvP.playSeconds(player) .. " seconds.")
 	elseif cmd == "pvphit" then -- (M5 tests) start the player-fight lock as if another player had hit you
 		SpirePvPLock.mark(player, os.time())
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: player fight for " .. SpirePvPLock.LOCK .. " seconds")

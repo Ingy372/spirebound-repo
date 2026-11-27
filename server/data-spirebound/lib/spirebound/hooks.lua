@@ -33,6 +33,17 @@ function SpireHooks.skill(name, fn)
 	SpireHooks.skillFns[name] = fn
 end
 
+-- The engine gives (exp * (1 + boost% + lowLevel%)) * stamina * baseRate. Q83 (Jay, 2026-11-27: Floor 1 should take
+-- 11-15 hours): take the engine's low-level bonus back out, keep the store/daily boost and stamina as they are.
+function SpireHooks.withoutLowLevelBonus(exp, boostPercent, lowLevelPercent)
+	lowLevelPercent = lowLevelPercent or 0
+	if lowLevelPercent <= 0 then
+		return exp
+	end
+	local keep = 1 + (boostPercent or 0) / 100
+	return exp * keep / (keep + lowLevelPercent / 100)
+end
+
 -- Experience from a monster kill, after the engine's own rates. Returns a whole number.
 function SpireHooks.gainExperience(player, target, exp, rawExp)
 	for _, name in ipairs(sorted(SpireHooks.xpFns)) do

@@ -9,6 +9,10 @@ local spireBaseGainExperience = Player.onGainExperience
 function Player:onGainExperience(target, exp, rawExp)
 	local out = spireBaseGainExperience(self, target, exp, rawExp)
 	if SpireHooks and target and target:isMonster() then -- kills only: quest rewards and corrections stay as given
+		-- Jay, Q83 (2026-11-27): "Yes, 11-15 hours". The engine's hidden 1.5x below level 50 is taken back out here;
+		-- Tibia's own rested-stamina bonus stays.
+		local boost = self:getXpBoostTime() > 0 and self:getXpBoostPercent() or 0
+		out = SpireHooks.withoutLowLevelBonus(out, boost, self:getFinalLowLevelBonus())
 		return SpireHooks.gainExperience(self, target, out, rawExp)
 	end
 	return out

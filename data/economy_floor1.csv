@@ -1,61 +1,61 @@
 id,base_xp_h,camp,levels,role,vocation,kills_h,xp_h,gold_h,loot_npc_h,materials_market_h,supplies_h,net_npc_h,net_with_trading_h,gold_h_real,loot_npc_h_real
-starter_west,1800,The Ratwarren,1-4,xp,Vanguard,300,40500,525,540,0,151,914,914,750,1080
-starter_west,1800,The Ratwarren,1-4,xp,Ranger (arrows),300,40500,525,540,0,536,529,529,750,1080
-starter_west,1800,The Ratwarren,1-4,xp,Ranger (spears),300,40500,525,540,0,255,810,810,750,1080
-starter_west,1800,The Ratwarren,1-4,xp,Arcanist/Mystic,300,40500,525,540,0,200,865,865,750,1080
-starter_east,2475,Toad Pond,3-7,xp,Vanguard,300,55688,682,405,1057,156,932,1989,975,810
-starter_east,2475,Toad Pond,3-7,xp,Ranger (arrows),300,55688,682,405,1057,489,599,1656,975,810
-starter_east,2475,Toad Pond,3-7,xp,Ranger (spears),300,55688,682,405,1057,246,842,1899,975,810
-starter_east,2475,Toad Pond,3-7,xp,Arcanist/Mystic,300,55688,682,405,1057,206,882,1939,975,810
-starter_south,3600,Sproutling Glade,5-10,xp,Vanguard,300,81000,859,495,1665,171,1182,2847,1162,990
-starter_south,3600,Sproutling Glade,5-10,xp,Ranger (arrows),300,81000,859,495,1665,520,834,2499,1162,990
-starter_south,3600,Sproutling Glade,5-10,xp,Ranger (spears),300,81000,859,495,1665,266,1088,2753,1162,990
-starter_south,3600,Sproutling Glade,5-10,xp,Arcanist/Mystic,300,81000,859,495,1665,227,1127,2792,1162,990
-wasp_fields,5100,Waspgrass Fields,7-12,xp,Vanguard,300,45900,945,818,2000,314,1448,3448,1350,1635
-wasp_fields,5100,Waspgrass Fields,7-12,xp,Ranger (arrows),300,45900,945,818,2000,713,1049,3049,1350,1635
-wasp_fields,5100,Waspgrass Fields,7-12,xp,Ranger (spears),300,45900,945,818,2000,422,1341,3341,1350,1635
-wasp_fields,5100,Waspgrass Fields,7-12,xp,Arcanist/Mystic,300,45900,945,818,2000,415,1347,3347,1350,1635
-boar_meadow,7398,Boar Meadow,9-15,xp,Vanguard,264,66583,1797,793,4228,843,1747,5974,2114,1585
-boar_meadow,8177,Boar Meadow,9-15,xp,Ranger (arrows),292,73595,1986,876,4673,1475,1388,6060,2336,1752
-boar_meadow,8177,Boar Meadow,9-15,xp,Ranger (spears),292,73595,1986,876,4673,1013,1849,6521,2336,1752
-boar_meadow,7945,Boar Meadow,9-15,xp,Arcanist/Mystic,284,71503,1929,851,4540,1115,1666,6206,2270,1702
-burrow_hills,8907,Burrow Hills,11-16,xp,Vanguard,232,80161,2750,617,1363,1051,2316,3679,3061,1234
-burrow_hills,10028,Burrow Hills,11-16,xp,Ranger (arrows),261,90249,3096,695,1535,1806,1985,3520,3447,1390
-burrow_hills,10028,Burrow Hills,11-16,xp,Ranger (spears),261,90249,3096,695,1535,1255,2536,4071,3447,1390
-burrow_hills,9689,Burrow Hills,11-16,xp,Arcanist/Mystic,252,87201,2992,671,1483,1390,2273,3756,3330,1343
-wolf_copse,11074,Wolf Copse,12-18,xp,Vanguard,277,99666,1324,702,5427,704,1322,6750,1756,1405
-wolf_copse,11983,Wolf Copse,12-18,xp,Ranger (arrows),300,107850,1432,760,5873,1279,913,6786,1900,1520
-wolf_copse,11983,Wolf Copse,12-18,xp,Ranger (spears),300,107850,1432,760,5873,859,1333,7206,1900,1520
-wolf_copse,11831,Wolf Copse,12-18,xp,Arcanist/Mystic,296,106479,1414,750,5798,1763,402,6200,1876,1501
-reed_marsh,9058,Reedmarsh,14-19,money,Vanguard,232,81523,3948,799,11591,1251,3496,15088,4297,1598
-reed_marsh,10197,Reedmarsh,14-19,money,Ranger (arrows),261,91770,4445,899,13048,2005,3339,16387,4837,1799
-reed_marsh,10197,Reedmarsh,14-19,money,Ranger (spears),261,91770,4445,899,13048,1455,3889,16938,4837,1799
-reed_marsh,9853,Reedmarsh,14-19,money,Arcanist/Mystic,253,88674,4295,869,12608,2352,2812,15420,4674,1738
-bramble_run,12703,The Bramble Run,14-20,xp,Vanguard,267,114323,1855,731,5174,852,1734,6908,2268,1463
-bramble_run,14020,The Bramble Run,14-20,xp,Ranger (arrows),294,126179,2048,807,5711,1475,1380,7091,2503,1614
-bramble_run,14020,The Bramble Run,14-20,xp,Ranger (spears),294,126179,2048,807,5711,1020,1834,7545,2503,1614
-bramble_run,13627,The Bramble Run,14-20,xp,Arcanist/Mystic,286,122646,1990,785,5551,1928,847,6398,2433,1569
-thornsnap_hollow,12950,Thornsnap Hollow,14-20,xp,Vanguard,252,116554,2341,454,1711,1021,1774,3485,2754,908
-thornsnap_hollow,14412,Thornsnap Hollow,14-20,xp,Ranger (arrows),281,129705,2605,505,1904,1698,1412,3316,3065,1011
-thornsnap_hollow,14412,Thornsnap Hollow,14-20,xp,Ranger (spears),281,129705,2605,505,1904,1204,1906,3811,3065,1011
-thornsnap_hollow,13974,Thornsnap Hollow,14-20,xp,Arcanist/Mystic,272,125763,2526,490,1847,2108,908,2755,2972,980
-shard_fields,16062,Shard Fields,17-24,xp,Vanguard,277,144554,2472,3323,1246,523,5271,6517,2908,6646
-shard_fields,17400,Shard Fields,17-24,xp,Ranger (arrows),300,156600,2677,3600,1350,1100,5177,6527,3150,7200
-shard_fields,17400,Shard Fields,17-24,xp,Ranger (spears),300,156600,2677,3600,1350,679,5598,6948,3150,7200
-shard_fields,17162,Shard Fields,17-24,xp,Arcanist/Mystic,296,154455,2641,3551,1332,1523,4668,6000,3107,7101
-bandit_road,14474,The Bandit Road,19-27,money,Vanguard,248,97699,8596,1115,2047,1452,8259,10307,10921,2231
-bandit_road,16148,The Bandit Road,19-27,money,Ranger (arrows),277,108996,9589,1244,2284,2145,8688,10973,12184,2489
-bandit_road,16148,The Bandit Road,19-27,money,Ranger (spears),277,108996,9589,1244,2284,1639,9195,11479,12184,2489
-bandit_road,15645,The Bandit Road,19-27,money,Arcanist/Mystic,268,105604,9291,1206,2213,2664,7833,10046,11805,2411
-old_quarry,19016,The Old Quarry,23-30,money,Vanguard,233,128360,8807,1193,869,1206,8794,9664,9973,2387
-old_quarry,21403,The Old Quarry,23-30,money,Ranger (arrows),262,144471,9912,1343,978,1959,9297,10275,11225,2686
-old_quarry,21403,The Old Quarry,23-30,money,Ranger (spears),262,144471,9912,1343,978,1409,9846,10825,11225,2686
-old_quarry,20682,The Old Quarry,23-30,money,Arcanist/Mystic,253,139604,9578,1298,945,2292,8584,9529,10847,2596
-smugglers_ridge,15972,Smugglers' Ridge,19-26,money,Vanguard,238,107812,8083,1018,2090,1211,7889,9980,10264,2035
-smugglers_ridge,17919,Smugglers' Ridge,19-26,money,Ranger (arrows),267,120951,9068,1142,2345,1942,8267,10612,11514,2284
-smugglers_ridge,17919,Smugglers' Ridge,19-26,money,Ranger (spears),267,120951,9068,1142,2345,1409,8801,11146,11514,2284
-smugglers_ridge,17332,Smugglers' Ridge,19-26,money,Arcanist/Mystic,258,116991,8771,1104,2268,2316,7559,9827,11137,2209
-fallen_bastion,19353,The Fallen Bastion,23-30,money,Vanguard,218,130630,10082,693,769,1450,9325,10094,11393,1385
-fallen_bastion,21960,The Fallen Bastion,23-30,money,Ranger (arrows),248,148228,11440,786,873,2258,9968,10841,12928,1572
-fallen_bastion,21960,The Fallen Bastion,23-30,money,Ranger (spears),248,148228,11440,786,873,1668,10558,11431,12928,1572
-fallen_bastion,21168,The Fallen Bastion,23-30,money,Arcanist/Mystic,239,142881,11028,758,841,2574,9212,10053,12462,1515
+starter_west,1800,The Ratwarren,1-4,xp,Vanguard,300,27000,525,540,0,151,914,914,750,1080
+starter_west,1800,The Ratwarren,1-4,xp,Ranger (arrows),300,27000,525,540,0,536,529,529,750,1080
+starter_west,1800,The Ratwarren,1-4,xp,Ranger (spears),300,27000,525,540,0,255,810,810,750,1080
+starter_west,1800,The Ratwarren,1-4,xp,Arcanist/Mystic,300,27000,525,540,0,200,865,865,750,1080
+starter_east,2475,Toad Pond,3-7,xp,Vanguard,300,37125,682,405,1057,156,932,1989,975,810
+starter_east,2475,Toad Pond,3-7,xp,Ranger (arrows),300,37125,682,405,1057,489,599,1656,975,810
+starter_east,2475,Toad Pond,3-7,xp,Ranger (spears),300,37125,682,405,1057,246,842,1899,975,810
+starter_east,2475,Toad Pond,3-7,xp,Arcanist/Mystic,300,37125,682,405,1057,206,882,1939,975,810
+starter_south,3600,Sproutling Glade,5-10,xp,Vanguard,300,54000,859,495,1665,171,1182,2847,1162,990
+starter_south,3600,Sproutling Glade,5-10,xp,Ranger (arrows),300,54000,859,495,1665,520,834,2499,1162,990
+starter_south,3600,Sproutling Glade,5-10,xp,Ranger (spears),300,54000,859,495,1665,266,1088,2753,1162,990
+starter_south,3600,Sproutling Glade,5-10,xp,Arcanist/Mystic,300,54000,859,495,1665,227,1127,2792,1162,990
+wasp_fields,5100,Waspgrass Fields,7-12,xp,Vanguard,300,30600,945,818,2000,314,1448,3448,1350,1635
+wasp_fields,5100,Waspgrass Fields,7-12,xp,Ranger (arrows),300,30600,945,818,2000,713,1049,3049,1350,1635
+wasp_fields,5100,Waspgrass Fields,7-12,xp,Ranger (spears),300,30600,945,818,2000,422,1341,3341,1350,1635
+wasp_fields,5100,Waspgrass Fields,7-12,xp,Arcanist/Mystic,300,30600,945,818,2000,415,1347,3347,1350,1635
+boar_meadow,7398,Boar Meadow,9-15,xp,Vanguard,264,44389,1797,793,4228,843,1747,5974,2114,1585
+boar_meadow,8177,Boar Meadow,9-15,xp,Ranger (arrows),292,49063,1986,876,4673,1475,1388,6060,2336,1752
+boar_meadow,8177,Boar Meadow,9-15,xp,Ranger (spears),292,49063,1986,876,4673,1013,1849,6521,2336,1752
+boar_meadow,7945,Boar Meadow,9-15,xp,Arcanist/Mystic,284,47669,1929,851,4540,1115,1666,6206,2270,1702
+burrow_hills,8907,Burrow Hills,11-16,xp,Vanguard,232,53440,2750,617,1363,1051,2316,3679,3061,1234
+burrow_hills,10028,Burrow Hills,11-16,xp,Ranger (arrows),261,60166,3096,695,1535,1806,1985,3520,3447,1390
+burrow_hills,10028,Burrow Hills,11-16,xp,Ranger (spears),261,60166,3096,695,1535,1255,2536,4071,3447,1390
+burrow_hills,9689,Burrow Hills,11-16,xp,Arcanist/Mystic,252,58134,2992,671,1483,1390,2273,3756,3330,1343
+wolf_copse,11074,Wolf Copse,12-18,xp,Vanguard,277,66444,1324,702,5427,704,1322,6750,1756,1405
+wolf_copse,11983,Wolf Copse,12-18,xp,Ranger (arrows),300,71900,1432,760,5873,1279,913,6786,1900,1520
+wolf_copse,11983,Wolf Copse,12-18,xp,Ranger (spears),300,71900,1432,760,5873,859,1333,7206,1900,1520
+wolf_copse,11831,Wolf Copse,12-18,xp,Arcanist/Mystic,296,70986,1414,750,5798,1763,402,6200,1876,1501
+reed_marsh,9058,Reedmarsh,14-19,money,Vanguard,232,54348,3948,799,11591,1251,3496,15088,4297,1598
+reed_marsh,10197,Reedmarsh,14-19,money,Ranger (arrows),261,61180,4445,899,13048,2005,3339,16387,4837,1799
+reed_marsh,10197,Reedmarsh,14-19,money,Ranger (spears),261,61180,4445,899,13048,1455,3889,16938,4837,1799
+reed_marsh,9853,Reedmarsh,14-19,money,Arcanist/Mystic,253,59116,4295,869,12608,2352,2812,15420,4674,1738
+bramble_run,12703,The Bramble Run,14-20,xp,Vanguard,267,76216,1855,731,5174,852,1734,6908,2268,1463
+bramble_run,14020,The Bramble Run,14-20,xp,Ranger (arrows),294,84120,2048,807,5711,1475,1380,7091,2503,1614
+bramble_run,14020,The Bramble Run,14-20,xp,Ranger (spears),294,84120,2048,807,5711,1020,1834,7545,2503,1614
+bramble_run,13627,The Bramble Run,14-20,xp,Arcanist/Mystic,286,81764,1990,785,5551,1928,847,6398,2433,1569
+thornsnap_hollow,12950,Thornsnap Hollow,14-20,xp,Vanguard,252,77702,2341,454,1711,1021,1774,3485,2754,908
+thornsnap_hollow,14412,Thornsnap Hollow,14-20,xp,Ranger (arrows),281,86470,2605,505,1904,1698,1412,3316,3065,1011
+thornsnap_hollow,14412,Thornsnap Hollow,14-20,xp,Ranger (spears),281,86470,2605,505,1904,1204,1906,3811,3065,1011
+thornsnap_hollow,13974,Thornsnap Hollow,14-20,xp,Arcanist/Mystic,272,83842,2526,490,1847,2108,908,2755,2972,980
+shard_fields,16062,Shard Fields,17-24,xp,Vanguard,277,96369,2472,3323,1246,523,5271,6517,2908,6646
+shard_fields,17400,Shard Fields,17-24,xp,Ranger (arrows),300,104400,2677,3600,1350,1100,5177,6527,3150,7200
+shard_fields,17400,Shard Fields,17-24,xp,Ranger (spears),300,104400,2677,3600,1350,679,5598,6948,3150,7200
+shard_fields,17162,Shard Fields,17-24,xp,Arcanist/Mystic,296,102970,2641,3551,1332,1523,4668,6000,3107,7101
+bandit_road,14474,The Bandit Road,19-27,money,Vanguard,248,65133,8596,1115,2047,1452,8259,10307,10921,2231
+bandit_road,16148,The Bandit Road,19-27,money,Ranger (arrows),277,72664,9589,1244,2284,2145,8688,10973,12184,2489
+bandit_road,16148,The Bandit Road,19-27,money,Ranger (spears),277,72664,9589,1244,2284,1639,9195,11479,12184,2489
+bandit_road,15645,The Bandit Road,19-27,money,Arcanist/Mystic,268,70403,9291,1206,2213,2664,7833,10046,11805,2411
+old_quarry,19016,The Old Quarry,23-30,money,Vanguard,233,85573,8807,1193,869,1206,8794,9664,9973,2387
+old_quarry,21403,The Old Quarry,23-30,money,Ranger (arrows),262,96314,9912,1343,978,1959,9297,10275,11225,2686
+old_quarry,21403,The Old Quarry,23-30,money,Ranger (spears),262,96314,9912,1343,978,1409,9846,10825,11225,2686
+old_quarry,20682,The Old Quarry,23-30,money,Arcanist/Mystic,253,93069,9578,1298,945,2292,8584,9529,10847,2596
+smugglers_ridge,15972,Smugglers' Ridge,19-26,money,Vanguard,238,71875,8083,1018,2090,1211,7889,9980,10264,2035
+smugglers_ridge,17919,Smugglers' Ridge,19-26,money,Ranger (arrows),267,80634,9068,1142,2345,1942,8267,10612,11514,2284
+smugglers_ridge,17919,Smugglers' Ridge,19-26,money,Ranger (spears),267,80634,9068,1142,2345,1409,8801,11146,11514,2284
+smugglers_ridge,17332,Smugglers' Ridge,19-26,money,Arcanist/Mystic,258,77994,8771,1104,2268,2316,7559,9827,11137,2209
+fallen_bastion,19353,The Fallen Bastion,23-30,money,Vanguard,218,87087,10082,693,769,1450,9325,10094,11393,1385
+fallen_bastion,21960,The Fallen Bastion,23-30,money,Ranger (arrows),248,98818,11440,786,873,2258,9968,10841,12928,1572
+fallen_bastion,21960,The Fallen Bastion,23-30,money,Ranger (spears),248,98818,11440,786,873,1668,10558,11431,12928,1572
+fallen_bastion,21168,The Fallen Bastion,23-30,money,Arcanist/Mystic,239,95254,11028,758,841,2574,9212,10053,12462,1515

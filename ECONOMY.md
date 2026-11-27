@@ -15,66 +15,66 @@
 ## Burn rate per hour of hunting (at the middle level of each hunting ground)
 | Hunting ground | Levels | Vocation | Kills/h | XP/h | Gold/h | Supplies/h | Net (NPC only) | Net with trading |
 |---|---|---|---|---|---|---|---|---|
-| The Ratwarren | 1-4 | Vanguard | 300 | 40,500 | 1,065 | 151 | 914 | 914 |
-| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 40,500 | 1,065 | 536 | 529 | 529 |
-| The Ratwarren | 1-4 | Ranger (spears) | 300 | 40,500 | 1,065 | 255 | 810 | 810 |
-| The Ratwarren | 1-4 | Arcanist/Mystic | 300 | 40,500 | 1,065 | 200 | 865 | 865 |
-| Toad Pond | 3-7 | Vanguard | 300 | 55,688 | 1,087 | 156 | 932 | 1,989 |
-| Toad Pond | 3-7 | Ranger (arrows) | 300 | 55,688 | 1,087 | 489 | 599 | 1,656 |
-| Toad Pond | 3-7 | Ranger (spears) | 300 | 55,688 | 1,087 | 246 | 842 | 1,899 |
-| Toad Pond | 3-7 | Arcanist/Mystic | 300 | 55,688 | 1,087 | 206 | 882 | 1,939 |
-| Sproutling Glade | 5-10 | Vanguard | 300 | 81,000 | 1,354 | 171 | 1,182 | 2,847 |
-| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 81,000 | 1,354 | 520 | 834 | 2,499 |
-| Sproutling Glade | 5-10 | Ranger (spears) | 300 | 81,000 | 1,354 | 266 | 1,088 | 2,753 |
-| Sproutling Glade | 5-10 | Arcanist/Mystic | 300 | 81,000 | 1,354 | 227 | 1,127 | 2,792 |
-| Waspgrass Fields | 7-12 | Vanguard | 300 | 45,900 | 1,763 | 314 | 1,448 | 3,448 |
-| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 45,900 | 1,763 | 713 | 1,049 | 3,049 |
-| Waspgrass Fields | 7-12 | Ranger (spears) | 300 | 45,900 | 1,763 | 422 | 1,341 | 3,341 |
-| Waspgrass Fields | 7-12 | Arcanist/Mystic | 300 | 45,900 | 1,763 | 415 | 1,347 | 3,347 |
-| Boar Meadow | 9-15 | Vanguard | 264 | 66,583 | 2,590 | 843 | 1,747 | 5,974 |
-| Boar Meadow | 9-15 | Ranger (arrows) | 292 | 73,595 | 2,862 | 1,475 | 1,388 | 6,060 |
-| Boar Meadow | 9-15 | Ranger (spears) | 292 | 73,595 | 2,862 | 1,013 | 1,849 | 6,521 |
-| Boar Meadow | 9-15 | Arcanist/Mystic | 284 | 71,503 | 2,780 | 1,115 | 1,666 | 6,206 |
-| Burrow Hills | 11-16 | Vanguard | 232 | 80,161 | 3,367 | 1,051 | 2,316 | 3,679 |
-| Burrow Hills | 11-16 | Ranger (arrows) | 261 | 90,249 | 3,791 | 1,806 | 1,985 | 3,520 |
-| Burrow Hills | 11-16 | Ranger (spears) | 261 | 90,249 | 3,791 | 1,255 | 2,536 | 4,071 |
-| Burrow Hills | 11-16 | Arcanist/Mystic | 252 | 87,201 | 3,663 | 1,390 | 2,273 | 3,756 |
-| Wolf Copse | 12-18 | Vanguard | 277 | 99,666 | 2,026 | 704 | 1,322 | 6,750 |
-| Wolf Copse | 12-18 | Ranger (arrows) | 300 | 107,850 | 2,192 | 1,279 | 913 | 6,786 |
-| Wolf Copse | 12-18 | Ranger (spears) | 300 | 107,850 | 2,192 | 859 | 1,333 | 7,206 |
-| Wolf Copse | 12-18 | Arcanist/Mystic | 296 | 106,479 | 2,164 | 1,763 | 402 | 6,200 |
-| Reedmarsh | 14-19 | Vanguard | 232 | 81,523 | 4,747 | 1,251 | 3,496 | 15,088 |
-| Reedmarsh | 14-19 | Ranger (arrows) | 261 | 91,770 | 5,344 | 2,005 | 3,339 | 16,387 |
-| Reedmarsh | 14-19 | Ranger (spears) | 261 | 91,770 | 5,344 | 1,455 | 3,889 | 16,938 |
-| Reedmarsh | 14-19 | Arcanist/Mystic | 253 | 88,674 | 5,164 | 2,352 | 2,812 | 15,420 |
-| The Bramble Run | 14-20 | Vanguard | 267 | 114,323 | 2,586 | 852 | 1,734 | 6,908 |
-| The Bramble Run | 14-20 | Ranger (arrows) | 294 | 126,179 | 2,855 | 1,475 | 1,380 | 7,091 |
-| The Bramble Run | 14-20 | Ranger (spears) | 294 | 126,179 | 2,855 | 1,020 | 1,834 | 7,545 |
-| The Bramble Run | 14-20 | Arcanist/Mystic | 286 | 122,646 | 2,775 | 1,928 | 847 | 6,398 |
-| Thornsnap Hollow | 14-20 | Vanguard | 252 | 116,554 | 2,795 | 1,021 | 1,774 | 3,485 |
-| Thornsnap Hollow | 14-20 | Ranger (arrows) | 281 | 129,705 | 3,110 | 1,698 | 1,412 | 3,316 |
-| Thornsnap Hollow | 14-20 | Ranger (spears) | 281 | 129,705 | 3,110 | 1,204 | 1,906 | 3,811 |
-| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 272 | 125,763 | 3,016 | 2,108 | 908 | 2,755 |
-| Shard Fields | 17-24 | Vanguard | 277 | 144,554 | 5,795 | 523 | 5,271 | 6,517 |
-| Shard Fields | 17-24 | Ranger (arrows) | 300 | 156,600 | 6,277 | 1,100 | 5,177 | 6,527 |
-| Shard Fields | 17-24 | Ranger (spears) | 300 | 156,600 | 6,277 | 679 | 5,598 | 6,948 |
-| Shard Fields | 17-24 | Arcanist/Mystic | 296 | 154,455 | 6,192 | 1,523 | 4,668 | 6,000 |
-| The Bandit Road | 19-27 | Vanguard | 248 | 97,699 | 9,711 | 1,452 | 8,259 | 10,307 |
-| The Bandit Road | 19-27 | Ranger (arrows) | 277 | 108,996 | 10,833 | 2,145 | 8,688 | 10,973 |
-| The Bandit Road | 19-27 | Ranger (spears) | 277 | 108,996 | 10,833 | 1,639 | 9,195 | 11,479 |
-| The Bandit Road | 19-27 | Arcanist/Mystic | 268 | 105,604 | 10,497 | 2,664 | 7,833 | 10,046 |
-| The Old Quarry | 23-30 | Vanguard | 233 | 128,360 | 10,000 | 1,206 | 8,794 | 9,664 |
-| The Old Quarry | 23-30 | Ranger (arrows) | 262 | 144,471 | 11,255 | 1,959 | 9,297 | 10,275 |
-| The Old Quarry | 23-30 | Ranger (spears) | 262 | 144,471 | 11,255 | 1,409 | 9,846 | 10,825 |
-| The Old Quarry | 23-30 | Arcanist/Mystic | 253 | 139,604 | 10,876 | 2,292 | 8,584 | 9,529 |
-| Smugglers' Ridge | 19-26 | Vanguard | 238 | 107,812 | 9,101 | 1,211 | 7,889 | 9,980 |
-| Smugglers' Ridge | 19-26 | Ranger (arrows) | 267 | 120,951 | 10,210 | 1,942 | 8,267 | 10,612 |
-| Smugglers' Ridge | 19-26 | Ranger (spears) | 267 | 120,951 | 10,210 | 1,409 | 8,801 | 11,146 |
-| Smugglers' Ridge | 19-26 | Arcanist/Mystic | 258 | 116,991 | 9,875 | 2,316 | 7,559 | 9,827 |
-| The Fallen Bastion | 23-30 | Vanguard | 218 | 130,630 | 10,775 | 1,450 | 9,325 | 10,094 |
-| The Fallen Bastion | 23-30 | Ranger (arrows) | 248 | 148,228 | 12,226 | 2,258 | 9,968 | 10,841 |
-| The Fallen Bastion | 23-30 | Ranger (spears) | 248 | 148,228 | 12,226 | 1,668 | 10,558 | 11,431 |
-| The Fallen Bastion | 23-30 | Arcanist/Mystic | 239 | 142,881 | 11,786 | 2,574 | 9,212 | 10,053 |
+| The Ratwarren | 1-4 | Vanguard | 300 | 27,000 | 1,065 | 151 | 914 | 914 |
+| The Ratwarren | 1-4 | Ranger (arrows) | 300 | 27,000 | 1,065 | 536 | 529 | 529 |
+| The Ratwarren | 1-4 | Ranger (spears) | 300 | 27,000 | 1,065 | 255 | 810 | 810 |
+| The Ratwarren | 1-4 | Arcanist/Mystic | 300 | 27,000 | 1,065 | 200 | 865 | 865 |
+| Toad Pond | 3-7 | Vanguard | 300 | 37,125 | 1,087 | 156 | 932 | 1,989 |
+| Toad Pond | 3-7 | Ranger (arrows) | 300 | 37,125 | 1,087 | 489 | 599 | 1,656 |
+| Toad Pond | 3-7 | Ranger (spears) | 300 | 37,125 | 1,087 | 246 | 842 | 1,899 |
+| Toad Pond | 3-7 | Arcanist/Mystic | 300 | 37,125 | 1,087 | 206 | 882 | 1,939 |
+| Sproutling Glade | 5-10 | Vanguard | 300 | 54,000 | 1,354 | 171 | 1,182 | 2,847 |
+| Sproutling Glade | 5-10 | Ranger (arrows) | 300 | 54,000 | 1,354 | 520 | 834 | 2,499 |
+| Sproutling Glade | 5-10 | Ranger (spears) | 300 | 54,000 | 1,354 | 266 | 1,088 | 2,753 |
+| Sproutling Glade | 5-10 | Arcanist/Mystic | 300 | 54,000 | 1,354 | 227 | 1,127 | 2,792 |
+| Waspgrass Fields | 7-12 | Vanguard | 300 | 30,600 | 1,763 | 314 | 1,448 | 3,448 |
+| Waspgrass Fields | 7-12 | Ranger (arrows) | 300 | 30,600 | 1,763 | 713 | 1,049 | 3,049 |
+| Waspgrass Fields | 7-12 | Ranger (spears) | 300 | 30,600 | 1,763 | 422 | 1,341 | 3,341 |
+| Waspgrass Fields | 7-12 | Arcanist/Mystic | 300 | 30,600 | 1,763 | 415 | 1,347 | 3,347 |
+| Boar Meadow | 9-15 | Vanguard | 264 | 44,389 | 2,590 | 843 | 1,747 | 5,974 |
+| Boar Meadow | 9-15 | Ranger (arrows) | 292 | 49,063 | 2,862 | 1,475 | 1,388 | 6,060 |
+| Boar Meadow | 9-15 | Ranger (spears) | 292 | 49,063 | 2,862 | 1,013 | 1,849 | 6,521 |
+| Boar Meadow | 9-15 | Arcanist/Mystic | 284 | 47,669 | 2,780 | 1,115 | 1,666 | 6,206 |
+| Burrow Hills | 11-16 | Vanguard | 232 | 53,440 | 3,367 | 1,051 | 2,316 | 3,679 |
+| Burrow Hills | 11-16 | Ranger (arrows) | 261 | 60,166 | 3,791 | 1,806 | 1,985 | 3,520 |
+| Burrow Hills | 11-16 | Ranger (spears) | 261 | 60,166 | 3,791 | 1,255 | 2,536 | 4,071 |
+| Burrow Hills | 11-16 | Arcanist/Mystic | 252 | 58,134 | 3,663 | 1,390 | 2,273 | 3,756 |
+| Wolf Copse | 12-18 | Vanguard | 277 | 66,444 | 2,026 | 704 | 1,322 | 6,750 |
+| Wolf Copse | 12-18 | Ranger (arrows) | 300 | 71,900 | 2,192 | 1,279 | 913 | 6,786 |
+| Wolf Copse | 12-18 | Ranger (spears) | 300 | 71,900 | 2,192 | 859 | 1,333 | 7,206 |
+| Wolf Copse | 12-18 | Arcanist/Mystic | 296 | 70,986 | 2,164 | 1,763 | 402 | 6,200 |
+| Reedmarsh | 14-19 | Vanguard | 232 | 54,348 | 4,747 | 1,251 | 3,496 | 15,088 |
+| Reedmarsh | 14-19 | Ranger (arrows) | 261 | 61,180 | 5,344 | 2,005 | 3,339 | 16,387 |
+| Reedmarsh | 14-19 | Ranger (spears) | 261 | 61,180 | 5,344 | 1,455 | 3,889 | 16,938 |
+| Reedmarsh | 14-19 | Arcanist/Mystic | 253 | 59,116 | 5,164 | 2,352 | 2,812 | 15,420 |
+| The Bramble Run | 14-20 | Vanguard | 267 | 76,216 | 2,586 | 852 | 1,734 | 6,908 |
+| The Bramble Run | 14-20 | Ranger (arrows) | 294 | 84,120 | 2,855 | 1,475 | 1,380 | 7,091 |
+| The Bramble Run | 14-20 | Ranger (spears) | 294 | 84,120 | 2,855 | 1,020 | 1,834 | 7,545 |
+| The Bramble Run | 14-20 | Arcanist/Mystic | 286 | 81,764 | 2,775 | 1,928 | 847 | 6,398 |
+| Thornsnap Hollow | 14-20 | Vanguard | 252 | 77,702 | 2,795 | 1,021 | 1,774 | 3,485 |
+| Thornsnap Hollow | 14-20 | Ranger (arrows) | 281 | 86,470 | 3,110 | 1,698 | 1,412 | 3,316 |
+| Thornsnap Hollow | 14-20 | Ranger (spears) | 281 | 86,470 | 3,110 | 1,204 | 1,906 | 3,811 |
+| Thornsnap Hollow | 14-20 | Arcanist/Mystic | 272 | 83,842 | 3,016 | 2,108 | 908 | 2,755 |
+| Shard Fields | 17-24 | Vanguard | 277 | 96,369 | 5,795 | 523 | 5,271 | 6,517 |
+| Shard Fields | 17-24 | Ranger (arrows) | 300 | 104,400 | 6,277 | 1,100 | 5,177 | 6,527 |
+| Shard Fields | 17-24 | Ranger (spears) | 300 | 104,400 | 6,277 | 679 | 5,598 | 6,948 |
+| Shard Fields | 17-24 | Arcanist/Mystic | 296 | 102,970 | 6,192 | 1,523 | 4,668 | 6,000 |
+| The Bandit Road | 19-27 | Vanguard | 248 | 65,133 | 9,711 | 1,452 | 8,259 | 10,307 |
+| The Bandit Road | 19-27 | Ranger (arrows) | 277 | 72,664 | 10,833 | 2,145 | 8,688 | 10,973 |
+| The Bandit Road | 19-27 | Ranger (spears) | 277 | 72,664 | 10,833 | 1,639 | 9,195 | 11,479 |
+| The Bandit Road | 19-27 | Arcanist/Mystic | 268 | 70,403 | 10,497 | 2,664 | 7,833 | 10,046 |
+| The Old Quarry | 23-30 | Vanguard | 233 | 85,573 | 10,000 | 1,206 | 8,794 | 9,664 |
+| The Old Quarry | 23-30 | Ranger (arrows) | 262 | 96,314 | 11,255 | 1,959 | 9,297 | 10,275 |
+| The Old Quarry | 23-30 | Ranger (spears) | 262 | 96,314 | 11,255 | 1,409 | 9,846 | 10,825 |
+| The Old Quarry | 23-30 | Arcanist/Mystic | 253 | 93,069 | 10,876 | 2,292 | 8,584 | 9,529 |
+| Smugglers' Ridge | 19-26 | Vanguard | 238 | 71,875 | 9,101 | 1,211 | 7,889 | 9,980 |
+| Smugglers' Ridge | 19-26 | Ranger (arrows) | 267 | 80,634 | 10,210 | 1,942 | 8,267 | 10,612 |
+| Smugglers' Ridge | 19-26 | Ranger (spears) | 267 | 80,634 | 10,210 | 1,409 | 8,801 | 11,146 |
+| Smugglers' Ridge | 19-26 | Arcanist/Mystic | 258 | 77,994 | 9,875 | 2,316 | 7,559 | 9,827 |
+| The Fallen Bastion | 23-30 | Vanguard | 218 | 87,087 | 10,775 | 1,450 | 9,325 | 10,094 |
+| The Fallen Bastion | 23-30 | Ranger (arrows) | 248 | 98,818 | 12,226 | 2,258 | 9,968 | 10,841 |
+| The Fallen Bastion | 23-30 | Ranger (spears) | 248 | 98,818 | 12,226 | 1,668 | 10,558 | 11,431 |
+| The Fallen Bastion | 23-30 | Arcanist/Mystic | 239 | 95,254 | 11,786 | 2,574 | 9,212 | 10,053 |
 
 Net with trading counts what the materials are worth when sold to other players (the gold a crafted item saves).
 
@@ -146,22 +146,22 @@ Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanis
 | The Fallen Bastion | solo | mixed | 21,110 | 11,753 | 0.89 |  |
 | The Old Watchtower (a party of six) | party | large | 105,376 | 6,157 | 1.04 | 1.84 |
 
-Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow). "Plan" counts our stages only; the engine also adds 1.5x below level 50 and 1.5x more while stamina is above 39 hours (measured, review A3-1), so the real columns are what players get. Nothing is retuned until Jay answers Q83.
+Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow). "Plan" counts our stages only; the engine also adds 1.5x more while stamina is above 39 hours (Tibia's rested bonus). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: "Yes, 11-15 hours").
 
 | Level | Plan | Real, rested | Real, stamina below 39 h |
 |---|---|---|---|
-| 6 | 0.1 | 0.0 | 0.0 |
-| 9 | 0.2 | 0.1 | 0.1 |
-| 11 | 0.4 | 0.2 | 0.3 |
-| 14 | 0.8 | 0.4 | 0.5 |
-| 18 | 1.5 | 0.7 | 1.0 |
-| 21 | 2.2 | 1.0 | 1.5 |
-| 25 | 3.9 | 1.7 | 2.6 |
-| 30 | 6.4 | 2.8 | 4.3 |
-| 35 | 9.4 | 4.2 | 6.3 |
-| 40 | 13.4 | 6.0 | 9.0 |
+| 6 | 0.1 | 0.0 | 0.1 |
+| 9 | 0.2 | 0.1 | 0.2 |
+| 11 | 0.4 | 0.3 | 0.4 |
+| 14 | 0.8 | 0.5 | 0.8 |
+| 18 | 1.5 | 1.0 | 1.5 |
+| 21 | 2.2 | 1.5 | 2.2 |
+| 25 | 3.9 | 2.6 | 3.9 |
+| 30 | 6.4 | 4.3 | 6.4 |
+| 35 | 9.4 | 6.3 | 9.4 |
+| 40 | 13.4 | 9.0 | 13.4 |
 
-Loot: the engine multiplies every drop chance by 2 (capped at 100%; review E-1, measured 42 coins a Road Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: Floor 1 in 11-15 hours by hand) are now missed: level 35 takes 4.2 hours rested, 6.3 on low stamina, against 9.4 in the plan. Q83 and Q84 ask Jay what to do.
+Loot: the engine multiplies every drop chance by 2 (capped at 100%; review E-1, measured 42 coins a Road Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: Floor 1 in 11-15 hours by hand): by the model level 35 takes 6.3 hours fully rested and 9.4 on low stamina; real play is about 40% slower, so most players land in 11-15 hours (Q83). Loot waits on Q84.
 
 Coins and NPC loot an hour for a Vanguard, plain tables against the real game (loot rate counted). The checks above and the hunting tasks' pay still use the plain column.
 

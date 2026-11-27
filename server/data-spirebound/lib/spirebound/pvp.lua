@@ -3,6 +3,7 @@
 
 SpirePvP = {
 	NEWBIE_LEVEL = 50, -- below this you can't attack or be attacked (except in boss rooms)
+	NEW_PLAY_TIME = 2 * 3600, -- DESIGN 6.4: a new character's first 2 hours of play are protected at any level, everywhere
 	LEVEL_RANGE = 0.70, -- can't start a fight with someone below 70% of your level (outside Contested/Deadzone/boss rooms)
 	BULLY_GAP = 30, -- unjust kill on someone 30+ levels lower counts double
 	RED_DAY = 3, RED_WEEK = 5, RED_MONTH = 10,
@@ -154,6 +155,14 @@ function SpirePvP.canAttack(a, v, zone)
 	if zone ~= "bossroom" and not v.aidedSkull and (a.level < SpirePvP.NEWBIE_LEVEL or v.level < SpirePvP.NEWBIE_LEVEL) then
 		return false, "Players below level " .. SpirePvP.NEWBIE_LEVEL .. " are protected."
 	end
+	-- RV6 (DESIGN 6.4): the first 2 hours of play protect a new character "regardless of level", boss rooms included.
+	-- playSeconds is nil for anything that isn't a tracked player (then it doesn't apply).
+	if (a.playSeconds or math.huge) < SpirePvP.NEW_PLAY_TIME then
+		return false, "You are a new climber: you can't attack players during your first 2 hours of play."
+	end
+	if not v.aidedSkull and (v.playSeconds or math.huge) < SpirePvP.NEW_PLAY_TIME then
+		return false, "That player is a new climber, protected for their first 2 hours of play."
+	end
 	if v.sanctuaryVsMyGuild or a.sanctuaryVsTheirGuild then
 		return false, "Sanctuary: your guilds can't fight each other right now."
 	end
@@ -248,6 +257,44 @@ local function scope(player)
 	return player:kv():scoped("spirebound-pvp")
 end
 SpirePvP.scope = scope
+
+-- Play time (RV6): the engine adds each session to players.onlinetime when the character logs out; this session is
+-- counted from login.
+-- The autopilot's test characters (Floors.onlyTesters) count as past the 2 hours, so PvP tests keep working, unless a
+-- test sets their play time with "/pilot playtime n" (SpirePvP.setPlayTime).
+SpirePvP.playBase, SpirePvP.playLogin = SpirePvP.playBase or {}, SpirePvP.playLogin or {}
+SpirePvP.playSet = SpirePvP.playSet or {}
+
+function SpirePvP.notePlayLogin(player)
+	local guid = player:getGuid()
+	if SpirePvP.playSet[guid] then
+		return
+	end
+	local base = 0
+	local q = db.storeQuery("SELECT `onlinetime` FROM `players` WHERE `id` = " .. guid)
+	if q then
+		base = result.getNumber(q, "onlinetime") or 0
+		result.free(q)
+	end
+	if base < SpirePvP.NEW_PLAY_TIME and Floors and Floors.onlyTesters({ player:getName() }) then
+		base = SpirePvP.NEW_PLAY_TIME
+	end
+	SpirePvP.playBase[guid], SpirePvP.playLogin[guid] = base, os.time()
+end
+
+function SpirePvP.setPlayTime(player, seconds)
+	local guid = player:getGuid()
+	SpirePvP.playSet[guid] = true
+	SpirePvP.playBase[guid], SpirePvP.playLogin[guid] = seconds, os.time()
+end
+
+function SpirePvP.playSeconds(player)
+	local guid = player:getGuid()
+	if not SpirePvP.playBase[guid] then
+		SpirePvP.notePlayLogin(player)
+	end
+	return SpirePvP.playBase[guid] + (os.time() - SpirePvP.playLogin[guid])
+end
 
 function SpirePvP.isMurderer(player)
 	local s = player:getSkull()

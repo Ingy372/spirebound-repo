@@ -47,9 +47,10 @@ function target.creatureOnTargetCombat(creature, victim)
 	end
 	local ra = recentAttacks[a:getGuid()] or {}
 	local ok, reason = SpirePvP.canAttack(
-		{ level = a:getLevel(), skull = a:getSkull(), sanctuaryVsTheirGuild = sanctuaryActive(a, guildId(v)) },
+		{ level = a:getLevel(), skull = a:getSkull(), sanctuaryVsTheirGuild = sanctuaryActive(a, guildId(v)), playSeconds = SpirePvP.playSeconds(a) },
 		{ level = v:getLevel(), skull = v:getSkull(), attackedMeRecently = (ra[v:getGuid()] or 0) > os.time() - 60,
-			sanctuaryVsMyGuild = sanctuaryActive(v, guildId(a)), aidedSkull = SpirePvP.aiding(v:getGuid(), os.time()) },
+			sanctuaryVsMyGuild = sanctuaryActive(v, guildId(a)), aidedSkull = SpirePvP.aiding(v:getGuid(), os.time()),
+			playSeconds = SpirePvP.playSeconds(v) },
 		zone)
 	if not ok then
 		if creature:isPlayer() then
@@ -278,6 +279,7 @@ function login.onLogin(player)
 	player:registerEvent("SpirePvPHits")
 	player:registerEvent("SpirePvPDeath")
 	graceUntil[player:getId()] = os.time() + 30
+	SpirePvP.notePlayLogin(player) -- RV6: the 2-hour new-climber protection counts play time from here
 	local s = SpirePvP.scope(player)
 	if s:get("outlawRespawn") then -- a murderer who died wakes in the Outlaw Camp, outside every town
 		s:remove("outlawRespawn")

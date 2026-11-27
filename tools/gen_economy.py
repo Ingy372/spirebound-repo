@@ -35,7 +35,7 @@ def stage(level):
     return 10 if level <= 8 else 4 if level <= 20 else 3
 
 
-# Review A3-1/E-1: the engine's own bonuses (1.5x below level 50, 1.5x more for a rested character) and its loot rate
+# Review A3-1/E-1: the engine's own bonuses (1.5x for a rested character; its 1.5x below level 50 is removed, Q83) and its loot rate
 # (every drop chance x rateLoot, capped at 100%). Shared with tools/balance.py.
 from balance import real_stage, rate_loot  # noqa: E402
 RATE_LOOT = rate_loot()
@@ -360,15 +360,16 @@ L += ["", "## What each ground pays per person, by class and in a party (S1b)",
 for r in REWARDS:
     L.append(f"| {r['ground']} | {r['kind']} | {r['type']} | {r['per_person_base_xp_h']:,} | {r['per_person_gold_h']:,} | {r['ratio']} | {r['vs_solo']} |")
 L += ["", "Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow). "
-      "\"Plan\" counts our stages only; the engine also adds 1.5x below level 50 and 1.5x more while stamina is above 39 hours "
-      "(measured, review A3-1), so the real columns are what players get. Nothing is retuned until Jay answers Q83.", "",
+      "\"Plan\" counts our stages only; the engine also adds 1.5x more while stamina is above 39 hours (Tibia's rested "
+      "bonus). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: \"Yes, 11-15 hours\").", "",
       "| Level | Plan | Real, rested | Real, stamina below 39 h |", "|---|---|---|---|"]
 for lvl in (6, 9, 11, 14, 18, 21, 25, 30, 35, 40):
     L.append(f"| {lvl} | {timeline[lvl]:.1f} | {real_timeline[lvl]:.1f} | {tired_timeline[lvl]:.1f} |")
 L += ["", f"Loot: the engine multiplies every drop chance by {RATE_LOOT:g} (capped at 100%; review E-1, measured 42 coins a Road "
       "Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: "
-      f"Floor 1 in 11-15 hours by hand) are now missed: level 35 takes {real_timeline[35]:.1f} hours rested, "
-      f"{tired_timeline[35]:.1f} on low stamina, against {timeline[35]:.1f} in the plan. Q83 and Q84 ask Jay what to do.", "",
+      f"Floor 1 in 11-15 hours by hand): by the model level 35 takes {real_timeline[35]:.1f} hours fully rested and "
+      f"{tired_timeline[35]:.1f} on low stamina; real play is about 40% slower, so most players land in 11-15 hours "
+      "(Q83). Loot waits on Q84.", "",
       "Coins and NPC loot an hour for a Vanguard, plain tables against the real game (loot rate counted). The checks above and "
       "the hunting tasks' pay still use the plain column.", "",
       "| Ground | Gold/h (plan) | Gold/h (real) | NPC loot/h (plan) | NPC loot/h (real) |", "|---|---|---|---|---|"]

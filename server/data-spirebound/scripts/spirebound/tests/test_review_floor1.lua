@@ -166,6 +166,11 @@ SpireTest.add("review T2: experience and skill factors go through the engine's o
 	SpireHooks.xpFns = { a = function(_, _, exp) return exp * 1.5 end, b = function(_, _, exp) return exp * 0.45 end }
 	SpireTest.eq(SpireHooks.gainExperience(nil, nil, 1000, 100), 675, "factors multiply and the result is a whole number")
 	SpireHooks.xpFns = saved
+	-- Q83: the engine's hidden low-level bonus is taken back out, a store boost is kept
+	SpireTest.eq(text:find("withoutLowLevelBonus", 1, true) ~= nil, true, "the engine's Player:onGainExperience removes the low-level bonus")
+	SpireTest.eq(SpireHooks.withoutLowLevelBonus(150, 0, 50), 100, "1.5x below level 50 comes back to 1x")
+	SpireTest.eq(SpireHooks.withoutLowLevelBonus(200, 50, 50), 150, "a 50% store boost stays")
+	SpireTest.eq(SpireHooks.withoutLowLevelBonus(120, 0, 0), 120, "nothing to remove from level 50")
 end)
 
 SpireTest.add("review T3: the cavebot's loot cut works on a real container of real items", function()
