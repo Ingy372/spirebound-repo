@@ -39,6 +39,8 @@ local HINTS = {
 	[5] = "Level 5! Visit the shops along Hearthgate's north wall: Armorer Hesta, Weaponsmith Garrick, Alchemist Ivo for potions and Fletcher Tamsin for arrows. Say 'hi' and then 'trade' to a merchant.",
 	[4] = "Level 4! You have learned your first healing spell. Say !spells to read your list.",
 	[8] = "Level 8! New spells unlocked. Say !spells to read them, and say a spell's words to cast it.",
+	-- review A9: the drop from 10x to 4x experience at level 9 felt like the game broke
+	[9] = "Level 9! The tower's first stretch is behind you: from here, experience comes slower (each kill gives less than half of what it did). That is normal. Try a harder hunting ground: say !hunt.",
 	[10] = "Level 10! Quest givers are waiting: Captain Dorrow at the north gate, Hunter Brannoch in the Hunters' Hall, Miller Agna in Millcross. Press J to see your quest log.",
 	[20] = "Level 20! You can be promoted at the Ascendancy in Hearthgate, and you can buy a house.",
 }

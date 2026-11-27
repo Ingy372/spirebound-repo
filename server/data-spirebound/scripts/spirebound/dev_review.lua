@@ -19,6 +19,8 @@
 --   /rv boxprep [fresh]                    item 10: stand by the Underkeep strongbox ("fresh": forget the account's day)
 --   /rv fishprep | fishstate               review A7-1: a rod in the left hand and worms on the river bank at
 --                                          1122,1213 (water at 1125,1213); fishstate logs the fishing tries so far
+--   /rv levelnine                          review A9: a real level-up from 8 to 9; logs whether the "slower" hint came
+--   /rv journal                            review A5-1: the Journal's Quests tab as the client receives it
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -252,6 +254,36 @@ function rv.onSay(player, words, param)
 		logger.info("[LOADTEST] rv fishstate {} tries={}", player:getName(), player:getSkillTries(SKILL_FISHING))
 	elseif cmd == "fishstate" then
 		logger.info("[LOADTEST] rv fishstate {} tries={}", player:getName(), player:getSkillTries(SKILL_FISHING))
+	elseif cmd == "levelnine" then
+		if player:getLevel() > 8 then -- back down to level 8 (a level-8 test character may not use chat commands)
+			player:removeExperience(player:getExperience() - Game.getExperienceForLevel(8), false)
+		end
+		local got = {}
+		local real = Player.sendTextMessage
+		Player.sendTextMessage = function(self, t, text, ...)
+			if self:getId() == player:getId() then
+				table.insert(got, tostring(text))
+			end
+			return real(self, t, text, ...)
+		end
+		local ok, err = pcall(function()
+			player:addExperience(Game.getExperienceForLevel(9) - player:getExperience() + 1, false)
+		end)
+		Player.sendTextMessage = real
+		local hint = false
+		for _, t in ipairs(got) do
+			hint = hint or t:find("experience comes slower", 1, true) ~= nil
+		end
+		logger.info("[LOADTEST] rv level9 {} level={} hint={} ok={}", player:getName(), player:getLevel(), hint and 1 or 0, ok and 1 or tostring(err))
+	elseif cmd == "journal" then
+		local _, lines = SpireJournal.quests(player)
+		local group = 0
+		for _, l in ipairs(lines) do
+			if l:find("Gate Hound", 1, true) and l:find("Stonehorn Ram", 1, true) then
+				group = group + 1
+			end
+		end
+		logger.info("[LOADTEST] rv journal {} lines={} stairkey_group_line={}", player:getName(), #lines, group)
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

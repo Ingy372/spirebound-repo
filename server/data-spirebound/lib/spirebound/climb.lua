@@ -26,7 +26,7 @@ SpireClimb.FLOOR1 = {
 		where = "see Hunter Brannoch in the Hunters' Hall, then hunt moles in Burrow Hills",
 		done = questDone("q1_iron1") },
 	{ key = "iron2", level = 19, text = "Iron for the Stair, part 2: your Floor 1 armour (Hunter Brannoch)",
-		where = "hunt Road Bandits on the Bandit Road (east), then report to Hunter Brannoch",
+		where = "hunt Road Bandits on the Bandit Road (north-east), then report to Hunter Brannoch",
 		done = questDone("q1_iron2") },
 	{ key = "gate_hound", level = 24, text = "Defeat the Gate Hound",
 		where = "gather a party of 3 or more and fight the Gate Hound at the Pass, the way into the Floor 1 labyrinth",

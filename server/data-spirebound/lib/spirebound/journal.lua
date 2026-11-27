@@ -98,8 +98,15 @@ function SpireJournal.quests(player)
 	if #lines == 0 then
 		table.insert(lines, "No quests yet. Talk to the people of Hearthgate.")
 	end
+	add("Bring a group", SpireJournal.GROUP_LINES) -- review A5-1: say plainly where a party is needed
 	return "Quests", lines
 end
+
+SpireJournal.GROUP_LINES = {
+	"The Stair Key needs two fights you cannot win alone: the Gate Hound in the Pass (3 or more players) and the Stonehorn Ram at the Old Watchtower (a party of 4).",
+	"Party grounds: the Smugglers' Cellar under the Bandit Road, the Old Watchtower, and the party caves under the grounds (2 to 4 players). The Bandit Road itself can be hunted alone.",
+	"The Lost Patrol (Captain Dorrow) is for a party of four, and the Axe-Lord of the Stair for 4 to 6.",
+}
 
 function SpireJournal.task(player)
 	local s = SpireTasks.scope(player)
