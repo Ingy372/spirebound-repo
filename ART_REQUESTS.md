@@ -266,3 +266,33 @@ Still icons only (Grok). Rare weapons need a picture of their own so others can 
 | [ ] | `item_brass_spyglass.png` (now item 23512) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a short brass spyglass, three telescoping sections, worn leather wrap in the middle, a glint of sky reflected in the lens." |
 | [ ] | `item_plains_map.png` (now item 2823) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a half-unrolled parchment map, hand-drawn green plains with a tiny tower in the middle, ink blots, one corner torn, a red string tying the roll." |
 | [ ] | `item_message_bottle.png` (now item 5802) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small green glass bottle stoppered with a cork and red wax, a rolled-up note visible inside, a strand of river weed caught around its neck." |
+
+## Batch 15 (2026-11-27): adventure layer Session B, rare roamers and treasure (Priority: medium; placeholders work)
+Rare roamers (roadmap AD4) are made by Claude with the Blender pipeline; drafts are in `ART_FOR_JAY/` (start with
+`RARE_ROAMERS_for_review.png`, plain grey). Until approved, the game shows a placeholder with a coloured glow. The
+Frenzied Boar uses our approved red-crested boar.
+
+| ✓ | Art name | What | Status |
+|---|---|---|---|
+| [~] | `goldback_toad` | Goldback Toad: a bottle-green, nearly black toad with a gold back studded with nuggets, a tiny gold crown and ruby eyes (Tibia's toad is orange-gold) | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
+| [~] | `pale_stag` | Pale Stag: an ash-white stag with a charcoal face, throat ruff and legs, great pale antlers with frost-blue tips (Tibia's deer is small and red-brown) | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
+| [~] | `paymaster` | The Paymaster: the bandits' banker in a black felt hat with a gold band and a green coat, hugging an iron-banded strongbox | drafted 2026-11-27, checker ALL PASS, waiting for Jay |
+| [ ] | `deadeye_sorrel`, `page_thief`, `glasswing`, `ironpurse`, `the_unfinished` | addon-hunt targets and hidden beasts: borrow the crossbowman, hexer, prism shardling, a citizen and the granite warden for now | later |
+
+Still item icons (Grok), 32×32, 1 frame, transparent background. Until drawn, the game borrows the item in brackets.
+
+| ✓ | File name | Grok prompt |
+|---|---|---|
+| [ ] | `item_tattered_map.png` (now 5706) | "32x32 pixel-art item icon, Tibia style, transparent background: a torn, stained parchment treasure map folded in half, a red X and a dotted path, one corner burnt." |
+| [ ] | `item_vault_key.png` (now 9172) | "32x32 pixel-art item icon, Tibia style, transparent background: a heavy black iron key with a round bow shaped like a coin, rust at the teeth." |
+| [ ] | `item_stone_rubbing.png` (now 2819, 2833, 4831) | "32x32 pixel-art item icon, Tibia style, transparent background: a small sheet of rough paper with a charcoal rubbing of a carved mason's mark, smudged edges." |
+| [ ] | `item_goldbacks_crown.png` (now 5799) | "32x32 pixel-art item icon, Tibia style, transparent background: a tiny three-pointed gold crown with a ruby, sized for a toad, a little dented." |
+| [ ] | `item_frenzied_tusk.png` (now 3044) | "32x32 pixel-art item icon, Tibia style, transparent background: a curved ivory boar tusk with a red-black scorch mark at its root, mounted on a small dark wooden plaque." |
+| [ ] | `item_pale_antlers.png` (now 12544) | "32x32 pixel-art item icon, Tibia style, transparent background: a pair of white branching stag antlers with frost-blue tips, mounted on a dark wooden shield." |
+| [ ] | `item_paymasters_strongbox.png` (now 35571) | "32x32 pixel-art item icon, Tibia style, transparent background: a small dark oak strongbox with brass bands and a brass lock, lid ajar, empty." |
+| [ ] | `item_smugglers_lantern.png` (now 10289) | "32x32 pixel-art item icon, Tibia style, transparent background: a shuttered tin signal lantern with a red glass pane, soot on top." |
+| [ ] | `item_bandit_banner.png` (now 10415) | "32x32 pixel-art item icon, Tibia style, transparent background: a tattered mud-brown banner on a short pole, a red mask painted on it." |
+| [ ] | `item_ruin_idol.png` (now 8146) | "32x32 pixel-art item icon, Tibia style, transparent background: a small weathered grey stone idol of a seated figure with a worn face, lichen in the cracks." |
+| [ ] | `item_captains_sea_chest.png` (now 8773) | "32x32 pixel-art item icon, Tibia style, transparent background: a salt-stained blue-grey sea chest with rope handles and iron corners." |
+| [ ] | `item_climbers_compass.png` (now 10302) | "32x32 pixel-art item icon, Tibia style, transparent background: an old brass compass whose needle points straight up, a cracked glass face." |
+| [ ] | `item_wardwright_tablet.png` (now 28538) | "32x32 pixel-art item icon, Tibia style, transparent background: a small clay tablet covered in neat angular builders' marks, one corner broken off." |

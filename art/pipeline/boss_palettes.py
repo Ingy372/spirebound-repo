@@ -232,13 +232,54 @@ ELITES = {"old_bristleback": OLD_BRISTLEBACK, "granite_warden": GRANITE_WARDEN, 
           "prism_shardling": PRISM_SHARDLING}
 
 
+# AD4 rare roamers (adventure design 4.4). Goldback Toad: bottle-green nearly black (Tibia's toad is orange-gold, our
+# pond toad emerald-teal), raised gold coin plates and a gold crown with a ruby; ruby eyes; cream belly.
+BOTTLE = ((6, 18, 12), (96, 128, 84), (30, 58, 38))
+BOTTLE_DARK = ((4, 12, 8), (64, 92, 60), (20, 40, 26))
+COIN = ((84, 52, 8), (248, 222, 130), (200, 148, 40))     # the gold back: old, warm gold
+CROWN = ((120, 80, 6), (255, 252, 190), (252, 206, 60))   # the crown: bright new gold, the one pale accent
+GOLDBACK_TOAD = {
+    "body": ramp(*BOTTLE), "head": ramp(*BOTTLE), "leg": ramp(*BOTTLE_DARK),
+    "belly": ramp((96, 84, 50), (246, 236, 196), (196, 180, 130)), "blotch": ramp((2, 8, 6), (22, 44, 30), (10, 22, 16)),
+    "wart": ramp((24, 50, 30), (150, 176, 110), (70, 104, 64)), "stripe": ramp(*BOTTLE_DARK), "coin": ramp(*COIN),
+    "crown": ramp(*CROWN),
+    "ruby": [[255, 60, 70]] * 8, "eye": ramp((110, 10, 14), (255, 140, 120), (220, 40, 40)), "pupil": [[6, 5, 5]] * 8,
+    "foot": ramp((80, 70, 40), (210, 196, 140), (150, 136, 90)), "line": [[3, 8, 5]] * 8,
+}
+# Pale Stag: moon-pale ash-white with cool blue-grey shadows (Tibia's deer is red-brown), a charcoal face mask, ruff
+# and lower legs, pale bone antlers with frost-blue tips, pale-blue eyes.
+MOON = ((52, 60, 78), (232, 234, 236), (158, 164, 176))      # ash, not snow: the antlers are the pale part
+CHAR = ((22, 22, 28), (120, 118, 124), (58, 56, 64))
+PALE_STAG = {
+    "body": ramp(*MOON), "head": ramp(*MOON), "belly": ramp((96, 102, 118), (246, 246, 244), (204, 206, 210)),
+    "ear": ramp(*MOON), "snout": ramp(*CHAR), "nose": [[14, 14, 18]] * 8, "eye": [[150, 220, 255]] * 8,
+    "leg_near": ramp((36, 38, 48), (190, 192, 200), (110, 112, 124)), "leg_far": ramp((26, 28, 36), (140, 142, 150), (80, 82, 92)),
+    "paw_near": [[16, 16, 20]] * 8, "paw_far": [[12, 12, 16]] * 8, "tail_base": ramp(*MOON),
+    "tail_tip": ramp((150, 156, 166), (255, 255, 255)), "ruff": ramp(*CHAR), "mask": ramp(*CHAR),
+    "antler": ramp((90, 78, 60), (255, 250, 232), (214, 200, 170)), "tine": ramp((40, 90, 140), (220, 246, 255), (120, 190, 240)),
+    "ring": [[236, 240, 246]] * 8,
+}
+# The Paymaster: the approved bandit's palette with a bottle-green coat-cape, mustard waistcoat, black felt hat with a
+# gold band, a dark oak strongbox with brass bands, gold coins.
+_BANDIT = json.loads((Path(__file__).resolve().parent / "palette.json").read_text(encoding="utf-8"))["ramps"]["bandit"]
+PAYMASTER = {**_BANDIT,
+    "cape": ramp((10, 30, 20), (120, 170, 120), (36, 80, 52)), "torso": ramp((60, 44, 8), (236, 206, 110), (170, 132, 40)),
+    "lace": ramp((10, 30, 20), (90, 130, 90)), "hood": ramp((8, 8, 10), (90, 88, 92), (30, 30, 34)),
+    "rim": ramp((110, 72, 6), (255, 240, 160), (230, 180, 50)), "box": ramp((24, 14, 8), (150, 104, 62), (74, 48, 26)),
+    "band": ramp((96, 64, 14), (252, 226, 140), (196, 150, 50)), "coin": ramp((130, 90, 10), (255, 252, 200), (250, 210, 70)),
+    "hair": ramp((40, 30, 24), (160, 140, 124), (90, 76, 64)),
+}
+ROAMERS = {"goldback_toad": GOLDBACK_TOAD, "pale_stag": PALE_STAG, "paymaster": PAYMASTER}
+
+
 def main():
     path = Path(__file__).resolve().parent / "palette.json"
     data = json.loads(path.read_text(encoding="utf-8"))
     data["ramps"].update(BOSSES)
     data["ramps"].update(ELITES)
+    data["ramps"].update(ROAMERS)
     path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
-    print("wrote", ", ".join(list(BOSSES) + list(ELITES)), "into", path.name)
+    print("wrote", ", ".join(list(BOSSES) + list(ELITES) + list(ROAMERS)), "into", path.name)
 
 
 if __name__ == "__main__":
