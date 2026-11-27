@@ -128,6 +128,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 		end
 	end,
 	respawn = true,
+	payEach = 1000, -- review A4-6: 10 platinum to each credited fighter's bank (the body keeps only a little)
 	private = { spawn = "boss_private_floor1", nw = "boss_private_floor1_nw", se = "boss_private_floor1_se", door = "lab3_up" },
 })
 
@@ -242,6 +243,9 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 		lastHit = kp and kp:getName() or nil
 	end
 	logger.info("[Spirebound] {} killed; credit: {}; last hit: {}", creature:getName(), table.concat(credit, ", "), tostring(lastHit))
+	if def.payEach then
+		SpireBoss.payCredited(credit, def.payEach, creature:getName())
+	end
 	if state.private then -- a private repeat kill: lock the party out for 20 hours, no world-first actions
 		SpireBoss.privateBusy[def.floor] = nil
 		for _, name in ipairs(state.private.members) do

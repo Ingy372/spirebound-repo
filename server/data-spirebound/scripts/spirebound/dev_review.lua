@@ -12,6 +12,7 @@
 --   /rv loot <monster> <n>                 kill n; logs the coins that reached you (bank and bag)
 --   /rv dg <case> <other player>           review A8-2: a Death Game death next to another real player; logs the verdict
 --                                          (cases: dragfought, dragged, firstvictim, firstother)
+--   /rv axelord                            review A4-6: kill the real Axe-Lord; logs what reached your bank
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -158,6 +159,26 @@ function rv.onSay(player, words, param)
 			local retired = kv.scoped("player"):scoped(tostring(guid)):scoped("spirebound"):get("retired") == true
 			logger.info("[LOADTEST] rv dg {} case={} verdict={} pvp_loss={} other_loss={} zone={}", name, case,
 				retired and "retire" or "saved", pvpLoss, otherLoss, SpirePvP.zoneAt(spot))
+		end, 1000)
+	elseif cmd == "axelord" then
+		local spot = WorldPoints.axe_lord_spawn
+		local boss
+		for _, c in ipairs(Game.getSpectators(spot, false, false, 14, 14, 14, 14)) do
+			if c:getName() == "Axe-Lord of the Stair" then
+				boss = c
+			end
+		end
+		boss = boss or SpireBoss.spawn("Axe-Lord of the Stair")
+		local bank = player:getBankBalance()
+		player:teleportTo(Position(spot.x, spot.y + 2, spot.z), true)
+		local hp = boss:getMaxHealth() * 3
+		doTargetCombatHealth(player, boss, COMBAT_PHYSICALDAMAGE, -hp, -hp, CONST_ME_NONE, ORIGIN_MELEE)
+		local pid = player:getId()
+		addEvent(function()
+			local p = Player(pid)
+			if p then
+				logger.info("[LOADTEST] rv axelord {} bank_gain={}", p:getName(), p:getBankBalance() - bank)
+			end
 		end, 1000)
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn

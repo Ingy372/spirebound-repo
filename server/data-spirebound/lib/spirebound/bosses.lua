@@ -179,6 +179,20 @@ function SpireBoss.stateFromDamageMap(damageMap, nameOf, now)
 	return state
 end
 
+-- Review A4-6: a boss whose coins should reach every credited fighter, not whoever opens the body, pays each one into
+-- the bank (online at once, offline through the database)
+function SpireBoss.payCredited(credit, amount, bossName)
+	for _, name in ipairs(credit) do
+		local p = Player(name)
+		if p then
+			p:setBankBalance(p:getBankBalance() + amount)
+			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your share of the %s's hoard: %d gold, paid into your bank.", bossName, amount))
+		else
+			db.query("UPDATE `players` SET `balance` = `balance` + " .. amount .. " WHERE `name` = " .. db.escapeString(name))
+		end
+	end
+end
+
 function SpireBoss.newState()
 	return { hits = {}, started = nil, headcount = 0, phase = 1, lastPlayerDamage = nil, emptySince = nil, flags = {} }
 end

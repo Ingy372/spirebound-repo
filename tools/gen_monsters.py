@@ -147,7 +147,9 @@ MONSTERS = {
                                   # and he leaves the tank for the casters half as often.
                                   hp=20000, xp=8000, speed=130, race="blood", change_target=(6000, 10),
                                   attacks=[("melee", 0, -160), ("cleave", -80, -170, 1)], armor=40, defense=40, boss=True,
-                                  loot=[(GOLD, 100000, 100), (PLAT, 100000, 40), (266, 100000, 10), (268, 100000, 10)],
+                                  # review A4-6: one body for the whole party, so most of his coins now go straight to each
+                                  # credited fighter's bank (SpireBoss payEach, 10 platinum each); the body keeps a little
+                                  loot=[(GOLD, 100000, 100), (PLAT, 100000, 5), (266, 100000, 10), (268, 100000, 10)],
                                   voices=["The stair is mine!", "None shall climb!"], summons=[("Ruin Sentinel", 2)],
                                   elements={"physical": 10},
                                   events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
