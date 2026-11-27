@@ -135,7 +135,7 @@ SpireFirstClimb.CHOICES = {
 }
 
 SpireFirstClimb.ITEMS = {
-	wreath = 2981,  -- Agna's wheat wreath (placeholder: flowers; a wreath picture is wished for in ART_REQUESTS.md)
+	wreath = 3605,  -- Agna's wheat wreath: a bunch of wheat, an item you use ON something (the flowers first used could not be aimed at the grave; FD1b)
 	pendant = 3039, -- Brother Tam's pendant (placeholder: a red stone, so nobody can wear it for its stats)
 }
 

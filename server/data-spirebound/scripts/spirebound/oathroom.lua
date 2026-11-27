@@ -583,7 +583,7 @@ function bossDeath.onDeath(creature)
 	end
 	r.cleared, r.boss = true, nil
 	openGate("g4")
-	setBraziers(false)
+	setBraziers(true) -- FD3b: they light the hall (without them it went pitch dark and two Pilots lost their way)
 	local team = members()
 	for _, p in ipairs(team) do
 		p:kv():scoped("spirebound-oath"):set("cleared_run", os.time())

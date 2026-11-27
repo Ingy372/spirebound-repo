@@ -323,7 +323,7 @@ a cracked oath-stone on his chest). Until then a stand-in look is used.
 | [ ] | `item_fc_record_page.png` (now 2815) | "32x32 pixel-art item icon, Tibia style, transparent background: a single yellowed journal page with neat brown handwriting and a torn left edge." |
 | [ ] | `item_fc_watch_log.png` (now 2821) | "32x32 pixel-art item icon, Tibia style, transparent background: a thick battered leather log book, its pages swollen, a faded tower stamped on the cover." |
 | [ ] | `item_fc_unsent_letter.png` (now 2818) | "32x32 pixel-art item icon, Tibia style, transparent background: a folded letter sealed with dark red wax that was never broken, a soldier's seal of a stair." |
-| [ ] | `item_agnas_wreath.png` (now 2981) | "32x32 pixel-art item icon, Tibia style, transparent background: a small round wreath of golden wheat stalks tied with a blue ribbon." |
+| [ ] | `item_agnas_wreath.png` (now 3605) | "32x32 pixel-art item icon, Tibia style, transparent background: a small round wreath of golden wheat stalks tied with a blue ribbon." |
 | [ ] | `item_tams_pendant.png` (now 3039) | "32x32 pixel-art item icon, Tibia style, transparent background: a plain healer's pendant, a smooth green stone on a worn leather cord." |
 | [ ] | `item_archive_seal.png` (now 2834) | "32x32 pixel-art item icon, Tibia style, transparent background: a cream certificate with a big ink-blue wax seal showing a quill over a tower." |
 | [ ] | `item_oathbound_pack.png` (now 5801) | "32x32 pixel-art item icon, Tibia style, transparent background: a sturdy dark-blue backpack with bronze buckles and a small oath-stone sewn on the flap." |
