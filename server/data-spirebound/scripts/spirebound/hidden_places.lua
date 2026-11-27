@@ -115,9 +115,10 @@ function mark.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You already carry a rubbing of this mark.")
 		return true
 	end
+	-- the line comes first: with a full backpack SpireGive.reward puts it in the Store Inbox and says so itself
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You press a sheet against the mason's mark and rub it with charcoal: a " ..
+		ItemType(rid):getName() .. ".")
 	SpireGive.reward(player, rid, 1)
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You press a sheet against the mason's mark and rub it with charcoal. " ..
-		ItemType(rid):getName() .. " added to your backpack.")
 	item:getPosition():sendMagicEffect(CONST_ME_POFF)
 	return true
 end
