@@ -104,6 +104,19 @@ PAL["elder_sproutling"] = {
     "moss": ramp((20, 44, 18), (130, 176, 80), (60, 104, 40)), "blossom": ramp((170, 100, 120), (255, 236, 240), (240, 180, 196)),
 }
 
+# Bandit Lieutenant: the approved road bandit's palette with a wine-black hood and cape (the bandits wear mud-brown, the
+# captain a red coat), a mustard officer's scarf, a dark leather-green jerkin, tan crossed knife belts, a bright tin
+# badge, steel knives.
+_BANDIT = json.loads((PIPE / "palette.json").read_text(encoding="utf-8"))["ramps"]["bandit"]
+WINE = ((16, 8, 12), (140, 74, 80), (62, 26, 34))
+PAL["bandit_lieutenant"] = {**_BANDIT,
+    "hood": ramp(*WINE), "cape": ramp(*WINE), "rim": ramp((8, 4, 6), (90, 44, 50), (36, 14, 20)),
+    "scarf": ramp((80, 54, 8), (246, 206, 100), (190, 140, 36)), "torso": ramp((14, 20, 16), (110, 130, 100), (46, 60, 44)),
+    "arm_a": ramp((14, 20, 16), (110, 130, 100), (46, 60, 44)), "arm_b": ramp((14, 20, 16), (110, 130, 100), (46, 60, 44)),
+    "strap": ramp((44, 26, 12), (220, 170, 110), (140, 96, 54)), "badge": ramp((90, 96, 106), (255, 255, 255), (200, 206, 214)),
+    "knife": ramp((60, 64, 76), (250, 252, 255), (170, 178, 192)),
+}
+
 
 def main():
     path = PIPE / "palette.json"
