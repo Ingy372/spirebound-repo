@@ -21,6 +21,14 @@ map builder writes half of it into the spawn file (see spawn_time()).
 TOWN = dict(x=176, y=236, w=112, h=96)          # Hearthgate, walled
 MILLCROSS = dict(x=35, y=195, w=64, h=44)       # the village west of the river
 
+# 10.4: the 2-wide trails to the three newer grounds (Floor 1 tiles; the builder adds 1000). One list, read by the map
+# builder (maps/layout_floor1.py) and the plan checker (tools/wilds_plan_check.py), so the two can't drift apart.
+NEW_GROUND_TRAILS = {
+    "Bramble Trail": [(169, 78), (169, 100), (233, 100)],                                   # from the Pass Road, west
+    "Bastion Trail": [(360, 158), (360, 163), (388, 163), (388, 226), (368, 226)],          # down the east edge to the Bandit Track
+    "Ridge Trail": [(355, 56), (355, 60), (391, 60), (391, 163), (388, 163)],               # joins the Bastion Trail
+}
+
 # The loop skeleton (plan Part 5.1): loop box (w, h), cross trail width, hub depth, groups and crowd spots per loop.
 SIZES = {
     "small": dict(loop=(18, 16), cross=2, hub=6, groups=4, crowd=4),

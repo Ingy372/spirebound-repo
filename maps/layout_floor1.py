@@ -12,13 +12,37 @@ import scenery as S  # noqa: E402
 import dungeon as DG  # noqa: E402
 import wilds  # noqa: E402
 import designed  # noqa: E402
-from floor1_plan import APEX, CAMPS, MILLCROSS, TOWN  # noqa: E402
+from floor1_plan import APEX, CAMPS, MILLCROSS, NEW_GROUND_TRAILS, TOWN  # noqa: E402
 
 
 X0, Y0, Z = 1000, 1000, 7
 ID_PILLAR = 2152  # a tall stone pillar: free-standing columns in the Underkeep and cover in the arena
 SIZE = 400
 PILLAR, PILLAR_VINE, MARBLE_PILLAR, HERO_STATUE, ANGEL_STATUE = 24001, 24003, 2153, 2027, 2031
+
+
+
+# the labyrinth's guards (Floor 1 review A1-1): about twelve a level, three kinds mixed
+LAB_RESPAWN = 120                     # real seconds (the old spawn file said 90, which the engine doubles)
+LAB_PACKS = {
+    7: [[("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 4,
+    6: [[("Ruin Sentinel", 2), ("Ruin Archer", 1)], [("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 2,
+    5: [[("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 3,
+}
+
+
+def _lab_spots(x0, y0, cells_w, cells_h, z, quiet, n, gap_quiet=9):
+    """n maze cells (their top-left floor tile), each as far as possible from the quiet tiles (teleports, the way in)
+    and from the cells already picked; never closer than gap_quiet to a quiet tile. Same result every build."""
+    cells = [(x0 + cx * 3 + 1, y0 + cy * 3 + 1) for cy in range(cells_h) for cx in range(cells_w)]
+    cells = [c for c in cells if min(max(abs(c[0] - q[0]), abs(c[1] - q[1])) for q in quiet) >= gap_quiet]
+    picked, far = [], list(quiet)
+    while len(picked) < n:
+        if not cells:
+            raise ValueError(f"labyrinth z{z}: only {len(picked)} of {n} pack cells fit")
+        best = max(cells, key=lambda t: (min(max(abs(t[0] - p[0]), abs(t[1] - p[1])) for p in far), t))
+        picked.append(best); far.append(best); cells.remove(best)
+    return [(x, y, z) for x, y in picked]
 
 
 def build(m):
@@ -541,10 +565,9 @@ def build(m):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # 10.4: trails to the three new grounds (the Bramble Run from the north road; Smugglers' Ridge and the Fallen Bastion
     # down the east edge to the Bandit Track)
-    for a, b in (((169, 78), (169, 100)), ((169, 100), (233, 100)),
-                 ((360, 158), (360, 163)), ((360, 163), (388, 163)), ((388, 163), (388, 226)), ((388, 226), (368, 226)),
-                 ((355, 56), (355, 60)), ((355, 60), (391, 60)), ((391, 60), (391, 163)), ((391, 163), (388, 163))):
-        m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
+    for path in NEW_GROUND_TRAILS.values():
+        for a, b in zip(path, path[1:]):
+            m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=2, wind=False)
     # Copse Road: Millcross's south side down past Wolf Copse to the Reedmarsh gate
     for a, b in (((70, 239), (92, 250)), ((92, 250), (92, 310)), ((92, 310), (70, 318)), ((70, 318), (70, 321))):
         m.road((X0 + a[0], Y0 + a[1]), (X0 + b[0], Y0 + b[1]), Z, width=3, wind=False)
@@ -875,7 +898,16 @@ def build(m):
     DG.hang(m, px, py, 24, 20, Z, every=4, h_item=DG.TORCH_H, v_item=DG.TORCH_V)
     # labyrinth level 1 (z 7) north of the Pass
     lx, ly = px - 10, Y0 + 12
-    m.fill(px + 11, ly + 31, 4, py - (ly + 31), Z, "stonefloor")  # corridor from the Pass to the maze
+    # corridor from the Pass to the maze, walled on both sides (map review M1: it was open meadow, so the labyrinth could
+    # be entered past the arena without the Gate Hound). Left wall on the meadow, right wall on the floor.
+    m.fill(px + 11, ly + 31, 5, py - (ly + 31), Z, "stonefloor")
+    for yy in range(ly + 31, py):
+        for xx in (px + 10, px + 15):
+            m.clear_items(xx, yy, Z)
+    m.autowall([(xx, yy) for yy in range(ly + 31, py) for xx in (px + 10, px + 15)], Z, "stone")
+    # the seal test (tools/mapgen.py): with the boulders in place, no walk from the temple may reach inside the maze
+    m.seals = getattr(m, "seals", []) + [dict(name="Floor 1 Pass", boulders=[(px + 12, py, Z), (px + 13, py, Z)],
+                                              inside=(px + 12, ly + 29, Z), box=(lx, ly, lx + 43, py + 20))]
     e1, x1 = m.maze(lx, ly, 14, 10, Z, seed=11)
     m.ground[(lx + 22, ly + 31, Z)] = 416; m.ground[(lx + 23, ly + 31, Z)] = 416
     for p in [(lx + 22, ly + 30, Z), (lx + 23, ly + 30, Z), (lx + 22, ly + 31, Z), (lx + 23, ly + 31, Z)]:
@@ -887,9 +919,15 @@ def build(m):
     m.teleport(x2, (e3[0] + 1, e3[1], 5), "lab2_up")
     m.teleport(e2, (x1[0] + 1, x1[1], Z), "lab2_down")
     m.teleport(e3, (x2[0] + 1, x2[1], 6), "lab3_down")
-    m.monsters.append(("Ruin Sentinel", (lx + 20, ly + 15, Z), 4, 4, 90))
-    m.monsters.append(("Ruin Archer", (lx + 20, ly + 15, 6), 4, 4, 90))
-    m.monsters.append(("Ruin Sentinel", (lx + 20, ly + 15, 5), 4, 5, 90))
+    # about twelve guards per level in mixed packs (Floor 1 review A1-1): a melee Ruin Sentinel in front, a Ruin Archer
+    # behind, a Hedge Hexer mending them. Packs stand in maze cells far from the teleports, the Pass corridor and each
+    # other, so a party can step off a teleport and choose its fight.
+    for lz, packs in LAB_PACKS.items():
+        quiet = [(px_, py_) for px_, py_, pz_ in m.points.values()
+                 if pz_ == lz and lx <= px_ < lx + 43 and ly <= py_ < ly + 31] + [(lx + 22, ly + 30)]
+        quiet += [t[:2] for t in (e1, x1, e2, x2, e3, x3) if t[2] == lz]   # lab3_up is placed further down
+        for spot, pack in zip(_lab_spots(lx, ly, 14, 10, lz, quiet, len(packs)), packs):
+            wilds.group(m, spot, pack, LAB_RESPAWN)
     for lz in (Z, 6, 5):                  # lamps on the corridor walls, cobwebs and old bones (nothing that blocks)
         lab_out = DG.keep_clear(m, lz)
         DG.hang_maze(m, lx, ly, 43, 31, lz, share=0.07)

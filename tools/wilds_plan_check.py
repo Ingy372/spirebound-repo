@@ -29,7 +29,7 @@ FIXED = {
 # turned on end (18 x 24, hub 6 deep). Hub side = where the entrance is.
 import sys as _sys
 _sys.path.insert(0, str(ROOT / "maps"))
-from floor1_plan import CAMPS  # noqa: E402
+from floor1_plan import CAMPS, NEW_GROUND_TRAILS  # noqa: E402
 GROUNDS = {c["id"]: (c["title"], c["x"], c["y"], c["w"], c["h"], c["gate"], c["size"], c["levels"], c["role"], c["zone"], c["den"])
            for c in CAMPS}
 
@@ -56,7 +56,8 @@ TRAILS = {
     "Shard Track": [(338, 285), (338, 292), (366, 296), (366, 299)],
     "Copse Road": [(70, 239), (92, 250), (92, 310), (70, 318), (70, 321)],
     "Copse gate": [(92, 282), (88, 282)],
-    "Watch Road": [(76, 194), (76, 110), (52, 84), (52, 80)],
+    "Watch Road": [(76, 194), (76, 110), (52, 84), (52, 74)],
+    **NEW_GROUND_TRAILS,              # the Bramble Run, Smugglers' Ridge, the Fallen Bastion (same list the builder lays)
 }
 MOVED = {"Standing stones (east)": (374, 262)}
 

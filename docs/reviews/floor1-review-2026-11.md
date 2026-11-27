@@ -78,7 +78,9 @@ What exists (`maps/floor1_plan.py`, `FLOOR1.md`, spawn file `server/data-spirebo
 - *Detail:* three spawn groups only: 4 Ruin Sentinels (level 1), 4 Ruin Archers (level 2), 5 Ruin Sentinels (level 3), each maze about 43 by 31 tiles (`maps/layout_floor1.py` lines 890-892). The hand-off lists the labyrinth under "not tested" (it was skipped with a jump).
 - *Fix:* about 12 monsters per level in mixed packs, one labyrinth-only monster or elite, and one full walk with a real party.
 
-**A1-2. Three new grounds have no trail in the plan (Medium, unverified in the client).**
+**A full visual review of the map was done afterwards: see `docs/reviews/floor1-map-review-2026-11-26.md`.** Its main finding (M1) is that the Gate Hound's arena can be walked around, so the labyrinth is never really sealed. It also corrects A1-2 below: the drawn map does show roads to all three new grounds, so that one is a false alarm from an out-of-date checker.
+
+**A1-2. Three new grounds have no trail in the plan (false alarm, see above).**
 - *For players:* the Bramble Run, Smugglers' Ridge and the Fallen Bastion may have to be found by walking through open country.
 - *Detail:* `python tools/wilds_plan_check.py` prints "NO TRAIL TO" for all three gates and "problems 3". Roadmap 10.4 still lists "walking the new grounds in the client" as not done.
 - *Fix:* add the trails and signposts in `maps/floor1_plan.py`, rerun the checker, walk them.

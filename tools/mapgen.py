@@ -838,6 +838,7 @@ def main(argv):
         import wilds
         import designed
         problems = wilds.check(m, m.points["temple_hearthgate"]) + wilds.check_caves(m) + designed.check(m)
+        problems += wilds.check_seals(m, m.points["temple_hearthgate"])     # map review M1
         for fl in sorted({L["c"].get("floor", 1) for L in m.wilds} - {1}):   # R13b/S6: planned floors, from their temple
             problems += wilds.check(m, m.points[f"f{fl}_temple"], floor=fl)
         if problems:

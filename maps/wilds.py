@@ -524,6 +524,34 @@ def check(m, home, floor=1):
     return problems
 
 
+def check_seals(m, home):
+    """Map review M1: a sealed way (the boulders the Gate Hound's death removes) must be the only way in. With the
+    boulders standing, a walk from the temple must not reach `inside`; with them gone, it must."""
+    block = blockers() | {1772}
+    problems = []
+    for sl in getattr(m, "seals", []):
+        x0, y0, x1, y1 = sl["box"]
+        near = [(x, y, Z) for x in range(x0 - 12, x1 + 12) for y in range(y0 - 12, y1 + 12)
+                if not (x0 <= x < x1 and y0 <= y < y1)]             # every meadow tile round the Pass and the maze
+        world = flood(m, [home], block, limit=floor_box(1))
+        starts = [p for p in near if p in world]
+        if not starts:
+            problems.append(f"{sl['name']}: the ground round it cannot be reached from the temple")
+            continue
+        if sl["inside"] in flood(m, starts, block):
+            problems.append(f"{sl['name']}: the inside can be reached without passing the sealed boulders")
+        saved = {b: m.items.get(b, []) for b in sl["boulders"]}
+        for b in sl["boulders"]:
+            m.items[b] = [it for it in saved[b] if it[0] != 1772]
+        try:
+            if sl["inside"] not in flood(m, starts, block - {1772}):
+                problems.append(f"{sl['name']}: the inside cannot be reached even with the boulders gone")
+        finally:
+            for b, v in saved.items():
+                m.items[b] = v
+    return problems
+
+
 if __name__ == "__main__":
     # scratch test (plan task W2): every ground on a blank meadow must build and pass the walk test
     import os
