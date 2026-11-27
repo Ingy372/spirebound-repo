@@ -13,8 +13,13 @@ You asked whether Floor 1 keeps a player hooked the whole way and has enough FOM
 The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is built until a real party clears Floor 1. Step 4b is mostly new rewards and announcements on things that already exist, but AD4 (rare roaming monsters) and AD5 (treasure maps, two new hidden places) are new content.
 - **Recommendation:** yes, lift the rule for Step 4b only. Do AD1, AD2, AD3 and AD6 first (existing systems, no new art), then AD4 and AD5.
 - **Second choice inside it (AD3):** a few prizes each season that only the first finders can ever have (as Twin Fang already works: first 3). My recommendation: looks and titles only, never power, so late joiners are not weaker, only less decorated.
-- Assumed until you answer: nothing is built yet (this one is your rule, so I don't assume past it); the tasks are filed and ready.
-- Jay's answer:
+- Jay's answer (2026-11-27): "yes lift the rule from the 25th. most things have been fleshes out. i havent run the play test yet but i dont feel like the servers quite ready. it needs a few more passes of detail work, like were doing now." And on secrets: "i feel like 1-3 secrets per floor should give gear, the rest can give special cosmetics or titles. players wont know what gives what so it will be up to them to decide if the secrets worth keeping, or rolling the dice to get an exclusive item. thoughts on this? im open to feedback"
+- **Built on your answer; my calls, veto any (design: `docs/superpowers/specs/2026-11-27-adventure-layer-design.md`):**
+  - Secret gear is a ring, an amulet or boots, never a weapon or armour, so it never beats the quest weapon path. Floor 1's three: Millrace Boots, Shrinekeeper's Pendant, Warden's Signet.
+  - Secret gear can't be traded: wearing it proves you found the place.
+  - Vesper never says what a secret pays, so keeping or selling stays a gamble.
+  - First-finder prizes each season are looks and titles only.
+  - The four rare roaming monsters: Goldback Toad, Frenzied Boar, Pale Stag, the Paymaster.
 
 ### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
 You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
