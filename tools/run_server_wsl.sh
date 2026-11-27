@@ -18,6 +18,8 @@ service mariadb start >/dev/null 2>&1 || true
 for _ in $(seq 1 20); do mysqladmin ping >/dev/null 2>&1 && break; sleep 1; done
 MYSQL_HOST="${MYSQL_HOST:-127.0.0.1}" MYSQL_USER="${MYSQL_USER:-spire}" MYSQL_PASS="${MYSQL_PASS:-spiretest}" MYSQL_DATABASE="${MYSQL_DATABASE:-spirebound}"
 export MYSQL_HOST MYSQL_USER MYSQL_PASS MYSQL_DATABASE
+# Jay's PC is the dev server: the autopilot's /pilot commands load (review A6-2). A public server runs with SPIRE_DEV=0.
+export SPIRE_DEV="${SPIRE_DEV:-1}"
 mysql -uroot -hlocalhost --protocol=socket -e "CREATE DATABASE IF NOT EXISTS \`$MYSQL_DATABASE\`; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'localhost' IDENTIFIED BY '$MYSQL_PASS'; CREATE USER IF NOT EXISTS '$MYSQL_USER'@'127.0.0.1' IDENTIFIED BY '$MYSQL_PASS'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'localhost'; GRANT ALL ON \`$MYSQL_DATABASE\`.* TO '$MYSQL_USER'@'127.0.0.1'; FLUSH PRIVILEGES;"
 python3 tools/build_server.py --offline || python3 tools/build_server.py
 B="$SB/.build/server"

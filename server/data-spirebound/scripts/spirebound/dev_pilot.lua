@@ -30,6 +30,12 @@
 --                          a practice club in hand, at the Registrar
 --   /pilot trace on|off    log what every spell you cast did (server log, [SPELLTRACE]); refills you after each
 --                          cast and lets you cast Lost Arts, so a test can try every spell
+-- Review A6-2: test commands load only on a server started as a test or dev server (SPIRE_DEV=1, which Jay's PC sets in
+-- tools/run_server_wsl.sh for the autopilot; or a test boot / load test). A public server leaves SPIRE_DEV unset.
+if os.getenv("SPIRE_DEV") ~= "1" and os.getenv("SPIRE_TESTS") ~= "1" and os.getenv("SPIRE_LOADTEST") ~= "1" then
+	logger.info("[Spirebound] {} not loaded: this is not a dev or test server", "the /pilot test commands")
+	return
+end
 local pilot = TalkAction("/pilot")
 
 function pilot.onSay(player, words, param)

@@ -33,6 +33,7 @@ python3 "$ROOT/tools/site_snapshot.py" --selftest || { echo "FAIL: website snaps
 python3 "$ROOT/tools/make_friend_client.py" --selftest || { echo "FAIL: friend installers"; exit 1; }
 python3 "$ROOT/tools/check_commands.py" || { echo "FAIL: a player command has no button (R19)"; exit 1; }
 python3 "$ROOT/tools/check_materials.py" || { echo "FAIL: a material does not say where it drops"; exit 1; }
+python3 "$ROOT/tools/check_dev_gates.py" || { echo "FAIL: a test-only script loads on a public server (review A6-2)"; exit 1; }
 python3 "$ROOT/tools/check_npc_text.py" || { echo "FAIL: an NPC line would vanish in the client"; exit 1; }
 # R4: a normal start must never touch the GM test account (only the dev-only step does)
 if grep -q "dev_accounts.sql" "$ROOT/tools/run_server_wsl.sh" "$ROOT/windows/Start-Spirebound.ps1"; then
