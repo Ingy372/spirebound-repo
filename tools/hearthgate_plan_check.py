@@ -107,6 +107,20 @@ if "--walk" in sys.argv:
             walked[k] = dist.get((tx + v[0], ty + v[1], 7))
     for g, ts in P.GATES.items():
         walked[f"{g.upper()} gate"] = min((dist.get((tx + x, ty + y, 7), 10 ** 6) for x, y in ts))
+    # every keeper stands inside their own building
+    home = {n: P.HEARTH for n in list(P.BANK_NPCS) + ["Priest Odran"]}
+    for blk in P.SHOP_BLOCKS:
+        for r in blk["rooms"]:
+            home[r[1]] = blk["rect"]
+    home.update({"Innkeeper Roan": P.INN["rect"], "Ascendant Veyra": P.ASCENDANCY["rect"], "Guildwarden Sela": P.GUILD_HALL["rect"],
+                 "Banker Ansel": P.GUILD_HALL["rect"], "Taskmaster Rhen": P.HUNTERS_HALL["rect"],
+                 "Bounty Warden Cass": P.HUNTERS_HALL["rect"], "Hunter Brannoch": P.HUNTERS_HALL["rect"],
+                 "Coachman Ferro": P.COACH_YARD["rect"]})
+    where = {n: (x - tx, y - ty) for n, (x, y, z) in m.npcs}
+    for n, (x, y, w, h) in home.items():
+        if n not in where or not (x < where[n][0] < x + w - 1 and y < where[n][1] < y + h - 1):
+            print("NPC NOT IN ITS BUILDING", n, where.get(n)); bad += 1
+    print(f"keepers checked: {len(home)}; problems now {bad}")
 
 fails = 0
 print(f"\nsteps from the Hearthstone {hs} (straight line{', then walked on the real map' if walked else ''}):")

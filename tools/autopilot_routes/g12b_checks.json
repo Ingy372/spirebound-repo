@@ -26,10 +26,10 @@
    "do": "jump",
    "to": [
     1236,
-    1302,
+    1296,
     7
    ],
-   "note": "the Hearth Square market"
+   "note": "the Hearth Plaza stalls"
   },
   {
    "do": "shot",

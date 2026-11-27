@@ -8,10 +8,10 @@
    "do": "jump",
    "to": [
     1229,
-    1304,
+    1292,
     7
    ],
-   "note": "Hearth Square"
+   "note": "Hearth Plaza"
   },
   {
    "do": "wait",

@@ -100,31 +100,48 @@ SpireTest.add("the Hearth: spawn point, three levels by stairs, lockers, junk bu
 	SpireTest.eq(SpireVault.parse("hello"), nil, "ordinary words aren't vault commands")
 end)
 
-SpireTest.add("Hearthgate v3: four open archways, a locker six steps from the Hearthstone, 30 street houses", function()
+SpireTest.add("Hearthgate v4: the Hearthstone under open sky, the Hearth's archways, a locker close by, 30 street houses", function()
 	local t = WorldPoints.temple_hearthgate
-	for _, d in ipairs({ { 0, -11 }, { 0, 11 }, { -14, 0 }, { 14, 0 } }) do
-		local p = Position(t.x + d[1], t.y + d[2], t.z)
-		local tile = Tile(p)
-		SpireTest.eq(tile ~= nil and tile:isWalkable(false, false, false, false, true), true, "archway " .. d[1] .. "," .. d[2] .. " is open")
+	local function open(x, y)
+		local tile = Tile(Position(x, y, t.z))
+		return tile ~= nil and tile:isWalkable(false, false, false, false, true)
 	end
-	local locker
-	for dx = -8, 8 do
-		for dy = -8, 8 do
-			local tile = Tile(Position(t.x + dx, t.y + dy, t.z))
-			if tile and tile:getItemByType(ITEM_TYPE_DEPOT) then
-				if not locker or math.abs(dx) + math.abs(dy) < locker then locker = math.abs(dx) + math.abs(dy) end
-			end
+	-- the Hearthstone stands in the middle of Hearth Plaza: it and its eight neighbours are clear, with sky above
+	for dx = -1, 1 do
+		for dy = -1, 1 do
+			SpireTest.eq(open(t.x + dx, t.y + dy), true, "the Hearthstone square is clear at " .. dx .. "," .. dy)
 		end
 	end
-	SpireTest.eq(locker ~= nil and locker <= 8, true, "a depot locker within eight steps of the Hearthstone")
+	SpireTest.eq(Tile(Position(t.x, t.y, t.z - 1)) == nil, true, "nothing over the Hearthstone: it is in the open plaza")
+	-- the Hearth (maps/hearthgate_plan.py: 42, 12, 30, 23; the Hearthstone is 56, 49): front archway faces the Hearthstone
+	for _, d in ipairs({ { -1, -15 }, { 0, -15 }, { 1, -15 }, { 2, -15 }, { 0, -37 }, { 1, -37 }, { -14, -26 }, { 15, -26 } }) do
+		SpireTest.eq(open(t.x + d[1], t.y + d[2]), true, "the Hearth's archway " .. d[1] .. "," .. d[2] .. " is open")
+	end
+	-- the nearest locker, counted in real steps (no diagonals) from the Hearthstone; the v4 plan promises 26
+	local seen, todo, steps, near = { [t.x .. ":" .. t.y] = true }, { { t.x, t.y } }, 0, nil
+	while #todo > 0 and steps <= 30 and not near do
+		local nxt = {}
+		for _, p in ipairs(todo) do
+			local tile = Tile(Position(p[1], p[2], t.z))
+			if tile and tile:getGround() and tile:getGround():getId() == 10145 then near = steps break end
+			for _, d in ipairs({ { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } }) do
+				local x, y = p[1] + d[1], p[2] + d[2]
+				if not seen[x .. ":" .. y] and open(x, y) then
+					seen[x .. ":" .. y] = true
+					nxt[#nxt + 1] = { x, y }
+				end
+			end
+		end
+		todo, steps = nxt, steps + 1
+	end
+	SpireTest.eq(near ~= nil and near <= 26, true, "a depot locker within 26 steps of the Hearthstone (" .. tostring(near) .. ")")
 	-- the Hearth's depot booths: a switch tile in front of every locker, walled in two tiles deep on both sides
 	local function blocked(x, y)
-		local tile = Tile(Position(x, y, t.z))
-		return not (tile and tile:isWalkable(false, false, false, false, true))
+		return not open(x, y)
 	end
 	local booths, good = 0, 0
-	for dx = -14, 14 do
-		for dy = -11, 0 do
+	for dx = -13, 14 do
+		for dy = -36, -16 do
 			local x, y = t.x + dx, t.y + dy
 			local tile = Tile(Position(x, y, t.z))
 			if tile and tile:getItemByType(ITEM_TYPE_DEPOT) then
@@ -149,7 +166,7 @@ SpireTest.add("Hearthgate v3: four open archways, a locker six steps from the He
 			streets = streets + 1
 		end
 	end
-	SpireTest.eq(streets, 30, "thirty houses in the eight streets")
+	SpireTest.eq(streets, 30, "thirty houses in the town's streets")
 end)
 
 -- P3: Hearthgate's townsfolk are out in the square

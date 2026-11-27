@@ -27,7 +27,7 @@ def on():
     if STORE.exists():
         shutil.copy(STORE, BACKUP)
     ROUTE.parent.mkdir(parents=True, exist_ok=True)
-    ROUTE.write_bytes(b"goto:1229,1303,7\ngoto:1239,1303,7\n")
+    ROUTE.write_bytes(b"goto:1229,1290,7\ngoto:1239,1290,7\n")
     HEAL.parent.mkdir(parents=True, exist_ok=True)
     spell = {"index": 1, "spell": "dewfall", "sign": "<", "origin": "HP%", "cost": 5, "value": 70, "enabled": True}
     hb = {"currentHealBotProfile": 1, "healbot": [profile(1, True, [spell])] + [profile(i, False, []) for i in range(2, 6)]}

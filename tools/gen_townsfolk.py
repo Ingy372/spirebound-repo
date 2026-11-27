@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Writes Hearthgate's townsfolk (roadmap P3, Jay's playtest 2026-11-23: "Hearthgate feels dead"): people who walk
-about the Hearth Square, chat to themselves now and then, and give a useful tip when greeted. The town crier also calls
+about Hearth Plaza, chat to themselves now and then, and give a useful tip when greeted. The town crier also calls
 out the tower's news. They are spawned at start-up by scripts/spirebound/townlife.lua (no map change).
 Usage: python tools/gen_townsfolk.py"""
 from pathlib import Path
@@ -11,40 +11,40 @@ OUT = Path(__file__).resolve().parent.parent / "server" / "data-spirebound" / "n
 # what they say to themselves, what they tell a climber who greets them (one picked each time)
 FOLK = [
     dict(file="town_crier", name="Crier Halsey", desc="the town crier of Hearthgate", look=(128, 78, 94, 114, 95, 1),
-         near=(1232, 1296, 7), radius=3, crier=True,
+         near=(1232, 1281, 7), radius=3, crier=True,
          chatter=["Hear ye! The tower stands sealed! Who will climb?", "News of the Spire, every hour on the hour!",
                   "Lost a friend in the wilds? The Priest in the Hearth heals for free below level 50!"],
          tips=["Say !hunt and the tower will tell you where to fight at your level.",
                "Every hour one lucky climber gets gold in the bank. Be online and be lucky!",
                "Climbers who read the old stones in the wilds sell the story to Vesper. Ask her for a quest."]),
     dict(file="town_lamplighter", name="Lamplighter Odo", desc="the lamplighter", look=(128, 58, 79, 76, 115, 0),
-         near=(1220, 1290, 7), radius=6,
-         chatter=["Lamps lit, lamps lit...", "One more on the Ring, then my supper.", "Mind the ladder!"],
+         near=(1222, 1287, 7), radius=6,
+         chatter=["Lamps lit, lamps lit...", "One more round the plaza, then my supper.", "Mind the ladder!"],
          tips=["The wilds are calm near their gates and grow fierce the deeper you go. Turn back while you can.",
                "At night the lamps of Hearthgate guide you home. Follow the road and you can't get lost.",
                "A '!' on your minimap marks someone with work for you."]),
     dict(file="town_baker", name="Baker Wenna", desc="the baker's wife", look=(136, 78, 39, 76, 115, 0),
-         near=(1214, 1300, 7), radius=4,
+         near=(1223, 1294, 7), radius=4,
          chatter=["Fresh bread! Well, yesterday's bread.", "Miller Agna's flour is the best on the floor.",
                   "Who keeps stealing my cheese? Rats, I tell you."],
          tips=["Miller Agna in Millcross always needs a hand, and her flour pays well if it reaches the guards.",
                "Field rats will snatch coins right out of your pack. Kill the thief and you get them back.",
                "Hungry? Food brings your health and mana back faster while you rest."]),
     dict(file="town_elder", name="Old Teodric", desc="an old man who has seen everything", look=(128, 0, 57, 57, 76, 0),
-         near=(1226, 1302, 7), radius=2,
+         near=(1238, 1293, 7), radius=2,
          chatter=["In my day the Pass was a cart road.", "*coughs* The fountain was dry for forty years, you know.",
                   "Blue light at the top of the Spire... never trusted it."],
          tips=["They say the builders carved their story on six stones in the wilds. I read three, once.",
                "The Gate Hound guards the Pass. Never go alone: take two friends, at least.",
                "The Axe-Lord's hall opens only for those who hold the Stair Key. Ask your quest log what it needs."]),
     dict(file="town_child", name="Little Bix", desc="a child who never stops running", look=(2028, 0, 0, 0, 0, 0),
-         near=(1236, 1290, 7), radius=7,
+         near=(1236, 1280, 7), radius=7,
          chatter=["Can't catch me!", "I'm going to climb the whole tower when I'm big!", "Tag, you're it!"],
          tips=["There's a sluice in the marsh with three levers! I pulled them all and nothing happened...",
                "My brother saw a GLOWING boar in the meadow! It was huge!",
                "Hunter Brannoch is scary but he pays good gold."]),
     dict(file="town_guard", name="Guard Ressa", desc="a guard of Hearthgate", look=(2023, 0, 0, 0, 0, 0),
-         near=(1246, 1286, 7), radius=4,
+         near=(1243, 1286, 7), radius=4,
          chatter=["Keep the peace in town.", "Captain Dorrow wants more climbers on the north road.",
                   "No fighting in town. Take it outside the walls."],
          tips=["Inside Hearthgate nobody can attack you. Out in the Guarded lands, only players of 50 and up fight each other.",

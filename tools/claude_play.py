@@ -6,7 +6,7 @@ One character:
     python tools/claude_play.py start --fresh            re-create "Claude Climber" (level 1, Arrival Yard) and log in
     python tools/claude_play.py start                    log in the same character where it left off
     python tools/claude_play.py do '{"type": "fight", "seconds": 20}'   one move (grok_tester's menu), then the state
-    python tools/claude_play.py do '[{"do": "walk", "to": [1200, 1300, 7]}]'   or raw autopilot steps
+    python tools/claude_play.py do '[{"do": "walk", "to": [1232, 1280, 7]}]'   or raw autopilot steps
     python tools/claude_play.py look                     the last state again
     python tools/claude_play.py places                   the names walk_to accepts
     python tools/claude_play.py stop                     log out and close the client

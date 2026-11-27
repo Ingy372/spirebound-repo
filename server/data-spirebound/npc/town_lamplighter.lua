@@ -15,7 +15,7 @@ npcConfig.voices = {
 	interval = 45000,
 	chance = 25,
 	{ text = "Lamps lit, lamps lit..." },
-	{ text = "One more on the Ring, then my supper." },
+	{ text = "One more round the plaza, then my supper." },
 	{ text = "Mind the ladder!" },
 }
 

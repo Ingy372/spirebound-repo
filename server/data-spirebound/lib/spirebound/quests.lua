@@ -589,8 +589,8 @@ end
 SpireQuests.WHERE = {
 	["Guide Pell"] = { place = "the Arrival Yard, at the start of the stone path", pos = { 1276, 1347, 7 } },
 	["Captain Dorrow"] = { place = "Hearthgate's north gate, outside the guardhouse", pos = { 1235, 1244, 7 } },
-	["Hunter Brannoch"] = { place = "the Hunters' Hall on Hearthgate's east side", pos = { 1267, 1273, 7 } },
-	["Vesper"] = { place = "Hearthgate, just south of the temple", pos = { 1236, 1302, 7 } },
+	["Hunter Brannoch"] = { place = "the Hunters' Hall in Hearthgate's Crown Quarter, north-east of the plaza", pos = { 1260, 1271, 7 } },
+	["Vesper"] = { place = "Hearth Plaza, beside the Hearthstone", pos = { 1235, 1289, 7 } },
 	["Fisher Corwin"] = { place = "the river bank north-west of Hearthgate", pos = { 1143, 1190, 7 } },
 	["Miller Agna"] = { place = "the mill on the north edge of Millcross, far to the west", pos = { 1082, 1185, 7 } },
 	["Fence Marrow"] = { place = "the road just south of the Bandit Road, east of Hearthgate" },

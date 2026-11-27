@@ -15,11 +15,11 @@
   {
    "do": "jump",
    "to": [
-    1236,
-    1304,
+    1235,
+    1290,
     7
    ],
-   "note": "Hearth Square, by Vesper"
+   "note": "Hearth Plaza, by Vesper"
   },
   {
    "do": "wait",
