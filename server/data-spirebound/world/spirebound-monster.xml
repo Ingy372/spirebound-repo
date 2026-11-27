@@ -2464,50 +2464,50 @@
 	<monster centerx="1314" centery="1084" centerz="7" radius="3">
 		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
 	</monster>
-	<monster centerx="1250" centery="1092" centerz="7" radius="3">
+	<monster centerx="1250" centery="1082" centerz="7" radius="3">
 		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1250" centery="1060" centerz="7" radius="3">
-		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
 	</monster>
 	<monster centerx="1008" centery="1184" centerz="7" radius="3">
-		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
-		<monster name="Meadow Hare" x="1" y="0" z="7" spawntime="45" />
+		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
 	</monster>
 	<monster centerx="1390" centery="1288" centerz="7" radius="3">
-		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1254" centery="1388" centerz="7" radius="3">
-		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
-		<monster name="Thistle Hen" x="1" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1142" centery="1154" centerz="7" radius="3">
-		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1136" centery="1014" centerz="7" radius="3">
-		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1132" centery="1214" centerz="7" radius="3">
-		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1124" centery="1328" centerz="7" radius="3">
-		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1080" centery="1146" centerz="7" radius="3">
-		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
-	</monster>
-	<monster centerx="1070" centery="1184" centerz="7" radius="3">
 		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
 		<monster name="Meadow Hare" x="1" y="0" z="7" spawntime="45" />
 	</monster>
-	<monster centerx="1008" centery="1154" centerz="7" radius="3">
+	<monster centerx="1254" centery="1388" centerz="7" radius="3">
 		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
 	</monster>
-	<monster centerx="1008" centery="1092" centerz="7" radius="3">
+	<monster centerx="1142" centery="1154" centerz="7" radius="3">
 		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
 		<monster name="Thistle Hen" x="1" y="0" z="7" spawntime="45" />
 	</monster>
+	<monster centerx="1136" centery="1014" centerz="7" radius="3">
+		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1132" centery="1214" centerz="7" radius="3">
+		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1080" centery="1146" centerz="7" radius="3">
+		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1070" centery="1184" centerz="7" radius="3">
+		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1008" centery="1154" centerz="7" radius="3">
+		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1008" centery="1092" centerz="7" radius="3">
+		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
+		<monster name="Meadow Hare" x="1" y="0" z="7" spawntime="45" />
+	</monster>
 	<monster centerx="1390" centery="1254" centerz="7" radius="3">
+		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1312" centery="1362" centerz="7" radius="3">
+		<monster name="Thistle Hen" x="0" y="0" z="7" spawntime="45" />
+		<monster name="Thistle Hen" x="1" y="0" z="7" spawntime="45" />
+	</monster>
+	<monster centerx="1306" centery="1008" centerz="7" radius="3">
 		<monster name="Acorn Squirrel" x="0" y="0" z="7" spawntime="45" />
 	</monster>
 	<monster centerx="2059" centery="1262" centerz="7" radius="2">

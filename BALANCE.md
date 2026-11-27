@@ -20,12 +20,12 @@ For a hunter at the middle level of each floor, hunting by hand. Floor 1 in deta
 Climbing all ten floors by hand: about 261 hours by the model (real play is slower).
 
 ## What the real game changes (review A3-1 and E-1, 2026-11-26)
-The engine adds 1.5x experience below level 50 and 1.5x more while stamina is above 39 hours, and multiplies every drop chance by 2 (capped at 100%). The table above and the checks still use the plain numbers; this is what a rested character really gets. Nothing is retuned until Jay answers Q83 (floor length) and Q84 (loot).
+The engine adds 1.5x more experience while stamina is above 39 hours (Tibia's rested bonus, the first 3 hours of a day) and multiplies every drop chance by 2 (capped at 100%). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: Floor 1 should take 11-15 hours). The table above uses the plain numbers; this column is what a fully rested character gets. Loot waits on Q84.
 
 | Floor | Hours to climb (plan) | With the engine's bonuses | Gold/h (plan) | With loot rate |
 |---|---|---|---|---|
-| 1 | 15.3 | 6.8 | 2,236 | 2,688 |
-| 2 | 14.0 | 6.9 | 11,000 | 11,071 |
+| 1 | 15.3 | 10.2 | 2,236 | 2,688 |
+| 2 | 14.0 | 9.3 | 11,000 | 11,071 |
 | 3 | 16.0 | 10.7 | 14,000 | 18,039 |
 | 4 | 18.0 | 12.0 | 18,000 | 26,653 |
 | 5 | 22.0 | 14.7 | 22,000 | 26,944 |
@@ -35,10 +35,13 @@ The engine adds 1.5x experience below level 50 and 1.5x more while stamina is ab
 | 9 | 40.0 | 26.7 | 43,351 | 43,351 |
 | 10 | 45.0 | 30.0 | 51,481 | 51,481 |
 
-No longer within 15% of the hours target once the bonuses are counted: Floor 2 (6.9 h against 14), Floor 3 (10.7 h against 16), Floor 4 (12.0 h against 18), Floor 5 (14.7 h against 22), Floor 6 (17.3 h against 26), Floor 7 (20.0 h against 30), Floor 8 (23.3 h against 35), Floor 9 (26.7 h against 40), Floor 10 (30.0 h against 45).
+No longer within 15% of the hours target once the bonuses are counted: Floor 2 (9.3 h against 14), Floor 3 (10.7 h against 16), Floor 4 (12.0 h against 18), Floor 5 (14.7 h against 22), Floor 6 (17.3 h against 26), Floor 7 (20.0 h against 30), Floor 8 (23.3 h against 35), Floor 9 (26.7 h against 40), Floor 10 (30.0 h against 45).
 
 ## Waycrystals (a gold sink, DESIGN.md 3.7)
 Each floor's crystal costs about 4 minutes of that floor's hunting income (a trip there and back about 8): Floor 1 150, Floor 2 730, Floor 3 930, Floor 4 1,200, Floor 5 1,470, Floor 6 1,770, Floor 7 2,330, Floor 8 2,330, Floor 9 2,890, Floor 10 3,430.
+
+## Cooking (FD4, a comfort, never power)
+Dishes give one small comfort out of a fight (no damage, defence, experience or loot); a feast lasts 2x as long: Grilled Minnow (regen 2, 20 min); Smoked Perch (mana 2, 20 min); Seared Meat (regen 2, 15 min); Boar Roast (cap 40, 30 min); Roast Truffle (light 6, 30 min); Baked Turtle Egg (townspeed 20, 30 min); Carp Steak (regen 4, 25 min); Whiskers Pie (regen 8, 60 min); Hunter's Roast (cap 100, 45 min); Honey-Glazed Ham (regen 5, 40 min); Truffle Omelette (light 9, 60 min); Bramble Tart (townspeed 50, 45 min); Herb-Crusted Perch (mana 6, 40 min).
 
 ## Rules the check enforces
 - Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.

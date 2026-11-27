@@ -1,0 +1,92 @@
+{
+ "901": {
+  "name": "Old Whiskers",
+  "plural": "Old Whiskers",
+  "description": "The legendary catfish of Floor 1's waters, whiskers as long as your arm. Some say it cooks."
+ },
+ "3728": {
+  "name": "truffle",
+  "plural": "truffles",
+  "description": "A knobbly black truffle that smells of earth and rain. Cook it on a fire."
+ },
+ "5678": {
+  "name": "turtle egg",
+  "plural": "turtle eggs",
+  "description": "A leathery turtle egg from a Reedmarsh sandbar. Cook it on a fire."
+ },
+ "3588": {
+  "name": "bramble berry",
+  "plural": "bramble berries",
+  "description": "A dark, sweet berry from the Bramble Run."
+ },
+ "13992": {
+  "name": "Grilled Minnow",
+  "plural": "Grilled Minnows",
+  "description": "Cooked from fish on a fire. Eat it and you heal a little faster out of a fight for 20 minutes."
+ },
+ "14085": {
+  "name": "Smoked Perch",
+  "plural": "Smoked Perchs",
+  "description": "Cooked from green perch on a fire. Eat it and your mana returns a little faster out of a fight for 20 minutes."
+ },
+ "22187": {
+  "name": "Seared Meat",
+  "plural": "Seared Meats",
+  "description": "Cooked from meat on a fire. Eat it and you heal a little faster out of a fight for 15 minutes."
+ },
+ "12310": {
+  "name": "Boar Roast",
+  "plural": "Boar Roasts",
+  "description": "Cooked from ham on a fire. Eat it and you can carry a little more for 30 minutes."
+ },
+ "3724": {
+  "name": "Roast Truffle",
+  "plural": "Roast Truffles",
+  "description": "Cooked from truffle on a fire. Eat it and a warm light goes with you for 30 minutes."
+ },
+ "10453": {
+  "name": "Baked Turtle Egg",
+  "plural": "Baked Turtle Eggs",
+  "description": "Cooked from turtle egg on a fire. Eat it and you walk faster in town for 30 minutes."
+ },
+ "10219": {
+  "name": "Carp Steak",
+  "plural": "Carp Steaks",
+  "description": "Cooked from salmon on a fire. Eat it and you heal a little faster out of a fight for 25 minutes."
+ },
+ "16103": {
+  "name": "Whiskers Pie",
+  "plural": "Whiskers Pies",
+  "description": "Cooked from Old Whiskers on a fire. Eat it and you heal a little faster out of a fight for 60 minutes."
+ },
+ "3583": {
+  "name": "Hunter's Roast",
+  "plural": "Hunter's Roasts",
+  "description": "A Boar Roast finished with truffle on the fire. Eat it and you can carry a little more for 45 minutes."
+ },
+ "31560": {
+  "name": "Honey-Glazed Ham",
+  "plural": "Honey-Glazed Hams",
+  "description": "A Boar Roast finished with honeycomb on the fire. Eat it and you heal a little faster out of a fight for 40 minutes."
+ },
+ "17820": {
+  "name": "Truffle Omelette",
+  "plural": "Truffle Omelettes",
+  "description": "A Baked Turtle Egg finished with truffle on the fire. Eat it and a warm light goes with you for 60 minutes."
+ },
+ "6393": {
+  "name": "Bramble Tart",
+  "plural": "Bramble Tarts",
+  "description": "A Baked Turtle Egg finished with bramble berry on the fire. Eat it and you walk faster in town for 45 minutes."
+ },
+ "3602": {
+  "name": "Herb-Crusted Perch",
+  "plural": "Herb-Crusted Perchs",
+  "description": "A Smoked Perch finished with sling herb on the fire. Eat it and your mana returns a little faster out of a fight for 40 minutes."
+ },
+ "9218": {
+  "name": "Lieutenant's Badge",
+  "plural": "Lieutenant's Badges",
+  "description": "A bandit lieutenant's tin badge. The wanted poster on the Bandit Road pays for it."
+ }
+}

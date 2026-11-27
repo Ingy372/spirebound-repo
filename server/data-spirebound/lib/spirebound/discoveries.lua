@@ -5,9 +5,12 @@
 -- Some categories already keep their own record (secrets, hidden beasts, fish, builders' stones, ground chests); those
 -- are read through `sources`, so nothing has to be marked twice.
 SpireDiscoveries = SpireDiscoveries or { rows = {} }
-SpireDiscoveries.ORDER = { "secret", "beast", "elite", "chest", "fish", "stone", "roamer", "keepsake" }
+-- Floor 1 depth (2026-11-27): "record" (Session C's story records), "groundlore" (each ground's feature used once) and
+-- "cookbook" (each dish made once) are row groups too.
+SpireDiscoveries.ORDER = { "secret", "beast", "elite", "chest", "fish", "stone", "roamer", "keepsake", "record", "groundlore", "cookbook" }
 SpireDiscoveries.LABEL = { secret = "Secrets", beast = "Hidden beasts", elite = "Elites", chest = "Ground chests",
-	fish = "Fish", stone = "Builders' stones", roamer = "Rare roamers", keepsake = "Treasure keepsakes" }
+	fish = "Fish", stone = "Builders' stones", roamer = "Rare roamers", keepsake = "Treasure keepsakes",
+	record = "Records", groundlore = "Ground lore", cookbook = "Cookbook" }
 SpireDiscoveries.sources = SpireDiscoveries.sources or {} -- category -> function(player, id) -> time found or nil
 SpireDiscoveries.FLOOR_NAMES = { [1] = "the Plains" }
 

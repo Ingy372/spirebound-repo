@@ -17,7 +17,7 @@ SpireFishing.tables = {
 		{ id = "mudskipper", name = "Mudskipper", item = 3581, weight = 6, kg = { 0.1, 0.3 } },
 		{ id = "golden_trout", name = "Golden Trout", item = 7158, weight = 4, kg = { 0.8, 2.5 } },
 		{ id = "moonscale_eel", name = "Moonscale Eel", item = 3580, weight = 4, kg = { 1.5, 5.0 }, night = true },
-		{ id = "old_whiskers", name = "Old Whiskers", item = 3580, weight = 0.3, kg = { 12, 20 }, legendary = true },
+		{ id = "old_whiskers", name = "Old Whiskers", item = 901, weight = 0.3, kg = { 12, 20 }, legendary = true },
 		{ id = "sunken_purse", name = "a sunken purse", item = 3035, count = 2, weight = 1, treasure = true },   -- A7-1: was 5 platinum at weight 2
 		{ id = "pearl", name = "a white pearl", item = 3026, weight = 1, treasure = true },
 		{ id = "message_bottle", name = "a message in a bottle", item = 5802, weight = 1, treasure = true, bottle = true }, -- adventure layer 4.7: a secret's riddle

@@ -58,6 +58,9 @@ function SpireCraft.talk(npc, npcHandler, player, msg, npcName)
 	if msg:sub(1, 1) == "!" then
 		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
 	end
+	if SpireCraft.cookingTalk(npc, npcHandler, player, msg, npcName) then
+		return true
+	end
 	local list = SpireCraft.forNpc(npcName)
 	if #list == 0 then
 		return false
@@ -102,4 +105,24 @@ function SpireCraft.talk(npc, npcHandler, player, msg, npcName)
 		end
 	end
 	return false
+end
+
+-- Cooking talk (roadmap FD4): every shop keeper explains cooking when asked; three of them hint plainly at one of the
+-- three dishes that are hard to guess (the hint text lives in tools/gen_depth.py). Not crafting: no fee, no window.
+SpireCraft.COOK_HINTS = { ["Innkeeper Bess"] = "truffle_omelette", ["Innkeeper Roan"] = "bramble_tart", ["Alchemist Ivo"] = "herb_crusted_perch" }
+
+function SpireCraft.cookingTalk(npc, npcHandler, player, msg, npcName)
+	local lower = msg:lower()
+	if not (MsgContains(lower, "cook") or MsgContains(lower, "recipe") or MsgContains(lower, "dish")) then
+		return false
+	end
+	local hint = SpireCraft.COOK_HINTS[npcName]
+	local d = hint and SpireCooking and SpireCooking.byId[hint]
+	if d and d.hint then
+		npcHandler:say("A secret of my kitchen? " .. d.hint, npc, player)
+		return true
+	end
+	npcHandler:say("Cooking needs no kitchen. Drop raw food on any fire, a hunting ground's campfire or an oven, and it cooks. " ..
+		"Drop a second ingredient on the dish while it is still on the fire and you may find a better one. Your Cookbook is on the Discoveries page.", npc, player)
+	return true
 end

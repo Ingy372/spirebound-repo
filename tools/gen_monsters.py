@@ -184,6 +184,24 @@ MONSTERS = {
                            elements={"physical": 10, "holy": -15},
                            loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (5880, 100000, 3), (239, 50000, 2)],
                            voices=["Chisel... and stone...", "FINISH... ME..."], events=["SpireMiniBossDeath"]),
+    # ---------------------------------------------------------------- FD2 ground features (Floor 1 depth design 4.2):
+    # each comes out of one ground's feature (scripts/spirebound/ground_features.lua), never from the map's spawns.
+    # Elder Sproutling: a seedling left two minutes grows into one. Tougher, better loot (herbs, more coins).
+    "Elder Sproutling": dict(desc="an elder sproutling", look=(19,), corpse=17622, hp=150, xp=55, speed=75, race="venom",
+                             attacks=[("melee", 0, -22), ("earth", -8, -26, 4)], armor=6, defense=8, heal=(0.03, 4000),
+                             loot=[(GOLD, 100000, 22), (3738, 60000, 2), (3577, 40000, 1)],
+                             voices=["The elder sproutling creaks and spreads its leaves."]),
+    # Nest Queen: comes out of a nest burnt with a torch in Waspgrass Fields, with her wasps.
+    "Nest Queen": dict(desc="a nest queen", look=(44,), corpse=5989, hp=260, xp=90, speed=120, race="venom",
+                       attacks=[("melee", 0, -30, None, "poison"), ("earth", -10, -30, 4)], armor=6, defense=8,
+                       loot=[(GOLD, 100000, 30), (5902, 100000, 2), (14083, 15000, 1)], voices=["BZZZZZT!"],
+                       summons=[("Meadow Wasp", 1)]),
+    # Bandit Lieutenant: one named lieutenant walks the Bandit Road each hour; the wanted poster pays on his badge.
+    "Bandit Lieutenant": dict(desc="a bandit lieutenant", look=(2202, 0, 0, 0, 0, 0), corpse=18050, hp=650, xp=260, speed=115,
+                              race="blood", attacks=[("melee", 0, -75), ("physical", -30, -70, 4)], armor=18, defense=18,
+                              loot=[(GOLD, 100000, 60), (9218, 100000, 1), (266, 30000, 1)],
+                              voices=["You'll never collect on me!", "The poster's worth more than you are."],
+                              summons=[("Road Bandit", 1)]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=5994, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),

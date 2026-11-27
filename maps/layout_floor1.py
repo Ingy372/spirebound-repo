@@ -668,6 +668,8 @@ def build(m):
     hidden_places.build(m)
     import floor1_story                                 # FD1/FD3: Archivist Maren, the Oathroom (maps/floor1_story.py)
     floor1_story.build(m)
+    import floor1_features                              # FD2/FD5: a feature per hunting ground, the Works (maps/floor1_features.py)
+    floor1_features.build(m)
 
     # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
     # a real dungeon since 2026-11-26 (Jay, Q89): rooms, corridors, loops, a secret and a mini-boss (maps/underkeep.py)

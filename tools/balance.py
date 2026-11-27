@@ -208,8 +208,9 @@ def xp_for(level):
 # Review A3-1/E-1 (measured on a real character, 2026-11-26): the engine adds its own experience bonuses on top of our
 # stages (Canary data/events/scripts/player.lua): 1.5x below level 50, and 1.5x more while stamina is above 39 hours
 # (a rested character's first 3 hours of the day). The models report both; the targets and generators still use the
-# plain stages until Jay answers Q83 (no retuning before that).
-ENGINE_LOW_LEVEL = (50, 1.5)
+# plain stages. Q83 (Jay, 2026-11-27: "Yes, 11-15 hours"): the low-level bonus is now taken back out on every kill
+# (server/core-patches/player_events_append.lua), so only the rested-stamina bonus is left.
+ENGINE_LOW_LEVEL = (50, 1.0)
 ENGINE_STAMINA = 1.5
 
 
@@ -491,9 +492,10 @@ def write(rows, problems, tasks):
     total = sum(r["band_hours"] for r in rows)
     L += ["", f"Climbing all ten floors by hand: about {total:.0f} hours by the model (real play is slower).", "",
           "## What the real game changes (review A3-1 and E-1, 2026-11-26)",
-          f"The engine adds 1.5x experience below level 50 and 1.5x more while stamina is above 39 hours, and multiplies every "
-          f"drop chance by {rate_loot():g} (capped at 100%). The table above and the checks still use the plain numbers; this is "
-          "what a rested character really gets. Nothing is retuned until Jay answers Q83 (floor length) and Q84 (loot).", "",
+          f"The engine adds 1.5x more experience while stamina is above 39 hours (Tibia's rested bonus, the first 3 hours of a "
+          f"day) and multiplies every drop chance by {rate_loot():g} (capped at 100%). Its hidden 1.5x below level 50 is taken "
+          "back out on every kill (Q83, Jay 2026-11-27: Floor 1 should take 11-15 hours). The table above uses the plain "
+          "numbers; this column is what a fully rested character gets. Loot waits on Q84.", "",
           "| Floor | Hours to climb (plan) | With the engine's bonuses | Gold/h (plan) | With loot rate |", "|---|---|---|---|---|"]
     for r in rows:
         L.append(f"| {r['floor']} | {r['band_hours']} | {r['real_band_hours']} | {r['gold_h']:,} | {r['real_gold_h']:,} |")
@@ -503,6 +505,10 @@ def write(rows, problems, tasks):
           "## Waycrystals (a gold sink, DESIGN.md 3.7)",
           "Each floor's crystal costs about 4 minutes of that floor's hunting income (a trip there and back about 8): "
           + ", ".join(f"Floor {r['floor']} {__import__('crystals').price(r['floor'], {x['floor']: x['gold_h'] for x in rows}):,}" for r in rows) + ".", "",
+          "## Cooking (FD4, a comfort, never power)",
+          "Dishes give one small comfort out of a fight (no damage, defence, experience or loot); a feast lasts "
+          f"{__import__('gen_depth').FEAST_MULT:g}x as long: "
+          + "; ".join(f"{d['name']} ({d['comfort']} {d['amount']}, {d['minutes']} min)" for d in __import__('gen_depth').DISHES) + ".", "",
           "## Rules the check enforces", f"- Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.",
           f"- Supplies never eat more than {SUPPLY_MAX_SHARE:.0%} of the coins.",
           f"- A typical house on Floors 1-2 costs {HOUSE_HOURS[0]}-{HOUSE_HOURS[1]} hours of hunting.",
@@ -579,6 +585,9 @@ def main(argv):
     problems += reward_problems()
     import gen_adventure                           # AD4/AD5: roamers and dig spots fit their grounds and danger budgets
     problems += gen_adventure.problems()
+    import gen_depth                               # FD2/FD4/FD5: dishes are comforts only, features stay small, Works sink gold
+    gen_depth.build()
+    problems += gen_depth.problems()
     write(rows, problems, tasks)
     print(f"wrote BALANCE.md, data/balance_floors.csv and tasks_floors.lua ({len(rows)} floors, {len(tasks)} tasks)")
     if problems:
