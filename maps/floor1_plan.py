@@ -829,9 +829,15 @@ def den_level(c):
 # "fast, OT-style respawn" of Jay's challenge note (DESIGN.md 9.4). A lone hunter's pace does not change; a ground just
 # feeds two and a half times as many. Elites (15 minutes) and the party caves keep their own times.
 RESPAWN_SCALE, RESPAWN_MIN = 0.4, 40
+# PT3 (2026-11-26): except Burrow Hills. With the faster return a level-14 Vanguard alone killed 202 moles in 27 minutes
+# (~445 an hour, ~155k experience an hour, lowest health 37%), nearly twice the pace the economy model is built on, and a
+# party made 138-143k each. Burrow Hills was also the one mid ground with room to spare in the N2 rerun, so it keeps
+# its old return time.
+RESPAWN_KEEP = {"burrow_hills"}
 for _c in CAMPS:
     _c["respawn_before_n2"] = _c["respawn"]
-    _c["respawn"] = max(RESPAWN_MIN, round(_c["respawn"] * RESPAWN_SCALE))
+    if _c["id"] not in RESPAWN_KEEP:
+        _c["respawn"] = max(RESPAWN_MIN, round(_c["respawn"] * RESPAWN_SCALE))
 
 for _c in CAMPS:
     _c.setdefault("den", None)

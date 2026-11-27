@@ -177,18 +177,22 @@ real shops and real quests, no `/pilot` level or teleport shortcuts. Played with
     with no danger. Suspect today's faster respawns (commit 558b8779) on a swarm ground. Measure solo with the
     autopilot, then tune Burrow Hills' density/respawn or mole experience in the generators (`tools/gen_monsters.py`,
     `maps/floor1_plan.py`), never the tables by hand.
+    - **Measured and changed:** solo, a level-14 Vanguard with a tier-1 barracks weapon (`python tools/autopilot.py burrow_solo14`) killed 202 moles in 27 min: ~155k experience an hour, ~445 kills an hour, lowest health 37%. So it is not a party effect: the faster respawns (10.4) roughly doubled the pace the economy model is built on. Burrow Hills now keeps its old 215-second return (`RESPAWN_KEEP` in `maps/floor1_plan.py`, map regenerated; it had spare capacity in the N2 rerun). Mole experience unchanged (lowering it broke the economy model's ladder check). Left: rerun the solo route after the next restart (ROADMAP PT3).
 16. **Levelling is fast for parties.** Level 3 -> 19 in about 2h45m of play including town trips; the target is ~12
     hours to level 35 solo. Fine if parties are meant to race ahead; check the solo pace with the autopilot.
+    - Solo pace measured only at Burrow Hills (above). A full solo level-up timing is still open under ROADMAP PT3.
 17. **The solo/class grounds never threatened a party** (no deaths from level 3 to 21; the healer's party heal was
     never needed below 65%). The first deaths came at the Bandit Road (group ground, Bandit Captain elite: 55-61 per
     swing on a 260-health Mystic, 8 monsters in sight). That matches the design; just confirm with Jay that the solo
     grounds are meant to be this safe for groups.
+    - For Jay: Q75 (recommendation: keep it).
 18. **Health potions look weak late in the band.** A level-21 Vanguard in brass gear, drinking every 2 seconds and
     casting Second Wind, lost to a pack of four Road Bandits in ~20 seconds (40-50 damage per 2 s). Check potion
     strength against Floor 1's 19-30 band damage (`tools/balance.py`).
    - **Done:** found the real cause: Tibia's rule let only level-50s drink strong health and strong mana potions, while Floor 1 sells them (Quartermaster Bryn) and hands them out from level-14 chests, so the Vanguard could only drink plain ones. Strong potions now work from level 14 (strong health for Vanguards and Rangers, strong mana for all; `server/core-overrides/scripts/actions/items/potions.lua`), and `tools/balance.py` models it (check passes). Test: "strong potions can be drunk on Floor 1".
 19. **No sting to dying below level 50** on Normal (no experience lost, by design: `Difficulty.youngGraceText`). Note
     for Jay's "challenge" goal: Floor 1 deaths cost only the walk back.
+    - For Jay: Q75 and Q77 (no loss below 50 on Normal, recommended).
 
 ## P4: party play
 

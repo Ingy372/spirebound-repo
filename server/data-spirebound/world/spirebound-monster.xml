@@ -768,256 +768,256 @@
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1254" centery="1179" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1264" centery="1175" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1288" centery="1175" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1291" centery="1175" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1297" centery="1177" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1300" centery="1177" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1320" centery="1177" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1317" centery="1177" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1318" centery="1186" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1315" centery="1186" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1254" centery="1219" centerz="7" radius="2">
-		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1264" centery="1223" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1288" centery="1223" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1291" centery="1223" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1297" centery="1221" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1300" centery="1221" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1320" centery="1221" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1317" centery="1221" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1318" centery="1212" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1321" centery="1212" centerz="7" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="7" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="7" spawntime="108" />
 	</monster>
 	<monster centerx="1270" centery="1196" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1267" centery="1196" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1271" centery="1188" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1268" centery="1188" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1300" centery="1185" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1303" centery="1185" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1307" centery="1197" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1304" centery="1197" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1289" centery="1212" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1292" centery="1212" centerz="6" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="6" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="6" spawntime="108" />
 	</monster>
 	<monster centerx="1242" centery="1186" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1239" centery="1186" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1244" centery="1172" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1241" centery="1172" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1270" centery="1168" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1267" centery="1168" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1276" centery="1173" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1273" centery="1173" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1303" centery="1168" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1306" centery="1168" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1313" centery="1173" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1316" centery="1173" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1324" centery="1216" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1327" centery="1216" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1317" centery="1228" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1320" centery="1228" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1290" centery="1224" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1293" centery="1224" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1264" centery="1229" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-2" y="0" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-2" y="0" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1261" centery="1229" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="-1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="-1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1264" centery="1232" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="-1" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-2" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="-1" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-2" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1242" centery="1214" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1239" centery="1214" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1287" centery="1215" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1290" centery="1215" centerz="8" radius="2">
-		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="43" />
-		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="43" />
+		<monster name="Burrow Mole" x="0" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="-1" y="0" z="8" spawntime="108" />
+		<monster name="Burrow Mole" x="0" y="-1" z="8" spawntime="108" />
 	</monster>
 	<monster centerx="1265" centery="1186" centerz="9" radius="2">
 		<monster name="Burrow Mole" x="0" y="0" z="9" spawntime="80" />

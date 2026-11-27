@@ -73,7 +73,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1171, y = 1374, z = 8, group = { { "Bristle Boar", 1 } } },
 		{ n = 12, loop = "d", x = 1155, y = 1392, z = 8, group = { { "Bristle Boar", 1 } } },
 	} },
-	{ id = "burrow_hills", title = "Burrow Hills", type = "mixed", want = 142, guarded = false, respawn = 86, lo = 11, hi = 16, x1 = 1234, y1 = 1164, x2 = 1329, y2 = 1233, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "middle" }, spots = {
+	{ id = "burrow_hills", title = "Burrow Hills", type = "mixed", want = 142, guarded = false, respawn = 215, lo = 11, hi = 16, x1 = 1234, y1 = 1164, x2 = 1329, y2 = 1233, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "middle" }, spots = {
 		{ n = 1, loop = "a", x = 1245, y = 1182, z = 7, group = { { "Burrow Mole", 2 } } },
 		{ n = 2, loop = "a", x = 1282, y = 1172, z = 7, group = { { "Burrow Mole", 2 } } },
 		{ n = 3, loop = "a", x = 1304, y = 1172, z = 7, group = { { "Burrow Mole", 2 } } },

@@ -14,7 +14,7 @@
   },
   {
    "do": "say",
-   "text": "/pilot gearreset"
+   "text": "/pilot gear 1"
   },
   {
    "do": "say",
