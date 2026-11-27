@@ -647,6 +647,7 @@ SpireWilds = { grounds = {
 	["Siege Beast"] = 3.0,
 	["Spore Bat"] = 0.5,
 	["Sproutling"] = 0.7,
+	["Stairwarden"] = 2.2,
 	["Stonehide Bull"] = 1.5,
 	["Stonehorn Ram"] = 2.0,
 	["The Paymaster"] = 2.5,
