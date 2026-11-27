@@ -31,13 +31,12 @@ The Pass gate also stays closed: there is no path round the boulders.
 
 1. **The "2 hours of play-time protection" in DESIGN.md 6.4 does not exist (item 8).** Only the level-50 rule exists.
    A design gap, not a bug: build it or drop it from DESIGN.md.
-2. **Small money leaks still open (items 11, 13):**
-   - Ground chests pay their first-time reward to every character on an account. A second character on the same
-     account got the full 3,450 gold and items again. That is 34,500 gold plus potions and shards per extra character.
-   - The Well Vein secret gives 10 platinum (1,000 gold) as an item, so it skips the "secret gold once per account"
-     rule. A second character on the same account got the 1,000 again.
-   - Hunting-task gold is put in the backpack (`addMoney`), not the bank. With a full backpack part of it is lost:
-     Rhen said "490 gold" and the character received 400, twice in two tries.
+2. **The three small money leaks are fixed since (`57e34644`), re-tested on that commit with real characters:**
+   - Ground chests: the first character on an account got the first-time reward (+3,450 at chest 1). A second
+     character on the same account got only the daily refill (+460), and after 21 hours another +460.
+   - Well Vein: the first character got 1,000 gold, a second character on the same account got 0.
+   - Task gold goes to the bank: with a completely full backpack, Rhen's "490 gold" arrived in full (+490).
+   (Test-copy note: in season 2 secret rewards are shuffled by the season remix. Test them in season 1.)
 3. **Death Game loot bonus looks bigger than designed (item 6):** +45% coins measured against +30% designed (300
    kills each). Worth a longer measurement before changing anything.
 4. **Smaller things:** after a reforge the new weapon goes to the backpack, not the hand, so "upgrade" and !upgrade
