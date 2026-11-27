@@ -111,13 +111,17 @@ local function giveReward(player, secret, first)
 	SpireSecrets.giveKeeps(player, secret, false)
 end
 
+SpireSecrets.KEEPS_SINCE = 1795791600 -- 2026-11-27 15:00 UTC: the adventure layer's secret rewards went live
+
 -- Characters who found a secret before its keepsake existed get it at login (adventure layer 4.1)
 function SpireSecrets.catchUp(player)
 	local given = player:kv():scoped("spirebound-secret-keeps")
 	for _, secret in ipairs(SpireSecrets.foundList(player)) do
 		SpireSecrets.giveKeeps(player, secret, true)
 		-- the Sealed Shrine's gift went to its fighters; those who found it before the gift existed get it now
-		if secret.reward == "sealed_shrine" and not given:get(secret.id .. ":gear") and SpireGear.giveSecretGear
+		-- (only for finds before the gift existed: a find since then earns it in the fight, not by walking away)
+		local foundAt = player:kv():scoped("spirebound-secrets"):get(secret.id) or 0
+		if secret.reward == "sealed_shrine" and foundAt < SpireSecrets.KEEPS_SINCE and not given:get(secret.id .. ":gear") and SpireGear.giveSecretGear
 			and SpireGear.giveSecretGear(player, "shrinekeepers_pendant") then
 			given:set(secret.id .. ":gear", os.time())
 		end
