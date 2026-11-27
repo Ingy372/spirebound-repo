@@ -211,8 +211,11 @@ MONSTERS = {
     # The Oathkeeper (FD3, Session C's Oathroom under the Old Quarry): the party boss of the Healer's hall, for four at
     # level 30. Spawned by scripts/spirebound/oathroom.lua (never on the map); he heals from four braziers
     # (SpireOathkeeper). No loot: the reward room's chests pay.
-    "The Oathkeeper": dict(desc="the Oathkeeper", look=(2206, 0, 0, 0, 0, 0), corpse=18074, hp=9000, xp=4500, speed=110,
-                           race="undead", attacks=[("melee", 0, -130), ("physical", -60, -120, 3)], armor=34, defense=34,
+    # FD3b (2026-11-27): four level-30 Pilots in tier-3 gear deal about 335 damage a second; at 9,000 health he fell in
+    # seconds even with his braziers burning. 25,000 health: with all four braziers lit his healing (oathroom.lua) matches
+    # a party's damage, so the braziers must be put out; with them handled the fight lasts about two to three minutes.
+    "The Oathkeeper": dict(desc="the Oathkeeper", look=(2206, 0, 0, 0, 0, 0), corpse=18074, hp=25000, xp=6000, speed=110,
+                           race="undead", attacks=[("melee", 0, -160), ("physical", -60, -140, 3)], armor=34, defense=34,
                            elements={"holy": 30, "death": -10}, boss=True, loot=[],
                            voices=["Hold the stair.", "The oath is kept."], events=["SpireOathkeeper"]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)

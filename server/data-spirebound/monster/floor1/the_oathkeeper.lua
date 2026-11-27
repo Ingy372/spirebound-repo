@@ -3,13 +3,13 @@ local mType = Game.createMonsterType("The Oathkeeper")
 local monster = {}
 
 monster.description = "the Oathkeeper"
-monster.experience = 4500
+monster.experience = 6000
 monster.outfit = {
 	lookType = 2206, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
-monster.health = 9000
-monster.maxHealth = 9000
+monster.health = 25000
+monster.maxHealth = 25000
 monster.race = "undead"
 monster.corpse = 18074
 monster.speed = 110
@@ -38,8 +38,8 @@ monster.loot = {
 }
 
 monster.attacks = {
-	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -130 },
-	{ name = "combat", type = COMBAT_PHYSICALDAMAGE, interval = 2000, chance = 25, minDamage = -60, maxDamage = -120, range = 3, target = true, shootEffect = CONST_ANI_THROWINGKNIFE, effect = CONST_ME_HITAREA },
+	{ name = "melee", interval = 2000, chance = 100, minDamage = 0, maxDamage = -160 },
+	{ name = "combat", type = COMBAT_PHYSICALDAMAGE, interval = 2000, chance = 25, minDamage = -60, maxDamage = -140, range = 3, target = true, shootEffect = CONST_ANI_THROWINGKNIFE, effect = CONST_ME_HITAREA },
 }
 
 monster.defenses = {

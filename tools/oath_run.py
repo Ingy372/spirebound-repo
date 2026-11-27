@@ -112,13 +112,13 @@ def route(name):
     steps += walk([boss[0] - 3, boss[1] + (i - 1), z], "into the Healer's hall", 20, True, 3)
     if i in (1, 3):     # Warden keeps braziers 1 and 2 (north) out, the Healer 3 and 4 (south), fighting between rounds
         b = [p["oath_brazier_1"], p["oath_brazier_2"]] if i == 1 else [p["oath_brazier_3"], p["oath_brazier_4"]]
-        for rnd in range(7):
+        for rnd in range(9):
             for k, br in enumerate(b):
                 stand = [br[0], br[1] + (1 if i == 1 else -1), z]
                 steps += walk(stand, f"put out brazier {k + 1} (round {rnd + 1})", 12, False) + [{"do": "wait", "seconds": 5}]
             steps += [{"do": "hunt", "seconds": 20, "radius": 10}]
     else:
-        steps += [{"do": "hunt", "seconds": 280, "radius": 10}]
+        steps += [{"do": "hunt", "seconds": 360, "radius": 10}]
     if i == 0:
         steps += [{"do": "shot", "name": "oath_boss"}]
     # the reward room: one chest each, then out through the light
