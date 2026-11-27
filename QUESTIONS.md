@@ -8,6 +8,14 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q99. Adventure and "someone has something I don't": build it now, before the full-party run? (2026-11-27)
+You asked whether Floor 1 keeps a player hooked the whole way and has enough FOMO. My audit: the first 30 minutes and levels 10 to 20 are good; levels 20 to 28 go flat (mostly "kill 30 or 40" in the money grounds, no new secret beast, the weapon already earned); and almost nothing on the floor is scarce or visible. Nine of the 13 secrets pay only coins, a rare weapon drop looks like the ordinary one and nobody is told, trophies can't be seen by other players, and every player of a class ends up with the same two addons. The fixes are roadmap Step 4b (AD1 to AD7).
+The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is built until a real party clears Floor 1. Step 4b is mostly new rewards and announcements on things that already exist, but AD4 (rare roaming monsters) and AD5 (treasure maps, two new hidden places) are new content.
+- **Recommendation:** yes, lift the rule for Step 4b only. Do AD1, AD2, AD3 and AD6 first (existing systems, no new art), then AD4 and AD5.
+- **Second choice inside it (AD3):** a few prizes each season that only the first finders can ever have (as Twin Fang already works: first 3). My recommendation: looks and titles only, never power, so late joiners are not weaker, only less decorated.
+- Assumed until you answer: nothing is built yet (this one is your rule, so I don't assume past it); the tasks are filed and ready.
+- Jay's answer:
+
 ### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
 You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
 - **Recommendation:** keep it on the ground floor, next to the Monument, so everyone arriving walks into the busy hall and climbs the stairs to the lockers.

@@ -144,3 +144,7 @@ While the lead session worked on the map, a second session did the non-map jobs 
 
 ### 2026-11-27 morning (Hearthgate v4.1, Jay's changes)
 - **Hearthgate v4.1 (Jay: deeper eight-sided wall, brighter town, the depot as a round building, then "flip the floor plan"):** wall corners cut at 24 tiles; grass with paved streets, door paths, trees and flowers; the Hearth is a round two-storey hall in the plaza (ground: Hearthstone, Monument, Beacon, Arena statue, stalls; upstairs: 16 lockers, bank, Nell, Vesper; round red roof); the old north hall is the Climbers' Temple; bigger detailed pond; 29 houses; three new townsfolk; Floor 1 Waycrystals land on the Hearthstone (Q98). Boot test 300 tests, 0 errors.
+
+### 2026-11-27 (adventure and FOMO audit, Fable session)
+- **Jay asked whether Floor 1 keeps players hooked and has enough FOMO** ("always something to do, something to explore, and lots of FOMO"). Read the quests, secrets, gear, elites, hidden beasts, events and playtests: strong at levels 1-5 and 10-20, flat at 20-28, and almost nothing is scarce or visible to others (9 of 13 secrets pay coins only; rare drops are silent and look ordinary; trophies are invisible).
+- Filed as roadmap Step 4b (AD1-AD7) and Q99 (whether to lift the "nothing new until the party run" rule for it). Nothing built; no server change.
