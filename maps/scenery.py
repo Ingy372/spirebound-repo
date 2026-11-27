@@ -106,8 +106,9 @@ def bridge(m, x0, y0, w, h, z):
 SCENERY = set(TREES_BROAD + TREES_FIR + TREES_DEAD + BUSHES + THORNS + FLOWERS + FERNS + STONES + BOULDERS + [1784, 1785, 1786, 2264, 2290, 3605, 7957, 1822])
 
 
-def ruin(m, x0, y0, w, h, z, style="stone"):
-    """A broken building: a wall ring with many pieces missing, rubble and a fallen pillar inside."""
+def ruin(m, x0, y0, w, h, z, style="stone", door=()):
+    """A broken building: a wall ring with many pieces missing, rubble and a fallen pillar inside. `door` tiles of the
+    ring stay open and clear, with nothing dropped just inside them (where a road arrives)."""
     from mapgen import FAMILIES
     rng = m.rng
     m.fill(x0, y0, w, h, z, "pave")
@@ -116,7 +117,14 @@ def ruin(m, x0, y0, w, h, z, style="stone"):
     ring = [(x, y0) for x in range(x0, x0 + w)] + [(x0 + w - 1, y) for y in range(y0 + 1, y0 + h)]
     ring += [(x, y0 + h - 1) for x in range(x0 + w - 2, x0 - 1, -1)] + [(x0, y) for y in range(y0 + h - 2, y0, -1)]
     keep, gap = [], 0
+    door = set(door)
+    inside_door = {(x, y + (1 if y == y0 else -1 if y == y0 + h - 1 else 0)) for x, y in door}
+    inside_door |= {(x + (1 if x == x0 else -1 if x == x0 + w - 1 else 0), y) for x, y in door}
+    for t in door | inside_door:
+        m.clear_items(t[0], t[1], z)          # whatever grew there earlier
     for t in ring:
+        if t in door:
+            continue
         if gap > 0:
             gap -= 1
             if rng.random() < 0.5:
@@ -129,7 +137,10 @@ def ruin(m, x0, y0, w, h, z, style="stone"):
         keep.append(t)
     m.autowall(keep, z, style)
     for _ in range(max(3, w * h // 14)):
-        prop(m, x0 + rng.randint(1, w - 2), y0 + rng.randint(1, h - 2), z, rng.choice([1822, 1822, 1783, 2264, 2290, 3737]))
+        rx, ry = x0 + rng.randint(1, w - 2), y0 + rng.randint(1, h - 2)
+        pid = rng.choice([1822, 1822, 1783, 2264, 2290, 3737])
+        if (rx, ry) not in inside_door:
+            prop(m, rx, ry, z, pid)
 
 
 def standing_stones(m, cx, cy, z, n=8, radius=5):

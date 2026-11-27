@@ -400,7 +400,8 @@ class Map:
             if any(i in WALL_IDS for i, _a in self.items.get(p, [])):
                 return                      # a road never eats a building's wall or door
             if p in self.ground:
-                self.ground[p] = 408 if self.ground[p] in (4597, 4609, 4610) else self.pick(key)
+                if self.ground[p] != 408:       # a road laid over a bridge keeps the bridge (map review M6)
+                    self.ground[p] = 408 if self.ground[p] in (4597, 4609, 4610) else self.pick(key)
                 self.clear_items(*p)
                 self.road_tiles.add(p)
 

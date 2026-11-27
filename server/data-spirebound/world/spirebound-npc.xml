@@ -75,14 +75,14 @@
 	<npc centerx="1143" centery="1190" centerz="7" radius="1">
 		<npc name="Fisher Corwin" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1059" centery="1204" centerz="7" radius="1">
-		<npc name="Miller Agna" x="0" y="0" z="7" spawntime="60" />
-	</npc>
 	<npc centerx="1063" centery="1204" centerz="7" radius="1">
 		<npc name="Innkeeper Bess" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1085" centery="1214" centerz="7" radius="1">
 		<npc name="Coachwoman Dara" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1082" centery="1185" centerz="7" radius="1">
+		<npc name="Miller Agna" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1276" centery="1347" centerz="7" radius="1">
 		<npc name="Guide Pell" x="0" y="0" z="7" spawntime="60" />

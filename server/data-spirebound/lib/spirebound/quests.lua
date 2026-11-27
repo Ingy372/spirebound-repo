@@ -592,7 +592,7 @@ SpireQuests.WHERE = {
 	["Hunter Brannoch"] = { place = "the Hunters' Hall on Hearthgate's east side", pos = { 1267, 1273, 7 } },
 	["Vesper"] = { place = "Hearthgate, just south of the temple", pos = { 1236, 1302, 7 } },
 	["Fisher Corwin"] = { place = "the river bank north-west of Hearthgate", pos = { 1143, 1190, 7 } },
-	["Miller Agna"] = { place = "the mill in Millcross, far to the west", pos = { 1059, 1204, 7 } },
+	["Miller Agna"] = { place = "the mill on the north edge of Millcross, far to the west", pos = { 1082, 1185, 7 } },
 	["Fence Marrow"] = { place = "the road just south of the Bandit Road, east of Hearthgate" },
 }
 

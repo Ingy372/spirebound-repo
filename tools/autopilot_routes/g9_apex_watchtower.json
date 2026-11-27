@@ -95,8 +95,8 @@
   {
    "do": "walk",
    "to": [
-    1086,
-    1204,
+    1083,
+    1218,
     7
    ],
    "fight": false,
@@ -107,7 +107,7 @@
    "do": "walk",
    "to": [
     1076,
-    1174,
+    1188,
     7
    ],
    "fight": false,
@@ -118,7 +118,7 @@
    "do": "walk",
    "to": [
     1076,
-    1144,
+    1158,
     7
    ],
    "fight": false,
@@ -129,7 +129,18 @@
    "do": "walk",
    "to": [
     1076,
-    1114,
+    1128,
+    7
+   ],
+   "fight": false,
+   "timeout": 120,
+   "note": "The Old Watchtower: on the way"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1062,
+    1110,
     7
    ],
    "fight": false,
@@ -140,7 +151,7 @@
    "do": "walk",
    "to": [
     1052,
-    1104,
+    1088,
     7
    ],
    "fight": false,

@@ -554,7 +554,8 @@ def build(m):
     m.road((tx + tw // 2 + 1, ty + th), (tx + tw // 2 + 1, Y0 + 372), Z)     # south road
     m.road((X0 + 60, Y0 + 220), (X0 + 130, Y0 + 220), Z)                    # Millcross to the river bank
     m.road((X0 + 130, Y0 + 220), (tx - 60, ty + th // 2 + 1), Z)            # river bank to the west road
-    m.road((tx + tw // 2, Y0 + 368), (X0 + 300, Y0 + 368), Z)               # Shrine Path, to the toppled shrine
+    m.road((tx + tw // 2, Y0 + 368), (X0 + 304, Y0 + 368), Z)               # Shrine Path, to the toppled shrine
+    m.road((X0 + 303, Y0 + 368), (X0 + 303, Y0 + 371), Z, width=2, wind=False)   # ... up to its broken north door (M5)
     # from East Cross: the Bandit Track north and the Shard Track south (2-wide trails)
     for a, b in (((338, 285), (368, 285)), ((368, 285), (368, 226)), ((368, 226), (354, 224)), ((354, 224), (354, 220)),
                  ((338, 285), (338, 292)), ((338, 292), (366, 296)), ((366, 296), (366, 299)), ((234, 144), (239, 144))):
@@ -640,7 +641,6 @@ def build(m):
     S.prop(m, mx + 20, my + 5, Z, 2519)
     S.prop(m, mx + 21, my + 5, Z, 2523)
     m.sign(mx + 25, my + 15, Z, "Millcross Inn")
-    m.npcs.append(("Miller Agna", (mx + 24, my + 9, Z)))
     m.npcs.append(("Innkeeper Bess", (mx + 28, my + 9, Z)))
     for row_y in (24, 34):
         for i in range(4):
@@ -649,8 +649,10 @@ def build(m):
                              style=["timber", "sand", "timber", "brick"][(i + (row_y // 10)) % 4])
             S.prop(m, mx + 5 + i * 15, my + row_y - 1, Z, 316)
             hid += 1
-    for px, py in ((mx + 10, my + 14), (mx + 40, my + 14)):                       # shade trees beside the street
+    for px, py in ((mx + 10, my + 14), (mx + 45, my + 14)):                       # shade trees beside the street
         S.prop(m, px, py, Z, 3619)
+    # the Watch Road comes down from the north and stopped at the village edge (map review M5): carry it to the street
+    m.road((X0 + 76, Y0 + 194), (X0 + 76, my + 16), Z, width=2, wind=False)
     S.prop(m, mx + 25, my + 19, Z, 1922)
     m.towns.append((2, "Millcross", (mx + 25, my + 18, Z)))
     m.npcs.append(("Coachwoman Dara", (mx + 50, my + 19, Z)))                      # carriages to Hearthgate
@@ -671,6 +673,22 @@ def build(m):
         for xx in (fx, fx + fw - 1):
             if S.free(m, xx, yy, Z):
                 m.put(xx, yy, Z, 17232)
+    # the mill itself (map review M9: Millcross had none; Agna stood in the inn). A stone mill house east of the Watch
+    # Road, across from the wheat, door to the road; the millstone in the middle, sacks of flour along the walls.
+    lx_, ly_, lw_, lh_ = mx + 44, my - 15, 9, 8
+    claim("Agna's mill", lx_, ly_, lw_, lh_)
+    for yy in range(ly_ - 2, ly_ + lh_ + 2):
+        for xx in range(lx_ - 3, lx_ + lw_ + 2):
+            m.clear_items(xx, yy, Z)
+    m.building(lx_, ly_, lw_, lh_, Z, floor="wood", door_side="w", style="stone", doors=True)
+    door_y = ly_ + lh_ // 2
+    m.fill(lx_ - 3, door_y, 3, 1, Z, "dirt")                         # a step of path from the road to the door
+    S.prop(m, lx_ + 4, ly_ + 3, Z, 1943)                              # the millstone
+    for px_, py_, pid in ((1, 1, 2523), (2, 1, 2519), (7, 1, 2523), (7, 6, 2519), (6, 6, 116), (1, 6, 117)):
+        S.prop(m, lx_ + px_, ly_ + py_, Z, pid)
+    m.npcs.append(("Miller Agna", (lx_ + 3, ly_ + 5, Z)))
+    m.sign(lx_ - 1, door_y - 2, Z, "Agna's Mill")
+    mill = (lx_, ly_)
 
     # ------------------------------------------------ the Arrival Yard (town 50): where every new character starts
     # Roadmap R11: a walled path with four gates; each opens after one small step (kill a rat, loot it, learn about
@@ -1034,7 +1052,7 @@ def build(m):
         tusk = next(p for p, v in bm["clearings"].items() if v[0] == "tusk")
         m.points["old_tusk_spawn"] = tusk
         secret("s2", tusk[0] + 1, tusk[1], tusk[2])      # a step into the mud from the chamber's middle
-    secret("s3", mx + 30, my + 8)                       # under the Millcross mill (inn back room)
+    secret("s3", mill[0] + 6, mill[1] + 3)              # under the Millcross mill: beside the millstone (M9)
     secret("s4", mx + 21, my + 6)                       # false pantry shelf in the inn
     qL = next(L for L in m.wilds if L["id"] == "old_quarry")
     if qL.get("design"):                                # H8: a dead-end nook off the north-east ledge, never on the trail
@@ -1223,7 +1241,7 @@ def build(m):
     S.pond(m, X0 + 96, Y0 + 130, 11, 7, Z, ring="mud")            # a pond across the river
     S.ruin(m, X0 + 312, Y0 + 125, 14, 11, Z)                       # ruined watchtower by the lake
     S.ruin(m, X0 + 60, Y0 + 150, 11, 9, Z)                         # a roofless farmhouse across the river
-    S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z)                        # a toppled shrine in the south-east
+    S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z, door=[(X0 + 302, Y0 + 372), (X0 + 303, Y0 + 372)])   # a toppled shrine (south-east)
     S.standing_stones(m, X0 + 382, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved twice for Toad Pond)
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]

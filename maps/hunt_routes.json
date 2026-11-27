@@ -12,8 +12,8 @@
    ],
    [
     [
-     1098,
-     1219,
+     1083,
+     1218,
      7
     ],
     "north-west"
@@ -32,12 +32,12 @@
    ],
    [
     "north",
-    245,
+    260,
     true
    ]
   ],
-  "steps": 361,
-  "text": "leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 245 steps to its south entrance",
+  "steps": 375,
+  "text": "leave Hearthgate by the west gate, follow the road west about 60 steps, then follow the road north about 260 steps to its south entrance",
   "title": "The Old Watchtower",
   "turns": [
    [
@@ -78,28 +78,33 @@
     7
    ],
    [
-    1086,
-    1204,
+    1083,
+    1218,
     7
    ],
    [
     1076,
-    1174,
+    1188,
     7
    ],
    [
     1076,
-    1144,
+    1158,
     7
    ],
    [
     1076,
-    1114,
+    1128,
+    7
+   ],
+   [
+    1062,
+    1110,
     7
    ],
    [
     1052,
-    1104,
+    1088,
     7
    ]
   ]
