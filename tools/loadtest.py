@@ -427,6 +427,15 @@ def _world_point(name):
 UNDERKEEP_BOX = "%d %d %d 3515 2" % _world_point("underkeep_chest")   # the altar the map uses as the strongbox (on a carpet)
 
 
+ROD_ON_RIVER = "1121 1213 7 3483 1 1125 1213 7"   # the rod lying beside you, on a river tile by the Millcross bridge
+
+
+def _check_fish(lines):
+    t = [r["tries"] for r in _rv(lines, "fishstate")]
+    good = len(t) == 4 and t[1] > t[0] and t[2] == t[1] and t[3] > t[2]
+    return good, "fishing tries: start %s, cast %s, cast again 0.7 s later %s (refused), 2.7 s later %s" % tuple((t + [None] * 4)[:4])
+
+
 def _check_dg(kind, want):
     def check(lines):
         r = _rv(lines, "dg")[0]
@@ -482,6 +491,10 @@ REVIEW_CASES = [
                               "first open +%d, second (character's own day forgotten) +%d" % (
                                   _rv(lines, "state")[0]["gold"] - _rv(lines, "boxprep")[0]["gold"],
                                   _rv(lines, "state")[1]["gold"] - _rv(lines, "boxprep")[1]["gold"]))),
+    dict(name="A7-1 two seconds between fishing casts", voc=4, level=30,
+         logins=[[(3, "say", "/rv fishprep"), (1, "usewith", ROD_ON_RIVER), (0.2, "say", "/rv fishstate"),
+                  (0.5, "usewith", ROD_ON_RIVER), (0.2, "say", "/rv fishstate"),
+                  (2.5, "usewith", ROD_ON_RIVER), (0.2, "say", "/rv fishstate")]], stay=8, check=_check_fish),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,

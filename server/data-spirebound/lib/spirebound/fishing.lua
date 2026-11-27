@@ -3,6 +3,7 @@
 -- use the rod again within BITE_WINDOW seconds to land it. Unattended fishing catches nothing (anti-bot).
 SpireFishing = {
 	BITE_WINDOW = 3, -- seconds to react to a bite
+	CAST_GAP = 2, -- review A7-1: seconds between casts (an empty cast could be repeated at once, a macro's gold source)
 	WORM = 3492,
 	TITLES = { { 5, "Angler" }, { 7, "Master Angler of Floor 1" } },
 }
@@ -17,7 +18,7 @@ SpireFishing.tables = {
 		{ id = "golden_trout", name = "Golden Trout", item = 7158, weight = 4, kg = { 0.8, 2.5 } },
 		{ id = "moonscale_eel", name = "Moonscale Eel", item = 3580, weight = 4, kg = { 1.5, 5.0 }, night = true },
 		{ id = "old_whiskers", name = "Old Whiskers", item = 3580, weight = 0.3, kg = { 12, 20 }, legendary = true },
-		{ id = "sunken_purse", name = "a sunken purse", item = 3035, count = 5, weight = 2, treasure = true },
+		{ id = "sunken_purse", name = "a sunken purse", item = 3035, count = 2, weight = 1, treasure = true },   -- A7-1: was 5 platinum at weight 2
 		{ id = "pearl", name = "a white pearl", item = 3026, weight = 1, treasure = true },
 		{ id = "junk_boots", name = "old boots", item = 3123, weight = 8, junk = true },
 	},

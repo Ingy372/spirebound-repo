@@ -154,6 +154,10 @@ class Bot:
                     if kind == "use":                 # use the item at "x y z itemid stackpos" (as a right click does)
                         x, y, z, iid, stack = (int(v) for v in text.split())
                         self.send(bytes([0x82]) + struct.pack("<HHBHBB", x, y, z, iid, stack, 0))
+                    elif kind == "usewith":           # use an item lying at one place on another: "fx fy fz itemid stackpos tx ty tz"
+                        fx, fy, fz, iid, fs, tx, ty, tz = (int(v) for v in text.split())
+                        self.send(bytes([0x83]) + struct.pack("<HHBHB", fx, fy, fz, iid, fs)
+                                  + struct.pack("<HHBHB", tx, ty, tz, 0, 0))
                     elif kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
                         self.send(bytes([0xA0, 1, 0, 0, 0]))   # unmarked players), pvp mode dove
                     else:

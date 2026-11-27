@@ -17,6 +17,8 @@
 --                                          character of the same account found it; logs the gold each time
 --   /rv dailyfresh | dailyalt              item 10: forget the account's (fresh) or only this character's (alt) daily
 --   /rv boxprep [fresh]                    item 10: stand by the Underkeep strongbox ("fresh": forget the account's day)
+--   /rv fishprep | fishstate               review A7-1: a rod in the left hand and worms on the river bank at
+--                                          1122,1213 (water at 1125,1213); fishstate logs the fishing tries so far
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -236,6 +238,20 @@ function rv.onSay(player, words, param)
 		logger.info("[LOADTEST] rv boxtile {} at={},{},{} items={}", player:getName(), player:getPosition().x, player:getPosition().y,
 			player:getPosition().z, table.concat(ids, ","))
 		state(player, "boxprep")
+	elseif cmd == "fishprep" then
+		player:addItem(SpireFishing.WORM, 50)
+		player:teleportTo(Position(1122, 1213, 7), true)
+		local spot = Position(1121, 1213, 7)                     -- the rod lies beside you (a rod can't be held in a hand)
+		for _, it in ipairs(Tile(spot) and Tile(spot):getItems() or {}) do
+			it:remove()
+		end
+		local rod = Game.createItem(3483, 1, spot)
+		local t = Tile(Position(1125, 1213, 7))
+		logger.info("[LOADTEST] rv fishprep {} water={} rod={} stack={}", player:getName(), t and t:getGround() and t:getGround():getId() or 0,
+			rod and rod:getId() or 0, rod and Tile(spot):getThingIndex(rod) or -1)
+		logger.info("[LOADTEST] rv fishstate {} tries={}", player:getName(), player:getSkillTries(SKILL_FISHING))
+	elseif cmd == "fishstate" then
+		logger.info("[LOADTEST] rv fishstate {} tries={}", player:getName(), player:getSkillTries(SKILL_FISHING))
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

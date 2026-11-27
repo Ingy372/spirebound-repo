@@ -1,6 +1,11 @@
 -- Spirebound fishing (lib/spirebound/fishing.lua). Replaces Canary's sample fishing script.
 local waterIds = { 629, 630, 631, 632, 633, 634, 4597, 4598, 4599, 4600, 4601, 4602, 4609, 4610, 4611, 4612, 4613, 4614 }
 local pending = {} -- playerId -> { biteUntil = ms, pos = Position } or { waitingUntil = ms }
+local lastCast = {} -- playerId -> ms of the last cast
+SpireFishing.lastCast = lastCast
+SpireCleanup.add(function(pid)
+	pending[pid], lastCast[pid] = nil, nil
+end)
 
 local function nowMs()
 	return systemTime and systemTime() or os.time() * 1000 -- milliseconds
@@ -12,9 +17,9 @@ local function land(player, pos)
 		return
 	end
 	local floor = math.max(1, Floors.at(pos))
-	local night = SpireSecrets.isNight(tonumber(os.date("%H")))
+	local night = SpireSecrets.isNight(SpireSecrets.gameHour()) -- review A7-2: the game's hour, as the secrets use
 	local f = SpireFishing.roll(floor, night, math.random(), SpireEvents and SpireEvents.fishingLuck(floor) or 1)
-	player:addItem(f.item, f.count or 1)
+	SpireGive.reward(player, f.item, f.count or 1) -- never onto the floor when the backpack is full
 	player:addSkillTries(SKILL_FISHING, 2, true)
 	pos:sendMagicEffect(CONST_ME_WATERSPLASH)
 	if f.junk or f.treasure then
@@ -74,6 +79,11 @@ function fishing.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		player:sendCancelMessage("Your line is already in the water.")
 		return true
 	end
+	if lastCast[pid] and t - lastCast[pid] < SpireFishing.CAST_GAP * 1000 then
+		player:sendCancelMessage("Let the water settle a moment before you cast again.")
+		return true
+	end
+	lastCast[pid] = t
 	toPosition:sendMagicEffect(CONST_ME_LOSEENERGY)
 	player:addSkillTries(SKILL_FISHING, 1, true)
 	if math.random(100) > SpireFishing.biteChance(player:getEffectiveSkillLevel(SKILL_FISHING)) then
