@@ -10,6 +10,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q82-Q94 come from the Floor 1 review and the map review (2026-11-26). Nothing is built for them until you answer.*
 
+### Q97. Hearthgate's new layout: build it as planned? (2026-11-26)
+You asked for a full redesign of the town unless I'd score it a solid A. I score it a B: tidy, but shops are 29 to 50 steps from where you appear (the Guild Hall 80), the middle is a building rather than a place to gather, and there are no districts. The plan (`docs/design/hearthgate_v4_plan.md`, picture `docs/HEARTHGATE_V4_PLAN.png`): the same size and gates, an eight-sided wall, a great round plaza in the middle where you appear on the Hearthstone in the open air (the Town of Beginnings nod), the Hearth as the great hall on its north side, every shop facing the plaza, the halls together in the north-east, Spire Manor in walled grounds in the south-east, and three neighbourhoods with different kinds of home. About a day of work.
+- **Recommendation:** build it, after the Underkeep rebuild has finished with the map.
+- Assumed until you answer: build it as planned.
+- Jay's answer:
+
 ### Q95. Spire Manor: are these the right things to sell with it? (2026-11-26)
 You asked for the manor to "feel premium" and have "features that players would want to pay for, but not be totally game breaking". It is rebuilt (four furnished floors) and comes with: a private depot and mailbox, a steward who is your bank, a housekeeper who sells supplies and buys loot at the town's own prices, three training dummies, 10 mannequins, a free Fortune Hall license, longer Open House, a permanent title, and the Waystone on the roof (travel to any open floor's town; the owner can be called home from inside any town; every 30 minutes, never in a fight). Nothing gives experience, damage, defence or loot. Full list: DESIGN.md 7.6, or `!manor` in game.
 - **Recommendation:** keep all of it. The Waystone is the one to think about: it saves the owner (and guests) walking and, later, teleport crystals. I think that is exactly the kind of comfort worth paying for, and it can't be used to escape a fight. If you'd rather it not replace crystals at all, I'd make it owner-only or once an hour.
