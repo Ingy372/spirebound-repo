@@ -487,7 +487,7 @@ def build(m, tx, ty, Z, claim, hid=1):
         m.clear_items(*R(px, py), Z)
     grate = R(*gr) + (Z,)                                # Underkeep grate (the Underkeep's exit lands at (5, 68))
     m.put(*grate, 435)
-    m.sign(*R(gr[0] + 2, gr[1]), Z, "An old drain grate. Something echoes far below.")
+    m.sign(*R(gr[0] + 2, gr[1]), Z, "An old drain grate. Something echoes far below. Climbers say only the seasoned come back up.")
     m.points["underkeep_grate"] = grate
 
     gx1, gy1, gw1, gh1 = P.GREEN                         # Hearthgate Green: a park with a pond
