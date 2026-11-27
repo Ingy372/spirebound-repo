@@ -1,24 +1,22 @@
-"""N3 (FLOOR1_REVIEW.md F1-50, Q47): Hearthgate dressed so it looks lived in, not generated.
+"""N3 (FLOOR1_REVIEW.md F1-50, Q47), redone for Hearthgate v4 (2026-11-27): the town dressed so it looks lived in.
 
-Runs after the town's buildings, streets and green places are in place (maps/layout_floor1.py). It only ever adds
+Runs after the town's buildings, streets, plaza and green places are in place (maps/hearthgate.py). It only ever adds
 things on open ground, so it can't block a door, a lane or an avenue:
-  * the Hearth Square: flower pots along the Ring, crates, barrels and a cart by the market stalls, and the notice board
-    (live news, scripts/spirebound/monument.lua);
   * the open cobble: a few things (a tree, barrels, crates, a cart, a bench, flower pots) only where a 5 x 5 patch of bare
-    cobble surrounds the spot, so lanes of four tiles or less stay clear, spaced at least 7 tiles apart;
+    cobble surrounds the spot and never on a street, spaced at least 7 tiles apart;
+  * a campfire with a bench on Hearthgate Green and in the Training Yard;
+  * a lamp beside the front doors that face south or east;
   * braziers either side of the four town gates (roadmap P3b).
 """
 import scenery as S
 
 COBBLE = 870
-NOTICE_BOARD = 2597
 CART = 5543
 BRAZIER = 2113          # coal basin (lit)
 CRATES = [2519, 117, 118, 2472]
 BARRELS = [2523, 116]
 POTS = [316, 321, 324, 329]
 TREE = 3619
-PARASOLS = [625, 626, 627]
 CAMPFIRE = 1996
 PILLAR = 1296            # grey stone post
 
@@ -33,7 +31,8 @@ def _bare(m, x, y, z, r):
     return True
 
 
-def dress(m, tx, ty, tw, th, z, rng):
+def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44))):
+    """streets: town-relative tiles that must stay clear (lanes are cobble too)."""
     def R(x, y):
         return tx + x, ty + y
 
@@ -41,49 +40,17 @@ def dress(m, tx, ty, tw, th, z, rng):
         p = R(x, y) + (z,)
         return p in m.ground and not m.items.get(p)
 
-    # ---- the Hearth Square (Ring: x 38..75, y 33..70; the Hearth hall: x 42..71, y 38..60)
-    for y in range(40, 59, 4):                    # flower pots down both sides of the Ring, clear of the side arches
-        if 47 <= y <= 51:
-            continue
-        for x in (39, 74):
-            if free(x, y):
-                S.prop(m, *R(x, y), z, rng.choice(POTS))
-    for x in range(44, 70, 5):                    # and along the north side, clear of the North Avenue
-        if 54 <= x <= 59:
-            continue
-        if free(x, 35):
-            S.prop(m, *R(x, 35), z, rng.choice(POTS))
-    # the market corner: goods stacked beside the stalls, a trader's cart
-    for (x, y), pid in (((37, 68), CRATES[0]), ((37, 67), BARRELS[0]), ((48, 69), CRATES[1]), ((65, 68), BARRELS[1]),
-                        ((70, 64), CRATES[2]), ((76, 64), BARRELS[0])):
-        if free(x, y):
-            S.prop(m, *R(x, y), z, pid)
-    if free(43, 66):
-        S.prop(m, *R(43, 66), z, CART)
-    for (x, y) in ((41, 69), (48, 69), (69, 69), (42, 63), (70, 63), (75, 63)):    # a parasol beside each stall
-        if free(x, y):
-            S.prop(m, *R(x, y), z, PARASOLS[(x + y) % len(PARASOLS)])
-    if free(46, 35) and free(47, 35):              # the old draw well on the north side of the square (2 tiles)
-        m.put(*R(47, 35), z, 1930)
-    cx_, cy_ = R(2, 52)                            # the Coach Yard gets its covered wagon (2 tiles)
-    if all((cx_ + a, cy_ + 2, z) in m.ground and not m.items.get((cx_ + a, cy_ + 2, z)) for a in (5, 6)):
-        m.put(cx_ + 6, cy_ + 2, z, 7906)
-    # the notice board, beside the town sign in front of the Hearth
-    nb = (62, 63)
-    if not free(*nb):
-        raise ValueError(f"the notice board's spot {nb} is taken")
-    m.put(*R(*nb), z, NOTICE_BOARD)
-    m.points["hearth_notice_board"] = R(*nb) + (z,)
-
+    keep = {R(x, y) for (x, y) in streets}
     # ---- the open cobble: a few things in the bare places, never in a lane
     kinds = [TREE, TREE, BARRELS, CRATES, POTS, CART, "bench"]
     placed = []
     spots = sorted((x, y) for x in range(tx + 3, tx + tw - 3) for y in range(ty + 3, ty + th - 3))
-    rng_spots = spots[:]
-    rng.shuffle(rng_spots)
-    for (x, y) in rng_spots:
-        if len(placed) >= 22:
+    rng.shuffle(spots)
+    for (x, y) in spots:
+        if len(placed) >= 26:
             break
+        if (x, y) in keep or (x + 1, y) in keep:
+            continue
         if any(max(abs(x - px), abs(y - py)) < 7 for px, py in placed):
             continue
         if not _bare(m, x, y, z, 2):
@@ -100,7 +67,7 @@ def dress(m, tx, ty, tw, th, z, rng):
         placed.append((x, y))
 
     # ---- campfires (P3b): one on Hearthgate Green, one in the Training Yard, each with a bench beside it
-    for (x, y) in ((30, 31), (102, 44)):
+    for (x, y) in campfires:
         spot = next(((x + a, y + b) for a in range(-2, 3) for b in range(-2, 3)
                      if free(x + a, y + b) and free(x + a + 1, y + b)), None)
         if spot:

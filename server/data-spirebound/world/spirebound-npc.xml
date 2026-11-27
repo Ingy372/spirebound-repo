@@ -1,82 +1,82 @@
 <?xml version="1.0"?>
 <npcs>
-	<npc centerx="1224" centery="1291" centerz="7" radius="1">
-		<npc name="Banker Tolliver" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1228" centery="1291" centerz="7" radius="1">
-		<npc name="Trader Osric" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1220" centery="1291" centerz="7" radius="1">
+	<npc centerx="1226" centery="1263" centerz="7" radius="1">
 		<npc name="Broker Nell" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1237" centery="1290" centerz="7" radius="1">
+	<npc centerx="1226" centery="1265" centerz="7" radius="1">
+		<npc name="Banker Tolliver" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1226" centery="1267" centerz="7" radius="1">
+		<npc name="Trader Osric" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1237" centery="1255" centerz="7" radius="1">
 		<npc name="Priest Odran" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1236" centery="1302" centerz="7" radius="1">
-		<npc name="Vesper" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1223" centery="1263" centerz="7" radius="1">
-		<npc name="Alchemist Ivo" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1242" centery="1263" centerz="7" radius="1">
-		<npc name="Fletcher Tamsin" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1208" centery="1278" centerz="7" radius="1">
-		<npc name="Runewright Mael" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1225" centery="1242" centerz="7" radius="1">
-		<npc name="Quartermaster Bryn" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1225" centery="1253" centerz="7" radius="1">
-		<npc name="Postmaster Hobb" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1240" centery="1253" centerz="7" radius="1">
-		<npc name="Tailor Quill" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1184" centery="1278" centerz="7" radius="1">
-		<npc name="Merchant Wenna" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1195" centery="1278" centerz="7" radius="1">
+	<npc centerx="1212" centery="1276" centerz="7" radius="1">
 		<npc name="Weaponsmith Garrick" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1194" centery="1292" centerz="7" radius="1">
+	<npc centerx="1212" centery="1281" centerz="7" radius="1">
 		<npc name="Armorer Hesta" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1194" centery="1302" centerz="7" radius="1">
+	<npc centerx="1212" centery="1289" centerz="7" radius="1">
+		<npc name="Merchant Wenna" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1212" centery="1294" centerz="7" radius="1">
+		<npc name="Quartermaster Bryn" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1253" centery="1277" centerz="7" radius="1">
+		<npc name="Runewright Mael" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1253" centery="1281" centerz="7" radius="1">
+		<npc name="Fletcher Tamsin" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1253" centery="1289" centerz="7" radius="1">
+		<npc name="Alchemist Ivo" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1253" centery="1294" centerz="7" radius="1">
+		<npc name="Tailor Quill" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1240" centery="1303" centerz="7" radius="1">
 		<npc name="Housewright Orla" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1240" centery="1307" centerz="7" radius="1">
+		<npc name="Postmaster Hobb" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1223" centery="1303" centerz="7" radius="1">
+		<npc name="Innkeeper Roan" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1235" centery="1244" centerz="7" radius="1">
 		<npc name="Captain Dorrow" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1258" centery="1242" centerz="7" radius="1">
+	<npc centerx="1254" centery="1262" centerz="7" radius="1">
 		<npc name="Ascendant Veyra" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1274" centery="1244" centerz="7" radius="1">
-		<npc name="Guildwarden Sela" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1279" centery="1240" centerz="7" radius="1">
-		<npc name="Banker Ansel" x="0" y="0" z="7" spawntime="60" />
-	</npc>
-	<npc centerx="1258" centery="1273" centerz="7" radius="1">
+	<npc centerx="1254" centery="1269" centerz="7" radius="1">
 		<npc name="Taskmaster Rhen" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1263" centery="1273" centerz="7" radius="1">
+	<npc centerx="1258" centery="1270" centerz="7" radius="1">
 		<npc name="Bounty Warden Cass" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1267" centery="1273" centerz="7" radius="1">
+	<npc centerx="1260" centery="1271" centerz="7" radius="1">
 		<npc name="Hunter Brannoch" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1205" centery="1290" centerz="7" radius="1">
-		<npc name="Innkeeper Roan" x="0" y="0" z="7" spawntime="60" />
+	<npc centerx="1264" centery="1279" centerz="7" radius="1">
+		<npc name="Guildwarden Sela" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1182" centery="1292" centerz="7" radius="1">
-		<npc name="Coachman Ferro" x="0" y="0" z="7" spawntime="60" />
+	<npc centerx="1268" centery="1276" centerz="7" radius="1">
+		<npc name="Banker Ansel" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1270" centery="1293" centerz="7" radius="1">
+	<npc centerx="1275" centery="1307" centerz="7" radius="1">
 		<npc name="Steward Aldous" x="0" y="0" z="7" spawntime="60" />
 	</npc>
-	<npc centerx="1257" centery="1298" centerz="7" radius="1">
+	<npc centerx="1262" centery="1312" centerz="7" radius="1">
 		<npc name="Housekeeper Mirelle" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1240" centery="1323" centerz="7" radius="1">
+		<npc name="Coachman Ferro" x="0" y="0" z="7" spawntime="60" />
+	</npc>
+	<npc centerx="1235" centery="1289" centerz="7" radius="1">
+		<npc name="Vesper" x="0" y="0" z="7" spawntime="60" />
 	</npc>
 	<npc centerx="1143" centery="1190" centerz="7" radius="1">
 		<npc name="Fisher Corwin" x="0" y="0" z="7" spawntime="60" />

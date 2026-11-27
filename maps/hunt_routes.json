@@ -49,7 +49,7 @@
   "via": [
    [
     1202,
-    1284,
+    1285,
     7
    ],
    [
@@ -137,12 +137,12 @@
   "legs": [
    [
     "east",
-    80,
+    75,
     true
    ],
    [
     "north",
-    55,
+    60,
     true
    ],
    [
@@ -157,12 +157,12 @@
    ]
   ],
   "steps": 209,
-  "text": "leave Hearthgate by the east gate, follow the road east about 80 steps, then follow the road north about 55 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance",
+  "text": "leave Hearthgate by the east gate, follow the road east about 75 steps, then follow the road north about 60 steps, then follow the road west about 10 steps, then follow the road north about 5 steps to its south entrance",
   "title": "The Bandit Road",
   "turns": [
    [
-    1367,
-    1283,
+    1365,
+    1285,
     7
    ],
    [
@@ -179,12 +179,12 @@
   "via": [
    [
     1262,
-    1286,
+    1285,
     7
    ],
    [
     1292,
-    1286,
+    1285,
     7
    ],
    [
@@ -261,7 +261,7 @@
   "via": [
    [
     1202,
-    1284,
+    1285,
     7
    ],
    [
@@ -441,6 +441,14 @@
   "forks": [
    [
     [
+     1326,
+     1286,
+     7
+    ],
+    "east"
+   ],
+   [
+    [
      1365,
      1285,
      7
@@ -504,12 +512,12 @@
   "via": [
    [
     1262,
-    1286,
+    1285,
     7
    ],
    [
     1292,
-    1286,
+    1285,
     7
    ],
    [
@@ -669,7 +677,7 @@
   "via": [
    [
     1202,
-    1284,
+    1285,
     7
    ],
    [
@@ -782,12 +790,12 @@
   "via": [
    [
     1262,
-    1286,
+    1285,
     7
    ],
    [
     1292,
-    1286,
+    1285,
     7
    ],
    [
@@ -878,12 +886,12 @@
   "via": [
    [
     1262,
-    1286,
+    1285,
     7
    ],
    [
     1292,
-    1286,
+    1285,
     7
    ],
    [
@@ -974,12 +982,12 @@
   "via": [
    [
     1262,
-    1286,
+    1285,
     7
    ],
    [
     1292,
-    1286,
+    1285,
     7
    ]
   ]
@@ -1047,7 +1055,7 @@
   "via": [
    [
     1202,
-    1284,
+    1285,
     7
    ],
    [
@@ -1256,7 +1264,7 @@
   "via": [
    [
     1202,
-    1284,
+    1285,
     7
    ],
    [
