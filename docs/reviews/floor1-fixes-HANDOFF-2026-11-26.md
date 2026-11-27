@@ -36,7 +36,19 @@ handed over while the review session keeps testing.
   characters on one tile made a scripted death not happen (the death cases start on `starter_east`); a Ruin Sentinel
   takes 10% less physical damage; write Python patches with a file, not a shell here-document (backslashes are halved).
 
-**LEFT (nothing started unless it says so)**
+**Opus session (2026-11-26 night): everything below that was LEFT is now DONE except where it says so.** Each fix has a
+real-character case in `tools/loadtest.py review` (28 cases, all pass; run on `/root/sbtest_fixes` with
+`bash /root/review_fixes.sh`, ports 7871/7872, database `spirebound_test_fixes`). Commits `4bf6d556` to `d289490d`.
+- Items 4 (Death Game), 5 (unlock safety), 6 (Gate Hound 10 min / 1%), 7 (Axe-Lord pays each fighter), 8 (labyrinth),
+  9 (trails: the checker was stale), 10 (six leaks), 11 (fishing), 12 (texts), 13 (shop items across a season),
+  14 (dev commands gated by SPIRE_DEV), 15 (models report the engine's bonuses and loot rate; nothing retuned): DONE.
+- Group 3: all twelve are in `QUESTIONS.md` (Q82-Q92, Q78 already there; Q90 turned out already true on the map).
+- Map review M1, M5, M6, M9, M16: DONE. M2-M4, M7, M8, M10-M15: roadmap MR2-MR5, questions Q89, Q93, Q94; Floors 2-10's
+  Pass seal is MR1.
+- Still waiting: Group 2 A2-4 (Underkeep wings without their teleport) and A6-1 (the 2-hour play-time protection):
+  no test result yet; roadmap RV6.
+
+**LEFT before the Opus session (kept for the record)**
 - Group 1 items 4, 5, 6, 7 (Death Game loopholes, unlock safety, Gate Hound, Axe-Lord coins).
 - Group 1 items 8 and 9 (labyrinth spawns, trails): map work, already with the Opus session.
 - Group 1 item 10 (small leaks), 11 (fishing), 12 (texts), 13 (donation items across a season), 14 (dev commands; note
