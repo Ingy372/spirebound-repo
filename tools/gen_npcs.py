@@ -12,7 +12,7 @@ from pathlib import Path
 
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from junk_prices import JUNK  # noqa: E402
+from junk_prices import JUNK, dish_rows  # noqa: E402
 import crystals  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -55,7 +55,7 @@ NPCS = {
         name="Trader Osric", desc="the trader of the Hearth", look=(129, 95, 116, 121, 115, 0),
         greet="Back from the field, |PLAYERNAME|? I buy nearly everything monsters drop: gear, hides, gems, odds and ends. Ask for a {trade} and sell me your loot.",
         voices=["I buy loot! Bring me everything!", "Gear, hides, gems: I pay in gold!"],
-        shop=[(n, i, None, v) for n, i, v in JUNK]),
+        shop=[(n, i, None, v) for n, i, v in JUNK] + [(n, i, None, v) for n, i, v in dish_rows()]),   # FD4b: dishes, for little
     # Spire Manor's staff (Jay, 2026-11-26: the manor needs "features that players would want to pay for, but not be
     # totally game breaking"): the bank and the town's own prices, at home. They stand inside the house, so only the
     # owner and invited guests can reach them. The housekeeper charges the Quartermaster's prices and pays Osric's.

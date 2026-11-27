@@ -56,3 +56,21 @@ JUNK = [
     ("compound eye", 14083, 25),
     ("bunch of reed", 30975, 8),
 ]
+
+
+# FD4b (design 4.4, "NPCs buy them for little"): the cooked dishes, at DISH_SELL (a tenth) of what their ingredients
+# would fetch. Ingredients Osric doesn't buy are valued here (fish and the Floor 1 finds); a combined dish counts its base.
+INGREDIENT_WORTH = {3578: 3, 7159: 5, 3579: 8, 901: 500, 3728: 20, 5678: 15, 3588: 3}
+
+
+def dish_rows():
+    import gen_depth
+    worth = {i: v for _n, i, v in JUNK}
+    worth.update({k: v for k, v in INGREDIENT_WORTH.items() if k not in worth})
+    by_id = {d["id"]: d for d in gen_depth.DISHES}
+
+    def value(d):
+        if "raw" in d:
+            return worth.get(d["raw"], 0)
+        return value(by_id[d["base"]]) + worth.get(d["add"], 0)
+    return [(d["name"].lower(), d["item"], max(1, round(value(d) * gen_depth.DISH_SELL))) for d in gen_depth.DISHES]

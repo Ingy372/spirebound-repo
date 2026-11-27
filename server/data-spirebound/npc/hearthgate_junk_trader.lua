@@ -70,6 +70,19 @@ npcConfig.shop = {
 	{ itemName = "rope belt", clientId = 11492, sell = 10 },
 	{ itemName = "compound eye", clientId = 14083, sell = 25 },
 	{ itemName = "bunch of reed", clientId = 30975, sell = 8 },
+	{ itemName = "grilled minnow", clientId = 13992, sell = 1 },
+	{ itemName = "smoked perch", clientId = 14085, sell = 1 },
+	{ itemName = "seared meat", clientId = 22187, sell = 1 },
+	{ itemName = "boar roast", clientId = 12310, sell = 1 },
+	{ itemName = "roast truffle", clientId = 3724, sell = 2 },
+	{ itemName = "baked turtle egg", clientId = 10453, sell = 2 },
+	{ itemName = "carp steak", clientId = 10219, sell = 1 },
+	{ itemName = "whiskers pie", clientId = 16103, sell = 50 },
+	{ itemName = "hunter's roast", clientId = 3583, sell = 2 },
+	{ itemName = "honey-glazed ham", clientId = 31560, sell = 1 },
+	{ itemName = "truffle omelette", clientId = 17820, sell = 4 },
+	{ itemName = "bramble tart", clientId = 6393, sell = 2 },
+	{ itemName = "herb-crusted perch", clientId = 3602, sell = 2 },
 }
 
 local keywordHandler = KeywordHandler:new()
