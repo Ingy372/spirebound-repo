@@ -27,6 +27,11 @@ function drops.monsterOnDropLoot(monster, corpse)
 	end
 	-- a rare weapon (review B4-2: elites and the Ram only, the looter's own class twice as likely)
 	local d = not monster:getMaster() and SpireGear.rareDrop(monster:getName(), owner:getVocation():getBaseId(), math.random(), math.random())
+	if SpireGear.forceRare and SpireGear.forceRare[owner:getId()] and SpireFinds and SpireFinds.isElite(monster:getName()) then
+		SpireGear.forceRare[owner:getId()] = nil -- (tests only: scripts/spirebound/dev_adventure.lua "/adv rare on")
+		local cls = ({ "arcanist", "mystic", "ranger", "vanguard" })[owner:getVocation():getBaseId()]
+		d = cls and SpireGear.def("f1_" .. cls .. "_drop") or d
+	end
 	if d and SpireGear.make(corpse, d.id) then
 		corpse:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
 		owner:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A rare weapon lies in the remains: " .. d.name .. "!")
