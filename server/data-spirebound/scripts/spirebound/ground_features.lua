@@ -172,10 +172,9 @@ local function liliesUp(up)
 			table.insert(clearTiles, WorldPoints[name])
 		end
 	end
-	local isle1 = WorldPoints.feat_island
-	if isle1 then -- the island tile next to the path's last pad
-		local last = path[#path]
-		table.insert(clearTiles, { x = last and last.x - 1 or isle1.x, y = last and last.y or isle1.y, z = isle1.z })
+	if #path >= 2 then -- the island tile beyond the first pad (the path runs from the island out to the shore)
+		local a, b = path[1], path[2]
+		table.insert(clearTiles, { x = a.x + (a.x - b.x), y = a.y + (a.y - b.y), z = a.z })
 	end
 	if up then
 		L.lifted = {}
@@ -290,6 +289,22 @@ local function growSeedling(pos, itemId)
 	spawn(c.elder, pos)
 end
 
+-- a seedling where a sproutling fell; it grows into an elder unless stamped out
+function F.plantSeedling(pos)
+	local c = F.conf("starter_south", "seedling")
+	local tile = Tile(pos)
+	if not tile or tile:hasFlag(TILESTATE_PROTECTIONZONE) then
+		return nil
+	end
+	local it = Game.createItem(c.item, 1, pos)
+	if it then
+		it:setActionId(A.seedling)
+		it:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "A sproutling seedling, already reaching for the light. Stamp it out (use it), or it will grow.")
+		addEvent(growSeedling, c.grow * 1000, Position(pos.x, pos.y, pos.z), c.item)
+	end
+	return it
+end
+
 local seedling = Action()
 function seedling.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	item:getPosition():sendMagicEffect(CONST_ME_POFF)
@@ -309,16 +324,7 @@ function deaths.monsterOnDropLoot(monster, corpse)
 	if name == "Sproutling" and SpireRoamers.groundAt(pos) == "starter_south" then
 		local c = F.conf("starter_south", "seedling")
 		if math.random() < c.chance then
-			local tile = Tile(pos)
-			if tile and not tile:hasFlag(TILESTATE_PROTECTIONZONE) then
-				local it = Game.createItem(c.item, 1, pos)
-				if it then
-					it:setActionId(A.seedling)
-					it:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "A sproutling seedling, already reaching for the light. Stamp it out (use it), or it will grow.")
-					local p, id = Position(pos.x, pos.y, pos.z), c.item
-					addEvent(growSeedling, c.grow * 1000, p, id)
-				end
-			end
+			F.plantSeedling(pos)
 		end
 	end
 	local owner = Player(corpse:getCorpseOwner())
@@ -939,9 +945,6 @@ local function holdTick(guid, waveN)
 		F.lore(p, "apex_watchtower")
 		local text = string.format("%s has lit the signal fire of the Old Watchtower! For %d minutes everyone hunting there finds a little more gold.",
 			p:getName(), math.floor(c.burns / 60))
-		if SpireFinds and SpireFinds.announce then
-			pcall(SpireFinds.announce, "secret", nil, text, nil)
-		end
 		Game.broadcastMessage(text, MESSAGE_EVENT_ADVANCE)
 		return
 	end

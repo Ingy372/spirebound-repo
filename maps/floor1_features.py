@@ -12,7 +12,8 @@ import dungeon as DG
 import scenery as S
 
 Z = 7
-BELL, NEST, HOWL_STONE, BALLISTA, WINCH, CACHE, STASH, BRAZIER = 15832, 48576, 4850, 2065, 2772, 2478, 1772, 2113
+# the bell is a lamp-on-a-post placeholder: a carryable bell item could not be used where it stood (client test)
+BELL, NEST, HOWL_STONE, BALLISTA, WINCH, CACHE, STASH, BRAZIER = 2117, 48576, 4850, 2065, 2772, 2478, 1772, 2113
 SHARDS = [7808, 7809, 7810, 7811]          # the four chime shards (blue, deep blue, light blue, red)
 BERRY_BUSH = 3699                           # a blueberry bush (the core script picks it; the berries are bramble berries)
 MOUND = 1787                                # a mole mound (placeholder: a heap of earth and stones)

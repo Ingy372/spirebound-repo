@@ -28,11 +28,23 @@ function depth.onSay(player, words, param)
 	local cmd, rest = param:match("^%s*(%a+)%s*(.*)$")
 	local say = function(t) player:sendTextMessage(MESSAGE_STATUS, "depth: " .. t) end
 	if cmd == "night" then
-		F.forceNight = (rest == "on" and true) or (rest == "off" and false) or nil
+		if rest == "on" then
+			F.forceNight = true
+		elseif rest == "off" then
+			F.forceNight = false
+		else
+			F.forceNight = nil
+		end
 		F.liliesUp(F.forceNight == nil and F.isNight() or F.forceNight)
 		say("night " .. tostring(F.forceNight))
 	elseif cmd == "tide" then
-		F.forceTide = (rest == "low" and true) or (rest == "high" and false) or nil
+		if rest == "low" then
+			F.forceTide = true
+		elseif rest == "high" then
+			F.forceTide = false
+		else
+			F.forceTide = nil
+		end
 		F.tideSet(F.forceTide == nil and false or F.forceTide)
 		local where = {}
 		for _, rec in ipairs(F.state.tide.items or {}) do
@@ -60,12 +72,7 @@ function depth.onSay(player, words, param)
 		F.truffleSpot(player:getPosition())
 		say("truffle spot made")
 	elseif cmd == "seedling" then
-		local c = F.conf("starter_south", "seedling")
-		local it = Game.createItem(c.item, 1, player:getPosition())
-		if it then
-			it:setActionId(F.AID.seedling)
-		end
-		say("seedling made")
+		say(F.plantSeedling(player:getPosition()) and "seedling made (it grows in two minutes)" or "no room for a seedling")
 	elseif cmd == "forget" then
 		for _, f in ipairs(SpireDepthData.features) do
 			SpireDiscoveries.unmark(player, "groundlore", f.id)
@@ -91,6 +98,8 @@ function depth.onSay(player, words, param)
 	elseif cmd == "works" then
 		if rest == "reset" then
 			kv.scoped("spirebound-works"):remove("state")
+		elseif rest == "nocap" then
+			SpireWorks.noCap = true
 		end
 		local s = SpireWorks.state()
 		say(string.format("project %d, %d of %s given", s.current, s.given, tostring(s.size)))

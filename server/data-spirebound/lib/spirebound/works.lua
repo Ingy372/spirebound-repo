@@ -22,7 +22,7 @@ end
 
 -- Pure: how much of `amount` an account may still give today, with `givenToday` given already
 function SpireWorks.allowed(size, givenToday, amount)
-	local cap = math.floor(size * W.dailyCap)
+	local cap = SpireWorks.noCap and size or math.floor(size * W.dailyCap) -- noCap: test servers only (/depth works nocap)
 	return math.max(0, math.min(amount, cap - givenToday)), cap
 end
 

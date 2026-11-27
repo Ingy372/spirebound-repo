@@ -19,7 +19,7 @@ SpireTest.add("ground features: every Floor 1 ground has one, and its spots are 
 	SpireTest.eq(F.place() >= 15, true, "the feature objects are tagged")
 	local bellAid = 0
 	for _, it in ipairs(Tile(WorldPoints.feat_bell):getItems() or {}) do
-		if it:getId() == 15832 then
+		if it:getId() == 2117 then
 			bellAid = it:getActionId()
 		end
 	end
