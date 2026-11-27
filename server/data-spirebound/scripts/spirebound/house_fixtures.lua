@@ -52,8 +52,9 @@ function mannequin.onSay(player, words, param)
 	end
 	local action, slot = param:lower():match("(%a+)%s*(%d*)")
 	slot = tonumber(slot) or 1
-	if slot < 1 or slot > SpireHouses.MANNEQUIN_SLOTS then
-		player:sendCancelMessage("Mannequins 1 to " .. SpireHouses.MANNEQUIN_SLOTS .. ".")
+	local slots = SpireManor.mannequinSlots(SpireManor.is(house), SpireHouses.MANNEQUIN_SLOTS) -- Spire Manor holds 10
+	if slot < 1 or slot > slots then
+		player:sendCancelMessage("Mannequins 1 to " .. slots .. ".")
 		return false
 	end
 	local store = player:kv():scoped("spirebound-mannequins")

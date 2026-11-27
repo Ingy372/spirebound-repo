@@ -2074,7 +2074,7 @@
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
 		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="60" />
 	</monster>
-	<monster centerx="1047" centery="1038" centerz="8" radius="2">
+	<monster centerx="1047" centery="1036" centerz="8" radius="2">
 		<monster name="Stonehorn Ram" x="0" y="0" z="8" spawntime="60" />
 		<monster name="Stonehorn Ram" x="-1" y="0" z="8" spawntime="60" />
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
@@ -2092,7 +2092,7 @@
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
 		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="60" />
 	</monster>
-	<monster centerx="1065" centery="1057" centerz="8" radius="2">
+	<monster centerx="1048" centery="1045" centerz="8" radius="2">
 		<monster name="Stonehorn Ram" x="0" y="0" z="8" spawntime="60" />
 		<monster name="Stonehorn Ram" x="-1" y="0" z="8" spawntime="60" />
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />

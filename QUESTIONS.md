@@ -10,6 +10,18 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q82-Q94 come from the Floor 1 review and the map review (2026-11-26). Nothing is built for them until you answer.*
 
+### Q95. Spire Manor: are these the right things to sell with it? (2026-11-26)
+You asked for the manor to "feel premium" and have "features that players would want to pay for, but not be totally game breaking". It is rebuilt (four furnished floors) and comes with: a private depot and mailbox, a steward who is your bank, a housekeeper who sells supplies and buys loot at the town's own prices, three training dummies, 10 mannequins, a free Fortune Hall license, longer Open House, a permanent title, and the Waystone on the roof (travel to any open floor's town; the owner can be called home from inside any town; every 30 minutes, never in a fight). Nothing gives experience, damage, defence or loot. Full list: DESIGN.md 7.6, or `!manor` in game.
+- **Recommendation:** keep all of it. The Waystone is the one to think about: it saves the owner (and guests) walking and, later, teleport crystals. I think that is exactly the kind of comfort worth paying for, and it can't be used to escape a fight. If you'd rather it not replace crystals at all, I'd make it owner-only or once an hour.
+- Assumed until you answer: as built.
+- Jay's answer:
+
+### Q96. One manor, one buyer: sell it once a season, or let more people pay? (2026-11-26)
+There is one Spire Manor and one owner, so it can be sold once per season (the last owner gets first refusal next season). That keeps it special, but it is one sale. Options: (a) keep it as the single trophy house; (b) auction it for Spire Coins at each season start; (c) add two or three smaller "estate" houses with a few of the manor's comforts (depot, steward) at a lower price.
+- **Recommendation:** (a) for the friends test, then (b) at public launch: an auction makes the one house worth far more than a fixed price, and losing bidders keep their coins for cosmetics.
+- Assumed until you answer: (a).
+- Jay's answer:
+
 ### Q82. Can players attack each other in the boss rooms below level 50? (2026-11-26, Floor 1 review A4-2)
 Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall, whatever their level. A level-60 could wait in the hall and kill a level-30 party mid-fight.
 - **Recommendation:** in boss rooms, players can only attack each other from level 50.

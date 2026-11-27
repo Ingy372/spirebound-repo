@@ -55,6 +55,21 @@ NPCS = {
         greet="Back from the field, |PLAYERNAME|? I buy nearly everything monsters drop: gear, hides, gems, odds and ends. Ask for a {trade} and sell me your loot.",
         voices=["I buy loot! Bring me everything!", "Gear, hides, gems: I pay in gold!"],
         shop=[(n, i, None, v) for n, i, v in JUNK]),
+    # Spire Manor's staff (Jay, 2026-11-26: the manor needs "features that players would want to pay for, but not be
+    # totally game breaking"): the bank and the town's own prices, at home. They stand inside the house, so only the
+    # owner and invited guests can reach them. The housekeeper charges the Quartermaster's prices and pays Osric's.
+    "manor_steward": dict(
+        name="Steward Aldous", desc="the steward of Spire Manor", look=(132, 114, 94, 94, 115, 0),
+        greet="Welcome home, |PLAYERNAME|. The manor's accounts are in order: ask about your {balance}, or {deposit} and {withdraw} gold. Your account {vault} is here too.",
+        kind="bank", voices=["Everything is in order."]),
+    "manor_housekeeper": dict(
+        name="Housekeeper Mirelle", desc="the housekeeper of Spire Manor", look=(136, 95, 86, 67, 115, 0),
+        greet="Good day, |PLAYERNAME|. The pantry is stocked and I'll take the hunt's leavings off your hands: ask for a {trade}.",
+        voices=["A place for everything."],
+        shop=[("health potion", 266, 50, None), ("mana potion", 268, 56, None),
+              ("strong health potion", 236, 115, None), ("strong mana potion", 237, 108, None),
+              ("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("bread", 3600, 4, None)]
+        + [(n, i, None, v) for n, i, v in JUNK if i not in (266, 268, 236, 237, 3447, 3446, 3600)]),
     "hearthgate_banker_branch": dict(
         name="Banker Ansel", desc="the banker of the north wall", look=(132, 115, 76, 35, 116, 0),
         greet="The north-wall branch of the bank, |PLAYERNAME|. Your {balance}, {deposit}, {withdraw} and your account {vault}, all here too.",

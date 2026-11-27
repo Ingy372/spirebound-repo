@@ -12,7 +12,7 @@ local COMMANDS = {
   { '!hunt', 'Where should I hunt for my level?' }, { '!guide', 'Read the starter letter again' },
   { '!spells', 'Every spell and sword skill of my path' }, { '!rules', 'The rules' },
   { '!taskshop', 'Spend task points' }, { '!top', 'Top climbers' }, { '!memorial', 'The fallen of the Death Game' }, { '!beacon', 'Floor Beacon fires' },
-  { '!path', 'Season Path goals' }, { '!chronicle', 'My Spire Chronicle (this season)' }, { '!trophies', 'My boss trophies' }, { '!openhouse', 'Open my house to visitors (2 hours)' },
+  { '!path', 'Season Path goals' }, { '!chronicle', 'My Spire Chronicle (this season)' }, { '!trophies', 'My boss trophies' }, { '!openhouse', 'Open my house to visitors (2 hours)' }, { '!manor', 'Spire Manor: what it offers, and its Waystone' },
   { '!portal', 'Travel through my house portal' }, { '!private', 'Private boss hall (party leader, top of a labyrinth)' },
   { '!lfg', 'Show or hide me as looking for a group' }, { '!language', 'Change language (en, pt, es)' },
   { '!arena join', 'Join the arena event' }, { '!siege join', 'Join the Spire Siege' },

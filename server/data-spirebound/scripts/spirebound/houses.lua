@@ -149,7 +149,8 @@ function fortune.onSay(player, words, param)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your house is already a Fortune Hall.")
 		return false
 	end
-	if not player:removeMoneyBank(SpireHouses.LICENSE_COST) then
+	-- Spire Manor comes with its license (lib/spirebound/manor.lua)
+	if not SpireManor.is(house) and not player:removeMoneyBank(SpireHouses.LICENSE_COST) then
 		player:sendCancelMessage("A Fortune Hall license costs " .. SpireHouses.LICENSE_COST .. " gold.")
 		return false
 	end
@@ -243,7 +244,14 @@ function openhouse.onSay(player, words, param)
 	local store = kv.scoped("spirebound-openhouse")
 	local key = tostring(house:getId())
 	local rec = store:get(key) or {}
-	local ok, hours = SpireHouses.openHouseAllowed(rec.opened, os.time())
+	local manor = SpireManor.is(house) -- Spire Manor: open for 6 hours, twice a day
+	local ok, hours
+	if manor then
+		ok, hours = SpireManor.openHouseAllowed(rec.opened, os.time())
+	else
+		ok, hours = SpireHouses.openHouseAllowed(rec.opened, os.time())
+	end
+	local openFor = manor and SpireManor.OPEN_HOUSE_TIME or SpireHouses.OPEN_HOUSE_TIME
 	if not ok then
 		player:sendCancelMessage("Your house was open recently. You can open it again in " .. hours .. " hours.")
 		return false
@@ -251,10 +259,10 @@ function openhouse.onSay(player, words, param)
 	if not rec.closesAt or rec.closesAt < os.time() then
 		rec.guests = house:getAccessList(GUEST_LIST) or "" -- keep the owner's real guest list
 	end
-	rec.opened, rec.closesAt = os.time(), os.time() + SpireHouses.OPEN_HOUSE_TIME
+	rec.opened, rec.closesAt = os.time(), os.time() + openFor
 	store:set(key, rec)
 	house:setAccessList(GUEST_LIST, "*")
-	Game.broadcastMessage(string.format("%s's house \"%s\" is open to visitors for the next 2 hours!", player:getName(), house:getName()), MESSAGE_EVENT_ADVANCE)
+	Game.broadcastMessage(string.format("%s's house \"%s\" is open to visitors for the next %d hours!", player:getName(), house:getName(), openFor / 3600), MESSAGE_EVENT_ADVANCE)
 	return false
 end
 openhouse:groupType("normal")

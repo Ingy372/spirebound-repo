@@ -381,6 +381,23 @@ When a floor boss dies for the first time, the credited players get a 1-hour hea
 | Open House **(Claude's idea)** | Owners can open their house to the public for 2 hours; it appears on a list in town. Great for showing off and for gambling nights. |
 | Guild Hall War Room **(Claude's idea)** | Guild halls get a war board showing active wars and a teleport to agreed war arenas. |
 
+### 7.6 Spire Manor (the one grand house)
+
+Jay, 2026-11-11: *"pay to obtain only ... at least 3 levels high"*. Jay, 2026-11-26: *"unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for"* and *"it needs to feel premium, and also have features that players would want to pay for, but not be totally game breaking."*
+
+One house in Hearthgate, sold only in the Spire Shop, one owner at a time, no rent. Everything below is **(Claude's call, Jay can veto)**. The rule every perk follows: **space, comfort, convenience and show; never damage, defence, experience, loot, skill speed, or a way out of a fight.**
+
+- **The house:** four floors, nearly 900 tiles (an ordinary house has about 40). Great hall with a fountain, dining hall and steward's office; a trophy and mannequin gallery, a library and a training hall; a master suite, a lounge and two guest rooms; a roof garden with a fish pond and a telescope. It comes furnished, and the furniture is fixed: it can't be carried off, sold or duplicated.
+- **Only at the manor:**
+  - a private depot (two lockers) and mailbox;
+  - Steward Aldous (the bank) and Housekeeper Mirelle (sells supplies at the Quartermaster's prices, buys loot at Trader Osric's prices), so nothing is cheaper here than in town;
+  - three exercise dummies (the same training as the town's);
+  - 10 mannequins instead of 3; a Fortune Hall license at no cost; Open House for 6 hours twice a day instead of 2 hours once a day;
+  - **the Waystone** on the roof: `!manor travel <floor>` takes the owner and invited guests to the temple of any floor the tower has opened, and `!manor home` calls the owner back from inside any town. Once per character every 30 minutes, never in a fight, and home only from a town, so it can't be used to escape;
+  - the title "Keeper of Spire Manor", kept for good.
+- Every ordinary house feature (7.5) works here too. `!manor` shows the whole list in game.
+- Season resets: the last buyer gets the first 7 days of the next season to buy it back before anyone else (review S-1).
+
 ---
 
 ## 8. Exploration
