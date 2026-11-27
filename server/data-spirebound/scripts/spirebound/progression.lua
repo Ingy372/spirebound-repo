@@ -50,9 +50,9 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
 	local f = SpireStyle.takenFactor(SpireStyle.get(player))
-	if f < 1 then
-		primaryDamage = math.floor(primaryDamage * f + 0.5)
-		secondaryDamage = math.floor(secondaryDamage * f + 0.5)
+	if f < 1 then -- (damage arrives negative: round the size, keep the sign)
+		primaryDamage = (primaryDamage < 0 and -1 or 1) * math.floor(math.abs(primaryDamage) * f + 0.5)
+		secondaryDamage = (secondaryDamage < 0 and -1 or 1) * math.floor(math.abs(secondaryDamage) * f + 0.5)
 	end
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end

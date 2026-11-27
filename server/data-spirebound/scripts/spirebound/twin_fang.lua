@@ -84,7 +84,7 @@ death:register()
 local offhand = CreatureEvent("SpireTwinFangOffhand")
 function offhand.onHealthChange(creature, attacker, primaryDamage, primaryType, secondaryDamage, secondaryType, origin)
 	local p = attacker and attacker:getPlayer()
-	if p and origin == ORIGIN_MELEE and primaryDamage > 0 and SwordSkills.hasTwinFang(p) then
+	if p and origin == ORIGIN_MELEE and primaryDamage ~= 0 and SwordSkills.hasTwinFang(p) then -- (hits arrive negative: review B4-0)
 		local left, right = p:getSlotItem(CONST_SLOT_LEFT), p:getSlotItem(CONST_SLOT_RIGHT)
 		local blade = (left and left:getType():getWeaponType() == WEAPON_SWORD and left) or (right and right:getType():getWeaponType() == WEAPON_SWORD and right)
 		local two = false
@@ -93,7 +93,7 @@ function offhand.onHealthChange(creature, attacker, primaryDamage, primaryType, 
 			two = bit.band(it:getSlotPosition(), SLOTP_TWO_HAND) ~= 0
 		end
 		if SwordSkills.offhandAllowed({ sword = blade ~= nil and blade ~= false, twoHanded = two, freeHand = not left or not right }) then
-			local dmg = math.max(1, math.floor(primaryDamage * SwordSkills.TWIN_FANG.OFFHAND))
+			local dmg = math.max(1, math.floor(math.abs(primaryDamage) * SwordSkills.TWIN_FANG.OFFHAND))
 			local pid, cid = p:getId(), creature:getId()
 			addEvent(function()
 				local a, c = Player(pid), Creature(cid)

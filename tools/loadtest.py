@@ -13,6 +13,9 @@ scripts/spirebound/dev_loadbot.lua), logs the bots in with tools/loadbot.py and 
         the kills, report) and the server logs which addons each owns. PASS when every class owns both addons.
     python3 tools/loadtest.py capacity [--steps 1,2,4,6,8,12] [--minutes 10] [--warmup 3]
         N2: that many bots on EVERY ground at once; per step and ground: kills per bot per hour (crowd system on).
+    python3 tools/loadtest.py review [--only text]
+        The Floor 1 review fixes on real, logged-in characters (scripts/spirebound/dev_review.lua): each case logs a
+        character in, does the real thing (dies to a real monster, hits one, loots...) and checks what the server did.
 
 Settings: MYSQL_* from the environment or server/local.env; MYSQL_DATABASE must not be the game's database.
 Results: .local/loadtest_<mode>.json and a table on screen.
@@ -352,6 +355,164 @@ async def addon_test():
     return ok
 
 
+# ---------------------------------------------------------------- review: real characters check the Floor 1 review fixes
+# Each case: name, class, level, the scripts of its logins one after another (a death ends a login), and a check over
+# the "[LOADTEST] rv <what> <character> key=value ..." lines its character logged (scripts/spirebound/dev_review.lua).
+def _rv(lines, what):
+    return [kv for w, kv in lines if w == what]
+
+
+def _check_hardcore(lines):
+    before, after = _rv(lines, "before_death")[0], _rv(lines, "state")[-1]
+    return after["exp"] < before["exp"], f"blessings {before['bless']}, experience {before['exp']} -> {after['exp']}"
+
+
+def _check_normal(lines):
+    before, after = _rv(lines, "before_death")[0], _rv(lines, "state")[-1]
+    return (before["bless"] == 8 and after["exp"] == before["exp"],
+            f"blessings {before['bless']}, experience {before['exp']} -> {after['exp']}")
+
+
+def _check_weapon(lines):
+    hits = [h["dealt"] for h in _rv(lines, "hit")]
+    power = _rv(lines, "weapon")[0]["power"]
+    # the test monster (a Ruin Sentinel) shrugs off 10% of physical damage, and Mastery adds a little on top of the
+    # weapon, so: the armed hit must be at least the bare hit times the weapon's power
+    return (len(hits) == 2 and hits[0] > 0 and power > 150 and hits[1] >= hits[0] * power / 100 - 2,
+            f"a hit of 100 bare-handed deals {hits[0]}; with a maxed Stairlord's Edge (power {power}%) it deals {hits[1]}")
+
+
+def _xp(lines):
+    return _rv(lines, "xp")[0]["gained"]
+
+
+def _check_xp_plain(lines):
+    return _xp(lines) > 0, f"{_xp(lines)} experience for the kill"
+
+
+def _check_xp_ratio(want, what):
+    def check(lines, all_lines=None):
+        base = _xp(all_lines["XP plain"])
+        got = _xp(lines)
+        return abs(got - base * want) <= 2, f"{got} experience against {base} plain ({what})"
+    check.needs_all = True
+    return check
+
+
+def _check_loot(lines, all_lines=None):
+    off = _rv(all_lines["CB loot, bot off"], "loot")[0]
+    on = _rv(lines, "loot")[0]
+    a, b = off["coins"], on["coins"]
+    return (on["botting"] == 1 and a > 0 and 0.3 * a <= b <= 0.7 * a,
+            f"{on['kills']} Road Bandits: {b} coins with the cavebot on against {a} with it off")
+
+
+_check_loot.needs_all = True
+
+def _check_skill(lines, all_lines=None):
+    old = _rv(all_lines["SK old"], "skill")[0]["tries"]
+    young = _rv(lines, "skill")[0]["tries"]
+    return abs(young - 2 * old) <= 2, f"1000 tries of training count as {young} at level 30 against {old} at level 55"
+
+
+_check_skill.needs_all = True
+
+XP_MONSTER = "Thornsnap"
+REVIEW_CASES = [
+    dict(name="B4-0 a maxed weapon really adds its damage", voc=4, level=30,
+         logins=[[(3, "say", "/rv hit"), (1, "say", "/rv weapon f1_vanguard_sword 5 1"), (1, "say", "/rv hit")]],
+         check=_check_weapon),
+    dict(name="XP plain", voc=4, level=30, logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv xp " + XP_MONSTER)]],
+         check=_check_xp_plain),
+    dict(name="XP Death Game gives +50%", voc=4, level=30,
+         logins=[[(3, "say", "/rv mode deathgame"), (1, "say", "/rv xp " + XP_MONSTER)]],
+         check=_check_xp_ratio(1.5, "+50%")),
+    dict(name="XP Hardcore gives +25%", voc=4, level=30,
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv xp " + XP_MONSTER)]],
+         check=_check_xp_ratio(1.25, "+25%")),
+    dict(name="XP the cavebot gives 45%", voc=4, level=30,
+         logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv bot on"), (1, "say", "/rv xp " + XP_MONSTER)]],
+         check=_check_xp_ratio(0.45, "45%")),
+    dict(name="SK old", voc=4, level=55, logins=[[(3, "say", "/rv skill")]],
+         check=lambda lines: (_rv(lines, "skill")[0]["tries"] > 0, f"{_rv(lines, 'skill')[0]['tries']} tries at level 55")),
+    dict(name="SK skills train twice as fast below level 50", voc=4, level=30, logins=[[(3, "say", "/rv skill")]],
+         check=_check_skill),
+    dict(name="CB loot, bot off", voc=4, level=30, logins=[[(3, "say", "/rv loot Road Bandit 60")]], stay=14,
+         check=lambda lines: (_rv(lines, "loot")[0]["coins"] > 0, f"{_rv(lines, 'loot')[0]['coins']} coins from 60 Road Bandits")),
+    dict(name="CB loot, bot on: about half the coins", voc=4, level=30,
+         logins=[[(3, "say", "/rv bot on"), (1, "say", "/rv loot Road Bandit 60")]], stay=14, check=_check_loot),
+
+    dict(name="A8-1 a level-15 Hardcore death costs experience", voc=4, level=15, ground="starter_east",
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_hardcore),
+    dict(name="A8-1 a level-15 Normal death costs nothing", voc=4, level=15, ground="starter_east",
+         logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_normal),
+]
+
+
+async def review_test(only=None):
+    e = env()
+    db = config_value("mysqlDatabase")
+    if not db or db == "spirebound":
+        raise SystemExit("refusing: the built server must use a test database, not the game's")
+    port = int(config_value("gameProtocolPort") or 7172)
+    cases = [c for c in REVIEW_CASES if not only or only.lower() in c["name"].lower()]
+    names = []
+    for i, c in enumerate(cases):
+        c["index"] = 920 + i
+        c["char"] = "Loadbot %03d" % c["index"]
+        names.append(c["char"])
+    sql(e, db, "DELETE FROM players WHERE name IN (%s);" % ", ".join("'%s'" % n for n in names))
+    tokens = {}
+    for c in cases:   # one at a time: each has its own level and class
+        _rows, logins = make_bots(e, db, [(c["index"], c.get("ground", "starter_west"))], level=c["level"], vocs=[c["voc"]] * 4)
+        tokens[c["char"]] = logins[0][1]
+    plan_file = ROOT / ".build" / "loadtest_plan.txt"
+    plan_file.write_text("")
+    srv = Server(e, plan_file)
+    if not srv.wait_online():
+        srv.stop()
+        raise SystemExit("server did not start (see .build/loadtest.log)")
+    stats = {"online": 0, "failed": 0, "bytes": 0, "errors": []}
+
+    async def play(c):
+        for script in c["logins"]:
+            await loadbot.Bot(c["char"], tokens[c["char"]], "127.0.0.1", port, stats, script).run(c.get("stay", 3))
+            await asyncio.sleep(3)
+
+    try:
+        tasks = []
+        for c in cases:
+            tasks.append(asyncio.create_task(play(c)))
+            await asyncio.sleep(0.7)
+        await asyncio.gather(*tasks)
+        await asyncio.sleep(2)
+    finally:
+        srv.stop()
+    srv.poll_log()
+    seen = {}
+    for _t, line in srv.lines:
+        m = re.search(r"\[LOADTEST\] rv (\w+) (Loadbot \d+)(.*)", line)
+        if m:
+            kv = {k: (int(v) if re.fullmatch(r"-?\d+", v) else v) for k, v in re.findall(r"(\w+)=(\S+)", m.group(3))}
+            seen.setdefault(m.group(2), []).append((m.group(1), kv))
+    ok = True
+    for c in cases:
+        try:
+            mine = seen.get(c["char"], [])
+            if getattr(c["check"], "needs_all", False):
+                good, detail = c["check"](mine, {x["name"]: seen.get(x["char"], []) for x in REVIEW_CASES if "char" in x})
+            else:
+                good, detail = c["check"](mine)
+        except (IndexError, KeyError) as err:
+            good, detail = False, "missing log lines (%r): %s" % (err, seen.get(c["char"], []))
+        ok = ok and good
+        print(f"{'PASS' if good else 'FAIL'}  {c['name']}: {detail}")
+    if stats["errors"]:
+        print("client notes:", *stats["errors"][:8], sep="\n  ")
+    print("review test:", "PASS" if ok else "FAIL")
+    return ok
+
+
 def summarise(lag, samples, t0, t1):
     win = [s for s in samples if t0 <= s[0] <= t1]
     cpu = [s[1] for s in win]
@@ -366,12 +527,15 @@ def summarise(lag, samples, t0, t1):
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("mode", choices=["ramp", "capacity", "addon"])
+    ap.add_argument("mode", choices=["ramp", "capacity", "addon", "review"])
+    ap.add_argument("--only", help="review: only the cases whose name contains this")
     ap.add_argument("--steps")
     ap.add_argument("--minutes", type=float)
     ap.add_argument("--warmup", type=float)
     ap.add_argument("--tee", help="also copy the server's output into this file (e.g. on /mnt/c, like the live server)")
     a = ap.parse_args()
+    if a.mode == "review":
+        sys.exit(0 if asyncio.run(review_test(a.only)) else 1)
     if a.mode == "addon":
         sys.exit(0 if asyncio.run(addon_test()) else 1)
     steps = [int(x) for x in (a.steps or ("10,25,50,75,100,125" if a.mode == "ramp" else "1,2,4,6,8,12")).split(",")]

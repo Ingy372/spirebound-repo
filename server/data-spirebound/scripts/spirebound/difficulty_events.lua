@@ -3,9 +3,8 @@
 -- In-memory: last time an outside player damaged a Death Game character, by guid.
 local lastOutsideHit = {}
 
--- XP bonus
-local xp = EventCallback("SpireDifficultyXp")
-function xp.playerOnGainExperience(player, target, exp, rawExp)
+-- XP bonus (through SpireHooks: the engine ignores what an EventCallback returns here, lib/spirebound/hooks.lua)
+SpireHooks.xp("difficulty", function(player, target, exp, rawExp)
 	local mode = Difficulty.get(player)
 	local withBonus = Difficulty.applyXp(mode, exp)
 	if withBonus > exp then -- remember what the harder mode's bonus gave (stepping down takes it back, Q14)
@@ -14,8 +13,7 @@ function xp.playerOnGainExperience(player, target, exp, rawExp)
 	end
 	local focus = SpireTasks.focusFactor and SpireTasks.focusFactor(player) or 1 -- Hunting Focus from the task shop
 	return math.floor(withBonus * SpireCavebot.xpFactor(player) * SpireSiege.factor(player) * focus)
-end
-xp:register()
+end)
 
 -- Heavier death XP loss for Hardcore (and for Death Game deaths saved by PvP)
 local lose = EventCallback("SpireDifficultyLoseXp")
@@ -37,8 +35,7 @@ end
 lose:register()
 
 -- Catch-up: skills train twice as fast below level 50 (DESIGN.md 15)
-local skills = EventCallback("SpireCatchUpSkills")
-function skills.playerOnGainSkillTries(player, skill, tries)
+SpireHooks.skill("difficulty", function(player, skill, tries)
 	if player:getLevel() < 50 then
 		tries = tries * 2
 	end
@@ -54,8 +51,7 @@ function skills.playerOnGainSkillTries(player, skill, tries)
 		end
 	end
 	return tries
-end
-skills:register()
+end)
 
 -- Loot bonus: an extra, scaled loot roll for Hardcore / Death Game corpse owners
 local loot = EventCallback("SpireDifficultyLoot")
@@ -196,6 +192,13 @@ function login.onLogin(player)
 	player:registerEvent("SpireHardcorePrepareDeath")
 	player:registerEvent("SpireHardcoreItemDrop")
 	SpireHardcore.settleDeath(player)
+	-- Until 2026-11-26 the difficulty bonus was counted in "bonusXp" but never given (the engine ignored it), and
+	-- stepping down takes "bonusXp" back: start every older character's count again, once.
+	local sk = player:kv():scoped("spirebound")
+	if not sk:get("bonusXpReal") then
+		sk:set("bonusXpReal", true)
+		sk:set("bonusXp", 0)
+	end
 	SpireDifficulty.settleExperience(player)
 	SpireDifficulty.youngBlessings(player)
 	local s = player:kv():scoped("spirebound")

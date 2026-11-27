@@ -33,23 +33,35 @@ function login.onLogin(player)
 end
 login:register()
 
--- Loot cut: each item in the corpse has a 50% chance to vanish (stacks are halved instead)
-local loot = EventCallback("SpireCavebotLoot")
-function loot.monsterPostDropLoot(monster, corpse)
-	local player = Player(corpse:getCorpseOwner())
-	if not player or not SpireCavebot.botting(player) then
-		return
-	end
+-- Loot cut: each item in the corpse has a 50% chance to vanish (stacks are halved instead).
+-- Review session 2026-11-26: this called item:isStackable(), which Canary 3.6.1 items don't have, so it raised an
+-- error on every kill and botting characters kept their full loot. The cut itself is SpireCavebot.cutLoot (tested on
+-- a real corpse container); it runs after every loot roll has filled the corpse and before autoloot and "coins to the bank" empty it.
+function SpireCavebot.cutLoot(corpse, roll)
+	local removed = 0
 	for i = corpse:getSize() - 1, 0, -1 do
 		local item = corpse:getItem(i)
 		if item then
-			if item:isStackable() and item:getCount() > 1 then
-				item:transform(item:getId(), math.max(1, math.floor(item:getCount() * SpireCavebot.LOOT)))
-			elseif math.random() > SpireCavebot.LOOT then
+			if ItemType(item:getId()):isStackable() and item:getCount() > 1 then
+				local keep = math.max(1, math.floor(item:getCount() * SpireCavebot.LOOT))
+				removed = removed + item:getCount() - keep
+				item:transform(item:getId(), keep)
+			elseif (roll or math.random)() > SpireCavebot.LOOT then
 				item:remove()
+				removed = removed + 1
 			end
 		end
 	end
+	return removed
+end
+
+local loot = EventCallback("SpireCavebotLoot")
+function loot.monsterPostDropLoot(monster, corpse)
+	local player = Player(corpse:getCorpseOwner())
+	if not player or not corpse:isContainer() or not SpireCavebot.botting(player) then
+		return
+	end
+	SpireCavebot.cutLoot(corpse)
 end
 loot:register()
 

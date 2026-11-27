@@ -6,21 +6,23 @@ Written for Jay. Review only: nothing in the game was changed. Every claim names
 
 **What I did not do.** I did not start the server, run the 279 in-game tests, or play in the client (another session was tuning the Axe-Lord while I worked, and the rule was "no edits"). I did not render the map, so tile-level problems (a missing door, a dead end) are **unverified** beyond what the plan checkers say. I did not read every NPC's dialogue line by line, nor the spell, house, arena or siege code. Two of the checkers redrew preview pictures as a side effect (`docs/FLOOR1_WILDS_PLAN.png`, `docs/previews/hunt_reed_marsh_z7.png`); I put both back exactly as they were.
 
+**Tests added after the first version (same day, with Jay's go-ahead).** I built a private copy of the server from commit `fff7d60b` (its own folder, ports and database, away from your live server) and ran: the full boot test (**281 in-game tests pass, 0 errors**), then experiments with real logged-in test characters that hit, killed and died for real. Results are marked **Tested** below. They confirmed three serious bugs the automated tests miss, confirmed two estimates with real numbers, and proved one of my own findings wrong (Hardcore, A8-1). A fix session started from this report is already working through the list in `docs/reviews/floor1-fixes-HANDOFF-2026-11-26.md`, so some findings may be fixed by the time you read this.
+
 **One moving target.** Another session was tuning the Axe-Lord while I read. It committed its work near the end of my review (commit `fff7d60b`: "Axe-Lord tuned by measurement: five level-30s kill him in 2 min 23 s with no deaths; client checks of the playtest fixes"). The boss numbers below are from that commit (20,000 health). I did not review the rest of that commit, and `ROADMAP.md` was still being edited when I finished.
 
 ---
 
 ## 1. Plain-English summary
 
-**Overall grade: C+.** Levels 1 to about 20 are a solid B: a complete, guided start, many different hunting grounds, working shops, quests and secrets, and an unusually careful test habit. The last third of the floor (levels 20 to 35, the labyrinth, the Axe-Lord) is a D for now, because it has never been finished by real play, and the boss was re-tuned twice today against test characters only. The gear system works mechanically but has real balance holes.
+**Overall grade: C.** Levels 1 to about 20 are a solid B to play: a complete, guided start, many different hunting grounds, working shops, quests and secrets, and an unusually careful test habit. The last third of the floor (levels 20 to 35, the labyrinth, the Axe-Lord) is a D for now, because it has never been finished by real play, and the boss was re-tuned twice today against test characters only. And three systems you count on do nothing in the real game: weapon upgrades add no damage, the cavebot costs nothing, and the harder modes pay no bonus. All three look finished and pass their automated tests, which is why nobody noticed.
 
 **Top 5 problems**
 
 1. **Nobody has ever finished Floor 1 the real way.** The labyrinth has never been walked in a playtest, it holds only about 13 monsters on three levels, and the Axe-Lord was re-tuned twice today: first after wiping a test party of three, then measured against five level-30 test characters whose level and gear were set by command (a kill in 2 min 23 s, commit `fff7d60b`). No party has ever reached and beaten him by really playing, so the moment the whole game is built around (the boss dies, Floor 2 opens) is still unproven.
-2. **The Vanguard's reward weapons are weaker than swords the Weaponsmith sells.** A fully upgraded, boss-awakened Hearthguard Sword hits like an attack-22.5 sword; the spike sword on sale for 8,000 gold is attack 24. The axe version is a trap (25% weaker than the mace for the same effort). The "rare drop" weapons promise bonuses (life leech, critical hits) that are not built at all. And there are signs in the code that the weapon damage bonus itself is skipped on most hits (finding B4-0), which needs a quick test.
-3. **The harder modes can be gamed, and the two boss rooms are open PvP for brand-new players.** Hardcore has no downside before level 21 (free +25% experience). A Death Game character becomes close to unkillable by hunting next to a friend who is not in the party. And anyone of any level can attack anyone inside the Gate Hound's arena and the Axe-Lord's hall, which every climber must visit.
-4. **The money and levelling numbers in the documents are not what the game does.** The game doubles every drop chance (loot rate 2), but the economy model does not, so real income is roughly 25 to 70% above `ECONOMY.md`. The engine also adds two experience bonuses the levelling model leaves out, so Floor 1 is probably much shorter than the 11 to 15 hours you asked for.
-5. **The cavebot penalty depends on the client being honest.** The server cuts experience and loot only when the client says "my bot is on". A changed client that stays silent farms at full speed; the only server-side catch is "killed 5 monsters without moving for 10 minutes".
+2. **Weapon upgrades add no damage at all (Tested).** A Vanguard holding a tier-5, awakened, fully familiar Stairlord's Edge hit for exactly the same as with bare hands in every test. Tiers, familiarity, the awakening, style passives and trophies are all skipped by one sign mistake. On top of that, the Vanguard's reward weapons are built on weak swords: in 20 real swings the shop's 8,000-gold spike sword did 2,517 damage against 1,606 for the maxed reward sword. The "rare drop" weapons' special bonuses were not built.
+3. **The cavebot costs nothing (Tested).** Your rule is that botting "heavily cuts XP". In the real game a botting character got full experience (378 of 378) and full loot (42.1 coins a kill against 42.4): the experience cut is ignored by the engine and the loot cut crashes on every kill. Separately, the penalty only starts when the client reports the bot, so a changed client would dodge it even once fixed.
+4. **The harder modes pay nothing, can be gamed, and the boss rooms are open PvP for new players.** The Hardcore and Death Game experience bonus is not applied (Tested: a Death Game character earned exactly normal experience), while Hardcore's death penalty is (Tested: 7.5% lost at level 15). So today Hardcore is all cost and no reward. A Death Game character can be made nearly unkillable by hunting beside a friend who is not in the party. And anyone of any level can attack anyone inside the Gate Hound's arena and the Axe-Lord's hall.
+5. **The money and levelling numbers in the documents are not what the game does (Tested).** Real experience per kill is 2.25 times the model's for the first three hours of a day and 1.5 times after, so Floor 1 is far shorter than the 11 to 15 hours you asked for. Real coin income is about 25 to 70% above `ECONOMY.md` because the game doubles every drop chance and the model does not (measured 42.3 coins per Road Bandit; the model says 33.5).
 
 **Top 5 strengths**
 
@@ -28,7 +30,7 @@ Written for Jay. Review only: nothing in the game was changed. Every claim names
 2. **Lots of real hunting ground.** Fifteen walled grounds plus the apex, six party caves, about 1,270 monsters, each with its own habit and trick, and a checker that proves no area floods a player (0 areas break the limits).
 3. **The floor unlock is carefully built.** It is recorded once, saved to disk at once, credits everyone who really fought (damage, healing, tanking), ignores test characters, and gets easier to finish for small groups.
 4. **No shop loop makes free money.** No Floor 1 NPC buys anything for as much as another sells it. The donation shop is switched off and holds no power beyond the starter set you approved.
-5. **Honest engineering habits.** Generated tables, a name checker with zero hits, 279 in-game tests, and a playtest-to-fix loop that found and closed real bugs the same day.
+5. **Honest engineering habits.** Generated tables, a name checker with zero hits, 281 in-game tests that all pass, and a playtest-to-fix loop that found and closed real bugs the same day. The weakness the new tests exposed: most of those tests check a rule on paper, not the rule working through the real game.
 
 ---
 
@@ -45,6 +47,8 @@ What blocks a friends session, in order:
 5. **Walk the three newest grounds** (Bramble Run, Smugglers' Ridge, Fallen Bastion). The plan checker says no trail leads to their gates (finding A1-2).
 
 Nothing in the list is large. Items 1 and 2 are enough for a first evening that stays below level 20.
+
+**Tell your friends three things until the fix session is done:** weapon upgrades do not raise damage yet, Hardcore and Death Game give no bonus yet, and the cavebot has no penalty yet. None of these stops anyone playing, but all three change how the game feels, so numbers from a session played before the fixes (how fast people level, how hard the boss is) should not be trusted.
 
 ---
 
@@ -163,7 +167,8 @@ Monsters have no level of their own; the "level" is the level band of the ground
 
 **A3-1. Levelling is faster than the plan says (High).**
 - *For players:* you asked for Floor 1 to last 11 to 15 hours. The real game is likely well under that, and a party is faster still (today's party went from level 3 to 19 in 2 hours 45 minutes including town trips).
-- *Detail:* the engine multiplies every kill's experience by a fresh-stamina bonus (1.5x for the first hours of play each day, on for everyone because `freePremium = true`) and a low-level bonus on top of the stage rate (Canary's `data/events/scripts/player.lua` lines 597-601, read from the pinned Canary package). `tools/gen_economy.py` `stage()` (lines 33-35) counts only the stage. The monster generator's own notes say the same ("the engine adds +50% below level 50 and +50% for fresh stamina", `tools/gen_monsters.py`, Pen Rat). The exact size of the low-level bonus at each level is **unverified**.
+- *Detail:* the engine multiplies every kill's experience by a fresh-stamina bonus (1.5x while stamina is above 39 hours, which is the first three hours of hunting each day; on for everyone because `freePremium = true`) and a flat 1.5x below level 50, on top of the stage rate (Canary's `data/events/scripts/player.lua` lines 597-601). `tools/gen_economy.py` `stage()` (lines 33-35) counts only the stage.
+- **Tested:** a real character killing a monster worth 56 base experience gained 1,260 at levels 5 and 8 (22.5x; the model says 10x), 504 at levels 10, 15 and 20 (9.0x; model 4x), 378 at levels 30 and 45 (6.75x; model 3x), and 252 at level 30 with stamina below 39 hours (4.5x).
 - *Fix:* put both bonuses into the model, measure solo with the autopilot (roadmap PT3), then lower the 9-20 stage if you still want 11 to 15 hours.
 
 **A3-2. Is the difficulty right for new players? Mostly yes; the wall is at level 19+ (Medium).**
@@ -260,17 +265,23 @@ Loot: 100 gold coins, up to 40 platinum, 10 health and 10 mana potions, in one b
 
 | | Normal | Hardcore | Death Game |
 |---|---|---|---|
-| Experience | normal | +25% | +50% |
+| Experience (as designed) | normal | +25% | +50% |
+| Experience (**Tested**) | normal | not checked; same code as Death Game | **no bonus at all** |
 | Loot | normal | +15% (an extra roll) | +30% |
 | Death below level 50 | costs nothing: no experience, no items (free blessings at each login) | 1.5x loss, blessings only halve it, extra item drops | character retired for good if it was a real monster death |
 | Moving down | - | to Normal any time, costs the bonus experience | to Hardcore or Normal any time, costs the bonus experience |
 
 (`lib/spirebound/difficulty.lua`, `scripts/spirebound/difficulty_events.lua`, `npc/registrar.lua` lines 53-55.)
 
-**A8-1. Hardcore is free power until level 21 (High).**
-- *For players:* a Hardcore character gets +25% experience and +15% loot, and until level 21 a death costs it nothing at all, because the engine's built-in starter blessing protects everyone that young. The smart choice is always Hardcore, then step down before it bites.
-- *Detail:* the engine's adventurer's blessing gives every blessing to characters up to level 21 (Canary `data/libs/systems/blessing.lua` lines 220-230); our loss hook never runs then (comment at `difficulty_events.lua` lines 100-102), and the Hardcore item roll is zero with five or more blessings (`difficulty.lua` lines 180-186).
-- *Fix:* Hardcore and Death Game characters do not get the starter blessing; Hardcore's loss applies from level 8.
+**A8-0. The Hardcore and Death Game experience bonus is not applied (High, Tested).**
+- *For players:* the Registrar promises 25% or 50% more experience for taking the risk. Nobody gets it. Hardcore players pay the heavier death penalty for nothing; Death Game players risk their character for nothing.
+- *Detail:* Canary 3.6.1 ignores what a `playerOnGainExperience` callback returns (its own `data/scripts/eventcallbacks/README.md` lists it as "void"). The bonus is applied only there (`scripts/spirebound/difficulty_events.lua` lines 8-17). **Tested:** a level-30 Death Game character gained 378 experience from a 56-experience monster, exactly the same as a character with no mode. The same ignored callback carries the cavebot's cut, Siege and Hunting Focus (same file), the Beacon's +5% per fire (`beacons.lua`), world events (`events.lua`) and the boosted creature (`boost.lua`): by the same logic none of those change experience either (not each tested). The extra loot roll uses a different mechanism and was not tested.
+- *Fix:* apply Spirebound's factors inside the engine's own experience function (which does return the final number), with a test that kills a real monster.
+
+**A8-1. Hardcore keeps its items until level 21 (Low). My first version of this finding was wrong.**
+- I first wrote that a Hardcore death costs nothing before level 21. **Tested, and not true:** a level-15 Hardcore character killed by a monster lost 7.5% of its experience (37,800 to 34,965, level 15 to 14). The experience penalty works.
+- What is true: the engine hands every character up to level 20 all its blessings at each login, so that character kept its weapon and its whole backpack. Hardcore's extra item risk only starts at level 21.
+- *Fix (your call):* leave it and say so at the Registrar, or stop Hardcore and Death Game characters getting the starter blessing.
 
 **A8-2. A Death Game character can be made nearly unkillable (High).**
 - *For players:* the rule "another player can never end you" has two side doors. (1) If the monster that kills you also hit another player who is not in your party, guild or household in the last 30 seconds, the death "does not count". Two friends who hunt side by side without partying both become immortal. (2) Inside a boss room, where PvP is open, a friend outside your party who hits you for 15% of your health once a minute does the same.
@@ -279,14 +290,14 @@ Loot: 100 gold coins, up to 40 platinum, 10 health and 10 mana potions, in one b
 
 **A8-3. Normal has no sting at all below level 50 (your call).** A death costs the walk back. That was a deliberate fix today (Q77) and it matches the Registrar's promise, but it sits oddly with "challenge, not calm". It also means Floor 1 has no gold sink from blessings.
 
-**A8-4. Are the perks worth the risk?** Hardcore: clearly yes, too much so (A8-1). Death Game: +50% is generous, and with A8-2 the risk is avoidable; fix A8-2 and it becomes a real, fair gamble. The Hardcore and Death Game titles and outfit rewards start at level 50 and beyond, so nothing cosmetic is earned on Floor 1.
+**A8-4. Are the perks worth the risk?** Today, no: neither mode pays its experience bonus (A8-0), so Hardcore is pure cost. Once A8-0 is fixed, Hardcore at +25% for a 1.5x loss is a fair trade. Death Game at +50% is generous, and with A8-2 the risk is avoidable; fix A8-2 and it becomes a real, fair gamble. The Hardcore and Death Game titles and outfit rewards start at level 50 and beyond, so nothing cosmetic is earned on Floor 1.
 
 ### A9. The first two hours, class by class
 
 All classes share the first 25 minutes:
 1. **Login, Arrival Yard (0-5 min).** Guide Pell, a letter, a stone path. Clear.
 2. **Old Granary (5-10 min).** Three Pen Rats, take a cheese, a gate opens. Rebuilt today; walked by a fresh character.
-3. **Registrar (10-15 min).** Pick a path and a difficulty. *Risk:* the difficulty choice is made with one sentence of information each, and Hardcore is the hidden best answer (A8-1).
+3. **Registrar (10-15 min).** Pick a path and a difficulty. *Risk:* the difficulty choice is made with one sentence of information each, and the promised bonuses are not paid yet (A8-0).
 4. **The Proving (15-25 min).** A solo fight with Bramblejaw that cannot kill you. Lit as of today.
 5. **Hearthgate and the Ratwarren, Toad Pond, Sproutling Glade (25-60 min, levels 3-9).** Fast and safe. With the engine bonuses a new player is level 9 in well under an hour.
 
@@ -638,13 +649,15 @@ All four classes follow the same steps: starter kit at the Registrar, shop gear 
 
 ### 5.2 Gear systems that exist
 
-**B4-0. The weapon damage bonus may not be reaching most hits at all (High, needs a 5-minute test).**
-- *For players:* tiers, familiarity, the awakening, style passives and trophies are all meant to raise the damage you deal. There is strong evidence in the code that the raise is skipped for most hits, so players would pay shards and gold for a number on the item that changes little.
-- *Detail:* the bonus is applied in one place, `SpireProgress.onDealt` (`lib/spirebound/progress.lua` lines 80-95), which begins "if the amount is zero or less, return it unchanged". But the engine hands damage to that hook as a negative number for most hits: the boss script says so in its own comment ("the engine hands most hits over as negative numbers and some spells as positive ones", `scripts/spirebound/bosses_floor1.lua` lines 145-147, a bug fixed there today), and the calling code says the same ("Damage can arrive as negative numbers here", `scripts/spirebound/spells.lua` line 1440). The floor-perk hook sits beside it and may share the problem. The only automated tests feed it +100 (`tests/test_progression.lua` lines 105-106). I could not run the game to confirm: **unverified in play**.
+**B4-0. The weapon damage bonus never applies (Critical for the gear system, Tested).**
+- *For players:* tiers, familiarity, the awakening, style passives and trophies are all meant to raise the damage you deal. None of them does. Players pay shards and gold for a number on the item that changes nothing.
+- **Tested:** a level-30 Vanguard dealt a fixed 100-point hit to a monster with bare hands, then holding a tier-5, awakened, fully familiar Stairlord's Edge (the item itself reports a 1.61x bonus). The monster lost the same amount both times, for spell, melee and ranged hits. In 26 of 26 hits, including 20 real sword swings, the amount reached the bonus code as a negative number and came back unchanged. This also means today's Axe-Lord tuning was measured without the bonus; once it is fixed, parties hit up to 61% harder and he must be measured again.
+- *Detail:* the bonus is applied in one place, `SpireProgress.onDealt` (`lib/spirebound/progress.lua` lines 80-95), which begins "if the amount is zero or less, return it unchanged". But the engine hands damage to that hook as a negative number for most hits: the boss script says so in its own comment ("the engine hands most hits over as negative numbers and some spells as positive ones", `scripts/spirebound/bosses_floor1.lua` lines 145-147, a bug fixed there today), and the calling code says the same ("Damage can arrive as negative numbers here", `scripts/spirebound/spells.lua` line 1440). The floor-perk hook sits beside it and may share the problem (not tested). The only automated tests feed it +100 (`tests/test_progression.lua` lines 105-106), which is why 281 tests pass.
 - *Fix:* work on the size of the hit and keep its sign, as the boss script now does; add a test that hits a real monster with and without a tier-5 weapon and compares the damage.
 
 **B4-1. Vanguard reward weapons are out-damaged by shop swords (High).**
 - *For players:* the weapon the game tells a Vanguard to hold, upgrade and awaken deals less damage than swords Garrick sells in the same room. Holding the better sword stops Mastery and familiarity from growing, so the player must choose between hitting hard now and growing later, and the game explains none of it.
+- **Tested:** 20 real swings each at sword skill 125 against the same monster: plain sword (attack 14) 1,179 damage, spike sword (attack 24) 2,517, maxed Stairlord's Edge (attack 14, bonus not applying) 1,606. Twenty swings is a small sample, but the spike sword's lead is far outside the noise.
 - *Detail:* melee and sword-skill damage scale with the weapon's attack value (`scripts/spirebound/sword_skills.lua` line 30; the engine's own melee formula). The Spirebound bonus is a multiplier on top (`lib/spirebound/gear.lua` `power`, lines 53-63): Floor 1 gives 1.10 at tier 0, 1.30 at tier 5, times 1.15 at full familiarity, plus 0.10 awakened = 1.61 at the very most. On an attack-14 sword that is the same as attack 15.4 at tier 0 and 22.5 at the maximum. Garrick sells a longsword (attack 17) for 160 gold and a spike sword (attack 24, defence 21 against 12) for 8,000 (`npc/hearthgate_weaponsmith.lua`). The Axe (attack 12) is 25% behind the Mace (attack 16) for identical cost.
 - *Fix:* give the three barracks weapons one attack value of their own, set on the item like the armour bonus already is (suggest attack 20, +1 per tier, defence 15), and take the spike sword out of Floor 1's shop.
 
@@ -692,7 +705,7 @@ The project's own table (`ECONOMY.md`) uses the listed drop chances. The game do
 | The Old Quarry | 23-30 | 233 | 10,000 | about 13,650 | +37% |
 | Old Watchtower (each of six) | 28-40 | about 65 each | 6,157 | about 9,500 | +54% |
 
-**E-1. The economy model ignores the loot rate (High).** `tools/gen_economy.py` `drop_value` (lines 88-102) multiplies listed chance by average amount and never by the loot rate. Every check that reads "All checks pass" (supplies under 60% of income, house affordability, task payouts) was run on numbers that are too low. Real incomes are comfortable, so nothing is broken for players, but houses and promotion arrive sooner than planned and the "money is tight early" feeling from the playtest came from autoloot being off, not from low drops. *Fix:* put the rate into the model, rerun, then decide whether to trim drops or keep the richer game.
+**E-1. The economy model ignores the loot rate (High, Tested).** 120 real Road Bandit kills paid 42.3 coins each; my table predicts 42.5, the project's model 33.5. `tools/gen_economy.py` `drop_value` (lines 88-102) multiplies listed chance by average amount and never by the loot rate. Every check that reads "All checks pass" (supplies under 60% of income, house affordability, task payouts) was run on numbers that are too low. Real incomes are comfortable, so nothing is broken for players, but houses and promotion arrive sooner than planned and the "money is tight early" feeling from the playtest came from autoloot being off, not from low drops. *Fix:* put the rate into the model, rerun, then decide whether to trim drops or keep the richer game.
 
 ### 6.2 Where gold comes from and where it goes
 
@@ -724,10 +737,11 @@ Nothing else overlaps with combat. The catalogue test in the code fails the buil
 
 ### 6.5 Cavebot
 
-- **Is the experience cut enforced on the server?** Yes: `scripts/spirebound/difficulty_events.lua` line 16 multiplies every gain by 0.45 while the bot is on and for 10 minutes after. Party members standing within 7 tiles of a botter get the same cut.
-- **Is loot cut too?** Yes: `scripts/spirebound/cavebot.lua` lines 36-54 removes each item with a 50% chance and halves stacks, coins included. Shards and rare weapons sit in the same body and are cut the same way. Secrets, party caves and boss rooms refuse botters. Hunting tasks count every second kill.
-- **CB-1. It all hangs on the client's word (High).** The server learns the bot is on from a message the client sends (`cavebot.lua` lines 4-27). A client that never sends it gets full experience and full loot. The one server-side check catches only a character that kills 5 monsters in 10 minutes without moving more than a tile; a walking bot is invisible to it. Long hunts are logged for staff, never punished automatically. This is acknowledged in `DESIGN.md` 12 (hacked clients are a ban matter), but you should know the cut is a rule for honest players, not a wall. *Fix later:* server-side route-repeat detection, as the design already lists.
-- **CB-2. Does coin loot reach the bank before the cut? Unverified.** With `autoBank = true`, if the engine banks coins before the cut runs, botters would keep full coins. My reading of the engine's order is that the cut runs first, but it needs one check in the client (it is also part of roadmap PT1).
+- **Is the experience cut enforced on the server? The code is there, but it does nothing (CB-0, High, Tested).** `scripts/spirebound/difficulty_events.lua` line 16 multiplies every gain by 0.45 while the bot is on, but the engine ignores that callback's answer (A8-0). **Tested:** with the server reporting the character as botting and its factor as 0.45, a kill gave 378 experience, exactly the same as with the bot off.
+- **Is loot cut too? No: the cut crashes (CB-0b, High, Tested).** `scripts/spirebound/cavebot.lua` line 46 asks each dropped item whether it stacks, using a call that does not exist on items in this engine. The script stops with an error on every botted kill (60 errors in 60 kills) and removes nothing. **Tested:** 42.1 coins per Road Bandit with the bot on, 42.4 with it off. Coins went straight to the bank in both cases, so once the cut is repaired it must also be checked that it runs before the coins are banked (CB-2).
+- **What does work for botters, by the code (not tested):** secrets, party caves and boss rooms refuse them, and hunting tasks count every second kill.
+- **CB-1. Even when repaired, it all hangs on the client's word (High).** The server learns the bot is on from a message the client sends (`cavebot.lua` lines 4-27). A client that never sends it gets full experience and full loot. The one server-side check catches only a character that kills 5 monsters in 10 minutes without moving more than a tile; a walking bot is invisible to it. Long hunts are logged for staff, never punished automatically. This is acknowledged in `DESIGN.md` 12 (hacked clients are a ban matter), but you should know the cut is a rule for honest players, not a wall. *Fix later:* server-side route-repeat detection, as the design already lists.
+- **CB-2. Does coin loot reach the bank before the cut? Still open.** It cannot be answered until the cut stops crashing; retest then.
 - **CB-3. The bot state is forgotten on a server restart (Low).** It lives in memory only; a restart clears the 10-minute linger.
 
 ### 6.6 Seasonal reset
@@ -751,7 +765,10 @@ What the wipe does (`server/data-spirebound/season_wipe.sql`, run offline by `to
 | 4 | Rare weapon perks | not built | build them, or delete the lines | B4-2 |
 | 5 | Flawless shard from Stonehorn Ram | 3.52% | 1% | 42 Rams make elites irrelevant |
 | 6 | Temper quest | +1 tier at any tier | only below tier 2 | A5-5 |
-| 7 | Hardcore and Death Game starter blessing | given until level 21 | not given | A8-1 |
+| 7 | Hardcore and Death Game experience bonus | not applied (bug) | +25% / +50% as designed | A8-0 |
+| 7b | Cavebot experience and loot cut | not applied (bugs) | 45% experience, 50% loot as designed | CB-0 |
+| 7c | Weapon, style and trophy damage bonus | not applied (bug) | as designed, then re-measure the Axe-Lord | B4-0 |
+| 7d | Hardcore and Death Game starter blessing | given until level 21 (no item risk) | your call | A8-1 |
 | 8 | Death Game "saved" rules | any outside player | only a hostile one; no "dragged in" if you attacked the monster | A8-2 |
 | 9 | Boss-room PvP | all levels | level 50 and above | A4-2 (your call) |
 | 10 | Gate Hound return time | 30 minutes | 10 minutes | A4-3 |
@@ -780,10 +797,12 @@ Each line is written so it can be handed over as a task. S = under an hour or tw
 2. **(S) Confirm the client checks of today's fixes** (roadmap PT1; commit `fff7d60b` reports them done), and add one more: are a cavebot user's looted coins halved before they reach the bank?
 3. **(M) Prove the Axe-Lord by real play** (roadmap N1) once Jay answers Q78: a party that levelled, geared and earned the Stair Key with no commands, through the labyrinth, in the real client.
 4. **(M) Rebuild the labyrinth's spawns** (about 12 per level, mixed packs) and walk all three levels with a party in the client.
-5. **(S) Test the weapon damage bonus** on a real monster with and without a tier-5 weapon (finding B4-0); if it is skipped for negative damage, fix `SpireProgress.onDealt` and the perk hook, and add the test to the boot run.
+5. **(S) Fix the weapon damage bonus** (B4-0, confirmed): work on the size of the hit in `SpireProgress.onDealt` and the perk hook; test with a real monster; then re-measure the Axe-Lord.
+5a. **(M) Make experience modifiers work** (A8-0, CB-0, confirmed): Hardcore, Death Game, cavebot, Beacons, events and the boosted creature all return numbers the engine ignores. Apply them in the engine's own experience function; test each with a real kill. Check skill-gain modifiers the same way.
+5c. **(S) Fix the cavebot loot cut** (CB-0b, confirmed crash at `cavebot.lua` line 46), with a test through the real drop, then check it runs before coins are banked.
 5b. **(M) Fix Vanguard weapons:** one attack value for the three barracks weapons set on the item and rising with tier; remove the spike sword from Floor 1's Weaponsmith; add a test that no Floor 1 shop weapon out-damages the barracks weapon of the same class at tier 0.
 6. **(M) Rare weapons:** build the four perks (life leech, critical, mana leech, healing) or remove them; cut the drop to 0.5% from elites and the Ram; favour the looter's class.
-7. **(S) Close the Hardcore loophole:** no starter blessing for Hardcore and Death Game characters; test a level-15 Hardcore death.
+7. **(S, Jay decides) Hardcore item risk below level 21** (A8-1): the experience loss already works; only decide whether the starter blessing should protect Hardcore items.
 8. **(M) Close the Death Game loopholes:** only hostile outside damage saves a character; no "dragged in" save when the victim attacked the monster; tests for both.
 9. **(S, Jay decides) Boss-room PvP below level 50:** if "off", change the two lines in `lib/spirebound/pvp.lua` and add a test.
 10. **(M) Make the money and levelling models tell the truth:** loot rate in `tools/gen_economy.py`, stamina and low-level bonuses in the levelling ladder; regenerate `ECONOMY.md` and `BALANCE.md`; list what no longer passes.

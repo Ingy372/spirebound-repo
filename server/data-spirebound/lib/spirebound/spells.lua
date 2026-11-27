@@ -626,7 +626,8 @@ end
 
 -- Pure: final damage after reduction and mark percentages
 function SpireBuffs.apply(damage, reducePct, markPct)
-	return math.floor(damage * (1 - (reducePct or 0) / 100) * (1 + (markPct or 0) / 100))
+	local sign = damage < 0 and -1 or 1 -- damage can arrive negative: round the size, keep the sign
+	return sign * math.floor(math.abs(damage) * (1 - (reducePct or 0) / 100) * (1 + (markPct or 0) / 100))
 end
 
 -- Pure: Undying Oath. Damage that would take health to 0 or below leaves 1 instead.

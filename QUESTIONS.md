@@ -8,6 +8,18 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
+The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
+- **Recommendation:** keep all of it (it is what DESIGN.md always said), and I re-measure the Axe-Lord and the hunting pace with the bonuses working (roadmap RV1, RV2) before anything is retuned. If the doubled skill training below 50 feels too fast once you play it, say so and I'll halve it.
+- Assumed until you answer: keep.
+- Jay's answer:
+
+### Q80. Should a Hardcore death risk your items before level 22? (2026-11-26, Floor 1 review)
+A Hardcore death already costs experience at any level (tested: a level-15 Hardcore character lost 7.5%, a Normal one nothing). But the game hands every character its blessings back at each login up to level 21 (the engine's "starter blessing"), so a young Hardcore character never drops an item, while it earns 25% more experience and 15% more loot from the first minute.
+- **Recommendation:** Hardcore and Death Game characters keep the free blessings only below level 8 (the first minutes). From level 8 a Hardcore death costs the full 15% and can drop gear, unless the player buys blessings from the priest. I built and tested this tonight and then took it out again, because it is your rule to change: it is a 20-minute job to put back.
+- Assumed until you answer: no change (today's behaviour stays).
+- Jay's answer:
+
 ### Q79. The Vanguard's barracks weapons now hit harder than any Floor 1 shop sword (2026-11-26, Floor 1 review)
 The review found that the Hearthguard Sword, Axe and Mace were weaker than swords Garrick sells in the same room (a 160-gold longsword beat the reward sword until tier 3, and the 8,000-gold spike sword beat it for ever), and that the Axe was 25% behind the Mace for the same price. Fixed: all three now have attack 20 and defence 15 of their own, +1 attack per tier (25 at tier 5); the rare Briarguard Sabre starts the same; the donation shop's Climber's Sword is 18; Garrick no longer sells the spike sword on Floor 1 (his best is the longsword, 17). (My call; you can veto.)
 - **Recommendation:** keep it. A Vanguard's reward weapon should be the best thing they can hold on the floor.

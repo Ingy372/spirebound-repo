@@ -116,8 +116,7 @@ ember:id(B.EMBER)
 ember:register()
 
 -- the bonus: experience and loot for kills on a floor with lit fires
-local xp = EventCallback("SpireBeaconXp")
-function xp.playerOnGainExperience(player, target, exp, rawExp)
+SpireHooks.xp("beacons", function(player, target, exp, rawExp)
 	if target and target:isMonster() then
 		local f = B.xpFactor(Floors.at(player:getPosition()))
 		if f > 1 then
@@ -125,8 +124,7 @@ function xp.playerOnGainExperience(player, target, exp, rawExp)
 		end
 	end
 	return exp
-end
-xp:register()
+end)
 
 local loot = EventCallback("SpireBeaconLoot")
 function loot.monsterOnDropLoot(monster, corpse)

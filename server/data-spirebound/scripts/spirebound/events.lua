@@ -97,17 +97,13 @@ end
 loot:register()
 
 -- Weekend XP and skill bonuses
-local xp = EventCallback("SpireWeekendXp")
-function xp.playerOnGainExperience(player, target, exp, rawExp)
+SpireHooks.xp("events", function(player, target, exp, rawExp)
 	return exp * SpireEvents.factor("xp")
-end
-xp:register()
+end)
 
-local skills = EventCallback("SpireWeekendSkills")
-function skills.playerOnGainSkillTries(player, skill, tries)
+SpireHooks.skill("events", function(player, skill, tries)
 	return tries * SpireEvents.factor("skill")
-end
-skills:register()
+end)
 
 -- Login reminder of the weekend bonus
 local login = CreatureEvent("SpireEventsLogin")

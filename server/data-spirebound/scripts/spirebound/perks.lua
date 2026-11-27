@@ -19,9 +19,11 @@ function defence.onHealthChange(creature, attacker, primaryDamage, primaryType, 
 		end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
-	primaryDamage = SpirePerks.taken(fx, primaryType, primaryDamage, math.random)
-	secondaryDamage = SpirePerks.taken(fx, secondaryType, secondaryDamage, function() return 1 end)
-	local after = player:getHealth() - primaryDamage - secondaryDamage
+	-- damage arrives as negative numbers (review B4-0): work on sizes, keep the signs
+	local ps, ss = primaryDamage < 0 and -1 or 1, secondaryDamage < 0 and -1 or 1
+	primaryDamage = ps * SpirePerks.taken(fx, primaryType, math.abs(primaryDamage), math.random)
+	secondaryDamage = ss * SpirePerks.taken(fx, secondaryType, math.abs(secondaryDamage), function() return 1 end)
+	local after = player:getHealth() - math.abs(primaryDamage) - math.abs(secondaryDamage)
 	local heal = SpirePerks.secondWind(fx, after, player:getMaxHealth(), lastWind[player:getId()], os.time())
 	if heal > 0 then
 		lastWind[player:getId()] = os.time()
@@ -41,7 +43,7 @@ defence:register()
 -- damage players deal (Executioner, Hunter's Eye, Ruinbreaker's Edge): called by the monsters' damage event
 function SpirePerks.onDealt(attacker, target, amount)
 	local player = attacker and (attacker:getPlayer() or (attacker:getMaster() and attacker:getMaster():getPlayer()))
-	if not player or amount <= 0 then
+	if not player or amount == 0 then
 		return amount
 	end
 	local fx = SpirePerks.effects(player)
@@ -50,7 +52,9 @@ function SpirePerks.onDealt(attacker, target, amount)
 	end
 	local mType = target:isMonster() and target:getType()
 	local share = target:getHealth() / math.max(1, target:getMaxHealth())
-	return SpirePerks.dealt(fx, amount, share, mType and mType:isBoss() or false, math.random)
+	-- the engine hands hits over as negative numbers (review B4-0): work on the size, keep the sign
+	local sign = amount < 0 and -1 or 1
+	return sign * SpirePerks.dealt(fx, math.abs(amount), share, mType and mType:isBoss() or false, math.random)
 end
 
 -- loot: Haggler's extra coins, Lucky Find's extra roll

@@ -200,6 +200,15 @@ def main(argv: list[str]) -> None:
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(f, dst)
 
+    # Spirebound's experience and skill factors hook into the engine's own Player:onGainExperience / onGainSkillTries
+    # (the EventCallback versions are ignored by Canary 3.6.1): lib/spirebound/hooks.lua
+    events = BUILD / "data" / "events" / "scripts" / "player.lua"
+    patch = (ROOT / "server" / "core-patches" / "player_events_append.lua").read_text(encoding="utf-8")
+    text = events.read_text(encoding="utf-8")
+    if "function Player:onGainExperience" not in text or "function Player:onGainSkillTries" not in text:
+        raise SystemExit("core data changed: Player:onGainExperience / onGainSkillTries not found in events/scripts/player.lua")
+    events.write_text(text + "\n" + patch, encoding="utf-8")
+
     # map: our generated map is part of the datapack (tools/mapgen.py); Canary's sample map only as a fallback
     world = BUILD / "data-spirebound" / "world"
     if (world / "spirebound.otbm").exists():

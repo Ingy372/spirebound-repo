@@ -1,12 +1,10 @@
 -- Wires the boosted creature of the day (lib/spirebound/boost.lua) into experience and loot.
-local xp = EventCallback("SpireBoostXp")
-function xp.playerOnGainExperience(player, target, exp, rawExp)
+SpireHooks.xp("boost", function(player, target, exp, rawExp)
 	if target and target:isMonster() and SpireBoost.isBoosted(target:getName()) then
 		return math.floor(exp * SpireBoost.XP)
 	end
 	return exp
-end
-xp:register()
+end)
 
 local loot = EventCallback("SpireBoostLoot")
 function loot.monsterOnDropLoot(monster, corpse)

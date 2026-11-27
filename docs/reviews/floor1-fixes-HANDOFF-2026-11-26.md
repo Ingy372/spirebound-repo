@@ -4,6 +4,36 @@ For the session that fixes these. The full reasoning, numbers and file reference
 `docs/reviews/floor1-review-2026-11.md` (finding ids like A4-2, B4-1 below point into it). Jay asked for this list to be
 handed over while the review session keeps testing.
 
+## UPDATE (review session, same evening): confirmed by test with a real character on commit `fff7d60b`
+
+Do these first; they are worse than anything in Group 1.
+
+- **T1. The weapon damage bonus never applies (was Group 2, B4-0). CONFIRMED.** 26 of 26 hits (20 real melee swings and
+  `doTargetCombatHealth` with spell, melee and ranged origin) reached `SpireProgress.onDealt` as a negative amount and
+  came back unchanged. A tier-5 awakened Stairlord's Edge (power 1.61) dealt the same as bare hands. Fix the sign
+  handling there, in `SpirePerks.onDealt` and in any "damage taken" guard; test with a real hit. Then re-measure the
+  Axe-Lord (his tuning today was measured without the bonus).
+- **T2. Experience callbacks are ignored. CONFIRMED.** Canary 3.6.1 treats `playerOnGainExperience` as void (its own
+  `data/scripts/eventcallbacks/README.md`). A Death Game character and a botting character (xpFactor 0.45) each gained
+  exactly the normal 378 from a 56-experience kill. Affected: `difficulty_events.lua` (Hardcore, Death Game, cavebot,
+  Siege, Hunting Focus), `beacons.lua`, `events.lua`, `boost.lua`. `playerOnGainSkillTries` is listed void too (double
+  skill gain below 50, Hardcore skill debt): test it. Apply the factors in the engine's `Player:onGainExperience`
+  (`data/events/scripts/player.lua`, via `server/core-overrides`), and check the `bonusXp` bookkeeping does not charge
+  players for bonus experience they never got.
+- **T3. The cavebot loot cut crashes on every kill. CONFIRMED.** `scripts/spirebound/cavebot.lua` line 46:
+  `item:isStackable()` does not exist ("attempt to call method 'isStackable' (a nil value)"). Botting gave 42.1 coins
+  a kill against 42.4. Use `ItemType(item:getId()):isStackable()`; test through the real drop; then check the cut runs
+  before autoBank moves the coins.
+- **Correction to Group 1 item 3 (Hardcore).** A level-15 Hardcore death lost 7.5% experience: the experience penalty
+  works. Do not add one. Only the item risk is off below level 21 (blessings are handed back at each login); that is a
+  question for Jay.
+- **Numbers for item 15.** Real experience per kill = base x stage x 1.5 (below level 50) x 1.5 (stamina above 39 h):
+  22.5x at levels 1-8, 9.0x at 9-20, 6.75x at 21-50; 4.5x at 21-50 with stamina below 39 h. Coins per Road Bandit: 42.3
+  measured over 120 kills (loot rate 2), model 33.5.
+- **A lesson for every fix here:** 281 in-game tests passed while T1-T3 were broken, because the tests call the pure
+  rule with made-up inputs. Each fix needs a test that goes through the real event with a real creature
+  (`tools/loadtest.py` + `tools/loadbot.py` can log a real character in on a test copy).
+
 ## Ground rules
 - `CLAUDE.md` applies as always: change generators, not generated files; `python3 tools/check_names.py`; boot test after
   each task; plain-English commits; PROGRESS entry; anything cut becomes a ROADMAP task.

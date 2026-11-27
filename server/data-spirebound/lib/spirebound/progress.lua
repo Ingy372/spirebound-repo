@@ -76,22 +76,27 @@ function SpireProgress.warnUnarmed(player)
 	return true
 end
 
--- Damage a player deals to a monster
+-- Damage a player deals to a monster.
+-- Floor 1 review B4-0 (2026-11-26, measured on a real character): the engine hands every hit over as a NEGATIVE
+-- number, and this function returned early on "amount <= 0", so weapon tiers, familiarity, the awakening, style
+-- passives and trophies added no damage at all in real play. Work on the size of the hit and keep its sign.
 function SpireProgress.onDealt(attacker, target, amount)
 	local player = SpireProgress.owner(attacker)
 	if player and amount ~= 0 and attacker:getId() == player:getId() then -- the player's own hits, not a summon's
 		SpireProgress.warnUnarmed(player)
 	end
-	if not player or amount <= 0 then
+	if not player or amount == 0 then
 		return amount
 	end
+	local sign = amount < 0 and -1 or 1
+	amount = math.abs(amount)
 	local item, d = SpireGear.mainWeapon(player)
 	local w = nil
 	if item and d.vocation == player:getVocation():getBaseId() then
 		w = SpireGear.state(item)
 	end
 	local ctx = { distance = player:getPosition():getDistance(target:getPosition()) }
-	return SpireProgress.dealtPure(amount, w, SpireStyle.get(player), ctx, SpireProgress.trophyBonus(player, ctx))
+	return sign * SpireProgress.dealtPure(amount, w, SpireStyle.get(player), ctx, SpireProgress.trophyBonus(player, ctx))
 end
 
 -- Members who share a kill: the killer's party on the same floor within range, or the killer alone

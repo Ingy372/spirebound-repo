@@ -130,3 +130,55 @@ SpireTest.add("review B4-2: rare weapons fall from the two elites and the Ram on
 		end
 	end
 end)
+
+-- ---------------------------------------------------------------- confirmed by the review session's tests (T1-T3)
+-- (real characters: tools/loadtest.py review hits and kills real monsters and reads what the server did)
+SpireTest.add("review B4-0: the weapon's damage bonus applies to hits the way the engine sends them (negative)", function()
+	local b = Game.createItem(2853, 1, HERE)
+	local sword = SpireGear.make(b, "f1_vanguard_sword")
+	SpireGear.setState(sword, { tier = 5, awakened = true })
+	local wolf = Game.createMonster("Meadow Wolf", HERE, false, true)
+	local p = holder(4, sword)
+	function p:getPosition() return HERE end
+	function p:getMaster() return nil end
+	function p:kv() return kv.scoped("spiretest-b40") end
+	function p:sendTextMessage() end
+	local want = math.floor(100 * SpireGear.power(SpireGear.state(sword)) + 0.5)
+	SpireTest.eq(want >= 140, true, "a tier-5 awakened sword is worth at least +40% (" .. want .. ")")
+	SpireTest.eq(SpireProgress.onDealt(p, wolf, -100) <= -want, true, "a negative hit of 100 grows to at least " .. want .. ": " .. SpireProgress.onDealt(p, wolf, -100))
+	SpireTest.eq(SpireProgress.onDealt(p, wolf, 100) >= want, true, "a positive hit grows the same way")
+	SpireTest.eq(SpireProgress.onDealt(p, wolf, 0), 0, "nothing stays nothing")
+	wolf:remove()
+	b:remove()
+end)
+
+SpireTest.add("review T2: experience and skill factors go through the engine's own functions", function()
+	local f = io.open("data/events/scripts/player.lua", "r")
+	local text = f:read("*a")
+	f:close()
+	SpireTest.eq(text:find("SpireHooks.gainExperience", 1, true) ~= nil, true, "the engine's Player:onGainExperience calls Spirebound's factors")
+	SpireTest.eq(text:find("SpireHooks.gainSkillTries", 1, true) ~= nil, true, "and so does Player:onGainSkillTries")
+	for _, name in ipairs({ "difficulty", "beacons", "boost", "events" }) do
+		SpireTest.eq(type(SpireHooks.xpFns[name]), "function", name .. " adds its experience factor")
+	end
+	SpireTest.eq(type(SpireHooks.skillFns.difficulty), "function", "the skill catch-up is hooked in")
+	local saved = SpireHooks.xpFns
+	SpireHooks.xpFns = { a = function(_, _, exp) return exp * 1.5 end, b = function(_, _, exp) return exp * 0.45 end }
+	SpireTest.eq(SpireHooks.gainExperience(nil, nil, 1000, 100), 675, "factors multiply and the result is a whole number")
+	SpireHooks.xpFns = saved
+end)
+
+SpireTest.add("review T3: the cavebot's loot cut works on a real container of real items", function()
+	local body = Game.createItem(2853, 1, HERE)
+	body:addItem(3031, 80) -- coins: a stack
+	body:addItem(3264, 1) -- a sword
+	body:addItem(3355, 1) -- a helmet
+	local removed = SpireCavebot.cutLoot(body, function() return 0.99 end) -- every single item is unlucky
+	SpireTest.eq(body:getSize(), 1, "single items vanish on a bad roll")
+	SpireTest.eq(body:getItem(0):getCount(), 40, "a stack of 80 coins is halved")
+	SpireTest.eq(removed, 42, "40 coins and 2 items taken")
+	body:addItem(3264, 1)
+	SpireCavebot.cutLoot(body, function() return 0 end)
+	SpireTest.eq(body:getSize(), 2, "and stay on a good one")
+	body:remove()
+end)
