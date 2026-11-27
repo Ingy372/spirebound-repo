@@ -216,6 +216,17 @@ Jay's teleport crystals (DESIGN.md 3.7). Ten still icons of the SAME crystal in 
 | [ ] | `item_waycrystal_f9.png` (now item 9237) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small hand-sized glossy black with a faint purple glint crystal, a long hexagonal prism with a pointed tip, set in a simple pewter cap with a ring, a tiny engraved number 9 on the cap, a soft glow of the same colour. Same shape for all ten floors, only the colour and the number change." |
 | [ ] | `item_waycrystal_f10.png` (now item 7281) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small hand-sized deep cerulean blue with a sapphire core crystal, a long hexagonal prism with a pointed tip, set in a simple pewter cap with a ring, a tiny engraved number 10 on the cap, a soft glow of the same colour. Same shape for all ten floors, only the colour and the number change." |
 
+## Batch 13 (2026-11-26): small game and the Underkeep mini-boss (Priority: low; placeholders work)
+Moving creatures: Claude makes them with the Blender pipeline (`art/`), compared with the closest Tibia creature as the monster art rules say; the notes are design descriptions.
+
+| ✓ | File names | Size / frames | Note |
+|---|---|---|---|
+| [ ] | `mon_meadow_hare_*` (pipeline, quadruped) | 32×32, 12 | Small game: a sandy-grey hare with long black-tipped ears and a white tail, always about to bolt. Compare with Tibia's rabbit. |
+| [ ] | `mon_dapple_fawn_*` (pipeline, quadruped) | 32×32, 12 | Small game: a slim russet fawn with white dapples along its back and a startled look. Compare with Tibia's deer. |
+| [ ] | `mon_thistle_hen_*` (pipeline, crawler rules) | 32×32, 12 | Small game: a speckled brown hen with a purple thistle-tuft crest. Compare with Tibia's chicken. |
+| [ ] | `mon_acorn_squirrel_*` (pipeline, quadruped) | 32×32, 12 | Small game: a red squirrel with a huge bushy tail, an acorn in its paws. Compare with Tibia's squirrel. |
+| [ ] | `mon_sluice_warden_*` (pipeline, crawler rules) | 64×64, 12 | Underkeep Wing 1 mini-boss: a bloated grey-green sluice toad wearing a rusted iron sluice gate as a collar, water dripping from its jaws. Compare with Tibia's swamp troll / toad: ours is armoured and much bigger. |
+
 ## Batch 11 (2026-11-25): money monsters for the website banner (Priority: with each monster)
 Jay: the website banner is reserved for "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet." Each walks across the banner as soon as its art is approved (`SHOWCASE` in `tools/gen_site.py`; pictures by `tools/site_art.py`). On the banner now: Azhrakkar, the Bristle Boar and the Grey Alpha.
 Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up like that"). A larger website render from the Blender model comes with roadmap N6.

@@ -166,6 +166,23 @@ MONSTERS = {
     "Chain Ghoul": dict(desc="a chain ghoul", look=(131, 79, 79, 79, 79, 0), corpse=18074, hp=900, xp=470, speed=110, race="undead",
                         attacks=[("melee", 0, -170), ("physical", -60, -150, 3)], armor=30, defense=28,
                         loot=[(GOLD, 100000, 100), (PLAT, 30000, 2), (3357, 1500, 1)], elements={"holy": -20}),
+    # ---------------------------------------------------------------- small game in the open country (Jay, Q94,
+    # 2026-11-26: "fill in the empty land with small game monsters"). Harmless, they run, and pay almost nothing, so they
+    # never become a farm. Placed by maps/small_game.py on the empty lawns. Placeholder looks until their art.
+    "Meadow Hare": dict(desc="a meadow hare", look=(74,), corpse=4173, hp=20, xp=3, speed=160, race="blood", hostile=False,
+                        attacks=[], armor=1, defense=1, run=20, loot=[(3577, 25000, 1)]),
+    "Dapple Fawn": dict(desc="a dapple fawn", look=(31,), corpse=4016, hp=35, xp=5, speed=170, race="blood", hostile=False,
+                        attacks=[], armor=1, defense=2, run=35, loot=[(3577, 40000, 2)]),
+    "Thistle Hen": dict(desc="a thistle hen", look=(111,), corpse=4330, hp=15, xp=2, speed=120, race="blood", hostile=False,
+                        attacks=[], armor=1, defense=1, run=15, loot=[(3606, 20000, 1), (5890, 30000, 2)]),
+    "Acorn Squirrel": dict(desc="an acorn squirrel", look=(274,), corpse=276, hp=12, xp=2, speed=180, race="blood", hostile=False,
+                           attacks=[], armor=1, defense=1, run=12, loot=[]),
+    # the Underkeep Wing 1 mini-boss (Q89, 2026-11-26): the keeper of the old sluices, in the den at the wing's heart.
+    # Sized for one or two climbers around level 30-40 (Jay may test alone or as a pair). Placeholder look until its art.
+    "Sluice Warden": dict(desc="the Sluice Warden", look=(222,), corpse=6077, hp=2600, xp=1500, speed=110, race="venom",
+                          attacks=[("melee", 0, -150, None, "poison"), ("earth", -60, -160, 4)], armor=30, defense=30,
+                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 6), (3032, 25000, 1)], elements={"earth": 100},
+                          voices=["The water remembers!"]),
     "Drain Matron": dict(desc="the Drain Matron", look=(222,), corpse=6077, hp=9000, xp=4200, speed=120, race="venom", boss=True,
                          attacks=[("melee", 0, -300, None, "poison"), ("earth", -150, -350, 5)], armor=40, defense=40,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 15), (3370, 20000, 1)], elements={"earth": 100}),
@@ -258,7 +275,7 @@ def render(name, d):
          "monster.changeTarget = { interval = %d, chance = %d }" % d.get("change_target", (4000, 20 if boss else 0)),
          "monster.strategiesTarget = { nearest = 100 }", "",
          "monster.flags = {",
-         f"\tsummonable = {str(d.get('summon', False)).lower()}, attackable = true, hostile = true, convinceable = false, pushable = false,",
+         f"\tsummonable = {str(d.get('summon', False)).lower()}, attackable = true, hostile = {str(d.get('hostile', True)).lower()}, convinceable = false, pushable = false,",
          f"\trewardBoss = false, illusionable = false, canPushItems = {str(boss).lower()}, canPushCreatures = {str(boss).lower()},",
          f"\tstaticAttackChance = 90, targetDistance = {d.get('dist', 1)}, runHealth = {d.get('run', 0)}, healthHidden = false, isBlockable = false,",
          "\tcanWalkOnEnergy = false, canWalkOnFire = false, canWalkOnPoison = false,",
