@@ -158,6 +158,12 @@ class Bot:
                         fx, fy, fz, iid, fs, tx, ty, tz = (int(v) for v in text.split())
                         self.send(bytes([0x83]) + struct.pack("<HHBHB", fx, fy, fz, iid, fs)
                                   + struct.pack("<HHBHB", tx, ty, tz, 0, 0))
+                    elif kind == "buy":               # buy from the open NPC trade window: "itemid amount"
+                        iid, amount = (int(v) for v in text.split())
+                        self.send(bytes([0x7A]) + struct.pack("<HBHBB", iid, 1, amount, 0, 0))
+                    elif kind == "modal":             # answer a menu window: "windowid button choice"
+                        wid, button, choice = (int(v) for v in text.split())
+                        self.send(bytes([0xF9]) + struct.pack("<IBB", wid, button, choice))
                     elif kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
                         self.send(bytes([0xA0, 1, 0, 0, 0]))   # unmarked players), pvp mode dove
                     else:

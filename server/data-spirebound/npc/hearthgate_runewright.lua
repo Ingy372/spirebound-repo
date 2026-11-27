@@ -19,7 +19,7 @@ npcConfig.shop = {
 	{ itemName = "blank rune", clientId = 3147, buy = 10 },
 	{ itemName = "wand of vortex", clientId = 3074, buy = 500, sell = 100 },
 	{ itemName = "snakebite rod", clientId = 3066, buy = 500, sell = 100 },
-	{ itemName = "temple teleport scroll", clientId = 25718, buy = 300 },
+	{ itemName = "amber waycrystal (floor 1)", clientId = 3251, buy = 150 },
 }
 
 local keywordHandler = KeywordHandler:new()

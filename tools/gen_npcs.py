@@ -13,6 +13,7 @@ from pathlib import Path
 import sys
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from junk_prices import JUNK  # noqa: E402
+import crystals  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "server" / "data-spirebound" / "npc"
@@ -90,8 +91,9 @@ NPCS = {
         name="Runewright Mael", desc="the runewright", look=(2027, 0, 0, 0, 0, 0),
         greet="Blank runes for your conjuring, |PLAYERNAME|, made cheaper if you bring gems to {craft} with, and wands and rods for those who need one. Ask for a {trade}.",
         voices=["Blank runes! Ready for your spells!"],
+        # the Amber Waycrystal replaces the old temple teleport scroll (DESIGN.md 3.7; price from tools/balance.py)
         shop=[("blank rune", 3147, 10, None), ("wand of vortex", 3074, 500, 100), ("snakebite rod", 3066, 500, 100),
-              ("temple teleport scroll", 25718, 300, None)]),
+              (crystals.name(1).lower(), crystals.CRYSTALS[1][1], crystals.price(1), None)]),
     "hearthgate_tailor": dict(
         name="Tailor Quill", desc="the tailor", look=(128, 95, 113, 114, 76, 0),
         greet="Good cloth for the climb, |PLAYERNAME|, and strong bags to carry your loot home. Bring furs and cloth and I'll {craft} you a hunter's outfit. Ask for a {trade}.",

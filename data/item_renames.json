@@ -44,6 +44,56 @@
   "plural": "Beacon Embers",
   "description": "Light a fire bowl of a town's Beacon with it: +5% experience and loot for everyone on that floor for an hour. Dropped by field bosses, hidden beasts, and sometimes elites and apex monsters."
  },
+ "3251": {
+  "name": "amber waycrystal (floor 1)",
+  "plural": "amber waycrystals (floor 1)",
+  "description": "Hold it still for 3 seconds to travel to Hearthgate, or to the gate of a Floor 1 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "11454": {
+  "name": "verdant waycrystal (floor 2)",
+  "plural": "verdant waycrystals (floor 2)",
+  "description": "Hold it still for 3 seconds to travel to Floor 2's town, or to the gate of a Floor 2 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "9240": {
+  "name": "azure waycrystal (floor 3)",
+  "plural": "azure waycrystals (floor 3)",
+  "description": "Hold it still for 3 seconds to travel to Floor 3's town, or to the gate of a Floor 3 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "5944": {
+  "name": "violet waycrystal (floor 4)",
+  "plural": "violet waycrystals (floor 4)",
+  "description": "Hold it still for 3 seconds to travel to Floor 4's town, or to the gate of a Floor 4 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "8225": {
+  "name": "crimson waycrystal (floor 5)",
+  "plural": "crimson waycrystals (floor 5)",
+  "description": "Hold it still for 3 seconds to travel to Floor 5's town, or to the gate of a Floor 5 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "9102": {
+  "name": "cyan waycrystal (floor 6)",
+  "plural": "cyan waycrystals (floor 6)",
+  "description": "Hold it still for 3 seconds to travel to Floor 6's town, or to the gate of a Floor 6 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "9697": {
+  "name": "rose waycrystal (floor 7)",
+  "plural": "rose waycrystals (floor 7)",
+  "description": "Hold it still for 3 seconds to travel to Floor 7's town, or to the gate of a Floor 7 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "942": {
+  "name": "frost waycrystal (floor 8)",
+  "plural": "frost waycrystals (floor 8)",
+  "description": "Hold it still for 3 seconds to travel to Floor 8's town, or to the gate of a Floor 8 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "9237": {
+  "name": "onyx waycrystal (floor 9)",
+  "plural": "onyx waycrystals (floor 9)",
+  "description": "Hold it still for 3 seconds to travel to Floor 9's town, or to the gate of a Floor 9 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
+ "7281": {
+  "name": "cerulean waycrystal (floor 10)",
+  "plural": "cerulean waycrystals (floor 10)",
+  "description": "Hold it still for 3 seconds to travel to Floor 10's town, or to the gate of a Floor 10 hunting ground you have the level for. Used up on arrival. Not in a fight, a boss room or a party cave."
+ },
  "13865": {
   "name": "broken stone guardian",
   "plural": "broken stone guardians",

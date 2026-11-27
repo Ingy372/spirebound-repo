@@ -147,7 +147,7 @@ SpireJournal.HOWTO = {
 	"My backpack is too heavy! Sell meat and ham to Innkeeper Roan, loot to Trader Osric, and deposit coins at the bank.",
 	"How do I sell loot? Trader Osric in the Hearth buys what monsters drop. Players pay more on the market (any depot locker).",
 	"What are hunting tasks? Every town has a taskmaster (Floor 1: Taskmaster Rhen) with a task menu of that floor's monsters. Each task pays gold and task points once a day. Spend points with !taskshop.",
-	"How do I get home fast? A temple teleport scroll (Runewright Mael, 300 gold) takes you to your temple outside a fight.",
+	"How do I get home fast? An Amber Waycrystal (Runewright Mael) takes you to Hearthgate, or to the gate of a hunting ground you have the level for. Hold still 3 seconds; not in a fight.",
 	"What is a secret? Hidden places on every floor. Find one and sell word of it to Vesper, the Info Broker, or keep it.",
 	"Why can't I attack that player? Players below level 50 are protected, and so are players far below your level.",
 	"How do floors open? When anyone beats a floor's boss, the way up opens for the whole server.",

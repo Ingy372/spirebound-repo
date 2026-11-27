@@ -449,6 +449,9 @@ def floor_tasks(monsters, floors):
 
 def write(rows, problems, tasks):
     (ROOT / "data").mkdir(exist_ok=True)
+    import crystals                                  # Waycrystals: priced from each floor's income (DESIGN.md 3.7)
+    gold_h = {r["floor"]: r["gold_h"] for r in rows}
+    (ROOT / "server/data-spirebound/lib/spirebound/crystals_data.lua").write_text(crystals.lua(gold_h), encoding="utf-8")
     with open(ROOT / "data/balance_floors.csv", "w", newline="") as fh:
         w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
         w.writeheader()
@@ -489,6 +492,9 @@ def write(rows, problems, tasks):
     off = [r for r in rows if r["floor"] >= 2 and abs(r["real_band_hours"] - TARGETS[r["floor"]]["hours"]) > 0.15 * TARGETS[r["floor"]]["hours"]]
     L += ["", "No longer within 15% of the hours target once the bonuses are counted: "
           + (", ".join(f"Floor {r['floor']} ({r['real_band_hours']} h against {TARGETS[r['floor']]['hours']})" for r in off) or "none") + ".", "",
+          "## Waycrystals (a gold sink, DESIGN.md 3.7)",
+          "Each floor's crystal costs about 4 minutes of that floor's hunting income (a trip there and back about 8): "
+          + ", ".join(f"Floor {r['floor']} {__import__('crystals').price(r['floor'], {x['floor']: x['gold_h'] for x in rows}):,}" for r in rows) + ".", "",
           "## Rules the check enforces", f"- Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.",
           f"- Supplies never eat more than {SUPPLY_MAX_SHARE:.0%} of the coins.",
           f"- A typical house on Floors 1-2 costs {HOUSE_HOURS[0]}-{HOUSE_HOURS[1]} hours of hunting.",

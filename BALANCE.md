@@ -37,6 +37,9 @@ The engine adds 1.5x experience below level 50 and 1.5x more while stamina is ab
 
 No longer within 15% of the hours target once the bonuses are counted: Floor 2 (6.9 h against 14), Floor 3 (10.7 h against 16), Floor 4 (12.0 h against 18), Floor 5 (14.7 h against 22), Floor 6 (17.3 h against 26), Floor 7 (20.0 h against 30), Floor 8 (23.3 h against 35), Floor 9 (26.7 h against 40), Floor 10 (30.0 h against 45).
 
+## Waycrystals (a gold sink, DESIGN.md 3.7)
+Each floor's crystal costs about 4 minutes of that floor's hunting income (a trip there and back about 8): Floor 1 150, Floor 2 730, Floor 3 930, Floor 4 1,200, Floor 5 1,470, Floor 6 1,770, Floor 7 2,330, Floor 8 2,330, Floor 9 2,890, Floor 10 3,430.
+
 ## Rules the check enforces
 - Each floor's climb within 15% of its hours target, and its coins within 15% of its gold target.
 - Supplies never eat more than 60% of the coins.

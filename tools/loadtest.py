@@ -436,6 +436,34 @@ def _check_fish(lines):
     return good, "fishing tries: start %s, cast %s, cast again 0.7 s later %s (refused), 2.7 s later %s" % tuple((t + [None] * 4)[:4])
 
 
+MEADOW = [(1250, 1052, 7), (1250, 1056, 7), (1250, 1060, 7)]   # open meadow east of the labyrinth corridor
+_h = _world_point("boss_private_floor1")
+BOSS_HALL = (_h[0] + 2, _h[1] + 4, _h[2])                     # inside the private boss hall
+
+
+def crystal_steps(mode, at, choice):
+    x, y, z = at
+    return [[(3, "say", "/rv crystalfloor %s %d %d %d" % (mode, x, y, z)), (1, "use", "%d %d %d 3251 1" % (x - 1, y, z)),
+             (1, "modal", "7301 1 %d" % choice), (5, "say", "/rv crystalcount")]]
+
+
+def _check_crystal(want):
+    def check(lines):
+        f, c = _rv(lines, "crystalfloor")[0], _rv(lines, "crystalcount")[0]
+        here = (c["x"], c["y"], c["z"])
+        town = tuple(int(v) for v in f["town"].split(","))
+        ground = tuple(int(v) for v in f["ground"].split(","))
+        spot = tuple(int(v) for v in f["spot"].split(","))
+        if want == "town":
+            good = max(abs(here[0] - town[0]), abs(here[1] - town[1])) <= 2 and here[2] == town[2]
+        elif want == "ground":
+            good = max(abs(here[0] - ground[0]), abs(here[1] - ground[1])) <= 2 and here[2] == ground[2]
+        else:                                # refused: still standing beside the crystal's tile
+            good = here == (spot[0] + 1, spot[1], spot[2])
+        return good, "now at %s (town %s, %s gate %s)" % (here, town, f["gid"], ground)
+    return check
+
+
 def _check_dg(kind, want):
     def check(lines):
         r = _rv(lines, "dg")[0]
@@ -522,6 +550,19 @@ REVIEW_CASES = [
          logins=[[(14, "say", "/rv privprep key"), (1, "say", "!private"), (2, "say", "/rv where"), (1, "say", "/rv floorsreset")]], stay=3,
          check=lambda lines: (_rv(lines, "where")[0]["z"] == 4,
                               "key %(key)s" % _rv(lines, "privprep")[0] + ", now on level %(z)s" % _rv(lines, "where")[0])),
+    dict(name="TC1 buy an Amber Waycrystal from the Runewright", voc=4, level=30,
+         logins=[[(3, "say", "/rv goto Runewright Mael"), (1, "say", "hi"), (1, "npc", "trade"), (1, "buy", "3251 1"),
+                  (1, "say", "/rv crystalcount")]], stay=3,
+         check=lambda lines: (_rv(lines, "crystalcount")[0]["carried"] == 1 and _rv(lines, "goto")[0]["gold"] - 150 >= 0,
+                              "carried %(carried)s after buying" % _rv(lines, "crystalcount")[0])),
+    dict(name="TC1 a Waycrystal to Hearthgate", voc=4, level=30, ground="wolf_copse",
+         logins=crystal_steps("plain", MEADOW[0], 1), stay=3, check=_check_crystal("town")),
+    dict(name="TC1 a Waycrystal to a hunting ground's gate", voc=4, level=30,
+         logins=crystal_steps("plain", MEADOW[1], 2), stay=3, check=_check_crystal("ground")),
+    dict(name="TC1 a Waycrystal refused in a fight", voc=4, level=30, ground="wolf_copse",
+         logins=crystal_steps("fight", MEADOW[2], 1), stay=3, check=_check_crystal("stay")),
+    dict(name="TC1 a Waycrystal refused in a boss room", voc=4, level=60,
+         logins=crystal_steps("plain", BOSS_HALL, 1), stay=3, check=_check_crystal("stay")),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,

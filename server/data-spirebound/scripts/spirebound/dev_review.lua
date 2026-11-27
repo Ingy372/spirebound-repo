@@ -29,6 +29,9 @@
 --   /rv pvpdmg <other player>              tester: the other player hits you; logs the PvP damage the credit rules saw
 --   /rv privprep [key]                     tester: by the private hall's door with Floor 2 open, with or without the key
 --   /rv where                              log your position
+--   /rv goto <npc>                         stand beside that NPC (and get 1,000 gold)
+--   /rv crystalfloor <mode> x y z          TC1: stand at x,y,z with the Amber Waycrystal on the tile west of you (so a
+--                                          test can right-click it); mode "fight": a wolf bites you first
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -375,6 +378,47 @@ function rv.onSay(player, words, param)
 	elseif cmd == "where" then
 		local p = player:getPosition()
 		logger.info("[LOADTEST] rv where {} x={} y={} z={}", player:getName(), p.x, p.y, p.z)
+	elseif cmd == "goto" then
+		local n = Npc(rest)
+		if n then
+			local p = n:getPosition()
+			player:teleportTo(Position(p.x, p.y + 1, p.z), true)
+		end
+		player:setBankBalance(player:getBankBalance() + 1000)
+		state(player, "goto")
+	elseif cmd == "crystalfloor" then
+		local iid = 3251
+		local def = SpireCrystalData.byItem[iid]
+		local mode, x, y, z = rest:match("^(%a+)%s+(%d+)%s+(%d+)%s+(%d+)$")
+		player:teleportTo(Position(tonumber(x), tonumber(y), tonumber(z)), true)
+		local me = player:getPosition()
+		local spot = Position(me.x - 1, me.y, me.z)
+		for _, it in ipairs(Tile(spot) and Tile(spot):getItems() or {}) do
+			it:remove()
+		end
+		local had = player:getItemCount(iid)
+		if had > 0 then
+			player:removeItem(iid, 1)
+		end
+		local placed = Game.createItem(iid, 1, spot)
+		logger.info("[LOADTEST] rv crystalstack {} index={} top={}", player:getName(), Tile(spot):getThingIndex(placed),
+			Tile(spot):getTopVisibleThing(player) and Tile(spot):getTopVisibleThing(player):getId() or 0)
+		if mode == "fight" then
+			local m = Game.createMonster("Meadow Wolf", Position(me.x, me.y + 1, me.z), true, true)
+			if m then
+				doTargetCombatHealth(m, player, COMBAT_PHYSICALDAMAGE, -5, -5, CONST_ME_NONE)
+				m:remove()
+			end
+		end
+		local choices = SpireCrystals.choices(1, player:getLevel(), "town")
+		local town = SpireCrystals.townPos(def)
+		local g = choices[2] and choices[2].pos or { 0, 0, 0 }
+		logger.info("[LOADTEST] rv crystalfloor {} had={} spot={},{},{} town={},{},{} ground={},{},{} gid={}", player:getName(), had,
+			spot.x, spot.y, spot.z, town.x, town.y, town.z, g[1], g[2], g[3], choices[2] and choices[2].id or "none")
+	elseif cmd == "crystalcount" then
+		local me = player:getPosition()
+		local t = Tile(Position(me.x - 1, me.y, me.z))
+		logger.info("[LOADTEST] rv crystalcount {} carried={} x={} y={} z={}", player:getName(), player:getItemCount(3251), me.x, me.y, me.z)
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss
