@@ -32,6 +32,12 @@ REWARDS.sealed_shrine = function(player, first)
 	for _ = 1, 2 do
 		Game.createMonster("Bandit Captain", player:getPosition(), true, false)
 	end
+	-- review item 10: the gold once per account, like every other secret's gold (the guardians wake for each character)
+	if SpireSecrets.goldPaid(player:getAccountId(), "sealed_shrine") then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The shrine's chest is empty (another of your characters took its gold), and its guardians wake!")
+		return
+	end
+	SpireSecrets.markGoldPaid(player:getAccountId(), "sealed_shrine")
 	player:addMoney(1000)
 	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The shrine's chest holds 1,000 gold, and its guardians wake!")
 end
@@ -54,7 +60,7 @@ local function giveReward(player, secret, first)
 		end
 	end
 	for _, it in ipairs(r.items or {}) do
-		player:addItem(it[1], it[2])
+		SpireGive.reward(player, it[1], it[2]) -- never onto the floor when the backpack is full
 	end
 	if r.text then
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, r.text)

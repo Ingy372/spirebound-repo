@@ -4,7 +4,16 @@ function login.onLogin(player)
 	if player:getVocation():getBaseId() == 0 then
 		return true -- still in the Arrival Yard
 	end
-	local k = player:kv():scoped("spirebound")
+	-- per account (review item 10: each character of an account used to collect its own streak); a character's old
+	-- streak seeds the account's the first time
+	local k = kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-daily")
+	if k:get("daily_last") == nil then
+		local old = player:kv():scoped("spirebound")
+		if old:get("daily_last") ~= nil then
+			k:set("daily_last", old:get("daily_last"))
+			k:set("daily_streak", old:get("daily_streak"))
+		end
+	end
 	local today = math.floor(os.time() / 86400)
 	local day = SpireDaily.next(k:get("daily_last"), k:get("daily_streak"), today)
 	if not day then
@@ -15,7 +24,7 @@ function login.onLogin(player)
 	local r = SpireDaily.reward(day)
 	player:setBankBalance(player:getBankBalance() + r.gold)
 	if r.potions > 0 then
-		player:addItem(266, r.potions)
+		SpireGive.reward(player, 266, r.potions)
 	end
 	local text = string.format("Daily reward, day %d of 7: %d gold to your bank%s. Come back tomorrow for day %d.", day, r.gold,
 		r.potions > 0 and (" and " .. r.potions .. " health potions") or "", day % 7 + 1)

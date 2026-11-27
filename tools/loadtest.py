@@ -418,6 +418,15 @@ def _check_skill(lines, all_lines=None):
 _check_skill.needs_all = True
 
 XP_MONSTER = "Thornsnap"
+def _world_point(name):
+    m = re.search(r'\["%s"\] = Position\((\d+), (\d+), (\d+)\)' % name,
+                  (ROOT / "server/data-spirebound/lib/spirebound/world_points.lua").read_text())
+    return tuple(int(v) for v in m.groups())
+
+
+UNDERKEEP_BOX = "%d %d %d 3515 2" % _world_point("underkeep_chest")   # the altar the map uses as the strongbox (on a carpet)
+
+
 def _check_dg(kind, want):
     def check(lines):
         r = _rv(lines, "dg")[0]
@@ -456,6 +465,23 @@ REVIEW_CASES = [
     dict(name="A4-6 every Axe-Lord fighter gets 10 platinum in the bank", voc=4, level=60,
          logins=[[(3, "say", "/rv axelord")]], stay=4,
          check=lambda lines: (_rv(lines, "axelord")[0]["bank_gain"] >= 1000, "bank +%(bank_gain)s" % _rv(lines, "axelord")[0])),
+    dict(name="I10 the Sealed Shrine's gold once per account", voc=4, level=60, logins=[[(3, "say", "/rv shrine")]], stay=4,
+         check=lambda lines: (_rv(lines, "shrine")[0]["first"] == 1000 and _rv(lines, "shrine")[0]["second"] == 0,
+                              "first character %(first)s gold, second %(second)s" % _rv(lines, "shrine")[0])),
+    dict(name="I10 the daily reward once per account", voc=4, level=30,
+         logins=[[(3, "say", "/rv dailyfresh")], [(6, "say", "/rv state")], [(3, "say", "/rv dailyalt")], [(6, "say", "/rv state")]],
+         check=lambda lines: (_rv(lines, "state")[0]["gold"] > _rv(lines, "dailyfresh")[0]["gold"]
+                              and _rv(lines, "state")[1]["gold"] == _rv(lines, "state")[0]["gold"],
+                              "gold %s -> %s at the first login, %s after an 'other character' login" % (
+                                  _rv(lines, "dailyfresh")[0]["gold"], _rv(lines, "state")[0]["gold"], _rv(lines, "state")[1]["gold"]))),
+    dict(name="I10 the Underkeep strongbox once per account", voc=4, level=30,
+         logins=[[(3, "say", "/rv boxprep fresh"), (1, "use", UNDERKEEP_BOX), (2, "say", "/rv state"),
+                  (1, "say", "/rv boxprep"), (1, "use", UNDERKEEP_BOX), (2, "say", "/rv state")]], stay=3,
+         check=lambda lines: (_rv(lines, "state")[0]["gold"] - _rv(lines, "boxprep")[0]["gold"] >= 800
+                              and _rv(lines, "state")[1]["gold"] == _rv(lines, "boxprep")[1]["gold"],
+                              "first open +%d, second (character's own day forgotten) +%d" % (
+                                  _rv(lines, "state")[0]["gold"] - _rv(lines, "boxprep")[0]["gold"],
+                                  _rv(lines, "state")[1]["gold"] - _rv(lines, "boxprep")[1]["gold"]))),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,

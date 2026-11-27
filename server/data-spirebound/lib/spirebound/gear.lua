@@ -289,6 +289,9 @@ function SpireGear.make(into, id)
 		item:remove()
 		return nil
 	end
+	if into.getCapacity and into:getSize() >= into:getCapacity() then
+		return nil -- a full container (asking the engine anyway logs an error)
+	end
 	local item = into:addItem(d.base, 1)
 	if not item then
 		return nil
@@ -346,6 +349,7 @@ function SpireGear.playerWallet(player)
 		remove = function(id, n) return player:removeItem(id, n) end,
 		money = function() return player:getMoney() + player:getBankBalance() end,
 		pay = function(n) return player:removeMoneyBank(n) end,
+		refund = function(n) player:setBankBalance(player:getBankBalance() + n) end,
 	}
 end
 
@@ -414,7 +418,10 @@ function SpireGear.reforgeWith(item, family, wallet, into)
 	end
 	local new = SpireGear.make(into, target.id)
 	if not new then
-		return nil, "You have no room for the new weapon."
+		if wallet.refund then
+			wallet.refund(fee) -- review item 10: the fee was kept when the new weapon could not be made
+		end
+		return nil, "You have no room for the new weapon. Your fee is back in your bank."
 	end
 	SpireGear.setState(new, { tier = s.tier, awakened = s.awakened })
 	item:remove()
@@ -483,10 +490,11 @@ function SpireGear.mainFor(vocation, floor, family)
 	end
 end
 
--- +1 tier, free (the temper quest)
+-- +1 tier, free (the temper quest). Only a raw weapon (below tier 2): review item 10, it could be saved to skip tier 5.
+SpireGear.TEMPER_BELOW = 2
 function SpireGear.temper(item)
 	local s = SpireGear.state(item)
-	if not s or s.shop or s.tier >= SpireGearData.MAX_TIER then
+	if not s or s.shop or s.tier >= SpireGearData.MAX_TIER or s.tier >= SpireGear.TEMPER_BELOW then
 		return false
 	end
 	SpireGear.setState(item, { tier = s.tier + 1 })
@@ -531,6 +539,8 @@ function SpireGear.temperFor(player, floor)
 	local item = SpireGear.floorWeapon(player, floor)
 	if item and SpireGear.temper(item) then
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, item:getName() .. " is tempered: tier " .. SpireGear.state(item).tier .. ".")
+	elseif item and SpireGear.state(item) and SpireGear.state(item).tier >= SpireGear.TEMPER_BELOW then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, item:getName() .. " is already past raw steel (tier 2 or more): the field temper adds nothing to it.")
 	else
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Bring your Floor 1 weapon next time and it will be tempered.")
 	end

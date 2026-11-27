@@ -13,6 +13,10 @@
 --   /rv dg <case> <other player>           review A8-2: a Death Game death next to another real player; logs the verdict
 --                                          (cases: dragfought, dragged, firstvictim, firstother)
 --   /rv axelord                            review A4-6: kill the real Axe-Lord; logs what reached your bank
+--   /rv shrine                             review item 10: step on the Sealed Shrine secret, then again as if another
+--                                          character of the same account found it; logs the gold each time
+--   /rv dailyfresh | dailyalt              item 10: forget the account's (fresh) or only this character's (alt) daily
+--   /rv boxprep [fresh]                    item 10: stand by the Underkeep strongbox ("fresh": forget the account's day)
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -50,8 +54,12 @@ local function blessings(player)
 end
 
 local function state(player, what)
-	logger.info("[LOADTEST] rv {} {} level={} exp={} bless={} mode={} hp={}", what, player:getName(), player:getLevel(),
-		player:getExperience(), blessings(player), Difficulty.get(player), player:getHealth())
+	logger.info("[LOADTEST] rv {} {} level={} exp={} bless={} mode={} hp={} gold={}", what, player:getName(), player:getLevel(),
+		player:getExperience(), blessings(player), Difficulty.get(player), player:getHealth(), player:getBankBalance() + player:getMoney())
+end
+
+local function accountDaily(player)
+	return kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-daily")
 end
 
 local MODES = { normal = Difficulty.NORMAL, hardcore = Difficulty.HARDCORE, deathgame = Difficulty.DEATHGAME }
@@ -180,6 +188,54 @@ function rv.onSay(player, words, param)
 				logger.info("[LOADTEST] rv axelord {} bank_gain={}", p:getName(), p:getBankBalance() - bank)
 			end
 		end, 1000)
+	elseif cmd == "shrine" then
+		local pos = WorldPoints.secret_s7
+		kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-secretgold"):remove("sealed_shrine")
+		local secrets = player:kv():scoped("spirebound-secrets")
+		local function stepOn()
+			secrets:remove("s7")                                   -- this character has not found it (yet)
+			player:teleportTo(Position(pos.x, pos.y + 2, pos.z), true)
+			local before = player:getBankBalance() + player:getMoney()
+			player:teleportTo(pos)                                 -- a real step onto the secret tile
+			return player:getBankBalance() + player:getMoney() - before
+		end
+		local first = stepOn()
+		local second = stepOn()
+		for _, c in ipairs(Game.getSpectators(pos, false, false, 4, 4, 4, 4)) do
+			if c:isMonster() then
+				c:remove()                                         -- the guardians it woke
+			end
+		end
+		logger.info("[LOADTEST] rv shrine {} first={} second={}", player:getName(), first, second)
+	elseif cmd == "dailyfresh" or cmd == "dailyalt" then
+		player:kv():scoped("spirebound"):remove("daily_last")
+		player:kv():scoped("spirebound"):remove("daily_streak")
+		if cmd == "dailyfresh" then
+			accountDaily(player):remove("daily_last")
+			accountDaily(player):remove("daily_streak")
+		end
+		state(player, cmd)
+		local pid = player:getId()
+		addEvent(function()                      -- a real logout, so the next login runs the login events again
+			local p = Player(pid)
+			if p then
+				p:remove()
+			end
+		end, 500)
+	elseif cmd == "boxprep" then
+		if rest == "fresh" then
+			accountDaily(player):remove("underkeep_box1")
+		end
+		player:kv():scoped("spirebound-underkeep"):remove("box1")
+		local c = WorldPoints.underkeep_chest
+		player:teleportTo(Position(c.x - 1, c.y, c.z), true)
+		local tile, ids = Tile(c), {}
+		for i, it in ipairs(tile and tile:getItems() or {}) do
+			table.insert(ids, it:getId() .. "@" .. tostring(tile:getThingIndex(it)))
+		end
+		logger.info("[LOADTEST] rv boxtile {} at={},{},{} items={}", player:getName(), player:getPosition().x, player:getPosition().y,
+			player:getPosition().z, table.concat(ids, ","))
+		state(player, "boxprep")
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

@@ -13,7 +13,7 @@ SpireQuests = {
 		-- Gear progression (spec 4.5): the barracks' weapon is tempered once you prove yourself in Wolf Copse
 		{ id = "q1_temper", floor = 1, name = "Tempered in the Field", giver = "Captain Dorrow", storage = 50135, killStorage = 50136,
 			target = "Meadow Wolf", count = 15, reward = { exp = 7400, temper = true, gold = 300 }, minLevel = 12, requiresWeapon = true,
-			offer = "That weapon of yours is still raw steel. Blood it on 15 meadow wolves in Wolf Copse, west of town, and my smith will temper it. Will you?",
+			offer = "That weapon of yours is still raw steel. Blood it on 15 meadow wolves in Wolf Copse, west of town, and my smith will temper it (raw steel only: a weapon below tier 2). Will you?",
 			step = "Hunt Meadow Wolves in Wolf Copse (west of Hearthgate): %d of %d.",
 			report = "Return to Captain Dorrow at Hearthgate's north gate and say 'report'.",
 			thanks = "Good. My smith tempered it while you talked: one tier stronger. And 300 gold for the trouble." },

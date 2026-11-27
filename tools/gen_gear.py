@@ -140,6 +140,8 @@ CUT_FROM_LEVEL = 12            # Floor 1 grounds whose lowest level is 12 or mor
 FLAWLESS_MONSTERS = {1: ["Grey Alpha", "Bandit Captain", "Stonehorn Ram", "Old Bristleback", "Moonhowl", "Mossback Snapper",
                          "Blackthorn", "Prism Shardling", "Granite Warden"]}
 NO_SHARDS = {"Pen Rat"}       # the Arrival Yard's tutorial rats
+# review item 10: 42 Stonehorn Rams at the elite rate made flawless shards common; a monster listed here has its own chance
+SHARD_RATE = {"Stonehorn Ram": {"flawless": 0.01}}
 REFORGE_FEE = 1000             # change family at the Weaponsmith (per floor of the weapon); tier kept, familiarity 0
 REISSUE_FEE = 2000             # a lost main weapon replaced by its quest giver (per floor), tier 0
 
@@ -369,7 +371,8 @@ def main():
     L.append("}")
     L.append("SpireGearData.shardMonsters = {")
     for name, grades in sorted(shard_monsters().items()):
-        L.append(f"	[{lua_str(name)}] = {{ " + ", ".join(f"{g} = true" for g in grades) + " },")
+        own = SHARD_RATE.get(name, {})
+        L.append(f"	[{lua_str(name)}] = {{ " + ", ".join(f"{g} = {own[g]}" if g in own else f"{g} = true" for g in grades) + " },")
     L.append("}")
     ch = shard_chances()
     L.append("SpireGearData.SHARD_CHANCE = { " + ", ".join(f"{g} = {v:.5f}" for g, v in ch.items()) + " }")

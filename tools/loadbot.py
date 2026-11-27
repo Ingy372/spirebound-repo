@@ -151,7 +151,10 @@ class Bot:
                     await asyncio.sleep(wait)
                     if drainer.done():
                         drainer.result()
-                    if kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
+                    if kind == "use":                 # use the item at "x y z itemid stackpos" (as a right click does)
+                        x, y, z, iid, stack = (int(v) for v in text.split())
+                        self.send(bytes([0x82]) + struct.pack("<HHBHBB", x, y, z, iid, stack, 0))
+                    elif kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
                         self.send(bytes([0xA0, 1, 0, 0, 0]))   # unmarked players), pvp mode dove
                     else:
                         self.say(text, npc=(kind == "npc"))

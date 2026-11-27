@@ -117,6 +117,30 @@ SpireTest.add("weaponsmith: a reforge keeps the tier and starts familiarity agai
 	b:remove()
 end)
 
+SpireTest.add("review item 10: the field temper only works below tier 2; a failed reforge gives the fee back; the Ram's own shard rate", function()
+	local b = Game.createItem(2853, 1, WorldPoints.temple_hearthgate)
+	local item = SpireGear.make(b, "f1_ranger_bow")
+	SpireGear.setState(item, { tier = 1 })
+	SpireTest.eq(SpireGear.temper(item), true, "tier 1 is tempered ...")
+	SpireTest.eq(SpireGear.state(item).tier, 2, "... to tier 2")
+	SpireTest.eq(SpireGear.temper(item), false, "tier 2 is not tempered again (it could be saved to skip tier 5)")
+	SpireTest.eq(SpireGear.state(item).tier, 2, "still tier 2")
+	-- a reforge whose new weapon cannot be made (a full one-slot container) gives the fee back
+	local full = Game.createItem(2853, 1, WorldPoints.temple_hearthgate)
+	for _ = 1, full:getCapacity() do
+		full:addItem(3003, 1) -- ropes: one per slot (coins would stack)
+	end
+	local w = wallet({}, 99999)
+	local refunded = 0
+	function w.refund(n) refunded = refunded + n end
+	SpireTest.eq((SpireGear.reforgeWith(item, "crossbow", w, full)), nil, "no room: no reforge")
+	SpireTest.eq(refunded, w.paid, "and the fee comes back")
+	SpireTest.eq(SpireGearData.shardMonsters["Stonehorn Ram"].flawless, 0.01, "the Ram drops flawless shards at 1%")
+	SpireTest.eq(SpireGearData.shardMonsters["Grey Alpha"].flawless, true, "an elite keeps the elite rate")
+	full:remove()
+	b:remove()
+end)
+
 -- FLOOR1_REVIEW.md F1-42: a pity counter so a hunter never goes far past the expected wait without a shard
 SpireTest.add("shards: the pity counter guarantees a shard at three times the expected wait", function()
 	local c = SpireGearData.SHARD_CHANCE.rough

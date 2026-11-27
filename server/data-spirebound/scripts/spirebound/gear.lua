@@ -13,7 +13,8 @@ function drops.monsterOnDropLoot(monster, corpse)
 		for grade in pairs(shards) do
 			local key = "shard_since_" .. grade
 			local since = kv:get(key) or 0
-			if SpireGear.shardRoll(SpireGearData.SHARD_CHANCE[grade], since, math.random()) then
+			local chance = type(shards[grade]) == "number" and shards[grade] or SpireGearData.SHARD_CHANCE[grade]   -- the Ram's own rate
+			if SpireGear.shardRoll(chance, since, math.random()) then
 				corpse:addItem(SpireGearData.tokens[1][grade], 1)
 				kv:set(key, 0)
 				-- the rare-drop moment (F1-42): a sparkle on the corpse and a line of its own

@@ -148,7 +148,7 @@ SpireGearData.shardMonsters = {
 	["Ruin Archer"] = { rough = true, cut = true },
 	["Ruin Sentinel"] = { rough = true, cut = true },
 	["Sproutling"] = { rough = true },
-	["Stonehorn Ram"] = { rough = true, cut = true, flawless = true },
+	["Stonehorn Ram"] = { rough = true, cut = true, flawless = 0.01 },
 	["Thornsnap"] = { rough = true, cut = true },
 }
 SpireGearData.SHARD_CHANCE = { rough = 0.00555, cut = 0.00469, flawless = 0.03520 }
