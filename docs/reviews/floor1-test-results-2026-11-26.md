@@ -19,40 +19,34 @@ new one, and I re-tested it myself.
 
 ## Needs fixing (most serious first)
 
-Everything in this list was still broken on `c654cde3`, except the Pass gate, which the map work has fixed (item 1).
+**Update, re-tested on `881c41a7` (which includes the fix commit `1f6eefcf`):** the four worst items below are now fixed,
+each confirmed again with real characters:
+- Floor perks: a 100 hit on a monster at 20% health deals 110 with Executioner, and there is no error.
+- PvP damage is recorded: a hit of 49 shows 49.
+- `!private` without the Stair Key is refused: the character stayed by level 3's teleport and no boss spawned.
+- A friend who does 20% in the Axe-Lord's hall no longer saves a Death Game character: it was retired.
+The Pass gate also stays closed: there is no path round the boulders.
 
-1. **Anyone with a floor perk errors on every hit and loses their weapon bonus (item 7).** Once you choose a perk from
-   Registrar Maelis, every hit on a monster gives "Lua Script Error ... perks.lua:57: attempt to call method 'isBoss'".
-   The perk does nothing, and the error also stops the weapon power and the rare-weapon perk for that hit. A perked
-   climber hits like bare hands. Still on current `main`. Sent to the fix session.
-2. **A Death Game character can still be saved by a friend in a boss room (item 9).** An unpartied friend starts the
-   fight and hits the victim for 20% in the Axe-Lord's hall (PvP is open there below level 50). A monster then kills
-   the victim: "saved, not retired". The fix session closed the other two tricks, but not this one. Sent. It may be a
-   question for Jay: recommendation below.
-3. **PvP damage is never recorded (item 8).** The script that notes who hurt a player drops every hit, because damage
-   arrives as a negative number. So the "10% of the damage" kill credit and the outnumbered shield never count anyone
-   but the killer. Sent.
-4. **`!private` lets a character without the Stair Key fight the Axe-Lord (item 10).** Once Floor 2 is open, a keyless
-   character standing by level 3's teleport says `!private` and is put in the private hall with the boss. It is no
-   route to Floor 2 (the hall only leads back to level 3), but it hands out repeat boss kills. Sent.
-5. **The "2 hours of play-time protection" in DESIGN.md 6.4 does not exist (item 8).** Only the level-50 rule exists.
+**Still open:**
+
+1. **The "2 hours of play-time protection" in DESIGN.md 6.4 does not exist (item 8).** Only the level-50 rule exists.
    A design gap, not a bug: build it or drop it from DESIGN.md.
-6. **Small money leaks still open (items 11, 13):**
+2. **Small money leaks still open (items 11, 13):**
    - Ground chests pay their first-time reward to every character on an account. A second character on the same
      account got the full 3,450 gold and items again. That is 34,500 gold plus potions and shards per extra character.
    - The Well Vein secret gives 10 platinum (1,000 gold) as an item, so it skips the "secret gold once per account"
      rule. A second character on the same account got the 1,000 again.
    - Hunting-task gold is put in the backpack (`addMoney`), not the bank. With a full backpack part of it is lost:
      Rhen said "490 gold" and the character received 400, twice in two tries.
-7. **Death Game loot bonus looks bigger than designed (item 6):** +45% coins measured against +30% designed (300
+3. **Death Game loot bonus looks bigger than designed (item 6):** +45% coins measured against +30% designed (300
    kills each). Worth a longer measurement before changing anything.
-8. **Smaller things:** after a reforge the new weapon goes to the backpack, not the hand, so "upgrade" and !upgrade
+4. **Smaller things:** after a reforge the new weapon goes to the backpack, not the hand, so "upgrade" and !upgrade
    see no weapon until you move it back (item 12). The fishing collection log is kept per character, though
    DESIGN.md 8.2 says account-wide (item 4). A Mastery Respec Scroll bought in the shop is lost in a season wipe,
    unlike the shop's outfits, mounts and furniture (item 15): probably fine, since it is used up on a character, but
    worth one line in the shop text.
 
-Fixed during this session and re-tested here: the Pass gate (item 1), a boss dying with no fight record (item 10),
+Fixed during this session and re-tested here: the floor-perk error (item 7), the PvP damage record (item 8), the Death Game boss-room trick (item 9), `!private` without the key (item 10), the Pass gate (item 1), a boss dying with no fight record (item 10),
 "Spell"/"Pilot" names (item 10), the Death Game hit-back and dragged-monster tricks (item 9), and the Underkeep
 strongbox, Sealed Shrine and login streak paying once per account (items 2, 11, 13).
 
