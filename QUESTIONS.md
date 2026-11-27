@@ -8,6 +8,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q79. The Vanguard's barracks weapons now hit harder than any Floor 1 shop sword (2026-11-26, Floor 1 review)
+The review found that the Hearthguard Sword, Axe and Mace were weaker than swords Garrick sells in the same room (a 160-gold longsword beat the reward sword until tier 3, and the 8,000-gold spike sword beat it for ever), and that the Axe was 25% behind the Mace for the same price. Fixed: all three now have attack 20 and defence 15 of their own, +1 attack per tier (25 at tier 5); the rare Briarguard Sabre starts the same; the donation shop's Climber's Sword is 18; Garrick no longer sells the spike sword on Floor 1 (his best is the longsword, 17). (My call; you can veto.)
+- **Recommendation:** keep it. A Vanguard's reward weapon should be the best thing they can hold on the floor.
+- Assumed until you answer: yes.
+- Jay's answer:
+
 ### Q78. How many players should it take to beat the Axe-Lord? (2026-11-26, party playtest)
 A level-30 party of three in upgraded Floor 1 gear killed the Gate Hound in a minute without a death, then wiped twice on the Axe-Lord: the best try did 19% of his health in 45 seconds. As he is now (12,000 health, hits up to 260 plus a 300 line attack), beating him needs about 8-10 level-30 players, or 5 well-geared level-34s. The room holds 20.
 - **Recommendation:** make him a party boss for 4-6 players around level 30-35 (lower his health and his biggest hits, keep his phases), so the first floor clear at launch is something a guild party can do on the first evening, and say "bring 4 or more" in the Journal. Keep him a raid only if you want Floor 1's first clear to need a whole guild.

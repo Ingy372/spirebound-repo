@@ -5,19 +5,20 @@ SpireGearData.MAX_TIER = 5
 SpireGearData.FAM_BONUS = 0.015
 SpireGearData.SHARDS_PER_TIER = 3
 SpireGearData.DROP_CHANCE = 0.03
+SpireGearData.MELEE_ATTACK_PER_TIER = 1
 SpireGearData.floor = {
 	[1] = { base = 0.1000, step = 0.0400, awaken = 0.1000, armorStep = 1 },
 	[2] = { base = 0.4893, step = 0.0600, awaken = 0.1500, armorStep = 2 },
 }
 SpireGearData.weapons = {
-	{ id = "f1_vanguard_sword", name = "Hearthguard Sword", floor = 1, vocation = 4, family = "sword", source = "main", base = 3264, awakenedName = "Stairlord's Edge" },
-	{ id = "f1_vanguard_axe", name = "Hearthguard Axe", floor = 1, vocation = 4, family = "axe", source = "main", base = 3274, awakenedName = "Stairlord's Cleaver" },
-	{ id = "f1_vanguard_club", name = "Hearthguard Mace", floor = 1, vocation = 4, family = "club", source = "main", base = 3286, awakenedName = "Stairlord's Maul" },
+	{ id = "f1_vanguard_sword", name = "Hearthguard Sword", floor = 1, vocation = 4, family = "sword", source = "main", base = 3264, awakenedName = "Stairlord's Edge", attack = 20, defense = 15 },
+	{ id = "f1_vanguard_axe", name = "Hearthguard Axe", floor = 1, vocation = 4, family = "axe", source = "main", base = 3274, awakenedName = "Stairlord's Cleaver", attack = 20, defense = 15 },
+	{ id = "f1_vanguard_club", name = "Hearthguard Mace", floor = 1, vocation = 4, family = "club", source = "main", base = 3286, awakenedName = "Stairlord's Maul", attack = 20, defense = 15 },
 	{ id = "f1_ranger_bow", name = "Trailwarden Bow", floor = 1, vocation = 3, family = "bow", source = "main", base = 3350, awakenedName = "Stair-Iron Longbow" },
 	{ id = "f1_ranger_crossbow", name = "Trailwarden Crossbow", floor = 1, vocation = 3, family = "crossbow", source = "main", base = 3349, awakenedName = "Stair-Iron Crossbow" },
 	{ id = "f1_arcanist_wand", name = "Wand of Hearth Sparks", floor = 1, vocation = 1, family = "wand", source = "main", base = 3074, awakenedName = "Wand of the Long Stair" },
 	{ id = "f1_mystic_rod", name = "Reedroot Rod", floor = 1, vocation = 2, family = "rod", source = "main", base = 3066, awakenedName = "Rod of the Long Stair" },
-	{ id = "f1_vanguard_drop", name = "Briarguard Sabre", floor = 1, vocation = 4, family = "sword", source = "drop", base = 3273, awakenedName = "Briarguard Sabre, Awakened", perk = "life_leech", perkValue = 0.02 },
+	{ id = "f1_vanguard_drop", name = "Briarguard Sabre", floor = 1, vocation = 4, family = "sword", source = "drop", base = 3273, awakenedName = "Briarguard Sabre, Awakened", perk = "life_leech", perkValue = 0.02, attack = 20, defense = 15 },
 	{ id = "f1_ranger_drop", name = "Copsewood Bow", floor = 1, vocation = 3, family = "bow", source = "drop", base = 3350, awakenedName = "Copsewood Bow, Awakened", perk = "crit", perkValue = 0.03 },
 	{ id = "f1_arcanist_drop", name = "Wand of Ember Script", floor = 1, vocation = 1, family = "wand", source = "drop", base = 3074, awakenedName = "Wand of Ember Script, Awakened", perk = "mana_leech", perkValue = 0.02 },
 	{ id = "f1_mystic_drop", name = "Thornward Rod", floor = 1, vocation = 2, family = "rod", source = "drop", base = 3066, awakenedName = "Thornward Rod, Awakened", perk = "heal", perkValue = 0.04 },
@@ -43,7 +44,7 @@ SpireGearData.armour = {
 	{ id = "f2_mystic_armour", name = "Grazer-Hide Coat", floor = 2, vocation = 2, source = "quest", base = 3378, bonus = 2 },
 }
 SpireGearData.shop = {
-	[4] = { weapon = { id = "shop_weapon_4", base = 3264, name = "Climber's Sword", bonus = 0.08 }, armour = { id = "shop_armour_4", base = 3359, name = "Climber's Mail", bonus = 1 } },
+	[4] = { weapon = { id = "shop_weapon_4", base = 3264, name = "Climber's Sword", bonus = 0.08, attack = 18, defense = 14 }, armour = { id = "shop_armour_4", base = 3359, name = "Climber's Mail", bonus = 1 } },
 	[3] = { weapon = { id = "shop_weapon_3", base = 3350, name = "Climber's Bow", bonus = 0.08 }, armour = { id = "shop_armour_3", base = 3372, name = "Climber's Greaves", bonus = 1 } },
 	[1] = { weapon = { id = "shop_weapon_1", base = 3074, name = "Climber's Wand", bonus = 0.08 }, armour = { id = "shop_armour_1", base = 3361, name = "Climber's Mantle", bonus = 1 } },
 	[2] = { weapon = { id = "shop_weapon_2", base = 3066, name = "Climber's Rod", bonus = 0.08 }, armour = { id = "shop_armour_2", base = 3361, name = "Climber's Robe", bonus = 1 } },
@@ -53,7 +54,7 @@ SpireGearData.dropFrom = {
 	[2] = { "Herd Bull", "Stonehide Bull", "Mesa Wyrmling" },
 }
 SpireGearData.FAMILIARITY_POINTS = {
-	[1] = { 4313, 8626, 12939, 17252, 21565, 25878, 30191, 34503, 38816, 43129 },
+	[1] = { 4224, 8448, 12672, 16896, 21121, 25345, 29569, 33793, 38017, 42241 },
 	[2] = { 13751, 27503, 41254, 55006, 68757, 82509, 96260, 110012, 123763, 137515 },
 }
 SpireGearData.tokens = {
@@ -124,6 +125,7 @@ SpireGearData.tokenNames = {
 }
 SpireGearData.shardMonsters = {
 	["Bandit Captain"] = { rough = true, cut = true, flawless = true },
+	["Bandit Crossbowman"] = { rough = true, cut = true },
 	["Blackthorn"] = { rough = true, cut = true, flawless = true },
 	["Bristle Boar"] = { rough = true },
 	["Burrow Mole"] = { rough = true },
@@ -131,6 +133,7 @@ SpireGearData.shardMonsters = {
 	["Field Shardling"] = { rough = true, cut = true },
 	["Granite Warden"] = { rough = true, cut = true, flawless = true },
 	["Grey Alpha"] = { rough = true, cut = true, flawless = true },
+	["Hedge Hexer"] = { rough = true, cut = true },
 	["Hopper Toad"] = { rough = true },
 	["Meadow Wasp"] = { rough = true },
 	["Meadow Wolf"] = { rough = true, cut = true },

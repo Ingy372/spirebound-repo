@@ -45,7 +45,7 @@ NPCS = {
         name="Weaponsmith Garrick", desc="the weaponsmith", look=(2025, 0, 0, 0, 0, 0),
         greet="Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost.",
         voices=["Sharp steel! Fair prices!"],
-        shop=[("sword", 3264, 85, 25), ("longsword", 3285, 160, 51), ("sabre", 3273, 35, 12), ("spike sword", 3271, 8000, 240),
+        shop=[("sword", 3264, 85, 25), ("longsword", 3285, 160, 51), ("sabre", 3273, 35, 12),
               ("hand axe", 3268, 8, 4), ("axe", 3274, 20, 7),
               ("club", 3270, 5, 1), ("mace", 3286, 90, 30),
               ("bow", 3350, 400, 100), ("crossbow", 3349, 500, 120), ("spear", 3277, 10, 3),

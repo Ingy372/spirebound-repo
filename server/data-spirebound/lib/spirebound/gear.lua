@@ -8,7 +8,8 @@ local A_ID, A_TIER, A_FAM, A_AWAKE = "sb_gear", "sb_tier", "sb_fam", "sb_awake"
 local defs = {}
 for _, w in ipairs(SpireGearData.weapons) do
 	defs[w.id] = { id = w.id, kind = "weapon", name = w.name, floor = w.floor, vocation = w.vocation, family = w.family,
-		source = w.source, base = w.base, awakenedName = w.awakenedName, perk = w.perk, perkValue = w.perkValue }
+		source = w.source, base = w.base, awakenedName = w.awakenedName, perk = w.perk, perkValue = w.perkValue,
+		attack = w.attack, defense = w.defense }
 end
 for _, a in ipairs(SpireGearData.armour) do
 	defs[a.id] = { id = a.id, kind = "armour", name = a.name, floor = a.floor, vocation = a.vocation, source = a.source,
@@ -16,7 +17,7 @@ for _, a in ipairs(SpireGearData.armour) do
 end
 for voc, s in pairs(SpireGearData.shop) do
 	defs[s.weapon.id] = { id = s.weapon.id, kind = "weapon", shop = true, name = s.weapon.name, floor = 1, vocation = voc,
-		base = s.weapon.base, bonus = s.weapon.bonus }
+		base = s.weapon.base, bonus = s.weapon.bonus, attack = s.weapon.attack, defense = s.weapon.defense }
 	defs[s.armour.id] = { id = s.armour.id, kind = "armour", shop = true, name = s.armour.name, floor = 1, vocation = voc,
 		base = s.armour.base, bonus = s.armour.bonus }
 end
@@ -60,6 +61,14 @@ function SpireGear.power(s)
 	end
 	local f = SpireGearData.floor[s.floor]
 	return (1 + f.base + (s.tier or 0) * f.step + (s.awakened and f.awaken or 0)) * (1 + SpireGearData.FAM_BONUS * (s.fam or 0))
+end
+
+-- Pure: the attack written on a melee weapon of this definition at a tier (nil: the base item's own attack)
+function SpireGear.attackOf(d, tier)
+	if not d or not d.attack then
+		return nil
+	end
+	return d.attack + (d.shop and 0 or (tier or 0) * SpireGearData.MELEE_ATTACK_PER_TIER)
 end
 
 function SpireGear.defOf(item)
@@ -124,6 +133,12 @@ function SpireGear.setState(item, new)
 	if d.kind == "armour" then
 		local step = d.shop and 0 or SpireGearData.floor[d.floor].armorStep
 		item:setAttribute(ITEM_ATTRIBUTE_ARMOR, ItemType(d.base):getArmor() + d.bonus + s.tier * step)
+	end
+	if d.kind == "weapon" and d.attack then
+		-- melee weapons carry their own attack and defence (Floor 1 review B4-1): one value per floor for sword, axe
+		-- and mace alike, +1 attack per tier, so no shop sword out-damages the barracks' weapon
+		item:setAttribute(ITEM_ATTRIBUTE_ATTACK, SpireGear.attackOf(d, s.tier))
+		item:setAttribute(ITEM_ATTRIBUTE_DEFENSE, d.defense)
 	end
 	item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, describe(item, d, s))
 	return true

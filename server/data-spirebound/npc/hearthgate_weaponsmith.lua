@@ -19,7 +19,6 @@ npcConfig.shop = {
 	{ itemName = "sword", clientId = 3264, buy = 85, sell = 25 },
 	{ itemName = "longsword", clientId = 3285, buy = 160, sell = 51 },
 	{ itemName = "sabre", clientId = 3273, buy = 35, sell = 12 },
-	{ itemName = "spike sword", clientId = 3271, buy = 8000, sell = 240 },
 	{ itemName = "hand axe", clientId = 3268, buy = 8, sell = 4 },
 	{ itemName = "axe", clientId = 3274, buy = 20, sell = 7 },
 	{ itemName = "club", clientId = 3270, buy = 5, sell = 1 },

@@ -278,3 +278,16 @@ function SpireGear.dorrowTalk(npc, handler, player, msg)
 	end
 	return false
 end
+
+-- Gear a character already owns picks up changed numbers when they log in (Floor 1 review B4-1: the barracks' melee
+-- weapons got an attack of their own, and weapons made before that still carried the plain sword's).
+local refresh = CreatureEvent("SpireGearRefresh")
+function refresh.onLogin(player)
+	for _, it in ipairs(SpireGear.carried(player)) do
+		if SpireGear.defOf(it) then
+			SpireGear.setState(it, {})
+		end
+	end
+	return true
+end
+refresh:register()
