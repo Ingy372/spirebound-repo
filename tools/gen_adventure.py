@@ -102,13 +102,13 @@ ADDON_HUNTS = {
 }
 
 # ---------------------------------------------------------------- AD5 hidden places (s14, s15)
-VAULT_KEY = (9172, "Vault Key", "Vault Keys",
-             "A heavy iron key stamped with a coin. Somewhere, a barred door is waiting for it. It is used up when it opens one.")
+# Secret items say nothing about what they open or where (Jay, 2026-11-27: secrets are found by riddles and exploring)
+VAULT_KEY = (9172, "Vault Key", "Vault Keys", "A heavy iron key stamped with a coin.")
 VAULT_KEY_DROP = {"Bandit Captain": 0.02}
-RUBBINGS = [  # the three marked stones of the Sealed Cut
-    ("old_quarry", 2819, "Quarry rubbing", "Quarry rubbings", "A charcoal rubbing of a mason's mark from the Old Quarry."),
-    ("fallen_bastion", 2833, "Bastion rubbing", "Bastion rubbings", "A charcoal rubbing of a mason's mark from the Fallen Bastion."),
-    ("shard_fields", 4831, "Shard Fields rubbing", "Shard Fields rubbings", "A charcoal rubbing of a mason's mark from the Shard Fields."),
+RUBBINGS = [  # the three marked stones of the Sealed Cut, named by the mark, never by the place
+    ("old_quarry", 2819, "hammer-mark rubbing", "hammer-mark rubbings", "A charcoal rubbing of a mason's mark: a hammer."),
+    ("fallen_bastion", 2833, "star-mark rubbing", "star-mark rubbings", "A charcoal rubbing of a mason's mark: a six-pointed star."),
+    ("shard_fields", 4831, "wheel-mark rubbing", "wheel-mark rubbings", "A charcoal rubbing of a mason's mark: a wheel."),
 ]
 
 

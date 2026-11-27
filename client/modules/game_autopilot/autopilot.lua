@@ -488,6 +488,27 @@ function handlers.useitem(player)
     end
 end
 
+-- (AD1 tests) look at a creature on screen, as a player shift-clicks it: { "do": "look", "name": "Pilot Bo" }
+function handlers.look(player)
+    if not stepData.sent then
+        local found = nil
+        for _, c in ipairs(g_map.getSpectators(player:getPosition(), false) or {}) do
+            if not found and c:getName() == step.name then
+                found = c
+            end
+        end
+        if found then
+            g_game.look(found)
+            log('looked at ' .. step.name)
+        else
+            log('look: no ' .. tostring(step.name) .. ' on screen')
+        end
+        stepData.sent = now()
+    elseif now() - stepData.sent > (step.gap or 2) then
+        nextStep()
+    end
+end
+
 -- use the thing on top of a tile next to you ("at": [x, y, z]): read a stone, pull a lever, open a chest
 function handlers.use(player)
     if not stepData.sent then

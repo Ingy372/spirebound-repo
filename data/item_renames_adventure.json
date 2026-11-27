@@ -7,7 +7,7 @@
  "9172": {
   "name": "Vault Key",
   "plural": "Vault Keys",
-  "description": "A heavy iron key stamped with a coin. Somewhere, a barred door is waiting for it. It is used up when it opens one."
+  "description": "A heavy iron key stamped with a coin."
  },
  "5799": {
   "name": "Goldback's Crown",
@@ -60,18 +60,18 @@
   "description": "A clay tablet marked by the Wardwrights, the tower's builders. A keepsake for a house."
  },
  "2819": {
-  "name": "Quarry rubbing",
-  "plural": "Quarry rubbings",
-  "description": "A charcoal rubbing of a mason's mark from the Old Quarry."
+  "name": "hammer-mark rubbing",
+  "plural": "hammer-mark rubbings",
+  "description": "A charcoal rubbing of a mason's mark: a hammer."
  },
  "2833": {
-  "name": "Bastion rubbing",
-  "plural": "Bastion rubbings",
-  "description": "A charcoal rubbing of a mason's mark from the Fallen Bastion."
+  "name": "star-mark rubbing",
+  "plural": "star-mark rubbings",
+  "description": "A charcoal rubbing of a mason's mark: a six-pointed star."
  },
  "4831": {
-  "name": "Shard Fields rubbing",
-  "plural": "Shard Fields rubbings",
-  "description": "A charcoal rubbing of a mason's mark from the Shard Fields."
+  "name": "wheel-mark rubbing",
+  "plural": "wheel-mark rubbings",
+  "description": "A charcoal rubbing of a mason's mark: a wheel."
  }
 }
