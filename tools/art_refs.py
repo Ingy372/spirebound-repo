@@ -153,6 +153,8 @@ LOOKALIKES = {
     "goldback_toad": [(222, "Toad"), (412, "Bog Frog")],
     "pale_stag": [(31, "Deer")],
     "paymaster": [(129, "Hunter (outfit)"), (128, "Citizen (outfit)")],
+    # RV5 labyrinth guard (2026-11-27)
+    "stairwarden": [(298, "Skeleton Warrior"), (131, "Knight (outfit)")],
 }
 
 
