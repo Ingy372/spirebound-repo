@@ -1,0 +1,200 @@
+{
+ "name": "mr6_lawns_walk",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "about": "MR6: walk two small-game spots on each of the four lawns and see the creatures.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1303,
+    1334,
+    7
+   ],
+   "note": "MR6 south-east lawn (1298,1334)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1299,
+    1334,
+    7
+   ],
+   "note": "MR6 south-east lawn (1298,1334)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 south-east lawn (1298,1334)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1371,
+    1390,
+    7
+   ],
+   "note": "MR6 south-east lawn (1366,1390)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1367,
+    1390,
+    7
+   ],
+   "note": "MR6 south-east lawn (1366,1390)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 south-east lawn (1366,1390)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1013,
+    1350,
+    7
+   ],
+   "note": "MR6 south-west lawn (1008,1350)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1009,
+    1350,
+    7
+   ],
+   "note": "MR6 south-west lawn (1008,1350)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 south-west lawn (1008,1350)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1013,
+    1390,
+    7
+   ],
+   "note": "MR6 south-west lawn (1008,1390)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1009,
+    1390,
+    7
+   ],
+   "note": "MR6 south-west lawn (1008,1390)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 south-west lawn (1008,1390)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1045,
+    1166,
+    7
+   ],
+   "note": "MR6 far-west lawn (1040,1166)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1041,
+    1166,
+    7
+   ],
+   "note": "MR6 far-west lawn (1040,1166)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 far-west lawn (1040,1166)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1013,
+    1122,
+    7
+   ],
+   "note": "MR6 far-west lawn (1008,1122)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1009,
+    1122,
+    7
+   ],
+   "note": "MR6 far-west lawn (1008,1122)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 far-west lawn (1008,1122)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1111,
+    1046,
+    7
+   ],
+   "note": "MR6 north-west lawn (1106,1046)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1107,
+    1046,
+    7
+   ],
+   "note": "MR6 north-west lawn (1106,1046)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 north-west lawn (1106,1046)"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1141,
+    1014,
+    7
+   ],
+   "note": "MR6 north-west lawn (1136,1014)"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1137,
+    1014,
+    7
+   ],
+   "note": "MR6 north-west lawn (1136,1014)"
+  },
+  {
+   "do": "watch",
+   "seconds": 12,
+   "note": "MR6 north-west lawn (1136,1014)"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -225,8 +225,12 @@ MONSTERS = {
                                   # party of three did 19% of 12,000 health before wiping in 45 s; two hits together (melee
                                   # 260 + line 300) killed the tank from full, one line + one swing killed a caster. Smaller hits, more health (five level-30s in tier-3 gear killed 12,000 in 90 s, about 135 damage a second),
                                   # and he leaves the tank for the casters half as often.
-                                  hp=20000, xp=8000, speed=130, race="blood", change_target=(6000, 10),
-                                  attacks=[("melee", 0, -160), ("cleave", -80, -170, 1)], armor=40, defense=40, boss=True,
+                                  # RV1 (Jay, Q78, 2026-11-27: "Keep him a raid"): weapon tiers now add about 30% at tier 3, so
+                                  # five level-30s deal about 180 damage a second (36 each). A raid of about nine (330 a second)
+                                  # should need 3-4 minutes: 60,000 health; hits back near the raid tuning, so one tank needs
+                                  # several healers and five players can't carry it.
+                                  hp=60000, xp=8000, speed=130, race="blood", change_target=(6000, 15),
+                                  attacks=[("melee", 0, -230), ("cleave", -90, -240, 1)], armor=40, defense=40, boss=True,
                                   # review A4-6: one body for the whole party, so most of his coins now go straight to each
                                   # credited fighter's bank (SpireBoss payEach, 10 platinum each); the body keeps a little
                                   loot=[(GOLD, 100000, 100), (PLAT, 100000, 5), (266, 100000, 10), (268, 100000, 10)],

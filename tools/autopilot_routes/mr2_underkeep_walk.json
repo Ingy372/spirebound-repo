@@ -1,0 +1,232 @@
+{
+ "name": "mr2_underkeep_walk",
+ "character": "Pilot Vanguard",
+ "timeout": 1500,
+ "about": "MR2: a real character walks every room of Underkeep Wing 1 (entry, guard room, cells, chest, collapsed, east, southeast, vault, den, southwest, columns, flooded).",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 40"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1180,
+    1250,
+    8
+   ],
+   "note": "MR2 Wing 1: entry"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "entry"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1198,
+    1252,
+    8
+   ],
+   "note": "MR2 Wing 1: guard"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "guard"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1219,
+    1253,
+    8
+   ],
+   "note": "MR2 Wing 1: cells"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "cells"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1239,
+    1250,
+    8
+   ],
+   "note": "MR2 Wing 1: chest"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "chest"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1233,
+    1264,
+    8
+   ],
+   "note": "MR2 Wing 1: collapsed"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "collapsed"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1237,
+    1272,
+    8
+   ],
+   "note": "MR2 Wing 1: east"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "east"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1235,
+    1286,
+    8
+   ],
+   "note": "MR2 Wing 1: southeast"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "southeast"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1220,
+    1289,
+    8
+   ],
+   "note": "MR2 Wing 1: vault"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "vault"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1204,
+    1288,
+    8
+   ],
+   "note": "MR2 Wing 1: den"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "den"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1184,
+    1287,
+    8
+   ],
+   "note": "MR2 Wing 1: southwest"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "southwest"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1210,
+    1269,
+    8
+   ],
+   "note": "MR2 Wing 1: columns"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "columns"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1186,
+    1268,
+    8
+   ],
+   "note": "MR2 Wing 1: flooded"
+  },
+  {
+   "do": "watch",
+   "seconds": 6,
+   "note": "flooded"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

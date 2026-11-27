@@ -54,11 +54,11 @@ SpireBoss.register("Axe-Lord of the Stair", {
 	roomNW = "boss_room_floor1_nw", roomSE = "boss_room_floor1_se",
 	onThink = function(boss, state, now)
 		local hpPct = boss:getHealth() / boss:getMaxHealth()
-		-- Phase 2 at 60%: summon two Sentinel guards (once); mark covers 2 tiles
+		-- Phase 2 at 60%: summon four Sentinel guards (once; RV1: a raid boss, Q78); mark covers 2 tiles
 		if state.phase == 1 and hpPct <= 0.60 then
 			state.phase = 2
 			boss:say("Guards! To me!", TALKTYPE_MONSTER_YELL)
-			for _ = 1, 2 do
+			for _ = 1, 4 do
 				Game.createMonster("Ruin Sentinel", boss:getPosition(), true, false)
 			end
 		end
@@ -84,7 +84,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 				if state.phase == 2 then
 					table.insert(tiles, Position(p.x + 1, p.y, p.z))
 				end
-				SpireBoss.markTiles(boss:getId(), tiles, -110, -200) -- P0-22: was 180-320, one-shot a level-30 caster
+				SpireBoss.markTiles(boss:getId(), tiles, -150, -260) -- RV1 (a raid again, Q78): was 110-200 for a party of 5
 			else
 				-- furthest player, 3-tile line from the boss toward them
 				local bp, far, best = boss:getPosition(), nil, -1
@@ -100,7 +100,7 @@ SpireBoss.register("Axe-Lord of the Stair", {
 				for i = 1, 3 do
 					table.insert(tiles, Position(bp.x + dx * i, bp.y + dy * i, bp.z))
 				end
-				SpireBoss.markTiles(boss:getId(), tiles, -160, -260) -- P0-22: was 260-420
+				SpireBoss.markTiles(boss:getId(), tiles, -220, -360) -- RV1 (a raid again, Q78): was 160-260 for a party of 5
 			end
 		end
 	end,
