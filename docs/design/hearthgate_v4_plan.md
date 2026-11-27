@@ -42,3 +42,47 @@ This is a rebuild of Hearthgate's part of the map, about a day of work: the layo
 - Rendered and looked at, every changed area, by the map quality rules.
 - Boot test passes; the manor, depot, bank, shop and housing tests pass on the new spots.
 - A fresh test character walks Hearthstone to each service in the client.
+
+---
+
+## The tile plan (built 2026-11-27)
+
+The exact numbers live in `maps/hearthgate_plan.py`, which both the builder (`maps/hearthgate.py`) and the checker (`tools/hearthgate_plan_check.py`) read, so this table and the map cannot drift apart. Coordinates are town-relative: x 0..111 west to east, y 0..95 north to south. Rectangles are x, y, width, height, walls included. Picture: `docs/HEARTHGATE_PLAN.png`.
+
+**Wall and plaza.** The wall's corners are cut 12 tiles (an octagon, a staircase of wall pieces on the diagonals). Gates unchanged: north and south x 55–58, west and east y 48–50. Hearth Plaza is a circle 33 tiles across centred on (56.5, 49), marble with a flagstone rim; the Hearthstone is (56, 49), a black marble square, the same tile as before (so `temple_hearthgate` did not move).
+
+| Place | Rectangle | Door(s) | Inside |
+|---|---|---|---|
+| The Hearth | 42, 12, 30, 23 | open archways: south x 55–58 (faces the Hearthstone), north x 56–57, west and east y 22–24 | bank (south-west, by the front), depot wing (south-east, 10 lockers), depot wing (north-west, 10 lockers), chapel (north-east); gallery on level 2 (10 more lockers, trade tables); the Hall of Climbers tower on level 3 (49, 18, 16, 11) |
+| Weaponsmith / Armorer | 31, 38, 10, 10 | (40, 40), (40, 45) east | two rooms, inner wall at y 42 |
+| General Store / Quartermaster | 31, 51, 10, 10 | (40, 53), (40, 58) east | inner wall at y 56 |
+| Runewright / Fletcher | 73, 39, 10, 9 | (73, 41), (73, 45) west | inner wall at y 43 |
+| Alchemist / Tailor | 73, 51, 10, 10 | (73, 53), (73, 58) west | inner wall at y 56 |
+| Housewright / Post Office | 60, 65, 11, 10 | (60, 67), (60, 71) west | inner wall at y 69 |
+| The Lantern & Lark (inn) | 43, 65, 11, 13 | (53, 67) east | bar, tables, rooms upstairs |
+| Guardhouse | 60, 2, 9, 8 | (60, 6) west | Captain Dorrow outside |
+| Ascendancy | 74, 22, 12, 9 | (74, 26) west | Crown Quarter |
+| Hunters' Hall | 74, 31, 14, 8 | (74, 35) west | trophy loft by ladder |
+| Guild Hall | 84, 39, 13, 9 | (90, 47) south | meeting room upstairs |
+| Training Yard | 98, 37, 11, 11 | gap (99–100, 47) | fenced, no roof |
+| Spire Manor grounds | 80, 63, 28, 22 | gate (93–95, 63) | the manor at (83, 67), door (94, 67); forecourt, trees, flowers |
+| Spire Gardens | 84, 52, 26, 9 | open | public garden; Manor Walk (x 93–95) from the East High Road to the gate |
+| Coach Yard | 60, 82, 10, 11 | gap (60, 87) | by the south gate |
+| Old Well Yard | 2, 62, 9, 9 | open | Underkeep grate kept at (5, 66) |
+| Hearthgate Green | 12, 13, 18, 21 | open | pond, benches, trees |
+
+**Streets.** North Avenue 55, 1, 4, 11; South Avenue 55, 65, 4, 30 (marble). West High Road 1, 48, 40, 3; East High Road 73, 48, 38, 3 (flagstone). Lanes (cobble): North Lane 3, 10, 106, 2; Hearth West Street 40, 12, 2, 26; Hearth East Street 72, 12, 2, 27; Crown Lane 86, 20, 23, 3; Green Lane 10, 12, 2, 36; Lantern Lane 2, 59, 26, 2; Lantern Close 11, 68, 17, 3; Lantern Cut 27, 51, 3, 30; Southgate Lane 10, 81, 45, 3; Coach Lane 59, 75, 20, 3.
+
+**Plaza.** Monument (49, 42), Arena Champion (49, 56), Beacon bowls (62–68, 42), fountain (64, 56), Vesper (59, 53), notice board (53, 45), six free stalls, benches facing the Hearthstone, a tree in a bed at four corners, lamps round the rim.
+
+**30 houses** (lots; `maps/house_plans.py` gives each its own plan):
+
+| Street | Lots (x, y) | Size | Door | Kind |
+|---|---|---|---|---|
+| Northside | (14,2) (23,2) (32,2) (41,2) (70,2) (79,2) (88,2) | 8 x 8 | south, onto North Lane | mid-size, two with an upstairs |
+| Crown Row | (74,12) (83,12) (92,12) (101,12); (89,23) (98,23) | 8 x 8 | south / north, onto Crown Lane | the best homes, all two storeys |
+| Greenside | (2,13) (2,22) (2,31) (32,13) (32,22) (13,37) | 8 x 8 | facing the Green | garden houses |
+| Lantern Row | (3,52) (11,52) (19,52) (12,61) (20,61) (12,71) (20,71) | 7 x 7 | north | small, cheap, tight lanes |
+| Southgate Row | (13,84) (22,84) (31,84) (40,84) | 8 x 8 | north, onto Southgate Lane | mid-size, two with an upstairs |
+
+**Measured walks** (steps from the Hearthstone, no diagonals, on the built map; `python tools/hearthgate_plan_check.py --walk`): nearest locker 26, bank 24, Trader Osric 22, priest 34; shop doors 19 to 25 (goal 25, was 29 to 50); Ascendancy 40, Hunters' Hall 31, Guild Hall 35, Training Yard 44 (goal 45, was up to 80); gates 46 to 56.
