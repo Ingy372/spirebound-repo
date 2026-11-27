@@ -11,12 +11,12 @@ SpireTest.add("quests: floor 1 story quests with a next step for every state", f
 			if not q.kind and not MonsterType(q.target) then error(q.id .. " targets unknown monster " .. tostring(q.target)) end
 		end
 	end
-	SpireTest.eq(n, 27, "twenty-seven floor 1 quests: nine story (with the weapon temper and the armour line), nine side (five not about killing: stones, sluice, flour, the Stair Key, the escort), the tutorial quest and the eight outfit-addon quests (6.5c)")
+	SpireTest.eq(n, 36, "thirty-six floor 1 quests: the eight chapters of The First Climb (FD1), the Oathroom (FD3), nine jobs (the old story quests), nine side (five not about killing: stones, sluice, flour, the Stair Key, the escort), the tutorial quest and the eight outfit-addon quests (6.5c)")
 	local story = 0
 	for _, q in ipairs(SpireQuests.list) do
 		if q.floor == 1 and not q.side then story = story + 1 end
 	end
-	SpireTest.eq(story, 9, "nine story quests (the perk needs only these)")
+	SpireTest.eq(story, 8, "eight story chapters (The First Climb; the perk waits at chapter 8)")
 	local q3 = SpireQuests.get("q1_3")
 	SpireTest.eq(SpireQuests.available(q3, -1, {}), false, "Millstone needs Bread for the Road first")
 	SpireTest.eq(SpireQuests.available(q3, -1, { q1_1 = true }), true, "then it opens")

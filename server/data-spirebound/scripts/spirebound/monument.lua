@@ -33,7 +33,8 @@ end
 
 local statue = Action()
 function statue.onUse(player, item)
-	player:showTextDialog(item:getId(), SpireMonumentText():sub(1, 4000))
+	local head = SpireFirstClimb and SpireFirstClimb.onMonument and SpireFirstClimb.onMonument(player) or "" -- FD1
+	player:showTextDialog(item:getId(), (head .. SpireMonumentText()):sub(1, 4000))
 	return true
 end
 local m = WorldPoints.monument

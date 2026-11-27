@@ -237,6 +237,9 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	end
 	local credit = SpireBoss.credited(state, now, SpireBoss.minShare(def.kind))
 	SpireGear.grantBoss(creature:getName(), credit) -- gear progression: shards and the awakening for every credited fighter
+	if SpireFirstClimb and SpireFirstClimb.onBossKill then
+		SpireFirstClimb.onBossKill(creature:getName(), credit) -- FD1: the Last Page (chapter 8)
+	end
 	local lastHit = nil
 	if killer then
 		local kp = killer:getPlayer() or (killer:getMaster() and killer:getMaster():getPlayer())

@@ -26,6 +26,9 @@ function kill.onKill(player, target)
 	local name = target:getName()
 	for _, member in ipairs(SpireProgress.killCredit("quest", player, target)) do -- the whole party nearby (P1-3)
 		SpireQuests.countKill(member, name)
+		if SpireFirstClimb and SpireFirstClimb.onKill then
+			SpireFirstClimb.onKill(member, target) -- FD1: chapter 3's thornsnaps, chapter 5's pages
+		end
 	end
 	return true
 end

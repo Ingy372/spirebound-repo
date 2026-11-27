@@ -21,6 +21,8 @@ npcType.onSay = function(npc, creature, type, message) npcHandler:onSay(npc, cre
 npcType.onCloseChannel = function(npc, player) npcHandler:onCloseChannel(npc, player) end
 
 local ANSWERS = {
+	-- FD1: the premise every new player meets in the Arrival Yard (lib/spirebound/first_climb.lua)
+	{ { "wish", "summit", "spire", "tower", "why", "story" }, SpireFirstClimb.PREMISE .. " Archivist Maren, at the Monument in Hearthgate, tells the story of the first company that tried: the {first climb}." },
 	{ { "fight", "fighting", "attack", "combat" }, "To attack, click the monster's name in the Battle List (Ctrl+B opens it), or right-click the monster and choose Attack. When it falls, right-click the body to loot. Your health is the red bar: when it runs low, drink a health potion or step back into the safe square here. Use the practice club in your hand until the Registrar gives you real gear." },
 	{ { "skill", "skills", "sword", "bar" }, "Your weapon skills sit on the row of buttons at the bottom of the screen: press Ctrl+1, 2 and 3 or click them, once the Registrar gives you a path. Press J at any time to open the Journal: secrets, fishing, quests, tasks and the list of climbers." },
 	{ { "spell", "spells", "magic" }, "Spells are learned on their own when you reach their level: no teacher, no cost. Your first attack spell comes the moment you choose your path, a healing spell at level 4. Say !spells to read your list." },
@@ -61,11 +63,11 @@ local function creatureSayCallback(npc, player, type, msg)
 			end
 		end
 	end
-	npcHandler:say("Ask me about {fighting}, {skills}, {spells}, {gold}, {quests}, {death}, {registrar}, {house} or where to {hunt}.", npc, player)
+	npcHandler:say("Ask me about the {wish}, {fighting}, {skills}, {spells}, {gold}, {quests}, {death}, {registrar}, {house} or where to {hunt}.", npc, player)
 	return true
 end
 
-local GREET = "Welcome, climber. I am Guide Pell. Walk the stone path east and each stop teaches one thing; click a gate to open it. Take on my {quest} to learn to fight, ask me to {heal} you, or ask about {skills}, {spells}, {gold}, {death} or where to {hunt}."
+local GREET = "Welcome, climber. I am Guide Pell. At the top of the Spire waits the Summit Wish, one wish for whoever reaches it, and you came to win it, like everyone here. Ask me about the {wish}. Walk the stone path east and each stop teaches one thing; click a gate to open it. Take on my {quest} to learn to fight, ask me to {heal} you, or ask about {skills}, {spells}, {gold}, {death} or where to {hunt}."
 -- C3 (Claude's playtest 2026-11-25): back with First Blood done, "hi" got the plain greeting and nothing said "report"
 local GREET_READY = "Back already, climber? Three rats down: say {report} and the reward is yours."
 npcHandler:setMessage(MESSAGE_GREET, GREET)

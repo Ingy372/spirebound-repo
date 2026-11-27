@@ -156,6 +156,16 @@ SpireQuests = {
 	},
 }
 
+-- FD1 (Floor 1 depth design 4.1): the old kill-count story quests stay as jobs (same pay), so no work is lost; the
+-- Floor 1 story is now The First Climb (lib/spirebound/first_climb.lua) and the perk waits at its chapter 8.
+for _, id in ipairs({ "q1_1", "q1_temper", "q1_2", "q1_3", "q1_iron1", "q1_iron2", "q1_4", "q1_5", "q1_6" }) do
+	for _, q in ipairs(SpireQuests.list) do
+		if q.id == id then
+			q.side, q.job = true, true
+		end
+	end
+end
+
 -- Outfit addons as quest rewards (roadmap 6.5c; Jay, 2026-11-25: "tibia has the base outfit, addon 1 and addon 2...
 -- it'll give us more content for quests"). Two quests per class, only for that class (vocation = base vocation id:
 -- 1 Arcanist, 2 Mystic, 3 Ranger, 4 Vanguard), each from a townsperson who fits the class. Addon 1 hunts a ground's
@@ -254,6 +264,8 @@ function SpireQuests.progress(player, q)
 		return 0
 	elseif q.kind == "key" then
 		return SpireStairKey.count(player)
+	elseif q.kind == "chapter" or q.kind == "oath" then
+		return SpireFirstClimb.progress(player, q)
 	end
 	return math.max(0, player:getStorageValue(q.killStorage))
 end
@@ -312,6 +324,9 @@ function SpireQuests.logText(q, state, kills)
 		if q.kind == "deliver" then
 			return q.step
 		end
+		if q.kind == "chapter" or q.kind == "oath" then
+			return SpireFirstClimb.stepLine(q, kills)
+		end
 		return string.format(q.step, math.min(kills, q.count), q.count)
 	elseif state == 2 then
 		return q.report
@@ -357,6 +372,9 @@ function SpireQuests.doneIds(player)
 end
 
 function SpireQuests.floorStoryDone(player, floor)
+	if floor == 1 and SpireFirstClimb and SpireFirstClimb.CHAPTERS then -- FD1: Floor 1's story is The First Climb
+		return SpireQuests.state(player, SpireFirstClimb.CHAPTERS[#SpireFirstClimb.CHAPTERS]) == 3
+	end
 	for _, q in ipairs(SpireQuests.list) do
 		if q.floor == floor and not q.side and SpireQuests.state(player, q) ~= 3 then
 			return false
@@ -410,6 +428,9 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 	end
 	local lower = msg:lower()
 	local pid = player:getId()
+	if SpireFirstClimb and SpireFirstClimb.talk and SpireFirstClimb.talk(npc, npcHandler, player, msg, giver) then
+		return true -- FD1: chapter steps said to a townsperson (Agna), and every giver's line on the First Climb
+	end
 	if MsgContains(lower, "report") then
 		for _, q in ipairs(SpireQuests.list) do
 			local choice = q.choices and q.choices[giver]
@@ -453,6 +474,10 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 				if st == 2 then
 					player:setStorageValue(q.storage, 3)
 					SpireChronicle.add(player, "quest", 1)
+					local thanks = q.thanks
+					if (q.kind == "chapter" or q.kind == "oath") and SpireFirstClimb.onReport then
+						thanks = SpireFirstClimb.onReport(player, q) or thanks -- FD1: chapter 4's choice, chapter 8's heir
+					end
 					if q.reward.gold then SpireQuests.payGold(player, q.reward.gold) end
 					if q.reward.exp then player:addExperience(q.reward.exp, true) end -- FLOOR1_REVIEW.md F1-21: about 10 minutes of hunting
 					if q.reward.title then player:kv():scoped("spirebound-titles"):set(q.reward.title, os.time()) end
@@ -460,7 +485,7 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					if q.reward.temper then SpireGear.temperFor(player, q.floor) end -- gear progression: +1 tier
 					if q.reward.addon then ClassOutfits.giveAddon(player, q.reward.addon) end -- 6.5c: outfit addon
 					if q.id == "q1_iron2" then SpireStairKey.update(player) end
-					npcHandler:say(q.thanks, npc, player)
+					npcHandler:say(thanks, npc, player)
 					SpireQuests.markGivers(player) -- the next quest may be with someone new
 					if SpireQuests.floorStoryDone(player, q.floor) then
 						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
@@ -522,6 +547,9 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 		player:setStorageValue(q.killStorage, 0)
 		if q.kind == "deliver" then
 			SpireGive.item(player, q.item, 1) -- ignores carrying weight: an overloaded player still gets the parcel (P1-1)
+		end
+		if q.kind == "chapter" and SpireFirstClimb.onStart then
+			SpireFirstClimb.onStart(player, q) -- FD1: a chapter's first item (chapter 4: Agna's marker)
 		end
 		npcHandler:say("Thank you! It's in your quest log.", npc, player)
 		if q.kind == "collect" then
@@ -601,6 +629,7 @@ SpireQuests.WHERE = {
 	["Fisher Corwin"] = { place = "the river bank north-west of Hearthgate", pos = { 1143, 1190, 7 } },
 	["Miller Agna"] = { place = "the mill on the north edge of Millcross, far to the west", pos = { 1082, 1185, 7 } },
 	["Fence Marrow"] = { place = "the road just south of the Bandit Road, east of Hearthgate" },
+	["Archivist Maren"] = { place = "the Monument in Hearthgate's plaza", pos = { 1229, 1277, 7 } }, -- FD1 (maps/floor1_story.py)
 }
 
 function SpireQuests.giverPos(giver)
@@ -659,3 +688,7 @@ function SpireQuests.markGivers(player)
 		end
 	end
 end
+
+-- FD1: The First Climb's eight chapters join the list here, before the client's quest catalog is built
+dofile(DATA_DIRECTORY .. "/lib/spirebound/first_climb.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/oathroom.lua") -- FD3: the Oathroom's rules and its quest-log entry

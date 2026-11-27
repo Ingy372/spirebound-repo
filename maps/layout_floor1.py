@@ -666,6 +666,8 @@ def build(m):
     secret("s12", X0 + 296, Y0 + 60)                    # broken stair of a ruined side tower near the Pass
     import hidden_places                                # AD5: the Smugglers' Vault (s14) and the Sealed Cut (s15), level 9
     hidden_places.build(m)
+    import floor1_story                                 # FD1/FD3: Archivist Maren, the Oathroom (maps/floor1_story.py)
+    floor1_story.build(m)
 
     # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
     # a real dungeon since 2026-11-26 (Jay, Q89): rooms, corridors, loops, a secret and a mini-boss (maps/underkeep.py)
