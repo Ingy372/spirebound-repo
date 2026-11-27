@@ -126,6 +126,14 @@ def patch_core(build: Path) -> None:
     # Spirebound's own item names (tools/gen_gear.py -> data/item_renames.json): Hearth Shards and other tokens
     import json
     renames = json.loads((ROOT / "data" / "item_renames.json").read_text(encoding="utf-8"))
+    # other generators keep their own file (data/item_renames_<name>.json, e.g. tools/gen_adventure.py), so two
+    # sessions never edit the same one; an id named twice is a mistake
+    for extra in sorted((ROOT / "data").glob("item_renames_*.json")):
+        more = json.loads(extra.read_text(encoding="utf-8"))
+        twice = sorted(set(more) & set(renames))
+        if twice:
+            raise SystemExit(f"{extra.name} renames items another file already renames: {', '.join(twice)}")
+        renames.update(more)
     for item_id, r in renames.items():
         def fix(m, r=r):
             body = re.sub(r'<attribute key="description"[^>]*/>\s*', "", m.group(2))

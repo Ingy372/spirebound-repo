@@ -129,6 +129,61 @@ MONSTERS = {
                            loot=[(GOLD, 100000, 95), (PLAT, 40000, 2), (3352, 20000, 1), (5880, 40000, 2), (236, 25000, 1)],
                            voices=["The works are closed."],
                            events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),
+    # ---------------------------------------------------------------- Floor 1 rare roamers (AD4, adventure design 4.4)
+    # One per level band; scripts/spirebound/roamers.lua brings one out every 25-45 minutes for 15 minutes, at a random
+    # monster spot of its grounds. Tuned like an elite: one player at the top of the band, or two below it. Not in the
+    # map's spawns. Placeholder looks with a coloured glow until the Blender sprites are approved (ART_REQUESTS).
+    # Goldback Toad: always hops away (runHealth = its health), so it must be cornered; spits from range while it flees.
+    "Goldback Toad": dict(desc="the Goldback Toad", look=(222,), corpse=6077, hp=420, xp=170, speed=135, race="blood",
+                          attacks=[("melee", 0, -24), ("earth", -10, -30, 4), ("slow", -80, 1500, 3, "CONST_ME_GREEN_RINGS")],
+                          armor=6, defense=8, run=420, light=(4, 210),
+                          loot=[(9640, 100000, 3)], voices=["RIBBIT!", "The Goldback Toad puffs up its golden back."],
+                          events=["SpireRoamerDeath"]),
+    # Frenzied Boar: our red-crested boar (Q63), angrier. Charges, and speeds up as it is hurt (SpireRoamerHurt).
+    "Frenzied Boar": dict(desc="the Frenzied Boar", look=(119,), corpse=12321, hp=900, xp=330, speed=120, race="blood",
+                          attacks=[("melee", 0, -55), ("charge", -20, -75, 4)], armor=14, defense=14, light=(4, 194),
+                          loot=[(3577, 100000, 4), (903, 60000, 2)], voices=["HRRRNNK!", "The Frenzied Boar's crest flares red."],
+                          events=["SpireRoamerDeath", "SpireRoamerHurt"]),
+    # Pale Stag: flees at speed (runHealth = its health) and gores with its antlers when you close in.
+    "Pale Stag": dict(desc="the Pale Stag", look=(31,), corpse=4016, hp=1100, xp=430, speed=190, race="blood",
+                      attacks=[("melee", 0, -70), ("charge", -30, -95, 3)], armor=16, defense=18, run=1100, light=(4, 215),
+                      loot=[(3577, 100000, 5)], voices=["The Pale Stag stamps and lowers its antlers."],
+                      events=["SpireRoamerDeath"]),
+    # The Paymaster: a bandit with the payroll chest; two Road Bandits guard him (roamers.lua), and he runs for the
+    # ground's edge once badly hurt. A citizen outfit in bandit colours until his own art.
+    "The Paymaster": dict(desc="the Paymaster", look=(129, 79, 94, 94, 79, 0), corpse=18050, hp=1500, xp=600, speed=115,
+                          race="blood", attacks=[("melee", 0, -85), ("physical", -40, -90, 4)], armor=20, defense=20,
+                          run=450, light=(3, 206),
+                          loot=[(3352, 15000, 1), (266, 50000, 2)], voices=["Hands off the payroll!", "Guards! GUARDS!"],
+                          events=["SpireRoamerDeath"]),
+    # ---------------------------------------------------------------- AD5 addon hunts (adventure design 4.5): each comes
+    # out after 15 kills of its kind in its ground (scripts/spirebound/addon_hunts.lua), for the player on the quest.
+    "Deadeye Sorrel": dict(desc="Deadeye Sorrel", look=(2208, 0, 0, 0, 0, 0), corpse=18050, hp=900, xp=380, speed=105,
+                           race="blood", attacks=[("melee", 0, -25), ("bolt", -40, -95, 7)], armor=14, defense=14, dist=5,
+                           light=(3, 30), loot=[(GOLD, 100000, 90), (PLAT, 60000, 2), (3446, 100000, 20)],
+                           voices=["I never miss twice.", "Hold still, hunter."]),
+    "The Page-Thief": dict(desc="the Page-Thief", look=(2209, 0, 0, 0, 0, 0), corpse=18050, hp=850, xp=380, speed=110,
+                           race="blood", attacks=[("melee", 0, -20), ("earth", -40, -90, 4), ("drunk", 0, 3000, 3)],
+                           armor=12, defense=12, dist=3, light=(3, 143), elements={"earth": 30, "fire": -10},
+                           loot=[(GOLD, 100000, 90), (PLAT, 60000, 2), (3738, 100000, 2)],
+                           voices=["Finders keepers!", "These pages are mine now."]),
+    "Glasswing": dict(desc="Glasswing", look=(2334, 0, 0, 0, 0, 0), corpse=16177, hp=1000, xp=380, speed=90, race="undead",
+                      attacks=[("melee", 0, -35), ("energy", -40, -85, 4)], armor=16, defense=16, light=(4, 71),
+                      elements={"energy": 50, "earth": -10}, events=["SpireShardBurst"],
+                      loot=[(GOLD, 100000, 90), (PLAT, 60000, 2), (268, 60000, 2)],
+                      voices=["The old shardling chimes softly."]),
+    # ---------------------------------------------------------------- AD5 hidden places (s14, s15): hidden beasts with
+    # trophies (gear spec 4.8 rules: once per character, 1-3 hours' rest, solo at the top of the band or a small group).
+    "Ironpurse": dict(desc="Ironpurse", look=(129, 94, 79, 79, 94, 0), corpse=18050, hp=2600, xp=1200, speed=110,
+                      race="blood", attacks=[("melee", 0, -150), ("physical", -60, -140, 4)], armor=28, defense=28,
+                      loot=[(GOLD, 100000, 100), (PLAT, 100000, 8), (3352, 30000, 1), (239, 50000, 2)],
+                      voices=["Every coin is counted.", "You owe interest on that, climber."],
+                      summons=[("Road Bandit", 2)], events=["SpireMiniBossDeath"]),
+    "The Unfinished": dict(desc="the Unfinished", look=(2335, 0, 0, 0, 0, 0), corpse=13865, hp=3400, xp=1500, speed=80,
+                           race="undead", attacks=[("melee", 0, -180), ("cleave", -80, -170, 1)], armor=34, defense=34,
+                           elements={"physical": 10, "holy": -15},
+                           loot=[(GOLD, 100000, 100), (PLAT, 100000, 10), (5880, 100000, 3), (239, 50000, 2)],
+                           voices=["Chisel... and stone...", "FINISH... ME..."], events=["SpireMiniBossDeath"]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=5994, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),
@@ -492,7 +547,20 @@ TWISTS = {
 }
 
 
+def adventure_drops():
+    """AD5 (tools/gen_adventure.py): Tattered maps from bandits and ruin guards, Vault Keys from Bandit Captains.
+    The engine doubles every drop chance (rateLoot 2), so the rows hold half the chance the design names."""
+    import gen_adventure as ga
+    for drops, item in ((ga.MAP_DROPS, ga.MAP_ITEM[0]), (ga.VAULT_KEY_DROP, ga.VAULT_KEY[0])):
+        for name, chance in drops.items():
+            loot = MONSTERS[name]["loot"]
+            if not any(row[0] == item for row in loot):
+                loot.append((item, int(round(chance * 100000 / 2)), 1))
+
+
 def main():
+    _sys.path.insert(0, str(ROOT / "tools"))
+    adventure_drops()
     floors_dir = OUT / "floors"
     floors_dir.mkdir(parents=True, exist_ok=True)
     for f in floors_dir.glob("*.lua"):

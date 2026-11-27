@@ -1,0 +1,77 @@
+{
+ "5706": {
+  "name": "Tattered map",
+  "plural": "Tattered maps",
+  "description": "A torn treasure map. Use it to read where it leads; use it again inside that ground to know if you are close."
+ },
+ "9172": {
+  "name": "Vault Key",
+  "plural": "Vault Keys",
+  "description": "A heavy iron key stamped with a coin. Somewhere, a barred door is waiting for it. It is used up when it opens one."
+ },
+ "5799": {
+  "name": "Goldback's Crown",
+  "plural": "Goldback's Crowns",
+  "description": "A tiny golden crown that sat on the Goldback Toad's head. A keepsake for a house shelf."
+ },
+ "3044": {
+  "name": "Frenzied Tusk",
+  "plural": "Frenzied Tusks",
+  "description": "A tusk with a red scorch at the root, from the Frenzied Boar. A keepsake for a house wall."
+ },
+ "12544": {
+  "name": "Pale Antlers",
+  "plural": "Pale Antlers",
+  "description": "White antlers from the Pale Stag, mounted for a house wall."
+ },
+ "35571": {
+  "name": "Paymaster's Strongbox",
+  "plural": "Paymaster's Strongboxes",
+  "description": "The bandits' payroll chest, empty now, with the Paymaster's tally still scratched inside the lid."
+ },
+ "10289": {
+  "name": "Smuggler's Lantern",
+  "plural": "Smuggler's Lanterns",
+  "description": "A shuttered lantern the smugglers signalled with. A keepsake for a house."
+ },
+ "10415": {
+  "name": "Bandit Banner",
+  "plural": "Bandit Banners",
+  "description": "The road gang's tattered banner, dug out of a buried stash. A keepsake for a house wall."
+ },
+ "8146": {
+  "name": "Ruin Idol",
+  "plural": "Ruin Idols",
+  "description": "A small stone idol from before the tower. Nobody knows who it was meant to be."
+ },
+ "8773": {
+  "name": "Captain's Sea Chest",
+  "plural": "Captain's Sea Chests",
+  "description": "A bandit captain's chest, salt-stained from some far coast. A keepsake for a house."
+ },
+ "10302": {
+  "name": "Old Climber's Compass",
+  "plural": "Old Climber's Compasses",
+  "description": "A compass that points up, not north. It belonged to a climber long before you."
+ },
+ "28538": {
+  "name": "Wardwright Tablet",
+  "plural": "Wardwright Tablets",
+  "description": "A clay tablet marked by the Wardwrights, the tower's builders. A keepsake for a house."
+ },
+ "2819": {
+  "name": "Quarry rubbing",
+  "plural": "Quarry rubbings",
+  "description": "A charcoal rubbing of a mason's mark from the Old Quarry."
+ },
+ "2833": {
+  "name": "Bastion rubbing",
+  "plural": "Bastion rubbings",
+  "description": "A charcoal rubbing of a mason's mark from the Fallen Bastion."
+ },
+ "4831": {
+  "name": "Shard Fields rubbing",
+  "plural": "Shard Fields rubbings",
+  "description": "A charcoal rubbing of a mason's mark from the Shard Fields."
+ }
+}

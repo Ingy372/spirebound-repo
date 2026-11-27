@@ -60,6 +60,8 @@ HABITS = {
     # Floor 1 elites (FLOOR1_REVIEW.md F1-11): alone, rare, each counts for about two and a half
     "Old Bristleback": ("loner", 2.5), "Moonhowl": ("loner", 2.5), "Mossback Snapper": ("loner", 2.5),
     "Blackthorn": ("loner", 2.5), "Prism Shardling": ("loner", 2.5), "Granite Warden": ("loner", 2.5),
+    # AD4 rare roamers (tools/gen_adventure.py): out one at a time for 15 minutes; the toad flees, so it is light
+    "Goldback Toad": ("loner", 1.5), "Frenzied Boar": ("loner", 2.5), "Pale Stag": ("loner", 2.5), "The Paymaster": ("loner", 2.5),
     # Floor 2 (maps/floor2_plan.py, R13b/S6): every habit once, weights against Floor 2's ordinary monster
     "Horned Grazer": ("pair", 1.0), "Dust Strider": ("swarm", 0.5), "Ridge Cat": ("loner", 1.6),
     "Blight Wasp": ("colony", 0.6), "Hill Cutthroat": ("sentry", 1.1), "Stonehide Bull": ("pack", 1.5),
@@ -571,6 +573,8 @@ def main(argv):
     problems += spawn_rule_problems()
     problems += gear_problems()
     problems += reward_problems()
+    import gen_adventure                           # AD4/AD5: roamers and dig spots fit their grounds and danger budgets
+    problems += gen_adventure.problems()
     write(rows, problems, tasks)
     print(f"wrote BALANCE.md, data/balance_floors.csv and tasks_floors.lua ({len(rows)} floors, {len(tasks)} tasks)")
     if problems:

@@ -329,8 +329,12 @@ function lt.onSay(player, words, param)
 		return false
 	end
 	local cmd, rest = param:match("^%s*(%a+)%s*(.*)$")
-	if cmd == "goto" then
+	if cmd == "goto" then -- an NPC or creature by name, or a named map point (AD5: loop_smugglers_ridge_b)
 		local c = Creature(rest)
+		local wp = not c and WorldPoints[rest]
+		if wp then
+			c = { getPosition = function() return wp end }
+		end
 		if c then
 			local p = c:getPosition()
 			local spot = Game.getClosestFreeTile and Game.getClosestFreeTile(player, p) or p

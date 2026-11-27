@@ -292,10 +292,11 @@ async def run(mode, steps, minutes, warmup, tee=None):
 
 
 ADDON_QUESTS = {   # class -> (giver, [(target, count)] for addon 1 and addon 2); must match lib/spirebound/quests.lua
+    # AD5 (2026-11-27): addon 2 of Ranger, Arcanist and Mystic is a hunt: (kind, 15, ground) brings the named target out
     4: ("Captain Dorrow", [("Moonhowl", 1), ("Granite Warden", 1)]),
-    3: ("Hunter Brannoch", [("Blackthorn", 1), ("Bandit Crossbowman", 40)]),
-    1: ("Vesper", [("Prism Shardling", 1), ("Hedge Hexer", 30)]),
-    2: ("Fisher Corwin", [("Mossback Snapper", 1), ("Field Shardling", 40)]),
+    3: ("Hunter Brannoch", [("Blackthorn", 1), ("Deadeye Sorrel", 1, ("Bandit Crossbowman", 15, "smugglers_ridge"))]),
+    1: ("Vesper", [("Prism Shardling", 1), ("The Page-Thief", 1, ("Hedge Hexer", 15, "bandit_road"))]),
+    2: ("Fisher Corwin", [("Mossback Snapper", 1), ("Glasswing", 1, ("Field Shardling", 15, "shard_fields"))]),
 }
 
 
@@ -322,9 +323,12 @@ async def addon_test():
     for (name, token, _g), voc in zip(logins, vocs):
         giver, steps = ADDON_QUESTS[voc]
         script = [(3, "say", "/lt state")]
-        for target, count in steps:
+        for target, count, *hunt in steps:
             script += [(1, "say", "/lt goto " + giver), (2, "say", "hi"), (2, "npc", "outfit"), (2, "npc", "yes"),
                        (1, "say", "/lt state")]
+            if hunt:                          # the hunt: 15 of the kind inside the ground first (they call it out)
+                kind, n, ground = hunt[0]
+                script += [(1, "say", f"/lt goto loop_{ground}_b"), (1, "say", f"/lt kill {kind} {n}"), (n * 0.2 + 2, "say", "/lt state")]
             script += [(1, "say", f"/lt kill {target} {count}"), (count * 0.2 + 1, "say", "/lt state")]
             script += [(1, "say", "/lt goto " + giver), (2, "say", "hi"), (2, "npc", "report"), (2, "npc", "bye"),
                        (1, "say", "/lt state")]
