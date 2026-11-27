@@ -514,6 +514,9 @@ function SpireSpells.burnVines(pos)
 		pos:sendMagicEffect(CONST_ME_FIREAREA)
 		return true
 	end
+	if SpireFeatures and SpireFeatures.burnVineAt then -- FD2b / J15b: and Thornsnap Hollow's vine walls
+		return SpireFeatures.burnVineAt(pos)
+	end
 	return false
 end
 

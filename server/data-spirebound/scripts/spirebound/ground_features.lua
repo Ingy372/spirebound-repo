@@ -688,6 +688,48 @@ local function wieldsBlade(player)
 	return false
 end
 
+-- The whole vine wall that stands on `pos` goes (all its tiles). Returns true if there was one.
+function SpireFeatures.clearVineWall(pos, itemId)
+	local found = false
+	for i = 1, 20 do
+		local first = WorldPoints["feat_vine_" .. i .. "_1"]
+		if not first then
+			break
+		end
+		local tiles = F.points("feat_vine_" .. i .. "_")
+		local mine = false
+		for _, p in ipairs(tiles) do
+			if p.x == pos.x and p.y == pos.y and p.z == pos.z then
+				mine = true
+			end
+		end
+		if mine then
+			for _, p in ipairs(tiles) do
+				local v = topItem(P(p), itemId)
+				if v then
+					v:remove()
+					found = true
+				end
+			end
+		end
+	end
+	return found
+end
+
+-- FD2b / J15b: fire burns a Thornsnap vine wall too (fire spells and the fire rune call this for each tile they hit).
+function SpireFeatures.burnVineAt(pos)
+	local c = F.conf("thornsnap_hollow", "vines")
+	local v = c and topItem(pos, c.vine)
+	if not v or v:getActionId() ~= A.vine then
+		return false
+	end
+	if SpireFeatures.clearVineWall(pos, c.vine) then
+		pos:sendMagicEffect(CONST_ME_FIREAREA)
+		return true
+	end
+	return false
+end
+
 local vine = Action()
 function vine.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	local pos = item:getPosition()
@@ -702,28 +744,7 @@ function vine.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		say(player, "Thorny vines block the trail. A sword or an axe would cut them, or a lit torch burn them.")
 		return true
 	end
-	-- the whole wall goes (all its tiles)
-	for i = 1, 20 do
-		local first = WorldPoints["feat_vine_" .. i .. "_1"]
-		if not first then
-			break
-		end
-		local tiles = F.points("feat_vine_" .. i .. "_")
-		local mine = false
-		for _, p in ipairs(tiles) do
-			if p.x == pos.x and p.y == pos.y then
-				mine = true
-			end
-		end
-		if mine then
-			for _, p in ipairs(tiles) do
-				local v = topItem(P(p), item:getId())
-				if v then
-					v:remove()
-				end
-			end
-		end
-	end
+	SpireFeatures.clearVineWall(pos, item:getId())
 	say(player, how .. " They will grow back.")
 	F.lore(player, "thornsnap_hollow")
 	return true
