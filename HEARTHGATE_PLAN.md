@@ -1,6 +1,8 @@
-# Hearthgate v3: the build plan
+# Hearthgate v3: the build plan (REPLACED)
 
-**Status:** plan only. Nothing in the game has been changed. This file is the brief for the model that builds it.
+**Replaced on 2026-11-27 by Hearthgate v4:** `docs/design/hearthgate_v4_plan.md` (the tile plan is `maps/hearthgate_plan.py`). Kept for history only; nothing below describes the game any more.
+
+**Status (old):** plan only. Nothing in the game has been changed. This file is the brief for the model that builds it.
 **Picture:** `docs/HEARTHGATE_PLAN.png` (drawn by `python tools/hearthgate_plan_check.py`, which also checks the plan for overlaps).
 **Asked for by Jay (2026-11-12):** *"it does not feel like a premium tight home/town layout ... make the layout of the temple and then town as functional as possible ... i want it to feel like it was hand crafted by a person."*
 

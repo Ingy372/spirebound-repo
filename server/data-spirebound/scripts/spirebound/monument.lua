@@ -1,4 +1,4 @@
--- P12 (FLOOR1_REVIEW.md F1-65): leaderboards in town. The Monument's statue in the Hearth Square shows the top
+-- P12 (FLOOR1_REVIEW.md F1-65): leaderboards in town. The Monument's statue on Hearth Plaza shows the top
 -- climbers and the Memorial (the same lists as the Journal's Top and Memorial tabs, !top and !memorial).
 function SpireMonumentText()
 	local _, top = SpireJournal.top()
@@ -60,7 +60,7 @@ if WorldPoints.yard_first_clears then
 	firstClears:register()
 end
 
--- N3 (FLOOR1_REVIEW.md F1-50): the notice board in the Hearth Square. Use it to read what is going on in the tower
+-- N3 (FLOOR1_REVIEW.md F1-50): the notice board on Hearth Plaza. Use it to read what is going on in the tower
 -- right now: the floor race, the beacon, this weekend's bonus, the biggest bounties. Each part is guarded, so one broken
 -- system never blanks the board.
 function SpireNoticeText()

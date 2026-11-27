@@ -133,8 +133,20 @@ Hearthgate's home hall, replacing the old temple, depot and Trade Hall. It is 62
 - **Level 2:** the trading gallery, with 16 lockers and six long trade tables.
 - **Level 3:** the Hall of Climbers, with statues and a meeting carpet for finding a party.
 
-## Hearthgate v3 (2026-11-12, built from HEARTHGATE_PLAN.md)
-This replaces the earlier Hearthgate descriptions above. The full plan, with every coordinate, is `HEARTHGATE_PLAN.md`; the picture is `docs/HEARTHGATE_PLAN.png`.
+## Hearthgate v4 (2026-11-27, built from docs/design/hearthgate_v4_plan.md)
+This replaces every Hearthgate description above, v3 included. Jay (2026-11-26) asked for a full redesign: function first, a loose nod to a big round starting plaza. The tile plan is `maps/hearthgate_plan.py`; the picture is `docs/HEARTHGATE_PLAN.png`.
+- **Same size, place and four gates; the wall's corners are cut off,** so the city is eight-sided.
+- **Hearth Plaza:** a round marble plaza, 33 tiles across, in the middle. You appear (and come back after dying) on the Hearthstone at its centre, in the open air. Round it: the Monument, the Arena Champion's statue, the Beacon's four fire bowls, the fountain, Vesper, the notice board, six free trading stalls, benches.
+- **The Hearth** is the great hall on the plaza's north side, its wide archway facing the Hearthstone (more archways north, west and east). Just inside: the bank and exchange (Tolliver, Osric, Nell) on the left, a depot wing on the right; behind them a second depot wing and the chapel (Priest Odran). 20 lockers in booths downstairs, 10 more in the Trading Gallery upstairs; the Hall of Climbers tower on top.
+- **Every shop is at the plaza's edge,** two shops to a building, where the avenues leave it: Weaponsmith and Armorer, General Store and Quartermaster (west); Runewright and Fletcher, Alchemist and Tailor (east); the inn, Housewright and Post Office (south).
+- **Crown Quarter (north-east):** the Ascendancy and the Hunters' Hall on the street along the Hearth's east wall; the Guild Hall and the Training Yard on the East High Road.
+- **Spire Manor (south-east)** stands in its own walled grounds with a forecourt, reached by Manor Walk through the public Spire Gardens.
+- **Homes, 30 in five streets:** Northside (north, mid-size), Crown Row (north-east, the best homes, all with an upstairs), Greenside (garden houses round Hearthgate Green, north-west), Lantern Row (small cheap homes in tight lanes, south-west), Southgate Row (south, mid-size). Ten have an upstairs.
+- **Kept where they were:** the Old Well Yard and the Underkeep grate (south-west corner), the guardhouse and Captain Dorrow at the north gate. The Coach Yard is now by the south gate.
+- **Walking distances from the Hearthstone** (steps): bank 24, nearest locker 26, shops 19 to 25, Hunters' Hall 31, Guild Hall 35, Ascendancy 40, Training Yard 44, gates 46 to 56.
+
+## Hearthgate v3 (2026-11-12, built from HEARTHGATE_PLAN.md; replaced by v4 above)
+This replaced the earlier Hearthgate descriptions above. The full plan, with every coordinate, is `HEARTHGATE_PLAN.md`; the picture is `docs/HEARTHGATE_PLAN.png`.
 - **The Hearth** stands where North Avenue and the East-West High Road cross, with four open archways. You spawn on the Hearthstone in the middle of a red carpet cross.
   - **Ground floor:** depot wings with 20 lockers in Tibia-style booths (10 more upstairs); the bank and exchange (Tolliver, Osric, Nell); the chapel (Priest Odran).
   - **Level 2:** the Trading Gallery.

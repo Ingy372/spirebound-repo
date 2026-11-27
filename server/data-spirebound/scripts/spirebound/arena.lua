@@ -47,7 +47,7 @@ local function randomSpot()
 	return WorldPoints["arena_center"]
 end
 
--- Spire Pressure: the MVP statue in the Hearth Square (kv keeps the name across restarts)
+-- Spire Pressure: the MVP statue on Hearth Plaza (kv keeps the name across restarts)
 local function mvpText(rec)
 	if not rec then
 		return "The Arena Champion's plinth. No champion yet: win the next arena event's MVP and your name goes here."
@@ -132,7 +132,7 @@ local function finish(st, winners)
 	if mvp then
 		local m = st.players[mvp]
 		SpireArena.raiseStatue({ name = m.name, kind = kind, kills = m.kills, at = os.time() })
-		Game.broadcastMessage(string.format("Arena MVP: %s with %d takedown%s. Their statue now stands in the Hearth Square.", m.name, m.kills, m.kills == 1 and "" or "s"), MESSAGE_EVENT_ADVANCE)
+		Game.broadcastMessage(string.format("Arena MVP: %s with %d takedown%s. Their statue now stands on Hearth Plaza.", m.name, m.kills, m.kills == 1 and "" or "s"), MESSAGE_EVENT_ADVANCE)
 	end
 	if #names == 0 then
 		Game.broadcastMessage(kind .. " is over: a draw.", MESSAGE_EVENT_ADVANCE)
