@@ -1,0 +1,47 @@
+{
+ "name": "art_stairwarden",
+ "character": "Pilot Arcanist",
+ "timeout": 150,
+ "about": "RV5: the approved Stairwarden in the real client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "art check"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Stairwarden, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Road Bandit, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bandit Lieutenant, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "shot",
+   "name": "art_stairwarden"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  }
+ ]
+}
