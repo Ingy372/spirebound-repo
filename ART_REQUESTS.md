@@ -337,3 +337,14 @@ badge on his chest).
 | [ ] | `item_lieutenant_badge.png` (now 9218) | "32x32 pixel-art item icon, Tibia style, transparent background: a dented tin badge shaped like a crossed dagger and key." |
 | [ ] | `items_dishes_floor1.png` (13 dishes, now food items) | "A sheet of 13 32x32 pixel-art food icons, Tibia style, transparent background: grilled minnow, smoked perch fillet, seared meat, boar roast, roast truffle, baked turtle egg, carp steak, whiskers fish pie, hunter's roast with truffle, honey-glazed ham, truffle omelette, bramble berry tart, herb-crusted perch." |
 | [ ] | `object_works_board.png` (now notice board 2597) | "32x64 pixel-art object, Tibia style: a tall wooden board with a carpenter's plan pinned to it and a coin slot box at its foot." |
+
+## Batch ART-F1 (2026-11-27): Floor 1 creatures that still wore borrowed Tibia looks (art session)
+Drawn by Claude with the Blender pipeline; each passes `check_creature.py` and had the DETAIL_RULES pass. Previews (sheet
+and 4x walk loops on plain grey) are in `ART_FOR_JAY/<name>/`. Until Jay approves one, the game keeps its placeholder.
+
+| ✓ | Art name | What | Status |
+|---|---|---|---|
+| [~] | `meadow_hare` | Meadow Hare: a silver-grey hare with a buff wash, very long black-tipped ears with pink insides, a white scut (Tibia's rabbit is plain brown) | drafted, waits for Jay's look |
+| [~] | `dapple_fawn` | Dapple Fawn: a small dun-taupe fawn on long legs, a dark spine stripe with rows of cream dapples, big dark-rimmed ears (Tibia's deer is a red-brown grown deer) | drafted, waits for Jay's look |
+| [~] | `thistle_hen` | Thistle Hen: a slate-blue ground hen freckled white, a rust breast, a spiky thistle-purple crest, a cocked bronze-black tail (Tibia's chicken is white with a red comb) | drafted, waits for Jay's look |
+| [~] | `acorn_squirrel` | Acorn Squirrel: an ash-grey squirrel with a huge dark brush of a tail frosted russet at the end, russet ear tufts and a golden acorn in its mouth (Tibia's is red-brown with a pale tail) | drafted, waits for Jay's look |

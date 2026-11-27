@@ -155,6 +155,19 @@ LOOKALIKES = {
     "paymaster": [(129, "Hunter (outfit)"), (128, "Citizen (outfit)")],
     # RV5 labyrinth guard (2026-11-27)
     "stairwarden": [(298, "Skeleton Warrior"), (131, "Knight (outfit)")],
+    # Floor 1 placeholders drawn for real (2026-11-27, art session): small game, ground features, Underkeep, bosses
+    "meadow_hare": [(74, "Rabbit")],
+    "dapple_fawn": [(31, "Deer")],
+    "thistle_hen": [(111, "Chicken")],
+    "acorn_squirrel": [(274, "Squirrel")],
+    "nest_queen": [(44, "Wasp")],
+    "elder_sproutling": [(535, "Swampling"), (567, "Leaf Golem")],
+    "bandit_lieutenant": [(129, "Hunter (outfit)"), (131, "Knight (outfit)")],
+    "mire_toad": [(222, "Toad"), (412, "Bog Frog")],
+    "sluice_warden": [(222, "Toad"), (412, "Bog Frog")],
+    "oathkeeper": [(99, "Lich"), (298, "Skeleton Warrior")],
+    "bramblejaw": [(380, "Boar"), (119, "look 119")],
+    "wolf_companion": [(27, "Wolf")],
 }
 
 

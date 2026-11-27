@@ -1,0 +1,154 @@
+{
+ "name": "thistle_hen",
+ "parts": [
+  "none",
+  "body",
+  "breast",
+  "wing",
+  "tail",
+  "head",
+  "beak",
+  "wattle",
+  "eye",
+  "crest",
+  "crestip",
+  "leg",
+  "foot",
+  "speck",
+  "line"
+ ],
+ "palette": "thistle_hen",
+ "walk_frames": 8,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.414213562373095,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.414213562373095,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "eye": 9.0,
+   "beak": 4.0,
+   "wattle": 3.5,
+   "crest": 3.0,
+   "crestip": 4.5,
+   "leg": 2.6,
+   "foot": 2.8,
+   "speck": 4.0,
+   "line": 3.0,
+   "wing": 1.4,
+   "tail": 1.6,
+   "breast": 1.2,
+   "head": 1.4
+  },
+  "thin": {
+   "eye": 2,
+   "beak": 2,
+   "wattle": 2,
+   "crest": 2,
+   "crestip": 2,
+   "leg": 3,
+   "foot": 2,
+   "speck": 2,
+   "line": 2
+  },
+  "soft": [
+   [
+    "body",
+    "breast",
+    "speck"
+   ],
+   [
+    "wing",
+    "line",
+    "speck"
+   ],
+   [
+    "head",
+    "eye",
+    "beak",
+    "wattle"
+   ],
+   [
+    "crest",
+    "crestip"
+   ],
+   [
+    "leg",
+    "foot"
+   ]
+  ],
+  "no_outline": [],
+  "fur": [],
+  "texture": {
+   "body": [
+    0.6,
+    0.2
+   ],
+   "wing": [
+    0.6,
+    0.15
+   ],
+   "breast": [
+    0.4,
+    0.1
+   ],
+   "tail": [
+    0.5,
+    0.0
+   ],
+   "head": [
+    0.4,
+    0.1
+   ]
+  },
+  "bands": [
+   0.36,
+   0.48,
+   0.58,
+   0.67,
+   0.76,
+   0.84,
+   0.92
+  ],
+  "selout": [
+   "body",
+   "wing",
+   "tail"
+  ]
+ },
+ "ref": "look_111.png",
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}
