@@ -167,6 +167,40 @@ PAL["oathkeeper"] = {**base(hair=((40, 42, 52), (180, 176, 168)), arms=SILVERPLA
     "rivet": ramp((90, 54, 14), (255, 236, 170), (200, 150, 60)),
 }
 
+# ---------------------------------------------------------------- the Proving and companions
+# Bramblejaw: an old yard boar, a deep oxblood-rust coat (Tibia's boar is orange-brown; our herd is charcoal or quilled),
+# a shaggy darker mane, bramble-green thorny vines tangled round it with pale thorns and a few leaves, a pale scar across
+# the snout, a torn ear, short yellowed tusks, small amber eyes.
+OXRUST = ((22, 8, 10), (176, 112, 104), (80, 32, 30))
+PAL["bramblejaw"] = {
+    "body": ramp(*OXRUST), "head": ramp(*OXRUST), "belly": ramp((30, 16, 12), (170, 126, 100), (90, 56, 40)),
+    "snout": ramp((50, 30, 26), (220, 170, 146), (130, 86, 70)), "nose": ramp((30, 16, 16), (180, 120, 110), (90, 50, 46)),
+    "ear": ramp(*OXRUST), "eye": flat((250, 180, 50)),
+    "leg_near": ramp((18, 8, 6), (130, 80, 62), (60, 28, 20)), "leg_far": ramp((14, 6, 4), (100, 60, 46), (46, 22, 16)),
+    "paw_near": flat((24, 18, 16)), "paw_far": flat((18, 14, 12)),
+    "tail_base": ramp(*OXRUST), "tail_tip": ramp((14, 8, 6), (90, 60, 40), (40, 24, 16)),
+    "mane": ramp((10, 6, 8), (200, 150, 120), (60, 30, 26)), "vine": ramp((10, 28, 10), (130, 190, 80), (44, 100, 34)),
+    "thorn": ramp((120, 110, 80), (255, 250, 220), (220, 210, 170)), "leaf": ramp((10, 40, 16), (120, 200, 100), (40, 120, 50)),
+    "tusk": ramp((110, 96, 60), (250, 236, 190), (210, 190, 130)), "scar": ramp((150, 110, 100), (250, 220, 210), (220, 180, 170)),
+    "brow": flat((14, 8, 6)),
+}
+
+# Wolf Companion (the Mystic's summon): pale silver-sage flanks (Tibia's wolf is plain grey, the meadow wolf ochre, the
+# alpha teal-silver with a black mane), a dark slate-teal saddle, cream belly and cheeks, a garland of green leaves
+# round the neck, jade spirit runes on the shoulders, glowing jade eyes.
+SAGE = ((30, 38, 40), (214, 222, 206), (112, 124, 118))
+PAL["wolf_companion"] = {
+    "body": ramp(*SAGE), "head": ramp(*SAGE), "belly": ramp((110, 110, 96), (255, 252, 236), (220, 216, 196)),
+    "snout": ramp((80, 84, 78), (240, 240, 226), (170, 172, 160)), "nose": flat((18, 18, 20)),
+    "ear": ramp(*SAGE), "eye": flat((120, 255, 190)),
+    "leg_near": ramp((26, 32, 34), (190, 198, 186), (96, 106, 102)), "leg_far": ramp((20, 26, 28), (150, 158, 148), (74, 82, 80)),
+    "paw_near": ramp((40, 40, 38), (200, 200, 190)), "paw_far": ramp((30, 30, 28), (150, 150, 142)),
+    "tail_base": ramp(*SAGE), "tail_tip": ramp((150, 156, 146), (255, 255, 250)),
+    "saddle": ramp((8, 20, 24), (90, 130, 130), (30, 60, 64)), "bib": ramp((120, 120, 106), (255, 252, 236), (224, 220, 200)),
+    "brow": flat((40, 56, 58)), "line": flat((16, 22, 24)),
+    "leaf": ramp((8, 40, 18), (140, 220, 120), (40, 130, 56)), "rune": ramp((40, 160, 110), (220, 255, 230), (110, 240, 180)),
+}
+
 
 def main():
     path = PIPE / "palette.json"

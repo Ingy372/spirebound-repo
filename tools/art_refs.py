@@ -166,7 +166,7 @@ LOOKALIKES = {
     "mire_toad": [(222, "Toad"), (412, "Bog Frog")],
     "sluice_warden": [(222, "Toad"), (412, "Bog Frog")],
     "oathkeeper": [(99, "Lich"), (298, "Skeleton Warrior")],
-    "bramblejaw": [(380, "Boar"), (119, "look 119")],
+    "bramblejaw": [(380, "Boar")],
     "wolf_companion": [(27, "Wolf")],
 }
 
