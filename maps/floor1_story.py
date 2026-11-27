@@ -1,7 +1,7 @@
 """Floor 1's story places (roadmap FD1 and FD3; design docs/superpowers/specs/2026-11-27-floor1-depth-design.md 4.1, 4.3).
 
 - Archivist Maren, the First Climb's NPC, beside the Monument in Hearthgate's plaza.
-- The Oathroom: Floor 1's one hand-made group quest. Its door stands in the Old Quarry (four oath tiles, a lever and
+- The Oathroom: Floor 1's one hand-made group quest. Its door stands just outside the Old Quarry's gate (four oath tiles, a lever and
   the garrison's standing order carved on a stone beside them); the hall itself lies on level 10, far from every other
   dungeon, and is reached only through the lever (scripts/spirebound/oathroom.lua moves the team in and out).
   Four halls in a row, one for each of the four who swore, then the reward room:
@@ -127,31 +127,35 @@ def build_hall(m):
 
 
 def _quarry_spot(m):
-    """a free 6 x 3 block of quarry ground with a free ring round it (the stone and the lever never close a path), far
-    from the gate, the secrets and the spawns, nearest the south loop. The oath tiles may lie on the trail itself."""
+    """a free 6 x 3 block (with a free ring round it) on open ground just outside the Old Quarry's gate, far from every
+    spawn: a team waits there for its fourth. (The first version stood by the quarry's south loop, and quarry monsters
+    killed a Pilot standing on his stone, 2026-11-27; no tile inside the quarry is far enough from its spawns.)"""
     qL = next(L for L in m.wilds if L["id"] == "old_quarry")
-    near, gate = m.points["loop_old_quarry_b"], m.points["gate_old_quarry"]
+    gate = m.points["gate_old_quarry"]
     avoid = [p for k, p in m.points.items() if p[2] == 7 and (k.startswith("secret_") or k.startswith("sealed_cut"))]
     spawns = [pos for _n, pos, *_r in m.monsters if pos[2] == 7]
     best = None
-    for (x, y) in sorted(qL["rect"]):
-        ring = [(x + i, y + j) for i in range(-1, 7) for j in range(-1, 4)]
-        if not all((bx, by, 7) in m.ground and not m.items.get((bx, by, 7)) and (bx, by) in qL["rect"]
-                   and m.ground[(bx, by, 7)] not in ROCK for bx, by in ring):
-            continue
-        if not all(m.ground.get((bx, by, 7)) not in ROCK for bx in range(x - 2, x + 8) for by in range(y - 2, y + 5)):
-            continue                      # not even beside a cliff: its rock faces are added later, on the floor next to it
-        if max(abs(x - gate[0]), abs(y - gate[1])) < 12:
-            continue                      # the gate side stays quiet
-        if any(max(abs(x - p[0]), abs(y - p[1])) < 10 for p in avoid):
-            continue
-        if any(max(abs(x + 3 - p[0]), abs(y + 1 - p[1])) < 5 for p in spawns):
-            continue
-        d = (x - near[0]) ** 2 + (y - near[1]) ** 2
-        if best is None or d < best[0]:
-            best = (d, (x, y))
+    for x in range(gate[0] - 16, gate[0] + 4):
+        for y in range(gate[1] - 12, gate[1] + 12):
+            ring = [(x + i, y + j) for i in range(-1, 7) for j in range(-1, 4)]
+            if any((bx, by) in qL["rect"] for bx, by in ring):
+                continue                  # outside the hunting ground
+            if not all((bx, by, 7) in m.ground and not m.items.get((bx, by, 7)) and m.ground[(bx, by, 7)] not in ROCK
+                       and not m.blocked(bx, by, 7) for bx, by in ring):
+                continue
+            if not all(m.ground.get((bx, by, 7)) not in ROCK for bx in range(x - 2, x + 8) for by in range(y - 2, y + 5)):
+                continue
+            if any(max(abs(x - p[0]), abs(y - p[1])) < 10 for p in avoid):
+                continue
+            if any(max(abs(x + 3 - p[0]), abs(y + 1 - p[1])) < 11 for p in spawns):
+                continue
+            d = max(abs(x + 3 - gate[0]), abs(y + 1 - gate[1]))
+            if d < 3:
+                continue
+            if best is None or d < best[0]:
+                best = (d, (x, y))
     if not best:
-        raise ValueError("Oathroom: no free 6 x 3 block in the Old Quarry for the door")
+        raise ValueError("Oathroom: no free 6 x 3 block outside the Old Quarry's gate for the door")
     return best[1]
 
 

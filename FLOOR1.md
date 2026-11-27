@@ -77,15 +77,15 @@ Hearthgate was a town; chapter 8 gives the title Heir to the First Climb and the
 3. *Bread for the Climb* (12): ask Miller Agna about the climb; the old flour bin in Thornsnap Hollow (three thornsnaps); the ledger.
 4. *The One Who Turned Back* (15): Brother Tam's grave in Reedmarsh; take his pendant to the archive or lay Agna's wreath (two titles, the look line says which).
 5. *The Pay Chest* (19): two pages of Ione's record from Bandit Captains.
-6. *The Watch That Never Ended* (24): the standing order by the oath stones in the Old Quarry; the watch log in the Old Watchtower's keep.
+6. *The Watch That Never Ended* (24): the standing order by the oath stones at the Old Quarry's gate; the watch log in the Old Watchtower's keep.
 7. *The Rearguard* (28): Aldric Vane's field desk at the foot of the labyrinth, opened with the Stair Key.
 8. *The Last Page* (30): the Axe-Lord of the Stair (he was Aldric Vane).
 Twelve records (nine from the chapters, three loose: the Millcross carriage stop, Wolf Copse, Reedmarsh's camp) are kept as
 items and counted on the Discoveries page (Records). Townsfolk each say one line about the First Climb ('climb'), and disagree.
 Objects are put down at start-up by `scripts/spirebound/first_climb.lua`; Maren and the Oathroom are in `maps/floor1_story.py`.
 
-**The big quest: The Oathroom** (roadmap FD3). Four climbers of level 30 stand on the four oath stones on the Old Quarry's
-south trail; one pulls the lever. 25 minutes, one team at a time, on level 10: the Captain's hall (hold a line for three
+**The big quest: The Oathroom** (roadmap FD3). Four climbers of level 30 stand on the four oath stones just outside the Old Quarry's
+gate; one pulls the lever. 25 minutes, one team at a time, on level 10: the Captain's hall (hold a line for three
 minutes of waves), the Scout's hall (two pairs, four levers in the carved order SUN, MOON, STAR, FLAME), the Keeper's hall
 (a rune floor; the safe path is in the book on the lectern, new each run), the Healer's hall (the Oathkeeper heals from four
 braziers; stand beside one to put it out). Four chests, one per character each season: a tier step on a Floor 1 weapon,

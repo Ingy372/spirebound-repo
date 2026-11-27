@@ -48,7 +48,7 @@ O.QUEST = {
 	id = "fd3_oath", floor = 1, side = true, auto = true, kind = "oath", name = "The Oathroom", giver = "the Oathroom",
 	storage = 51321, killStorage = 51322, count = 5, minLevel = O.LEVEL, reward = { exp = 0 },
 	offer = "",
-	step = "A group quest for four climbers of level 30. The way in: the four oath stones on the Old Quarry's south trail (the First Climb's standing order, chapter 6, tells of it). Four stand on the stones, one pulls the lever.",
+	step = "A group quest for four climbers of level 30. The way in: the four oath stones just outside the Old Quarry's gate (the First Climb's standing order, chapter 6, tells of it). Four stand on the stones, one pulls the lever.",
 	steps = {
 		{ text = "The Captain's hall: hold the line for three minutes. Not one of the garrison may get past the marked line behind you." },
 		{ text = "The Scout's hall: split into two pairs, north and south. Pull the four levers in the order carved at the entrance (SUN, MOON, STAR, FLAME); each lever opens the other pair's next door." },

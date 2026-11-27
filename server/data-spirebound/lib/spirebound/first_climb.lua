@@ -28,7 +28,7 @@ SpireFirstClimb.RECORDS = {
 	{ id = "page2", name = "a page of Ione's record (day 52)", item = 2815, chain = true,
 		text = "RECORD OF THE FIRST CLIMB. Day 52.\n\nThe road thieves have found our old camp and dig under every tree. Let them dig. The chest was never buried there. The Captain carried it up the stair himself. Where he goes, it goes." },
 	{ id = "order", name = "the Garrison's Standing Order", item = 2818, chain = true,
-		text = "STANDING ORDER OF THE FIRST CLIMB (copied from the guard post wall in the Old Quarry)\n\nHold the quarry. Hold the tower. Let nobody up the stair.\n\nWe four swore it for the forty-one in the oath hall below this quarry. Its door stands in the quarry, sealed by four oath stones: four must stand on them, and one pull the lever. Keep the oath until we come down.\n\n- A. Vane, captain" },
+		text = "STANDING ORDER OF THE FIRST CLIMB (copied from the carved stone at the Old Quarry's gate)\n\nHold the quarry. Hold the tower. Let nobody up the stair.\n\nWe four swore it for the forty-one in the oath hall below this quarry. Its way in stands at the quarry's gate, sealed by four oath stones: four must stand on them, and one pull the lever. Keep the oath until we come down.\n\n- A. Vane, captain" },
 	{ id = "watchlog", name = "the Old Watchtower's Watch Log", item = 2821, chain = true,
 		text = "WATCH LOG, OLD WATCHTOWER\n\nDay 1: Company gone up the stair. All quiet.\nDay 2: All quiet.\nDay 3: All quiet.\n\n(The same two words fill every page after that, in a hand that never changes, to the very end of the book.)\n\nDay 11,904: All quiet. They have not come down." },
 	{ id = "letter", name = "Aldric Vane's Unsent Letter", item = 2818, chain = true,
@@ -93,7 +93,7 @@ local CH = {
 	{ id = "fc6", level = 24, title = "The Watch That Never Ended", exp = 12000, gold = 2000,
 		offer = "The First Climb quarried the stair's stone in the Old Quarry and kept watch from the Old Watchtower, and the Ruin Guards there still stand at their posts. Read their standing order, carved in the Old Quarry, then their watch log in the Old Watchtower's keep?",
 		steps = {
-			{ text = "In the Old Quarry (north of Hearthgate, off the Pass Road), read the garrison's standing order, carved on a stone beside the four oath stones on the quarry's south trail (use it)." },
+			{ text = "In the Old Quarry (north of Hearthgate, off the Pass Road), read the garrison's standing order, carved on a stone beside the four oath stones just outside the quarry's gate (use it)." },
 			{ text = "In the Old Watchtower (far north-west, up the Watch Road from Millcross), reach the keep at its heart and read the watch log on the captain's table." },
 		},
 		thanks = "Thousands of days of \"all quiet\". They are still keeping the watch. And the order is signed A. Vane: Captain Aldric Vane. His field desk stood at the foot of the stair. Come back at level 28, with the Stair Key." },

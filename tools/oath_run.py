@@ -110,12 +110,15 @@ def route(name):
     # the Healer's hall
     boss = p["oath_boss"]
     steps += walk([boss[0] - 3, boss[1] + (i - 1), z], "into the Healer's hall", 20, True, 3)
-    if i in (1, 3):     # Warden puts out braziers 1 and 2 (north), the Healer 3 and 4 (south)
+    if i in (1, 3):     # Warden keeps braziers 1 and 2 (north) out, the Healer 3 and 4 (south), fighting between rounds
         b = [p["oath_brazier_1"], p["oath_brazier_2"]] if i == 1 else [p["oath_brazier_3"], p["oath_brazier_4"]]
-        for k, br in enumerate(b):
-            stand = [br[0], br[1] + (1 if i == 1 else -1), z]
-            steps += walk(stand, f"put out a brazier ({k + 1})", 20, False) + [{"do": "wait", "seconds": 8}]
-    steps += [{"do": "hunt", "seconds": 240, "radius": 10}]
+        for rnd in range(7):
+            for k, br in enumerate(b):
+                stand = [br[0], br[1] + (1 if i == 1 else -1), z]
+                steps += walk(stand, f"put out brazier {k + 1} (round {rnd + 1})", 12, False) + [{"do": "wait", "seconds": 5}]
+            steps += [{"do": "hunt", "seconds": 20, "radius": 10}]
+    else:
+        steps += [{"do": "hunt", "seconds": 280, "radius": 10}]
     if i == 0:
         steps += [{"do": "shot", "name": "oath_boss"}]
     # the reward room: one chest each, then out through the light
@@ -147,6 +150,24 @@ def main():
         for line in re.findall(r"[^\n]*(?:oath|Oath|line|lever|rune|brazier|chest|Keeper|Captain|Scout|Healer)[^\n]*", t):
             if "msg" in line or "message" in line.lower() or ":" in line:
                 print("     " + line.strip()[:160])
+    # the times of the halls (from the first Pilot whose log has them) and how often each hall went wrong
+    keys = [("in", "You are inside the First Climb"), ("captain", "The line held"), ("scout", "All four levers"),
+            ("keeper", "Across the Keeper's floor"), ("boss up", "The Oathkeeper rises"), ("boss down", "The Oathkeeper falls"),
+            ("timeout", "25 minutes are up")]
+    for n in TEAM:
+        f = PR.LOGS / PR.logname(n)
+        t = f.read_text(encoding="utf-8", errors="replace") if f.exists() else ""
+        when = {}
+        for k, text in keys:
+            m = re.search(r"^\s*([\d.]+)\s+message: .*" + re.escape(text), t, re.M)
+            if m:
+                when[k] = float(m.group(1))
+        if "in" in when:
+            t0 = when["in"]
+            print("  times (%s): " % n + ", ".join("%s %d:%02d" % (k, (v - t0) // 60, (v - t0) % 60) for k, v in when.items() if k != "in"))
+            print("  went wrong: line broken %d, wrong lever %d, wrong rune %d, deaths %d" % (
+                t.count("The line is broken"), t.count("won't move"), t.count("not the safe stone"), t.count(" DEATH ")))
+            break
     for line in PR.server_text()[mark:].splitlines():
         if "DIED" in line or "oath" in line.lower():
             print("  server: " + line.split("] ", 2)[-1])
