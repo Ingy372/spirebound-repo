@@ -816,6 +816,50 @@ function handlers.drop(player)
     if now() - stepData.t > 1.5 then nextStep() end
 end
 
+-- (FD2 tests) use an item from the backpack on a map tile, as a player does with "Use with": a shovel on a truffle spot
+-- { "do": "usewith", "id": 3457, "at": [x, y, z] }
+function handlers.usewith(player)
+    if not stepData.sent then
+        local tile = g_map.getTile({ x = step.at[1], y = step.at[2], z = step.at[3] })
+        local target = tile and tile:getTopUseThing()
+        local done = false
+        for _, c in pairs(g_game.getContainers()) do
+            for _, it in ipairs(c:getItems()) do
+                if not done and target and it:getId() == step.id then
+                    g_game.useWith(it, target)
+                    done = true
+                end
+            end
+        end
+        log(done and ('used item ' .. step.id .. ' on ' .. table.concat(step.at, ',')) or ('usewith: no item or no tile'))
+        stepData.sent = now()
+    elseif now() - stepData.sent > (step.gap or 2) then
+        nextStep()
+    end
+end
+
+-- (FD4/FD5 tests) drag an item from the backpack onto a map tile, as a player does (food on a fire, coins on the
+-- Works Board): { "do": "throw", "id": 3582, "at": [x, y, z], "count": 1 }
+function handlers.throw(player)
+    if not stepData.t then
+        stepData.t = now()
+        local to = { x = step.at[1], y = step.at[2], z = step.at[3] }
+        for _, c in pairs(g_game.getContainers()) do
+            for _, it in ipairs(c:getItems()) do
+                if it:getId() == step.id and not stepData.done then
+                    stepData.done = true
+                    local n = math.min(step.count or it:getCount(), math.max(1, it:getCount()))
+                    g_game.move(it, to, n)
+                    log('threw item ' .. step.id .. ' x' .. n .. ' to ' .. to.x .. ',' .. to.y .. ',' .. to.z)
+                end
+            end
+        end
+        if not stepData.done then log('throw: no item ' .. step.id .. ' in the backpack') end
+        return
+    end
+    if now() - stepData.t > 1.5 then nextStep() end
+end
+
 -- (party playtests) buy and sell at an NPC's trade window, as a player does:
 -- { "do": "trade", "buy": [["health potion", 50]], "sell": ["rat tail"] }   "sell": ["*"] sells all loot the NPC buys
 -- (never potions, food, ammunition or what you wear); walk next to the NPC first

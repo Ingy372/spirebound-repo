@@ -431,18 +431,41 @@ def spread(m, x0, y0, w, h, z, n, gap, avoid=()):
 
 
 # ------------------------------------------------------------------------------------------------ walk test
+def appearances_file(root):
+    """The game's appearances file: the client's copy on Jay's PC, else the built server's own copy (Linux test copies
+    have no client). MR7, 2026-11-27: without either, the hand list below has no water, so water grounds 'leaked'
+    and spawn spots landed differently: the map was not the same on Windows and Linux."""
+    for pattern_root, pattern in ((root / ".local" / "client", "**/appearances-*.dat"),
+                                  (root / ".build" / "server" / "data" / "items", "appearances.dat")):
+        if pattern_root.exists():
+            hit = next(pattern_root.glob(pattern), None)
+            if hit:
+                return hit
+    return None
+
+
+_BLOCKERS = None
+
+
 def blockers():
     """Item and ground ids that cannot be walked on: from the game's appearances file when it is on this PC, otherwise a
     list of everything the wilds use that blocks."""
+    global _BLOCKERS
+    if _BLOCKERS is not None:
+        return set(_BLOCKERS)
     from pathlib import Path
     root = Path(__file__).resolve().parent.parent
     try:
         import sys
         sys.path.insert(0, str(root / "tools"))
         import appearances
-        path = next((root / ".local" / "client").glob("**/appearances-*.dat"))
-        return {i for i, (f, _n) in appearances.load(str(path)).items() if f.get("unpass")}
+        path = appearances_file(root)
+        if path is None:
+            raise OSError("no appearances file")
+        _BLOCKERS = {i for i, (f, _n) in appearances.load(str(path)).items() if f.get("unpass")}
+        return set(_BLOCKERS)
     except (StopIteration, OSError, ImportError):
+        print("wilds: WARNING no appearances file found; the walk test uses a short hand list (water is not in it)")
         from mapgen import WALL_IDS
         ids = set(WALL_IDS) | set(TREES_ALL_BROAD + FIRS + ROCKS + REEDS + S.THORNS + S.BUSHES + S.TREES_DEAD + S.BOULDERS)
         ids |= {3751, 3754, 3698, 1784, 1785, 1786, 2264, 2290, 2012, 5543, 116, 17232, 17233, 1081, 1082, 1085, MOUNTAIN}
