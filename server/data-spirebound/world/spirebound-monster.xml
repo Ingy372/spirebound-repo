@@ -1907,8 +1907,8 @@
 		<monster name="Bandit Crossbowman" x="-1" y="0" z="7" spawntime="28" />
 	</monster>
 	<monster centerx="1337" centery="1023" centerz="7" radius="2">
-		<monster name="Road Bandit" x="0" y="0" z="7" spawntime="28" />
-		<monster name="Bandit Crossbowman" x="-1" y="0" z="7" spawntime="28" />
+		<monster name="Road Bandit" x="-1" y="0" z="7" spawntime="28" />
+		<monster name="Bandit Crossbowman" x="1" y="0" z="7" spawntime="28" />
 	</monster>
 	<monster centerx="1356" centery="1035" centerz="7" radius="2">
 		<monster name="Bandit Crossbowman" x="0" y="0" z="7" spawntime="28" />
@@ -1926,6 +1926,90 @@
 	</monster>
 	<monster centerx="1355" centery="1014" centerz="7" radius="2">
 		<monster name="Bandit Captain" x="0" y="0" z="7" spawntime="450" />
+	</monster>
+	<monster centerx="1372" centery="1017" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1375" centery="1017" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1355" centery="1016" centerz="8" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="8" spawntime="450" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1352" centery="1016" centerz="8" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="8" spawntime="450" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1338" centery="1017" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1335" centery="1017" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="1" y="0" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1337" centery="1033" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1340" centery="1033" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1341" centery="1048" centerz="8" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="8" spawntime="450" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1338" centery="1048" centerz="8" radius="2">
+		<monster name="Bandit Captain" x="0" y="0" z="8" spawntime="450" />
+		<monster name="Road Bandit" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="1" y="0" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1370" centery="1048" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1373" centery="1048" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1372" centery="1033" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1375" centery="1033" centerz="8" radius="2">
+		<monster name="Road Bandit" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Road Bandit" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="80" />
 	</monster>
 	<monster centerx="1338" centery="1143" centerz="7" radius="2">
 		<monster name="Ruin Archer" x="0" y="0" z="7" spawntime="30" />
@@ -1970,6 +2054,102 @@
 	<monster centerx="1378" centery="1132" centerz="7" radius="2">
 		<monster name="Ruin Sentinel" x="0" y="0" z="7" spawntime="30" />
 		<monster name="Ruin Archer" x="-1" y="0" z="7" spawntime="30" />
+	</monster>
+	<monster centerx="1340" centery="1143" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1337" centery="1143" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="1" y="0" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1361" centery="1145" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1364" centery="1145" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1381" centery="1143" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1384" centery="1143" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1382" centery="1126" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1385" centery="1126" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1380" centery="1107" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1383" centery="1107" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Sentinel" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1362" centery="1106" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1365" centery="1106" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1339" centery="1105" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1339" centery="1105" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1340" centery="1126" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
+	</monster>
+	<monster centerx="1337" centery="1126" centerz="8" radius="2">
+		<monster name="Ruin Sentinel" x="0" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="-1" y="0" z="8" spawntime="80" />
+		<monster name="Ruin Archer" x="0" y="-1" z="8" spawntime="80" />
+		<monster name="Field Shardling" x="0" y="1" z="8" spawntime="80" />
 	</monster>
 	<monster centerx="1283" centery="1348" centerz="8" radius="2">
 		<monster name="Pen Rat" x="-1" y="-1" z="8" spawntime="15" />
@@ -2074,7 +2254,7 @@
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
 		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="60" />
 	</monster>
-	<monster centerx="1047" centery="1036" centerz="8" radius="2">
+	<monster centerx="1047" centery="1037" centerz="8" radius="2">
 		<monster name="Stonehorn Ram" x="0" y="0" z="8" spawntime="60" />
 		<monster name="Stonehorn Ram" x="-1" y="0" z="8" spawntime="60" />
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
@@ -2092,7 +2272,7 @@
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
 		<monster name="Hedge Hexer" x="0" y="1" z="8" spawntime="60" />
 	</monster>
-	<monster centerx="1048" centery="1045" centerz="8" radius="2">
+	<monster centerx="1065" centery="1057" centerz="8" radius="2">
 		<monster name="Stonehorn Ram" x="0" y="0" z="8" spawntime="60" />
 		<monster name="Stonehorn Ram" x="-1" y="0" z="8" spawntime="60" />
 		<monster name="Bandit Crossbowman" x="0" y="-1" z="8" spawntime="60" />
@@ -2461,7 +2641,7 @@
 	<monster centerx="1102" centery="1260" centerz="7" radius="3">
 		<monster name="Meadow Hare" x="0" y="0" z="7" spawntime="45" />
 	</monster>
-	<monster centerx="1314" centery="1084" centerz="7" radius="3">
+	<monster centerx="1314" centery="1076" centerz="7" radius="3">
 		<monster name="Dapple Fawn" x="0" y="0" z="7" spawntime="45" />
 	</monster>
 	<monster centerx="1250" centery="1082" centerz="7" radius="3">

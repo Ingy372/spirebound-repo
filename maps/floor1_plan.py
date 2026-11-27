@@ -130,12 +130,16 @@ CAMPS = [
          groups=[G(("Road Bandit", 2), ("Bandit Crossbowman", 1)), G(("Hedge Hexer", 1), ("Road Bandit", 1)),
                  G(("Road Bandit", 3)), G(("Bandit Crossbowman", 2)), G(("Bandit Captain", 1), ("Road Bandit", 2)),
                  G(("Road Bandit", 2), ("Hedge Hexer", 1))], respawn=140,
+         den="The Ridge Tunnels", den_groups=[G(("Road Bandit", 2), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 5
+         + [G(("Bandit Captain", 1), ("Road Bandit", 1), ("Bandit Crossbowman", 1), ("Hedge Hexer", 1))] * 2,
          note="The bandits' second camp, up in the north-east firs. Coins, crossbows and hexers who mend their friends."),
     dict(id="fallen_bastion", type="mixed", title="The Fallen Bastion", x=335, y=110, w=52, h=48, gate="s", size="std", design="BASTION",
          zone="open", levels=(23, 30), role="money", wall="boulders", core="cutstone", trail="gravel", ruin_walls=True,
          groups=[G(("Ruin Archer", 1)), G(("Ruin Sentinel", 1)), G(("Ruin Archer", 1)),
                  G(("Ruin Sentinel", 1), ("Ruin Archer", 1)), G(("Ruin Sentinel", 1)), G(("Ruin Archer", 1))],
          respawn=150,
+         den="The Bastion Cellars", den_groups=[G(("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Field Shardling", 1))] * 4
+         + [G(("Ruin Sentinel", 1), ("Ruin Archer", 2), ("Field Shardling", 1))] * 4,
          note="An old fort's broken walls, held by stone sentinels and their archers. North of the Bandit Road."),
 ]
 
@@ -763,8 +767,10 @@ SMUGGLERS = dict(
     route_names={"a": "The East Firs", "b": "The West Firs", "c": "The Smugglers' Path", "d": "The Ridge Camp"},
     levels={7: dict(_flip(BANDITS["levels"][7], 52, 48, True, False,
                           swap={"a1": [_RB1], "a2": [_SB2], "b1": [_RB1], "b2": [_SB1], "c1": [_SB2], "d1": [_CAP1]}),
-                    name="Smugglers' Ridge")},
-    links=[],
+                    name="Smugglers' Ridge"),
+            # 10.4 pass 3 (2026-11-27 night): a party cave for 3-4 (the surface can't hold more inside its danger limits)
+            8: dict(_flip(BANDITS["levels"][8], 52, 48, True, False), name="The Ridge Tunnels", box=(4, 4, 46, 42))},
+    links=[("stairs", 51 - 25, 33, 8)],
 )
 _RS1 = (("Ruin Sentinel", 1),)
 _RA1 = (("Ruin Archer", 1),)
@@ -781,8 +787,12 @@ BASTION = dict(
     route_names={"a": "The West Wall", "b": "The Inner Yard", "c": "The Keep Steps", "d": "The Fallen Gate"},
     levels={7: dict(_flip(dict(_s7, clearings=[cl for cl in _s7["clearings"]]), 52, 48, False, True,
                           swap={"a1": [_RA1], "a2": [_RS1], "b1": [_RA1], "b2": [_RS1, _RA1]}),
-                    name="The Fallen Bastion")},
-    links=[],
+                    name="The Fallen Bastion"),
+            # 10.4 pass 3: the bastion's cellars, a party cave for 3-4 (the Shard Grotto's plan, mirrored like the surface)
+            8: dict(_flip(SHARDS["levels"][8], 52, 48, False, True,
+                          swap={k: [_LW1] if k in ("p2", "p5") else [_LW2] for k in ("p1", "p2", "p3", "p4", "p5", "p6", "p7", "p8")}),
+                    name="The Bastion Cellars", box=(0, -10, 52, 50))},
+    links=[("stairs", 9, 5, 8)],               # on the path into the flipped south-west clearing, clear of its spot
 )
 _bl = BASTION["levels"][7]
 _bl["clearings"] = list(_bl["clearings"]) + _KEEP

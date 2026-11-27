@@ -117,7 +117,7 @@ def start(name, steps, mark):
     RUN.write_text(json.dumps({"name": "party_" + name, "account": ACCOUNT.get(name, "autopilot@localhost"), "password": "spirebound",
                                "character": name, "log": logname(name), "exit": True, "steps": steps}))
     subprocess.Popen([str(CLIENT / "otclient.exe")], cwd=str(CLIENT))
-    ok = wait_for(f"{name} has logged in", 60, mark)
+    ok = wait_for(f"{name} has logged in", 120, mark)   # a fourth or fifth client can take over a minute to start
     time.sleep(2)
     RUN.unlink(missing_ok=True)
     print(f"{name}: {'logged in' if ok else 'DID NOT LOG IN'}", flush=True)

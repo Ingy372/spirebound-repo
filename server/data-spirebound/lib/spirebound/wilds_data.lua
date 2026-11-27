@@ -204,6 +204,9 @@ SpireWilds = { grounds = {
 		{ n = 10, loop = "d", x = 1362, y = 1015, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 11, loop = "d", x = 1348, y = 1015, z = 7, group = { { "Road Bandit", 1 } } },
 		{ n = 12, loop = "d", x = 1355, y = 1017, z = 7, group = { { "Road Bandit", 1 } } },
+		{ n = 13, loop = "d", x = 1364, y = 1016, z = 8, group = { { "Road Bandit", 1 } } },
+		{ n = 14, loop = "d", x = 1346, y = 1016, z = 8, group = { { "Road Bandit", 1 } } },
+		{ n = 15, loop = "d", x = 1348, y = 1048, z = 8, group = { { "Road Bandit", 1 } } },
 	} },
 	{ id = "fallen_bastion", title = "The Fallen Bastion", type = "mixed", want = 16, guarded = false, respawn = 60, lo = 23, hi = 30, x1 = 1335, y1 = 1110, x2 = 1386, y2 = 1157, z = 7, zs = { [7] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1338, y = 1149, z = 7, group = { { "Ruin Archer", 1 } } },
@@ -218,6 +221,9 @@ SpireWilds = { grounds = {
 		{ n = 10, loop = "d", x = 1344, y = 1114, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 11, loop = "d", x = 1354, y = 1114, z = 7, group = { { "Ruin Archer", 1 } } },
 		{ n = 12, loop = "d", x = 1349, y = 1118, z = 7, group = { { "Ruin Archer", 1 } } },
+		{ n = 13, loop = "d", x = 1351, y = 1145, z = 8, group = { { "Ruin Archer", 1 } } },
+		{ n = 14, loop = "d", x = 1372, y = 1145, z = 8, group = { { "Ruin Archer", 1 } } },
+		{ n = 15, loop = "d", x = 1372, y = 1106, z = 8, group = { { "Ruin Archer", 1 } } },
 	} },
 	{ id = "f2_downs", title = "Grazing Downs", type = "training", want = 28, guarded = false, respawn = 100, lo = 35, hi = 41, x1 = 2050, y1 = 1252, x2 = 2093, y2 = 1293, z = 7, spots = {
 		{ n = 1, loop = "nw", x = 2061, y = 1263, z = 7, group = { { "Horned Grazer", 2 } } },
@@ -586,6 +592,8 @@ SpireWilds = { grounds = {
 	{ id = "shard_fields", x1 = 1340, y1 = 1308, x2 = 1391, y2 = 1357, z = 8, exit = Position(1351, 1344, 7) },
 	{ id = "bandit_road", x1 = 1332, y1 = 1176, x2 = 1377, y2 = 1217, z = 8, exit = Position(1353, 1204, 7) },
 	{ id = "old_quarry", x1 = 1242, y1 = 1125, x2 = 1298, y2 = 1161, z = 8, exit = Position(1251, 1149, 7) },
+	{ id = "smugglers_ridge", x1 = 1334, y1 = 1012, x2 = 1379, y2 = 1053, z = 8, exit = Position(1356, 1040, 7) },
+	{ id = "fallen_bastion", x1 = 1335, y1 = 1100, x2 = 1386, y2 = 1149, z = 8, exit = Position(1344, 1114, 7) },
 	{ id = "f2_gully", x1 = 2248, y1 = 1197, x2 = 2283, y2 = 1222, z = 8, exit = Position(2266, 1209, 7) },
 	{ id = "f2_ridge", x1 = 2180, y1 = 1157, x2 = 2215, y2 = 1182, z = 8, exit = Position(2198, 1169, 7) },
 	{ id = "f2_steppe", x1 = 2083, y1 = 1146, x2 = 2118, y2 = 1171, z = 8, exit = Position(2101, 1158, 7) },

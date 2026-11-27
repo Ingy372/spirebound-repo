@@ -137,6 +137,6 @@ SpireTest.add("crowd: the !hunt line and the cave rule", function()
 	for _, c in ipairs(SpireWilds.caves) do
 		if c.x1 < 2000 then floor1 = floor1 + 1 end
 	end
-	SpireTest.eq(floor1, 6, "six caves on Floor 1")
+	SpireTest.eq(floor1, 8, "eight caves on Floor 1 (10.4 pass 3: the Ridge Tunnels and the Bastion Cellars)")
 	SpireTest.eq(#SpireWilds.caves >= 6, true, "and the higher floors' caves are listed too")
 end)

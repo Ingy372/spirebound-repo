@@ -21,6 +21,7 @@ SpireTasks.floorList = {
 	{ id = "t1_banditcaptain", floor = 1, monster = "Bandit Captain", count = 50, gold = 590, points = 2 },
 	{ id = "t1_blackcrawler", floor = 1, monster = "Black Crawler", count = 50, gold = 650, points = 2 },
 	{ id = "t1_vaultrat", floor = 1, monster = "Vault Rat", count = 50, gold = 720, points = 2 },
+	{ id = "t1_stairwarden", floor = 1, monster = "Stairwarden", count = 20, gold = 320, points = 2 },
 	{ id = "t1_chainghoul", floor = 1, monster = "Chain Ghoul", count = 50, gold = 990, points = 2 },
 	{ id = "t1_stonehornram", floor = 1, monster = "Stonehorn Ram", count = 50, gold = 990, points = 2 },
 	{ id = "t1_ironshade", floor = 1, monster = "Iron Shade", count = 50, gold = 1800, points = 2 },

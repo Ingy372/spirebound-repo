@@ -84,7 +84,7 @@ SpireTest.add("wilds: the Old Watchtower has its fixed groups (34 above ground, 
 	SpireTest.eq(cave >= 30 and cave <= 32, true, "cave: " .. cave .. " (want 32)")
 end)
 
-SpireTest.add("wilds: six party caves on Floor 1 (more above), each with working stairs and 56 to 64 monsters", function()
+SpireTest.add("wilds: eight party caves on Floor 1 (more above), each with working stairs and 56 to 64 monsters", function()
 	local n = 0
 	for k, _ in pairs(WorldPoints) do
 		local id = k:match("^den_(.+)_nw$")
@@ -101,7 +101,7 @@ SpireTest.add("wilds: six party caves on Floor 1 (more above), each with working
 			SpireTest.eq(c >= 52 and c <= 64, true, id .. ": " .. c .. " monsters in the cave (want 56 to 64)")
 		end
 	end
-	SpireTest.eq(n, 6, "six caves on Floor 1")
+	SpireTest.eq(n, 8, "eight caves on Floor 1 (10.4 pass 3)")
 end)
 
 -- FLOOR1_HUNTING_PLAN.md (H4): the Ratwarren is calm by the gate and layered below. Counts the monsters the engine really

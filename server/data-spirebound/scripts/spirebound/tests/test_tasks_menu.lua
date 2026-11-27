@@ -66,7 +66,7 @@ SpireTest.add("tasks: every floor's taskmaster stands in town with only that flo
 			if (mt.isRewardBoss and mt:isRewardBoss()) or t.monster == "Pen Rat" then error(t.id .. " is not a hunting monster") end
 		end
 	end
-	SpireTest.eq(#SpireTasks.forFloor(1), 27, "Floor 1 offers all 27 huntable monsters (S4: the crossbowman and the hexer)")
+	SpireTest.eq(#SpireTasks.forFloor(1), 28, "Floor 1 offers all 28 huntable monsters (S4: the crossbowman and the hexer; RV5: the Stairwarden)")
 end)
 
 SpireTest.add("tasks: take, hunt, report through Taskmaster Rhen's menu", function()
@@ -78,7 +78,7 @@ SpireTest.add("tasks: take, hunt, report through Taskmaster Rhen's menu", functi
 	s:set("points", 0)
 	local m = SpireTasks.menu(p, 1)
 	SpireTest.eq(m.master, "Taskmaster Rhen", "menu is Rhen's")
-	SpireTest.eq(#m.list, 27, "27 tasks listed")
+	SpireTest.eq(#m.list, 28, "28 tasks listed")
 	SpireTest.eq(m.active, false, "no task yet")
 	SpireTest.eq(m.list[1].look[1] > 0, true, "the menu shows the monster's look")
 	SpireTest.eq((SpireTasks.take(p, "t2_hornedgrazer")), false, "Rhen doesn't give Floor 2 tasks")
