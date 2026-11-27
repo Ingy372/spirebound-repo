@@ -20,6 +20,62 @@ BENCH, LAMP_POST, TREE = 2370, 8660, 3619
 POTS = (316, 321)
 
 
+LILIES = (3669, 3670, 3671, 3672)
+REED = 3688
+
+
+def garden_pond(m, R, Z, c, rx, ry, pier, rng):
+    """A town pond (Jay, 2026-11-27: the old one "looks funny and needs some detail work"): a smooth oval of water on
+    the grass, no mud ring, so Map.edge_grounds draws a proper shoreline; lilies on the water, reeds and stones on the
+    shore, and a short wooden pier."""
+    cx, cy = c
+    water = []
+    for y in range(cy - ry - 1, cy + ry + 2):
+        for x in range(cx - rx - 1, cx + rx + 2):
+            if ((x - cx) / (rx + 0.5)) ** 2 + ((y - cy) / (ry + 0.5)) ** 2 <= 1.0:
+                p = R(x, y) + (Z,)
+                m.clear_items(*p)
+                m.ground[p] = m.pick("water")
+                water.append((x, y))
+    if pier:
+        S.bridge(m, *R(pier[0], pier[1]), pier[2], pier[3], Z)
+    ws = set(water)
+    inner = [(x, y) for (x, y) in water if all((x + a, y + b) in ws for a in (-1, 0, 1) for b in (-1, 0, 1))
+             and m.ground[R(x, y) + (Z,)] != 408]
+    for (x, y) in rng.sample(inner, min(len(inner), max(2, len(inner) // 4))):
+        m.put(*R(x, y), Z, rng.choice(LILIES))
+    shore = sorted({(x + a, y + b) for (x, y) in water for a in (-1, 0, 1) for b in (-1, 0, 1)} - ws)
+    rng.shuffle(shore)
+    for k, (x, y) in enumerate(shore[:max(4, len(shore) // 5)]):
+        p = R(x, y) + (Z,)
+        if m.ground.get(p) in S.GRASS_IDS and not m.items.get(p) and not (pier and abs(x - pier[0]) <= 1):
+            m.put(*p, REED if k % 3 else rng.choice(S.STONES))
+
+
+def hearth_roof(m, R, rz, tiles, style="red"):
+    """A roof on level rz over a round hall (Map.roof does rectangles): roof ground on every tile, edge pieces on the
+    empty tiles round it, picked by which sides the roof is on (the same rules as Map.roof)."""
+    from mapgen import ROOFS
+    r = ROOFS[style]
+    world = {R(x, y) for (x, y) in tiles}
+    for (x, y) in world:
+        if (x, y, rz) not in m.ground:
+            m.ground[(x, y, rz)] = r["g"]
+            m.flags[(x, y, rz)] = m.flags.get((x, y, rz + 2), 0)
+    around = {(x + a, y + b) for (x, y) in world for a in (-1, 0, 1) for b in (-1, 0, 1)} - world
+    for (x, y) in around:
+        if (x, y, rz) in m.ground:
+            continue
+        n, s_, e, w_ = (x, y - 1) in world, (x, y + 1) in world, (x + 1, y) in world, (x - 1, y) in world
+        key = ("N" if n else "S" if s_ else "") + ("E" if e else "W" if w_ else "")
+        if len(key) == 2:
+            key = key[0]
+        if not key:
+            key = ("N" if (x, y - 1) in world or (x - 1, y - 1) in world or (x + 1, y - 1) in world else "S") + \
+                  ("W" if (x - 1, y - 1) in world or (x - 1, y + 1) in world else "E")
+        m.put(x, y, rz, r[key])
+
+
 def build(m, tx, ty, Z, claim, hid=1):
     """Lays the whole town with its top-left corner at (tx, ty). Returns the next free house id."""
     rng = random.Random(2611)                 # the town's own random numbers (m.pick and the helpers use m.rng too)
@@ -49,12 +105,13 @@ def build(m, tx, ty, Z, claim, hid=1):
         return ((x, y) in streets or (55 <= x <= 58 and 33 <= y <= 66) or (40 <= x <= 73 and 48 <= y <= 50))
 
     # ---------------------------------------------------------------- ground, the eight-sided wall, the safe zone
+    # v4.1 (Jay: "the town is grey, brighten it up some"): grass between the buildings, paved streets and plaza
     W, H = P.W, P.H
     for y in range(H):
         for x in range(W):
             p = (tx + x, ty + y, Z)
             m.clear_items(*p)
-            m.ground[p] = COBBLE if P.inside_wall(x, y) else m.pick("grass")
+            m.ground[p] = m.pick("grass")
     wall = P.wall_tiles()
     gates = {t for ts in P.GATES.values() for t in ts}
     m.autowall([R(x, y) for (x, y) in wall if (x, y) not in gates], Z, "pale")
@@ -74,70 +131,147 @@ def build(m, tx, ty, Z, claim, hid=1):
             d2 = (x - cx) ** 2 + (y - cy) ** 2
             if d2 <= P.PLAZA_R ** 2:
                 m.ground[(tx + x, ty + y, Z)] = FLAGSTONE if d2 > (P.PLAZA_R - 1.3) ** 2 else MARBLE
+
+    # ---------------------------------------------------------------- the Hearth: the round hall at the plaza's centre
+    # (Jay, 2026-11-27: "make the depot (middle of town) a building. make it circular as you can to hold the shape that
+    # is currently there. this will be the main hub of the city", then "flip the floor plan. i think the actual bank
+    # booths ... should be on the second floor"). Ground floor: the Hearthstone, the Monument, the Floor Beacon, the
+    # Arena Champion and the stalls. Second floor: the depot lockers and the bank.
     hx_, hy_ = P.HEARTHSTONE
-    for a in (-1, 0, 1):                                         # the Hearthstone: a black marble square
-        for b in (-1, 0, 1):
-            m.ground[(tx + hx_ + a, ty + hy_ + b, Z)] = BLACK_MARBLE
-    for a, b in ((-3, 0), (3, 0), (0, -3), (0, 3), (-2, -2), (2, -2), (-2, 2), (2, 2)):   # a ring of flagstone round it
-        m.ground[(tx + hx_ + a, ty + hy_ + b, Z)] = FLAGSTONE
+    hall, ring = P.hearth_tiles()
+    claim("the hearth", *R(*P.HEARTH_COURT[:2]), *P.HEARTH_COURT[2:])
+    for (x, y) in hall:
+        m.ground[(tx + x, ty + y, Z)] = MARBLE
+    m.autowall([R(x, y) for (x, y) in ring if not P.hearth_arch(x, y)], Z, "white")
+    for a in range(-2, 4):                                       # the Hearthstone: black marble framed in flagstone,
+        for b in range(-2, 3):                                   # the braziers on the frame's corners
+            edge = a in (-2, 3) or b in (-2, 2)
+            m.ground[(tx + hx_ + a, ty + hy_ + b, Z)] = FLAGSTONE if edge else BLACK_MARBLE
     temple = R(hx_, hy_) + (Z,)
     m.towns.append((1, "Hearthgate", temple))
     m.points["temple_hearthgate"] = temple
-
-    # ---------------------------------------------------------------- the Hearth (plan: HEARTH)
-    x0, y0, hw, hh = P.HEARTH
-    claim("the hearth", *R(x0, y0), hw, hh)
-    m.building(*R(x0, y0), hw, hh, Z, floor="marble", door_side=None, style="white", doors=False,
-               extra_gaps=[R(*a) for a in P.HEARTH_ARCHES])
-    m.storey(*R(x0, y0), hw, hh, Z - 1, floor="wood", style="white")           # the Trading Gallery
-    m.storey(*R(*P.HEARTH_TOWER[:2]), *P.HEARTH_TOWER[2:], Z - 2, floor="marble", style="white")   # the Hall of Climbers
-    paint(43, 13, 12, 9, WOOD)                                                    # north-west depot wing
-    paint(59, 25, 12, 9, WOOD)                                                    # south-east depot wing
-    paint(43, 25, 12, 9, BLACK_MARBLE)                                            # the bank
-    for a in P.HEARTH_ARCHES:
-        m.ground[(tx + a[0], ty + a[1], Z)] = MARBLE
-    S.carpet(m, *R(56, 12), 2, 23, Z, 2576)                                       # the red cross of carpet
-    S.carpet(m, *R(43, 23), 28, 1, Z, 2576)
-    for px, py in ((54, 21), (59, 21), (54, 25), (59, 25)):
-        S.prop(m, *R(px, py), Z, MARBLE_PILLAR)
-    for px, py in ((54, 33), (59, 33), (54, 13), (59, 13)):
+    m.points["hearth_waypoint"] = R(*P.WAYPOINT) + (Z,)              # where a Floor 1 Waycrystal brings you
+    for (px, py) in P.HEARTH_BRAZIERS:                            # four braziers round the Hearthstone: the hearth fire
         S.prop(m, *R(px, py), Z, DG.COAL_BASIN)
-    # depot (Jay, 2026-11-12: "just use what tibia uses for their dp's"): two wings of ten booths, two-deep dividers
-    for bx, by, face in P.DEPOT_BOOTHS:
-        m.depot_booths(*R(bx, by), 5, Z, 1, face=face)
-    m.put(*R(59, 31), Z, 3501)
-    m.put(*R(54, 15), Z, 3501)
-    m.sign(*R(59, 27), Z, "Depot. Your lockers are shared by every depot in the tower. Open the market from any locker. "
-           "More booths in the north-west wing and upstairs.")
-    m.points["depot_hearthgate"] = R(*P.HEARTH_POINTS["depot_hearthgate"]) + (Z,)
-    # the bank and exchange, just inside the front archway: one counter, three keepers behind it
-    bx, by, bn = P.BANK_COUNTER
-    S.counter(m, *R(bx, by), bn, Z, vertical=True)
+    for name, (sx, sy, sz) in P.HEARTH_STAIRS.items():
+        m.stairs(*R(sx, sy), sz, floor="marble", name=name)
+    mx, my = P.MONUMENT                                          # the Monument: the names of every floor's first clears
+    S.prop(m, *R(mx, my), Z, HERO_STATUE)
+    for px in (mx - 2, mx + 3):
+        S.prop(m, *R(px, my), Z, MARBLE_PILLAR)
+    m.sign(*R(mx + 1, my), Z, "The Monument. The names of those who cleared each floor's boss are carved here. "
+           "Use the statue to read them. Say !top for the climbers, !memorial for the fallen.")
+    m.points["monument"] = R(mx, my + 1) + (Z,)
+    for i, (bx_, by_) in enumerate(P.BEACON_BOWLS):       # the Floor Beacon (scripts/spirebound/beacons.lua)
+        S.prop(m, *R(bx_, by_), Z, 30964)                 # empty fire bowl (lit: 30965)
+        m.points[f"beacon_1_{i + 1}"] = R(bx_, by_) + (Z,)
+    m.sign(*R(63, 44), Z, "The Floor Beacon. Bring a Beacon Ember to a fire bowl: each fire gives everyone hunting on "
+           "this floor +5% experience and loot for an hour. Say !beacon to see what burns.")
+    ax, ay = P.ARENA_STATUE                               # the Arena MVP's statue (scripts/spirebound/arena.lua names it)
+    S.prop(m, *R(ax, ay), Z, 2025)
+    m.points["arena_mvp_statue"] = R(ax, ay) + (Z,)
+    m.sign(*R(ax + 1, ay), Z, "The Arena Champion. The best fighter of the last arena event stands here until the next "
+           "one. Say !arena for the schedule.")
+    m.put(*R(*P.NOTICE_BOARD), Z, 2597)                    # the notice board (live news, scripts/spirebound/monument.lua)
+    m.points["hearth_notice_board"] = R(*P.NOTICE_BOARD) + (Z,)
+    for k, (sx_, sy_) in enumerate(P.STALLS):             # free trading stalls
+        S.counter(m, *R(sx_, sy_), 3, Z)
+        S.prop(m, *R(sx_ + 1, sy_ - 1 if sy_ < 49 else sy_ + 1), Z, (2519, 116, 2523, 117)[k])
+    for (px, py) in ((52, 46), (61, 46), (52, 52), (61, 52)):                           # benches round the Hearthstone
+        S.prop(m, *R(px, py), Z, BENCH)
+    for (px, py) in ((50, 57), (63, 57), (51, 43), (61, 39), (49, 61), (60, 61)):       # pillars and plants
+        if free(px, py):
+            S.prop(m, *R(px, py), Z, MARBLE_PILLAR if py in (57, 61) else POTS[px % 2])
+    m.sign(*R(57, 46), Z, "The Hearth. Upstairs on both sides: your depot lockers (shared by every depot in the tower; "
+           "open the market from any of them) and the bank. Stalls here are free: stand behind one and trade.")
+    m.sign(*R(57, 52), Z, "Hearthgate. Shops face the plaza where the avenues leave the Hearth: arms and stores west, "
+           "runes, arrows, potions and cloth east, the inn, housewright and post south. The Climbers' Temple north, "
+           "the Crown Quarter north-east, Spire Manor south-east. Say !guide for your first steps.")
+    # the second floor: the same round wall, a floor over it (one tile in from top and left, as storeys are), the
+    # lockers and the bank; then a round roof
+    up = {(x, y) for (x, y) in hall if (x - 1, y) in hall and (x, y - 1) in hall}
+    for (x, y) in up:
+        p = (tx + x, ty + y, Z - 1)
+        if m.ground.get(p) is None:
+            m.ground[p] = MARBLE
+        m.flag(tx + x, ty + y, 1, 1, Z - 1, 0x0001)
+    m.autowall([R(x, y) for (x, y) in ring], Z - 1, "white")
+    for a in range(-2, 4):                                       # the same framed square over the Hearthstone
+        for b in range(-2, 3):
+            edge = a in (-2, 3) or b in (-2, 2)
+            m.ground[(tx + hx_ + a, ty + hy_ + b, Z - 1)] = FLAGSTONE if edge else BLACK_MARBLE
+    for (px, py) in P.HEARTH_BRAZIERS:
+        S.prop(m, *R(px, py), Z - 1, DG.COAL_BASIN)
+    # sixteen lockers facing the middle (Jay, 2026-11-12: "just use what tibia uses for their dp's")
+    for bx, by, face in P.DEPOT_ROWS:
+        m.depot_booths(*R(bx, by), 4, Z - 1, 1, face=face)
+    m.points["depot_hearthgate"] = R(*P.HEARTH_POINTS["depot_hearthgate"]) + (Z - 1,)
+    # the counters on the sides: the bank west, Broker Nell and Vesper east
+    for (kx, ky, kn) in P.HEARTH_COUNTERS:
+        S.counter(m, *R(kx, ky), kn, Z - 1, vertical=True)
     for npc, pos in P.BANK_NPCS.items():
-        m.npcs.append((npc, R(*pos) + (Z,)))
-    for py, pid in ((26, 2472), (28, 2480), (30, 2472), (32, 2480)):
-        S.prop(m, *R(44, py), Z, pid)
-    S.carpet(m, *R(46, 27), 3, 5, Z, 5572)
-    m.sign(*R(54, 27), Z, "Bank and Exchange. Banker Tolliver keeps your gold and your account vault; Trader Osric buys "
-           "your loot; Broker Nell explains the market.")
+        m.npcs.append((npc, R(*pos) + (Z - 1,)))
+    m.npcs.append(("Vesper", R(*P.VESPER) + (Z - 1,)))
     for k in ("hearth_bank", "hearth_trader", "trade_hall", "shop_bank"):
-        m.points[k] = R(*P.HEARTH_POINTS[k]) + (Z,)
-    # the chapel
+        m.points[k] = R(*P.HEARTH_POINTS[k]) + (Z - 1,)
+    m.sign(*R(45, 43), Z - 1, "Bank and Exchange. Banker Tolliver keeps your gold and your account vault; Trader Osric "
+           "buys your loot.")
+    m.sign(*R(68, 43), Z - 1, "Broker Nell explains the market. Vesper has work for climbers who ask.")
+    m.sign(*R(57, 46), Z - 1, "The Hearth, depot floor. Your lockers are shared by every depot in the tower; open the "
+           "market from any of them. Stairs down on both sides.")
+    for (px, py) in ((50, 49), (63, 49)):                       # plants beside the middle
+        S.prop(m, *R(px, py), Z - 1, POTS[px % 2])
+    hearth_roof(m, R, Z - 2, up)
+
+    # ---------------------------------------------------------------- the Climbers' Temple (plan: TEMPLE)
+    x0, y0, hw, hh = P.TEMPLE
+    claim("the temple", *R(x0, y0), hw, hh)
+    m.building(*R(x0, y0), hw, hh, Z, floor="marble", door_side=None, style="white", doors=False,
+               extra_gaps=[R(*a) for a in P.TEMPLE_ARCHES])
+    m.storey(*R(x0, y0), hw, hh, Z - 1, floor="wood", style="white")           # the Trading Gallery
+    m.storey(*R(*P.TEMPLE_TOWER[:2]), *P.TEMPLE_TOWER[2:], Z - 2, floor="marble", style="white")   # the Hall of Climbers
+    paint(45, 13, 10, 8, WOOD)                                                    # the waiting hall (north-west)
+    paint(45, 23, 10, 7, WOOD)                                                    # the trade hall (south-west)
+    for a in P.TEMPLE_ARCHES:
+        m.ground[(tx + a[0], ty + a[1], Z)] = MARBLE
+    S.carpet(m, *R(56, 12), 2, 19, Z, 2576)                                       # the red cross of carpet
+    S.carpet(m, *R(45, 22), 24, 1, Z, 2576)
+    for px, py in ((54, 20), (59, 20), (54, 24), (59, 24)):
+        S.prop(m, *R(px, py), Z, MARBLE_PILLAR)
+    for px, py in ((54, 29), (59, 29), (54, 13), (59, 13)):
+        S.prop(m, *R(px, py), Z, DG.COAL_BASIN)
+    # the chapel (north-east)
     m.put(*R(65, 13), Z, 3515)                                                    # the altar
     S.carpet(m, *R(64, 14), 3, 6, Z, 2576)
     m.npcs.append(("Priest Odran", R(*P.PRIEST) + (Z,)))
-    for px, py in ((61, 15), (68, 15), (68, 18)):
+    m.points["hearth_chapel"] = R(P.PRIEST[0], P.PRIEST[1] + 1) + (Z,)
+    for px, py in ((61, 15), (67, 15), (67, 18)):
         S.prop(m, *R(px, py), Z, BENCH)
-    m.sign(*R(60, 21), Z, "The Hearth. Temple, depot, bank and market under one roof. The trading gallery is upstairs.")
+    # the waiting hall (north-west): find a party before you climb
+    S.prop(m, *R(48, 14), Z, HERO_STATUE)
+    S.prop(m, *R(52, 14), Z, ANGEL_STATUE)
+    for px, py in ((47, 19), (51, 19)):
+        S.prop(m, *R(px, py), Z, BENCH)
+    for px, py in ((46, 13), (53, 19)):
+        S.prop(m, *R(px, py), Z, POTS[px % 2])
+    # the trade hall (south-west): tables to deal face to face
+    for py in (24, 27):
+        S.counter(m, *R(47, py), 6, Z)
+    for px, py in ((46, 29), (53, 29)):
+        S.prop(m, *R(px, py), Z, POTS[px % 2])
+    # the south-east hall: benches by the stairs
+    for px, py in ((61, 25), (64, 25)):
+        S.prop(m, *R(px, py), Z, BENCH)
+    S.prop(m, *R(66, 24), Z, ANGEL_STATUE)
+    m.sign(*R(60, 21), Z, "The Climbers' Temple. Priest Odran in the chapel; the Trading Gallery upstairs; the Hall of "
+           "Climbers at the top.")
     DG.hang(m, *R(x0, y0), hw, hh, Z, every=5, offset=3)
     # level 2: the Trading Gallery
-    for bx, by, face in P.GALLERY_BOOTHS:
-        m.depot_booths(*R(bx, by), 5, Z - 1, 1, face=face)
-    for px, py in ((45, 17), (61, 17), (45, 29), (61, 29)):
+    for px, py in ((46, 16), (60, 16), (46, 26), (60, 26)):
         S.counter(m, *R(px, py), 8, Z - 1)                                        # trade tables: stand either side and deal
-    for px, py in ((48, 32), (64, 32)):
+    for px, py in ((48, 28), (64, 28)):
         S.prop(m, *R(px, py), Z - 1, BENCH)
-    m.sign(*R(56, 15), Z - 1, "The Trading Gallery. Meet, haggle, and trade face to face. Lockers along the north wall.")
+    m.sign(*R(56, 15), Z - 1, "The Trading Gallery. Meet, haggle, and trade face to face.")
     DG.hang(m, *R(x0, y0), hw, hh, Z - 1, every=5, offset=4)
     # level 3: the Hall of Climbers
     S.prop(m, *R(52, 20), Z - 2, HERO_STATUE)
@@ -146,10 +280,18 @@ def build(m, tx, ty, Z, claim, hid=1):
     S.prop(m, *R(57, 26), Z - 2, MARBLE_PILLAR)
     S.carpet(m, *R(53, 22), 8, 3, Z - 2, 2576)
     m.sign(*R(56, 19), Z - 2, "The Hall of Climbers. Look for a party here before you climb. Say !top for the climbers.")
-    DG.hang(m, *R(*P.HEARTH_TOWER[:2]), *P.HEARTH_TOWER[2:], Z - 2, every=4, offset=3)
-    for name, (sx, sy, sz) in P.HEARTH_STAIRS.items():
+    DG.hang(m, *R(*P.TEMPLE_TOWER[:2]), *P.TEMPLE_TOWER[2:], Z - 2, every=4, offset=3)
+    for name, (sx, sy, sz) in P.TEMPLE_STAIRS.items():
         m.stairs(*R(sx, sy), sz, floor="wood" if sz == Z else "marble", name=name)
-    m.roof(*R(*P.HEARTH_TOWER[:2]), *P.HEARTH_TOWER[2:], Z - 2, "red")           # the tower's own roof
+    m.roof(*R(*P.TEMPLE_TOWER[:2]), *P.TEMPLE_TOWER[2:], Z - 2, "red")           # the tower's own roof
+    gx_, gy_, gw_, gh_ = P.TEMPLE_GARDEN                                          # flower beds before the temple
+    for y in range(gy_, gy_ + gh_):
+        for x in range(gx_, gx_ + gw_):
+            if not (54 <= x <= 59) and not P.in_plaza(x, y):
+                m.ground[(tx + x, ty + y, Z)] = 4526
+                if (x + y) % 2 == 0 and y == gy_ + 1:
+                    S.prop(m, *R(x, y), Z, rng.choice(S.FLOWERS))
+    paint(55, 31, 4, 3, MARBLE)
 
     # ---------------------------------------------------------------- shops: two rooms in each building, doors on the plaza
     PROPS = {"general": (2519, 2523, 116, 117), "weapons": (3458, 116, 118, 2472), "armor": (2429, 2429, 2480, 2472),
@@ -288,30 +430,26 @@ def build(m, tx, ty, Z, claim, hid=1):
     import manor                                         # the whole house is one movable piece (maps/manor.py)
     mx0, my0 = R(*P.MANOR_AT)
     manor.build(m, mx0, my0, Z)
-    paint(93, 64, 3, 3, MARBLE)                          # the forecourt: gate to door
-    paint(88, 64, 13, 2, MARBLE)
-    lamps([(89, 64), (99, 64)])
-    for px, py in ((91, 65), (97, 65)):
-        S.prop(m, *R(px, py), Z, POTS[px % 2])
-    for px, py in ((81, 64), (106, 64), (81, 83), (106, 83), (81, 74), (106, 74)):   # the grounds: trees and flowers round the house
+    dx_, dy_ = P.MANOR_AT[0] + 11, P.MANOR_AT[1]          # the manor's front door
+    paint(dx_ - 1, gy0 + 1, 3, dy_ - gy0 - 1, MARBLE)     # the forecourt: gate to door
+    paint(dx_ - 6, gy0 + 1, 13, 1, MARBLE)
+    lamps([(dx_ - 5, gy0 + 2), (dx_ + 5, gy0 + 2)])
+    for px in (dx_ - 3, dx_ + 3):
+        S.prop(m, *R(px, gy0 + 2), Z, POTS[px % 2])
+    for px, py in ((gx0 + 2, gy0 + 1), (gx0 + gw0 - 3, gy0 + 1)):   # a tree each side of the forecourt
         S.prop(m, *R(px, py), Z, rng.choice(S.TREES_BROAD[:3]))
-    for y in range(gy0 + 1, gy0 + gh0 - 1):
-        for x in range(gx0 + 1, gx0 + gw0 - 1):
-            if (x <= 82 or x >= 105 or y >= 83) and free(x, y) and m.ground[(tx + x, ty + y, Z)] in S.GRASS_IDS \
-                    and (x + 2 * y) % 5 == 0:
-                S.prop(m, *R(x, y), Z, rng.choice(S.FLOWERS))
-    sgx, sgy, sgw, sgh = P.SPIRE_GARDENS                 # a public garden on the way to the manor's gate
+    sgx, sgy, sgw, sgh = P.SPIRE_GARDENS                 # a public garden beside the way to the manor's gate
     paint(sgx, sgy, sgw, sgh, 4526)
-    paint(93, 51, 3, 12, MARBLE)                         # Manor Walk
-    S.pond(m, *R(101, 56), 3, 2, Z, ring="mud")
-    for px, py in ((86, 53), (90, 59), (98, 53), (107, 59), (88, 56), (106, 53)):
+    paint(*P.STREETS["Manor Walk"][0], MARBLE)
+    garden_pond(m, R, Z, (100, 56), 3, 2, None, rng)
+    for px, py in ((89, 53), (90, 59), (95, 53), (107, 59), (94, 59), (107, 53)):
         if free(px, py):
             S.prop(m, *R(px, py), Z, TREE)
-    for px, py in ((92, 55), (96, 57), (101, 59)):
+    for px, py in ((92, 56), (100, 53), (100, 59)):
         if free(px, py):
             S.prop(m, *R(px, py), Z, BENCH)
     S.sprinkle(m, *R(sgx, sgy), sgw, sgh, Z, S.FLOWERS, 0.1, seed=62)
-    m.sign(*R(92, 52), Z, "Spire Gardens. Manor Walk leads to the gate of Spire Manor.")
+    m.sign(*R(87, 51), Z, "Spire Gardens. Manor Walk leads to the gate of Spire Manor.")
 
     # ---------------------------------------------------------------- yards and green places
     c = P.COACH_YARD
@@ -344,15 +482,17 @@ def build(m, tx, ty, Z, claim, hid=1):
 
     gx1, gy1, gw1, gh1 = P.GREEN                         # Hearthgate Green: a park with a pond
     paint(gx1, gy1, gw1, gh1, 4526)
-    paint(gx1, 23, gw1, 1, COBBLE)
-    paint(20, gy1, 1, gh1, COBBLE)
-    S.pond(m, *R(25, 29), 2, 2, Z, ring="mud")
-    for px, py in ((17, 21), (23, 21), (17, 26), (22, 31), (15, 30), (27, 18)):
+    for r in P.GREEN_PATHS:
+        paint(*r, COBBLE)
+    pd = P.POND
+    garden_pond(m, R, Z, pd["c"], pd["rx"], pd["ry"], pd["pier"], rng)
+    for px, py in ((22, 22), (26, 22), (19, 28), (29, 25)):            # benches looking at the pond
         S.prop(m, *R(px, py), Z, BENCH)
-    for px, py in ((14, 15), (16, 17), (13, 19), (13, 27), (18, 31), (14, 32), (28, 15), (24, 15)):
+    for px, py in ((14, 16), (15, 19), (20, 16), (24, 17), (28, 16), (14, 25), (14, 32), (20, 33), (29, 33)):
         S.prop(m, *R(px, py), Z, rng.choice(S.TREES_BROAD[:3]))
-    S.sprinkle(m, *R(gx1, gy1), gw1, gh1, Z, S.FLOWERS, 0.06, seed=63)
-    lamps([(19, 12), (21, 34), (12, 22), (29, 24)])
+    S.sprinkle(m, *R(gx1, gy1), gw1, 6, Z, S.FLOWERS, 0.10, seed=63)
+    S.sprinkle(m, *R(gx1, 22), 4, 13, Z, S.FLOWERS, 0.10, seed=65)
+    lamps([(18, 20), (18, 22), (12, 21), (16, 34)])
     px0, py0, pw, ph = P.POCKET_GARDEN
     paint(px0, py0, pw, ph, 4526)
     S.prop(m, *R(50, 87), Z, BENCH)
@@ -373,58 +513,27 @@ def build(m, tx, ty, Z, claim, hid=1):
                 HP.yard(m, (hx0, hy0, lw, lh), (fx, fy, fw, fh), Z, S, rng)
             hid += 1
 
-    # ---------------------------------------------------------------- the plaza: Monument, Vesper, Beacon, stalls, benches
-    mx, my = P.MONUMENT
-    S.prop(m, *R(mx, my), Z, HERO_STATUE)
-    m.sign(*R(mx + 1, my), Z, "The Monument. Names of those who opened the tower's floors are carved here. Say !top for the "
-           "climbers, !memorial for the fallen.")
-    m.points["monument"] = R(mx, my + 1) + (Z,)
-    ax, ay = P.ARENA_STATUE                               # the Arena MVP's statue (scripts/spirebound/arena.lua names it)
-    S.prop(m, *R(ax, ay), Z, 2025)
-    m.points["arena_mvp_statue"] = R(ax, ay) + (Z,)
-    m.sign(*R(ax + 1, ay), Z, "The Arena Champion. The best fighter of the last arena event stands here until the next one. "
-           "Say !arena for the schedule.")
-    for i, (bx_, by_) in enumerate(P.BEACON_BOWLS):       # the Floor Beacon (scripts/spirebound/beacons.lua)
-        S.prop(m, *R(bx_, by_), Z, 30964)                 # empty fire bowl (lit: 30965)
-        m.points[f"beacon_1_{i + 1}"] = R(bx_, by_) + (Z,)
-    m.sign(*R(65, 44), Z, "The Floor Beacon. Bring a Beacon Ember to a fire bowl: each fire gives everyone hunting on this "
-           "floor +5% experience and loot for an hour. Say !beacon to see what burns.")
-    m.npcs.append(("Vesper", R(*P.VESPER) + (Z,)))
-    m.put(*R(*P.FOUNTAIN), Z, 1922)                       # the fountain
-    for k, (sx_, sy_) in enumerate(P.STALLS):             # free trading stalls
-        S.counter(m, *R(sx_, sy_), 3, Z)
-        S.prop(m, *R(sx_ + 1, sy_ - 1 if sy_ < 49 else sy_ + 1), Z, (2519, 116, 2523, 117, 2519, 116)[k])
-    for (px, py) in ((52, 41), (61, 41), (47, 49 - 3), (66, 52), (52, 57), (61, 57)):     # benches looking at the Hearthstone
-        if free(px, py) and not on_path(px, py):
+    # ---------------------------------------------------------------- round the Hearth: the fountain, benches, lamps
+    m.put(*R(*P.FOUNTAIN), Z, 1922)                       # the fountain, in the temple garden
+    for (px, py) in ((42, 43), (42, 55), (71, 43), (71, 55)):                           # benches by the shop doors
+        if free(px, py):
             S.prop(m, *R(px, py), Z, BENCH)
-    for (px, py) in ((45, 38), (68, 38), (45, 60), (68, 60)):                           # a tree in a bed at four corners
-        for a in (0, 1):
-            for b in (0, 1):
-                m.ground[(tx + px + a, ty + py + b, Z)] = 4526
-        S.prop(m, *R(px, py), Z, TREE)
-        S.prop(m, *R(px + 1, py + 1), Z, rng.choice(S.FLOWERS))
-    m.sign(*R(53, 52), Z, "Hearthgate. The Hearth (depot, bank, temple) is the great hall north. Shops face this plaza "
-           "where the avenues leave it: arms and stores west, runes, arrows, potions and cloth east, the inn, housewright "
-           "and post south. Crown Quarter north-east, Spire Manor south-east. Say !guide for your first steps.")
-    m.sign(*R(60, 46), Z, "Hearth Plaza. Stalls are free: stand behind one and trade with other climbers. "
-           "For lasting offers use the market at any depot locker.")
-    m.put(*R(*P.NOTICE_BOARD), Z, 2597)                    # the notice board (live news, scripts/spirebound/monument.lua)
-    m.points["hearth_notice_board"] = R(*P.NOTICE_BOARD) + (Z,)
     rim = []                                               # lamps round the plaza's rim, clear of the avenues
     import math
     for i in range(16):
         ang = (i + 0.5) * math.pi / 8
-        px, py = int(round(cx + 15.2 * math.cos(ang))), int(round(cy + 15.2 * math.sin(ang)))
-        if py <= 35 or on_path(px, py) or not free(px, py):
+        px, py = int(round(cx + 15.4 * math.cos(ang))), int(round(cy + 15.4 * math.sin(ang)))
+        if on_path(px, py) or not free(px, py) or (px, py) in hall:
             continue
         rim.append((px, py))
     lamps(rim)
 
     # ---------------------------------------------------------------- street lamps along the avenues and high roads
     lamps([(54, 3), (59, 8), (54, 9), (54, 70), (59, 80), (54, 90), (59, 92),
-           (4, 47), (14, 47), (26, 47), (39, 51), (74, 47), (84, 51), (97, 47), (108, 51),
-           (39, 12), (74, 12), (9, 12), (20, 12), (96, 12), (30, 58), (11, 80), (30, 80), (59, 74)])
+           (4, 47), (14, 47), (26, 47), (39, 51), (74, 47), (83, 51), (97, 47), (108, 51),
+           (41, 12), (72, 12), (16, 12), (95, 12), (30, 58), (15, 80), (30, 80), (59, 74), (69, 82), (98, 61)])
     import hearthgate_dress                               # the open cobble, the gates and the doors dressed
-    hearthgate_dress.dress(m, tx, ty, W, H, Z, rng, streets=streets | {(x, y) for x in range(55, 59) for y in range(33, 67)})
+    hearthgate_dress.dress(m, tx, ty, W, H, Z, rng, streets=streets | {(x, y) for x in range(55, 59) for y in range(33, 67)},
+                           campfires=((15, 28), (105, 44)), inside=P.inside_wall)
     m.rng = main_rng
     return hid

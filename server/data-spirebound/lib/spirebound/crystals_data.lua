@@ -2,7 +2,7 @@
 SpireCrystalData = {
 	CAST_SECONDS = 3, FIGHT_LOCK = 10,
 	byItem = {
-		[3251] = { floor = 1, colour = "Amber", name = "Amber Waycrystal (Floor 1)", price = 150, town = "temple_hearthgate" },
+		[3251] = { floor = 1, colour = "Amber", name = "Amber Waycrystal (Floor 1)", price = 150, town = "hearth_waypoint" },
 		[11454] = { floor = 2, colour = "Verdant", name = "Verdant Waycrystal (Floor 2)", price = 730, town = "f2_temple" },
 		[9240] = { floor = 3, colour = "Azure", name = "Azure Waycrystal (Floor 3)", price = 930, town = "f3_temple" },
 		[5944] = { floor = 4, colour = "Violet", name = "Violet Waycrystal (Floor 4)", price = 1200, town = "f4_temple" },

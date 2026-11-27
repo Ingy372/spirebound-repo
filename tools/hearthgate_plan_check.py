@@ -14,7 +14,7 @@ sys.path.insert(0, os.path.join(ROOT, "maps"))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import hearthgate_plan as P  # noqa: E402
 
-B = {"THE HEARTH": (P.HEARTH, "hub", None)}
+B = {"CLIMBERS' TEMPLE": (P.TEMPLE, "civic", None)}
 for blk in P.SHOP_BLOCKS:
     B[" + ".join(r[0].split("'")[0] for r in blk["rooms"])] = (blk["rect"], "shop", [r[4] for r in blk["rooms"]])
 B["Inn"] = (P.INN["rect"], "shop", [P.INN["door"]])
@@ -55,13 +55,13 @@ for i, a in enumerate(names):
         if not P.inside_wall(*t) or t in wall:
             print("OUTSIDE OR ON THE WALL", a, t); bad += 1; break
     for t in tiles(ra):
-        if kind not in OPEN_KINDS and P.in_plaza(*t) and a != "THE HEARTH":
+        if kind not in OPEN_KINDS and P.in_plaza(*t):
             print("IN THE PLAZA", a, t); bad += 1; break
     for b in names[i + 1:]:
         if ov(ra, B[b][0]) and not (a == "MANOR GROUNDS" and b == "Spire Gardens"):
             print("OVERLAP", a, b); bad += 1
     for s, (r, _g) in P.STREETS.items():
-        if kind not in OPEN_KINDS and a != "THE HEARTH" and ov(ra, r):
+        if kind not in OPEN_KINDS and ov(ra, r):
             print("ON STREET", a, s); bad += 1
 # doors: two clear tiles in front of every door, on no building
 occupied = {t for n, (r, k, _d) in B.items() if k not in OPEN_KINDS for t in tiles(r)}
@@ -108,7 +108,10 @@ if "--walk" in sys.argv:
     for g, ts in P.GATES.items():
         walked[f"{g.upper()} gate"] = min((dist.get((tx + x, ty + y, 7), 10 ** 6) for x, y in ts))
     # every keeper stands inside their own building
-    home = {n: P.HEARTH for n in list(P.BANK_NPCS) + ["Priest Odran"]}
+    PLAZA_BOX = (40, 33, 34, 33)                 # the bank and Vesper stand behind the court's side counters
+    home = {n: PLAZA_BOX for n in P.BANK_NPCS}
+    home["Vesper"] = PLAZA_BOX
+    home["Priest Odran"] = P.TEMPLE
     for blk in P.SHOP_BLOCKS:
         for r in blk["rooms"]:
             home[r[1]] = blk["rect"]
@@ -172,8 +175,10 @@ for street, _rent, lots in P.HOUSES:
     x, y = lots[0][0], lots[0][1]
     d.text((x * S + 2, y * S + 34), street, fill=(60, 30, 0), font=fs)
 d.ellipse([hs[0] * S - 4, hs[1] * S - 4, hs[0] * S + S + 4, hs[1] * S + S + 4], fill=(220, 60, 30), outline=(0, 0, 0))
-d.text((44 * S, 50 * S + 4), "Hearth Plaza", fill=(60, 50, 30), font=f)
-d.text((12, P.H * S - 16), "Hearthgate v4 tile plan   red dot = the Hearthstone   white squares = doors   1 square = 1 tile x10",
+x, y, w, h = P.HEARTH_COURT
+d.rectangle([x * S, y * S, (x + w) * S - 1, (y + h) * S - 1], outline=(120, 90, 40), width=3)
+d.text((46 * S, 50 * S + 4), "THE HEARTH (depot + bank)", fill=(60, 50, 30), font=f)
+d.text((12, P.H * S - 16), "Hearthgate v4.1 tile plan   red dot = the Hearthstone   white squares = doors   1 square = 1 tile x10",
        fill=(255, 255, 255), font=fs)
 img.save(os.path.join(ROOT, "docs", "HEARTHGATE_PLAN.png"))
 print("saved docs/HEARTHGATE_PLAN.png")

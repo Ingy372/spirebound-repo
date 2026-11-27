@@ -1,7 +1,7 @@
 -- Hearthgate feels alive (roadmap P3): townsfolk walk about Hearth Plaza (npc/town_*.lua, tools/gen_townsfolk.py)
 -- and the fountain sprays now and then when someone is near. Spawned at start-up, so the map file doesn't change.
 SpireTownlife = SpireTownlife or { placed = {} }
-SpireTownlife.FOUNTAIN = Position(1240, 1292, 7) -- maps/hearthgate_plan.py FOUNTAIN: Hearth Plaza's fountain
+SpireTownlife.FOUNTAIN = Position(1225, 1268, 7) -- maps/hearthgate_plan.py FOUNTAIN: Hearth Plaza's fountain
 
 local startup = GlobalEvent("SpireTownlifeStartup")
 function startup.onStartup()

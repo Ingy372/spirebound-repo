@@ -7,6 +7,10 @@ things on open ground, so it can't block a door, a lane or an avenue:
   * a campfire with a bench on Hearthgate Green and in the Training Yard;
   * a lamp beside the front doors that face south or east;
   * braziers either side of the four town gates (roadmap P3b).
+v4.1 (Jay, 2026-11-27: "the town is grey, brighten it up some"): the ground between buildings is grass, so this also
+  * paves a path from every door that faces grass to the nearest street (`door_paths`);
+  * plants trees, bushes and flowers on the grass (`greenery`): a tree only where a 3 x 3 patch of bare grass surrounds
+    it (it can never close a gap between houses), nothing within a tile of a wall or two tiles of a door.
 """
 import scenery as S
 
@@ -31,8 +35,9 @@ def _bare(m, x, y, z, r):
     return True
 
 
-def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44))):
-    """streets: town-relative tiles that must stay clear (lanes are cobble too)."""
+def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44)), inside=None):
+    """streets: town-relative tiles that must stay clear (lanes are cobble too). inside(x, y): town-relative, True
+    within the city wall."""
     def R(x, y):
         return tx + x, ty + y
 
@@ -41,6 +46,7 @@ def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44))
         return p in m.ground and not m.items.get(p)
 
     keep = {R(x, y) for (x, y) in streets}
+    doors = door_paths(m, tx, ty, tw, th, z)
     # ---- the open cobble: a few things in the bare places, never in a lane
     kinds = [TREE, TREE, BARRELS, CRATES, POTS, CART, "bench"]
     placed = []
@@ -75,6 +81,7 @@ def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44))
             S.prop(m, *R(spot[0] + 1, spot[1]), z, 2370)
 
     door_lamps(m, tx, ty, tw, th, z)
+    greenery(m, tx, ty, tw, th, z, rng, keep, doors, inside)
 
     # ---- braziers at the four gates (P3b), just inside the wall either side of each gap
     mid_x, mid_y = tw // 2, th // 2
@@ -83,6 +90,87 @@ def dress(m, tx, ty, tw, th, z, rng, streets=(), campfires=((15, 25), (105, 44))
         if free(x, y):
             S.prop(m, *R(x, y), z, BRAZIER)
     return placed
+
+
+def _door_ids():
+    from mapgen import FAMILIES
+    return {i for f in FAMILIES.values() for k, i in f.items() if i and k.startswith("door")}
+
+
+def door_paths(m, tx, ty, tw, th, z, reach=10):
+    """A cobble path from every door that opens onto grass, straight out to the nearest paving (a street, the plaza, a
+    yard). When nothing paved lies within `reach` tiles, only the two tiles in front of the door are paved. Returns the
+    door tiles (world coordinates)."""
+    dids = _door_ids()
+    doors = [(x, y) for (x, y, zz), its in m.items.items()
+             if zz == z and tx <= x < tx + tw and ty <= y < ty + th and any(i in dids for i, _a in its)]
+    for (x, y) in doors:
+        for (a, b) in ((0, 1), (0, -1), (1, 0), (-1, 0)):
+            first = (x + a, y + b, z)
+            if m.ground.get(first) not in S.GRASS_IDS or m.items.get(first):
+                continue
+            run = []
+            for k in range(1, reach + 1):
+                q = (x + a * k, y + b * k, z)
+                if q not in m.ground or m.items.get(q):
+                    break
+                if m.ground[q] not in S.GRASS_IDS:
+                    run.append(None)                       # reached paving
+                    break
+                run.append(q)
+            if run and run[-1] is None:
+                run = run[:-1]
+            else:
+                run = run[:2]
+            for q in run:
+                m.ground[q] = COBBLE
+    return doors
+
+
+def greenery(m, tx, ty, tw, th, z, rng, keep, doors, inside):
+    """Trees, bushes and flowers on the town's grass (see the module notes for the rules)."""
+    natural = S.SCENERY | set(POTS)
+
+    def grass_free(p):
+        return m.ground.get(p) in S.GRASS_IDS and not m.items.get(p) and (p[0], p[1]) not in keep
+
+    def clear_round(x, y, r):
+        """No wall, furniture or sign within r tiles (natural things are fine)."""
+        for a in range(-r, r + 1):
+            for b in range(-r, r + 1):
+                its = m.items.get((x + a, y + b, z))
+                if its and any(i not in natural for i, _a in its):
+                    return False
+                if (x + a, y + b, z) not in m.ground:
+                    return False
+        return True
+
+    near_door = {(x + a, y + b) for (x, y) in doors for a in range(-2, 3) for b in range(-2, 3)}
+    trees = [(x, y) for (x, y, zz), its in m.items.items() if zz == z and tx <= x < tx + tw and ty <= y < ty + th
+             and any(i in S.TREES_BROAD or i == TREE for i, _a in its)]
+    spots = [(x, y) for x in range(tx + 2, tx + tw - 2) for y in range(ty + 2, ty + th - 2)
+             if (inside is None or inside(x - tx, y - ty)) and (x, y) not in near_door]
+    rng.shuffle(spots)
+    n_tree = n_bush = n_flower = 0
+    for (x, y) in spots:
+        p = (x, y, z)
+        if not grass_free(p) or not clear_round(x, y, 1):
+            continue
+        if inside is not None and not all(inside(x - tx + a, y - ty + b) for a in (-2, 0, 2) for b in (-2, 0, 2)):
+            continue                                       # keep clear of the city wall
+        open3 = all(grass_free((x + a, y + b, z)) for a in (-1, 0, 1) for b in (-1, 0, 1))
+        roll = rng.random()
+        if open3 and n_tree < 90 and all(max(abs(x - u), abs(y - v)) >= 5 for (u, v) in trees):
+            m.put(x, y, z, rng.choice(S.TREES_BROAD[:3]))
+            trees.append((x, y))
+            n_tree += 1
+        elif open3 and roll < 0.03 and n_bush < 40:
+            m.put(x, y, z, rng.choice(S.BUSHES))
+            n_bush += 1
+        elif roll < 0.09:
+            m.put(x, y, z, rng.choice(S.FLOWERS))
+            n_flower += 1
+    return n_tree, n_bush, n_flower
 
 
 def door_lamps(m, tx, ty, tw, th, z):

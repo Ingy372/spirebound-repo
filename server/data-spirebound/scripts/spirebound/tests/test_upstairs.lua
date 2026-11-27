@@ -70,10 +70,11 @@ SpireTest.add("map: upstairs of a two-storey house belongs to the house; buildin
 	end
 	local g = WorldPoints.stairs_guild_hall
 	SpireTest.eq(SpirePvP.zoneAt(Position(g.x, g.y - 1, g.z - 1)), "town", "upstairs in town is still the town zone")
-	-- the Hearthstone is in the open plaza (Hearthgate v4); the Hearth hall behind it has the roof
-	local depot = WorldPoints.depot_hearthgate
-	local roof = Tile(Position(depot.x, depot.y, depot.z - 1))
-	SpireTest.eq(roof ~= nil and roof:getGround() ~= nil, true, "the Hearth has a roof over it")
+	-- the Hearth (depot, bank, Hearthstone) is the open court at the plaza's centre (Hearthgate v4.1); the Climbers'
+	-- Temple north of it has the roof
+	local chapel = WorldPoints.hearth_chapel
+	local roof = Tile(Position(chapel.x, chapel.y, chapel.z - 1))
+	SpireTest.eq(roof ~= nil and roof:getGround() ~= nil, true, "the Climbers' Temple has a roof over it")
 end)
 
 SpireTest.add("map: decoration never blocks a landing, start or entrance", function()

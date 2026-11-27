@@ -39,7 +39,7 @@ function crystal.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		refuse(player, why)
 		return true
 	end
-	local townName = def.floor == 1 and "Hearthgate (the temple)" or ("Floor " .. def.floor .. "'s town")
+	local townName = def.floor == 1 and "Hearthgate (the Hearth)" or ("Floor " .. def.floor .. "'s town")
 	local choices = SpireCrystals.choices(def.floor, player:getLevel(), townName)
 	-- remember where the crystal was used from: a backpack (x = 0xFFFF) or a tile beside the player
 	local from = fromPosition.x ~= 0xFFFF and Position(fromPosition.x, fromPosition.y, fromPosition.z) or nil

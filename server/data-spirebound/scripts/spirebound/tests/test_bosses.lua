@@ -123,7 +123,7 @@ SpireTest.add("town: all Hearthgate NPCs are standing in town", function()
 	local want = { "Ascendant Veyra", "Hunter Brannoch", "Housewright Orla", "Priest Odran", "Banker Tolliver", "Merchant Wenna", "Quartermaster Bryn", "Weaponsmith Garrick", "Armorer Hesta",
 		"Vesper", "Bounty Warden Cass", "Guildwarden Sela", "Taskmaster Rhen", "Captain Dorrow" }
 	local found = {}
-	for _, c in ipairs(Game.getSpectators(WorldPoints.temple_hearthgate, false, false, 60, 60, 50, 50)) do
+	for _, c in ipairs(Game.getSpectators(WorldPoints.temple_hearthgate, true, false, 60, 60, 50, 50)) do
 		if c:isNpc() then
 			found[c:getName()] = true
 		end

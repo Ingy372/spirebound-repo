@@ -16,7 +16,7 @@ npcConfig.voices = {
 	chance = 25,
 	{ text = "Hear ye! The tower stands sealed! Who will climb?" },
 	{ text = "News of the Spire, every hour on the hour!" },
-	{ text = "Lost a friend in the wilds? The Priest in the Hearth heals for free below level 50!" },
+	{ text = "Lost a friend in the wilds? The Priest in the Climbers' Temple heals for free below level 50!" },
 }
 
 local TIPS = {

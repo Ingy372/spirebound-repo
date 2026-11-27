@@ -590,7 +590,7 @@ SpireQuests.WHERE = {
 	["Guide Pell"] = { place = "the Arrival Yard, at the start of the stone path", pos = { 1276, 1347, 7 } },
 	["Captain Dorrow"] = { place = "Hearthgate's north gate, outside the guardhouse", pos = { 1235, 1244, 7 } },
 	["Hunter Brannoch"] = { place = "the Hunters' Hall in Hearthgate's Crown Quarter, north-east of the plaza", pos = { 1260, 1271, 7 } },
-	["Vesper"] = { place = "Hearth Plaza, beside the Hearthstone", pos = { 1235, 1289, 7 } },
+	["Vesper"] = { place = "the Hearth, upstairs at the east counter beside the depot lockers", pos = { 1245, 1283, 6 } },
 	["Fisher Corwin"] = { place = "the river bank north-west of Hearthgate", pos = { 1143, 1190, 7 } },
 	["Miller Agna"] = { place = "the mill on the north edge of Millcross, far to the west", pos = { 1082, 1185, 7 } },
 	["Fence Marrow"] = { place = "the road just south of the Bandit Road, east of Hearthgate" },
@@ -628,6 +628,10 @@ function SpireQuests.whereText(giver)
 	local pos, temple = SpireQuests.giverPos(giver), WorldPoints and WorldPoints.temple_hearthgate
 	if pos and temple and pos.z == temple.z then
 		return string.format("%s (%s: %s)", giver, w.place, SpireQuests.compass(temple, pos))
+	end
+	if pos and temple and math.abs(pos.z - temple.z) == 1 then   -- one level up or down (Vesper, upstairs in the Hearth)
+		return string.format("%s (%s: %s, %s)", giver, w.place, pos.z < temple.z and "upstairs" or "downstairs",
+			SpireQuests.compass(temple, pos))
 	end
 	return string.format("%s (%s)", giver, w.place)
 end

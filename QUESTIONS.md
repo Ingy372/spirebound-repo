@@ -8,6 +8,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
+You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
+- **Recommendation:** keep it on the ground floor, next to the Monument, so everyone arriving walks into the busy hall and climbs the stairs to the lockers.
+- Assumed until you answer: ground floor, on the Hearthstone.
+- Jay's answer:
+
 ### Q95. Waycrystals: the name and the rules I chose (2026-11-26, from your idea in Q94)
 You asked for teleport crystals, one colour per floor. What I am building, my call until you say otherwise:
 - **Name:** "Waycrystal" (for example "Amber Waycrystal (Floor 1)"). "Teleport Crystal" is the exact item name in Sword Art Online, and our rule is no SAO names players can see.

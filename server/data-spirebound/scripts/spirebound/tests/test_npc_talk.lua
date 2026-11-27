@@ -100,78 +100,70 @@ SpireTest.add("the Hearth: spawn point, three levels by stairs, lockers, junk bu
 	SpireTest.eq(SpireVault.parse("hello"), nil, "ordinary words aren't vault commands")
 end)
 
-SpireTest.add("Hearthgate v4: the Hearthstone under open sky, the Hearth's archways, a locker close by, 30 street houses", function()
+SpireTest.add("Hearthgate v4.1: the Hearthstone inside the round Hearth, its archways, lockers and bank upstairs, 29 houses", function()
 	local t = WorldPoints.temple_hearthgate
-	local function open(x, y)
-		local tile = Tile(Position(x, y, t.z))
+	local function open(x, y, z)
+		local tile = Tile(Position(x, y, z or t.z))
 		return tile ~= nil and tile:isWalkable(false, false, false, false, true)
 	end
-	-- the Hearthstone stands in the middle of Hearth Plaza: it and its eight neighbours are clear, with sky above
+	-- the Hearthstone stands in the middle of the Hearth's ground floor: it and its eight neighbours are clear
 	for dx = -1, 1 do
 		for dy = -1, 1 do
 			SpireTest.eq(open(t.x + dx, t.y + dy), true, "the Hearthstone square is clear at " .. dx .. "," .. dy)
 		end
 	end
-	SpireTest.eq(Tile(Position(t.x, t.y, t.z - 1)) == nil, true, "nothing over the Hearthstone: it is in the open plaza")
-	-- the Hearth (maps/hearthgate_plan.py: 42, 12, 30, 23; the Hearthstone is 56, 49): front archway faces the Hearthstone
-	for _, d in ipairs({ { -1, -15 }, { 0, -15 }, { 1, -15 }, { 2, -15 }, { 0, -37 }, { 1, -37 }, { -14, -26 }, { 15, -26 } }) do
-		SpireTest.eq(open(t.x + d[1], t.y + d[2]), true, "the Hearth's archway " .. d[1] .. "," .. d[2] .. " is open")
+	SpireTest.eq(Tile(Position(t.x, t.y, t.z - 1)) ~= nil, true, "the Hearth's second floor is over the Hearthstone")
+	SpireTest.eq(WorldPoints.hearth_waypoint ~= nil and WorldPoints.hearth_waypoint.z == t.z, true, "Waycrystals land in the Hearth")
+	-- the round hall's four archways (maps/hearthgate_plan.py: wall on a circle of 14.5 round the plaza's centre) and
+	-- the Climbers' Temple's archways north of it
+	for _, d in ipairs({ { -1, -14 }, { 0, -14 }, { 1, -14 }, { 2, -14 }, { -1, 14 }, { 2, 14 }, { -14, 0 }, { 15, 0 },
+		{ 0, -37 }, { 1, -37 }, { -12, -27 }, { 13, -27 } }) do
+		SpireTest.eq(open(t.x + d[1], t.y + d[2]), true, "the archway " .. d[1] .. "," .. d[2] .. " is open")
 	end
-	-- the nearest locker, counted in real steps (no diagonals) from the Hearthstone; the v4 plan promises 26
-	local seen, todo, steps, near = { [t.x .. ":" .. t.y] = true }, { { t.x, t.y } }, 0, nil
-	while #todo > 0 and steps <= 30 and not near do
-		local nxt = {}
-		for _, p in ipairs(todo) do
-			local tile = Tile(Position(p[1], p[2], t.z))
-			if tile and tile:getGround() and tile:getGround():getId() == 10145 then near = steps break end
-			for _, d in ipairs({ { 1, 0 }, { -1, 0 }, { 0, 1 }, { 0, -1 } }) do
-				local x, y = p[1] + d[1], p[2] + d[2]
-				if not seen[x .. ":" .. y] and open(x, y) then
-					seen[x .. ":" .. y] = true
-					nxt[#nxt + 1] = { x, y }
-				end
-			end
-		end
-		todo, steps = nxt, steps + 1
+	-- stairs up on both sides, and on the second floor sixteen booths: a switch in front of every locker, walled in
+	-- two tiles deep on both sides
+	for _, n in ipairs({ "hearth_up_west", "hearth_up_east" }) do
+		local s = WorldPoints["stairs_" .. n]
+		SpireTest.eq(s ~= nil and Tile(Position(s.x, s.y - 1, s.z - 1)) ~= nil, true, n .. ": stairs up to the depot floor")
 	end
-	SpireTest.eq(near ~= nil and near <= 26, true, "a depot locker within 26 steps of the Hearthstone (" .. tostring(near) .. ")")
-	-- the Hearth's depot booths: a switch tile in front of every locker, walled in two tiles deep on both sides
-	local function blocked(x, y)
-		return not open(x, y)
-	end
+	local z = t.z - 1
 	local booths, good = 0, 0
 	for dx = -13, 14 do
-		for dy = -36, -16 do
+		for dy = -9, 9 do
 			local x, y = t.x + dx, t.y + dy
-			local tile = Tile(Position(x, y, t.z))
+			local tile = Tile(Position(x, y, z))
 			if tile and tile:getItemByType(ITEM_TYPE_DEPOT) then
 				booths = booths + 1
 				for _, f in ipairs({ { 0, 1 }, { 0, -1 } }) do
-					local st = Tile(Position(x, y + f[2], t.z))
+					local st = Tile(Position(x, y + f[2], z))
 					if st and st:getGround() and st:getGround():getId() == 10145 then
 						local s1, s2 = y + f[2], y + 2 * f[2]
-						if blocked(x - 1, s1) and blocked(x + 1, s1) and blocked(x - 1, s2) and blocked(x + 1, s2) then good = good + 1 end
+						if not open(x - 1, s1, z) and not open(x + 1, s1, z) and not open(x - 1, s2, z) and not open(x + 1, s2, z) then
+							good = good + 1
+						end
 					end
 				end
 			end
 		end
 	end
-	SpireTest.eq(booths, 20, "twenty lockers in the Hearth's depot wings")
-	SpireTest.eq(good, 20, "every booth has a depot switch and two-deep dividers")
+	SpireTest.eq(booths, 16, "sixteen lockers on the Hearth's second floor")
+	SpireTest.eq(good, 16, "every booth has a depot switch and two-deep dividers")
+	local d = WorldPoints.depot_hearthgate
+	SpireTest.eq(d.z == z and Tile(d):getGround():getId() == 10145, true, "the depot point is a locker's switch upstairs")
 	local streets = 0
 	for _, h in ipairs(Game.getHouses()) do
 		local n = h:getName()
-		if n:find("^Squareside") or n:find("^Crown Row") or n:find("^Northside") or n:find("^Greenside") or n:find("^Lantern Row")
-			or n:find("^Manor Walk") or n:find("^Southgate Row") then
+		if n:find("^Crown Row") or n:find("^Northside") or n:find("^Greenside") or n:find("^Lantern Row")
+			or n:find("^Manor Lane") or n:find("^Southgate Row") or n:find("^Garden Row") then
 			streets = streets + 1
 		end
 	end
-	SpireTest.eq(streets, 30, "thirty houses in the town's streets")
+	SpireTest.eq(streets, 29, "twenty-nine houses in the town's streets")
 end)
 
 -- P3: Hearthgate's townsfolk are out in the square
 SpireTest.add("town: the townsfolk walk about Hearthgate", function()
-	SpireTest.eq(#SpireTownsfolk, 6, "six townsfolk")
+	SpireTest.eq(#SpireTownsfolk, 9, "nine townsfolk (three more round the Hearth, v4.1)")
 	for _, f in ipairs(SpireTownsfolk) do
 		local spot = SpireTownlife.placed[f.name]
 		SpireTest.eq(spot ~= nil, true, f.name .. " has a spot")

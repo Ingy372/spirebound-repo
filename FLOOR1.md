@@ -133,7 +133,19 @@ Hearthgate's home hall, replacing the old temple, depot and Trade Hall. It is 62
 - **Level 2:** the trading gallery, with 16 lockers and six long trade tables.
 - **Level 3:** the Hall of Climbers, with statues and a meeting carpet for finding a party.
 
-## Hearthgate v4 (2026-11-27, built from docs/design/hearthgate_v4_plan.md)
+## Hearthgate v4.1 (2026-11-27, Jay's changes to v4)
+This changes v4 below where they differ. Jay: "make it more of an 8 sided wall", "brighten it up some", "make the depot (middle of town) a building. make it circular", "flip the floor plan ... the actual bank booths ... should be on the second floor".
+- **A real eight-sided wall:** the corners are cut twice as deep (24 tiles instead of 12).
+- **Green, not grey:** grass between the buildings, paved streets, a path from every door to its street, trees, bushes and flowers.
+- **The Hearth is the round building in the middle of the plaza** (round wall, red round roof, an archway on each of the four avenues).
+  - **Ground floor:** you appear on the Hearthstone in the middle (and Waycrystals bring you there). Round it: the Monument (the names of each floor's first boss clears), the Floor Beacon's four fire bowls, the Arena Champion's statue, the notice board, four free trading stalls, benches. Stairs up on the west and east sides.
+  - **Second floor:** 16 depot lockers in booths facing the middle (two rows north, two south), the bank counter on the west (Banker Tolliver, Trader Osric), Broker Nell and Vesper at the east counter.
+- **The big hall north of the plaza is now the Climbers' Temple:** the chapel (Priest Odran), a waiting hall, a trade hall, the Trading Gallery upstairs and the Hall of Climbers on top. Flower beds and the fountain in front of it.
+- **Hearthgate Green's pond** is bigger, with a proper shore, water lilies, reeds, stones and a little wooden pier.
+- **Homes: 29** (the deeper corners took some lots; new ones on Manor Lane and Garden Row by the manor). Spire Manor's grounds moved a little west.
+- **Nine townsfolk** (three more: Porter Gimble at the Hearth, Lysa the Florist and Corwin the Minstrel).
+- **Steps from the Hearthstone:** stairs to the depot and bank 13-14, shops 19 to 25, the temple's priest 35.
+
 This replaces every Hearthgate description above, v3 included. Jay (2026-11-26) asked for a full redesign: function first, a loose nod to a big round starting plaza. The tile plan is `maps/hearthgate_plan.py`; the picture is `docs/HEARTHGATE_PLAN.png`.
 - **Same size, place and four gates; the wall's corners are cut off,** so the city is eight-sided.
 - **Hearth Plaza:** a round marble plaza, 33 tiles across, in the middle. You appear (and come back after dying) on the Hearthstone at its centre, in the open air. Round it: the Monument, the Arena Champion's statue, the Beacon's four fire bowls, the fountain, Vesper, the notice board, six free trading stalls, benches.

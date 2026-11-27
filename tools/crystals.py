@@ -22,7 +22,7 @@ MINUTES = 4            # a crystal costs about this many minutes of the floor's 
 MIN_PRICE = 50
 CAST_SECONDS = 3       # standing still before it works (moving or being hurt cancels it)
 FIGHT_LOCK = 10        # seconds after any hit given or taken
-TOWN_POINT = {1: "temple_hearthgate"}   # floor n's town otherwise: WorldPoints["f<n>_temple"]
+TOWN_POINT = {1: "hearth_waypoint"}       # the Hearthstone, in the Hearth (2026-11-27)   # floor n's town otherwise: WorldPoints["f<n>_temple"]
 
 
 def name(n):
