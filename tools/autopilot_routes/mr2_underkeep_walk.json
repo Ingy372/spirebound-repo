@@ -2,7 +2,7 @@
  "name": "mr2_underkeep_walk",
  "character": "Pilot Vanguard",
  "timeout": 1500,
- "about": "MR2: a real character walks every room of Underkeep Wing 1 (entry, guard room, cells, chest, collapsed, east, southeast, vault, den, southwest, columns, flooded).",
+ "about": "MR2: a real character walks every room of Underkeep Wing 1 (entry, guard room, cells, chest, collapsed, east, southeast, vault, den, southwest, columns, flooded). Level 60 in tier-5 gear: Wing 1 is tuned to Floor 2 (a level-40 died in the collapsed hall).",
  "steps": [
   {
    "do": "say",
@@ -10,11 +10,11 @@
   },
   {
    "do": "say",
-   "text": "/pilot level 40"
+   "text": "/pilot level 60"
   },
   {
    "do": "say",
-   "text": "/pilot gear 3"
+   "text": "/pilot gear 5"
   },
   {
    "do": "say",

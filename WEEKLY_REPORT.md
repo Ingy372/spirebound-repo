@@ -1,53 +1,67 @@
-# Update, 2026-11-26 morning: Floor 1's last third is finished
+# Update, 2026-11-28 morning: Floor 1 depth is in, and a night of fixes
 
-(The 2026-11-25 report is in git history. Details per task: `PROGRESS.md`, `ROADMAP_DONE.md`.)
+(The 2026-11-26 report is in git history. Details per task: `PROGRESS.md`, `ROADMAP_DONE.md`.)
 
 ## The short version
-Step 2 of the roadmap ("finish Floor 1's last third") is done except one small measurement (H0b). The hunting grounds
-are busier and harder as you asked, groups of five can hunt and fight bosses together, the economy now knows what each
-class earns alone and in a party, there's a new rescue quest, and a bug that would have cheated the first party out of
-their boss rewards is fixed. What's left before Floor 1 is complete is the real thing: you and a party clearing it (N1).
+Four sessions worked on Floor 1 at once without getting in each other's way. Floor 1 now has a story, one thing to do in
+every hunting ground, a big four-player quest, cooking, and a town project everyone builds together. The night session
+brought Floor 1 back to 11-15 hours, made the Axe-Lord a raid again, closed a real PvP hole, added room for more players
+at levels 19-30, and drew the labyrinth's own monster. An art session drew most of the creatures that still wore borrowed
+Tibia looks. What's left before Floor 1 is complete is still the real thing: you playing it, then a party clearing it (N1).
 
 ## What's new
-- **Challenge, not calm (your words):** only the gate of each ground stays quiet. Deeper in there are 2-3 times the
-  monsters; Floor 1 now has about 1,270. A test character at each ground's level holds the near parts with its spells,
-  and the Granite Warden's nest in the Old Quarry pushes it back.
-- **Groups work:** five test characters formed one party, hunted the Smugglers' Cellar together and shared the
-  experience evenly. They also beat the Gate Hound together.
-- **Party bonus raised** from +30% to +50% per extra member (Q65 below). The model showed party caves paying only about
-  1.25x what a solo hunter earns there; now it's about 1.5-1.9x.
-- **Monster tricks all checked in the game:** boar charge, mole burrowing, snapper slow, bandit dizzying smoke, wolf
-  packs that move as one behind their Grey Alpha.
-- **New side quest, "The Last of the Patrol":** after The Lost Patrol, Captain Dorrow asks you to free Patrolman
-  Teodric from the bandits' cellar (a party cave) and walk him home alive. He follows you, up stairs too.
-- **Boss rewards fixed:** the Floor 1 bosses were crediting nobody when they died (no shards, no Stair Key piece, no
-  weapon awakening). Fixed and checked. If you die during a boss fight but your party wins, your share now arrives when
-  you log back in.
-- **The gear path's last pieces work:** the temper quest, the Gate Hound's shards and the Axe-Lord's awakening.
-- **The Axe-Lord is hard:** five level 34 test characters in upgraded gear got him to about 20% before falling. They
-  don't heal each other like real players do, so I left him as he is; your party run will tell.
+**Floor 1 depth (the story and depth sessions):**
+- **The story, "The First Climb":** Archivist Maren at the Monument tells eight chapters about the company that climbed
+  before you and never came back. The Floor 1 perk now comes at the end of chapter 8.
+- **The Oathroom:** a four-player quest at level 30 under the Old Quarry: four halls and a boss, then each player takes one
+  of four chests, once a season. Four test characters cleared it through the real door.
+- **Every hunting ground has its own thing to do** (a bell, night lilies, wasp nests, truffles, a tide, a ballista...).
+- **Cooking:** drop food on any campfire; about a dozen dishes, found by trying, kept in a Cookbook.
+- **Town Works:** a board in Hearthgate where everyone gives gold to one project at a time (a bridge, road lanterns...).
+  When it fills, the map changes for the season. The River Bridge is already finished on your server from a test.
+
+**Night session:**
+- **Floor 1 is back to 11-15 hours** (your answer to Q83). The engine was secretly giving 1.5x experience below level 50.
+  That's switched off; Tibia's normal "rested" bonus stays.
+- **The Axe-Lord is a raid again** (your answer to Q78): 60,000 health (was 20,000), harder hits, four guards at 60%.
+  Five level-30 test characters in a real party wiped after taking him to about half in four minutes; a raid of about
+  nine kills him in roughly 2.5-3 minutes.
+- **New characters are protected for their first 2 hours of play**, at any level, even in boss rooms. Checked with two
+  characters in the client.
+- **A real PvP hole closed:** class spells (Iron Reach and the rest) ignored every PvP protection, so a high level could
+  hit a protected player with a spell. Now spells follow the same rules as normal attacks.
+- **Two new party caves for levels 19-30:** the Ridge Tunnels under Smugglers' Ridge and the Bastion Cellars under the
+  Fallen Bastion (the surface had no room left for whole new grounds). Floor 1 now holds about 117 players hunting at
+  once against my target of 150; the last ~30 need more map space (see Questions).
+- **Quieter server:** every kill used to write 8 warning lines to the log (about 150,000 an hour at 100 players). Now none.
+- **The map now builds the same on any computer** (it used to fail on water grounds under Linux).
 
 ## Playtest checklist (under an hour)
-1. (5 min) Log in, walk into any ground past level 15: the gate should be quiet, the middle busy.
-2. (10 min) Read a hub sign in two grounds (the autopilot can't read signs).
-3. (10 min) At level 20+, find the Granite Warden's nest in the Old Quarry's Upper Cut: it should feel overwhelming alone.
-4. (10 min) With a friend or two, hunt a party cave (the Smugglers' Cellar, under the Bandit Road) and see the shared
-   experience feel worth it.
-5. (15 min) Do "The Last of the Patrol" from Captain Dorrow (after The Lost Patrol): free Teodric and walk him home.
-6. (5 min) Tell me if the Ratwarren (levels 1-4) should be busier too; over half its spots were empty in the check.
+1. (10 min) Make a new character and walk out of the Arrival Yard. Does the first thing Guide Pell says make you want to
+   climb (the Summit Wish)?
+2. (10 min) Talk to Archivist Maren at the Monument and do chapter 1 of "The First Climb". Is the story worth reading?
+3. (10 min) In any hunting ground you reach, find its one special thing (ask an innkeeper for a rumour if stuck).
+4. (5 min) Drop raw meat or a fish on a campfire, then drop a second ingredient on the dish. Did you find a recipe?
+5. (5 min) Look at the Works Board in Hearthgate: is it clear what everyone is building and why you'd give gold?
+6. (10 min) Look at the new drawings in `ART_FOR_JAY/` (list below) and say "approved" or what to change.
+7. (5 min) Tell me if anything felt too fast or too slow. Floor 1 should now take a normal player 11-15 hours.
 
 ## Questions (my recommendation is assumed until you answer)
-- **Q65** The party bonus is now +50% per extra member (was +30%). Recommendation: keep it.
-- **Ratwarren:** leave the level 1-4 starter ground gentle? Recommendation: yes, it's for brand-new players.
-- **Art waiting for your OK** (drafts were sent to you by the art session): Bandit Crossbowman (look 2208), Hedge Hexer
-  (2209), Hill Cutthroat (2210), Black Crawler (2301), Blight Wasp (2302), Ridge Cat (2303), Herd Bull (2304),
-  Stonehide Bull (2305), Horned Grazer (2306), Dust Strider (2307), the redrawn townsfolk, the other gender of the four
-  class outfits, the Underkeeper and the Vault Wraith.
-- **Old Tusk, Hollowfang and the Briar Mother:** a session wrote that you approved them, but I couldn't find your words.
-  Say "approved" and they go in (looks 2311-2313).
+- **Q102** (Session D's smaller calls on cooking, ground features and Town Works). Recommendation: keep them all.
+- **Q101 / Q100** (the story and the secrets): still open from yesterday. Recommendation: keep.
+- **Floor 1 for launch night:** about 117 players can hunt at once; 150 needs more land. Recommendation: wait until after
+  your playtest; if the friends test shows crowding, I add a second open area to Floor 1 (a few hours of map work).
+- **The Underkeep's first wing** is tuned for Floor 2 levels (35-60): a level-40 test character died there alone.
+  Recommendation: keep it as the floor's hidden harder dungeon, and add a warning at its entrance.
+- **The Axe-Lord as a raid** means you can't test him alone or as a pair. A solo or pair playtest stops at the Gate Hound,
+  unless you bring my five test characters.
 
-## Art and map requests
-- Art still to draw (the art session stopped for the night; start it in the morning): the Floor 1 money monsters,
-  Moonhowl, Old Bristleback, Bramblejaw, Blackthorn, Prism Shardling, Mire Toad, Vault Rat and Wolf Companion (looks
-  2314-2321), then the Drain Matron, Sleeping Trunk, Mossback Warden and Moss Crawler. The brief is in the shared notes.
-- No map requests this time.
+## Art waiting for your OK
+New drawings in `ART_FOR_JAY/`, each with a walk animation: the **Stairwarden** (the labyrinth's guard: an empty suit of the
+First Climb's armour with a cold light inside and a halberd), the four lawn animals (**Meadow Hare, Dapple Fawn, Thistle Hen,
+Acorn Squirrel**), the **Nest Queen**, the **Elder Sproutling**, the **Bandit Lieutenant**, and the Underkeep's **Mire Toad** and
+**Sluice Warden**, plus the **Oathkeeper** (the Oathroom boss), **Bramblejaw**, the **Wolf Companion** and the **Drain Matron**.
+Until you approve them, they wear borrowed Tibia looks in the game.
+
+## Map requests
+None. All map work this week was done by Claude.
