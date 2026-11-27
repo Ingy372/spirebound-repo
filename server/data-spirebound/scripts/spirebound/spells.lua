@@ -720,7 +720,20 @@ local function riders(player, row, target, dealt, from)
 end
 
 -- One hit on one creature. Returns the damage dealt.
+-- May this caster's spell hurt that creature? Players go through the same PvP rules as any attack (newbie and
+-- new-climber protection, level range, town, arena, siege); the refusal message is sent to the caster.
+local function mayHurt(player, c)
+	if not c:isPlayer() or c == player or not SpirePvP or not SpirePvP.attackResult then
+		return true
+	end
+	return SpirePvP.attackResult(player, c) == RETURNVALUE_NOERROR
+end
+SpireSpells.mayHurt = mayHurt
+
 local function hitCreature(player, row, combat, target, mult, vis, from)
+	if SpireSpells.aggressive(row) and not mayHurt(player, target) then
+		return 0
+	end
 	local tid, tpos = target:getId(), target:getPosition()
 	local before = target:getHealth()
 	local mn, mx = formula(row, player)
@@ -742,10 +755,14 @@ local function hitTile(player, row, combat, pos, mult, vis, from)
 	if not tile or not tile:getGround() or tile:hasProperty(CONST_PROP_BLOCKPROJECTILE) or not from:isSightClear(pos) then
 		return 0
 	end
-	local seen = {}
+	local seen, blocked = {}, false
 	for _, c in ipairs(tile:getCreatures() or {}) do
 		if c ~= player then
-			table.insert(seen, { id = c:getId(), hp = c:getHealth() })
+			if SpireSpells.aggressive(row) and not mayHurt(player, c) then
+				blocked = true -- a protected player stands here: hit the others one by one below
+			else
+				table.insert(seen, { id = c:getId(), hp = c:getHealth() })
+			end
 		end
 	end
 	if row.element == COMBAT_FIREDAMAGE then
@@ -753,7 +770,13 @@ local function hitTile(player, row, combat, pos, mult, vis, from)
 	end
 	local mn, mx = formula(row, player)
 	cast.mn, cast.mx = math.floor(mn * mult), math.floor(mx * mult)
-	combat:execute(player, Variant(pos))
+	if blocked then
+		for _, s in ipairs(seen) do
+			combat:execute(player, Variant(s.id))
+		end
+	else
+		combat:execute(player, Variant(pos))
+	end
 	fx(pos, vis.effect)
 	local total = 0
 	for _, s in ipairs(seen) do

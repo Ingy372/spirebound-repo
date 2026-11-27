@@ -1,0 +1,44 @@
+{
+ "name": "rv6_shield_target",
+ "about": "RV6: the 2-hour new-climber shield. Run: python tools/pvp_duel.py rv6_shield_target rv6_shield_attacker",
+ "character": "Spell Ranger",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1366,
+    1305,
+    7
+   ],
+   "note": "stand"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot playtime 600"
+  },
+  {
+   "do": "wait",
+   "seconds": 30
+  },
+  {
+   "do": "say",
+   "text": "/pilot playtime 7300"
+  },
+  {
+   "do": "wait",
+   "seconds": 45
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

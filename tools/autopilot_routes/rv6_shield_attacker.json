@@ -1,0 +1,73 @@
+{
+ "name": "rv6_shield_attacker",
+ "about": "RV6: attacks a 10-minute-old climber (refused), then the same one at 2 hours (allowed).",
+ "character": "Spell Vanguard",
+ "timeout": 150,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1366,
+    1308,
+    7
+   ],
+   "note": "setup"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "wait",
+   "seconds": 4
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace on"
+  },
+  {
+   "do": "cast",
+   "text": "iron reach",
+   "shots": [
+    0.0,
+    0.5
+   ],
+   "gap": 3.0,
+   "name": "rv6_new_climber",
+   "note": "refused: a new climber",
+   "target": "player"
+  },
+  {
+   "do": "wait",
+   "seconds": 35
+  },
+  {
+   "do": "cast",
+   "text": "iron reach",
+   "shots": [
+    0.0,
+    0.5
+   ],
+   "gap": 3.0,
+   "name": "rv6_two_hours",
+   "note": "allowed: two hours played",
+   "target": "player"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "say",
+   "text": "/pilot trace off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

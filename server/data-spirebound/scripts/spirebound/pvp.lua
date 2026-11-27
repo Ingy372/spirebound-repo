@@ -23,9 +23,9 @@ local function sanctuaryActive(victim, attackerGuild)
 	return (s[tostring(attackerGuild)] or 0) > os.time()
 end
 
--- Who may attack whom
-local target = EventCallback("SpirePvPTarget")
-function target.creatureOnTargetCombat(creature, victim)
+-- Who may attack whom. Also used by Spirebound's own spells (scripts/spirebound/spells.lua), whose hits on players
+-- don't reach this callback (found 2026-11-27 night: Iron Reach hit a protected player while melee was refused).
+function SpirePvP.attackResult(creature, victim)
 	local a = creature and (creature:getPlayer() or (creature:getMaster() and creature:getMaster():getPlayer()))
 	local v = victim and victim:getPlayer()
 	if not a or not v or a == v then
@@ -59,6 +59,11 @@ function target.creatureOnTargetCombat(creature, victim)
 		return RETURNVALUE_YOUMAYNOTATTACKTHISPLAYER
 	end
 	return RETURNVALUE_NOERROR
+end
+
+local target = EventCallback("SpirePvPTarget")
+function target.creatureOnTargetCombat(creature, victim)
+	return SpirePvP.attackResult(creature, victim)
 end
 target:register()
 
