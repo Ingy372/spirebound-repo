@@ -4,6 +4,51 @@ For the session that fixes these. The full reasoning, numbers and file reference
 `docs/reviews/floor1-review-2026-11.md` (finding ids like A4-2, B4-1 below point into it). Jay asked for this list to be
 handed over while the review session keeps testing.
 
+## Status (first fix session, stopped 2026-11-26 night; the next session takes everything marked LEFT)
+
+**Done, pushed to `main`, boot test 289 tests / 0 errors, `python3 tools/loadtest.py review` 11 checks pass**
+- **T1 weapon damage sign: DONE** (`41a83ef8`). `SpireProgress.onDealt`, `SpirePerks.onDealt`, the perk defence event,
+  the style damage-taken guard, `SpireBuffs.apply` and Twin Fang's off-hand hit all work on the size and keep the sign.
+  Real check: a hit of 90 becomes 145 with a maxed Stairlord's Edge.
+- **T2 experience and skill factors: DONE** (`41a83ef8`). New `lib/spirebound/hooks.lua` (`SpireHooks.xp(name, fn)` /
+  `SpireHooks.skill(name, fn)`); `tools/build_server.py` appends `server/core-patches/player_events_append.lua` to the
+  engine's `data/events/scripts/player.lua`, whose `Player:onGainExperience` / `onGainSkillTries` the engine does
+  honour. Applied to monster kills only (quest rewards and `addExperience` corrections are left alone). The four
+  `playerOnGainExperience` callbacks and two `playerOnGainSkillTries` callbacks were moved onto it. `bonusXp` is reset
+  once per character at login (it had counted bonus that was never given). Real check: 378 plain, 567 Death Game,
+  473 Hardcore, 170 botting; skill training 2x below level 50. `playerOnLoseExperience` was NOT moved: the engine has
+  that event switched off (`events.xml`), and the death loss is already settled at the next login (works, tested).
+- **T3 cavebot loot cut: DONE** (`41a83ef8`). `SpireCavebot.cutLoot`, still in `monsterPostDropLoot` (it runs before
+  autoloot and autoBank). Real check: 1,432 coins against 2,619 over 60 Road Bandits.
+- **Group 1 item 1 (B4-1 barracks weapons): DONE** (`5580249e`). Attack 20 / defence 15, +1 per tier, written by
+  `SpireGear.setState`; Climber's Sword 18/14; spike sword out of Garrick's shop; carried gear refreshes at login.
+  Floor 2's melee weapons were left alone (roadmap RV4). Q79.
+- **Group 1 item 2 (B4-2 rare weapons): DONE** (`aabfdaa3`). Four perks built (`SpireGear.perkHit`, `onDealtPerk`,
+  `perkHealFactor`), 0.5% from Grey Alpha, Bandit Captain and Stonehorn Ram, own class weight 2.
+- **Group 1 item 3 (A8-1 Hardcore): NOT BUILT, by the correction above.** It is Q80 for Jay. (I had built "free
+  blessings only below level 8 for Hardcore and Death Game, `adventurersBlessingLevel = 0`" and removed it again
+  uncommitted; note that our own `SpireDifficulty.youngBlessings` gives nothing to Hardcore, so the blessings a young
+  Hardcore character holds come from the engine's adventurer blessing alone.)
+- **The test tool:** `tools/loadtest.py review [--only text]` with `scripts/spirebound/dev_review.lua` (`/rv mode`,
+  `state`, `die`, `weapon`, `hit`, `xp`, `skill`, `bot`, `loot`; test servers only, loadbot accounts only). Add a case
+  to `REVIEW_CASES` for each new fix. In WSL: `bash /root/review_f1.sh` (rsync to `/root/sbtest`, build, ports
+  7371/7372, database `spirebound_test`) and `bash /root/boottest_f1.sh` for the boot test. Gotchas: many test
+  characters on one tile made a scripted death not happen (the death cases start on `starter_east`); a Ruin Sentinel
+  takes 10% less physical damage; write Python patches with a file, not a shell here-document (backslashes are halved).
+
+**LEFT (nothing started unless it says so)**
+- Group 1 items 4, 5, 6, 7 (Death Game loopholes, unlock safety, Gate Hound, Axe-Lord coins).
+- Group 1 items 8 and 9 (labyrinth spawns, trails): map work, already with the Opus session.
+- Group 1 item 10 (small leaks), 11 (fishing), 12 (texts), 13 (donation items across a season), 14 (dev commands; note
+  `dev_review.lua` follows the `SPIRE_LOADTEST` pattern already), 15 (models: use the measured numbers above).
+- Group 2: CB-2 is answered by T3 (the cut runs before autoBank; measured). A2-4 and A6-1 untouched.
+- Group 3: only what became Q79 (weapon numbers), Q80 (Hardcore item risk) and Q81 (what T1-T3 change) is in
+  `QUESTIONS.md`. **The twelve Group 3 questions are still to be written** (next free number: Q82).
+- New roadmap follow-ups from this work: RV1 (re-measure the Axe-Lord: damage is up to 61% higher now), RV2
+  (re-measure the pace with the experience factors working), RV3 (client check after the next live restart: none of
+  this is live), RV4 (Floor 2 melee attack).
+- `PROGRESS.md` is over its 30 KB limit and needs its older entries moved to `PROGRESS_ARCHIVE.md`.
+
 ## UPDATE (review session, same evening): confirmed by test with a real character on commit `fff7d60b`
 
 Do these first; they are worse than anything in Group 1.
