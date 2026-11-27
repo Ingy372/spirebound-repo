@@ -70,7 +70,7 @@ SpireTest.add("adventure: auras and keepsakes exist and can be shown", function(
 		if not it or it:getId() == 0 or not it:isPickupable() then error(k.id .. ": placeholder item " .. k.item .. " can't be carried") end
 	end
 	SpireTest.eq(SpireFinds.lookText("Ana", { title = "Underkeeper", trophies = { "Old Tusk's Tusk" }, secrets = 7, firsts = 3 }),
-		"Ana: Title: Underkeeper. Trophies: Old Tusk's Tusk. Secrets found: 7. First finder (3).", "look line")
+		"Ana's record: Title: Underkeeper. Trophies: Old Tusk's Tusk. Secrets found: 7. First finder (3).", "look line")
 	SpireTest.eq(SpireFinds.lookText("Bo", { trophies = {}, secrets = 0, firsts = 0 }), nil, "nothing to show")
 end)
 

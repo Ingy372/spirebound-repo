@@ -125,7 +125,7 @@ function SpireFinds.lookText(name, info)
 	if #parts == 0 then
 		return nil
 	end
-	return name .. ": " .. table.concat(parts, " ")
+	return name .. "'s record: " .. table.concat(parts, " ") -- (not "Name: ...", which reads like something they said)
 end
 
 function SpireFinds.lookInfo(target)
