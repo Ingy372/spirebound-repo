@@ -3,7 +3,9 @@ SpireTest.add("journal: secret rows hide names until found", function()
 	local s = SpireSecrets.list[1]
 	local hidden = SpireJournal.secretLine(s, false)
 	SpireTest.eq(hidden:find(s.name, 1, true), nil, "name hidden")
-	SpireTest.eq(hidden:find(s.hint, 1, true) ~= nil, true, "hint shown")
+	SpireTest.eq(hidden:find(s.hint, 1, true), nil, "riddle hidden until sold or held (Jay, 2026-11-27)")
+	SpireTest.eq(SpireJournal.secretLine(s, false, true):find(s.hint, 1, true) ~= nil, true, "riddle shown when held")
+	SpireTest.eq(hidden:find(s.tier, 1, true), nil, "no tier shown")
 	SpireTest.eq(SpireJournal.secretLine(s, true):find(s.name, 1, true) ~= nil, true, "name shown when found")
 end)
 

@@ -605,3 +605,143 @@ function SpireGear.giveBossReward(p, boss)
 		end
 	end
 end
+
+-- ---------------------------------------------------------------- secret gear (adventure layer 4.1)
+-- A ring, an amulet or boots that only a secret gives (SpireGearData.secretGear, tools/gen_gear.py). Bound to its
+-- finder: it can't be traded, dropped, stored or sold (scripts/spirebound/secret_gear.lua). Bonuses work while worn.
+local A_SECRET = "sb_secret"
+SpireGear.SECRET_SLOTS = { feet = CONST_SLOT_FEET, necklace = CONST_SLOT_NECKLACE, ring = CONST_SLOT_RING }
+
+function SpireGear.secretDef(id)
+	for _, g in ipairs(SpireGearData.secretGear or {}) do
+		if g.id == id then
+			return g
+		end
+	end
+end
+
+function SpireGear.secretOf(item)
+	if not item or not item.getCustomAttribute then
+		return nil
+	end
+	local id = item:getCustomAttribute(A_SECRET)
+	return id and SpireGear.secretDef(id) or nil
+end
+
+-- true if the item is secret gear or holds some (a bag with the boots in it)
+function SpireGear.holdsSecret(item)
+	if SpireGear.secretOf(item) then
+		return true
+	end
+	if item and item.isContainer and item:isContainer() then
+		for _, inner in ipairs(item:getItems(true) or {}) do
+			if SpireGear.secretOf(inner) then
+				return true
+			end
+		end
+	end
+	return false
+end
+
+function SpireGear.makeSecret(g)
+	local item = Game.createItem(g.base, 1)
+	if not item then
+		return nil
+	end
+	item:setCustomAttribute(A_SECRET, g.id)
+	item:setAttribute(ITEM_ATTRIBUTE_NAME, g.name)
+	item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "Secret: " .. g.text .. " while worn. Bound to its finder: it can't be traded, dropped or sold.")
+	return item
+end
+
+-- Once per character. Returns true when given (or already owned).
+function SpireGear.giveSecretGear(player, id)
+	local g = SpireGear.secretDef(id)
+	if not g then
+		return false
+	end
+	local k = player:kv():scoped("spirebound-secret-gear")
+	if k:get(id) then
+		return true
+	end
+	local item = SpireGear.makeSecret(g)
+	if not item then
+		return false
+	end
+	local slot = SpireGear.SECRET_SLOTS[g.slot]
+	local ok = (slot and not player:getSlotItem(slot) and player:addItemEx(item, false, slot, FLAG_NOLIMIT) == RETURNVALUE_NOERROR)
+		or player:addItemEx(item, false, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR
+	if not ok then
+		local inbox = player.getStoreInbox and player:getStoreInbox()
+		ok = inbox and inbox:addItemEx(item, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR
+	end
+	if not ok then
+		item:remove()
+		return false
+	end
+	k:set(id, os.time())
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s! %s while worn. It is yours alone: it can't be traded or sold.", g.name, g.text))
+	player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW or CONST_ME_GIFT_WRAPS)
+	SpireGear.applySecret(player)
+	return true
+end
+
+-- Pure: totals of worn secret gear rows
+function SpireGear.secretTotals(rows)
+	local t = { speed = 0, health = 0, mana = 0, skill = 0 }
+	for _, g in ipairs(rows) do
+		for k in pairs(t) do
+			t[k] = t[k] + (g[k] or 0)
+		end
+	end
+	return t
+end
+
+local SECRET_SUBID = 4610
+local secretSpeed = {}
+SpireCleanup.add(function(pid) secretSpeed[pid] = nil end)
+
+function SpireGear.wornSecrets(player)
+	local out = {}
+	for _, slot in pairs(SpireGear.SECRET_SLOTS) do
+		local g = SpireGear.secretOf(player:getSlotItem(slot))
+		if g and SpireGear.SECRET_SLOTS[g.slot] == slot then
+			table.insert(out, g)
+		end
+	end
+	return out
+end
+
+function SpireGear.applySecret(player)
+	local t = SpireGear.secretTotals(SpireGear.wornSecrets(player))
+	player:removeCondition(CONDITION_ATTRIBUTES, CONDITIONID_DEFAULT, SECRET_SUBID)
+	if t.health > 0 or t.mana > 0 or t.skill > 0 then
+		local c = Condition(CONDITION_ATTRIBUTES)
+		c:setParameter(CONDITION_PARAM_SUBID, SECRET_SUBID)
+		c:setParameter(CONDITION_PARAM_TICKS, -1)
+		if t.health > 0 then
+			c:setParameter(CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT, 100 + math.floor(t.health * 100 + 0.5))
+		end
+		if t.mana > 0 then
+			c:setParameter(CONDITION_PARAM_STAT_MAXMANAPOINTSPERCENT, 100 + math.floor(t.mana * 100 + 0.5))
+		end
+		if t.skill > 0 then
+			local voc = player:getVocation():getBaseId()
+			if voc == 3 then
+				c:setParameter(CONDITION_PARAM_SKILL_DISTANCE, t.skill)
+			elseif voc == 4 then
+				c:setParameter(CONDITION_PARAM_SKILL_MELEE, t.skill) -- sword, axe and club
+			else
+				c:setParameter(CONDITION_PARAM_STAT_MAGICPOINTS, t.skill)
+			end
+		end
+		player:addCondition(c)
+	end
+	local pid = player:getId()
+	local had = secretSpeed[pid] or 0
+	if t.speed ~= had then
+		player:changeSpeed(t.speed - had)
+		secretSpeed[pid] = t.speed
+	end
+	return t
+end

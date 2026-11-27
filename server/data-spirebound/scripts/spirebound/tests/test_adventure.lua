@@ -73,3 +73,30 @@ SpireTest.add("adventure: auras and keepsakes exist and can be shown", function(
 		"Ana: Title: Underkeeper. Trophies: Old Tusk's Tusk. Secrets found: 7. First finder (3).", "look line")
 	SpireTest.eq(SpireFinds.lookText("Bo", { trophies = {}, secrets = 0, firsts = 0 }), nil, "nothing to show")
 end)
+
+SpireTest.add("adventure AD2: secrets pay a purse and keepsakes; riddles name no place", function()
+	SpireTest.eq(SpireSecrets.purse(1), 1000, "Floor 1 purse (Jay: always a medium gold reward)")
+	local gear, banned = 0, { "Hearthgate", "Millcross", "Vesper", "north", "south", "east", "west", "Floor" }
+	for _, g in ipairs(SpireWilds.grounds) do table.insert(banned, (g.title:gsub("^The ", ""))) end
+	for _, s in ipairs(SpireSecrets.list) do
+		if s.floor == 1 and type(s.reward) == "table" and s.reward.gear then gear = gear + 1 end
+		if s.floor == 1 then
+			for _, word in ipairs(banned) do
+				if s.hint:lower():find(word:lower(), 1, true) then error(s.id .. "'s riddle names " .. word) end
+			end
+		end
+	end
+	SpireTest.eq(gear + 1, 3, "three gear secrets on Floor 1 (two from the table, the shrine's pendant from its fight)")
+	for _, g in ipairs(SpireGearData.secretGear) do
+		SpireTest.eq(SpireGear.SECRET_SLOTS[g.slot] ~= nil, true, g.id .. " is a ring, amulet or boots")
+		local item = SpireGear.makeSecret(g)
+		SpireTest.eq(SpireGear.secretOf(item).id, g.id, g.id .. " made and recognised")
+		SpireTest.eq(item:getName(), g.name, g.id .. " named")
+		item:remove()
+	end
+	local t = SpireGear.secretTotals(SpireGearData.secretGear)
+	SpireTest.eq(t.speed, 5, "boots speed"); SpireTest.eq(t.skill, 1, "signet skill")
+	-- the Journal never shows a riddle by default, nor a tier
+	local line = SpireJournal.secretLine(SpireSecrets.get("s3"), false, false)
+	SpireTest.eq(line, "[ ] Floor 1 - ???", "unfound secret row")
+end)

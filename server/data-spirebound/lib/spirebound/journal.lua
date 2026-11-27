@@ -10,14 +10,17 @@ local function titleCase(s)
 	return (s:gsub("^%l", string.upper))
 end
 
--- Pure: one secret's row. found = bool.
-function SpireJournal.secretLine(secret, found)
-	local tier = titleCase(secret.tier)
+-- Pure: one secret's row. found = bool; riddle = true when this character may read the riddle (the secret was sold,
+-- or a message bottle gave it). Jay, 2026-11-27: riddles are the only hints, and nothing else points at a secret:
+-- no tier (gear secrets pay Vesper's large tier), no "night only".
+function SpireJournal.secretLine(secret, found, riddle)
 	if found then
-		return string.format("[x] Floor %d - %s (%s) - found", secret.floor, secret.name, tier)
+		return string.format("[x] Floor %d - %s - found", secret.floor, secret.name)
 	end
-	local night = secret.night and " (night only)" or ""
-	return string.format("[ ] Floor %d - %s (%s)%s: %s", secret.floor, "???", tier, night, secret.hint)
+	if riddle then
+		return string.format("[ ] Floor %d - ???: \"%s\"", secret.floor, secret.hint)
+	end
+	return string.format("[ ] Floor %d - ???", secret.floor)
 end
 
 function SpireJournal.secrets(player)
@@ -27,9 +30,10 @@ function SpireJournal.secrets(player)
 		if f then
 			found = found + 1
 		end
-		table.insert(lines, SpireJournal.secretLine(s, f))
+		local riddle = SpireSecrets.publicBy(s.id) ~= nil or (player.kv and SpireSecrets.holdsRiddle(player, s.id))
+		table.insert(lines, SpireJournal.secretLine(s, f, riddle))
 	end
-	table.insert(lines, 1, string.format("You have found %d of %d secrets. Sell what you know to the Info Broker in Hearthgate.", found, #SpireSecrets.list))
+	table.insert(lines, 1, string.format("You have found %d of %d secrets. Riddles come from Vesper's list of sold secrets and from bottles in the water. Sell what you find to Vesper, or keep it.", found, #SpireSecrets.list))
 	return "Secrets", lines
 end
 

@@ -201,7 +201,16 @@ function SpireDiscoveries.lines(player, floor)
 			table.insert(lines, string.format("%s: %d of %d", SpireDiscoveries.LABEL[cat] or cat, c.got, c.total))
 			for _, r in ipairs(rows) do
 				if r.category == cat then
-					table.insert(lines, SpireDiscoveries.rowLine(r, SpireDiscoveries.foundAt(player, cat, r.id), SpireDiscoveries.rumoured(player, cat, r.id)))
+					local at = SpireDiscoveries.foundAt(player, cat, r.id)
+					-- Jay, 2026-11-27: rumours never point at secrets or hidden beasts
+					local rumour = (cat ~= "secret" and cat ~= "beast") and SpireDiscoveries.rumoured(player, cat, r.id) or nil
+					table.insert(lines, SpireDiscoveries.rowLine(r, at, rumour))
+					if cat == "secret" and not at and SpireSecrets.holdsRiddle(player, r.id) then
+						local sec = SpireSecrets.get(r.id)
+						if sec and sec.hint then
+							table.insert(lines, "      a riddle from a bottle: \"" .. sec.hint .. "\"")
+						end
+					end
 				end
 			end
 		end

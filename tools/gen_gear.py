@@ -120,6 +120,22 @@ ARMOUR = [
 TIER_ARMOR = {1: 1, 2: 2}     # armour points per tier
 
 # shop starter set (spec 4.9): (vocation, weapon base, weapon name, armour base, armour name, armour bonus)
+# Secret gear (adventure layer 4.1; Jay, 2026-11-27: "1-3 exclusive items total that can only be obtained through
+# secrets per floor"). Claude's calls: ring, amulet or boots only (never a weapon or armour, so it never beats the quest
+# weapon path), can't be traded, dropped or sold, once per character. Bonuses stay at or under the hidden beasts'
+# trophies (SECRET_CAPS), checked below. (id, name, floor, slot, placeholder item, bonus, text)
+SECRET_GEAR = [
+    ("millrace_boots", "Millrace Boots", 1, "feet", 3552, {"speed": 5}, "+5 movement speed"),
+    ("shrinekeepers_pendant", "Shrinekeeper's Pendant", 1, "necklace", 3014, {"health": 0.03, "mana": 0.03}, "+3% maximum health and mana"),
+    ("wardens_signet", "Warden's Signet", 1, "ring", 3063, {"skill": 1}, "+1 to your class's main skill"),
+]
+SECRET_CAPS = {"speed": 5, "health": 0.03, "mana": 0.03, "skill": 1}
+for _g in SECRET_GEAR:
+    assert _g[3] in ("feet", "necklace", "ring"), f"{_g[0]}: secret gear is a ring, an amulet or boots"
+    for _k, _v in _g[5].items():
+        assert _v <= SECRET_CAPS[_k], f"{_g[0]}: {_k} {_v} is over the cap {SECRET_CAPS[_k]}"
+assert sum(1 for g in SECRET_GEAR if g[2] == 1) <= 3, "at most three secret gear pieces per floor (Jay: 1-3)"
+
 SHOP = [
     (VANGUARD, 3264, "Climber's Sword", 3359, "Climber's Mail", 1),
     (RANGER, 3350, "Climber's Bow", 3372, "Climber's Greaves", 1),
@@ -335,6 +351,11 @@ def main():
     L.append("SpireGearData.armour = {")
     for aid, name, fl, voc, src, base, bonus in ARMOUR:
         L.append(f'\t{{ id = "{aid}", name = {lua_str(name)}, floor = {fl}, vocation = {voc}, source = "{src}", base = {base}, bonus = {bonus} }},')
+    L.append("}")
+    L.append("SpireGearData.secretGear = {")
+    for gid, name, fl, slot, base, bonus, text in SECRET_GEAR:
+        b = ", ".join(f"{k} = {v}" for k, v in bonus.items())
+        L.append(f'	{{ id = "{gid}", name = {lua_str(name)}, floor = {fl}, slot = "{slot}", base = {base}, {b}, text = {lua_str(text)} }},')
     L.append("}")
     L.append("SpireGearData.shop = {")
     for voc, wb, wn, ab, an, abon in SHOP:

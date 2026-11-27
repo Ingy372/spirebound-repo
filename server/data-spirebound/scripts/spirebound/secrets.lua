@@ -29,43 +29,148 @@ REWARDS.sealed_shrine = function(player, first)
 	if not first then
 		return
 	end
+	-- the guardians wake for each character who finds it; everyone who fights them gets the shrine's gift (below)
+	local ids = {}
 	for _ = 1, 2 do
-		Game.createMonster("Bandit Captain", player:getPosition(), true, false)
+		local m = Game.createMonster("Bandit Captain", player:getPosition(), true, false)
+		if m then
+			m:registerEvent("SpireShrineGuardianDeath")
+			table.insert(ids, m:getId())
+		end
 	end
-	-- review item 10: the gold once per account, like every other secret's gold (the guardians wake for each character)
-	if SpireSecrets.goldPaid(player:getAccountId(), "sealed_shrine") then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The shrine's chest is empty (another of your characters took its gold), and its guardians wake!")
+	SpireSecrets.shrineFight = SpireSecrets.shrineFight or {}
+	for _, id in ipairs(ids) do
+		SpireSecrets.shrineFight[id] = ids
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The shrine's guardians wake!")
+end
+
+-- What a character keeps from a secret (adventure layer 4.1): given once, each piece only if not had yet, so
+-- characters who found a secret before these rewards existed get them at their next login (catchUp below).
+function SpireSecrets.giveKeeps(player, secret, quiet)
+	local given = player:kv():scoped("spirebound-secret-keeps")
+	local function once(key, fn)
+		if not given:get(secret.id .. ":" .. key) then
+			if fn() ~= false then
+				given:set(secret.id .. ":" .. key, os.time())
+			end
+		end
+	end
+	if secret.title then
+		once("title", function()
+			player:kv():scoped("spirebound-titles"):set(secret.title, os.time())
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You earned the title " .. secret.title .. ".")
+		end)
+	end
+	local r = secret.reward
+	if type(r) ~= "table" then
 		return
 	end
-	SpireSecrets.markGoldPaid(player:getAccountId(), "sealed_shrine")
-	player:addMoney(1000)
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The shrine's chest holds 1,000 gold, and its guardians wake!")
+	if r.title then
+		once("title_r", function()
+			player:kv():scoped("spirebound-titles"):set(r.title, os.time())
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You earned the title " .. r.title .. ".")
+		end)
+	end
+	if r.aura and SpireAuras then
+		once("aura", function() SpireAuras.give(player, r.aura) end)
+	end
+	if r.keepsake and SpireKeepsakes then
+		once("keepsake", function() return SpireKeepsakes.give(player, r.keepsake) or SpireKeepsakes.has(player, r.keepsake) end)
+	end
+	if r.gear and SpireGear.giveSecretGear then
+		once("gear", function() return SpireGear.giveSecretGear(player, r.gear) end)
+	end
+	if not quiet then
+		for _, it in ipairs(r.items or {}) do
+			SpireGive.reward(player, it[1], it[2]) -- never onto the floor when the backpack is full
+		end
+		if r.text then
+			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, r.text)
+		end
+	end
 end
 
 local function giveReward(player, secret, first)
 	local r = secret.reward
 	if type(r) == "string" then
 		REWARDS[r](player, first)
+	end
+	if not first then
 		return
 	end
-	if not first or type(r) ~= "table" then
-		return
+	-- the purse, once per account, for every secret (Jay, 2026-11-27)
+	if SpireSecrets.goldPaid(player:getAccountId(), secret.id) then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Another of your characters already took this secret's gold.")
+	else
+		SpireSecrets.markGoldPaid(player:getAccountId(), secret.id)
+		local gold = SpireSecrets.purse(secret.floor)
+		player:setBankBalance(player:getBankBalance() + gold) -- into the bank: a full backpack never loses it
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold goes to your bank account.", gold))
 	end
-	if r.gold then
-		if SpireSecrets.goldPaid(player:getAccountId(), secret.id) then
-			player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Another of your characters already took this secret's gold.")
-		else
-			SpireSecrets.markGoldPaid(player:getAccountId(), secret.id)
-			player:addMoney(r.gold)
+	SpireSecrets.giveKeeps(player, secret, false)
+end
+
+-- Characters who found a secret before its keepsake existed get it at login (adventure layer 4.1)
+function SpireSecrets.catchUp(player)
+	local given = player:kv():scoped("spirebound-secret-keeps")
+	for _, secret in ipairs(SpireSecrets.foundList(player)) do
+		SpireSecrets.giveKeeps(player, secret, true)
+		-- the Sealed Shrine's gift went to its fighters; those who found it before the gift existed get it now
+		if secret.reward == "sealed_shrine" and not given:get(secret.id .. ":gear") and SpireGear.giveSecretGear
+			and SpireGear.giveSecretGear(player, "shrinekeepers_pendant") then
+			given:set(secret.id .. ":gear", os.time())
 		end
 	end
-	for _, it in ipairs(r.items or {}) do
-		SpireGive.reward(player, it[1], it[2]) -- never onto the floor when the backpack is full
-	end
-	if r.text then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, r.text)
-	end
 end
+
+local catchUp = CreatureEvent("SpireSecretKeepsLogin")
+function catchUp.onLogin(player)
+	local pid = player:getId()
+	addEvent(function()
+		local p = Player(pid)
+		if p then
+			SpireSecrets.catchUp(p)
+		end
+	end, 1500)
+	return true
+end
+catchUp:register()
+
+-- The Sealed Shrine's gift: when the last guardian of a fight falls, everyone who hurt either of them gets it
+local guardianDeath = CreatureEvent("SpireShrineGuardianDeath")
+function guardianDeath.onDeath(creature)
+	local fight = SpireSecrets.shrineFight and SpireSecrets.shrineFight[creature:getId()]
+	if not fight then
+		return true
+	end
+	local credit = SpireSecrets.shrineCredit or {}
+	SpireSecrets.shrineCredit = credit
+	credit[fight] = credit[fight] or {}
+	for cid in pairs(creature:getDamageMap()) do
+		if Player(cid) then
+			credit[fight][cid] = true
+		end
+	end
+	SpireSecrets.shrineFight[creature:getId()] = nil
+	for _, id in ipairs(fight) do
+		if SpireSecrets.shrineFight[id] and Creature(id) then
+			return true -- the other guardian still stands
+		end
+	end
+	for cid in pairs(credit[fight]) do
+		local p = Player(cid)
+		if p and SpireGear.giveSecretGear then
+			local given = p:kv():scoped("spirebound-secret-keeps")
+			if not given:get("s7:gear") and SpireGear.giveSecretGear(p, "shrinekeepers_pendant") then
+				given:set("s7:gear", os.time())
+			end
+		end
+	end
+	credit[fight] = nil
+	return true
+end
+guardianDeath:register()
 
 local function trigger(player, secret)
 	if secret.night and not SpireSecrets.isNight(SpireSecrets.gameHour()) then

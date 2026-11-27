@@ -45,6 +45,11 @@ SpireGearData.armour = {
 	{ id = "f2_arcanist_armour", name = "Mesa-Weave Coat", floor = 2, vocation = 1, source = "quest", base = 3378, bonus = 2 },
 	{ id = "f2_mystic_armour", name = "Grazer-Hide Coat", floor = 2, vocation = 2, source = "quest", base = 3378, bonus = 2 },
 }
+SpireGearData.secretGear = {
+	{ id = "millrace_boots", name = "Millrace Boots", floor = 1, slot = "feet", base = 3552, speed = 5, text = "+5 movement speed" },
+	{ id = "shrinekeepers_pendant", name = "Shrinekeeper's Pendant", floor = 1, slot = "necklace", base = 3014, health = 0.03, mana = 0.03, text = "+3% maximum health and mana" },
+	{ id = "wardens_signet", name = "Warden's Signet", floor = 1, slot = "ring", base = 3063, skill = 1, text = "+1 to your class's main skill" },
+}
 SpireGearData.shop = {
 	[4] = { weapon = { id = "shop_weapon_4", base = 3264, name = "Climber's Sword", bonus = 0.08, attack = 18, defense = 14 }, armour = { id = "shop_armour_4", base = 3359, name = "Climber's Mail", bonus = 1 } },
 	[3] = { weapon = { id = "shop_weapon_3", base = 3350, name = "Climber's Bow", bonus = 0.08 }, armour = { id = "shop_armour_3", base = 3372, name = "Climber's Greaves", bonus = 1 } },
