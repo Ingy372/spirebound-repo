@@ -8,6 +8,16 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q103. The new style trees: my calls (2026-11-27)
+Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief. Not built yet (roadmap ST1). Every class now forks into two jobs, then into an "extreme" version that pays with a minus or a "balanced" one with no minus.
+- **Vanguard:** Bulwark (shield tank) → **Ironwall** (-20% damage, much tougher, taunts) or **Bladeward** (tough and still hits, counter-strikes). Reaver is unchanged. **Recommendation: keep.**
+- **Bulwark needs a shield, not a sword:** any one-handed weapon plus a shield counts, so axe and club players can tank too. **Recommendation: keep.** (Say "sword only" if you want it strict.)
+- **Mystic:** Wildcaller → **Blightcaller** (big damage, little control) or **Frostwarden** (holds groups in place). Lifebinder → **Dawnmender** (heavy heals and buffs, -15% damage) or **Briarmender** (5% less healing than a Lifebinder, damage that heals allies). **Recommendation: keep.**
+- **Arcanist:** Emberwright (destruction) → **Cinderheart** (boss-breaker) or **Ashwalker** (burning ground). Stormbinder (control) → **Tempest** (skirmisher) or **Spellbreaker** (makes the whole party hit harder). **Recommendation: keep.**
+- **Ranger:** Marksman → **Deadeye** (boss sniper) or **Volley Captain** (crowds). Trapper becomes **Huntwarden** (control and support) → **Snareweaver** (solo kiter) or **Pathfinder** (party speed and heals, low damage). **Recommendation: keep.**
+- Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
+- Jay's answer:
+
 ### Q102. Ground features, cooking and Town Works: my smaller calls (2026-11-27)
 Built (roadmap FD2, FD4, FD5). I assumed each of these; tell me if you want one changed.
 - **Cooking is "drop it on the fire".** The game client cannot "use" food on something, so you drag raw food onto a campfire and it cooks right there; drop a second ingredient on the dish to combine. **Recommendation: keep.**

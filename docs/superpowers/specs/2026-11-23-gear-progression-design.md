@@ -81,6 +81,8 @@ Stage 1: <Class> Mastery 1-10
 - **Pacing (Claude's call, numbers in `tools/balance.py`):** Stage 1 finishes around the end of Floor 1 / start of Floor 2 (around level 35 to 40), so the first choice comes at the first floor change. Stage 2 finishes around Floor 4 to 5. Stage 3 finishes around Floor 8. That spreads the three big moments across a season.
 - **Showing it:** the style window (section 4.7) shows both options of the next choice before you reach it, with what each does, so a player can plan. Choosing asks twice ("This is permanent. Choose Marksman?").
 
+**Replaced 2026-11-27:** the paths and finals below are superseded by `2026-11-27-style-trees-v2.md` (Jay's brief for the Vanguard and Mystic; extreme-or-balanced finals for every class). The table is kept for history.
+
 **Draft path names (Claude's call, Jay can veto; all must pass `tools/check_names.py`):**
 
 | Class | Path A → finals | Path B → finals |
