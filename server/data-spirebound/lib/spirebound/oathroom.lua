@@ -30,9 +30,9 @@ O.RUNE_ROWS, O.RUNE_LANES = 9, 5
 O.RUNE_HURT = 0.25               -- a wrong rune takes a quarter of your health, never the last point
 O.BOSS = "The Oathkeeper"        -- made by tools/gen_monsters.py (Session D); a stand-in is used until it exists
 O.BOSS_STANDIN = "The Unfinished"
-O.BRAZIER_HEAL = 0.005           -- of his health, per lit brazier, every 2 seconds (FD3b: four lit = about a party's damage)
+O.BRAZIER_HEAL = 0.004           -- of his health, per lit brazier, every 2 seconds (FD3b: four lit out-heal a party)
 O.DOUSE_SECONDS = 3              -- standing beside a brazier this long puts it out...
-O.DOUSE_STUN = 4000              -- ...and leaves you out of the fight this long (ms)
+O.DOUSE_STUN = 2500              -- ...and leaves you out of the fight this long (ms; FD3b: 4 s got a stunned Mystic killed)
 O.RELIGHT_EVERY = 30             -- one cold brazier lights again this often
 O.KEEPER_GOLD = 10000
 
