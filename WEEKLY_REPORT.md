@@ -35,6 +35,11 @@ Tibia looks. What's left before Floor 1 is complete is still the real thing: you
   once against my target of 150; the last ~30 need more map space (see Questions).
 - **Quieter server:** every kill used to write 8 warning lines to the log (about 150,000 an hour at 100 players). Now none.
 - **The map now builds the same on any computer** (it used to fail on water grounds under Linux).
+- **Smaller finishes:** Trader Osric buys cooked dishes (for little); fire spells and fire runes burn Thornsnap Hollow's
+  vine walls; Burrow Hills has its fourth mole mound (down in the Molework); the Road Lanterns now line the road from
+  Millcross to the bridge; the Underkeep's drain grate warns that only seasoned climbers come back up.
+- **Still to be seen in the game client** (the test clients were busy all evening with the Oathroom tests): selling a
+  dish to Osric, a fire rune on a vine wall, the rest of the Underkeep walk, the two new caves, and the pace measurements.
 
 ## Playtest checklist (under an hour)
 1. (10 min) Make a new character and walk out of the Arrival Yard. Does the first thing Guide Pell says make you want to
