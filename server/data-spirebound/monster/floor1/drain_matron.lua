@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Drain Matron"
 monster.experience = 4200
 monster.outfit = {
-	lookType = 222, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2350, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 9000

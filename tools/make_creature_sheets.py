@@ -59,7 +59,14 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "granite_warden": 2335,
              # AD4 rare roamers (Jay, 2026-11-27: "approved, put them in the game"): the toad and stag are placed like the
              # animals (2340+); the Paymaster is built on the bandit's body, so he takes the people's shift (2211)
-             "goldback_toad": 2340, "pale_stag": 2341, "paymaster": 2211}
+             "goldback_toad": 2340, "pale_stag": 2341, "paymaster": 2211,
+             # Floor 1 creatures that wore borrowed looks (art session; Jay, 2026-11-27: "approved, put them in the game").
+             # Own numbers, never a reskin: their borrowed looks (19, 27, 31, 44, 74, 111, 119, 222, 274...) are shared.
+             # The Bandit Lieutenant is on the bandit's body (people's shift); the Oathkeeper is placed like a boss.
+             "bandit_lieutenant": 2212, "oathkeeper": 2213,
+             "meadow_hare": 2342, "dapple_fawn": 2343, "thistle_hen": 2344, "acorn_squirrel": 2345, "nest_queen": 2346,
+             "elder_sproutling": 2347, "mire_toad": 2348, "sluice_warden": 2349, "drain_matron": 2350, "bramblejaw": 2351,
+             "wolf_companion": 2352}
 
 
 # approved corpses (art/CORPSE_RULES.md) -> the spare Tibia corpse chain they reskin in the client: four items

@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a thistle hen"
 monster.experience = 2
 monster.outfit = {
-	lookType = 111, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2344, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 15

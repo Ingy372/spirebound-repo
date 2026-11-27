@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a dapple fawn"
 monster.experience = 5
 monster.outfit = {
-	lookType = 31, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2343, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 35

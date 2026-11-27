@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a bandit lieutenant"
 monster.experience = 260
 monster.outfit = {
-	lookType = 2202, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2212, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 650

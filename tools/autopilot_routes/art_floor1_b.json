@@ -1,0 +1,141 @@
+{
+ "name": "art_floor1_b",
+ "character": "Pilot Arcanist",
+ "timeout": 300,
+ "about": "Jay's approved Floor 1 placeholder replacements (art session, 2026-11-27) in the real client.",
+ "steps": [
+  {
+   "do": "jump",
+   "to": "centre_boar_meadow",
+   "note": "art check"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Meadow Hare, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Dapple Fawn, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Thistle Hen, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Acorn Squirrel, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_f1b_small"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Nest Queen, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Elder Sproutling, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bandit Lieutenant, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Wolf Companion, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_f1b_features"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Mire Toad, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Sluice Warden, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Drain Matron, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_f1b_underkeep"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn The Oathkeeper, 1, 2000"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bramblejaw, 1, 2000"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "art_f1b_bosses"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  }
+ ]
+}

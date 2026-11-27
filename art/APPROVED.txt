@@ -4,6 +4,8 @@
 # Keep this list in step with the folder: python tools/art_approved.py
 # Corpses for the three monsters with no fitting Tibia corpse (Jay, 2026-11-26: "Approve all three"; art/CORPSE_RULES.md)
 # Gate Hound corpse (Jay, 2026-11-26: "Approve it"; Q67)
+# Floor 1 placeholder creatures drawn by the art session (Jay, 2026-11-27: "approved, put them in the game")
+acorn_squirrel
 alchemist
 alpha
 arcanist
@@ -17,12 +19,14 @@ axe_lord
 axe_lord_blade
 azhrakkar
 bandit
+bandit_lieutenant
 banker
 bess
 bix
 blackthorn
 blightwasp
 boar
+bramblejaw
 brannoch
 briar_mother
 bristleback
@@ -36,7 +40,10 @@ corwin
 crawler
 crossbowman
 cutthroat
+dapple_fawn
 dorrow
+drain_matron
+elder_sproutling
 gate_hound
 goldback_toad
 granite_warden
@@ -44,7 +51,9 @@ grazer
 guildwarden
 hexer
 hollowfang
+meadow_hare
 merchant
+mire_toad
 mole
 moonhowl
 mossback
@@ -54,6 +63,8 @@ mystic_a2
 mystic_m
 mystic_m_a1
 mystic_m_a2
+nest_queen
+oathkeeper
 old_bristleback
 old_tusk
 pale_stag
@@ -75,11 +86,13 @@ ridgecat
 runewright
 sentinel
 shardling
+sluice_warden
 smith
 snapper
 sproutling
 stonebull
 strider
+thistle_hen
 thornsnap
 toad
 underkeeper
@@ -96,3 +109,4 @@ warden
 wasp
 watchguard
 wolf
+wolf_companion

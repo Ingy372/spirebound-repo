@@ -2408,6 +2408,513 @@
    "size": 37
   },
   {
+   "name": "bandit_lieutenant",
+   "file": "bandit_lieutenant.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2212,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     26,
+     30,
+     36,
+     32
+    ],
+    [
+     25,
+     29,
+     36,
+     35
+    ],
+    [
+     26,
+     28,
+     36,
+     36
+    ],
+    [
+     27,
+     29,
+     32,
+     35
+    ]
+   ],
+   "addons": 0,
+   "size": 36
+  },
+  {
+   "name": "oathkeeper",
+   "file": "oathkeeper.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2213,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     20,
+     3,
+     43,
+     55
+    ],
+    [
+     26,
+     5,
+     33,
+     58
+    ],
+    [
+     14,
+     6,
+     49,
+     51
+    ],
+    [
+     18,
+     4,
+     44,
+     59
+    ]
+   ],
+   "addons": 0,
+   "size": 59
+  },
+  {
+   "name": "meadow_hare",
+   "file": "meadow_hare.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2342,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     48,
+     38,
+     15,
+     23
+    ],
+    [
+     42,
+     42,
+     20,
+     21
+    ],
+    [
+     48,
+     39,
+     15,
+     21
+    ],
+    [
+     44,
+     42,
+     18,
+     21
+    ]
+   ],
+   "addons": 0,
+   "size": 23
+  },
+  {
+   "name": "dapple_fawn",
+   "file": "dapple_fawn.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2343,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     41,
+     22,
+     21,
+     36
+    ],
+    [
+     36,
+     34,
+     26,
+     29
+    ],
+    [
+     41,
+     28,
+     21,
+     30
+    ],
+    [
+     30,
+     34,
+     28,
+     29
+    ]
+   ],
+   "addons": 0,
+   "size": 36
+  },
+  {
+   "name": "thistle_hen",
+   "file": "thistle_hen.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2344,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     47,
+     36,
+     16,
+     24
+    ],
+    [
+     42,
+     39,
+     21,
+     24
+    ],
+    [
+     47,
+     35,
+     16,
+     26
+    ],
+    [
+     42,
+     39,
+     21,
+     24
+    ]
+   ],
+   "addons": 0,
+   "size": 26
+  },
+  {
+   "name": "acorn_squirrel",
+   "file": "acorn_squirrel.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2345,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     47,
+     36,
+     16,
+     24
+    ],
+    [
+     37,
+     40,
+     26,
+     23
+    ],
+    [
+     46,
+     30,
+     17,
+     30
+    ],
+    [
+     40,
+     40,
+     22,
+     23
+    ]
+   ],
+   "addons": 0,
+   "size": 30
+  },
+  {
+   "name": "nest_queen",
+   "file": "nest_queen.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2346,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     38,
+     7,
+     25,
+     55
+    ],
+    [
+     24,
+     30,
+     38,
+     32
+    ],
+    [
+     38,
+     27,
+     25,
+     36
+    ],
+    [
+     14,
+     30,
+     49,
+     32
+    ]
+   ],
+   "addons": 0,
+   "size": 55
+  },
+  {
+   "name": "elder_sproutling",
+   "file": "elder_sproutling.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2347,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     19,
+     20,
+     44,
+     43
+    ],
+    [
+     23,
+     9,
+     33,
+     54
+    ],
+    [
+     20,
+     10,
+     43,
+     50
+    ],
+    [
+     34,
+     9,
+     29,
+     54
+    ]
+   ],
+   "addons": 0,
+   "size": 54
+  },
+  {
+   "name": "mire_toad",
+   "file": "mire_toad.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2348,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     26,
+     10,
+     37,
+     39
+    ],
+    [
+     24,
+     23,
+     36,
+     40
+    ],
+    [
+     24,
+     22,
+     37,
+     38
+    ],
+    [
+     13,
+     23,
+     37,
+     40
+    ]
+   ],
+   "addons": 0,
+   "size": 40
+  },
+  {
+   "name": "sluice_warden",
+   "file": "sluice_warden.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2349,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     24,
+     7,
+     38,
+     39
+    ],
+    [
+     21,
+     24,
+     37,
+     39
+    ],
+    [
+     23,
+     18,
+     38,
+     39
+    ],
+    [
+     11,
+     22,
+     37,
+     39
+    ]
+   ],
+   "addons": 0,
+   "size": 39
+  },
+  {
+   "name": "drain_matron",
+   "file": "drain_matron.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2350,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     20,
+     19,
+     43,
+     44
+    ],
+    [
+     19,
+     18,
+     42,
+     45
+    ],
+    [
+     20,
+     16,
+     43,
+     44
+    ],
+    [
+     21,
+     18,
+     42,
+     45
+    ]
+   ],
+   "addons": 0,
+   "size": 45
+  },
+  {
+   "name": "bramblejaw",
+   "file": "bramblejaw.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2351,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     30,
+     8,
+     32,
+     50
+    ],
+    [
+     11,
+     24,
+     52,
+     39
+    ],
+    [
+     30,
+     10,
+     32,
+     53
+    ],
+    [
+     13,
+     23,
+     50,
+     40
+    ]
+   ],
+   "addons": 0,
+   "size": 53
+  },
+  {
+   "name": "wolf_companion",
+   "file": "wolf_companion.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2352,
+   "shift": [
+    0,
+    0
+   ],
+   "boxes": [
+    [
+     37,
+     6,
+     25,
+     50
+    ],
+    [
+     12,
+     29,
+     51,
+     34
+    ],
+    [
+     37,
+     2,
+     25,
+     56
+    ],
+    [
+     17,
+     29,
+     46,
+     34
+    ]
+   ],
+   "addons": 0,
+   "size": 56
+  },
+  {
    "name": "corpse_sentinel",
    "file": "corpse_sentinel.bmp.lzma",
    "count": 3,

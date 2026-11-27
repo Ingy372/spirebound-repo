@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "the Oathkeeper"
 monster.experience = 5000
 monster.outfit = {
-	lookType = 2206, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2213, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 8000

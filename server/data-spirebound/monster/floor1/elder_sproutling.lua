@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "an elder sproutling"
 monster.experience = 55
 monster.outfit = {
-	lookType = 19, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2347, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 150

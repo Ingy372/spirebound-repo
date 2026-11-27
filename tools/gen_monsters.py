@@ -33,7 +33,7 @@ MONSTERS = {
     # purpose: a slow bite, and every few seconds a telegraphed stomp (red smoke first) that teaches stepping aside.
     # It can't kill you: the Proving pulls you out at 1 health (scripts/spirebound/proving.lua). Placeholder look.
     # G7: 6 experience (was 60 = about 1,350 with the engine's bonuses, level 3 to 5 in one fight); the Proving ends at level 3.
-    "Bramblejaw": dict(desc="Bramblejaw", look=(119,), corpse=12321, hp=240, xp=6, speed=90, race="blood",
+    "Bramblejaw": dict(desc="Bramblejaw", look=(2351, 0, 0, 0, 0, 0), corpse=12321, hp=240, xp=6, speed=90, race="blood",
                        attacks=[("melee", 0, -12)], armor=2, defense=4, boss=True,
                        loot=[(GOLD, 100000, 40), (266, 100000, 2)], voices=["SNORT!", "Bramblejaw paws the ground."],
                        events=["SpireProvingThink", "SpireProvingDeath"]),
@@ -193,17 +193,17 @@ MONSTERS = {
     # ---------------------------------------------------------------- FD2 ground features (Floor 1 depth design 4.2):
     # each comes out of one ground's feature (scripts/spirebound/ground_features.lua), never from the map's spawns.
     # Elder Sproutling: a seedling left two minutes grows into one. Tougher, better loot (herbs, more coins).
-    "Elder Sproutling": dict(desc="an elder sproutling", look=(19,), corpse=17622, hp=150, xp=55, speed=75, race="venom",
+    "Elder Sproutling": dict(desc="an elder sproutling", look=(2347, 0, 0, 0, 0, 0), corpse=17622, hp=150, xp=55, speed=75, race="venom",
                              attacks=[("melee", 0, -22), ("earth", -8, -26, 4)], armor=6, defense=8, heal=(0.03, 4000),
                              loot=[(GOLD, 100000, 22), (3738, 60000, 2), (3577, 40000, 1)],
                              voices=["The elder sproutling creaks and spreads its leaves."]),
     # Nest Queen: comes out of a nest burnt with a torch in Waspgrass Fields, with her wasps.
-    "Nest Queen": dict(desc="a nest queen", look=(44,), corpse=5989, hp=260, xp=90, speed=120, race="venom",
+    "Nest Queen": dict(desc="a nest queen", look=(2346, 0, 0, 0, 0, 0), corpse=5989, hp=260, xp=90, speed=120, race="venom",
                        attacks=[("melee", 0, -30, None, "poison"), ("earth", -10, -30, 4)], armor=6, defense=8,
                        loot=[(GOLD, 100000, 30), (5902, 100000, 2), (14083, 15000, 1)], voices=["BZZZZZT!"],
                        summons=[("Meadow Wasp", 1)]),
     # Bandit Lieutenant: one named lieutenant walks the Bandit Road each hour; the wanted poster pays on his badge.
-    "Bandit Lieutenant": dict(desc="a bandit lieutenant", look=(2202, 0, 0, 0, 0, 0), corpse=18050, hp=650, xp=260, speed=115,
+    "Bandit Lieutenant": dict(desc="a bandit lieutenant", look=(2212, 0, 0, 0, 0, 0), corpse=18050, hp=650, xp=260, speed=115,
                               race="blood", attacks=[("melee", 0, -75), ("physical", -30, -70, 4)], armor=18, defense=18,
                               loot=[(GOLD, 100000, 60), (9218, 100000, 1), (266, 30000, 1)],
                               voices=["You'll never collect on me!", "The poster's worth more than you are."],
@@ -215,7 +215,7 @@ MONSTERS = {
     # about 37 damage a second together, and at 25,000 health his braziers healed it all back (19,000 dealt, 15,000
     # healed in 8 minutes); a Mystic putting out a brazier died stunned in 6 seconds. Now 8,000 health, armour 20 and
     # softer hits: with all four braziers lit he still out-heals a party (oathroom.lua); kept out, he falls in minutes.
-    "The Oathkeeper": dict(desc="the Oathkeeper", look=(2206, 0, 0, 0, 0, 0), corpse=18074, hp=8000, xp=5000, speed=110,
+    "The Oathkeeper": dict(desc="the Oathkeeper", look=(2213, 0, 0, 0, 0, 0), corpse=18074, hp=8000, xp=5000, speed=110,
                            race="undead", attacks=[("melee", 0, -120), ("physical", -50, -100, 3)], armor=20, defense=20,
                            elements={"holy": 30, "death": -10}, boss=True, loot=[],
                            voices=["Hold the stair.", "The oath is kept."], events=["SpireOathkeeper"]),
@@ -248,7 +248,7 @@ MONSTERS = {
                                   elements={"physical": 10},
                                   events=["SpireBossHealth", "SpireBossDeath", "SpireBossThink"]),
     # ---------------------------------------------------------------- the Underkeep, Wing 1 (tuned to Floor 2)
-    "Mire Toad": dict(desc="a mire toad", look=(222, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=210, speed=95, race="venom",
+    "Mire Toad": dict(desc="a mire toad", look=(2348, 0, 0, 0, 0, 0), corpse=6077, hp=420, xp=210, speed=95, race="venom",
                       attacks=[("melee", 0, -70, None, "poison"), ("earth", -30, -90, 4)], armor=18, defense=18,
                       loot=[(GOLD, 100000, 60), (236, 8000, 1), (3032, 2000, 1)], elements={"earth": 100, "fire": -10}),
     "Black Crawler": dict(desc="a black crawler", look=(2301, 0, 0, 0, 0, 0), corpse=10458, hp=520, xp=260, speed=130, race="blood",
@@ -262,22 +262,22 @@ MONSTERS = {
                         loot=[(GOLD, 100000, 100), (PLAT, 30000, 2), (3357, 1500, 1)], elements={"holy": -20}),
     # ---------------------------------------------------------------- small game in the open country (Jay, Q94,
     # 2026-11-26: "fill in the empty land with small game monsters"). Harmless, they run, and pay almost nothing, so they
-    # never become a farm. Placed by maps/small_game.py on the empty lawns. Placeholder looks until their art.
-    "Meadow Hare": dict(desc="a meadow hare", look=(74,), corpse=4173, hp=20, xp=3, speed=160, race="blood", hostile=False,
+    # never become a farm. Placed by maps/small_game.py on the empty lawns. Own looks since 2026-11-27 (art session, approved by Jay).
+    "Meadow Hare": dict(desc="a meadow hare", look=(2342, 0, 0, 0, 0, 0), corpse=4173, hp=20, xp=3, speed=160, race="blood", hostile=False,
                         attacks=[], armor=1, defense=1, run=20, loot=[(3577, 25000, 1)]),
-    "Dapple Fawn": dict(desc="a dapple fawn", look=(31,), corpse=4016, hp=35, xp=5, speed=170, race="blood", hostile=False,
+    "Dapple Fawn": dict(desc="a dapple fawn", look=(2343, 0, 0, 0, 0, 0), corpse=4016, hp=35, xp=5, speed=170, race="blood", hostile=False,
                         attacks=[], armor=1, defense=2, run=35, loot=[(3577, 40000, 2)]),
-    "Thistle Hen": dict(desc="a thistle hen", look=(111,), corpse=4330, hp=15, xp=2, speed=120, race="blood", hostile=False,
+    "Thistle Hen": dict(desc="a thistle hen", look=(2344, 0, 0, 0, 0, 0), corpse=4330, hp=15, xp=2, speed=120, race="blood", hostile=False,
                         attacks=[], armor=1, defense=1, run=15, loot=[(3606, 20000, 1), (5890, 30000, 2)]),
-    "Acorn Squirrel": dict(desc="an acorn squirrel", look=(274,), corpse=276, hp=12, xp=2, speed=180, race="blood", hostile=False,
+    "Acorn Squirrel": dict(desc="an acorn squirrel", look=(2345, 0, 0, 0, 0, 0), corpse=276, hp=12, xp=2, speed=180, race="blood", hostile=False,
                            attacks=[], armor=1, defense=1, run=12, loot=[]),
     # the Underkeep Wing 1 mini-boss (Q89, 2026-11-26): the keeper of the old sluices, in the den at the wing's heart.
-    # Sized for one or two climbers around level 30-40 (Jay may test alone or as a pair). Placeholder look until its art.
-    "Sluice Warden": dict(desc="the Sluice Warden", look=(222,), corpse=6077, hp=2600, xp=1500, speed=110, race="venom",
+    # Sized for one or two climbers around level 30-40 (Jay may test alone or as a pair). Own look since 2026-11-27.
+    "Sluice Warden": dict(desc="the Sluice Warden", look=(2349, 0, 0, 0, 0, 0), corpse=6077, hp=2600, xp=1500, speed=110, race="venom",
                           attacks=[("melee", 0, -150, None, "poison"), ("earth", -60, -160, 4)], armor=30, defense=30,
                           loot=[(GOLD, 100000, 100), (PLAT, 100000, 6), (3032, 25000, 1)], elements={"earth": 100},
                           voices=["The water remembers!"]),
-    "Drain Matron": dict(desc="the Drain Matron", look=(222,), corpse=6077, hp=9000, xp=4200, speed=120, race="venom", boss=True,
+    "Drain Matron": dict(desc="the Drain Matron", look=(2350, 0, 0, 0, 0, 0), corpse=6077, hp=9000, xp=4200, speed=120, race="venom", boss=True,
                          attacks=[("melee", 0, -300, None, "poison"), ("earth", -150, -350, 5)], armor=40, defense=40,
                          loot=[(GOLD, 100000, 100), (PLAT, 100000, 15), (3370, 20000, 1)], elements={"earth": 100}),
     "Trap Mimic": dict(desc="a trap mimic", look=(197,), corpse=6072, hp=2200, xp=1100, speed=90, race="blood",
@@ -329,7 +329,7 @@ MONSTERS = {
                              loot=[], boss=True, voices=["Show me two blades in one heart."], events=["SpireTwinFangDeath"]),
     "Mirror Image": dict(desc="a mirror image", look=(130,), corpse=0, hp=2000, xp=0, speed=0, race="undead",
                          attacks=[("melee", 0, 0)], armor=50, defense=50, summon=True, loot=[]),
-    "Wolf Companion": dict(desc="a wolf companion", look=(27,), corpse=0, hp=400, xp=0, speed=160, race="blood",
+    "Wolf Companion": dict(desc="a wolf companion", look=(2352, 0, 0, 0, 0, 0), corpse=0, hp=400, xp=0, speed=160, race="blood",
                            attacks=[("melee", 0, -50)], armor=15, defense=15, summon=True, loot=[]),
     # P9b: the Lost Patrol's survivor while he walks home with you (scripts/spirebound/escort.lua); dressed like the watch
     "Patrolman Teodric": dict(desc="Patrolman Teodric", look=(134, 95, 94, 94, 95, 0), corpse=0, hp=900, xp=0, speed=230,

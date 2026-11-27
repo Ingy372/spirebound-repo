@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "an acorn squirrel"
 monster.experience = 2
 monster.outfit = {
-	lookType = 274, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
+	lookType = 2345, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 12
