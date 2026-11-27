@@ -95,6 +95,10 @@ Level bands are hunting targets, not doors. No level cap. Floors 2–5 use the O
 - Each wing is tuned to the floor that opened it, not to the player. A level 10 in Wing 5 should leave fast.
 - Every wing hides at least one more secret (shop, boss, chest room, fishing pool).
 - Sealed doors read: *"Sealed until the tower reaches Floor N."*
+- **Wing 1 as a real dungeon (Jay, 2026-11-26, Q89: "yes. being honest i dont know how many people im going to get to help me play test. i may end up just being my self or maybe myself and one other person."):** corridors two or three tiles wide, guard rooms, cells, a collapsed and a flooded part, at least one loop and dead ends with rewards, one secret inside, about 50 monsters of three kinds and a mini-boss. Because the first playtests may be Jay alone or with one other person, everything on Floor 1 must be testable solo or as a pair (the Pilot party tools stand in for a party).
+
+### 3.4b Small game in the open country (Jay, 2026-11-26, Q94: "fill in the empty land with small game monsters to help it feel less empty")
+- The empty lawns between Floor 1's grounds hold harmless or nearly harmless small creatures in loose scatter, so the land feels alive. **(Claude's call, Jay can veto:)** original names, their own habits, tiny experience and loot so they never become the best farm, never on roads or near a ground's gate.
 
 ### 3.5 Apex spawns (from Jay's favorite hunt)
 One layered, over-tuned spawn per floor that stays worth hunting long past its floor: an easy outer layer, a packed inner room, a semi-hidden rope spot to a big deeper spawn, and a hidden side dungeon with easier, denser monsters. Apex spawns sit in **Contested** PvP zones (6.3), so they create the fights Jay remembers.
@@ -111,6 +115,10 @@ Every 3 hours a world event fires on an open floor: Frenzy (apex spawn +50% resp
 - The boosted creature of the day (roadmap J7) stays for now; it's a daily reason to try a different ground. *(Claude's call, Jay can veto.)*
 
 ---
+
+### 3.7 Waycrystals (Jay's idea, 2026-11-26, Q94: "i would lean towards fill in the empty land with small game monsters to help it feel less empty. i had an idea to incorporate 'teleport crystals' to help players save time, to create a unique system, and to provide another area to burn player income. the teleport crystal can be set to instantly teleport you to town, or it can open a menu and teleport you to a training zone on that floor specifically. teleport crystals should come in 10 different colors for each floor and labeled accordingly.")
+- Jay's own: ten crystals, one per floor, each its own colour and labelled with its floor; using one takes you to that floor's town, or opens a menu of that floor's hunting grounds. A time-saver and a gold sink.
+- **(Claude's call, Jay can veto; Q95):** called Waycrystals ("Teleport Crystal" is SAO's item name). Right-click: a menu of the floor's town and the grounds whose level band you have reached (you arrive at the gate). Used up on arrival. Three seconds standing still; moving or taking damage cancels it; refused in a fight (any hit given or taken in the last few seconds), in boss rooms, arenas, the tutorial and party caves, and for floors not yet open. Sold by each floor's Runewright (never the donation shop) at about 4 minutes of that floor's hunting income (Floor 1: 150 gold); it replaces the old temple scroll. Prices come from `tools/balance.py`, which counts them as a sink.
 
 ## 4. Seasons
 

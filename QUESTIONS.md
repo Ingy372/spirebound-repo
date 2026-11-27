@@ -8,6 +8,17 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q95. Waycrystals: the name and the rules I chose (2026-11-26, from your idea in Q94)
+You asked for teleport crystals, one colour per floor. What I am building, my call until you say otherwise:
+- **Name:** "Waycrystal" (for example "Amber Waycrystal (Floor 1)"). "Teleport Crystal" is the exact item name in Sword Art Online, and our rule is no SAO names players can see.
+- **Use:** right-click it: a small menu offers that floor's town, or any of its hunting grounds your level has reached (you arrive at the ground's gate). It is used up when the teleport happens.
+- **Not an escape:** you stand still for 3 seconds (moving or being hit cancels it); refused while in a fight, in boss rooms, arenas, the tutorial and party caves, and for floors that are not open yet. This matters most for Death Game characters.
+- **Where to buy:** each floor's Runewright, never the donation shop. It replaces the Runewright's old 300-gold temple scroll.
+- **Price:** about 4 minutes of that floor's hunting income each (there and back costs about 8 minutes); Floor 1's is 150 gold.
+- **Recommendation:** keep all of the above.
+- Assumed until you answer: as above.
+- Jay's answer:
+
 *Q82-Q94 come from the Floor 1 review and the map review (2026-11-26). Nothing is built for them until you answer.*
 
 ### Q97. Hearthgate's new layout: build it as planned? (2026-11-26)
@@ -72,8 +83,7 @@ Rangers who use spears get nothing from the barracks the bow users get.
 ### Q89. The Underkeep: make it a real dungeon? (2026-11-26, Floor 1 review A2-1 and map review M2)
 The Underkeep under the city is six big bare halls; Wing 1 holds about 18 monsters in one 70 by 50 room. It reads as a warehouse, not a secret dungeon.
 - **Recommendation:** rebuild Wing 1 first as a real dungeon: corridors, guard rooms, cells, a collapsed and a flooded part, a loop and a dead end with a reward, about 50 monsters of three kinds, one mini-boss and the promised secret. The other wings follow with their floors. It is several days of work, so it waits for your yes (roadmap MR2).
-- Assumed until you answer: no change.
-- Jay's answer:
+- Jay's answer (2026-11-26): "yes. being honest i dont know how many people im going to get to help me play test. i may end up just being my self or maybe myself and one other person." Being built (MR2). For all planning: Floor 1 must be testable alone or as a pair.
 
 ### Q90. Solo players and the Stair Key (2026-11-26, Floor 1 review A3-2 and A5-1; FYI)
 The review worried that the Stair Key step (30 Road Bandits) needs a group. Checked on the built map: the Bandit Road's surface already holds Road Bandits in ones and twos only (11 on the surface, the Captain alone at the camp); the packs of 3-4 are in the Smugglers' Cellar below, which is the party part.
@@ -95,14 +105,12 @@ After the first clear, any party can say !private at the top of the labyrinth an
 ### Q93. How hand-made should Floor 1 look before friends see it? (2026-11-26, map review M3, M4, M7, M8, M10-M15)
 The map is tidy and correct, but it looks generated: every hunting ground is a box, most roads are straight with square corners, all ~80 homes are the same empty square, and the public halls (Hunters' Hall, Registrar, the inns, Spire Manor) are big rooms with little in them.
 - **Recommendation:** two jobs before the friends test, each in the generator so Floors 2-10 inherit them: (1) wandering outlines and winding roads for every ground (roadmap MR3); (2) five or six house plans with beds and furniture, and furnished public halls (roadmap MR4). The smaller polish (MR5) is left for the Cowork finishing pass you planned.
-- Assumed until you answer: wait.
-- Jay's answer:
+- Jay's answer (2026-11-26): "im not worried about the game feeling hand made, im worried about it being fun and functional. currently the housing options are boring and all the same. unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for. i wanted the town to have somewhat of a resemblance to sword art onlines town of beginnings. but at the same time dont want anything having restrictions on it to hold to that hope." So: the pure looks (box-shaped grounds, straight roads, the labyrinth and watchtower looks: MR3, MR5) wait in "Later"; housing and Spire Manor went to the review session at Jay's request; a nod to that kind of town only where it costs nothing (the central plaza), with original names and layout as always.
 
 ### Q94. The empty land on Floor 1 (2026-11-26, map review M11)
 About a third of the 400 by 400 floor is open lawn with nothing to find (south-east, south-west, far west, north-west).
 - **Recommendation:** use it for the launch-size grounds of Step 4 (levels 17-30, helps launch-day crowding), and meanwhile scatter a few small landmarks (a shrine, a camp, a wreck) so wandering is rewarded.
-- Assumed until you answer: no change.
-- Jay's answer:
+- Jay's answer (2026-11-26): "i would lean towards fill in the empty land with small game monsters to help it feel less empty. i had an idea to incorporate 'teleport crystals' to help players save time, to create a unique system, and to provide another area to burn player income. the teleport crystal can be set to instantly teleport you to town, or it can open a menu and teleport you to a training zone on that floor specifically. teleport crystals should come in 10 different colors for each floor and labeled accordingly." So: small harmless creatures over the empty lawns (roadmap MR6), and the crystals (roadmap TC1, DESIGN.md 3.7; the choices left to me are Q95).
 
 ### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
 The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
