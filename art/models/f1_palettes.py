@@ -80,6 +80,30 @@ PAL["acorn_squirrel"] = {
     "line": flat((20, 16, 18)),
 }
 
+# ---------------------------------------------------------------- ground-feature monsters (FD2)
+# Nest Queen: the meadow wasps' mother: a long honey-gold abdomen with burgundy-black bands (her wasps are amber and
+# blue-black; Tibia's are lemon and brown), a russet fuzzy thorax, an ivory crown of horn spikes, ember eyes, smoky
+# amber wings torn ragged, a glowing amber venom drop.
+PAL["nest_queen"] = {
+    "thorax": ramp((40, 14, 8), (230, 150, 80), (140, 64, 30)), "abdomen": ramp((90, 46, 6), (255, 226, 120), (214, 150, 30)),
+    "stripe": ramp((16, 4, 10), (120, 50, 70), (52, 14, 30)), "head": ramp((16, 4, 10), (120, 50, 70), (52, 14, 30)),
+    "face": ramp((90, 60, 20), (255, 230, 150), (200, 160, 80)), "eye": ramp((120, 10, 6), (255, 160, 90), (230, 60, 30)),
+    "stinger": ramp((10, 4, 8), (90, 50, 60), (36, 16, 24)), "wing": ramp((90, 70, 50), (226, 206, 170), (170, 146, 110)),
+    "leg": ramp((14, 6, 10), (100, 60, 64), (40, 20, 28)), "antenna": flat((26, 10, 18)), "vein": flat((50, 30, 26)),
+    "waist": ramp((16, 4, 10), (120, 50, 70), (52, 14, 30)), "crown": ramp((120, 100, 60), (255, 250, 220), (230, 214, 160)),
+    "venom": ramp((180, 100, 10), (255, 250, 170), (255, 200, 60)),
+}
+
+# Elder Sproutling: a sproutling grown old: a sage-olive bulb face on a grey-brown bark trunk, a crown of deep emerald
+# leaves (bluer and darker than the meadow grass) with pale-pink blossoms, mossy patches, amber eyes under bark brows.
+PAL["elder_sproutling"] = {
+    "bulb": ramp((22, 34, 20), (186, 200, 132), (92, 114, 62)), "bark": ramp((24, 18, 14), (176, 150, 120), (92, 74, 56)),
+    "ridge": flat((20, 14, 10)), "eye": ramp((140, 70, 0), (255, 230, 120), (250, 170, 30)), "brow": ramp((20, 14, 10), (120, 96, 70), (60, 46, 32)),
+    "mouth": flat((16, 10, 8)), "leaf": ramp((4, 24, 20), (96, 170, 112), (24, 92, 62)), "vein": flat((150, 214, 150)),
+    "twig": ramp((24, 18, 14), (160, 132, 100), (84, 64, 46)), "root": ramp((22, 16, 12), (150, 120, 90), (76, 58, 40)),
+    "moss": ramp((20, 44, 18), (130, 176, 80), (60, 104, 40)), "blossom": ramp((170, 100, 120), (255, 236, 240), (240, 180, 196)),
+}
+
 
 def main():
     path = PIPE / "palette.json"
