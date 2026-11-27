@@ -29,8 +29,14 @@ def say(t, w=1.0):
     return [{"do": "say", "text": t}, {"do": "wait", "seconds": w}]
 
 
-def walk(to, note, t=60, fight=True):
-    return [{"do": "walk", "to": to, "fight": fight, "timeout": t, "note": note}]
+def walk(to, note, t=60, fight=True, tries=1):
+    """a walk; through a gate that may still be shut, try again a few times (the gates open as the team goes on)"""
+    out = []
+    for k in range(tries):
+        out += [{"do": "walk", "to": to, "fight": fight, "timeout": t, "note": note + ("" if k == 0 else " (again)")}]
+        if k < tries - 1:
+            out += [{"do": "hunt", "seconds": 8, "radius": 4}]
+    return out
 
 
 def use(at, n=1, gap=6):
@@ -58,13 +64,13 @@ def route(name):
         steps += [{"do": "party", "join": TEAM[0], "seconds": 100, "note": "form the party"}]
     steps += walk(tile, "onto oath stone %d" % (i + 1), 15, False) + [{"do": "wait", "seconds": 20 if i == 3 else 35}]
     if i == 3:                                   # the last on the stones pulls the lever (it stands beside stone 4)
-        steps += [{"do": "shot", "name": "oath_door"}] + use(lever, 1, 4)
+        steps += [{"do": "shot", "name": "oath_door"}] + use(lever, 4, 10)   # until all four stand on the stones
         steps += say("/story oathsafe", 1)
     else:
         steps += [{"do": "wait", "seconds": 10}]
     # the Captain's hall: hold in front of the line (the line is 5 tiles in from the west end)
     line = p["oath_line"]
-    steps += walk([line[0] + 3 + (i % 2), ay - 1 + i, z], "hold the line", 30) + [{"do": "hunt", "seconds": 215, "radius": 9}]
+    steps += walk([line[0] + 3 + (i % 2), ay - 1 + i, z], "hold the line", 15, True, 5) + [{"do": "hunt", "seconds": 240, "radius": 9}]
     if i == 0:
         steps += [{"do": "shot", "name": "oath_captain"}]
     steps += say("/pilot heal")
@@ -72,23 +78,23 @@ def route(name):
     north = i in (0, 1)
     l1, l2, l3, l4 = (p[f"oath_lever_l{k}"] for k in (1, 2, 3, 4))
     gx = p["oath_gate_g1"][0]
-    steps += walk([gx + 3, ay - 3 if north else ay + 3, z], "into the Scout's hall", 40)
+    steps += walk([gx + 3, ay - 3 if north else ay + 3, z], "into the Scout's hall", 25, True, 5)
     if i == 0:      # SUN
         steps += walk([l1[0] - 1, l1[1] + 1, z], "to the SUN lever", 30) + use(l1, 3, 5) + [{"do": "hunt", "seconds": 15, "radius": 4}]
-        steps += walk([l3[0] - 1, l3[1] + 1, z], "to the STAR lever", 60) + use(l3, 5, 5)
+        steps += walk([l3[0] - 1, l3[1] + 1, z], "to the STAR lever", 20, True, 5) + use(l3, 5, 5)
     elif i == 2:    # MOON
         steps += walk([l2[0] - 1, l2[1] - 1, z], "to the MOON lever", 30) + [{"do": "wait", "seconds": 8}] + use(l2, 4, 5)
         steps += [{"do": "hunt", "seconds": 10, "radius": 4}]
-        steps += walk([l4[0] - 1, l4[1] - 1, z], "to the FLAME lever", 60) + [{"do": "wait", "seconds": 10}] + use(l4, 6, 5)
+        steps += walk([l4[0] - 1, l4[1] - 1, z], "to the FLAME lever", 20, True, 5) + use(l4, 8, 5)
     else:           # the partners fight beside them
         lv = l1 if north else l2
         steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner", 30) + [{"do": "hunt", "seconds": 25, "radius": 4}]
         lv = l3 if north else l4
-        steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner (second room)", 60) + [{"do": "hunt", "seconds": 35, "radius": 4}]
+        steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner (second room)", 20, True, 5) + [{"do": "hunt", "seconds": 35, "radius": 4}]
     # the Keeper's hall: read the lectern, then the middle lane (one Pilot first steps on a wrong stone)
     lec = p["oath_lectern"]
     runes = p["oath_runes"]
-    steps += walk([lec[0], lec[1] + 1, z], "to the Keeper's lectern", 60) + use(lec, 1, 3)
+    steps += walk([lec[0], lec[1] + 1, z], "to the Keeper's lectern", 20, True, 6) + use(lec, 1, 3)
     if i == 0:
         steps += [{"do": "shot", "name": "oath_lectern"}]
     if i == 1:
@@ -98,7 +104,7 @@ def route(name):
     steps += [{"do": "wait", "seconds": 4 + 2 * i}]
     # the Healer's hall
     boss = p["oath_boss"]
-    steps += walk([boss[0] - 3, boss[1] + (i - 1), z], "into the Healer's hall", 20)
+    steps += walk([boss[0] - 3, boss[1] + (i - 1), z], "into the Healer's hall", 20, True, 3)
     if i in (1, 3):     # Warden puts out braziers 1 and 2 (north), the Healer 3 and 4 (south)
         b = [p["oath_brazier_1"], p["oath_brazier_2"]] if i == 1 else [p["oath_brazier_3"], p["oath_brazier_4"]]
         for k, br in enumerate(b):
@@ -109,10 +115,9 @@ def route(name):
         steps += [{"do": "shot", "name": "oath_boss"}]
     # the reward room: one chest each, then out through the light
     chest = p["oath_chest_" + CHEST[name]]
-    steps += walk([chest[0], chest[1] + 1, z], "to " + CHEST[name] + "'s chest", 40, False) + use(chest, 1, 3)
+    steps += walk([chest[0], chest[1] + 1, z], "to " + CHEST[name] + "'s chest", 20, False, 6) + use(chest, 1, 3)
     steps += [{"do": "shot", "name": "oath_chest_" + CHEST[name]}]
     steps += walk(list(p["oath_exit_reward"]), "out through the light", 20, False) + [{"do": "wait", "seconds": 4}]
-    steps += [{"do": "look", "at": "self"}] if False else []
     steps += [{"do": "wait", "seconds": 3, "note": "done"}]
     return steps
 

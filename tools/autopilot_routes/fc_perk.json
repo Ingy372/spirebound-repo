@@ -1,0 +1,65 @@
+{
+ "name": "fc_perk",
+ "character": "Pilot Vanguard",
+ "timeout": 90,
+ "about": "FD1: Maren grants the Floor 1 perk to an Heir",
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "perk"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "Thick Skin"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "perk"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "shot",
+   "name": "fc_perk"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

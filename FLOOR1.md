@@ -68,7 +68,30 @@ The four starter grounds and the roads around the city are *Guarded* (players ca
 - **Levelling:** levels 1-8 at 10x, 9-20 at 4x, 21-50 at 3x; Floor 1 takes about 11 to 15 hours of real play (ECONOMY.md has the ladder).
 
 ## Quests on Floor 1
-**Story quests** (finish all six to earn the Floor 1 perk at the Registrar):
+**The story: The First Climb** (roadmap FD1, 2026-11-27; design `docs/superpowers/specs/2026-11-27-floor1-depth-design.md` 4.1).
+Why everyone climbs: at the top of the Spire waits the Summit Wish, one wish for whoever reaches it (Guide Pell, the `!guide`
+letter). Archivist Maren at the Monument tells eight chapters that follow the First Climb, the company that went up before
+Hearthgate was a town; chapter 8 gives the title Heir to the First Climb and the Floor 1 perk (Registrar Maelis, 'perk').
+1. *The Missing Names* (level 4): read the Monument's scraped rows; find the supply mark on the old wall by the north gate.
+2. *The Quartermaster's Trail* (8): three supply stones in the Ratwarren, Toad Pond and the Sproutling Glade.
+3. *Bread for the Climb* (12): ask Miller Agna about the climb; the old flour bin in Thornsnap Hollow (three thornsnaps); the ledger.
+4. *The One Who Turned Back* (15): Brother Tam's grave in Reedmarsh; take his pendant to the archive or lay Agna's wreath (two titles, the look line says which).
+5. *The Pay Chest* (19): two pages of Ione's record from Bandit Captains.
+6. *The Watch That Never Ended* (24): the standing order by the oath stones in the Old Quarry; the watch log in the Old Watchtower's keep.
+7. *The Rearguard* (28): Aldric Vane's field desk at the foot of the labyrinth, opened with the Stair Key.
+8. *The Last Page* (30): the Axe-Lord of the Stair (he was Aldric Vane).
+Twelve records (nine from the chapters, three loose: the Millcross carriage stop, Wolf Copse, Reedmarsh's camp) are kept as
+items and counted on the Discoveries page (Records). Townsfolk each say one line about the First Climb ('climb'), and disagree.
+Objects are put down at start-up by `scripts/spirebound/first_climb.lua`; Maren and the Oathroom are in `maps/floor1_story.py`.
+
+**The big quest: The Oathroom** (roadmap FD3). Four climbers of level 30 stand on the four oath stones on the Old Quarry's
+south trail; one pulls the lever. 25 minutes, one team at a time, on level 10: the Captain's hall (hold a line for three
+minutes of waves), the Scout's hall (two pairs, four levers in the carved order SUN, MOON, STAR, FLAME), the Keeper's hall
+(a rune floor; the safe path is in the book on the lectern, new each run), the Healer's hall (the Oathkeeper heals from four
+braziers; stand beside one to put it out). Four chests, one per character each season: a tier step on a Floor 1 weapon,
+the Oathbound Pack, 10,000 gold, or the Oathkeeper's Mantle aura. The first team each season goes on the Monument.
+
+**Jobs** (the old story quests, same pay; since FD1 they no longer gate the perk):
 1. *Bread for the Road* (Miller Agna): 15 Bristle Boars.
 2. *The Lost Patrol* (Captain Dorrow): 2 Bandit Captains.
 3. *Millstone* (Miller Agna, after Bread): 20 Thornsnaps. Title: Millhand.
