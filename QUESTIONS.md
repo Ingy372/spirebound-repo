@@ -8,6 +8,16 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q100. Adventure layer, my smaller calls (2026-11-27)
+Built from your answers in Q99. These are mine; say if you want any changed.
+- **Riddles:** I rewrote all 13 Floor 1 hints as riddles with no place names, directions or NPC names. A riddle shows only on Vesper's list once that secret is sold, or in your Journal if a message bottle gave it to you. Nobody sees all the riddles by default any more (before, the Journal showed every hint to everyone).
+- **The purse:** 1,000 gold for every secret, into the bank, once per account. The three gear secrets also pay Vesper's top price if sold, without saying why.
+- **Where secret gear sits:** the Millrace Boots under the mill and the Warden's Signet in the walled-up cell. The Shrinekeeper's Pendant goes to everyone who fights the shrine's two guardians. They can't be traded, dropped, stored or sold. Next season they move with the season remix.
+- **Rare weapon pictures:** until Grok's icons arrive, the rare wand and rod borrow stronger base items, scaled back so they never out-damage the quest weapon. Side effect: they need level 13 to wield.
+- **On the Monument and board:** a first find of a secret reads "A secret of Floor 1 (no. 3): Name". It never says where or which one. Hidden beasts and elites are named.
+- **Recommendation:** keep all of it. Assumed until you answer.
+- Jay's answer:
+
 ### Q99. Adventure and "someone has something I don't": build it now, before the full-party run? (2026-11-27)
 You asked whether Floor 1 keeps a player hooked the whole way and has enough FOMO. My audit: the first 30 minutes and levels 10 to 20 are good; levels 20 to 28 go flat (mostly "kill 30 or 40" in the money grounds, no new secret beast, the weapon already earned); and almost nothing on the floor is scarce or visible. Nine of the 13 secrets pay only coins, a rare weapon drop looks like the ordinary one and nobody is told, trophies can't be seen by other players, and every player of a class ends up with the same two addons. The fixes are roadmap Step 4b (AD1 to AD7).
 The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is built until a real party clears Floor 1. Step 4b is mostly new rewards and announcements on things that already exist, but AD4 (rare roaming monsters) and AD5 (treasure maps, two new hidden places) are new content.
@@ -206,6 +216,7 @@ You approved all sixteen addon drawings. Now each one is a quest reward (my call
 - Each pays some experience too, and unlocks the addon on both the man's and the woman's outfit.
 - **Recommendation:** keep it like this. Elites are rare, so addon 1 is a small hunt of its own, and an addon shows you did it.
 - Assumed until you answer: yes.
+- **Changed 2026-11-27 (adventure layer, roadmap AD5, my call):** three of the addon 2 jobs were plain kill counts, so they are now a hunt for a named target that comes out after you drop 15 of its kind in its ground (the Journal says so): Ranger: outshoot **Deadeye Sorrel** on Smugglers' Ridge (was 40 crossbowmen); Arcanist: take the book from **the Page-Thief** on the Bandit Road (was 30 hexers); Mystic: calm **Glasswing**, the oldest shardling, in the Shard Fields (was 40 shardlings). If it gets away (10 minutes), 5 more kills call it back. Vanguard's Granite Warden is unchanged. Veto any of them and I put the kill count back.
 ### Q70. Put the website on a public https:// address now, or wait? (2026-11-26, 7.1b)
 The scripts are ready (`windows\Open-Public-Website.bat`, steps in `windows\README.md`): free, through Tailscale Funnel, an address ending in `.ts.net` with a real certificate, no domain to buy. Only the website (sign-up and account pages) goes public; the game itself still needs Tailscale. Anyone on the internet could then make accounts on your PC.
 - **Recommendation:** wait until the friends test (9.3) is close; switch it on that day, and off again after. A proper domain name comes with picking a host (10.1).
