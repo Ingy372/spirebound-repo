@@ -59,4 +59,7 @@ dofile(DATA_DIRECTORY .. "/lib/spirebound/chronicle.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/arena.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/siege.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/remix.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/finds.lua") -- adventure layer: finds, firsts, Discoveries, auras
+dofile(DATA_DIRECTORY .. "/lib/spirebound/discoveries.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/auras.lua")
 dofile(DATA_DIRECTORY .. "/lib/core/load.lua")

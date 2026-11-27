@@ -20,6 +20,7 @@ local COMMANDS = {
   { '!summon', 'Summoning Circle in my house (add: boss name)', true }, { '!dice', 'Bet in a Fortune Hall (add: amount high|low)', true },
   { '!fortune', 'Make my house a Fortune Hall (add: license)', true }, { '!mannequin', 'Show my outfit on a house mannequin' },
   { '!pond', 'My house pond' }, { '!answer', 'Answer the Tower Quiz (add: your answer)', true }, { '!warroom', 'My guild war room' }, { '!journal', 'Open this Journal' },
+  { '!finds', 'My Floor 1 Discoveries' }, { '!finds anonymous', 'Hide or show my name in find announcements' }, { '!aura', 'My auras (add: name or off)', true }, { '!title', 'My titles: choose the one others see (add: name or off)', true },
 }
 local current = 'upgrade'
 local LABELS = {

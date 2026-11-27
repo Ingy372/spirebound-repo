@@ -1,5 +1,5 @@
 -- Roadmap 2.7 / 2.8: secrets and the Info Broker.
-SpireTest.add("secrets: 13 on floor 1, each with a walkable trigger tile", function()
+SpireTest.add("secrets: 13+ on floor 1, each with a walkable trigger tile", function()
 	local n = 0
 	for _, s in ipairs(SpireSecrets.list) do
 		if s.floor == 1 then
@@ -10,7 +10,7 @@ SpireTest.add("secrets: 13 on floor 1, each with a walkable trigger tile", funct
 			if not t or t:hasFlag(TILESTATE_BLOCKSOLID) then error(s.id .. " trigger tile is blocked") end
 		end
 	end
-	SpireTest.eq(n, 13, "floor 1 secrets")
+	if n < 13 then error("only " .. n .. " floor 1 secrets") end -- 13, plus s14/s15 from the adventure layer (Session B)
 end)
 
 SpireTest.add("secrets: selling rules never lock anyone out", function()
