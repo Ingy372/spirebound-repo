@@ -45,7 +45,7 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	if primaryType == COMBAT_HEALING then
 		local healer = SpireProgress.owner(attacker)
 		if healer then
-			primaryDamage = math.floor(primaryDamage * SpireStyle.healFactor(SpireStyle.get(healer)) + 0.5)
+			primaryDamage = math.floor(primaryDamage * SpireStyle.healFactor(SpireStyle.get(healer)) * SpireGear.perkHealFactor(SpireGear.perkOf(healer)) + 0.5)
 		end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end

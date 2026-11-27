@@ -53,3 +53,80 @@ SpireTest.add("review B4-1: no Floor 1 shop sells a weapon that out-damages the 
 	SpireTest.eq(seen >= 8, true, "found the shops' weapons (" .. seen .. ")")
 	SpireTest.eq(table.concat(bad, ", "), "", "shop weapons at or above attack " .. barracks)
 end)
+
+-- ---------------------------------------------------------------- 2. rare-drop weapons (B4-2)
+-- A stand-in fighter holding a real item in its weapon hand (no real player is online during the boot test)
+local function holder(voc, item)
+	local p = { id = 987000 + voc }
+	function p:getPlayer() return self end
+	function p:getId() return self.id end
+	function p:getVocation() return { getBaseId = function() return voc end } end
+	function p:getSlotItem(slot) return slot == CONST_SLOT_LEFT and item or nil end
+	return p
+end
+
+SpireTest.add("review B4-2: the four rare-weapon perks do what the item says", function()
+	local size, life, mana = SpireGear.perkHit("life_leech", 0.02, 200, 0.9)
+	SpireTest.eq(size, 200, "life leech leaves the hit alone")
+	SpireTest.eq(life, 4, "2% of 200 comes back as health")
+	size, life, mana = SpireGear.perkHit("mana_leech", 0.02, 200, 0.9)
+	SpireTest.eq(mana, 4, "2% of 200 comes back as mana")
+	size = SpireGear.perkHit("crit", 0.03, 200, 0.02)
+	SpireTest.eq(size, 300, "a critical hit does half as much again")
+	size = SpireGear.perkHit("crit", 0.03, 200, 0.5)
+	SpireTest.eq(size, 200, "most hits are ordinary")
+	SpireTest.eq(SpireGear.perkHealFactor("heal", 0.04), 1.04, "healing 4% stronger")
+	SpireTest.eq(SpireGear.perkHealFactor(nil, nil), 1, "no rare weapon: no change")
+	for _, w in ipairs(SpireGearData.weapons) do
+		if w.source == "drop" then
+			SpireTest.eq(SpireGear.perkText(w.perk, w.perkValue) ~= "", true, w.name .. " has a built perk")
+		end
+	end
+end)
+
+SpireTest.add("review B4-2: a rare weapon in hand changes a real hit on a real monster, whatever its sign", function()
+	local b = Game.createItem(2853, 1, HERE)
+	local sabre = SpireGear.make(b, "f1_vanguard_drop")
+	SpireTest.eq(sabre:getAttribute(ITEM_ATTRIBUTE_DESCRIPTION):find("returns as health", 1, true) ~= nil, true, "the item says what it does")
+	local wolf = Game.createMonster("Meadow Wolf", HERE, false, true)
+	SpireTest.eq(wolf ~= nil, true, "monster made")
+	local vanguard = holder(4, sabre)
+	SpireTest.eq((SpireGear.perkOf(vanguard)), "life_leech", "a Vanguard holding the sabre has its perk")
+	SpireTest.eq(SpireGear.onDealtPerk(vanguard, wolf, -40), -40, "life leech keeps a negative hit as it is")
+	SpireTest.eq(SpireGear.perkOf(holder(3, sabre)), nil, "another class holding it gets nothing")
+	local bow = SpireGear.make(b, "f1_ranger_drop")
+	local ranger, crits, total = holder(3, bow), 0, 0
+	for _ = 1, 4000 do
+		local out = SpireGear.onDealtPerk(ranger, wolf, -100)
+		total = total + 1
+		if out == -150 then
+			crits = crits + 1
+		else
+			SpireTest.eq(out, -100, "an ordinary arrow")
+		end
+	end
+	SpireTest.eq(crits > 60 and crits < 200, true, "about 3% of 4000 arrows are critical (" .. crits .. ")")
+	SpireTest.eq(SpireGear.onDealtPerk(holder(3, SpireGear.make(b, "f1_ranger_bow")), wolf, -100), -100, "the main bow has no perk")
+	wolf:remove()
+	b:remove()
+end)
+
+SpireTest.add("review B4-2: rare weapons fall from the two elites and the Ram only, 1 kill in 200, your own class twice as often", function()
+	SpireTest.eq(SpireGearData.DROP_CHANCE, 0.005, "the chance")
+	SpireTest.eq(SpireGear.rareDrop("Ruin Sentinel", 4, 0, 0), nil, "Ruin Sentinels no longer drop them")
+	SpireTest.eq(SpireGear.rareDrop("Grey Alpha", 4, 0.0049, 0) ~= nil, true, "a Grey Alpha does, on a lucky roll")
+	SpireTest.eq(SpireGear.rareDrop("Grey Alpha", 4, 0.005, 0), nil, "and not on an ordinary one")
+	for _, name in ipairs({ "Bandit Captain", "Stonehorn Ram" }) do
+		SpireTest.eq(SpireGear.rareDrop(name, 1, 0, 0) ~= nil, true, name .. " can drop one")
+	end
+	for own = 1, 4 do
+		local count = { 0, 0, 0, 0 }
+		for i = 0, 999 do
+			local d = SpireGear.rareDrop("Grey Alpha", own, 0, i / 1000)
+			count[d.vocation] = count[d.vocation] + 1
+		end
+		for voc = 1, 4 do
+			SpireTest.eq(count[voc], voc == own and 400 or 200, "class " .. voc .. " share for a class-" .. own .. " looter")
+		end
+	end
+end)

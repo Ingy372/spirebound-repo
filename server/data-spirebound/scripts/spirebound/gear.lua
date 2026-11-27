@@ -1,16 +1,6 @@
 -- Gear in the game: rare alternative weapons from each floor's harder monsters (gear progression spec 4.5).
 -- Rules: lib/spirebound/gear.lua. Data: lib/spirebound/gear_data.lua (tools/gen_gear.py).
 
-local function floorOfDropper(name)
-	for floor, list in pairs(SpireGearData.dropFrom) do
-		for _, n in ipairs(list) do
-			if n == name then
-				return floor
-			end
-		end
-	end
-end
-
 local drops = EventCallback("SpireGearDrops")
 function drops.monsterOnDropLoot(monster, corpse)
 	local owner = Player(corpse:getCorpseOwner())
@@ -34,12 +24,11 @@ function drops.monsterOnDropLoot(monster, corpse)
 			end
 		end
 	end
-	local floor = floorOfDropper(monster:getName())
-	if floor and math.random() < SpireGearData.DROP_CHANCE then
-		local d = SpireGear.find(math.random(1, 4), floor, "drop", "weapon")
-		if d then
-			SpireGear.make(corpse, d.id)
-		end
+	-- a rare weapon (review B4-2: elites and the Ram only, the looter's own class twice as likely)
+	local d = not monster:getMaster() and SpireGear.rareDrop(monster:getName(), owner:getVocation():getBaseId(), math.random(), math.random())
+	if d and SpireGear.make(corpse, d.id) then
+		corpse:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
+		owner:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A rare weapon lies in the remains: " .. d.name .. "!")
 	end
 end
 drops:register()

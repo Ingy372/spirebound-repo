@@ -4,8 +4,10 @@ SpireGearData = {}
 SpireGearData.MAX_TIER = 5
 SpireGearData.FAM_BONUS = 0.015
 SpireGearData.SHARDS_PER_TIER = 3
-SpireGearData.DROP_CHANCE = 0.03
+SpireGearData.DROP_CHANCE = 0.005
 SpireGearData.MELEE_ATTACK_PER_TIER = 1
+SpireGearData.CRIT_BONUS = 0.5
+SpireGearData.DROP_OWN_CLASS_WEIGHT = 2
 SpireGearData.floor = {
 	[1] = { base = 0.1000, step = 0.0400, awaken = 0.1000, armorStep = 1 },
 	[2] = { base = 0.4893, step = 0.0600, awaken = 0.1500, armorStep = 2 },
@@ -50,7 +52,7 @@ SpireGearData.shop = {
 	[2] = { weapon = { id = "shop_weapon_2", base = 3066, name = "Climber's Rod", bonus = 0.08 }, armour = { id = "shop_armour_2", base = 3361, name = "Climber's Robe", bonus = 1 } },
 }
 SpireGearData.dropFrom = {
-	[1] = { "Bandit Captain", "Grey Alpha", "Ruin Sentinel", "Stonehorn Ram" },
+	[1] = { "Bandit Captain", "Grey Alpha", "Stonehorn Ram" },
 	[2] = { "Herd Bull", "Stonehide Bull", "Mesa Wyrmling" },
 }
 SpireGearData.FAMILIARITY_POINTS = {

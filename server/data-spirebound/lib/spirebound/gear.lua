@@ -63,6 +63,110 @@ function SpireGear.power(s)
 	return (1 + f.base + (s.tier or 0) * f.step + (s.awakened and f.awaken or 0)) * (1 + SpireGearData.FAM_BONUS * (s.fam or 0))
 end
 
+-- ---------------------------------------------------------------- rare-drop weapon perks (spec 4.5; review B4-2)
+-- Pure: the line on the item
+function SpireGear.perkText(perk, value)
+	local pct = math.floor(value * 100 + 0.5)
+	if perk == "life_leech" then
+		return string.format("Rare: %d%% of the damage you deal returns as health", pct)
+	elseif perk == "mana_leech" then
+		return string.format("Rare: %d%% of the damage you deal returns as mana", pct)
+	elseif perk == "crit" then
+		return string.format("Rare: %d%% of your hits strike for %d%% more", pct, math.floor(SpireGearData.CRIT_BONUS * 100 + 0.5))
+	elseif perk == "heal" then
+		return string.format("Rare: your healing is %d%% stronger", pct)
+	end
+	return ""
+end
+
+-- Pure: what a hit of this size (a positive number) becomes with a perk. roll is in [0, 1).
+-- Returns the new size, health given back, mana given back.
+function SpireGear.perkHit(perk, value, size, roll)
+	if perk == "crit" and roll < value then
+		return math.floor(size * (1 + SpireGearData.CRIT_BONUS) + 0.5), 0, 0
+	elseif perk == "life_leech" then
+		return size, math.floor(size * value + 0.5), 0
+	elseif perk == "mana_leech" then
+		return size, 0, math.floor(size * value + 0.5)
+	end
+	return size, 0, 0
+end
+
+-- Pure: multiplier on healing done
+function SpireGear.perkHealFactor(perk, value)
+	return perk == "heal" and (1 + value) or 1
+end
+
+-- The perk of the rare weapon in this player's hand (only for its own class, like the damage bonus)
+function SpireGear.perkOf(player)
+	local item, d = SpireGear.mainWeapon(player)
+	if d and d.perk and d.vocation == player:getVocation():getBaseId() then
+		return d.perk, d.perkValue
+	end
+end
+
+-- A player's own hit on a monster (called from the monsters' damage event). The amount can arrive negative or
+-- positive: work on its size and keep the sign. Leeched health and mana arrive a moment later, never inside the event.
+function SpireGear.onDealtPerk(attacker, target, amount)
+	local player = attacker and attacker:getPlayer()
+	if not player or amount == 0 then
+		return amount
+	end
+	local perk, value = SpireGear.perkOf(player)
+	if not perk then
+		return amount
+	end
+	local sign = amount < 0 and -1 or 1
+	local size, life, mana = SpireGear.perkHit(perk, value, math.abs(amount), math.random())
+	if size > math.abs(amount) then
+		target:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE)
+	end
+	if life > 0 or mana > 0 then
+		local cap = target:getHealth() -- an overkill gives back no more than the monster had
+		life, mana = math.min(life, cap), math.min(mana, cap)
+		addEvent(function(pid, hp, mp)
+			local p = Player(pid)
+			if p and hp > 0 then
+				p:addHealth(hp)
+			end
+			if p and mp > 0 then
+				p:addMana(mp)
+			end
+		end, 50, player:getId(), life, mana)
+	end
+	return sign * size
+end
+
+-- Pure: does this kill drop a rare weapon, and for which class? `own` is the looter's class (1-4), chanceRoll and
+-- classRoll are in [0, 1). The looter's own class is DROP_OWN_CLASS_WEIGHT times as likely as each other class.
+function SpireGear.rareDrop(monsterName, own, chanceRoll, classRoll)
+	local floor = nil
+	for f, list in pairs(SpireGearData.dropFrom) do
+		for _, n in ipairs(list) do
+			if n == monsterName then
+				floor = f
+			end
+		end
+	end
+	if not floor or chanceRoll >= SpireGearData.DROP_CHANCE then
+		return nil
+	end
+	local w = SpireGearData.DROP_OWN_CLASS_WEIGHT
+	local total = 0
+	for voc = 1, 4 do
+		total = total + (voc == own and w or 1)
+	end
+	local at, pick = classRoll * total, 4
+	for voc = 1, 4 do
+		at = at - (voc == own and w or 1)
+		if at < 0 then
+			pick = voc
+			break
+		end
+	end
+	return SpireGear.find(pick, floor, "drop", "weapon")
+end
+
 -- Pure: the attack written on a melee weapon of this definition at a tier (nil: the base item's own attack)
 function SpireGear.attackOf(d, tier)
 	if not d or not d.attack then
@@ -106,6 +210,9 @@ local function describe(item, d, s)
 		end
 		if s.awakened then
 			text = text .. ". Awakened"
+		end
+		if d.perk then
+			text = text .. ". " .. SpireGear.perkText(d.perk, d.perkValue)
 		end
 	end
 	return text .. "."

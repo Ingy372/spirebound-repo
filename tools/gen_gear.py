@@ -84,9 +84,15 @@ MELEE_STATS = {1: (20, 15)}
 MELEE_ATTACK_PER_TIER = 1
 SHOP_MELEE_STATS = (18, 14)    # the shop's Climber's Sword: above the smith's longsword (17), below the barracks' weapon
 # a rare drop starts like the main weapon, with a different small bonus (spec 4.5)
+# The perks are built in lib/spirebound/gear.lua (perkHit, perkHealFactor): life_leech and mana_leech give back that
+# share of each hit, crit is the chance of a hit doing CRIT_BONUS more, heal is extra healing done.
 DROP_PERK = {VANGUARD: ("life_leech", 0.02), RANGER: ("crit", 0.03), ARCANIST: ("mana_leech", 0.02), MYSTIC: ("heal", 0.04)}
-DROP_FROM = {1: ["Bandit Captain", "Grey Alpha", "Ruin Sentinel", "Stonehorn Ram"], 2: ["Herd Bull", "Stonehide Bull", "Mesa Wyrmling"]}
-DROP_CHANCE = 0.03
+CRIT_BONUS = 0.5
+# Floor 1 review B4-2 (2026-11-26): 3% from Ruin Sentinels (48 spawns) and Rams (42) made a "rare" weapon fall every
+# 33 kills. Now 0.5%, from the two elites and the Ram only, and the looter's own class is twice as likely as each other.
+DROP_FROM = {1: ["Bandit Captain", "Grey Alpha", "Stonehorn Ram"], 2: ["Herd Bull", "Stonehide Bull", "Mesa Wyrmling"]}
+DROP_CHANCE = 0.005
+DROP_OWN_CLASS_WEIGHT = 2      # each other class counts 1
 
 # (id, name, floor, vocation, source, base item id, armour bonus)
 ARMOUR = [
@@ -295,7 +301,8 @@ def main():
          "-- Do not edit by hand.", "SpireGearData = {}", f"SpireGearData.MAX_TIER = {MAX_TIER}",
          f"SpireGearData.FAM_BONUS = {FAM_BONUS}", f"SpireGearData.SHARDS_PER_TIER = {SHARDS_PER_TIER}",
          f"SpireGearData.DROP_CHANCE = {DROP_CHANCE}",
-         f"SpireGearData.MELEE_ATTACK_PER_TIER = {MELEE_ATTACK_PER_TIER}"]
+         f"SpireGearData.MELEE_ATTACK_PER_TIER = {MELEE_ATTACK_PER_TIER}",
+         f"SpireGearData.CRIT_BONUS = {CRIT_BONUS}", f"SpireGearData.DROP_OWN_CLASS_WEIGHT = {DROP_OWN_CLASS_WEIGHT}"]
     L.append("SpireGearData.floor = {")
     for n in (1, 2):
         base, step, awaken = floor_numbers(n)
