@@ -6,7 +6,8 @@ This session tested and reported only. It changed no game code or maps.
 
 **How I tested.** I used a private copy of `main` in WSL (`/root/sbreview`, ports 7471/7472, database
 `spirebound_review`). It was first built from `1dcedca2`. Once the fix session had landed its changes, I rebuilt it
-from `46016cc7` and re-ran everything that those changes touch. Scripted test characters log in over the real game
+from `46016cc7` and re-ran everything that those changes touch. At the end I re-tested every broken item on
+`c654cde3`, the newest `main` at the time of writing. Scripted test characters log in over the real game
 protocol (`tools/loadbot.py`) and send what a client sends: talk, NPC talk, the attack packet, fight modes and
 use-item packets. A temporary test script, which is not in the repo, moves them one real step at a time with the
 engine's own `player:move`, so stairs, teleports, secrets and doors fire exactly as they do for a player. It also has
@@ -18,42 +19,47 @@ new one, and I re-tested it myself.
 
 ## Needs fixing (most serious first)
 
+Everything in this list was still broken on `c654cde3`, except the Pass gate, which the map work has fixed (item 1).
+
 1. **Anyone with a floor perk errors on every hit and loses their weapon bonus (item 7).** Once you choose a perk from
    Registrar Maelis, every hit on a monster gives "Lua Script Error ... perks.lua:57: attempt to call method 'isBoss'".
    The perk does nothing, and the error also stops the weapon power and the rare-weapon perk for that hit. A perked
    climber hits like bare hands. Still on current `main`. Sent to the fix session.
-2. **The Pass gate can be walked around (item 1).** Both boulders were in place and the labyrinth was still "closed",
-   but a character walked from the Pass arena into the labyrinth through a gap at 1244,1070. Nobody has to kill the
-   Gate Hound to reach the labyrinth. Sent.
-3. **A Death Game character can still be saved by a friend in a boss room (item 9).** An unpartied friend starts the
+2. **A Death Game character can still be saved by a friend in a boss room (item 9).** An unpartied friend starts the
    fight and hits the victim for 20% in the Axe-Lord's hall (PvP is open there below level 50). A monster then kills
    the victim: "saved, not retired". The fix session closed the other two tricks, but not this one. Sent. It may be a
    question for Jay: recommendation below.
-4. **PvP damage is never recorded (item 8).** The script that notes who hurt a player drops every hit, because damage
+3. **PvP damage is never recorded (item 8).** The script that notes who hurt a player drops every hit, because damage
    arrives as a negative number. So the "10% of the damage" kill credit and the outnumbered shield never count anyone
    but the killer. Sent.
-5. **`!private` lets a character without the Stair Key fight the Axe-Lord (item 10).** Once Floor 2 is open, a keyless
+4. **`!private` lets a character without the Stair Key fight the Axe-Lord (item 10).** Once Floor 2 is open, a keyless
    character standing by level 3's teleport says `!private` and is put in the private hall with the boss. It is no
    route to Floor 2 (the hall only leads back to level 3), but it hands out repeat boss kills. Sent.
-6. **The "2 hours of play-time protection" in DESIGN.md 6.4 does not exist (item 8).** Only the level-50 rule exists.
+5. **The "2 hours of play-time protection" in DESIGN.md 6.4 does not exist (item 8).** Only the level-50 rule exists.
    A design gap, not a bug: build it or drop it from DESIGN.md.
-7. **Small money leaks still open (items 11, 13):**
+6. **Small money leaks still open (items 11, 13):**
    - Ground chests pay their first-time reward to every character on an account. A second character on the same
      account got the full 3,450 gold and items again. That is 34,500 gold plus potions and shards per extra character.
    - The Well Vein secret gives 10 platinum (1,000 gold) as an item, so it skips the "secret gold once per account"
      rule. A second character on the same account got the 1,000 again.
    - Hunting-task gold is put in the backpack (`addMoney`), not the bank. With a full backpack part of it is lost:
      Rhen said "490 gold" and the character received 400, twice in two tries.
-8. **Death Game loot bonus looks bigger than designed (item 6):** +45% coins measured against +30% designed (300
+7. **Death Game loot bonus looks bigger than designed (item 6):** +45% coins measured against +30% designed (300
    kills each). Worth a longer measurement before changing anything.
-9. **Smaller things:** after a reforge the new weapon goes to the backpack, not the hand, so "upgrade" and !upgrade
+8. **Smaller things:** after a reforge the new weapon goes to the backpack, not the hand, so "upgrade" and !upgrade
    see no weapon until you move it back (item 12). The fishing collection log is kept per character, though
-   DESIGN.md 8.2 says account-wide (item 4).
+   DESIGN.md 8.2 says account-wide (item 4). A Mastery Respec Scroll bought in the shop is lost in a season wipe,
+   unlike the shop's outfits, mounts and furniture (item 15): probably fine, since it is used up on a character, but
+   worth one line in the shop text.
+
+Fixed during this session and re-tested here: the Pass gate (item 1), a boss dying with no fight record (item 10),
+"Spell"/"Pilot" names (item 10), the Death Game hit-back and dragged-monster tricks (item 9), and the Underkeep
+strongbox, Sealed Shrine and login streak paying once per account (items 2, 11, 13).
 
 ## Results by item
 
-### 1. The labyrinth: PARTLY (the gate is broken; the levels and the key door work)
-Tested on `1dcedca2`.
+### 1. The labyrinth: WORKS now (the gate was broken until the map work)
+Tested on `1dcedca2`; the gate re-tested on `c654cde3`.
 - **The three levels can be walked.** A real level-60 character went from the Pass arena to level 1's teleport
   (1250,1040,7), arrived on level 2 (1212,1013,6), walked to level 2's teleport, arrived on level 3, walked to level 3's
   teleport and landed on the hall door (1231,1035,4). Each level is one connected area: level 1 has 13,391 walkable
@@ -66,10 +72,11 @@ Tested on `1dcedca2`.
   - Skystep: no tile on level 3 has a Skystep spot at all. All 544 tiles of the hall are inside the boss-room zone,
     which Skystep refuses. The hall's only exit is the teleport back to level 3.
   - `!private`: see item 10. It lets a keyless character in once Floor 2 is open.
-- **BROKEN: the Pass gate.** The gate boulders (1232,1070 and 1233,1070) were in place and
+- **The Pass gate (fixed since).** On `1dcedca2` the gate boulders (1232,1070 and 1233,1070) were in place and
   `Floors.isLabyrinthOpen(1)` was false. Even so, the shortest path from the arena to level 1 goes round them and
   crosses the gate's row at **1244,1070**: 116 steps, through 1233,1088, 1244,1083, 1244,1053 and 1234,1043. The
-  character really walked it.
+  character really walked it. On `c654cde3`, with the boulders back in place, there is **no path** from the arena to
+  level 1: fixed.
 
 ### 2. The Underkeep: WORKS
 Tested on `1dcedca2`.
@@ -231,8 +238,11 @@ Tested on `46016cc7`.
   +34,500 gold in total, plus potions and a rough shard each. After moving their timer back 21 hours the daily refill
   paid +460, +240 and +340 (the three tested). **A second character on the same account got the full first-time reward
   again** (chest 1: +3,450).
-- **Login streak:** day 1 paid 100 gold to the bank. A second character on the same account the same day got nothing,
-  which is right since `5fec5bd4`. Day 2: see the note at the end.
+- **Login streak: WORKS.** Day 1 paid 100 gold to the bank. Logging in again the same day paid nothing. A second
+  character on the same account the same day got nothing, which is right since `5fec5bd4`. With the day moved back,
+  the next login paid day 2 (+200, streak 2; tested on `c654cde3`). Note for testers: my scripted client only really
+  logs out from inside town. Elsewhere it stays in the game and the next login just reconnects without a new "login".
+  That also explains why the fix session's own daily case failed on my copy.
 - **Hunting tasks: WORK, per character.** Taskmaster Rhen gave "Hunt 60 Road Bandits". 60 real kills counted, the
   report paid ("490 gold and 2 task points"), and taking it again the same day was refused ("Come back tomorrow").
   **Leak:** the gold goes into the backpack, and with a full bag 90 of the 490 were lost (twice).
@@ -251,7 +261,12 @@ Tested on `46016cc7`. All 33 Floor 1 NPCs were found on the map. Each was greete
 was not touched: the rehearsal loads the backup into a scratch database and drops it afterwards.
 - Before: 34 characters, 2 staff, 11 accounts, 123 saved house tiles, 1,684 character records, 5 account rewards.
 - After: 0 characters, 2 staff, 11 accounts, 0 house tiles, 0 character records, **5 account rewards kept**.
-- Donation-shop items: see the note at the end.
+- **Donation-shop items across a wipe (tested on `c654cde3`, shop switched on as at launch):** a character bought the
+  Hearth Cloak outfit, the Stone Hound mount, a harp kit, a candelabrum and a Mastery Respec Scroll with the real
+  `!shop buy`. I moved the season on, ran the wipe on my test database, and logged in a new character on the same
+  account. Result: the unspent shop coins were kept (1,460), the outfit and the mount were granted again, and the harp
+  kit and candelabrum were waiting in the Store Inbox (since `d289490d`). The Respec Scroll was gone with the old
+  character.
 
 ### 16. Re-tests of the landed fixes: WORKS
 On `46016cc7` I ran the fix session's whole real-character suite (`tools/loadtest.py review`, 28 cases) on my own
@@ -265,7 +280,7 @@ copy. 26 pass:
 - **Beacon loot:** +22% with four fires lit (item 6). **Beacon experience** was not measured separately. It uses the
   same fixed experience hook the suite proves for the other factors.
 - The two failures are timing problems in the tests, not game bugs. The daily-reward case has the same logout problem
-  as my own streak test (note at the end). The fishing case is explained under item 4.
+  as my own streak test (item 13), and the streak itself works. The fishing case is explained under item 4.
 
 ### 17. General crash scan: WORKS
 Tested on `1dcedca2`: `python3 tools/loadtest.py ramp --steps 10,24 --minutes 4`. 10 bots, then 24 bots, 4 minutes
@@ -276,3 +291,14 @@ each, hunting across every Floor 1 ground (about 4,300 monsters alive).
   error (item 7, real) and an error from my own test script, which I fixed.
 - Harmless startup warnings: 27 Tibia wheel spells not found (an engine feature we don't use), and "no boosted
   boss / boosted creature" from the engine (Spirebound has its own boost script).
+
+## What I could not test, and why
+
+- **A real auto-attack fight between two players (item 8).** My scripted client's attack on a player was accepted by
+  Spirebound's rules but dropped by the engine. Direct hits prove that damage gets through in the arena and the hall.
+  A 5-minute check in the real client settles it.
+- **How things look on screen** (PvP cursor colours, NPC dialogue windows, the fishing splash): the real client only.
+  The live server was not restarted, so none of today's fixes are on Jay's server yet.
+- **Dorrow's 15-wolf temper quest end to end (item 12)**: only the rule change was checked.
+- **Beacon experience on its own (item 16)**: only the loot side was measured. The experience side uses the same hook
+  that the suite proves works for Hardcore, Death Game and the cavebot.
