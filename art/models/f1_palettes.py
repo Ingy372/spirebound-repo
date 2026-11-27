@@ -145,6 +145,28 @@ PAL["sluice_warden"] = {**PAL["mire_toad"],
     "moss": ramp((10, 36, 20), (110, 180, 110), (40, 100, 56)),
 }
 
+# ---------------------------------------------------------------- the Oathroom (FD3)
+# The Oathkeeper: pale tarnished silver plate (the Stairwardens are blackened iron, the Axe-Lord rusted bronze), a faded
+# cornflower-blue tabard and cape (lighter than the Stairwardens' slate), bronze trim, a pale oath-stone on the chest
+# whose crack glows warm gold like the visor (the Stairwardens' light is cold blue), a tall shield with an ivory raised
+# hand, a flanged steel mace, an unlit bronze lantern.
+SILVERPLATE = ((40, 42, 52), (236, 234, 226), (130, 132, 140))
+PAL["oathkeeper"] = {**base(hair=((40, 42, 52), (180, 176, 168)), arms=SILVERPLATE, legs=SILVERPLATE,
+                           boots=((30, 26, 24), (150, 130, 110), (76, 64, 54)), torso=SILVERPLATE,
+                           cuff=((60, 34, 12), (250, 210, 130), (170, 112, 44)),
+                           belt=((26, 18, 14), (140, 100, 66), (70, 48, 30)), buckle=((90, 54, 14), (255, 230, 150))),
+    "skin": ramp((40, 42, 52), (236, 234, 226), (130, 132, 140)), "nose": ramp((40, 42, 52), (236, 234, 226), (130, 132, 140)),
+    "hand": ramp((40, 42, 52), (236, 234, 226), (130, 132, 140)),
+    "eye": flat((255, 214, 110)), "brow": flat((10, 10, 14)),
+    "helm": ramp((36, 38, 48), (240, 238, 230), (126, 128, 138)), "visor": flat((8, 8, 12)),
+    "trim": ramp((60, 34, 12), (250, 210, 130), (170, 112, 44)), "cloth": ramp((26, 34, 64), (176, 196, 236), (84, 104, 160)),
+    "stone": ramp((70, 70, 76), (240, 238, 232), (160, 158, 156)), "crack": ramp((200, 120, 20), (255, 250, 200), (255, 200, 80)),
+    "glow": ramp((190, 110, 20), (255, 246, 190), (255, 196, 80)), "shield": ramp((24, 32, 60), (160, 182, 226), (76, 96, 150)),
+    "sign": ramp((150, 140, 116), (255, 252, 240), (230, 222, 200)), "haft": ramp((24, 16, 12), (150, 110, 74), (76, 52, 32)),
+    "steel": ramp((50, 54, 64), (250, 250, 248), (160, 164, 174)), "lantern": ramp((30, 18, 8), (190, 140, 70), (100, 66, 30)),
+    "rivet": ramp((90, 54, 14), (255, 236, 170), (200, 150, 60)),
+}
+
 
 def main():
     path = PIPE / "palette.json"
