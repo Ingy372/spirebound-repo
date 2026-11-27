@@ -52,7 +52,7 @@ HABITS = {
     "Meadow Wasp": ("colony", 0.5), "Burrow Mole": ("colony", 1.0), "Bristle Boar": ("loner", 1.5),
     "Meadow Wolf": ("pack", 1.0), "Grey Alpha": ("pack", 2.0), "Reed Snapper": ("pair", 1.0),
     "Thornsnap": ("sentry", 1.3), "Field Shardling": ("pair", 1.0), "Road Bandit": ("sentry", 1.0),
-    "Bandit Captain": ("sentry", 2.5), "Ruin Sentinel": ("sentry", 1.3), "Ruin Archer": ("sentry", 1.0),
+    "Bandit Captain": ("sentry", 2.5), "Ruin Sentinel": ("sentry", 1.3), "Ruin Archer": ("sentry", 1.0), "Stairwarden": ("sentry", 2.2),
     "Stonehorn Ram": ("pack", 2.0),
     "Bandit Crossbowman": ("sentry", 1.0), "Hedge Hexer": ("sentry", 1.1),     # S4: the mixed packs' ranged one and caster
     # small game on the open lawns (Q94): loners, harmless, a tenth of an ordinary monster

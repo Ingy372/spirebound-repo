@@ -285,7 +285,8 @@ end
 -- every "every" seconds: jump back onto "hold" (test characters only) and use the thing at "use" (a lever)
 handlers["until"] = function(player)
     Autopilot.heard = Autopilot.heard or {}
-    if not stepData.mark then stepData.mark = #Autopilot.heard + 1; stepData.next = 0 end
+    -- (from the start of the run: the line may come while an earlier step is still running)
+    if not stepData.mark then stepData.mark = (step.since_step and #Autopilot.heard + 1) or 1; stepData.next = 0 end
     for k = stepData.mark, #Autopilot.heard do
         if Autopilot.heard[k]:find(step.text, 1, true) then
             log('until: heard "' .. step.text .. '"')
@@ -502,14 +503,16 @@ function handlers.rune(player)
 end
 
 -- (AD5 tests) use an item in an open backpack, as a player double-clicks it: read a treasure map
--- { "do": "useitem", "id": 5706 }
+-- { "do": "useitem", "id": 5706 }   ("on": [x, y, z] uses it on the thing at that tile, e.g. a wreath on a grave)
 function handlers.useitem(player)
     if not stepData.sent then
         local done = false
         for _, c in pairs(g_game.getContainers()) do
             for _, it in ipairs(c:getItems()) do
                 if not done and it:getId() == step.id then
-                    g_game.use(it)
+                    local tile = step.on and g_map.getTile(toPos(step.on))
+                    local target = tile and tile:getTopUseThing()
+                    if target then g_game.useWith(it, target) else g_game.use(it) end -- FD1b: "on": use it on a tile's thing
                     done = true
                 end
             end

@@ -27,7 +27,7 @@ LAB_RESPAWN = 120                     # real seconds (the old spawn file said 90
 LAB_PACKS = {
     7: [[("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 4,
     6: [[("Ruin Sentinel", 2), ("Ruin Archer", 1)], [("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 2,
-    5: [[("Ruin Sentinel", 2), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 3,
+    5: [[("Stairwarden", 1), ("Ruin Sentinel", 1), ("Ruin Archer", 1), ("Hedge Hexer", 1)]] * 3,   # RV5: the maze's own guard
 }
 
 
