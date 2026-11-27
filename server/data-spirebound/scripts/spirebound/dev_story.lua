@@ -3,6 +3,7 @@
 --   /story where              print where the story objects stand (into the server log and the chat)
 --   /story oathend            end the Oathroom run now (everyone inside is put out)
 --   /story oathhold n         (tests) the Captain's hall needs only n seconds of waves this run
+--   /story oathsafe           (tests) the rune floor's safe path is the middle stone on every row, this run
 if os.getenv("SPIRE_DEV") ~= "1" and os.getenv("SPIRE_TESTS") ~= "1" and os.getenv("SPIRE_LOADTEST") ~= "1" then
 	logger.info("[Spirebound] {} not loaded: this is not a dev or test server", "the /story test commands")
 	return
@@ -46,6 +47,13 @@ function story.onSay(player, words, param)
 	elseif cmd == "oathend" then
 		SpireOathroom.endRun("A test ended the run.")
 		say("oath run ended")
+	elseif cmd == "oathsafe" then -- (tests) the rune floor's safe stone is the middle one (lane 3) on every row, this run
+		if SpireOathroom.run then
+			for i = 1, SpireOathroom.RUNE_ROWS do
+				SpireOathroom.run.path[i] = 3
+			end
+		end
+		say("rune path: lane 3")
 	elseif cmd == "oathhold" then
 		SpireOathroom.HOLD = tonumber(rest) or SpireOathroom.HOLD
 		say("hold " .. SpireOathroom.HOLD)

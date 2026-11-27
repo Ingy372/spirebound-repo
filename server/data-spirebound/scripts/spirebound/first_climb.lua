@@ -164,7 +164,7 @@ function FC.onReport(player, q)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "New title: " .. c.title .. ".")
 		return c.thanks
 	elseif q.id == "fc8" then
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The First Climb's names are back on the Monument for you to read. Registrar Maelis can grant your Floor 1 perk: say 'perk' to her.")
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The First Climb's names are back on the Monument for you to read. Archivist Maren grants your Floor 1 perk: say 'perk' to her.")
 		if SpireFinds and SpireFinds.announce then
 			pcall(Game.broadcastMessage, player:getName() .. " followed the First Climb to the end of Floor 1: Heir to the First Climb.", MESSAGE_STATUS)
 		end

@@ -108,7 +108,7 @@ local CH = {
 		steps = {
 			{ text = "Defeat the Axe-Lord of the Stair at the top of the labyrinth (a party fight). The last page of Ione's record is on him." },
 		},
-		thanks = "\"They went on anyway.\" So the First Climb is still up there, somewhere above us. I've put their names back on the Monument, and yours under them: Heir to the First Climb. Registrar Maelis can grant your Floor 1 perk now: say 'perk' to her." },
+		thanks = "\"They went on anyway.\" So the First Climb is still up there, somewhere above us. I've put their names back on the Monument, and yours under them: Heir to the First Climb. And the archive owes you a Floor 1 perk: say {perk} to choose it." },
 }
 
 SpireFirstClimb.CHAPTERS = {}

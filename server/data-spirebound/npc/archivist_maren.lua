@@ -28,11 +28,39 @@ local function current(player)
 	return FC.current(function(q) return SpireQuests.state(player, q) end)
 end
 
+local perkOffer = {} -- player id -> true while choosing the Floor 1 perk
+SpireCleanup.add(function(pid) perkOffer[pid] = nil end)
+
 local function creatureSayCallback(npc, player, type, msg)
 	if not npcHandler:checkInteraction(npc, player) then
 		return false
 	end
 	local lower = msg:lower()
+	local pid = player:getId()
+	-- the Floor 1 perk (DESIGN 8.3): chosen here at the end of the First Climb (the Registrar stays in the Arrival
+	-- Yard, which climbers cannot go back into)
+	local opts = SpireQuests.PERKS[1]
+	if perkOffer[pid] then
+		for _, o in ipairs(opts) do
+			if MsgContains(lower, o.name:lower()) or MsgContains(lower, (o.key:gsub("_", " "))) then
+				perkOffer[pid] = nil
+				SpirePerks.choose(player, 1, o.key)
+				npcHandler:say("Then it's written in the archive, under your name: " .. o.name .. ".", npc, player)
+				return true
+			end
+		end
+	end
+	if MsgContains(lower, "perk") then
+		if SpirePerks.get(player, 1) then
+			npcHandler:say("Your Floor 1 perk is already written down.", npc, player)
+		elseif SpireQuests.floorStoryDone(player, 1) then
+			perkOffer[pid] = true
+			npcHandler:say(string.format("For the Heir to the First Climb: choose one, {%s} (%s) or {%s} (%s).", opts[1].name, opts[1].text, opts[2].name, opts[2].text), npc, player)
+		else
+			npcHandler:say("The Floor 1 perk is for whoever follows the First Climb to the end of their trail, chapter 8.", npc, player)
+		end
+		return true
+	end
 	if MsgContains(lower, "wish") or MsgContains(lower, "spire") or MsgContains(lower, "summit") then
 		npcHandler:say(FC.PREMISE, npc, player)
 		return true

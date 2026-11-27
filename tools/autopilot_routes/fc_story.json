@@ -1,0 +1,1174 @@
+{
+ "name": "fc_story",
+ "character": "Pilot Vanguard",
+ "timeout": 900,
+ "about": "FD1: The First Climb, chapters 1-8 through Maren, the objects and the Axe-Lord",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/story reset"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 4"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 3"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "climb"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1228,
+    1276,
+    7
+   ],
+   "note": "Monument (scraped rows)"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1227,
+    1275,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "shot",
+   "name": "fc1_monument"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1233,
+    1243,
+    7
+   ],
+   "note": "supply mark by the north gate"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1233,
+    1242,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "shot",
+   "name": "fc1_report"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 8"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1132,
+    1253,
+    7
+   ],
+   "note": "tally stone, Ratwarren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1132,
+    1252,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1299,
+    1269,
+    7
+   ],
+   "note": "tally stone, Toad Pond"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1299,
+    1268,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1187,
+    1358,
+    7
+   ],
+   "note": "tally stone, Sproutling Glade"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1187,
+    1357,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1082,
+    1186,
+    7
+   ],
+   "note": "Miller Agna"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "climb"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1192,
+    1129,
+    7
+   ],
+   "note": "flour bin, Thornsnap Hollow"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1192,
+    1130,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "hunt",
+   "seconds": 50,
+   "radius": 5
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1192,
+    1129,
+    7
+   ],
+   "note": "flour bin again (the ledger)"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1192,
+    1130,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "shot",
+   "name": "fc3_ledger"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1047,
+    1339,
+    7
+   ],
+   "note": "Brother Tam's grave"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1047,
+    1338,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1047,
+    1338,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 19"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1300,
+    1260,
+    7
+   ],
+   "note": "an empty field for the captains"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Bandit Captain, 2, 40"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 6
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 24"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1260,
+    1157,
+    7
+   ],
+   "note": "standing order, Old Quarry"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1260,
+    1158,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "shot",
+   "name": "fc6_order"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1050,
+    1051,
+    7
+   ],
+   "note": "watch log, Old Watchtower keep"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1050,
+    1050,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 28"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "say",
+   "text": "/pilot stairkey"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1045,
+    7
+   ],
+   "note": "Aldric Vane's field desk"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1236,
+    1044,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "shot",
+   "name": "fc7_desk"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 30"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "quest"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1231,
+    1030,
+    4
+   ],
+   "note": "the Axe-Lord's hall"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "say",
+   "text": "/pilot bosshp 2"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "hunt",
+   "seconds": 60,
+   "radius": 8
+  },
+  {
+   "do": "shot",
+   "name": "fc8_boss"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "jump",
+   "to": [
+    1229,
+    1278,
+    7
+   ],
+   "note": "Archivist Maren"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "npc",
+   "text": "bye"
+  },
+  {
+   "do": "shot",
+   "name": "fc8_heir"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1228,
+    1276,
+    7
+   ],
+   "note": "Monument (restored names)"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  },
+  {
+   "do": "use",
+   "at": [
+    1227,
+    1275,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 2.5
+  },
+  {
+   "do": "shot",
+   "name": "fc8_monument"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  },
+  {
+   "do": "wait",
+   "seconds": 1.5
+  }
+ ]
+}

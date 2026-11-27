@@ -488,7 +488,9 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 					npcHandler:say(thanks, npc, player)
 					SpireQuests.markGivers(player) -- the next quest may be with someone new
 					if SpireQuests.floorStoryDone(player, q.floor) then
-						player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
+						if q.floor ~= 1 then -- (Floor 1: Archivist Maren grants the perk, and says so herself)
+							player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You finished every story quest on Floor " .. q.floor .. ". Registrar Maelis in Hearthgate can grant you a perk: say 'perk'.")
+						end
 					end
 					return true
 				elseif st == 1 then
