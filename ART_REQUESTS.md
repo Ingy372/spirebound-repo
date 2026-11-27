@@ -42,12 +42,26 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
   are roughly 10-12 sessions of art, best done a floor at a time just before each floor opens.
 
 ## How to use this file (still images only)
-1. Copy a prompt into Grok's pixel-art generator.
-2. Save each frame as a PNG with the exact file name shown (one PNG per frame, or one sheet left-to-right in the frame order listed).
-3. Drop the PNGs in `assets/incoming/` in the repo folder (Claude picks them up next session) and tick the box.
+New way (Jay, 2026-11-27): Grok's tiny 32x32 pixel art came back thin, pale and flat, so Grok now draws **big** and
+`tools/grok_clean.py` does the pixel work (shrinks to 32x32, recolours with the approved monsters' colours, lights it
+from the top-left, adds the dark outline).
+1. Paste the **big-picture template** below into Grok, with the item description from the tables on the first line.
+   One item per picture.
+2. Save each picture with the item's file name (e.g. `wardens_signet.png`) in `ART_FOR_JAY\grok_in\`.
+3. Tell Claude. Claude runs the clean-up and shows you `ART_FOR_JAY\grok_out\compare.png` (Grok's picture, the sprite
+   at 4x, the sprite at real size). A picture with several items in it also works (`--split`), but one each is better.
 
-**Style lock (paste at the start of every prompt):**
-> 32x32 pixel art sprite, classic Tibia MMORPG style, top-down 3/4 view facing the camera at an angle, transparent background, 1-pixel dark outline, limited 24-color palette, soft top-left lighting, no text, no border.
+**Big-picture template** (describe the *shape* on the first line: "a thick gold ring with a big square green stone on
+top", not just "signet ring"):
+> Item: [description].
+> One single object, centred, on a plain flat grey background, filling about 70% of the image.
+> Seen from above at a 3/4 angle, like a top-down old-school RPG.
+> Bold, chunky, simple shape that is still recognisable when shrunk to a tiny 32x32 icon.
+> Strong light from the top-left, clear shadow side on the bottom-right, bright highlight spots.
+> Saturated colours with one bright accent colour. Thick dark outline around the whole object.
+> No text, no background scenery, no extra objects, no thin details. 512x512.
+
+Older prompts in the tables below still begin "32x32 ... Tibia style": use only their description with the template.
 
 **Frames:** Tibia creatures face 4 directions (south, east, north, west). Each direction has 1 standing frame + 2 walking frames = **12 frames** unless stated. Big creatures are 64×64 (shown as 2×2 tiles).
 
