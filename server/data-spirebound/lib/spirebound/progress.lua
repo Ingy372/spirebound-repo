@@ -20,7 +20,7 @@ end
 
 -- Pure: damage after the weapon's power, the style passives and trophy bonuses
 function SpireProgress.dealtPure(amount, weaponState, styleView, ctx, trophyBonus)
-	local mult = SpireGear.power(weaponState) * (1 + SpireStyle.damageBonus(styleView, ctx) + (trophyBonus or 0))
+	local mult = SpireGear.power(weaponState) * (weaponState and weaponState.scale or 1) * (1 + SpireStyle.damageBonus(styleView, ctx) + (trophyBonus or 0))
 	return math.floor(amount * mult + 0.5)
 end
 

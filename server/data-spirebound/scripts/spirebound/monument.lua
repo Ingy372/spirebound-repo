@@ -13,6 +13,17 @@ function SpireMonumentText()
 	table.insert(lines, string.format("The Spire Chronicle of Season %d, finished by:", season))
 	table.insert(lines, #done > 0 and table.concat(done, ", ") or "no one yet.")
 	table.insert(lines, "")
+	-- adventure layer 4.3: the season's first finders (never where)
+	local firsts = SpireFinds and SpireFinds.allFirsts() or {}
+	table.insert(lines, string.format("First finders of Season %d:", season))
+	if #firsts == 0 then
+		table.insert(lines, "  no one yet. The tower keeps its secrets.")
+	else
+		for _, l in ipairs(SpireFinds.firstLines(firsts, 25)) do
+			table.insert(lines, l)
+		end
+	end
+	table.insert(lines, "")
 	table.insert(lines, "The Memorial (Death Game):")
 	for _, l in ipairs(fallen) do
 		table.insert(lines, l)
@@ -99,7 +110,28 @@ function SpireNoticeText()
 		end
 		return out
 	end)
-	table.insert(lines, "Say !arena for the arena, !beacon for the beacons, !top for the climbers.")
+	part(function() -- adventure layer 4.2: rare finds of the last week, newest first
+		local out = { "Recent finds:" }
+		for i, e in ipairs(SpireFinds.board()) do
+			if i > 8 then break end
+			table.insert(out, string.format("  %s %s", os.date("%d %b", e.at), e.text))
+		end
+		if #out == 1 then
+			table.insert(out, "  nothing yet this week. Somebody has to be first.")
+		end
+		return out
+	end)
+	part(function() -- adventure layer 4.3: first finds of this season
+		local out = { "First finds this season:" }
+		for _, l in ipairs(SpireFinds.firstLines(SpireFinds.allFirsts(), 6)) do
+			table.insert(out, l)
+		end
+		if #out == 1 then
+			table.insert(out, "  none yet. Every secret, hidden beast and elite still waits for its first finder.")
+		end
+		return out
+	end)
+	table.insert(lines, "Say !arena for the arena, !beacon for the beacons, !top for the climbers, !finds for your discoveries.")
 	return table.concat(lines, "\n")
 end
 

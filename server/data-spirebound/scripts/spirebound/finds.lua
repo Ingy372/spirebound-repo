@@ -27,9 +27,6 @@ SpireDiscoveries.sources.chest = function(player, id)
 	end
 end
 
-SpireFinds.ELITES = { -- Floor 1's six elites (tools/gen_monsters.py, FLOOR1_REVIEW F1-11)
-	{ "Old Bristleback", 1 }, { "Moonhowl", 1 }, { "Mossback Snapper", 1 }, { "Blackthorn", 1 }, { "Prism Shardling", 1 }, { "Granite Warden", 1 },
-}
 
 function SpireFinds.registerFloorRows()
 	for _, s in ipairs(SpireSecrets.list) do
@@ -38,8 +35,13 @@ function SpireFinds.registerFloorRows()
 	for _, t in ipairs(SpireTrophies.LIST) do
 		SpireDiscoveries.register("beast", t.id, t.boss, t.floor or 1)
 	end
-	for _, e in ipairs(SpireFinds.ELITES) do
-		SpireDiscoveries.register("elite", e[1], e[1], e[2])
+	local elites = {}
+	for name in pairs(SpireFinds.ELITE_NAMES) do
+		table.insert(elites, name)
+	end
+	table.sort(elites)
+	for _, name in ipairs(elites) do
+		SpireDiscoveries.register("elite", name, name, SpireFinds.ELITE_NAMES[name])
 	end
 	local chests = {}
 	for name in pairs(WorldPoints) do
@@ -268,3 +270,17 @@ function show.onThink(interval)
 end
 show:interval(1000)
 show:register()
+
+-- Milestones that came from records kept elsewhere (fish, stones) are checked at login too
+local login = CreatureEvent("SpireDiscoveriesLogin")
+function login.onLogin(player)
+	local pid = player:getId()
+	addEvent(function()
+		local p = Player(pid)
+		if p then
+			SpireDiscoveries.checkMilestones(p, 1)
+		end
+	end, 2000)
+	return true
+end
+login:register()

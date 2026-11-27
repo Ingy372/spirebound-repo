@@ -58,6 +58,10 @@ function open.onUse(player, item)
 		player:setBankBalance(player:getBankBalance() + r.gold) -- into the bank: a full backpack never loses it
 		acc:set(g.id, now)
 		SpireGive.reward(player, r.potions[1], r.potions[2])
+		if SpireDiscoveries then -- the chest's row on the Discoveries page fills once the record below is saved
+			local pid = player:getId()
+			addEvent(function() local p = Player(pid) if p then SpireDiscoveries.checkMilestones(p, 1) end end, 100)
+		end
 		SpireGive.reward(player, SpireGearData.tokens[1].rough, 1)
 		rec.first = now
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold (to your bank), %d %s and a rough Hearth Shard. It fills again every 20 hours.",

@@ -60,9 +60,9 @@ WEAPONS = [
     ("f1_arcanist_wand", "Wand of Hearth Sparks", 1, ARCANIST, "wand", "main", 3074, "Wand of the Long Stair"),
     ("f1_mystic_rod", "Reedroot Rod", 1, MYSTIC, "rod", "main", 3066, "Rod of the Long Stair"),
     ("f1_vanguard_drop", "Briarguard Sabre", 1, VANGUARD, "sword", "drop", 3273, "Briarguard Sabre, Awakened"),
-    ("f1_ranger_drop", "Copsewood Bow", 1, RANGER, "bow", "drop", 3350, "Copsewood Bow, Awakened"),
-    ("f1_arcanist_drop", "Wand of Ember Script", 1, ARCANIST, "wand", "drop", 3074, "Wand of Ember Script, Awakened"),
-    ("f1_mystic_drop", "Thornward Rod", 1, MYSTIC, "rod", "drop", 3066, "Thornward Rod, Awakened"),
+    ("f1_ranger_drop", "Copsewood Bow", 1, RANGER, "bow", "drop", 9378, "Copsewood Bow, Awakened"),
+    ("f1_arcanist_drop", "Wand of Ember Script", 1, ARCANIST, "wand", "drop", 3075, "Wand of Ember Script, Awakened"),
+    ("f1_mystic_drop", "Thornward Rod", 1, MYSTIC, "rod", "drop", 3070, "Thornward Rod, Awakened"),
     # Floor 2: two or three choices per class (spec 4.6)
     ("f2_vanguard_main", "Highland Edge", 2, VANGUARD, "sword", "main", 3271, "Aurochs-Crown Blade"),
     ("f2_vanguard_axe", "Hornbreaker Axe", 2, VANGUARD, "axe", "main", 3274, "Aurochs-Crown Axe"),
@@ -88,6 +88,18 @@ SHOP_MELEE_STATS = (18, 14)    # the shop's Climber's Sword: above the smith's l
 # share of each hit, crit is the chance of a hit doing CRIT_BONUS more, heal is extra healing done.
 DROP_PERK = {VANGUARD: ("life_leech", 0.02), RANGER: ("crit", 0.03), ARCANIST: ("mana_leech", 0.02), MYSTIC: ("heal", 0.04)}
 CRIT_BONUS = 0.5
+# Adventure layer 4.2 (2026-11-27): a rare weapon gets its own picture so others can tell it apart (until Grok's icons
+# arrive). Bow 9378 has the plain bow's numbers. The wand and rod pictures are stronger items (13-25 damage against
+# the starter wand's and rod's 8-18), so their damage is scaled back to the quest weapon's: a rare weapon never
+# out-damages the quest path (gear spec 2026-11-23). base item id -> damage multiplier.
+BASE_DAMAGE = {3074: (8, 18), 3066: (8, 18), 3075: (13, 25), 3070: (13, 25)}
+SCALE_TO = {3075: 3074, 3070: 3066}
+def base_scale(base):
+    if base not in SCALE_TO:
+        return None
+    lo, hi = BASE_DAMAGE[SCALE_TO[base]]
+    lo2, hi2 = BASE_DAMAGE[base]
+    return round((lo + hi) / (lo2 + hi2), 4)
 # Floor 1 review B4-2 (2026-11-26): 3% from Ruin Sentinels (48 spawns) and Rams (42) made a "rare" weapon fall every
 # 33 kills. Now 0.5%, from the two elites and the Ram only, and the looter's own class is twice as likely as each other.
 DROP_FROM = {1: ["Bandit Captain", "Grey Alpha", "Stonehorn Ram"], 2: ["Herd Bull", "Stonehide Bull", "Mesa Wyrmling"]}
@@ -316,6 +328,8 @@ def main():
         p = f', perk = "{perk[0]}", perkValue = {perk[1]}' if perk else ""
         if fam in MELEE_FAMILIES and fl in MELEE_STATS:
             p += f", attack = {MELEE_STATS[fl][0]}, defense = {MELEE_STATS[fl][1]}"
+        if base_scale(base):
+            p += f", scale = {base_scale(base)}"
         L.append(f'\t{{ id = "{wid}", name = {lua_str(name)}, floor = {fl}, vocation = {voc}, family = "{fam}", source = "{src}", base = {base}, awakenedName = {lua_str(awake)}{p} }},')
     L.append("}")
     L.append("SpireGearData.armour = {")

@@ -301,3 +301,37 @@ function SpireFinds.firstLines(list, limit)
 	end
 	return lines
 end
+
+-- ---------------------------------------------------------------- helpers for kills
+SpireFinds.ELITE_NAMES = { ["Old Bristleback"] = 1, ["Moonhowl"] = 1, ["Mossback Snapper"] = 1, ["Blackthorn"] = 1,
+	["Prism Shardling"] = 1, ["Granite Warden"] = 1 } -- Floor 1's six elites (tools/gen_monsters.py, FLOOR1_REVIEW F1-11)
+
+function SpireFinds.isElite(name)
+	return SpireFinds.ELITE_NAMES[name] ~= nil
+end
+
+-- everyone who hurt a monster (online players), the "credit list"
+function SpireFinds.creditList(monster)
+	local out = {}
+	for cid in pairs(monster:getDamageMap() or {}) do
+		local p = Player(cid)
+		if p then
+			table.insert(out, p)
+		end
+	end
+	return out
+end
+
+-- A secret on the Monument and the board: its number on the floor, never its name or place (Jay, 2026-11-27)
+function SpireFinds.secretLabel(secret)
+	local n = 0
+	for _, s in ipairs(SpireSecrets.list) do
+		if s.floor == secret.floor then
+			n = n + 1
+		end
+		if s.id == secret.id then
+			break
+		end
+	end
+	return string.format("A secret of Floor %d (no. %d)", secret.floor, n)
+end

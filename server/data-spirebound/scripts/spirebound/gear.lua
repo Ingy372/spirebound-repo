@@ -30,6 +30,17 @@ function drops.monsterOnDropLoot(monster, corpse)
 	if d and SpireGear.make(corpse, d.id) then
 		corpse:getPosition():sendMagicEffect(CONST_ME_GIFT_WRAPS)
 		owner:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A rare weapon lies in the remains: " .. d.name .. "!")
+		if SpireFinds then -- adventure layer 4.2: the whole server hears it
+			SpireFinds.announce("rare_weapon", { owner }, { item = d.name, from = monster:getName() })
+		end
+	end
+	-- adventure layer: elites count on the Discoveries page and for season firsts (everyone who hurt it)
+	if SpireFinds and SpireFinds.isElite(monster:getName()) and not monster:getMaster() then
+		local credit = SpireFinds.creditList(monster)
+		for _, p in ipairs(credit) do
+			SpireDiscoveries.mark(p, "elite", monster:getName())
+		end
+		SpireFinds.first("elite", monster:getName(), credit, monster:getName())
 	end
 end
 drops:register()

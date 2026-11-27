@@ -249,3 +249,20 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 
 
 Approved 2026-11-26 (Jay: "Approve all"), own looks in tools/make_creature_sheets.py: vanguard_f, ranger_f, arcanist_m, mystic_m (with addons), watchguard, dorrow, smith, alchemist, runewright, bix, crossbowman, hexer, cutthroat, crawler, blightwasp, ridgecat, bull, stonebull, grazer, strider, old_tusk, hollowfang, briar_mother.
+
+## Batch 14 (2026-11-27): adventure layer, rare weapons and secret keepsakes (Priority: medium; placeholders work)
+Still icons only (Grok). Rare weapons need a picture of their own so others can tell them from the ordinary weapon (`tools/gen_gear.py`); secret gear and keepsakes are things players show off. Until drawn, the game borrows the base item shown in brackets.
+
+| ✓ | File names | Size / frames | Grok prompt |
+|---|---|---|---|
+| [ ] | `item_briarguard_sabre.png` (now item 3273) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a curved one-handed sabre with a dark green-bronze blade, a guard of twisted briar thorns wrapped around the grip, a single red berry set in the pommel, a faint red glint along the edge." |
+| [ ] | `item_copsewood_bow.png` (now item 9378) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a short hunting bow carved from pale silver birch with dark knots, small living leaves still growing at both tips, a green-dyed string, a faint golden shimmer along the limbs." |
+| [ ] | `item_wand_of_ember_script.png` (now item 3075) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a slim charred-black wand carved with glowing orange runes along its length, the tip a curl of ember-red light, tiny sparks drifting off it." |
+| [ ] | `item_thornward_rod.png` (now item 3070) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a gnarled dark-wood rod wrapped in a spiral of thorny vine, topped with a closed white rosebud that glows softly pale green." |
+| [ ] | `item_millrace_boots.png` (now item 3552) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a pair of soft brown leather boots with a blue-grey waterproof sheen, a small brass millwheel buckle on each, and a wet darker band around the soles as if they just ran through a mill stream." |
+| [ ] | `item_shrinekeepers_pendant.png` (now item 3014) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a round weathered-stone pendant on a thin silver chain, a tiny shrine arch carved into it, a soft warm white light glowing from inside the arch." |
+| [ ] | `item_wardens_signet.png` (now item 3063) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a heavy dark-iron signet ring with a square face engraved with a key crossed over a barred window, a dull blue stone set in the key's bow." |
+| [ ] | `item_inn_tankard.png` (now item 2880) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a dented pewter tankard with a hinged lid, a little stamped hammer-and-anvil mark on its side, foam spilling over the rim." |
+| [ ] | `item_brass_spyglass.png` (now item 23512) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a short brass spyglass, three telescoping sections, worn leather wrap in the middle, a glint of sky reflected in the lens." |
+| [ ] | `item_plains_map.png` (now item 2823) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a half-unrolled parchment map, hand-drawn green plains with a tiny tower in the middle, ink blots, one corner torn, a red string tying the roll." |
+| [ ] | `item_message_bottle.png` (now item 5802) | 32×32, 1 | "32x32 pixel-art item icon, Tibia style, transparent background: a small green glass bottle stoppered with a cork and red wax, a rolled-up note visible inside, a strand of river weed caught around its neck." |

@@ -33,6 +33,7 @@ local function land(player, pos)
 	local entry = log:get(f.id) or { count = 0, best = 0 }
 	local firstTime = entry.count == 0
 	entry.count = entry.count + 1
+	entry.first = entry.first or os.time() -- the Discoveries page shows the date of the first catch
 	if kg > entry.best then
 		entry.best = math.floor(kg * 100) / 100
 	end
@@ -42,7 +43,12 @@ local function land(player, pos)
 		SpireEvents.derbyCatch(player, f.name, kg)
 	end
 	if f.legendary then
-		Game.broadcastMessage(string.format("%s has landed %s, the legendary fish of Floor %d (%.1f kg)!", player:getName(), f.name, floor, kg), MESSAGE_EVENT_ADVANCE)
+		if SpireFinds then -- adventure layer 4.2/4.3: the line (rate-limited, on the board) and the season first
+			SpireFinds.announce("fish", { player }, { name = f.name, kg = kg })
+			SpireFinds.first("fish", f.id, { player }, f.name)
+		else
+			Game.broadcastMessage(string.format("%s has landed %s, the legendary fish of Floor %d (%.1f kg)!", player:getName(), f.name, floor, kg), MESSAGE_EVENT_ADVANCE)
+		end
 	end
 	if firstTime then
 		local kinds = 0
@@ -50,6 +56,9 @@ local function land(player, pos)
 			if not row.junk and not row.treasure and (log:get(row.id) or { count = 0 }).count > 0 then
 				kinds = kinds + 1
 			end
+		end
+		if SpireDiscoveries then
+			SpireDiscoveries.checkMilestones(player, floor)
 		end
 		local title = SpireFishing.titleFor(kinds)
 		if title then

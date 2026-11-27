@@ -89,6 +89,14 @@ local function trigger(player, secret)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, msg)
 		player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_BLUE)
 		logger.info("[Spirebound] {} discovered {} ({} found)", player:getName(), secret.id, count)
+		-- adventure layer 4.2/4.3: the season's first find is heard server-wide (the floor only, never where); later
+		-- finds are silent so a kept secret stays kept
+		if SpireFinds and SpireFinds.first("secret", secret.id, { player }, SpireFinds.secretLabel(secret)) then
+			SpireFinds.announce("secret", {}, nil, secret.floor)
+		end
+		if SpireDiscoveries then
+			SpireDiscoveries.checkMilestones(player, secret.floor)
+		end
 	end
 	giveReward(player, secret, first)
 	if SpireTrophies and SpireTrophies.onSecret then

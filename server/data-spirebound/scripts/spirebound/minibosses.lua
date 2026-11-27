@@ -35,11 +35,17 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	end
 	alive[t.id] = nil
 	restUntil[t.id] = os.time() + SpireTrophies.respawnDelay(math.random)
+	local credit = {}
 	for cid in pairs(creature:getDamageMap()) do
 		local p = Player(cid)
 		if p then
 			SpireTrophies.grant(p, t.id)
+			table.insert(credit, p)
 		end
+	end
+	-- adventure layer 4.2/4.3: the first kill of the season is heard server-wide, never where; later kills are silent
+	if SpireFinds and SpireFinds.first("beast", t.id, credit, t.boss) then
+		SpireFinds.announce("beast", {}, nil, Floors.at(creature:getPosition()) > 0 and Floors.at(creature:getPosition()) or 1)
 	end
 	return true
 end

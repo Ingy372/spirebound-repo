@@ -9,7 +9,7 @@ local defs = {}
 for _, w in ipairs(SpireGearData.weapons) do
 	defs[w.id] = { id = w.id, kind = "weapon", name = w.name, floor = w.floor, vocation = w.vocation, family = w.family,
 		source = w.source, base = w.base, awakenedName = w.awakenedName, perk = w.perk, perkValue = w.perkValue,
-		attack = w.attack, defense = w.defense }
+		attack = w.attack, defense = w.defense, scale = w.scale }
 end
 for _, a in ipairs(SpireGearData.armour) do
 	defs[a.id] = { id = a.id, kind = "armour", name = a.name, floor = a.floor, vocation = a.vocation, source = a.source,
@@ -193,7 +193,8 @@ function SpireGear.state(item)
 	return { id = d.id, kind = d.kind, floor = d.floor, vocation = d.vocation, shop = d.shop or false,
 		tier = tonumber(item:getCustomAttribute(A_TIER)) or 0, famPoints = points,
 		fam = d.kind == "weapon" and not d.shop and SpireGear.famLevel(points, d.floor) or 0,
-		awakened = (tonumber(item:getCustomAttribute(A_AWAKE)) or 0) == 1 }
+		awakened = (tonumber(item:getCustomAttribute(A_AWAKE)) or 0) == 1,
+		scale = d.scale } -- adventure layer: a rare weapon's own picture may be a stronger base item, scaled back
 end
 
 local function describe(item, d, s)
