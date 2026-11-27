@@ -78,8 +78,13 @@ def _dead_corner(m, box, z, away_from):
 def _trailside(m, L, gate, min_gate=12):
     """a free tile just off a ground's trail (never on it), far from the gate, for the Sealed Cut's mouth"""
     best = None
+    # never beside another secret: the first try put the mouth next to the North Crack (s5), and its exit landed
+    # players on s5's tile, which threw them out at Millcross (client test 2026-11-27)
+    others = [p for k, p in m.points.items() if k.startswith("secret_") and p[2] == 7]
     for (x, y) in sorted(L["rect"]):
         if (x, y) in L["open"] or (x, y, 7) not in m.ground or m.items.get((x, y, 7)):
+            continue
+        if any(max(abs(x - p[0]), abs(y - p[1])) < 8 for p in others):
             continue
         if not any((x + dx, y + dy) in L["open"] for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
             continue

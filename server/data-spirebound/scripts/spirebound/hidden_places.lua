@@ -47,9 +47,9 @@ local function resting(player, trophyId, what)
 	return false
 end
 
--- The Vault's barred grate
-local grate = Action()
-function grate.onUse(player, item, fromPosition, target, toPosition, isHotkey)
+-- The Vault's barred grate (use it, or use the Vault Key on it: the cellar's bandits leave their bodies on the grate,
+-- and a body on top would take the click; client test 2026-11-27)
+local function openGrate(player)
 	if player:getItemCount(H.KEY) < 1 then
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "An iron grate, barred from below. The bar has a keyhole stamped with a coin.")
 		return true
@@ -61,8 +61,25 @@ function grate.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	takeIn(player, WorldPoints.vault_entry, "The Vault Key turns, the bar lifts, and the key snaps in the lock. You climb down a rope ladder.")
 	return true
 end
+
+local grate = Action()
+function grate.onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	return openGrate(player)
+end
 grate:aid(AID_GRATE)
 grate:register()
+
+local key = Action()
+function key.onUse(player, item, fromPosition, target, toPosition, isHotkey)
+	local g = WorldPoints.vault_grate
+	if g and toPosition and toPosition.x == g.x and toPosition.y == g.y and toPosition.z == g.z then
+		return openGrate(player)
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A heavy key stamped with a coin. It fits no lock here.")
+	return true
+end
+key:id(H.KEY)
+key:register()
 
 -- The Sealed Cut's rubble mouth
 local mouth = Action()
