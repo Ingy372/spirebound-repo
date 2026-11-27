@@ -399,6 +399,7 @@ def build(m):
         ("Manor Walk", [(77, 72), (86, 72), (95, 72)], "s", 1, 1800, ["sand", "white", "timber"]),
         ("Southgate Row", [(62, 83), (71, 83), (80, 83), (89, 83), (98, 83)], "n", 1, 1300, ["brick", "timber", "sand", "timber", "brick"]),
     ]
+    import house_plans as HP
     for sname, lots, side, storeys, rent, walls_ in streets:
         for k, ((lx, ly), st) in enumerate(zip(lots, walls_)):
             hw, hh = 8, 8
@@ -409,8 +410,13 @@ def build(m):
                     hh = 7
             hx, hy = tx + lx, ty + ly
             claim(f"house {hid}", hx, hy, 8, 8)
-            m.house_building(hid, f"{sname} {k + 1}", hx, hy, hw, hh, Z, town=1, rent=rent, door_side=side, style=st,
-                             floor="marble" if st == "white" else "wood", storeys=storeys)
+            # every lot gets its own plan (maps/house_plans.py): size, rooms, beds and rent differ from its neighbours
+            fx, fy, fw, fh, plan = HP.footprint(hid, hx, hy, hw, hh, side, allow_shrink=storeys == 1)
+            m.house_building(hid, f"{sname} {k + 1}", fx, fy, fw, fh, Z, town=1, rent=HP.rent_for(rent, fw, fh, plan, storeys),
+                             door_side=side, style=st, floor="marble" if st == "white" else "wood", storeys=storeys)
+            HP.fit(m, hid, fx, fy, fw, fh, Z, side, st, plan, storeys)
+            if (fw, fh) != (hw, hh):
+                HP.yard(m, (hx, hy, hw, hh), (fx, fy, fw, fh), Z, S, rng)
             if hw < 8 or hh < 8:
                 gtiles = [(hx + 7, hy + j) for j in range(8)] if hw < 8 else [(hx + j, hy + 7) for j in range(8)]
                 for gx2, gy2 in gtiles:
@@ -462,25 +468,39 @@ def build(m):
     # Wallside Cabins: two clusters of ten small cabins beside the west and east roads. Fisher's Huts: ten on the river bank.
     for cluster, x_start in (("West", tx - 44), ("East", tx + tw + 5)):
         for row_y in (60, 69):
-            for i in range(5):
+            i = 0
+            while i < 5:                                       # one double-width longhouse in every row, in a different place
+                long_ = i == (0 if row_y == 60 else 3)
+                cw = 15 if long_ else 7
                 hx, hy = x_start + i * 8, ty + row_y
-                claim(f"{cluster} cabin {hid}", hx, hy, 7, 6)
-                m.house_building(hid, f"Wallside Cabin {hid}", hx, hy, 7, 6, Z, town=1, rent=600, door_side="n", style="brick")
+                claim(f"{cluster} cabin {hid}", hx, hy, cw, 6)
+                plan = dict(HP.pick(hid), wall="along") if long_ else HP.pick(hid)
+                m.house_building(hid, f"Wallside {'Longhouse' if long_ else 'Cabin'} {hid}", hx, hy, cw, 6, Z, town=1,
+                                 rent=HP.rent_for(600, cw, 6, plan, standard=20), door_side="n", style="timber" if long_ else "brick")
+                HP.fit(m, hid, hx, hy, cw, 6, Z, "n", "timber" if long_ else "brick", plan)
                 S.prop(m, hx + 1, hy - 1, Z, 316)
                 S.prop(m, hx + 5, hy - 1, Z, rng.choice([2519, 116]))
                 hid += 1
+                i += 2 if long_ else 1
         lane0 = x_start - 2
         m.road((lane0, ty + 59), (lane0 + 43, ty + 59), Z, width=2, wind=False)
         m.road((lane0, ty + 68), (lane0 + 43, ty + 68), Z, width=2, wind=False)
     fisher = []
     for col_x in (X0 + 134, X0 + 146):
-        for j in range(5):
+        j = 0
+        while j < 5:                                           # one double-length boathouse in each column
+            long_ = j == (1 if col_x == X0 + 134 else 3)
+            chh = 14 if long_ else 6
             hx, hy = col_x, Y0 + 192 + j * 8
-            claim(f"fisher hut {hid}", hx, hy, 7, 6)
-            m.house_building(hid, f"Fisher's Hut {hid}", hx, hy, 7, 6, Z, town=1, rent=500, door_side="w", style="sand")
+            claim(f"fisher hut {hid}", hx, hy, 7, chh)
+            plan = dict(HP.pick(hid), wall="along") if long_ else HP.pick(hid)
+            m.house_building(hid, f"Fisher's {'Boathouse' if long_ else 'Hut'} {hid}", hx, hy, 7, chh, Z, town=1,
+                             rent=HP.rent_for(500, 7, chh, plan, standard=20), door_side="w", style="timber" if long_ else "sand")
+            HP.fit(m, hid, hx, hy, 7, chh, Z, "w", "timber" if long_ else "sand", plan)
             S.prop(m, hx - 1, hy + 1, Z, rng.choice([2519, 116, 2523]))
             fisher.append((hx, hy))
             hid += 1
+            j += 2 if long_ else 1
     m.npcs.append(("Fisher Corwin", (X0 + 143, Y0 + 190, Z)))
     m.sign(X0 + 143, Y0 + 192, Z, "Fisher's Huts. Cheap homes on the river bank, outside the city walls.")
 
@@ -582,8 +602,13 @@ def build(m):
     for row_y in (24, 34):
         for i in range(4):
             claim(f"cottage {hid}", mx + 3 + i * 15, my + row_y, 9, 8)
-            m.house_building(hid, f"Millcross Cottage {hid}", mx + 3 + i * 15, my + row_y, 9, 8, Z, town=2, rent=800, door_side="n",
-                             style=["timber", "sand", "timber", "brick"][(i + (row_y // 10)) % 4])
+            cst = ["timber", "sand", "timber", "brick"][(i + (row_y // 10)) % 4]
+            cx0, cy0, cw, ch, plan = HP.footprint(hid, mx + 3 + i * 15, my + row_y, 9, 8, "n")
+            m.house_building(hid, f"Millcross Cottage {hid}", cx0, cy0, cw, ch, Z, town=2, rent=HP.rent_for(800, cw, ch, plan, standard=42),
+                             door_side="n", style=cst)
+            HP.fit(m, hid, cx0, cy0, cw, ch, Z, "n", cst, plan)
+            if (cw, ch) != (9, 8):
+                HP.yard(m, (mx + 3 + i * 15, my + row_y, 9, 8), (cx0, cy0, cw, ch), Z, S, rng)
             S.prop(m, mx + 5 + i * 15, my + row_y - 1, Z, 316)
             hid += 1
     for px, py in ((mx + 10, my + 14), (mx + 45, my + 14)):                       # shade trees beside the street

@@ -146,3 +146,11 @@ This replaces the earlier Hearthgate descriptions above. The full plan, with eve
   - Lantern Quarter: Market Street shops, the inn, the Coach Yard, Old Well Yard with the Underkeep grate.
   - Manor Quarter: Spire Manor on the East High Road with its forecourt and the public Spire Gardens.
 - **30 houses** in eight streets (Squareside, Crown Row, Northside, Greenside, Lantern Row North and South, Manor Walk, Southgate Row); every third house is smaller with a garden strip; 12 have an upstairs.
+
+## Homes, varied (2026-11-26)
+This replaces the housing counts above. Jay: "the housing options are boring and all the same. unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for."
+- **Hearthgate, inside the walls:** 30 houses in eight streets, each with one of six plans (one room, two rooms, one room and a back yard, living room and side bedroom, two rooms with two beds, a snug single room); eight have an upstairs. Rent follows floor space.
+- **Wallside Cabins:** 16 homes outside the west and east gates: 12 small cabins and 4 double-size longhouses.
+- **Fisher's Huts:** 8 homes on the river bank: 6 huts and 2 boathouses.
+- **Millcross:** 8 cottages, no two alike.
+- **Spire Manor:** the one grand house, four furnished floors, sold only in the Spire Shop (DESIGN.md 7.6).

@@ -363,6 +363,8 @@ Founded at the Guild Registrar (gold fee, leader level 30+). Ranks, guild chat, 
 ### 7.3 Houses
 Every town has houses; each new floor's town brings a new district. One house per character **(Claude's call)**. Rent weekly from the bank, 7-day grace before it reverts (items to depot). Reverted houses relist at server save with an announcement (stops bot sniping).
 
+**House plans (Jay, 2026-11-26: "currently the housing options are boring and all the same. unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for").** No two neighbouring homes are alike: each lot picks one of six plans (`maps/house_plans.py`): one room; two rooms; one room with a back yard; a living room with a side bedroom; two rooms with two beds; a snug single room. Among the cabins and huts stand double-size longhouses and boathouses, and some town houses have an upstairs. Every home has a bed and a few fixed pieces (the engine removes loose furniture from houses: the owner brings the rest), and rent follows floor space, so the cheap and the roomy are both on offer. The one grand house is Spire Manor (7.6). *(Plans and rents: Claude's call, Jay can veto.)*
+
 ### 7.4 Head start
 When a floor boss dies for the first time, the credited players get a 1-hour head start to buy one house each in the new floor's town at the listed price (capped at half the district). Then an announcement opens the rest. *(From the old pack.)*
 
