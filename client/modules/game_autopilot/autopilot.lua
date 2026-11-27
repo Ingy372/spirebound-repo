@@ -280,6 +280,39 @@ local function readCharlist(tries)
     finish('route complete')
 end
 
+-- FD3 (the Oathroom): wait until the server says something, re-doing a little on the way:
+-- { "do": "until", "text": "inside the oath hall", "seconds": 180, "every": 9, "hold": [x, y, z], "use": [x, y, z] }
+-- every "every" seconds: jump back onto "hold" (test characters only) and use the thing at "use" (a lever)
+handlers["until"] = function(player)
+    Autopilot.heard = Autopilot.heard or {}
+    if not stepData.mark then stepData.mark = #Autopilot.heard + 1; stepData.next = 0 end
+    for k = stepData.mark, #Autopilot.heard do
+        if Autopilot.heard[k]:find(step.text, 1, true) then
+            log('until: heard "' .. step.text .. '"')
+            nextStep()
+            return
+        end
+    end
+    if now() - stepT >= (step.seconds or 60) then
+        log('until: never heard "' .. step.text .. '"')
+        nextStep()
+        return
+    end
+    if now() >= stepData.next then
+        stepData.next = now() + (step.every or 9)
+        if step.hold then
+            local h = toPos(step.hold)
+            local p = player:getPosition()
+            if dist(p, h) ~= 0 or p.z ~= h.z then g_game.talk(string.format('/pilot jump %d, %d, %d', h.x, h.y, h.z)) end
+        end
+        if step.use then
+            local tile = g_map.getTile(toPos(step.use))
+            local thing = tile and tile:getTopUseThing()
+            if thing then g_game.use(thing) end
+        end
+    end
+end
+
 function handlers.jump(player)
     local to = toPos(step.to)
     if not stepData.sent then
@@ -1356,6 +1389,8 @@ local function onText(mode, text)
             if best then text = text .. string.format(' (from %d tiles)', best) end
         end
         log('message: ' .. text)
+        Autopilot.heard = Autopilot.heard or {}
+        table.insert(Autopilot.heard, text)
     end
 end
 

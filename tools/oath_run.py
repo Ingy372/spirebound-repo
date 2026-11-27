@@ -62,12 +62,17 @@ def route(name):
         steps += [{"do": "wait", "seconds": 30}, {"do": "party", "invite": TEAM[1:], "share": True, "seconds": 60, "note": "form the party"}]
     else:
         steps += [{"do": "party", "join": TEAM[0], "seconds": 100, "note": "form the party"}]
-    steps += walk(tile, "onto oath stone %d" % (i + 1), 15, False) + [{"do": "wait", "seconds": 20 if i == 3 else 35}]
-    if i == 3:                                   # the last on the stones pulls the lever (it stands beside stone 4)
-        steps += [{"do": "shot", "name": "oath_door"}] + use(lever, 4, 10)   # until all four stand on the stones
+    steps += walk(tile, "onto oath stone %d" % (i + 1), 10, False, 2)
+    # stay on the stone until the team is inside (quarry monsters wander past and pull fighters off it); the last one
+    # pulls the lever every 9 seconds until all four stand (the door says "3 of 4 are standing" until then)
+    hold = {"do": "until", "text": "inside the First Climb's oath hall", "seconds": 240, "every": 9, "hold": list(tile),
+            "note": "on the stone until the lever takes us in"}
+    if i == 3:
+        hold["use"] = list(lever)
+        steps += [{"do": "shot", "name": "oath_door"}]
+    steps += [hold]
+    if i == 3:
         steps += say("/story oathsafe", 1)
-    else:
-        steps += [{"do": "wait", "seconds": 10}]
     # the Captain's hall: hold in front of the line (the line is 5 tiles in from the west end)
     line = p["oath_line"]
     steps += walk([line[0] + 3 + (i % 2), ay - 1 + i, z], "hold the line", 15, True, 5) + [{"do": "hunt", "seconds": 240, "radius": 9}]
@@ -80,15 +85,15 @@ def route(name):
     gx = p["oath_gate_g1"][0]
     steps += walk([gx + 3, ay - 3 if north else ay + 3, z], "into the Scout's hall", 25, True, 5)
     if i == 0:      # SUN
-        steps += walk([l1[0] - 1, l1[1] + 1, z], "to the SUN lever", 30) + use(l1, 3, 5) + [{"do": "hunt", "seconds": 15, "radius": 4}]
+        steps += walk([l1[0] - 1, l1[1] + 1, z], "to the SUN lever", 20, True, 5) + use(l1, 3, 5) + [{"do": "hunt", "seconds": 15, "radius": 4}]
         steps += walk([l3[0] - 1, l3[1] + 1, z], "to the STAR lever", 20, True, 5) + use(l3, 5, 5)
     elif i == 2:    # MOON
-        steps += walk([l2[0] - 1, l2[1] - 1, z], "to the MOON lever", 30) + [{"do": "wait", "seconds": 8}] + use(l2, 4, 5)
+        steps += walk([l2[0] - 1, l2[1] - 1, z], "to the MOON lever", 20, True, 5) + [{"do": "wait", "seconds": 8}] + use(l2, 6, 5)
         steps += [{"do": "hunt", "seconds": 10, "radius": 4}]
         steps += walk([l4[0] - 1, l4[1] - 1, z], "to the FLAME lever", 20, True, 5) + use(l4, 8, 5)
     else:           # the partners fight beside them
         lv = l1 if north else l2
-        steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner", 30) + [{"do": "hunt", "seconds": 25, "radius": 4}]
+        steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner", 20, True, 5) + [{"do": "hunt", "seconds": 25, "radius": 4}]
         lv = l3 if north else l4
         steps += walk([lv[0] - 2, lv[1] + (1 if north else -1), z], "beside the partner (second room)", 20, True, 5) + [{"do": "hunt", "seconds": 35, "radius": 4}]
     # the Keeper's hall: read the lectern, then the middle lane (one Pilot first steps on a wrong stone)
