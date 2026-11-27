@@ -44,7 +44,7 @@ SpireBoss.register("Gate Hound", {
 			Game.broadcastMessage("The Gate Hound has fallen! The labyrinth of Floor 1 is open to all.", MESSAGE_EVENT_ADVANCE)
 		end
 	end,
-	-- it comes back (30 minutes after a kill): "Defeat the Gate Hound" is a step on every climber's Floor 1 path and pays
+	-- it comes back (10 minutes after a kill, SpireBoss.FIELD_RESPAWN): "Defeat the Gate Hound" is a step on every climber's Floor 1 path and pays
 	-- its shards to everyone credited (gear progression spec; FLOOR1_REVIEW.md F1-46). The gate stays open for good.
 	respawn = true,
 })
@@ -222,11 +222,19 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	local def = SpireBoss.defs[creature:getName()]
 	local state = SpireBoss.fights[creature:getId()]
 	SpireBoss.fights[creature:getId()] = nil
-	if not def or not state then
+	if not def then
 		return true
 	end
 	local now = os.time()
-	local credit = SpireBoss.credited(state, now)
+	if not state then -- the fight record was lost (a script reload): rebuild it from the engine's damage map
+		state = SpireBoss.stateFromDamageMap(creature:getDamageMap(), function(cid)
+			local c = Creature(cid)
+			local p = c and (c:getPlayer() or (c:getMaster() and c:getMaster():getPlayer()))
+			return p and p:getName() or nil
+		end, now)
+		logger.error("[Spirebound] {} died with no fight record (scripts reloaded?): credit rebuilt from the damage map", creature:getName())
+	end
+	local credit = SpireBoss.credited(state, now, SpireBoss.minShare(def.kind))
 	SpireGear.grantBoss(creature:getName(), credit) -- gear progression: shards and the awakening for every credited fighter
 	local lastHit = nil
 	if killer then
@@ -256,7 +264,7 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 		local name = creature:getName()
 		addEvent(function()
 			SpireBoss.spawn(name)
-		end, SpireBoss.REPEAT_RESPAWN * 1000)
+		end, SpireBoss.respawnSeconds(def.kind) * 1000)
 	end
 	return true
 end

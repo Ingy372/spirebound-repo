@@ -137,12 +137,38 @@ end
 -- GM/testing only
 -- Pure: true when every credited name is a test character (the autopilot's Pilots and spell testers). Their boss kills on
 -- Jay's server must never open a floor or claim a first clear (2026-11-26: "Pilot Warden" opened Floor 2 in a test).
-function Floors.onlyTesters(names)
+-- Test characters are told apart by their account's e-mail, never by their name (review A4-5: a real player called
+-- "Pilot ..." would have made a real first clear count for nothing). The sign-up never accepts @localhost addresses.
+Floors.TEST_EMAILS = { "^autopilot%d*@localhost$", "^loadbot%d*@localhost$" }
+
+function Floors.isTestEmail(email)
+	for _, pat in ipairs(Floors.TEST_EMAILS) do
+		if email and email:match(pat) then
+			return true
+		end
+	end
+	return false
+end
+
+local function accountEmail(name)
+	local q = db.storeQuery("SELECT `a`.`email` FROM `players` `p` JOIN `accounts` `a` ON `a`.`id` = `p`.`account_id` WHERE `p`.`name` = "
+		.. db.escapeString(name))
+	if not q then
+		return nil
+	end
+	local email = Result.getString(q, "email")
+	Result.free(q)
+	return email
+end
+
+-- emailOf(name) -> the character's account e-mail (default: from the database)
+function Floors.onlyTesters(names, emailOf)
 	if not names or #names == 0 then
 		return false
 	end
+	emailOf = emailOf or accountEmail
 	for _, name in ipairs(names) do
-		if not (name:find("^Pilot ") or name:find("^Spell ")) then
+		if not Floors.isTestEmail(emailOf(name)) then
 			return false
 		end
 	end

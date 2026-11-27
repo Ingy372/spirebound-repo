@@ -56,9 +56,34 @@ SpireTest.add("floors: the login line says which floor is sealed and what opens 
 	SpireTest.eq(Floors.raceLine(10, {}), "The tower: all 10 floors are open.", "the end")
 end)
 
-SpireTest.add("floors: test characters never open a floor (2026-11-26)", function()
-	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Pilot Ranger" }), true, "a party of Pilots is only testers")
-	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Jay" }), false, "one real player makes it count")
-	SpireTest.eq(Floors.onlyTesters({}), false, "nobody credited is not 'only testers'")
+SpireTest.add("floors: test characters never open a floor, told apart by account e-mail (review A4-5)", function()
+	local emails = { ["Pilot Warden"] = "autopilot@localhost", ["Pilot Ranger"] = "autopilot2@localhost",
+		["Loadbot 001"] = "loadbot1@localhost", ["Pilot Realguy"] = "someone@example.com", Jay = "jay@localhost" }
+	local of = function(n) return emails[n] end
+	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Pilot Ranger", "Loadbot 001" }, of), true, "a party of test accounts is only testers")
+	SpireTest.eq(Floors.onlyTesters({ "Pilot Warden", "Jay" }, of), false, "one real player makes it count")
+	SpireTest.eq(Floors.onlyTesters({ "Pilot Realguy" }, of), false, "a real player named 'Pilot ...' counts")
+	SpireTest.eq(Floors.onlyTesters({}, of), false, "nobody credited is not 'only testers'")
+	-- and through the real database: a character called "Pilot ..." on a real account counts
+	local name = "Pilot Notatest"
+	db.query("DELETE FROM `players` WHERE `name` = " .. db.escapeString(name))
+	db.query("INSERT INTO `players` (`name`, `group_id`, `account_id`, `level`, `vocation`, `health`, `healthmax`, `experience`, `lookbody`, `lookfeet`, `lookhead`, `looklegs`, `looktype`, `maglevel`, `mana`, `manamax`, `town_id`, `conditions`, `cap`, `sex`) SELECT "
+		.. db.escapeString(name) .. ", 1, `id`, 8, 0, 185, 185, 4200, 0, 0, 0, 0, 128, 0, 35, 35, 1, '', 400, 1 FROM `accounts` WHERE `name` = 'jay'")
+	SpireTest.eq(Floors.onlyTesters({ name }), false, "database: 'Pilot Notatest' on Jay's account is a real player")
+	db.query("DELETE FROM `players` WHERE `name` = " .. db.escapeString(name))
+end)
+
+SpireTest.add("bosses: the field boss comes back in 10 minutes and credits from 1%; a lost fight record is rebuilt (review A4-3, A4-5)", function()
+	SpireTest.eq(SpireBoss.respawnSeconds("field"), 600, "Gate Hound back in 10 minutes")
+	SpireTest.eq(SpireBoss.respawnSeconds("floor"), 1800, "floor boss still 30")
+	local st = SpireBoss.newState()
+	SpireBoss.recordHit(st, "Big", 985, 100)
+	SpireBoss.recordHit(st, "Small", 15, 100)
+	local function has(list, n) for _, x in ipairs(list) do if x == n then return true end end return false end
+	SpireTest.eq(has(SpireBoss.credited(st, 101, SpireBoss.minShare("field")), "Small"), true, "1.5% is credited at a field boss")
+	SpireTest.eq(has(SpireBoss.credited(st, 101, SpireBoss.minShare("floor")), "Small"), false, "but not at the floor boss (2%)")
+	local rebuilt = SpireBoss.stateFromDamageMap({ [11] = { total = 500, ticks = 1 }, [12] = { total = 300 }, [13] = { total = 50 } },
+		function(cid) return ({ [11] = "Ana", [12] = "Bo" })[cid] end, 1000)
+	SpireTest.eq(#SpireBoss.credited(rebuilt, 1000), 2, "both players on the damage map are credited; the monster (13) is not")
 end)
 

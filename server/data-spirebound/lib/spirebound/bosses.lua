@@ -9,6 +9,8 @@ SpireBoss = {
 	ENRAGE_STEP = 30, -- seconds between enrage damage steps
 	ENRAGE_BONUS = 0.5, -- +50% boss damage per step
 	REPEAT_RESPAWN = 30 * 60, -- floor boss respawn after a kill (repeat kills give no first-clear rewards)
+	FIELD_RESPAWN = 10 * 60, -- field boss (the Gate Hound): every climber needs its credit for the Stair Key (review A4-3)
+	FIELD_MIN_SHARE = 0.01, -- a field boss credits from 1% of the fight (a crowd at the Pass all gets the step)
 	-- roadmap R9 (REVIEW 3.9, 1.4)
 	MIN_SHARE = 0.02, -- you need at least 2% of the fight's total contribution to be credited
 	TAKEN_WEIGHT = 0.5, -- damage you soak from the boss counts half
@@ -37,13 +39,13 @@ end
 
 -- Pure: credited names at kill time: took part within the credit window and did at least MIN_SHARE of everything
 -- (damage to the boss, healing of the fighters, half the damage soaked), top 20 by total contribution.
-function SpireBoss.credited(state, now)
+function SpireBoss.credited(state, now, minShare)
 	local list, total = {}, 0
 	for _, h in pairs(state.hits) do
 		total = total + h.total
 	end
 	for name, h in pairs(state.hits) do
-		if now - h.last <= SpireBoss.CREDIT_WINDOW and h.total >= total * SpireBoss.MIN_SHARE then
+		if now - h.last <= SpireBoss.CREDIT_WINDOW and h.total >= total * (minShare or SpireBoss.MIN_SHARE) then
 			table.insert(list, { name = name, amount = h.total })
 		end
 	end
@@ -150,6 +152,31 @@ function SpireBoss.enrageMultiplier(state, now)
 	end
 	local steps = math.floor((now - enrageAt) / SpireBoss.ENRAGE_STEP) + 1
 	return 1 + SpireBoss.ENRAGE_BONUS * steps
+end
+
+-- Pure: how soon a boss of this kind comes back after a kill, and the share of the fight that earns credit
+function SpireBoss.respawnSeconds(kind)
+	return kind == "field" and SpireBoss.FIELD_RESPAWN or SpireBoss.REPEAT_RESPAWN
+end
+
+function SpireBoss.minShare(kind)
+	return kind == "field" and SpireBoss.FIELD_MIN_SHARE or SpireBoss.MIN_SHARE
+end
+
+-- A fight record rebuilt from the engine's own damage map (review A4-5: after a script reload the record is gone, and
+-- the kill used to give no credit, no unlock and no return). damageMap = creature:getDamageMap(); nameOf(cid) -> the
+-- player's name (summons count as their owner) or nil.
+function SpireBoss.stateFromDamageMap(damageMap, nameOf, now)
+	local state = SpireBoss.newState()
+	state.started = now
+	for cid, d in pairs(damageMap or {}) do
+		local name = nameOf(cid)
+		local amount = type(d) == "table" and (d.total or 0) or (tonumber(d) or 0)
+		if name and amount > 0 then
+			SpireBoss.recordHit(state, name, amount, now)
+		end
+	end
+	return state
 end
 
 function SpireBoss.newState()

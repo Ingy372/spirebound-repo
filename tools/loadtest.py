@@ -453,6 +453,10 @@ REVIEW_CASES = [
          logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_hardcore),
     dict(name="A8-1 a level-15 Normal death costs nothing", voc=4, level=15, ground="starter_east",
          logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_normal),
+    dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
+         logins=[[(3, "say", "/rv bossreload")]], stay=4,
+         check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,
+                              "had a record %(had_record)s, credited %(credited)s" % _rv(lines, "bossreload")[0])),
 ] + [
     # A8-2: each Death Game victim dies beside its own real partner character ("{partner}" is that character's name)
     case for kind, want in (("dragfought", "retire"), ("dragged", "saved"), ("firstvictim", "retire"), ("firstother", "saved"))

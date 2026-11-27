@@ -899,7 +899,7 @@ def build(m):
             m.clear_items(xx, yy, Z)
     m.walls(px, py, 24, 20, Z, gaps={(px + 12, py + 19), (px + 13, py + 19), (px + 12, py), (px + 13, py)}, style="stone")
     DG.flagstones(m, px + 3, py + 3, 18, 14, Z, 351)                  # a trampled dirt pit inside a flagstone ring
-    m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script; it returns 30 minutes after a kill
+    m.points["gate_hound_spawn"] = (px + 12, py + 9, Z)  # spawned by script; it returns 10 minutes after a kill
     m.sign(px + 10, py + 20, Z, "The Pass. The Gate Hound guards the way to the Floor 1 labyrinth. Come with a party of "
            "three or more: alone, it will tear you apart.")       # FLOOR1_REVIEW.md F1-44
     m.points["pass_arena"] = (px + 12, py + 10, Z)
