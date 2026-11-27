@@ -216,13 +216,12 @@ function login.onLogin(player)
 	local voc = player:getVocation():getId()
 	L.bots[player:getId()] = { g = g, dps = plan.dps, spot = math.random(#g.spots), range = (voc == 4) and 1 or 3,
 		n = { reset = 0, travel = 0, hit = 0, walk = 0, chase = 0 }, skip = {} } -- what it spent its thinks on (the minute report)
-	player:registerEvent("SpireLoadbotKill")
 	addEvent(think, 1000 + math.random(THINK), player:getId())
 	return true
 end
 login:register()
 
-local kill = CreatureEvent("SpireLoadbotKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	local b = L.bots[player:getId()]
 	if b and target:isMonster() and not target:getMaster() then
@@ -233,7 +232,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireLoadbotKill", kill.onKill)
 
 -- the heartbeat: a 100 ms timer; how late it fires is how far behind the server's game loop is
 local HEART = 100 -- the scheduler runs timers on a 50 ms grid, so a 100 ms timer that is on time reads 0-50

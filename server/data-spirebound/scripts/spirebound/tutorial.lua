@@ -241,7 +241,7 @@ end
 gateFront:register()
 
 -- step 1: beat a rat
-local kill = CreatureEvent("SpireTutorialKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	if target and target:isMonster() and target:getName() == "Pen Rat" then
 		local second = SpireTutorial.done(player, "kill") -- this is at least the second rat
@@ -257,7 +257,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireTutorialKill", kill.onKill)
 
 -- step 2: take something out of a body
 local loot = EventCallback("SpireTutorialLoot")
@@ -279,7 +279,6 @@ end
 
 local login = CreatureEvent("SpireTutorialLogin")
 function login.onLogin(player)
-	player:registerEvent("SpireTutorialKill")
 	if player:getVocation():getId() == 0 and not scope(player):get("potionBase") then
 		scope(player):remove("potion") -- the old check could count regeneration as the potion: check it again
 		if player:getItemCount(POTION) == 0 then

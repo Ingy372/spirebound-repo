@@ -3,7 +3,7 @@
 
 local counted = {} -- monster id -> true once its kill was shared (onKill can fire for the last hitter and the top damage dealer)
 
-local kill = CreatureEvent("SpireProgressKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	if not target or not target:isMonster() then
 		return true
@@ -22,7 +22,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireProgressKill", kill.onKill)
 
 local applied = {} -- player id -> speed added by the style
 SpireCleanup.add(function(pid) applied[pid] = nil end)
@@ -60,7 +60,6 @@ guard:register()
 
 local login = CreatureEvent("SpireProgressLogin")
 function login.onLogin(player)
-	player:registerEvent("SpireProgressKill")
 	player:registerEvent("SpireStyleGuard")
 	SpireStyle.applySpeed(player)
 	return true

@@ -15,7 +15,7 @@ local function bossKind(name)
 end
 C.bossKind = bossKind
 
-local kill = CreatureEvent("SpireChronicleKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	if not target or not target:isMonster() or target:getMaster() then
 		return true
@@ -31,7 +31,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireChronicleKill", kill.onKill)
 
 -- level, floor and path: whatever any character on the account reached
 local function checkReach(p)
@@ -45,7 +45,6 @@ C.checkReach = checkReach
 
 local login = CreatureEvent("SpireChronicleLogin")
 function login.onLogin(player)
-	player:registerEvent("SpireChronicleKill")
 	addEvent(function(pid)
 		local p = Player(pid)
 		if p then

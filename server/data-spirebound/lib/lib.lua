@@ -3,6 +3,7 @@
 dofile(DATA_DIRECTORY .. "/lib/spirebound/test_api.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/cleanup.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/hooks.lua")
+dofile(DATA_DIRECTORY .. "/lib/spirebound/kills.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/save.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/moderation.lua")
 dofile(DATA_DIRECTORY .. "/lib/spirebound/difficulty.lua")

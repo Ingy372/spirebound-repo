@@ -67,7 +67,7 @@ loot:register()
 
 -- R15: kills and positions for the standing-still rule and the suspicion log
 SpireCleanup.add(function(pid, guid) SpireCavebot.track[guid] = nil end)
-local kills = CreatureEvent("SpireBotWatchKill")
+local kills = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kills.onKill(player, target)
 	if target and target:isMonster() and not target:getMaster() then
 		local guid = player:getGuid()
@@ -84,11 +84,10 @@ function kills.onKill(player, target)
 	end
 	return true
 end
-kills:register()
+SpireKills.on("SpireBotWatchKill", kills.onKill)
 
 local watchLogin = CreatureEvent("SpireBotWatchLogin")
 function watchLogin.onLogin(player)
-	player:registerEvent("SpireBotWatchKill")
 	return true
 end
 watchLogin:register()

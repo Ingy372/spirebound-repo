@@ -28,7 +28,7 @@ function SpireTasks.countKill(player, name)
 	return true
 end
 
-local kill = CreatureEvent("SpireTaskKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	if not target or not target:isMonster() or target:getMaster() then
 		return true
@@ -39,7 +39,7 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpireTaskKill", kill.onKill)
 
 -- Task window buttons (client: client/modules/game_spirebound/tasks.lua): {t="task", a="take"|"report"|"cancel"|"open", id}
 -- Every button only works next to a taskmaster; the window then shows that taskmaster's floor again.
@@ -81,7 +81,6 @@ opcode:register()
 
 local login = CreatureEvent("SpireTaskLogin")
 function login.onLogin(player)
-	player:registerEvent("SpireTaskKill")
 	player:registerEvent("SpireTaskOpcode")
 	return true
 end

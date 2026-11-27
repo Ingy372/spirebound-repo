@@ -1,5 +1,5 @@
 -- Season Path: kill counting and the !path window
-local kill = CreatureEvent("SpirePathKill")
+local kill = {} -- N8: counted through SpireKills (one death callback), not the deprecated onKill event
 function kill.onKill(player, target)
 	if not target or not target:isMonster() or target:getMaster() then
 		return true
@@ -10,11 +10,10 @@ function kill.onKill(player, target)
 	end
 	return true
 end
-kill:register()
+SpireKills.on("SpirePathKill", kill.onKill)
 
 local login = CreatureEvent("SpirePathLogin")
 function login.onLogin(player)
-	player:registerEvent("SpirePathKill")
 	return true
 end
 login:register()
