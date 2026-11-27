@@ -597,6 +597,7 @@ SpireWilds = { grounds = {
 	{ id = "f4_moat", x1 = 2883, y1 = 1146, x2 = 2918, y2 = 1171, z = 8, exit = Position(2901, 1158, 7) },
 	{ id = "f4_keep", x1 = 2874, y1 = 1078, x2 = 2909, y2 = 1103, z = 8, exit = Position(2892, 1090, 7) },
 }, weights = {
+	["Acorn Squirrel"] = 0.1,
 	["Bandit Captain"] = 2.5,
 	["Bandit Crossbowman"] = 1.0,
 	["Bark Mantis"] = 1.0,
@@ -605,6 +606,7 @@ SpireWilds = { grounds = {
 	["Bristle Boar"] = 1.5,
 	["Burrow Mole"] = 1.0,
 	["Castle Hound"] = 1.2,
+	["Dapple Fawn"] = 0.1,
 	["Drowned Footman"] = 1.0,
 	["Drowned Sergeant"] = 2.5,
 	["Dust Strider"] = 0.5,
@@ -622,6 +624,7 @@ SpireWilds = { grounds = {
 	["Horned Grazer"] = 1.0,
 	["Lake Eel"] = 0.5,
 	["Lantern Wisp"] = 1.0,
+	["Meadow Hare"] = 0.1,
 	["Meadow Wasp"] = 0.5,
 	["Meadow Wolf"] = 1.0,
 	["Mesa Wyrmling"] = 3.0,
@@ -643,6 +646,7 @@ SpireWilds = { grounds = {
 	["Sproutling"] = 0.7,
 	["Stonehide Bull"] = 1.5,
 	["Stonehorn Ram"] = 2.0,
+	["Thistle Hen"] = 0.1,
 	["Thornsnap"] = 1.3,
 	["Tide Crab"] = 0.8,
 }, budgets = {

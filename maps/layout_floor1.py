@@ -1035,41 +1035,14 @@ def build(m):
     secret("s12", X0 + 296, Y0 + 60)                    # broken stair of a ruined side tower near the Pass
 
     # ------------------------------------------------ The Underkeep, Wing 1 (DESIGN.md 3.4), under Hearthgate at z 8
+    # a real dungeon since 2026-11-26 (Jay, Q89): rooms, corridors, loops, a secret and a mini-boss (maps/underkeep.py)
+    import underkeep
     ux, uy, uz = tx, ty + 10, 8
-    m.fill(ux, uy, 70, 50, uz, "stonetile")
-    m.walls(ux, uy, 70, 50, uz, style="pale")
-    # a water channel and column hall
-    for y in range(uy + 3, uy + 47):
-        m.ground[(ux + 20, y, uz)] = m.pick("water")
-        m.ground[(ux + 21, y, uz)] = m.pick("water")
-    for y in (uy + 15, uy + 16, uy + 30, uy + 31):  # crossings
-        m.ground[(ux + 20, y, uz)] = 351
-        m.ground[(ux + 21, y, uz)] = 351
-    for cx_ in range(ux + 30, ux + 66, 6):
-        for cy_ in range(uy + 6, uy + 46, 8):
-            m.put(cx_, cy_, uz, ID_PILLAR)
-    m.points["underkeep_entry"] = (ux + 4, uy + 4, uz)
+    underkeep.build_wing1(m, ux, uy, uz)
+    vx, vy, vz = m.points["uk1_vault"]
+    secret("s13", vx, vy, vz)                          # the walled-up cell at the end of the dead-end passage
     m.teleport((ux + 2, uy + 2, uz), (tx + 5, ty + 68, Z), "underkeep_exit")
-    m.monsters.append(("Mire Toad", (ux + 10, uy + 25, uz), 4, 5, 90))
-    m.monsters.append(("Mire Toad", (ux + 40, uy + 12, uz), 4, 4, 90))
-    m.monsters.append(("Black Crawler", (ux + 45, uy + 30, uz), 4, 5, 90))
-    m.monsters.append(("Black Crawler", (ux + 58, uy + 40, uz), 4, 4, 90))
-    # daily chest room (scripted reward, task 2.10) and the sealed door to Wing 2
-    m.points["underkeep_chest"] = (ux + 64, uy + 4, uz)
-    m.walls(ux + 58, uy + 1, 11, 8, uz, gaps={(ux + 58, uy + 4)}, style="pale")
-    S.carpet(m, ux + 60, uy + 3, 8, 3, uz, 5572)
-    m.put(ux + 64, uy + 4, uz, 3515)  # an old stone altar used as the daily strongbox (scripted)
-    m.points["underkeep_wing2_door"] = (ux + 69, uy + 25, uz)
     m.sign(ux + 67, uy + 25, uz, "A black iron door. Sealed until the tower reaches Floor 2.")
-    # dressing: lamps, a storeroom by the entrance, damp and old bones, braziers in the column hall
-    uk_out = DG.keep_clear(m, uz) | {(ux + 2, uy + 2), (ux + 3, uy + 3)}
-    for qx, qy, pid in ((ux + 6, uy + 2, 2519), (ux + 7, uy + 2, 2523), (ux + 9, uy + 2, 2519), (ux + 2, uy + 7, 2523),
-                        (ux + 2, uy + 8, 2519)):
-        S.prop(m, qx, qy, uz, pid)
-    DG.hang(m, ux, uy, 70, 50, uz, every=6)
-    DG.scatter(m, ux + 1, uy + 1, 68, 48, uz, DG.COBWEBS, 35, avoid=uk_out)
-    DG.scatter(m, ux + 1, uy + 1, 68, 48, uz, DG.BONES + DG.DEBRIS, 35, avoid=uk_out)
-    DG.scatter(m, ux + 23, uy + 1, 34, 48, uz, [DG.COAL_BASIN], 6, solid=True, avoid=uk_out)
 
     # ------------------------------------------------ Underkeep Wings 2-6 (DESIGN.md 3.4): one per two floors cleared
     # wing: (x, y, z, w, h, monsters, opens when floor N is open, boss)
@@ -1207,6 +1180,9 @@ def build(m):
     S.ruin(m, X0 + 300, Y0 + 372, 10, 8, Z, door=[(X0 + 302, Y0 + 372), (X0 + 303, Y0 + 372)])   # a toppled shrine (south-east)
     S.standing_stones(m, X0 + 382, Y0 + 262, Z)                    # a ring of standing stones east of the city (moved twice for Toad Pond)
     S.standing_stones(m, X0 + 30, Y0 + 350, Z)
+    import small_game                                  # Q94: small game on the empty lawns (maps/small_game.py)
+    small_game.place(m, X0, Y0, SIZE, Z, [(X0 + c["x"], Y0 + c["y"], c["w"], c["h"]) for c in CAMPS] + [
+        (tx, ty, tw, th), (X0 + MILLCROSS["x"], Y0 + MILLCROSS["y"], MILLCROSS["w"], MILLCROSS["h"])])
     keep = [p for p in m.points.values() if p[2] == Z] + [pos for _n, pos, *_r in m.monsters if pos[2] == Z] + [pos for _n, pos in m.npcs if pos[2] == Z]
     grounds = [(X0 + c["x"] - 2, Y0 + c["y"] - 2, c["w"] + 4, c["h"] + 4) for c in CAMPS]
     S.forest(m, X0 + 4, Y0 + 4, SIZE - 8, SIZE - 8, Z, keep=keep, avoid=grounds)

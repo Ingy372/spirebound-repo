@@ -99,7 +99,7 @@ def build_wing1(m, ux, uy, uz):
     m.points["underkeep_chest"] = (ux + 64, uy + 4, uz)
     S.carpet(m, ux + 60, uy + 3, 7, 3, uz, 5572)
     m.put(ux + 64, uy + 4, uz, 3515)                       # an old stone altar used as the daily strongbox (scripted)
-    m.points["underkeep_wing2_door"] = (ux + 69, uy + 25, uz)
+    m.points["underkeep_wing2_door"] = (ux + 66, uy + 25, uz)    # the portal tile into Wing 2
     m.points["uk1_vault"] = (ux + 44, uy + 43, uz)         # the walled-up cell's secret (s13)
     m.points["uk1_miniboss"] = (ux + 28, uy + 41, uz)
     # monsters: packs placed in their rooms, as far from each other and the doors as the room allows
