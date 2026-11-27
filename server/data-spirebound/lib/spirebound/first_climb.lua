@@ -41,7 +41,7 @@ SpireFirstClimb.RECORDS = {
 	{ id = "margin", name = "Linnet Marsh's Route Notes", item = 2815, loose = "centre_wolf_copse",
 		text = "Scout's notes, Linnet Marsh, First Climb.\n\nWolves den to the west of the river. Keep fires high. The river is the road: follow it and you never lose the stair. Above the Pass the ground climbs to grass country, herd country. Good grazing, bad weather.\n\nTold the Captain the stair is watched from above as well as below. He laughed. I did not." },
 	{ id = "rations", name = "a Camp Cook's Scrap", item = 2815, loose = "camp_reed_marsh",
-		text = "A cook's scrap, greasy at the corners:\n\nFor the long climb: fish keeps, boar fills, honey cheers. A truffle in the pot and nobody complains about the cold. Turtle eggs from the marsh at low water, if you're quick. Cook it on a camp fire, not in the ashes.\n\nTam says I put too much salt in everything. Tam can cook his own." },
+		text = "A cook's scrap, greasy at the corners:\n\nFor the long climb: fish keeps, boar fills, honey cheers. A truffle in the pot and nobody complains about the cold. Turtle eggs from the marsh at low water, if you're quick. Cook it on a camp fire, not in the ashes.\n\nIone's favourite: turtle eggs baked on the fire with a shaved truffle on top. She called it the only good thing about the marsh.\n\nTam says I put too much salt in everything. Tam can cook his own." },
 }
 
 function SpireFirstClimb.record(id)
