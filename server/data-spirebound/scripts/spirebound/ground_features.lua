@@ -37,6 +37,14 @@ local function tagPoint(name, aid, id, desc)
 		if desc then
 			it:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, desc)
 		end
+		-- a grass-edge piece the map laid over the object is what the client clicks first (client test 2026-11-27):
+		-- it carries the same action
+		local t = Tile(it:getPosition())
+		for _, other in ipairs(t and t:getItems() or {}) do
+			if other ~= it and not ItemType(other:getId()):isPickupable() and other:getActionId() == 0 then
+				other:setActionId(aid)
+			end
+		end
 	end
 	return it
 end
@@ -153,12 +161,39 @@ local function liliesUp(up)
 		return
 	end
 	local path = F.points("feat_lily_")
+	-- the path's tiles, the shore it starts from and the island tiles: shoreline pieces and reeds on them are solid, so
+	-- they are lifted off at night and put back at dawn (client test 2026-11-27)
+	local clearTiles = {}
+	for _, p in ipairs(path) do
+		table.insert(clearTiles, p)
+	end
+	for _, name in ipairs({ "feat_lily_shore", "feat_island", "feat_island_2" }) do
+		if WorldPoints[name] then
+			table.insert(clearTiles, WorldPoints[name])
+		end
+	end
+	local isle1 = WorldPoints.feat_island
+	if isle1 then -- the island tile next to the path's last pad
+		local last = path[#path]
+		table.insert(clearTiles, { x = last and last.x - 1 or isle1.x, y = last and last.y or isle1.y, z = isle1.z })
+	end
 	if up then
+		L.lifted = {}
+		for _, p in ipairs(clearTiles) do
+			local t = Tile(P(p))
+			for _, it in ipairs(t and t:getItems() or {}) do
+				local id = it:getId()
+				if id ~= 39548 and not ItemType(id):isPickupable() and ItemType(id):isBlocking() then
+					table.insert(L.lifted, { x = p.x, y = p.y, z = p.z, id = id })
+					it:remove()
+				end
+			end
+		end
 		for _, p in ipairs(path) do
 			local t = Tile(P(p))
 			if t and t:getGround() then
 				L.ground[p.x .. "," .. p.y] = t:getGround():getId()
-				t:getGround():transform(6352)
+				t:getGround():transform(17238) -- dark mud under the pads (swamp ground is "avoid": the client will not path over it)
 				Game.createItem(39548, 1, P(p))
 				P(p):sendMagicEffect(CONST_ME_GREEN_RINGS)
 			end
@@ -171,7 +206,7 @@ local function liliesUp(up)
 			end
 		end
 	else
-		local shore = P(WorldPoints.feat_lily_shore)
+		local shore = dryNear(P(WorldPoints.feat_lily_shore))
 		local onIt = {}
 		for _, p in ipairs(path) do
 			onIt[p.x .. "," .. p.y] = true
@@ -206,6 +241,10 @@ local function liliesUp(up)
 				t:getGround():transform(was)
 			end
 		end
+		for _, rec in ipairs(L.lifted or {}) do
+			Game.createItem(rec.id, 1, Position(rec.x, rec.y, rec.z))
+		end
+		L.lifted = {}
 		for _, id in ipairs(L.toads) do
 			local m = Monster(id)
 			if m then
@@ -466,7 +505,7 @@ function howl.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 		m:selectTarget(player)
 		n = n + 1
 	end
-	if F.isNight() then
+	if F.forceNight or (F.forceNight == nil and F.isNight()) then
 		local start = WorldPoints["loop_wolf_copse_a"] or player:getPosition()
 		local extra = {}
 		for i = 1, c.night_extra do
@@ -1063,9 +1102,17 @@ fixed:register()
 local clock = GlobalEvent("SpireFeatureClock")
 function clock.onThink(interval)
 	local t = now()
-	pcall(liliesUp, F.isNight())
+	local night = F.forceNight
+	if night == nil then
+		night = F.isNight()
+	end
+	pcall(liliesUp, night)
 	local tc = F.conf("reed_marsh", "tide")
-	pcall(tideSet, F.tideLow(t, tc.every, tc.low))
+	local low = F.forceTide
+	if low == nil then
+		low = F.tideLow(t, tc.every, tc.low)
+	end
+	pcall(tideSet, low)
 	local vc = F.conf("thornsnap_hollow", "vines")
 	if not st.vinesAt or t >= st.vinesAt then
 		st.vinesAt = t + vc.every
@@ -1176,3 +1223,5 @@ function F.berryPicked(player, pos)
 		say(player, "Something under the bush did not like being disturbed!")
 	end
 end
+
+F.stashPick, F.truffleSpot, F.rootThink = stashPick, truffleSpot, rootThink

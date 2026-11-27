@@ -160,9 +160,11 @@ def toad_pond(m, busy):
             break
     if not pond:
         raise ValueError("Toad Pond: no unbridged pond is big enough for the night island")
-    for (x, y) in isle:
+    for i, (x, y) in enumerate(isle):
         m.ground[(x, y, Z)] = m.pick("grass")
         m.clear_items(x, y, Z)
+        if i in (1, 2):              # a flower on two corners: land with something on it is never tidied into water
+            m.put(x, y, Z, 6225)
     # the lily path: the shortest straight line of water from the shore to the island
     best = None
     for (ix, iy) in isle:

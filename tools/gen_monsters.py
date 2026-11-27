@@ -202,6 +202,13 @@ MONSTERS = {
                               loot=[(GOLD, 100000, 60), (9218, 100000, 1), (266, 30000, 1)],
                               voices=["You'll never collect on me!", "The poster's worth more than you are."],
                               summons=[("Road Bandit", 1)]),
+    # The Oathkeeper (FD3, Session C's Oathroom under the Old Quarry): the party boss of the Healer's hall, for four at
+    # level 30. Spawned by scripts/spirebound/oathroom.lua (never on the map); he heals from four braziers
+    # (SpireOathkeeper). No loot: the reward room's chests pay.
+    "The Oathkeeper": dict(desc="the Oathkeeper", look=(2206, 0, 0, 0, 0, 0), corpse=18074, hp=9000, xp=4500, speed=110,
+                           race="undead", attacks=[("melee", 0, -130), ("physical", -60, -120, 3)], armor=34, defense=34,
+                           elements={"holy": 30, "death": -10}, boss=True, loot=[],
+                           voices=["Hold the stair.", "The oath is kept."], events=["SpireOathkeeper"]),
     # ---------------------------------------------------------------- Floor 1 apex spawn (Contested)
     "Stonehorn Ram": dict(desc="a stonehorn ram", look=(607,), corpse=5994, hp=900, xp=480, speed=120, race="blood",
                           attacks=[("melee", 0, -120), ("charge", 0, -150, 4)], armor=30, defense=28, heal=(0.05, 6000),

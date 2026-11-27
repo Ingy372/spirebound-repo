@@ -51,9 +51,9 @@ SpireTest.add("ground features: the rules (tide, chimes, vines, cool-downs)", fu
 	SpireTest.eq(ok == false and left == 50, true, "then cooling down")
 	-- the lilies and the tide swap their tiles and back
 	F.liliesUp(true)
-	SpireTest.eq(Tile(WorldPoints.feat_lily_1):getGround():getId(), 6352, "a lily pad at night")
+	SpireTest.eq(Tile(WorldPoints.feat_lily_1):getGround():getId(), 17238, "a lily pad at night")
 	F.liliesUp(false)
-	SpireTest.eq(Tile(WorldPoints.feat_lily_1):getGround():getId() ~= 6352, true, "water again by day")
+	SpireTest.eq(Tile(WorldPoints.feat_lily_1):getGround():getId() ~= 17238, true, "water again by day")
 	F.tideSet(true)
 	SpireTest.eq(Tile(WorldPoints.feat_tide_1):getGround():getId(), 104, "a sandbar at low tide")
 	F.tideSet(false)

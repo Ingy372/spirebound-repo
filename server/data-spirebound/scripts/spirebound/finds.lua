@@ -122,6 +122,9 @@ function SpireFinds.lookText(name, info)
 	if (info.firsts or 0) > 0 then
 		table.insert(parts, "First finder (" .. info.firsts .. ").")
 	end
+	for _, extra in ipairs(info.extra or {}) do -- other scripts' lines (Session C's story choices, the Oathroom chest)
+		table.insert(parts, extra)
+	end
 	if #parts == 0 then
 		return nil
 	end
@@ -136,7 +139,15 @@ function SpireFinds.lookInfo(target)
 			table.insert(trophies, t.name)
 		end
 	end
+	local extra = {}
+	for _, f in ipairs(SpireFinds.LOOK_EXTRAS or {}) do
+		local ok, line = pcall(f, target)
+		if ok and line then
+			table.insert(extra, line)
+		end
+	end
 	return {
+		extra = extra,
 		title = SpireFinds.shownTitle(target),
 		trophies = trophies,
 		secrets = #SpireSecrets.foundList(target),

@@ -209,6 +209,19 @@ function SpireCooking.onDrop(player, item, pos)
 		return false
 	end
 	local tile = Tile(fire)
+	-- the item the engine hands over can be the stack left behind in the backpack (a part of a stack was dropped):
+	-- cook what really lies on the fire
+	local onFire
+	for _, it in ipairs(tile:getItems() or {}) do
+		if it:getId() == id then
+			onFire = it
+			break
+		end
+	end
+	if not onFire then
+		return false
+	end
+	item = onFire
 	-- a second ingredient on a dish that lies on the fire: the combined dish
 	local base, d = combinePartner(tile, id)
 	if base then
@@ -336,9 +349,10 @@ function SpireCooking.tick(player)
 	end
 	local fighting = player:hasCondition(CONDITION_INFIGHT)
 	if a.comfort == "regen" and not fighting and player:getHealth() < player:getMaxHealth() then
-		player:addHealth(a.amount)
+		-- quietly (addHealth prints "You were healed" every tick)
+		player:setHealth(math.min(player:getMaxHealth(), player:getHealth() + a.amount))
 	elseif a.comfort == "mana" and not fighting and player:getMana() < player:getMaxMana() then
-		player:addMana(a.amount)
+		player:addMana(a.amount) -- (the engine has no setMana; addMana says nothing)
 	elseif a.comfort == "townspeed" then
 		local tile = Tile(player:getPosition())
 		if tile and tile:hasFlag(TILESTATE_PROTECTIONZONE) then
