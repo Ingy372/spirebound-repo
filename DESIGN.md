@@ -15,6 +15,9 @@ An Open Tibia server shaped like a floating tower. Everyone starts on Floor 1. E
 
 It plays like Tibia (hunting, loot, skulls, houses, guilds, depots, parties, the four familiar vocations, gold/platinum/crystal coins) with SAO-style touches: a floor indicator, sword skills on a hotbar, green/orange/red player cursors, an Info Broker who buys secrets, and a hidden dungeon under Floor 1 that grows as the tower opens.
 
+### Why everyone climbs (Jay, 2026-11-27)
+Jay: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing." **(Claude's telling, Jay can veto; Q101):** at the summit waits the **Summit Wish**, one wish for whoever reaches it. Nobody is trapped in the Spire; everyone came by choice to win it. Floor 1's story, "The First Climb", follows a company that went up long ago and never came down. Full design, with the per-ground features, the Oathroom quest, cooking and Town Works: `docs/superpowers/specs/2026-11-27-floor1-depth-design.md`.
+
 ### Pillars (what every decision is checked against)
 1. **The tower is shared.** Floors open for everyone. The server has one story, written by its players.
 2. **PvP with teeth, not bullying.** Fights are real, but the game actively protects weaker and newer players. Toxicity is why Jay has quit servers, so this is the top priority.

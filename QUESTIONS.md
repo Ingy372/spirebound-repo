@@ -8,6 +8,16 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
+You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
+- **The prize:** the **Summit Wish**. One wish, for whoever reaches the top of the Spire. Nobody is trapped; everyone came by choice to win it.
+- **Floor 1's mystery:** a company called the **First Climb** went up long ago and never came down. Their names are chiselled off the Monument. The ruins, quarry and watchtower are theirs, the ruin guards are their garrison still at their posts, and the Axe-Lord was their rearguard captain, ordered to let nobody follow. The last page says the Wish is real and costs something, and that they went on to the Highlands anyway.
+- **The big quest's rewards:** take one of four chests, once a season: one free weapon tier step, a backpack with its own look, 10,000 gold, or a mantle. Only the first is power, and it stays inside the gear system.
+- **Cooking:** no bench and no recipe window. You use food on a fire. Dishes never help in a fight.
+- **Town Works:** gold given is destroyed; the top giver of each project gets a title for the season, nothing else.
+- **Recommendation:** keep all of it. Assumed until you answer. Full design: `docs/superpowers/specs/2026-11-27-floor1-depth-design.md`.
+- Jay's answer:
+
 ### Q100. Adventure layer, my smaller calls (2026-11-27)
 Built from your answers in Q99. These are mine; say if you want any changed.
 - **Riddles:** I rewrote all 13 Floor 1 hints as riddles with no place names, directions or NPC names. A riddle shows only on Vesper's list once that secret is sold, or in your Journal if a message bottle gave it to you. Nobody sees all the riddles by default any more (before, the Journal showed every hint to everyone).
