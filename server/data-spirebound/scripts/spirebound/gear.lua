@@ -79,6 +79,9 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 	if msg:sub(1, 1) == "!" then
 		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
 	end
+	if SpireRumours and SpireRumours.talk(npc, handler, player, msg, npcName) then
+		return true -- adventure layer 4.7: innkeepers answer "rumour" (every generated NPC passes its talk through here)
+	end
 	if npcName ~= SpireGear.WEAPONSMITH then
 		return false
 	end

@@ -100,3 +100,36 @@ SpireTest.add("adventure AD2: secrets pay a purse and keepsakes; riddles name no
 	local line = SpireJournal.secretLine(SpireSecrets.get("s3"), false, false)
 	SpireTest.eq(line, "[ ] Floor 1 - ???", "unfound secret row")
 end)
+
+SpireTest.add("adventure AD7: rumours pick the band, never secrets or beasts; bottles hold a riddle", function()
+	local c = { { row = { id = "a" }, lo = 1, hi = 10, ground = "A" }, { row = { id = "b" }, lo = 20, hi = 30, ground = "B" } }
+	SpireTest.eq(SpireRumours.pick(c, 25, 0.5).row.id, "b", "in band")
+	SpireTest.eq(SpireRumours.pick(c, 15, 0.1).row.id, "a", "closest band when none fits")
+	SpireTest.eq(SpireRumours.ready(nil, 100), true, "first rumour")
+	SpireTest.eq(SpireRumours.ready(100, 100 + 3600), false, "one a day")
+	SpireTest.eq(SpireRumours.CATEGORIES.secret, nil, "never secrets (Jay, 2026-11-27)")
+	SpireTest.eq(SpireRumours.CATEGORIES.beast, nil, "never hidden beasts")
+	SpireTest.eq(SpireRumours.line("elite", "Wolf Copse", 0), "Hunters whisper that something bigger than the rest leads the beasts of the Wolf Copse.", "words")
+	local s = SpireRumours.bottlePick(SpireSecrets.list, function(id) return id ~= "s4" end, function() return false end, 0.3)
+	SpireTest.eq(s and s.id, "s4", "the bottle picks an unfound secret")
+	SpireTest.eq(SpireRumours.bottlePick(SpireSecrets.list, function() return true end, function() return false end, 0.3), nil, "none left")
+	local bottle = false
+	for _, f in ipairs(SpireFishing.tables[1]) do if f.bottle then bottle = f.weight == 1 end end
+	SpireTest.eq(bottle, true, "a message bottle at weight 1 on the Floor 1 table")
+	-- every rumour category on Floor 1 has somewhere to point
+	for name, gid in pairs(SpireRumours.ELITE_GROUND) do
+		local ok = false
+		for _, g in ipairs(SpireWilds.grounds) do if g.id == gid then ok = true end end
+		if not ok then error(name .. " points at a missing ground " .. gid) end
+	end
+	for _, f in ipairs(SpireTownsfolk) do
+		if not f.name then error("townsperson without a name") end
+	end
+end)
+
+SpireTest.add("adventure AD6: the Journal has a Discoveries tab", function()
+	SpireTest.eq(SpireJournal.tabFromRequest('{"t":"journal","tab":"discoveries"}'), "discoveries", "request parse")
+	local found = false
+	for _, t in ipairs(SpireJournal.TABS) do if t == "discoveries" then found = true end end
+	SpireTest.eq(found, true, "listed")
+end)

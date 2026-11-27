@@ -3,7 +3,7 @@
 SpireJournalUi = {}
 local win = nil
 local TABS = {
-  { 'upgrade', 'Upgrade' }, { 'secrets', 'Secrets' }, { 'fishing', 'Fishing' }, { 'quests', 'Quests' },
+  { 'upgrade', 'Upgrade' }, { 'secrets', 'Secrets' }, { 'discoveries', 'Discoveries' }, { 'fishing', 'Fishing' }, { 'quests', 'Quests' },
   { 'task', 'Task' }, { 'chronicle', 'Chronicle' }, { 'top', 'Top' }, { 'memorial', 'Memorial' }, { 'howto', 'How do I' }, { 'commands', 'Commands' },
 }
 -- Roadmap R19: every chat command a player needs, one click away (the Commands tab sends it for you)
@@ -24,8 +24,8 @@ local COMMANDS = {
 }
 local current = 'upgrade'
 local LABELS = {
-  pt = { upgrade = 'Melhoria', secrets = 'Segredos', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', chronicle = 'Crônica', top = 'Top', memorial = 'Memorial', howto = 'Como faço', commands = 'Comandos', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
-  es = { upgrade = 'Mejora', secrets = 'Secretos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', chronicle = 'Crónica', top = 'Top', memorial = 'Memorial', howto = 'Cómo hago', commands = 'Comandos', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
+  pt = { upgrade = 'Melhoria', secrets = 'Segredos', discoveries = 'Descobertas', fishing = 'Pesca', quests = 'Missões', task = 'Tarefa', chronicle = 'Crônica', top = 'Top', memorial = 'Memorial', howto = 'Como faço', commands = 'Comandos', close = 'Fechar', journal = 'Diário', loading = 'carregando...' },
+  es = { upgrade = 'Mejora', secrets = 'Secretos', discoveries = 'Descubrimientos', fishing = 'Pesca', quests = 'Misiones', task = 'Tarea', chronicle = 'Crónica', top = 'Top', memorial = 'Memorial', howto = 'Cómo hago', commands = 'Comandos', close = 'Cerrar', journal = 'Diario', loading = 'cargando...' },
 }
 SpireJournalUi.lang = 'en'
 local function label(key, english)

@@ -19,6 +19,12 @@ local function land(player, pos)
 	local floor = math.max(1, Floors.at(pos))
 	local night = SpireSecrets.isNight(SpireSecrets.gameHour()) -- review A7-2: the game's hour, as the secrets use
 	local f = SpireFishing.roll(floor, night, math.random(), SpireEvents and SpireEvents.fishingLuck(floor) or 1)
+	if f.bottle and SpireRumours then -- adventure layer 4.7: the note is read at once; the riddle goes to the Journal
+		pos:sendMagicEffect(CONST_ME_WATERSPLASH)
+		player:addSkillTries(SKILL_FISHING, 2, true)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You fished up a message in a bottle. " .. SpireRumours.openBottle(player))
+		return
+	end
 	SpireGive.reward(player, f.item, f.count or 1) -- never onto the floor when the backpack is full
 	player:addSkillTries(SKILL_FISHING, 2, true)
 	pos:sendMagicEffect(CONST_ME_WATERSPLASH)

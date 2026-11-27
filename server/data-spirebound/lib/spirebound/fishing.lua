@@ -20,6 +20,7 @@ SpireFishing.tables = {
 		{ id = "old_whiskers", name = "Old Whiskers", item = 3580, weight = 0.3, kg = { 12, 20 }, legendary = true },
 		{ id = "sunken_purse", name = "a sunken purse", item = 3035, count = 2, weight = 1, treasure = true },   -- A7-1: was 5 platinum at weight 2
 		{ id = "pearl", name = "a white pearl", item = 3026, weight = 1, treasure = true },
+		{ id = "message_bottle", name = "a message in a bottle", item = 5802, weight = 1, treasure = true, bottle = true }, -- adventure layer 4.7: a secret's riddle
 		{ id = "junk_boots", name = "old boots", item = 3123, weight = 8, junk = true },
 	},
 }

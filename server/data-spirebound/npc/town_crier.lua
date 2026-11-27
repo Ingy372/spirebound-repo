@@ -56,10 +56,13 @@ local function creatureSayCallback(npc, player, type, msg)
 		npcHandler:say(SpireHunt.advice(player:getLevel()), npc, player)
 		return true
 	end
+	if SpireRumours and SpireRumours.talk(npc, npcHandler, player, msg, npcName) then
+		return true -- adventure layer 4.7: one rumour a day
+	end
 	return greet(npc, player)
 end
 
-npcHandler:setMessage(MESSAGE_GREET, "Oh, hello |PLAYERNAME|! Want a {tip}? Or ask me where to {hunt}.")
+npcHandler:setMessage(MESSAGE_GREET, "Oh, hello |PLAYERNAME|! Want a {tip}? Or ask me where to {hunt}, or for a {rumour}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Off you go, then!")
 npcHandler:setCallback(CALLBACK_MESSAGE_DEFAULT, creatureSayCallback)
 npcHandler:addModule(FocusModule:new(), npcConfig.name, true, true, true)
