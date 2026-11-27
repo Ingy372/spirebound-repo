@@ -60,7 +60,9 @@ def build(model_cls, facing):
 
 def _sword_hand(sh, a, walking):
     wave = 0.05 * math.sin(2 * a) if walking else 0.0
-    return sh + Vector((0.090, -0.120, 0.090 + wave))     # waved high and out to the side
+    # held out in front, not out to the side: held out sideways the arm read as broken in the south view
+    # (Jay, 2026-11-27: "little bix arm looks broken on the left side")
+    return sh + Vector((0.140, 0.010, -0.110 + wave))
 
 
 def pose(m, t):
@@ -76,7 +78,7 @@ def pose(m, t):
         root = Vector((-0.090, 0.030 * sgn, 0.880)) + up
         m.put_segment(f"tail{i}", root, root + Vector((-0.110, 0.030 * sgn, -0.030 + flap * sgn)), 0.020, 0.012)
     hand = p["hand_r"]
-    d = Vector((0.70, -0.35, 0.62)).normalized()        # pointed forward and up, clear of his head
+    d = Vector((0.80, -0.05, 0.60)).normalized()        # pointed ahead and up, like a knight's charge
     side = d.cross(Vector((1, 0, 0))).normalized()
     m.put_segment("grip", hand - d * 0.030, hand + d * 0.030, 0.012)
     m.put_segment("guard", hand + d * 0.034 - side * 0.040, hand + d * 0.034 + side * 0.040, 0.012)

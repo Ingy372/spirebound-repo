@@ -13,6 +13,13 @@ Template:
 
 ---
 
+## 2026-11-27 (Jay, in chat, with screenshots of the Hearth)
+1. Banks: players trade and show off at them; "if i can get behind the bank the way i am, i can steal player items." **Fixed (Claude, same day):** the lockers back onto solid walls and the bank and broker counters close off rooms only their NPCs stand in.
+2. Floating blackboards: they need a wall behind them. **Fixed:** the Hearth's notice board (the only one on the map) now stands against the round wall.
+3. The boss-clear monument deserves its own custom object. **First version in the game:** a granite memorial slab with a bronze name plaque, the Spire's blue crystal and a little bronze spire (`art/models/monument.py`). Waiting for Jay's look.
+4. Little Bix's arm looks broken on the left side. **Fixed:** he holds the toy sword out in front instead of sideways.
+5. The ground round the depot area needs cleaning up. **Fixed:** the Hearth's wall is grey stone now (the pale marble wall pieces read as messy floor slabs), and the ground outside it is one even band of paving.
+
 ## To try next (from Claude, 2026-11-25, evening)
 - **Weapon skill keys are now Ctrl+1, 2, 3** (Shift+1-3 typed "!@#" into chat). Try them with chat on and off. Does Enter still fire a skill after you click one of its buttons?
 - **Switch chat tabs, then type a line straight away:** does the first line get sent?

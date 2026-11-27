@@ -1,0 +1,81 @@
+{
+ "name": "monument",
+ "parts": [
+  "none",
+  "plinth",
+  "step",
+  "stone",
+  "cap",
+  "plaque",
+  "names",
+  "gem"
+ ],
+ "palette": "monument",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.7071067811865476
+  ],
+  [
+   0.0,
+   1.0,
+   0.7071067811865476
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "names": 4.0,
+   "gem": 6.0,
+   "plaque": 2.0,
+   "cap": 2.0
+  },
+  "thin": {
+   "names": 2,
+   "gem": 3
+  },
+  "soft": [
+   [
+    "plinth",
+    "step"
+   ]
+  ],
+  "no_outline": [
+   "names"
+  ],
+  "selout": [
+   "stone",
+   "plinth",
+   "step"
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

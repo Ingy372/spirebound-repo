@@ -69,6 +69,11 @@ CORPSE_ITEMS = {"corpse_sentinel": [13865, 13866, 13867, 13868],       # was "de
 CORPSE_STEPS = ["1_fresh", "2_rot", "3_end"]
 CORPSE_OF_ITEM = [0, 0, 1, 2]
 
+# our own map objects rendered with the creature pipeline -> (the view used, the spare Tibia items drawn with it).
+# The Climbers' Monument (Jay, 2026-11-27: "deserves to be its own custom object"): Tibia's item 2028 is already
+# named "monument" and stands nowhere else on our map. Installed before Jay's OK so he can judge it in the game.
+OBJECT_ITEMS = {"monument": ("E", [2028])}
+
 
 def cip_sheet(img: Image.Image) -> bytes:
     """One 384x384 sheet in the client's file format (same writer as art/effects/make_fx.py): a 32-byte header, then
@@ -157,6 +162,14 @@ def main() -> None:
         (OUT / file).write_bytes(cip_sheet(sheet))
         manifest.append({"name": name, "file": file, "count": len(CORPSE_STEPS), "looks": [],
                          "items": {str(i): CORPSE_OF_ITEM[k] for k, i in enumerate(items)}})
+    for name, (view, items) in OBJECT_ITEMS.items():       # objects: one 1-sprite sheet each
+        sheet = Image.new("RGBA", (SHEET, SHEET), (0, 0, 0, 0))
+        f = Image.open(ROOT / "art" / "output" / name / "frames" / f"{view}_0.png").convert("RGBA")
+        assert f.size == (64, 64), f"{name}: {f.size}, want 64x64"
+        sheet.paste(f, (0, 0))
+        file = f"{name}.bmp.lzma"
+        (OUT / file).write_bytes(cip_sheet(sheet))
+        manifest.append({"name": name, "file": file, "count": 1, "looks": [], "items": {str(i): 0 for i in items}})
     (OUT / "creatures.json").write_text(json.dumps({
         "about": "Spirebound creature sprites (Blender pipeline, approved by Jay); made by tools/make_creature_sheets.py, "
                  "installed in the client by tools/install_effects.py in place of the listed placeholder looks",

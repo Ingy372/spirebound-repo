@@ -98,20 +98,28 @@ def hearth_arch(x, y):
 
 
 HEARTH_COURT = (42, 35, 30, 29)  # the hall's bounding box
-DEPOT_ROWS = [(47, 42, "s"), (60, 42, "s"), (47, 56, "n"), (60, 56, "n")]    # first locker; four booths each
-DEPOT_SWITCH = (53, 43)          # the locker nearest the Hearthstone: its switch tile (point depot_hearthgate)
-HEARTH_COUNTERS = [(45, 44, 4), (68, 44, 4)]                                 # vertical, (x, top y, length)
-BANK_NPCS = {"Banker Tolliver": (44, 45), "Trader Osric": (44, 47), "Broker Nell": (69, 45)}
-VESPER = (69, 47)
-HEARTH_POINTS = {"depot_hearthgate": DEPOT_SWITCH, "hearth_bank": (46, 45), "hearth_trader": (46, 47),
-                 "trade_hall": (46, 46), "shop_bank": (46, 45)}
+# The depot floor (level 6), redone after Jay's playtest (2026-11-27: "design flaw in the banks. players use them for
+# trading and showing off. if i can get behind the bank the way i am, i can steal player items"). Nobody can stand
+# behind a locker or a counter any more: the lockers back onto two straight inner walls (the crescents behind them are
+# sealed), and the bank and broker counters close off small rooms against the round wall that only their NPCs stand in.
+DEPOT_ROWS = [(48, 42, "s"), (59, 42, "s"), (48, 56, "n"), (59, 56, "n")]    # first locker; four booths each
+DEPOT_SWITCH = (54, 43)          # the locker nearest the Hearthstone: its switch tile (point depot_hearthgate)
+HEARTH_INNER_WALLS = ([(x, 41) for x in range(48, 66)] + [(x, 57) for x in range(48, 66)]   # behind the lockers
+                      + [(46, 43), (46, 44), (67, 43), (67, 44), (46, 54), (46, 55), (67, 54), (67, 55)]  # row ends
+                      + [(x, 50) for x in (45, 46, 47)] + [(x, 50) for x in (66, 67, 68)]               # counter rooms
+                      + [(46, 44), (67, 44)])
+HEARTH_COUNTERS = [(47, 45, 5), (66, 45, 5)]                                 # vertical, (x, top y, length)
+BANK_NPCS = {"Banker Tolliver": (46, 46), "Trader Osric": (46, 48), "Broker Nell": (67, 46)}
+VESPER = (67, 48)
+HEARTH_POINTS = {"depot_hearthgate": DEPOT_SWITCH, "hearth_bank": (48, 46), "hearth_trader": (48, 48),
+                 "trade_hall": (48, 47), "shop_bank": (48, 46)}
 HEARTH_BRAZIERS = [(54, 47), (59, 47), (54, 51), (59, 51)]   # on the corners of the Hearthstone's frame (x 54..59)
 HEARTH_STAIRS = {"hearth_up_west": (45, 52, 7), "hearth_up_east": (68, 52, 7)}
 # the ground floor round the Hearthstone (the lockers and bank above use the same x, y on level 6)
 WAYPOINT = HEARTHSTONE          # where a Floor 1 Waycrystal brings you (tools/crystals.py TOWN_POINT)
 MONUMENT = (51, 39)              # hero statue; its sign beside it; point "monument" one tile south
 BEACON_BOWLS = [(62, 41), (64, 42), (66, 44), (67, 46)]
-NOTICE_BOARD = (48, 42)
+NOTICE_BOARD = (53, 37)          # against the round wall (Jay: no floating blackboards)
 ARENA_STATUE = (52, 59)
 STALLS = [(47, 44), (64, 54), (47, 54), (62, 59)]     # free trading stalls, 3 counters each
 FOUNTAIN = (49, 32)              # in the temple garden, just north of the Hearth

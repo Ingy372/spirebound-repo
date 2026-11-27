@@ -1,15 +1,15 @@
 <?xml version="1.0"?>
 <npcs>
-	<npc centerx="1220" centery="1281" centerz="6" radius="1">
+	<npc centerx="1222" centery="1282" centerz="6" radius="1">
 		<npc name="Banker Tolliver" x="0" y="0" z="6" spawntime="60" />
 	</npc>
-	<npc centerx="1220" centery="1283" centerz="6" radius="1">
+	<npc centerx="1222" centery="1284" centerz="6" radius="1">
 		<npc name="Trader Osric" x="0" y="0" z="6" spawntime="60" />
 	</npc>
-	<npc centerx="1245" centery="1281" centerz="6" radius="1">
+	<npc centerx="1243" centery="1282" centerz="6" radius="1">
 		<npc name="Broker Nell" x="0" y="0" z="6" spawntime="60" />
 	</npc>
-	<npc centerx="1245" centery="1283" centerz="6" radius="1">
+	<npc centerx="1243" centery="1284" centerz="6" radius="1">
 		<npc name="Vesper" x="0" y="0" z="6" spawntime="60" />
 	</npc>
 	<npc centerx="1237" centery="1254" centerz="7" radius="1">

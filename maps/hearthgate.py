@@ -16,6 +16,7 @@ import hearthgate_plan as P
 
 MARBLE, FLAGSTONE, BLACK_MARBLE, WOOD, COBBLE, DIRT = 409, 416, 410, 408, 870, 103
 MARBLE_PILLAR, HERO_STATUE, ANGEL_STATUE = 2153, 2027, 2031
+MONUMENT = 2028                 # Tibia's "monument", drawn with ours in the client (tools/install_effects.py)
 BENCH, LAMP_POST, TREE = 2370, 8660, 3619
 POTS = (316, 321)
 
@@ -50,6 +51,9 @@ def garden_pond(m, R, Z, c, rx, ry, pier, rng):
         p = R(x, y) + (Z,)
         if m.ground.get(p) in S.GRASS_IDS and not m.items.get(p) and not (pier and abs(x - pier[0]) <= 1):
             m.put(*p, REED if k % 3 else rng.choice(S.STONES))
+
+
+HEARTH_WALL = "stone"            # the Hearth's round wall, both levels
 
 
 def hearth_roof(m, R, rz, tiles, style="red"):
@@ -130,7 +134,7 @@ def build(m, tx, ty, Z, claim, hid=1):
         for x in range(38, 76):
             d2 = (x - cx) ** 2 + (y - cy) ** 2
             if d2 <= P.PLAZA_R ** 2:
-                m.ground[(tx + x, ty + y, Z)] = FLAGSTONE if d2 > (P.PLAZA_R - 1.3) ** 2 else MARBLE
+                m.ground[(tx + x, ty + y, Z)] = FLAGSTONE if d2 > (P.HEARTH_R - 0.5) ** 2 else MARBLE
 
     # ---------------------------------------------------------------- the Hearth: the round hall at the plaza's centre
     # (Jay, 2026-11-27: "make the depot (middle of town) a building. make it circular as you can to hold the shape that
@@ -140,9 +144,11 @@ def build(m, tx, ty, Z, claim, hid=1):
     hx_, hy_ = P.HEARTHSTONE
     hall, ring = P.hearth_tiles()
     claim("the hearth", *R(*P.HEARTH_COURT[:2]), *P.HEARTH_COURT[2:])
-    for (x, y) in hall:
-        m.ground[(tx + x, ty + y, Z)] = MARBLE
-    m.autowall([R(x, y) for (x, y) in ring if not P.hearth_arch(x, y)], Z, "white")
+    for (x, y) in hall:                    # the wall stands on the plaza's paving, so no pale floor pokes out past it
+        m.ground[(tx + x, ty + y, Z)] = FLAGSTONE if (x, y) in ring and not P.hearth_arch(x, y) else MARBLE
+    # grey stone, not the low white marble: from above the white pieces read as pale floor slabs, so the ring looked
+    # like messy ground (Jay, 2026-11-27: "the ground tiles need to be cleaned up around all of the depot area")
+    m.autowall([R(x, y) for (x, y) in ring if not P.hearth_arch(x, y)], Z, HEARTH_WALL)
     for a in range(-2, 4):                                       # the Hearthstone: black marble framed in flagstone,
         for b in range(-2, 3):                                   # the braziers on the frame's corners
             edge = a in (-2, 3) or b in (-2, 2)
@@ -156,7 +162,7 @@ def build(m, tx, ty, Z, claim, hid=1):
     for name, (sx, sy, sz) in P.HEARTH_STAIRS.items():
         m.stairs(*R(sx, sy), sz, floor="marble", name=name)
     mx, my = P.MONUMENT                                          # the Monument: the names of every floor's first clears
-    S.prop(m, *R(mx, my), Z, HERO_STATUE)
+    S.prop(m, *R(mx, my), Z, MONUMENT)   # our own object (art/models/monument.py; Jay: "deserves to be its own custom object")
     for px in (mx - 2, mx + 3):
         S.prop(m, *R(px, my), Z, MARBLE_PILLAR)
     m.sign(*R(mx + 1, my), Z, "The Monument. The names of those who cleared each floor's boss are carved here. "
@@ -195,7 +201,11 @@ def build(m, tx, ty, Z, claim, hid=1):
         if m.ground.get(p) is None:
             m.ground[p] = MARBLE
         m.flag(tx + x, ty + y, 1, 1, Z - 1, 0x0001)
-    m.autowall([R(x, y) for (x, y) in ring], Z - 1, "white")
+    walls6 = ring | set(P.HEARTH_INNER_WALLS)                 # the round wall and the walls behind lockers and counters
+    for (x, y) in walls6:
+        m.ground.setdefault((tx + x, ty + y, Z - 1), MARBLE)
+        m.clear_items(tx + x, ty + y, Z - 1)
+    m.autowall([R(x, y) for (x, y) in walls6], Z - 1, HEARTH_WALL)
     for a in range(-2, 4):                                       # the same framed square over the Hearthstone
         for b in range(-2, 3):
             edge = a in (-2, 3) or b in (-2, 2)
@@ -214,9 +224,9 @@ def build(m, tx, ty, Z, claim, hid=1):
     m.npcs.append(("Vesper", R(*P.VESPER) + (Z - 1,)))
     for k in ("hearth_bank", "hearth_trader", "trade_hall", "shop_bank"):
         m.points[k] = R(*P.HEARTH_POINTS[k]) + (Z - 1,)
-    m.sign(*R(45, 43), Z - 1, "Bank and Exchange. Banker Tolliver keeps your gold and your account vault; Trader Osric "
+    m.sign(*R(48, 50), Z - 1, "Bank and Exchange. Banker Tolliver keeps your gold and your account vault; Trader Osric "
            "buys your loot.")
-    m.sign(*R(68, 43), Z - 1, "Broker Nell explains the market. Vesper has work for climbers who ask.")
+    m.sign(*R(65, 50), Z - 1, "Broker Nell explains the market. Vesper has work for climbers who ask.")
     m.sign(*R(57, 46), Z - 1, "The Hearth, depot floor. Your lockers are shared by every depot in the tower; open the "
            "market from any of them. Stairs down on both sides.")
     for (px, py) in ((50, 49), (63, 49)):                       # plants beside the middle
