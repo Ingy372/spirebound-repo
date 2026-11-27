@@ -479,13 +479,14 @@ function mole.onUse(player, item, fromPosition, target, toPosition, isHotkey)
 	out:sendMagicEffect(CONST_ME_POFF)
 	-- the mound you went down collapses behind you for a minute: a chase can be cut off
 	item:setCustomAttribute("closed_until", now() + c.collapse)
+	local open = item:getId() -- a surface mound (1787) or the Molework's rubble heap: it reopens as it was
 	item:transform(c.closed)
 	item:setActionId(A.mole)
 	local p = Position(here.x, here.y, here.z)
 	addEvent(function()
 		local it = topItem(p, c.closed)
 		if it and it:getActionId() == A.mole then
-			it:transform(1787)
+			it:transform(open)
 			it:setActionId(A.mole)
 		end
 	end, c.collapse * 1000)

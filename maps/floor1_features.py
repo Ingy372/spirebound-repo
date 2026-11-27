@@ -17,6 +17,7 @@ BELL, NEST, HOWL_STONE, BALLISTA, WINCH, CACHE, STASH, BRAZIER = 2117, 48576, 48
 SHARDS = [7808, 7809, 7810, 7811]          # the four chime shards (blue, deep blue, light blue, red)
 BERRY_BUSH = 3699                           # a blueberry bush (the core script picks it; the berries are bramble berries)
 MOUND = 1787                                # a mole mound (placeholder: a heap of earth and stones)
+MOUND_CAVE = 5866                           # underground: a single rubble heap (the 2x2 heap can't stand on a cave path)
 WATER = set(range(4597, 4626)) - {4621}     # the water grounds (4621 is a sandy shore piece and walkable)
 SIGN = 2012
 
@@ -73,6 +74,25 @@ def _beside_trail(m, L, z, busy, near, min_gate=9, k=1, gap=6, cells=None):
         if len(out) == k:
             break
     return out
+
+
+def _cave_edge(m, L, z, busy, near, gap_from=3):
+    """In a cave the tiles beside a trail are rock, so _beside_trail finds nothing (FD2b: the Molework had no mound).
+    Here: a free cave-floor tile at the cave's edge (rock beside it, so it isn't in the way), at least gap_from tiles
+    from `near` (the loop's start, where monsters stand), closest to it. Use a single-tile object there (MOUND_CAVE):
+    Map.finish removes a multi-piece heap from a cave path."""
+    open_ = L["levels"].get(z, set())
+    cand = []
+    for (x, y) in sorted(open_):
+        if not _free(m, x, y, z, busy):
+            continue
+        if not any((x + dx, y + dy) not in open_ for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1))):
+            continue
+        d = _dist((x, y), near)
+        if d >= gap_from:
+            cand.append((d, (x, y)))
+    cand.sort()
+    return [cand[0][1]] if cand else []
 
 
 def _hub_far(m, L, busy):
@@ -222,9 +242,11 @@ def burrow_hills(m, busy):
         starts.append(L["centre"] + (7,) if len(L["centre"]) == 2 else L["centre"])
     for s in starts:
         spot = _beside_trail(m, L, s[2], _busy(m, s[2]), s[:2], min_gate=10)
+        if not spot and s[2] != Z:
+            spot = _cave_edge(m, L, s[2], _busy(m, s[2]), s[:2])
         if spot:
             n += 1
-            _place(m, f"feat_mole_{n}", spot[0][0], spot[0][1], s[2], MOUND)
+            _place(m, f"feat_mole_{n}", spot[0][0], spot[0][1], s[2], MOUND if s[2] == Z else MOUND_CAVE)
     if n < 3:
         raise ValueError(f"Burrow Hills: only {n} mole mounds found room")
     _hub_line(m, L, "The moles' tunnels join the four loops: use a mound to dive in.")
@@ -437,10 +459,15 @@ def works(m):
         for x in (run[0] - 1, run[-1] + 1):          # the banks' shoreline stones are solid: cleared off the way on
             P[1].append(dict(x=x, y=y, z=Z, op="clearblock"))
     m.points["works_bridge"] = (run[0] - 1, 1318, Z)
-    # 2. The Road Lanterns: unlit posts along the road from Millcross to the river bank
-    for x in range(1062, 1100, 8):
-        for y in (1223, 1224, 1218, 1217):
-            if _w_free(m, x, y) and not any(_w_free(m, x, yy) is False and m.items.get((x, yy, Z)) for yy in ()):
+    # 2. The Road Lanterns: unlit posts along the road from Millcross to the river bank (FD2b: they follow the road
+    # itself now, a post every 6 tiles on its north verge, or the south verge where the north one is taken)
+    roads = {(t[0], t[1]) for t in getattr(m, "road_tiles", set()) if len(t) == 2 or t[2] == Z}
+    for x in range(1098, 1124, 6):
+        ys = sorted(y for (rx, y) in roads if rx == x and 1205 <= y <= 1232)
+        if not ys:
+            continue
+        for y in (ys[0] - 1, ys[-1] + 1):
+            if (x, y) not in roads and _w_free(m, x, y):
                 m.put(x, y, Z, LAMP_UNLIT)
                 P[2].append(dict(x=x, y=y, z=Z, op="transform", id=LAMP_LIT, src=LAMP_UNLIT))
                 break

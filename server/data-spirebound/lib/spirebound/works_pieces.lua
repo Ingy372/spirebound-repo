@@ -13,11 +13,11 @@ SpireWorksPieces = {
 		{ x = 1121, y = 1319, z = 7, op = "clearblock" },
 	},
 	[2] = {
-		{ x = 1062, y = 1223, z = 7, op = "transform", id = 8660, src = 8659 },
-		{ x = 1070, y = 1223, z = 7, op = "transform", id = 8660, src = 8659 },
-		{ x = 1078, y = 1224, z = 7, op = "transform", id = 8660, src = 8659 },
-		{ x = 1086, y = 1224, z = 7, op = "transform", id = 8660, src = 8659 },
-		{ x = 1094, y = 1223, z = 7, op = "transform", id = 8660, src = 8659 },
+		{ x = 1098, y = 1217, z = 7, op = "transform", id = 8660, src = 8659 },
+		{ x = 1104, y = 1216, z = 7, op = "transform", id = 8660, src = 8659 },
+		{ x = 1110, y = 1216, z = 7, op = "transform", id = 8660, src = 8659 },
+		{ x = 1116, y = 1216, z = 7, op = "transform", id = 8660, src = 8659 },
+		{ x = 1122, y = 1217, z = 7, op = "transform", id = 8660, src = 8659 },
 	},
 	[3] = {
 		{ x = 1239, y = 1098, z = 7, op = "item", id = 1996 },
