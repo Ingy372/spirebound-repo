@@ -74,6 +74,12 @@ SpireTest.add("death game (review A8-2): no save from a monster the victim was f
 	SpireDeathGame.noteHit(v, { guid = 909, outside = true }, 100, now - 3)
 	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "saved", "a stranger who started it: saved")
 	fresh(v)
+	SpireDeathGame.noteHit(v, { guid = 910, outside = true, bossroom = true, skulled = true }, 300, now - 5) -- white skull
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "retire", "boss room, a white skull: retired")
+	fresh(v)
+	SpireDeathGame.noteHit(v, { guid = 911, outside = true, bossroom = true, skulled = true, murderer = true }, 300, now - 5)
+	SpireTest.eq((SpireDeathGame.judge(v, MAXHP, { monsterId = 80 }, now, strangers)), "saved", "boss room, a murderer: saved")
+	fresh(v)
 end)
 
 local function makePlayer(name)

@@ -50,11 +50,13 @@ function SpirePerks.onDealt(attacker, target, amount)
 	if #fx == 0 then
 		return amount
 	end
-	local mType = target:isMonster() and target:getType()
+	-- tester 2026-11-26: MonsterType has no isBoss() in Canary 3.6.1 (every hit raised a Lua error and lost the weapon
+	-- bonus after it); a boss is one of ours (SpireBoss.defs)
+	local isBoss = target:isMonster() and SpireBoss ~= nil and SpireBoss.defs[target:getName()] ~= nil
 	local share = target:getHealth() / math.max(1, target:getMaxHealth())
 	-- the engine hands hits over as negative numbers (review B4-0): work on the size, keep the sign
 	local sign = amount < 0 and -1 or 1
-	return sign * SpirePerks.dealt(fx, math.abs(amount), share, mType and mType:isBoss() or false, math.random)
+	return sign * SpirePerks.dealt(fx, math.abs(amount), share, isBoss, math.random)
 end
 
 -- loot: Haggler's extra coins, Lucky Find's extra roll

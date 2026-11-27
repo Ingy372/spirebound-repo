@@ -24,6 +24,11 @@
 --   /rv shopon | newseason | shopstate     review S-1: open the shop with 1,000 coins (fresh ledger); then forget this
 --                                          season's hand-over and the items (as a wipe does) and log out; then count the
 --                                          candelabra in the Store Inbox
+--   /rv perkhit                            tester: a 100 hit on a monster at 20% health, without and then with the
+--                                          Executioner perk; logs both (MonsterType:isBoss crashed every hit)
+--   /rv pvpdmg <other player>              tester: the other player hits you; logs the PvP damage the credit rules saw
+--   /rv privprep [key]                     tester: by the private hall's door with Floor 2 open, with or without the key
+--   /rv where                              log your position
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -145,6 +150,10 @@ function rv.onSay(player, words, param)
 		player:kv():scoped("spirebound"):remove("difficulty")
 		Difficulty.set(player, Difficulty.DEATHGAME)
 		local spot = Position(1250, 1055, 7)              -- open meadow east of the labyrinth corridor (open PvP)
+		if case == "bossother" then                        -- the private boss hall (a boss room: PvP for all, no skull)
+			local h = WorldPoints.boss_private_floor1
+			spot = Position(h.x, h.y + 4, h.z)
+		end
 		player:teleportTo(spot, true)
 		o:teleportTo(Position(spot.x + 1, spot.y, spot.z), true)
 		local m = Game.createMonster("Meadow Wolf", Position(spot.x, spot.y + 1, spot.z), true, true)
@@ -160,7 +169,7 @@ function rv.onSay(player, words, param)
 		if case == "firstvictim" then
 			doTargetCombatHealth(player, o, COMBAT_ENERGYDAMAGE, -5, -5, CONST_ME_NONE)    -- the victim struck first
 		end
-		if case == "firstvictim" or case == "firstother" then
+		if case == "firstvictim" or case == "firstother" or case == "bossother" then
 			local big = math.floor(maxhp * 0.4)   -- PvP damage arrives halved: about 20% lands
 			doTargetCombatHealth(o, player, COMBAT_ENERGYDAMAGE, -big, -big, CONST_ME_NONE)
 		end
@@ -311,6 +320,61 @@ function rv.onSay(player, words, param)
 		local inbox = player:getStoreInbox()
 		logger.info("[LOADTEST] rv shopstate {} inbox={} carried={}", player:getName(), inbox and inbox:getItemCountById(2911) or -1,
 			player:getItemCount(2911))
+	elseif cmd == "perkhit" then
+		local function hit()
+			local m = Game.createMonster("Stonehorn Ram", player:getPosition(), true, true)   -- 900 health: 20% still takes a full hit
+			m:addHealth(-math.floor(m:getMaxHealth() * 0.8))
+			local before = m:getHealth()
+			logger.info("[LOADTEST] rv perkmon {} hp={} max={}", player:getName(), m:getHealth(), m:getMaxHealth())
+			doTargetCombatHealth(player, m, COMBAT_PHYSICALDAMAGE, -100, -100, CONST_ME_NONE, ORIGIN_MELEE)
+			local d = before - m:getHealth()
+			m:remove()
+			return d
+		end
+		player:kv():scoped("spirebound-perks"):remove("floor1")
+		SpirePerks.apply(player)
+		local plain = hit()
+		SpirePerks.choose(player, 1, "executioner")
+		local perk = hit()
+		local fx = SpirePerks.effects(player)
+		logger.info("[LOADTEST] rv perkhit {} plain={} executioner={} effects={} pure={}", player:getName(), plain, perk, #fx,
+			SpirePerks.dealt(fx, 100, 0.2, false, function() return 1 end))
+	elseif cmd == "pvpdmg" then
+		local o = Player(rest)
+		if not o then
+			logger.info("[LOADTEST] rv pvpdmg {} seen=-1", player:getName())
+			return true
+		end
+		local spot = Position(1250, 1055, 7)
+		player:teleportTo(spot, true)
+		o:teleportTo(Position(spot.x + 1, spot.y, spot.z), true)
+		local hp = player:getHealth()
+		doTargetCombatHealth(o, player, COMBAT_ENERGYDAMAGE, -100, -100, CONST_ME_NONE)
+		logger.info("[LOADTEST] rv pvpdmg {} lost={} seen={}", player:getName(), hp - player:getHealth(),
+			SpirePvP.damageFrom(player:getGuid(), o:getGuid(), os.time(), 60))
+	elseif cmd == "privprep" then
+		if not Floors.get(1).bossDeadAt then
+			Floors.recordClear(1, { "Loadbot" }, nil, 0)        -- Floor 2 open on this test copy
+		end
+		local k = player:kv():scoped("spirebound")
+		if rest == "key" then
+			k:set("stair_key_pilot", 1)
+		else
+			k:remove("stair_key_pilot")
+		end
+		player:kv():scoped("spirebound-bosslock"):remove("1")
+		SpireBoss.privateBusy[1] = nil
+		local d = WorldPoints.lab3_up
+		player:teleportTo(Position(d.x + 1, d.y, d.z), true)
+		logger.info("[LOADTEST] rv privprep {} key={} floor2={}", player:getName(), SpireStairKey.has(player) and 1 or 0, Floors.isOpen(2) and 1 or 0)
+	elseif cmd == "floorsreset" then                       -- undo privprep's Floor 1 clear (the test database is shared)
+		for n = 1, 10 do
+			Floors.reset(n)
+		end
+		logger.info("[LOADTEST] rv floorsreset {} floor2={}", player:getName(), Floors.isOpen(2) and 1 or 0)
+	elseif cmd == "where" then
+		local p = player:getPosition()
+		logger.info("[LOADTEST] rv where {} x={} y={} z={}", player:getName(), p.x, p.y, p.z)
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

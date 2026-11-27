@@ -338,6 +338,15 @@ function private.onSay(player, words, param)
 			table.insert(members, m)
 		end
 	end
+	-- tester 2026-11-26 (Q92 assumed): the private hall needs the Stair Key too, for every member, like the public hall
+	if floor == 1 then
+		for _, m in ipairs(members) do
+			if not SpireStairKey.has(m) then
+				player:sendCancelMessage(m:getName() .. " has no Stair Key: " .. SpireStairKey.missingText(m))
+				return false
+			end
+		end
+	end
 	local now, list, near = os.time(), {}, true
 	for _, m in ipairs(members) do
 		table.insert(list, { name = m:getName(), lockedAt = m:kv():scoped("spirebound-bosslock"):get(tostring(floor)) })

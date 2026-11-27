@@ -505,13 +505,31 @@ REVIEW_CASES = [
          check=lambda lines: (_rv(lines, "newseason")[0]["had"] == 1 and _rv(lines, "shopstate")[0]["inbox"] == 1,
                               "bought and carried %s; after the 'new season' login, %s in the Store Inbox" % (
                                   _rv(lines, "newseason")[0]["had"], _rv(lines, "shopstate")[0]["inbox"]))),
+    dict(name="T4 a floor perk no longer breaks every hit", voc=4, level=30, logins=[[(3, "say", "/rv perkhit")]],
+         check=lambda lines: (_rv(lines, "perkhit")[0]["executioner"] > _rv(lines, "perkhit")[0]["plain"],
+                              "100 hit at 20%% health: %(plain)s plain, %(executioner)s with Executioner" % _rv(lines, "perkhit")[0])),
+    dict(name="T5 PvP damage is recorded", voc=4, level=60, partner="T5 partner",
+         logins=[[(1, "unsecure", ""), (5, "say", "/rv pvpdmg {partner}")]], stay=3,
+         check=lambda lines: (_rv(lines, "pvpdmg")[0]["seen"] > 0 and _rv(lines, "pvpdmg")[0]["seen"] == _rv(lines, "pvpdmg")[0]["lost"],
+                              "lost %(lost)s, the credit rules saw %(seen)s" % _rv(lines, "pvpdmg")[0])),
+    dict(name="T5 partner", voc=4, level=60, logins=[[(1, "unsecure", ""), (1, "say", "/rv state")]], stay=12,
+         check=lambda lines: (True, "partner")),
+    dict(name="T6 !private refused without the Stair Key", voc=4, level=60,
+         logins=[[(3, "say", "/rv privprep"), (1, "say", "!private"), (2, "say", "/rv where")]], stay=3,
+         check=lambda lines: (_rv(lines, "privprep")[0]["floor2"] == 1 and _rv(lines, "where")[0]["z"] == 5,
+                              "floor 2 open %(floor2)s, key %(key)s" % _rv(lines, "privprep")[0] + ", now on level %(z)s" % _rv(lines, "where")[0])),
+    dict(name="T6 !private works with the Stair Key", voc=4, level=60,
+         logins=[[(14, "say", "/rv privprep key"), (1, "say", "!private"), (2, "say", "/rv where"), (1, "say", "/rv floorsreset")]], stay=3,
+         check=lambda lines: (_rv(lines, "where")[0]["z"] == 4,
+                              "key %(key)s" % _rv(lines, "privprep")[0] + ", now on level %(z)s" % _rv(lines, "where")[0])),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,
                               "had a record %(had_record)s, credited %(credited)s" % _rv(lines, "bossreload")[0])),
 ] + [
     # A8-2: each Death Game victim dies beside its own real partner character ("{partner}" is that character's name)
-    case for kind, want in (("dragfought", "retire"), ("dragged", "saved"), ("firstvictim", "retire"), ("firstother", "saved"))
+    case for kind, want in (("dragfought", "retire"), ("dragged", "saved"), ("firstvictim", "retire"), ("firstother", "saved"),
+                            ("bossother", "retire"))
     for case in (
         dict(name=f"A8-2 DG {kind}: {want}", voc=4, level=60, partner=f"A8-2 partner {kind}",
              logins=[[(1, "unsecure", ""), (5, "say", "/rv dg " + kind + " {partner}")]], stay=4, check=_check_dg(kind, want)),

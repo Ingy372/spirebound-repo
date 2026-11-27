@@ -75,7 +75,9 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 		local list = recentAttacks[v:getGuid()] or {}
 		list[a:getGuid()] = now
 		recentAttacks[v:getGuid()] = list
-		SpirePvP.noteDamage(v:getGuid(), a:getGuid(), math.max(0, primaryDamage) + math.max(0, secondaryDamage), now)
+		-- damage arrives negative (tester 2026-11-26: math.max(0, ...) recorded nothing, so kill credit and the
+		-- outnumbered shield never counted anyone): count the size
+		SpirePvP.noteDamage(v:getGuid(), a:getGuid(), math.abs(primaryDamage) + math.abs(secondaryDamage), now)
 		local vinfo = Difficulty.playerInfo(v)
 		local n = SpirePvP.outnumberedCount(v:getGuid(), v:getMaxHealth(), now, function(g)
 			local other = Player(g)

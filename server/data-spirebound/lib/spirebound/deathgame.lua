@@ -39,12 +39,21 @@ function SpireDeathGame.noteVictimStrike(victimGuid, otherGuid, now)
 	strike(victimGuid, otherGuid, true, now)
 end
 
--- Note damage a Death Game victim took from a player. attacker = { guid, outside = bool, skulled = bool }
+-- Note damage a Death Game victim took from a player.
+-- attacker = { guid, outside = bool, skulled = bool, murderer = bool (red/black skull), bossroom = bool }
 function SpireDeathGame.noteHit(victimGuid, attacker, amount, now)
 	local list = SpireDeathGame.hits[victimGuid] or {}
 	SpireDeathGame.hits[victimGuid] = list
 	local fight = strike(victimGuid, attacker.guid, false, now)
-	local aggressor = attacker.skulled == true or not fight.byVictim
+	-- in a boss room anyone may attack anyone, and the white skull an attacker gets there means nothing, so only a
+	-- murderer (red or black skull) counts (tester 2026-11-26: an unpartied friend could open the fight there and save
+	-- a Death Game victim). Elsewhere: whoever started the fight, or any skulled attacker.
+	local aggressor
+	if attacker.bossroom then
+		aggressor = attacker.murderer == true
+	else
+		aggressor = attacker.skulled == true or not fight.byVictim
+	end
 	table.insert(list, { guid = attacker.guid, outside = attacker.outside, aggressor = aggressor, amount = amount, time = now })
 	while #list > 0 and now - list[1].time > SpireDeathGame.WINDOW do
 		table.remove(list, 1)

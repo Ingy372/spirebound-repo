@@ -88,7 +88,8 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 	if victim and hitter and hitter ~= victim and amount > 0 and Difficulty.get(victim) == Difficulty.DEATHGAME then
 		local outside = Difficulty.countsAsOutsidePlayer(Difficulty.playerInfo(victim), Difficulty.playerInfo(hitter))
 		SpireDeathGame.noteHit(victim:getGuid(), { guid = hitter:getGuid(), outside = outside,
-			skulled = SpirePvP.isSkulled(hitter:getSkull()) }, amount, os.time())
+			skulled = SpirePvP.isSkulled(hitter:getSkull()), murderer = hitter:getSkull() == SKULL_RED or hitter:getSkull() == SKULL_BLACK,
+			bossroom = SpirePvP.zoneAt(victim:getPosition()) == "bossroom" }, amount, os.time())
 		if outside then
 			lastOutsideHit[victim:getGuid()] = os.time()
 		end
