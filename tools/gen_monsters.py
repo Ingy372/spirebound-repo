@@ -85,8 +85,8 @@ MONSTERS = {
                           loot=[(GOLD, 100000, 85), (PLAT, 6000, 1), (3352, 6000, 1), (3274, 5000, 1), (5880, 8000, 1)], elements={"physical": 10, "holy": -15},
                           events=["SpireShieldWall", "SpireShieldWallHit", "SpireShieldWallDeath"]),  # F1-10: shield wall
     # RV5 (2026-11-27): the labyrinth's own guard, one per top-level pack. The First Climb's garrison: an empty suit of
-    # armour with a halberd (art/models/stairwarden.py, waiting for Jay's look; a dark knight placeholder until then).
-    "Stairwarden": dict(desc="a stairwarden", look=(131, 114, 94, 114, 114, 0), corpse=18074, hp=700, xp=260, speed=100,
+    # armour with a halberd (art/models/stairwarden.py; own look 2214, approved by Jay 2026-11-27).
+    "Stairwarden": dict(desc="a stairwarden", look=(2214, 0, 0, 0, 0, 0), corpse=18074, hp=700, xp=260, speed=100,
                         race="undead", attacks=[("melee", 0, -110), ("cleave", -20, -95, 1)], armor=30, defense=28,
                         loot=[(GOLD, 100000, 120), (PLAT, 15000, 1), (3352, 6000, 1), (3369, 2500, 1), (5880, 10000, 1)],
                         voices=["None shall follow.", "The order stands."], elements={"physical": 15, "holy": -20, "energy": -10}),

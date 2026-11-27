@@ -5,6 +5,7 @@
 # Corpses for the three monsters with no fitting Tibia corpse (Jay, 2026-11-26: "Approve all three"; art/CORPSE_RULES.md)
 # Gate Hound corpse (Jay, 2026-11-26: "Approve it"; Q67)
 # Floor 1 placeholder creatures drawn by the art session (Jay, 2026-11-27: "approved, put them in the game")
+# The Stairwarden, the labyrinth guard (Jay, 2026-11-27: "Approved")
 acorn_squirrel
 alchemist
 alpha
@@ -90,6 +91,7 @@ sluice_warden
 smith
 snapper
 sproutling
+stairwarden
 stonebull
 strider
 thistle_hen

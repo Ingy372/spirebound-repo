@@ -5,7 +5,7 @@ local monster = {}
 monster.description = "a stairwarden"
 monster.experience = 260
 monster.outfit = {
-	lookType = 131, lookHead = 114, lookBody = 94, lookLegs = 114, lookFeet = 114, lookAddons = 0, lookMount = 0,
+	lookType = 2214, lookHead = 0, lookBody = 0, lookLegs = 0, lookFeet = 0, lookAddons = 0, lookMount = 0,
 }
 
 monster.health = 700

@@ -66,7 +66,10 @@ NEW_LOOKS = {"vanguard": 2001, "ranger": 2002, "arcanist": 2003, "mystic": 2004,
              "bandit_lieutenant": 2212, "oathkeeper": 2213,
              "meadow_hare": 2342, "dapple_fawn": 2343, "thistle_hen": 2344, "acorn_squirrel": 2345, "nest_queen": 2346,
              "elder_sproutling": 2347, "mire_toad": 2348, "sluice_warden": 2349, "drain_matron": 2350, "bramblejaw": 2351,
-             "wolf_companion": 2352}
+             "wolf_companion": 2352,
+             # the Stairwarden, the labyrinth's own guard (RV5; Jay, 2026-11-27: "Approved"): on the humanoid body, placed like
+             # people (CANVAS_OFFSET, no AUTO_PLACE), so it takes the people's shift
+             "stairwarden": 2214}
 
 
 # approved corpses (art/CORPSE_RULES.md) -> the spare Tibia corpse chain they reskin in the client: four items

@@ -2915,6 +2915,45 @@
    "size": 56
   },
   {
+   "name": "stairwarden",
+   "file": "stairwarden.bmp.lzma",
+   "count": 36,
+   "looks": [],
+   "new_look": 2214,
+   "shift": [
+    8,
+    8
+   ],
+   "boxes": [
+    [
+     23,
+     28,
+     41,
+     34
+    ],
+    [
+     25,
+     26,
+     37,
+     38
+    ],
+    [
+     13,
+     28,
+     50,
+     36
+    ],
+    [
+     25,
+     16,
+     35,
+     48
+    ]
+   ],
+   "addons": 0,
+   "size": 50
+  },
+  {
    "name": "corpse_sentinel",
    "file": "corpse_sentinel.bmp.lzma",
    "count": 3,
