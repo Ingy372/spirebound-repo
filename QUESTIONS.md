@@ -19,6 +19,7 @@ The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is 
   - Secret gear can't be traded: wearing it proves you found the place.
   - Vesper never says what a secret pays, so keeping or selling stays a gamble.
   - First-finder prizes each season are looks and titles only.
+  - **Your clarification (2026-11-27):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone ... (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras." Done that way. Two readings of mine to check: when a secret is sold, Vesper's list now shows its riddle instead of directions (before, a sold secret came with directions); and "medium gold" is 1,000 on Floor 1, once per account.
   - The four rare roaming monsters: Goldback Toad, Frenzied Boar, Pale Stag, the Paymaster.
 
 ### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)

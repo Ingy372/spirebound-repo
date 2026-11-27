@@ -42,7 +42,12 @@ Jay, 2026-11-27: "i feel like 1-3 secrets per floor should give gear, the rest c
 
 Rules:
 - **Three gear secrets per floor** (inside Jay's 1 to 3). **(Claude's calls:)** secret gear is a ring, an amulet or boots, never a weapon or armour; it cannot be traded, dropped, or put on the market (a worn piece proves you found the place); once per character; small bonuses checked by `balance.py`.
-- **The rest give a cosmetic or a title**, plus a smaller purse (about a third of today's gold, still once per account).
+- **Jay's clarification, 2026-11-27 (this wins over anything else in this file):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone. this will encourage heavy wondering and exploring of the server. rewards from secrets: (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras."
+- **Every secret always pays a medium gold reward** **(Claude's call on the number: 1,000 gold on Floor 1, the floor's medium Vesper payout divided by three, once per account)**.
+- **The three exclusive items** are the three gear pieces below; they exist nowhere else in the game.
+- **The rest give a title, a cosmetic, a pet or an aura.** Pets need art, so Floor 1 uses them only where a sprite exists or is approved (Blender pipeline); otherwise titles, house trophies and auras.
+- **Riddles only.** Every secret's hint is rewritten as a thick riddle: no ground name, no place name, no compass direction, no NPC name, nothing that can be searched for on a map. It should be solvable only by someone who has already wandered past the spot and noticed something odd. Nothing else in the game hints at a secret: not announcements, not rumours, not the Discoveries page, not quest text, not signposts.
+- **Vesper's public list** shows a sold secret's name and its riddle, not directions **(Claude's reading of Jay's words; it replaces "with directions" in DESIGN 8.1; Q99)**. Selling still makes the secret public knowledge that it exists and who sold it.
 - **Nobody is told what a secret pays.** Hints, Vesper's public list and the Discoveries page never name a reward. Only the finder sees it.
 - **Keep or sell is unchanged** (DESIGN 8.1): selling pays gold and makes the directions public, so the finder of a gear secret chooses between gold now and staying one of the few who has it. Vesper pays the large tier for gear secrets without saying why.
 - Which secrets hold gear is reshuffled each season (roadmap 8.4).
@@ -55,21 +60,21 @@ Floor 1 table **(Claude's call on every row; numbers for the generator to tune)*
 |---|---|---|
 | s1 The Underkeep | the way in | the way in, title "Underkeeper" |
 | s2 Old Tusk | beast, trophy | unchanged (trophy now visible, 4.2) |
-| s3 Miller's Race | 800 gold | **gear: Millrace Boots** (+5 speed), 250 gold |
+| s3 Miller's Race | 800 gold | **gear: Millrace Boots** (+5 speed) |
 | s4 Inn Smith | 3 potions | the hidden shop stays; title "Regular"; house trophy "Inn Tankard" |
 | s5 North Crack | shortcut | shortcut, title "Cragfinder" |
 | s6 Firefly Hollow | a lamp | **aura: Fireflies**, the lamp |
 | s7 Sealed Shrine | group fight | **gear: Shrinekeeper's Pendant** (amulet, +3% maximum health and mana), everyone on the credit list |
-| s8 Dye Well | 1,200 gold | **aura: Dyer's Drift** (slow coloured sparks), 400 gold |
+| s8 Dye Well | 1,200 gold | **aura: Dyer's Drift** (slow coloured sparks) |
 | s9 Empty Camp | beast, trophy | unchanged |
 | s10 Well Vein | beast, trophy | unchanged |
 | s11 Coward Pup | beast, trophy | unchanged |
-| s12 Gate Balcony | 400 gold | title "Skywatcher", house trophy "Brass Spyglass", 150 gold |
-| s13 Forgotten Cell | 900 gold | **gear: Warden's Signet** (ring, +1 to the class's main skill), 300 gold |
+| s12 Gate Balcony | 400 gold | title "Skywatcher", house trophy "Brass Spyglass" |
+| s13 Forgotten Cell | 900 gold | **gear: Warden's Signet** (ring, +1 to the class's main skill) |
 | s14 Smugglers' Vault (new, 4.5) | | beast, trophy |
 | s15 The Sealed Cut (new, 4.5) | | beast, trophy |
 
-Characters who already found a secret get the new reward at their next login.
+Every row also pays the medium gold reward. Characters who already found a secret get the new reward at their next login.
 
 ### 4.2 Rare finds are loud and visible (AD1)
 
@@ -79,7 +84,7 @@ Server-wide lines (orange event text) and a notice-board entry, kept for 7 days:
 |---|---|---|
 | Rare weapon drop | "<Name> found a Copsewood Bow on a Grey Alpha!" | finder |
 | Legendary fish | "<Name> landed Old Whiskers (17.4 kg)!" | finder |
-| A secret's first find of the season | "Someone has found a secret in the Wolf Copse." | nobody, ground only |
+| A secret's first find of the season | "Someone has found a secret on Floor 1." | nobody; never the ground or any place |
 | A hidden beast's first kill of the season | "A hidden beast has fallen somewhere on Floor 1." | nobody |
 | Rare roamer sighted / killed (4.4) | "A Frenzied Boar has been sighted in the Boar Meadow!" / "<Names> brought down the Frenzied Boar!" | killers |
 | Treasure keepsake (4.5) | "<Name> dug up a Smuggler's Lantern!" | finder |
@@ -135,15 +140,15 @@ Art: the boar exists. The other three use a recoloured placeholder until Blender
 ### 4.6 Floor 1 Discoveries page (AD6)
 
 A Journal tab "Discoveries" (and `!finds`). Categories with a count each and a floor total: secrets (15), hidden beasts (6), elites (6), ground chests, fish (7 kinds), builders' stones (6), rare roamers (4), treasure keepsakes (6).
-- Unfound rows read "???". A rumour (4.7) turns a row into "??? (rumoured: Boar Meadow)". Found rows show the name and the date, never a reward for secrets.
+- Unfound rows read "???". A rumour (4.7) turns a chest, stone, elite or roamer row into "??? (rumoured: Boar Meadow)"; secret and hidden-beast rows stay "???" until found (a riddle you hold from a bottle shows under its row, unnamed). Found rows show the name and the date, never a reward for secrets.
 - Milestones: 25% title "Wanderer of the Plains"; 50% house trophy "Plains Map"; 100% title "Cartographer of the Plains" and the **aura: Cartographer's Compass**.
 - Built from one registry so each floor later adds its rows.
 
 ### 4.7 Rumours (AD7)
 
 - Innkeepers and townsfolk answer "rumour": one per player every 20 hours. It picks something that player has not found, in their level band first, and names the ground, never the spot: "A trapper swears something big wallows in the south of the Boar Meadow."
-- Rumours cover secrets, hidden beasts, chests, stones and dig-map grounds. The rumour marks the row on the Discoveries page.
-- Fishing can land a **message bottle** (weight 1 on the Floor 1 table): a rumour about a secret, whatever your level (DESIGN 8.2 already promises this).
+- Rumours cover ground chests, builders' stones, elites and rare roamers only. **Never secrets or hidden beasts** (Jay, 2026-11-27: riddles only). The rumour marks the row on the Discoveries page.
+- Fishing can land a **message bottle** (weight 1 on the Floor 1 table): it holds one secret's riddle (the same riddle Vesper would show), whatever your level.
 
 ## 5. How the two build sessions share the work
 
