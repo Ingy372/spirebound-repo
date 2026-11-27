@@ -44,8 +44,6 @@ Jay: "always something to do, something to explore, and lots of FOMO that someon
 
 ## Step 4c — Floor 1 depth (Jay, 2026-11-27: "love 1-5")
 Jay: "i still dont feel like there is enough content/systems/activities to keep players completely immersed in the spirebound world." Design: `docs/superpowers/specs/2026-11-27-floor1-depth-design.md`. Two build sessions: C takes FD1 and FD3; D takes FD2, FD4 and FD5.
-- [ ] **FD1b First Climb loose ends:** looking at a player shows chapter 4's choice (needs the look-line hook `SpireFinds.LOOK_EXTRAS` in `scripts/spirebound/finds.lua`, asked of Session D) and the Oathroom chest; the wreath choice played once in the client. Done when: both are seen in the client.
-- [ ] **FD3b The Oathkeeper and the Oathroom's tuning:** the boss "The Oathkeeper" from `tools/gen_monsters.py` (asked of Session D; until then the hall uses The Unfinished as a stand-in, who died in seconds), then tune the four halls so four level-30 players in ordinary Floor 1 gear pass on a second or third try, and one clear in a fully formed party. Done when: four Pilots in one party clear it with the real boss in 15-25 minutes.
 
 ## Step 4d — Weapon variety and the weapon rules (Jay, 2026-11-27)
 Jay: "there should also be an array of weapons that players get", familiarity "reset upon trade", and an awakened weapon that keeps going to the next floor's boss should get "a unique reward". Design: `docs/superpowers/specs/2026-11-27-weapon-review.md` (Q104-Q106). Don't touch the style tree or mastery files (spec ST1 owns those).

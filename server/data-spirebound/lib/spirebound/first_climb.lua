@@ -128,9 +128,9 @@ end
 
 -- Chapter 4's choice: both pay the same; a different keepsake and title, and the look line says which
 SpireFirstClimb.CHOICES = {
-	pendant = { title = "Keeper of the Archive", keepsake = "fc_archive_seal", look = "took Brother Tam's pendant to the archive",
+	pendant = { title = "Keeper of the Archive", keepsake = "fc_archive_seal", look = "took his pendant to the archive",
 		thanks = "His pendant. It goes into the archive, under glass, where nobody can forget him again. Take this seal of the archive with my thanks. Come back at level 19." },
-	wreath = { title = "Tam's Mourner", keepsake = "fc_reed_flower", look = "left Brother Tam his pendant and laid a wreath",
+	wreath = { title = "Tam's Mourner", keepsake = "fc_reed_flower", look = "left him his pendant and laid a wreath",
 		thanks = "You left it with him, and laid Agna's wreath. She'll be glad. Some things belong where they are. Keep that flower from his grave. Come back at level 19." },
 }
 

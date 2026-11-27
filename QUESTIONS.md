@@ -682,3 +682,7 @@ Six hunting grounds get a cave underneath with bigger groups, meant for a party 
 Cyntara's written rules ban macros and outside programs. In practice its own client has helpers built in (walker, looter, experimental vBot support), and the game quietly withholds some rewards from players who used the auto-walker recently.
 - **Recommendation:** allow only helpers built into our client: auto-heal, auto-eat, ring/amulet refill, loot helper. Ban cavebots/walkers, auto-targeting, auto skill rotations, auto-fishing, and all outside programs. Details in DESIGN.md §12.
 - Jay's answer (2026-11-08): **cavebot and auto-targeting will be built into the client; with the cavebot on, XP is cut a lot so manual play is much better; botters risk being PKed.** DESIGN.md §12 rewritten to match (see Q10 for my numbers).
+
+### Q107 (Session C, 2026-11-27): Is the Oathroom hard enough?
+Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
+**My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.
