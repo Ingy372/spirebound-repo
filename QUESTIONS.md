@@ -8,6 +8,26 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q106. Should a weapon keep growing after its awakening? (2026-11-27)
+Your question: a Floor 1 weapon awakened at the Floor 1 boss, then taken all the way to a Floor 2 boss kill. Full answer in `docs/superpowers/specs/2026-11-27-weapon-review.md` section 5.
+- **Recommendation: yes, once, as "Ascended".** Beat the Floor 2 boss holding your awakened Floor 1 weapon at familiarity 10 (earned by you) and having done at least 10% of the damage yourself. It gets a new name, your name carved in it for good, combos that stay open 1 second longer, a sparkle, the title Unbroken and a server announcement. Later you can lay it to rest as a house trophy and your current weapon jumps 2 familiarity levels.
+- **My push-back: no extra power.** Power given at the Floor 2 boss only matters on Floor 3, where a small boost does nothing and a big one would make switching weapons pointless. So the reward is pride and story. It's a challenge run (about 20% less damage on Floor 2), not the best path.
+- **It stops after one floor.** Two floors up the old weapon does about half the damage; I'd revisit a "Legend" mark when Floor 3 is real.
+- Jay's answer:
+
+### Q105. How many weapons per class? (2026-11-27)
+- **Recommendation: six kinds per class on every floor**, each from a different place: Steady (Captain Dorrow, as now), Swift (the Weaponsmith sells it: softer hits, faster sword skills), Heavy (the Gate Hound drops it: bigger hits, slower skills), Elemental (a side quest: fire, ice, earth or energy), Rare (elites, as now) and Relic (a hidden beast; secret). All roughly equal in strength, so none is "the right one". The Ranger also gets the missing spear.
+- **Vanguard two-handed weapons hit 10% harder** to pay for losing the shield. **Recommendation: keep.**
+- **Retune:** the Weaponsmith can move your tiers from one Floor 1 weapon to another, losing one tier, so trying a new weapon doesn't throw away your shards. **Recommendation: keep.**
+- Jay's answer:
+
+### Q104. Familiarity resets when a weapon changes hands: the details (2026-11-27)
+Your rule: tier stays on the weapon, familiarity resets when it changes owner.
+- **Recommendation: it resets the first time a different character holds it in their weapon hand or fights with it**, not at the moment of the trade. Same result for every real trade, market buy or corpse loot, and much more reliable to build. A friend who only carries it in a bag doesn't reset it.
+- **Your own other characters count as a new owner.** Otherwise a high-level alt could level familiarity for a new character. **Recommendation: keep.**
+- Lending a weapon for one hunt resets it twice (for the friend, then for you when you take it back). A weapon remembers one fighter. Its look text says who: "familiarity 6/10 with Aldra".
+- Jay's answer:
+
 ### Q103. The new style trees: my calls (2026-11-27)
 Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief. Not built yet (roadmap ST1). Every class now forks into two jobs, then into an "extreme" version that pays with a minus or a "balanced" one with no minus.
 - **Vanguard:** Bulwark (shield tank) → **Ironwall** (-20% damage, much tougher, taunts) or **Bladeward** (tough and still hits, counter-strikes). Reaver is unchanged. **Recommendation: keep.**
