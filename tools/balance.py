@@ -380,7 +380,11 @@ def load_game():
     return monsters, floors, prices, houses, tasks
 
 
-NOT_TASKS = {"Pen Rat"}   # the Arrival Yard's tutorial rats (Claude's call, Jay can veto)
+NOT_TASKS = {"Pen Rat",   # the Arrival Yard's tutorial rats (Claude's call, Jay can veto)
+             # small game on the open lawns (Q94): harmless, they pay almost nothing, never a hunting task (2026-11-27:
+             # 54fd3380 put them on the Taskmaster's list as 50-kill, 280-gold tasks)
+             "Meadow Hare", "Dapple Fawn", "Thistle Hen", "Acorn Squirrel",
+             "Sluice Warden"}          # the Underkeep Wing 1 mini-boss (one at a time, half-hour respawn): not a 20-kill task
 
 
 def floor_of(x, y):

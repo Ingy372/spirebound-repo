@@ -278,6 +278,15 @@ function pilot.onSay(player, words, param)
 		player:addItem(tonumber(id), tonumber(n))
 		local got = player:getItemCount(tonumber(id)) - before
 		player:sendTextMessage(MESSAGE_STATUS, got > 0 and ("pilot: given " .. got) or "pilot: no room, it fell on the floor")
+	elseif cmd == "roamer" then -- (AD4 tests) "/pilot roamer frenzied boar [pity]": bring a rare roamer out at a real spot of
+		-- its grounds (as the timer does) and say where; "pity" fills this character's keepsake counter, so the kill drops it
+		local name = rest:gsub("%s*pity%s*$", "")
+		local r = SpireRoamers.get(name)
+		if r and rest:match("pity%s*$") then
+			player:kv():scoped("spirebound-roamers"):set("since_" .. r.id, 100)
+		end
+		local m, why = SpireRoamers.spawn(name)
+		player:sendTextMessage(MESSAGE_STATUS, m and ("pilot: roamer " .. m:getName() .. " at " .. m:getPosition():toString()) or ("pilot: roamer " .. tostring(why)))
 	elseif cmd == "pvphit" then -- (M5 tests) start the player-fight lock as if another player had hit you
 		SpirePvPLock.mark(player, os.time())
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: player fight for " .. SpirePvPLock.LOCK .. " seconds")
@@ -303,7 +312,7 @@ function pilot.onSay(player, words, param)
 		local pct = math.max(1, math.min(100, tonumber(rest:match("%d+")) or 10))
 		local n = 0
 		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, 9, 9, 9, 9)) do
-			if c:isMonster() and SpireBoss and SpireBoss.defs[c:getName()] then
+			if c:isMonster() and ((SpireBoss and SpireBoss.defs[c:getName()]) or (SpireRoamers and SpireRoamers.byName(c:getName()))) then
 				c:addHealth(math.floor(c:getMaxHealth() * pct / 100) - c:getHealth())
 				n = n + 1
 			end

@@ -24,16 +24,35 @@ function SpireAddonHunts.step(have, need, inGround, kindMatches, targetOut)
 	return true, have + 1 >= need
 end
 
-local function spawnFor(player, q)
-	local here = player:getPosition()
-	local best, bestD = nil, nil
-	for _, s in ipairs(SpireRoamers.spots(q.hunt.ground)) do
-		local d = math.max(math.abs(s.x - here.x), math.abs(s.y - here.y))
-		if s.z == here.z and d >= 4 and (not bestD or d < bestD) then
-			best, bestD = s, d
+-- where the target comes out: a free tile 4-6 steps from the hunter, inside the ground (so it is seen and comes at
+-- you: the first try used the nearest monster spot, 13 tiles off behind rocks, and Glasswing never came over)
+local function nearTile(here, gid)
+	for d = 4, 6 do
+		for _ = 1, 16 do
+			local p = Position(here.x + math.random(-d, d), here.y + math.random(-d, d), here.z)
+			local t = Tile(p)
+			if math.max(math.abs(p.x - here.x), math.abs(p.y - here.y)) >= 4 and t and t:getGround()
+				and not t:hasFlag(TILESTATE_PROTECTIONZONE) and t:isWalkable(false, false, false, false, true)
+				and not t:getTopCreature() and SpireRoamers.groundAt(p) == gid then
+				return p
+			end
 		end
 	end
-	local pos = best and Position(best.x, best.y, best.z) or here
+end
+
+local function spawnFor(player, q)
+	local here = player:getPosition()
+	local pos = nearTile(here, q.hunt.ground)
+	if not pos then
+		local best, bestD = nil, nil
+		for _, s in ipairs(SpireRoamers.spots(q.hunt.ground)) do
+			local d = math.max(math.abs(s.x - here.x), math.abs(s.y - here.y))
+			if s.z == here.z and d >= 4 and (not bestD or d < bestD) then
+				best, bestD = s, d
+			end
+		end
+		pos = best and Position(best.x, best.y, best.z) or here
+	end
 	local m = Game.createMonster(q.target, pos, true, true)
 	if not m then
 		return nil

@@ -468,6 +468,26 @@ function handlers.rune(player)
     end
 end
 
+-- (AD5 tests) use an item in an open backpack, as a player double-clicks it: read a treasure map
+-- { "do": "useitem", "id": 5706 }
+function handlers.useitem(player)
+    if not stepData.sent then
+        local done = false
+        for _, c in pairs(g_game.getContainers()) do
+            for _, it in ipairs(c:getItems()) do
+                if not done and it:getId() == step.id then
+                    g_game.use(it)
+                    done = true
+                end
+            end
+        end
+        log(done and ('used item ' .. step.id) or ('useitem: no item ' .. step.id .. ' in an open container'))
+        stepData.sent = now()
+    elseif now() - stepData.sent > (step.gap or 2) then
+        nextStep()
+    end
+end
+
 -- use the thing on top of a tile next to you ("at": [x, y, z]): read a stone, pull a lever, open a chest
 function handlers.use(player)
     if not stepData.sent then

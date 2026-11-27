@@ -162,7 +162,10 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller)
 			SpireDiscoveries.mark(p, "roamer", r.id)
 		end
 		if R.creditKill(p, r) and SpireFinds and SpireFinds.announce then
-			SpireFinds.announce("rare_weapon", { p }, r.keepsakeName, nil)
+			-- after the kill line's 20-second gap, or the rate limit sends it to the board only (client test 2026-11-27)
+			local name, item = p:getName(), r.keepsakeName
+			addEvent(function() SpireFinds.announce("rare_weapon", { Player(name) or name }, item, nil) end,
+				((SpireFinds.GAP or 20) + 1) * 1000)
 		end
 	end
 	return true
