@@ -464,6 +464,15 @@ def _check_crystal(want):
     return check
 
 
+CHEST_BANDIT = "%d %d %d 4073 1" % _world_point("chest_bandit_road")
+
+
+def _check_chest(lines):
+    p, s = _rv(lines, "chestprep"), _rv(lines, "state")
+    first, second = s[0]["gold"] - p[0]["gold"], s[1]["gold"] - p[1]["gold"]
+    return first > 0 and 0 <= second < first, "first character +%d, second character of the account +%d (the daily refill)" % (first, second)
+
+
 def _check_dg(kind, want):
     def check(lines):
         r = _rv(lines, "dg")[0]
@@ -563,6 +572,16 @@ REVIEW_CASES = [
          logins=crystal_steps("fight", MEADOW[2], 1), stay=3, check=_check_crystal("stay")),
     dict(name="TC1 a Waycrystal refused in a boss room", voc=4, level=60,
          logins=crystal_steps("plain", BOSS_HALL, 1), stay=3, check=_check_crystal("stay")),
+    dict(name="L1 a ground chest's first reward once per account", voc=4, level=30,
+         logins=[[(3, "say", "/rv chestprep bandit_road"), (1, "use", CHEST_BANDIT), (1, "say", "/rv state"),
+                  (1, "say", "/rv chestprep bandit_road alt"), (1, "use", CHEST_BANDIT), (1, "say", "/rv state")]], stay=3,
+         check=lambda lines: _check_chest(lines)),
+    dict(name="L2 the Well Vein's gold once per account", voc=4, level=30, logins=[[(3, "say", "/rv wellvein")]],
+         check=lambda lines: (_rv(lines, "wellvein")[0]["first"] == 1000 and _rv(lines, "wellvein")[0]["second"] == 0,
+                              "first character %(first)s, second %(second)s" % _rv(lines, "wellvein")[0])),
+    dict(name="L3 task gold is never lost to a full backpack", voc=4, level=30, logins=[[(3, "say", "/rv taskdone")]],
+         check=lambda lines: (_rv(lines, "taskdone")[0]["ok"] == 1 and _rv(lines, "taskdone")[0]["gained"] == _rv(lines, "taskdone")[0]["reward"],
+                              "reward %(reward)s, arrived %(gained)s, backpack slots free %(free_slots)s" % _rv(lines, "taskdone")[0])),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,

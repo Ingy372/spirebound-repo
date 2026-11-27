@@ -23,7 +23,7 @@ SpireSecrets.list = {
 	{ id = "s7", floor = 1, tier = "medium", name = "Sealed Shrine", hint = "A ruined shrine along the bandit road. Bring friends.", reward = "sealed_shrine" },
 	{ id = "s8", floor = 1, tier = "medium", name = "Dye Well", hint = "Odd stone plates in the shard fields.", reward = { gold = 1200 } },
 	{ id = "s9", floor = 1, tier = "small", name = "Empty Camp", hint = "An abandoned bedroll deep in the wolf copse.", reward = { gold = 300, text = "A torn diary: \"The Axe-Lord's book lies. When he drops the axe, run.\"" } },
-	{ id = "s10", floor = 1, tier = "medium", name = "Well Vein", hint = "The ruined well in the far south-east corner of the plains.", reward = { items = { { 3035, 10 } } } },
+	{ id = "s10", floor = 1, tier = "medium", name = "Well Vein", hint = "The ruined well in the far south-east corner of the plains.", reward = { gold = 1000 } }, -- tester 2026-11-26: was 10 platinum as an item, paid to every character
 	{ id = "s11", floor = 1, tier = "small", name = "Coward Pup", hint = "Inside the bramble ring of the thornsnap hollow.", reward = { items = { { 3577, 5 } } } },
 	{ id = "s13", floor = 1, tier = "medium", name = "Forgotten Cell", hint = "Deep in the Underkeep's first wing, one passage ends in a cell somebody walled up.", reward = { gold = 900 } },
 	{ id = "s12", floor = 1, tier = "small", name = "Gate Balcony", hint = "A broken stair on a ruined tower near the Pass. What a view.", reward = { gold = 400 } },

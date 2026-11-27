@@ -42,6 +42,12 @@ function open.onUse(player, item)
 	local store = player:kv():scoped("spirebound-chests")
 	local rec = store:get(g.id) or {}
 	local now = os.time()
+	-- tester 2026-11-26: the first-time reward is once per ACCOUNT (a second character got the full reward again);
+	-- another character of the account starts on the daily refill straight away
+	local acc = kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-chests-first")
+	if not rec.first and acc:get(g.id) then
+		rec.first = 0
+	end
 	local kind, wait = SpireChests.claim(rec, now)
 	if not kind then
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The chest is empty. It fills again in about %d hours.", math.ceil(wait / 3600)))
@@ -49,16 +55,17 @@ function open.onUse(player, item)
 	end
 	if kind == "first" then
 		local r = SpireChests.reward(g.lo, g.hi)
-		player:addMoney(r.gold)
+		player:setBankBalance(player:getBankBalance() + r.gold) -- into the bank: a full backpack never loses it
+		acc:set(g.id, now)
 		SpireGive.reward(player, r.potions[1], r.potions[2])
 		SpireGive.reward(player, SpireGearData.tokens[1].rough, 1)
 		rec.first = now
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold, %d %s and a rough Hearth Shard. It fills again every 20 hours.",
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold (to your bank), %d %s and a rough Hearth Shard. It fills again every 20 hours.",
 			g.title, r.gold, r.potions[2], ItemType(r.potions[1]):getPluralName()))
 	else
 		local r = SpireChests.daily(g.lo, g.hi)
-		player:addMoney(r.gold)
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The chest has filled again: %d gold. Come back in 20 hours.", r.gold))
+		player:setBankBalance(player:getBankBalance() + r.gold)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The chest has filled again: %d gold to your bank. Come back in 20 hours.", r.gold))
 	end
 	rec.last = now
 	store:set(g.id, rec)

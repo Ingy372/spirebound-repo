@@ -32,6 +32,10 @@
 --   /rv goto <npc>                         stand beside that NPC (and get 1,000 gold)
 --   /rv crystalfloor <mode> x y z          TC1: stand at x,y,z with the Amber Waycrystal on the tile west of you (so a
 --                                          test can right-click it); mode "fight": a wolf bites you first
+--   /rv chestprep <ground> [alt]           tester: stand by that ground's chest; "alt": forget this character's own record
+--                                          (as a second character of the same account), keep the account's
+--   /rv wellvein                           tester: the Well Vein secret for this character, then as a second one
+--   /rv taskdone                           tester: a finished Field Rat task, a full backpack, then report it
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -419,6 +423,49 @@ function rv.onSay(player, words, param)
 		local me = player:getPosition()
 		local t = Tile(Position(me.x - 1, me.y, me.z))
 		logger.info("[LOADTEST] rv crystalcount {} carried={} x={} y={} z={}", player:getName(), player:getItemCount(3251), me.x, me.y, me.z)
+	elseif cmd == "chestprep" then
+		local gid, alt = rest:match("^(%S+)%s*(%a*)$")
+		player:kv():scoped("spirebound-chests"):remove(gid)
+		if alt ~= "alt" then
+			kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-chests-first"):remove(gid)
+		end
+		local c = WorldPoints["chest_" .. gid]
+		player:teleportTo(Position(c.x, c.y + 1, c.z), true)
+		state(player, "chestprep")
+	elseif cmd == "wellvein" then
+		local pos = WorldPoints.secret_s10
+		kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-secretgold"):remove("s10")
+		local secrets = player:kv():scoped("spirebound-secrets")
+		local function stepOn()
+			secrets:remove("s10")
+			player:teleportTo(Position(pos.x, pos.y + 2, pos.z), true)
+			local before = player:getBankBalance() + player:getMoney()
+			player:teleportTo(pos)
+			return player:getBankBalance() + player:getMoney() - before
+		end
+		local first = stepOn()
+		local second = stepOn()
+		logger.info("[LOADTEST] rv wellvein {} first={} second={}", player:getName(), first, second)
+	elseif cmd == "taskdone" then
+		local rhen = Npc("Taskmaster Rhen")
+		if rhen then
+			local rp = rhen:getPosition()
+			player:teleportTo(Position(rp.x, rp.y + 1, rp.z), true)
+		end
+		local s = SpireTasks.scope(player)
+		local t = SpireTasks.get("t1_fieldrat")
+		s:set("active", t.id)
+		s:set("kills", t.count)
+		local bp = player:getSlotItem(CONST_SLOT_BACKPACK)
+		local filled = 0
+		while bp and bp:getEmptySlots(false) > 0 and filled < 40 do
+			bp:addItem(3003, 1) -- ropes: one per slot, until the backpack is full
+			filled = filled + 1
+		end
+		local before = player:getBankBalance() + player:getMoney()
+		local ok, text = SpireTasks.report(player)
+		logger.info("[LOADTEST] rv taskdone {} ok={} reward={} gained={} free_slots={}", player:getName(), ok and 1 or 0, t.gold,
+			player:getBankBalance() + player:getMoney() - before, bp and bp:getEmptySlots(false) or -1)
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

@@ -91,8 +91,8 @@ function SpireTasks.report(player)
 	s:set("kills", 0)
 	s:set("done_" .. t.id, os.time())
 	s:set("points", (s:get("points") or 0) + t.points)
-	player:addMoney(t.gold)
-	return true, string.format("Good work. %d gold and %d task point%s (you have %d).", t.gold, t.points, t.points > 1 and "s" or "", s:get("points"))
+	player:setBankBalance(player:getBankBalance() + t.gold) -- tester 2026-11-26: coins were lost with a full backpack
+	return true, string.format("Good work. %d gold to your bank and %d task point%s (you have %d).", t.gold, t.points, t.points > 1 and "s" or "", s:get("points"))
 end
 
 function SpireTasks.cancel(player)

@@ -7,6 +7,8 @@ local function fakePlayer(pos, tag)
 	local p = { bp = bp, money = 0, msgs = {} }
 	function p:addItem(id, n) return bp:addItem(id, n) end
 	function p:addMoney(n) self.money = self.money + n return true end
+	function p:getBankBalance() return self.money end      -- task gold now goes to the bank
+	function p:setBankBalance(n) self.money = n return true end
 	function p:sendCancelMessage(m) table.insert(self.msgs, m) end
 	function p:sendTextMessage(_, m) table.insert(self.msgs, m) end
 	function p:getPosition() return pos end
