@@ -24,6 +24,7 @@ counts() {
     UNION ALL SELECT 'market offers', COUNT(*) FROM market_offers
     UNION ALL SELECT 'character data (kv)', COUNT(*) FROM kv_store WHERE key_name LIKE 'player.%'
     UNION ALL SELECT 'account rewards (kv)', COUNT(*) FROM kv_store WHERE key_name LIKE 'account.%'
+    UNION ALL SELECT 'shop purchases kept (kv)', COUNT(*) FROM kv_store WHERE key_name LIKE 'account.%spirebound-shop%' OR key_name LIKE 'spirebound-shop-manor%'
     UNION ALL SELECT 'Hall of Seasons (kv)', COUNT(*) FROM kv_store WHERE key_name LIKE 'hall-of-seasons%'"
 }
 
@@ -42,7 +43,7 @@ if [[ "$CMD" == rehearse ]]; then
   mysql "$R" < "$SQL"
   echo "--- after ---"; counts "$R"
   mysql -e "DROP DATABASE \`$R\`"
-  echo "Rehearsal done. Characters, houses, guilds and the market should be empty; accounts, staff, account rewards and the Hall of Seasons kept."
+  echo "Rehearsal done. Characters, houses, guilds and the market should be empty; accounts, staff, account rewards, shop purchases and the Hall of Seasons kept."
   exit 0
 fi
 

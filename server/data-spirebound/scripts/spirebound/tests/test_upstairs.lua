@@ -115,4 +115,14 @@ SpireTest.add("map: Spire Manor has four levels joined by stairs, and only the s
 	SpireTest.eq((SpireShop.houseAvailable(0, false)), true, "free and the buyer has no house")
 	SpireTest.eq((SpireShop.houseAvailable(42, false)), false, "already owned")
 	SpireTest.eq((SpireShop.houseAvailable(0, true)), false, "buyer already owns a house")
+	-- review S-1: last season's buyer has the first 7 days of a new season to buy it back
+	local last, start = { account = 7, season = 1 }, 1000000
+	SpireTest.eq((SpireShop.houseAvailable(0, false, 8, last, 2, start, start + 86400)), false, "held for last season's owner in week one")
+	SpireTest.eq((SpireShop.houseAvailable(0, false, 7, last, 2, start, start + 86400)), true, "the last owner may buy it back")
+	SpireTest.eq((SpireShop.houseAvailable(0, false, 8, last, 2, start, start + 8 * 86400)), true, "after 7 days anyone may")
+	SpireTest.eq((SpireShop.houseAvailable(0, false, 8, { account = 7, season = 2 }, 2, start, start + 86400)), true, "same season: no hold")
+	-- furniture and decorations come back in a new season; outfits and mounts follow the account anyway
+	local back = SpireShop.toRedeliver({ candelabrum = 2, outfit_hearth_cloak = 1 }, 1, 2)
+	SpireTest.eq(#back == 1 and back[1].entry.id == "candelabrum" and back[1].count == 2, true, "two candelabra come back")
+	SpireTest.eq(#SpireShop.toRedeliver({ candelabrum = 2 }, 2, 2), 0, "not twice in the same season")
 end)

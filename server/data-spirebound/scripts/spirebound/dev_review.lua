@@ -21,6 +21,9 @@
 --                                          1122,1213 (water at 1125,1213); fishstate logs the fishing tries so far
 --   /rv levelnine                          review A9: a real level-up from 8 to 9; logs whether the "slower" hint came
 --   /rv journal                            review A5-1: the Journal's Quests tab as the client receives it
+--   /rv shopon | newseason | shopstate     review S-1: open the shop with 1,000 coins (fresh ledger); then forget this
+--                                          season's hand-over and the items (as a wipe does) and log out; then count the
+--                                          candelabra in the Store Inbox
 --   /rv bossreload                         review A4-5: fight the real Gate Hound, lose its fight record (as a script
 --                                          reload does), kill it; logs whether you were still credited
 if os.getenv("SPIRE_LOADTEST") ~= "1" then
@@ -284,6 +287,30 @@ function rv.onSay(player, words, param)
 			end
 		end
 		logger.info("[LOADTEST] rv journal {} lines={} stairkey_group_line={}", player:getName(), #lines, group)
+	elseif cmd == "shopon" then
+		SpireShop.ENABLED = true                                  -- test servers only (closed until launch)
+		local s = kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-shop")
+		s:remove("bought")
+		s:remove("deliveredSeason")
+		SpireShop.setCoins(player, 1000)
+		logger.info("[LOADTEST] rv shopon {} coins={}", player:getName(), SpireShop.coinsOf(player))
+	elseif cmd == "newseason" then
+		local s = kv.scoped("account"):scoped(tostring(player:getAccountId())):scoped("spirebound-shop")
+		s:set("deliveredSeason", SpireSeason.current() - 1)      -- as if it was bought last season
+		local had = player:getItemCount(2911)
+		player:removeItem(2911, had)                              -- the wipe took the character and its items
+		logger.info("[LOADTEST] rv newseason {} had={} bought={}", player:getName(), had, tostring((s:get("bought") or {}).candelabrum))
+		local pid = player:getId()
+		addEvent(function()
+			local p = Player(pid)
+			if p then
+				p:remove()
+			end
+		end, 500)
+	elseif cmd == "shopstate" then
+		local inbox = player:getStoreInbox()
+		logger.info("[LOADTEST] rv shopstate {} inbox={} carried={}", player:getName(), inbox and inbox:getItemCountById(2911) or -1,
+			player:getItemCount(2911))
 	elseif cmd == "bossreload" then
 		local spot = WorldPoints.gate_hound_spawn
 		local boss

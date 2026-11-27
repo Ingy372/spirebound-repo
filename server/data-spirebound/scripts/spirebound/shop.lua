@@ -30,7 +30,7 @@ local function deliver(player, e)
 	elseif e.kind == "mount" then
 		player:addMount(e.mount)
 	else
-		player:addItem(e.item, 1)
+		SpireGive.reward(player, e.item, 1) -- never onto the floor
 	end
 end
 
@@ -45,6 +45,31 @@ function login.onLogin(player)
 			elseif owned:get(e.id) and e.kind == "mount" then
 				player:addMount(e.mount)
 			end
+		end
+		-- review S-1: furniture and decorations bought in an earlier season come back to the season's first character
+		local bought, deliveredSeason = SpireShop.bought(player)
+		local back = SpireShop.toRedeliver(bought, deliveredSeason, SpireSeason.current())
+		if #back > 0 then
+			local inbox = player:getStoreInbox()
+			local names = {}
+			for _, r in ipairs(back) do
+				for _ = 1, r.count do
+					local it = Game.createItem(r.entry.item, 1)
+					if it and not (inbox and inbox:addItemEx(it, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR) then
+						SpireGive.reward(player, r.entry.item, 1)
+					end
+				end
+				table.insert(names, r.count .. "x " .. r.entry.name)
+			end
+			SpireShop.markDelivered(player)
+			logger.info("[Spirebound] shop: {} got last season's items back ({})", player:getName(), table.concat(names, ", "))
+			addEvent(function(pid)
+				local p = Player(pid)
+				if p then
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "A new season: the shop items your account owns are back in your Store Inbox ("
+						.. table.concat(names, ", ") .. ").")
+				end
+			end, 3000, player:getId())
 		end
 	end
 	return true
@@ -67,7 +92,8 @@ function cmd.onSay(player, words, param)
 			if not h then
 				ok, why = false, "That house is not on this map."
 			else
-				ok, why = SpireShop.houseAvailable(h:getOwnerGuid(), player:getHouse() ~= nil)
+				ok, why = SpireShop.houseAvailable(h:getOwnerGuid(), player:getHouse() ~= nil, player:getAccountId(),
+					SpireShop.manorLast(), SpireSeason.current(), kv.scoped("spirebound-season"):get("startedAt") or 0, os.time())
 			end
 		end
 		if not ok then
@@ -79,6 +105,10 @@ function cmd.onSay(player, words, param)
 		SpireSave.now("shop purchase") -- R8: a bought item is never lost to a crash
 		if e.kind == "outfit" or e.kind == "mount" then
 			SpireShop.owned(player):set(e.id, os.time())
+		elseif SpireShop.REDELIVER[e.kind] then
+			SpireShop.noteBought(player, e.id) -- review S-1: it comes back next season
+		elseif e.kind == "house" then
+			SpireShop.setManorLast(player:getAccountId())
 		end
 		logger.info("[Spirebound] shop: {} bought {} for {}", player:getName(), e.id, e.price)
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You bought " .. e.name .. ".")

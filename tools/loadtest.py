@@ -499,6 +499,12 @@ REVIEW_CASES = [
          check=lambda lines: (_rv(lines, "level9")[0]["hint"] == 1, "level %(level)s, hint %(hint)s" % _rv(lines, "level9")[0])),
     dict(name="A5-1 the Journal says the Stair Key needs a group", voc=4, level=12, logins=[[(3, "say", "/rv journal")]],
          check=lambda lines: (_rv(lines, "journal")[0]["stairkey_group_line"] == 1, "%(lines)s lines, group line %(stairkey_group_line)s" % _rv(lines, "journal")[0])),
+    dict(name="S-1 a shop decoration comes back next season", voc=4, level=30,
+         logins=[[(3, "say", "/rv shopon"), (1, "say", "!shop buy candelabrum"), (1, "say", "/rv newseason")],
+                 [(6, "say", "/rv shopstate")]],
+         check=lambda lines: (_rv(lines, "newseason")[0]["had"] == 1 and _rv(lines, "shopstate")[0]["inbox"] == 1,
+                              "bought and carried %s; after the 'new season' login, %s in the Store Inbox" % (
+                                  _rv(lines, "newseason")[0]["had"], _rv(lines, "shopstate")[0]["inbox"]))),
     dict(name="A4-5 a boss kill after a lost fight record still credits", voc=4, level=60,
          logins=[[(3, "say", "/rv bossreload")]], stay=4,
          check=lambda lines: (_rv(lines, "bossreload")[0]["credited"] == 1 and _rv(lines, "bossreload")[0]["had_record"] == 1,

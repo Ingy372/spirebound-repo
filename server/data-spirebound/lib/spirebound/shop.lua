@@ -32,15 +32,41 @@ SpireShop.catalog = {
 -- Houses that only the shop can hand out (!buyhouse refuses them)
 SpireShop.SHOP_HOUSES = { ["Spire Manor"] = true }
 
--- Pure: may this player take this shop house? owner guid of the house (0 = free), does the player own a house already
-function SpireShop.houseAvailable(ownerGuid, playerHasHouse)
+-- Pure: may this player take this shop house? owner guid of the house (0 = free), does the player own a house already,
+-- and (review S-1) the Manor's first refusal: last = { account, season } of its last buyer, or nil.
+SpireShop.MANOR_REFUSAL_DAYS = 7
+function SpireShop.houseAvailable(ownerGuid, playerHasHouse, accountId, last, season, seasonStartedAt, now)
 	if (ownerGuid or 0) ~= 0 then
 		return false, "Spire Manor already has an owner this season."
 	end
 	if playerHasHouse then
 		return false, "Leave your current house first: a climber can own one house."
 	end
+	if last and accountId and last.account ~= accountId and (last.season or 0) < (season or 0)
+		and (now or 0) < (seasonStartedAt or 0) + SpireShop.MANOR_REFUSAL_DAYS * 86400 then
+		return false, "Spire Manor is held for last season's owner for the first " .. SpireShop.MANOR_REFUSAL_DAYS
+			.. " days of the season."
+	end
 	return true
+end
+
+-- Review S-1: a season wipe deletes characters, so takeable shop items (furniture, decorations) would be lost with
+-- them. Each purchase is counted on the ACCOUNT (kept by the wipe); the first character to log in in a new season gets
+-- them all again in its Store Inbox. Pure: what to hand back. bought = { [id] = count }, deliveredSeason = the season
+-- they were last handed over (or bought) in.
+SpireShop.REDELIVER = { furniture = true, decoration = true }
+function SpireShop.toRedeliver(bought, deliveredSeason, season)
+	if (deliveredSeason or 0) >= season then
+		return {}
+	end
+	local out = {}
+	for _, e in ipairs(SpireShop.catalog) do
+		local n = bought and tonumber(bought[e.id]) or 0
+		if SpireShop.REDELIVER[e.kind] and n > 0 then
+			table.insert(out, { entry = e, count = n })
+		end
+	end
+	return out
 end
 
 local GOLD_COINS = { [3031] = true, [3035] = true, [3043] = true } -- gold, platinum, crystal
@@ -94,6 +120,31 @@ end
 -- Outfits and mounts are re-granted at login so they follow the account
 function SpireShop.owned(player)
 	return scope(player):scoped("owned")
+end
+
+-- Takeable items bought by the account: { [id] = count }, and the season they were last handed over in (review S-1)
+function SpireShop.bought(player)
+	return scope(player):get("bought") or {}, scope(player):get("deliveredSeason")
+end
+
+function SpireShop.noteBought(player, id)
+	local b = scope(player):get("bought") or {}
+	b[id] = (tonumber(b[id]) or 0) + 1
+	scope(player):set("bought", b)
+	scope(player):set("deliveredSeason", SpireSeason.current())
+end
+
+function SpireShop.markDelivered(player)
+	scope(player):set("deliveredSeason", SpireSeason.current())
+end
+
+-- The Manor's last buyer (kept across seasons: not in season_wipe.sql's list)
+function SpireShop.manorLast()
+	return kv.scoped("spirebound-shop-manor"):get("last")
+end
+
+function SpireShop.setManorLast(accountId)
+	kv.scoped("spirebound-shop-manor"):set("last", { account = accountId, season = SpireSeason.current() })
 end
 
 function SpireShop.isGold(itemId)
