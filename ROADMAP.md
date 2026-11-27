@@ -77,6 +77,11 @@ Art, not code, sets the launch date: only 13 monsters are ours.
 ## Later — after the friends test (not ordered yet)
 Kept so nothing is lost. Several wait on Jay's answers to Q54-Q61 (the review's cuts).
 
+**Every floor unlocks something new (Jay, 2026-11-27: "put the idea of the floor by floor unlocks into the roadmap and we will do that later")**
+- [ ] **FU1 A new feature with every floor** (Jay wants the feeling of "come on guys we have to hurry and push to the next floor so we can...."; waits until Floor 1 is finished): opening a floor switches on something for the whole server, matched to its theme. Claude's first list, Jay can change any of it: Floor 2 mounts (tamed from the Highlands herds), Floor 3 pets, Floor 4 boats and guild halls, Floor 5 ranked arena and the weekly siege, Floor 6 the forge (takes over J10), Floor 9 a black market. Firsts stay cosmetic. Needs a design first. Done when: each floor's unlock is written in DESIGN.md and Floor 2's works in game.
+- [ ] **FU2 Floor 1 teasers for what is above** (part of FU1): closed stalls in Hearthgate (an empty stable, a cold forge, a boarded-up kennel) whose keepers say which floor they wait for, and rare Floor 1 drops that cannot be used yet (a strange egg, a lump of ore "needs the forge on Floor 6"). Done when: a new player can name three things a later floor will bring without leaving Floor 1.
+- [ ] **FU3 The wait before a boss unseals becomes the preparation** (part of FU1): a server-wide effort anyone can add to in the days before each floor boss unseals (scouting the labyrinth, supplying the stair camp), paid out on opening day. Done when: it runs once on Floor 1 with a test through the real event.
+
 **Money monsters (Jay, 2026-11-25)**
 - [ ] **N6 The "money monsters"** (new; Jay: "monsters that vets will look forward to running into once in the game. Bosses, the fire boar, and a few others that haven't been made yet"; the fire boar is our red-crested Bristle Boar, already made): make the art for the rest of the list in ART_REQUESTS.md Batch 11 (the bosses first), and give each a website showcase render (a larger, sharp render from the Blender model, never a stretched sprite) for the banner. Possibly rename the Bristle Boar to something like Frenzied Boar (Q63). Done when: every boss on the list walks across the website banner.
 
