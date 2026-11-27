@@ -8,6 +8,84 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+*Q82-Q94 come from the Floor 1 review and the map review (2026-11-26). Nothing is built for them until you answer.*
+
+### Q82. Can players attack each other in the boss rooms below level 50? (2026-11-26, Floor 1 review A4-2)
+Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall, whatever their level. A level-60 could wait in the hall and kill a level-30 party mid-fight.
+- **Recommendation:** in boss rooms, players can only attack each other from level 50.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q83. Floor 1's length now that the engine's own bonuses are counted (2026-11-26, Floor 1 review A3-1)
+The engine quietly adds 1.5x experience below level 50 and another 1.5x for fresh stamina, on top of our stages. Measured, a kill gives 22.5x at levels 1-8, 9x at 9-20 and 6.75x at 21-50. So Floor 1 is shorter than the 11-15 hours you chose in Q30.
+- **Recommendation:** keep the 11-15 hours: lower our stages so the totals match (I re-measure first; roadmap RV2).
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q84. Loot is doubled by the engine: keep the richer game or trim drops? (2026-11-26, Floor 1 review E-1)
+The server doubles every drop chance (loot rate 2). Measured, a Road Bandit gives 42 coins a kill against the 33 our economy plan expects, and some items drop twice as often as the tables say.
+- **Recommendation:** keep loot rate 2 and lower the few drops that matter (gems, cheese) in the tables, so the plan and the game agree.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q85. Do Tibia's item names count as "CipSoft names"? (2026-11-26, Floor 1 review)
+Many items keep their Tibia names ("magic plate armor", "wand of vortex"). Our name rule covers monsters, NPCs and places.
+- **Recommendation:** rename the items players see most (weapons, armour, wands and rods sold or dropped on Floor 1) before the friends test; leave the rest for later.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q86. Should upgraded gear need a level to wear? (2026-11-26, Floor 1 review B4-9)
+A tier-5 weapon can be traded to a level-8 character and wielded at once.
+- **Recommendation:** a level requirement by tier (tier 3: level 20, tier 5: level 30).
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q87. Mastery respecs only from the donation shop? (2026-11-26, Floor 1 review)
+- **Recommendation:** also a steep in-game route (gold that grows with each respec), so the shop sells convenience, not the only way.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q88. Spear Rangers have no barracks weapon (2026-11-26, Floor 1 review B4-3)
+Rangers who use spears get nothing from the barracks the bow users get.
+- **Recommendation:** add a Trailwarden Spear on the same tiers as the barracks bow.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q89. The Underkeep: make it a real dungeon? (2026-11-26, Floor 1 review A2-1 and map review M2)
+The Underkeep under the city is six big bare halls; Wing 1 holds about 18 monsters in one 70 by 50 room. It reads as a warehouse, not a secret dungeon.
+- **Recommendation:** rebuild Wing 1 first as a real dungeon: corridors, guard rooms, cells, a collapsed and a flooded part, a loop and a dead end with a reward, about 50 monsters of three kinds, one mini-boss and the promised secret. The other wings follow with their floors. It is several days of work, so it waits for your yes (roadmap MR2).
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q90. Solo players and the Stair Key (2026-11-26, Floor 1 review A3-2 and A5-1; FYI)
+The review worried that the Stair Key step (30 Road Bandits) needs a group. Checked on the built map: the Bandit Road's surface already holds Road Bandits in ones and twos only (11 on the surface, the Captain alone at the camp); the packs of 3-4 are in the Smugglers' Cellar below, which is the party part.
+- **Recommendation:** keep it as it is: a solo player can finish the step on the surface.
+- Assumed until you answer: keep.
+- Jay's answer:
+
+### Q91. A guild can fill the 20-player boss hall (2026-11-26, Floor 1 review A4-4)
+- **Recommendation:** at most 10 of the 20 credited places per guild, so a big guild cannot lock others out of the first kill.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q92. The private boss hall without the Stair Key (2026-11-26, Floor 1 review A4-7)
+After the first clear, any party can say !private at the top of the labyrinth and fight the Axe-Lord alone, Stair Key or not.
+- **Recommendation:** keep it as a catch-up for late climbers, but each member needs the Stair Key.
+- Assumed until you answer: no change.
+- Jay's answer:
+
+### Q93. How hand-made should Floor 1 look before friends see it? (2026-11-26, map review M3, M4, M7, M8, M10-M15)
+The map is tidy and correct, but it looks generated: every hunting ground is a box, most roads are straight with square corners, all ~80 homes are the same empty square, and the public halls (Hunters' Hall, Registrar, the inns, Spire Manor) are big rooms with little in them.
+- **Recommendation:** two jobs before the friends test, each in the generator so Floors 2-10 inherit them: (1) wandering outlines and winding roads for every ground (roadmap MR3); (2) five or six house plans with beds and furniture, and furnished public halls (roadmap MR4). The smaller polish (MR5) is left for the Cowork finishing pass you planned.
+- Assumed until you answer: wait.
+- Jay's answer:
+
+### Q94. The empty land on Floor 1 (2026-11-26, map review M11)
+About a third of the 400 by 400 floor is open lawn with nothing to find (south-east, south-west, far west, north-west).
+- **Recommendation:** use it for the launch-size grounds of Step 4 (levels 17-30, helps launch-day crowding), and meanwhile scatter a few small landmarks (a shrine, a camp, a wreck) so wandering is rewarded.
+- Assumed until you answer: no change.
+- Jay's answer:
+
 ### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
 The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
 - **Recommendation:** keep all of it (it is what DESIGN.md always said), and I re-measure the Axe-Lord and the hunting pace with the bonuses working (roadmap RV1, RV2) before anything is retuned. If the doubled skill training below 50 feels too fast once you play it, say so and I'll halve it.
