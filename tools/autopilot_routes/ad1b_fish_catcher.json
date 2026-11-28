@@ -32,6 +32,10 @@
    "do": "inventory"
   },
   {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
    "do": "usewith",
    "id": 3483,
    "at": [

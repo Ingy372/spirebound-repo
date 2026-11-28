@@ -594,7 +594,7 @@ end
 -- open the Journal, press one of its tab buttons ("tab": the button's text, e.g. "Discoveries") as a click does,
 -- log what the tab shows, screenshot it, close the Journal
 function handlers.journaltab(player)
-    local ui = SpireJournalUi
+    local ui = rawget(_G, 'SpireJournalUi') or (modules.game_spirebound and modules.game_spirebound.SpireJournalUi)
     if not stepData.opened then
         if ui and ui.toggle then ui.toggle() end
         stepData.opened = now()
