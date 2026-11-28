@@ -49,7 +49,8 @@ GOLD, PLAT = 3031, 3035
 HABIT_KINDS = ("loner", "pair", "pack", "swarm", "colony", "sentry")
 HABITS = {
     "Field Rat": ("swarm", 0.4), "Hopper Toad": ("pair", 1.0), "Sproutling": ("colony", 0.7),
-    "Meadow Wasp": ("colony", 0.5), "Burrow Mole": ("colony", 1.0), "Bristle Boar": ("loner", 1.5),
+    "Meadow Wasp": ("colony", 0.5), "Burrow Mole": ("colony", 1.0), "Bristle Boar": ("pair", 1.5),   # QA14 (Q73, Claude's call): ones and twos
+   
     "Meadow Wolf": ("pack", 1.0), "Grey Alpha": ("pack", 2.0), "Reed Snapper": ("pair", 1.0),
     "Thornsnap": ("sentry", 1.3), "Field Shardling": ("pair", 1.0), "Road Bandit": ("sentry", 1.0),
     "Bandit Captain": ("sentry", 2.5), "Ruin Sentinel": ("sentry", 1.3), "Ruin Archer": ("sentry", 1.0), "Stairwarden": ("sentry", 2.2),

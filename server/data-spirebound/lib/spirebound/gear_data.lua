@@ -76,6 +76,10 @@ SpireGearData.tokenWhere = {
 	[16121] = "Dropped on Floor 2's harder grounds and caves.",
 	[16127] = "Dropped by Floor 2's elites and on its group grounds.",
 }
+SpireGearData.TIER_LEVEL = {
+	[1] = { [3] = 20, [4] = 25, [5] = 30 },
+	[2] = { [3] = 46, [4] = 51, [5] = 56 },
+}
 SpireGearData.TIER_COST = {
 	[1] = { grade = "rough", gold = 500 },
 	[2] = { grade = "rough", gold = 1000 },

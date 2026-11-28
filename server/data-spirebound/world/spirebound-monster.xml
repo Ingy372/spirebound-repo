@@ -733,9 +733,11 @@
 	</monster>
 	<monster centerx="1148" centery="1390" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
 	<monster centerx="1170" centery="1390" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="7" spawntime="20" />
 	</monster>
 	<monster centerx="1159" centery="1391" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="20" />
@@ -751,21 +753,27 @@
 	</monster>
 	<monster centerx="1138" centery="1346" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1148" centery="1346" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1175" centery="1378" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1175" centery="1388" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1155" centery="1396" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1145" centery="1396" centerz="8" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="8" spawntime="20" />
+		<monster name="Bristle Boar" x="-1" y="0" z="8" spawntime="20" />
 	</monster>
 	<monster centerx="1254" centery="1179" centerz="7" radius="2">
 		<monster name="Bristle Boar" x="0" y="0" z="7" spawntime="108" />

@@ -218,7 +218,11 @@ local function creatureSayCallback(npc, player, type, msg)
 		for key, mode in pairs(MODES) do
 			if MsgContains(lower, key) and not (key == "normal" and MsgContains(lower, "death")) and Difficulty.canChange(current, mode.id) then
 				chosen[pid] = { mode = mode.id }
-				npcHandler:say("Step down to " .. Difficulty.names[mode.id] .. " forever? {yes} or {no}?", npc, player)
+				-- QA12 (Jay, Q14): say what it costs before the yes
+				local bonus = player:kv():scoped("spirebound"):get("bonusXp") or 0
+				local cost = SpireDeathGame.stepDownCost(bonus, current, mode.id)
+				local costText = cost > 0 and string.format(" It costs the %d extra experience your harder path gave you: you keep only what a %s climber would have earned.", cost, Difficulty.names[mode.id]) or ""
+				npcHandler:say("Step down to " .. Difficulty.names[mode.id] .. " forever?" .. costText .. " {yes} or {no}?", npc, player)
 				npcHandler:setTopic(pid, 11)
 				return true
 			end

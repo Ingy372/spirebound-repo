@@ -153,6 +153,9 @@ TOKENS = {
             flawless=(16127, "flawless Highland Shard", "flawless Highland Shards", "Dropped by Floor 2's elites and on its group grounds.")),
 }
 # tier t needs 3 shards of this grade plus gold (spec 4.4); gold per floor = fee * floor
+# Level needed to wield a piece at each tier (Jay, 2026-11-27, Q86: "yes" to "tier 3: level 20, tier 5: level 30").
+# Tiers 1-2 (the field temper's tiers) need nothing. Floor 2 is the same steps shifted by its band (Claude's call).
+TIER_LEVEL = {1: {3: 20, 4: 25, 5: 30}, 2: {3: 46, 4: 51, 5: 56}}
 TIER_COST = {1: ("rough", 500), 2: ("rough", 1000), 3: ("cut", 2000), 4: ("cut", 3500), 5: ("flawless", 6000)}
 SHARDS_PER_TIER = 3
 # Floor Beacons (DESIGN 3.6, roadmap M1): the token that lights a town Beacon's fire bowl (server: lib/spirebound/beacons.lua)
@@ -379,6 +382,10 @@ def main():
     for fl, grades in TOKENS.items():
         for g, v in grades.items():
             L.append(f"\t[{v[0]}] = {lua_str(v[3])},")
+    L.append("}")
+    L.append("SpireGearData.TIER_LEVEL = {")
+    for n, steps in TIER_LEVEL.items():
+        L.append(f"	[{n}] = {{ " + ", ".join(f"[{t}] = {lv}" for t, lv in steps.items()) + " },")
     L.append("}")
     L.append("SpireGearData.TIER_COST = {")
     for t, (grade, gold) in TIER_COST.items():

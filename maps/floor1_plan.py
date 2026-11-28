@@ -457,8 +457,10 @@ WASPS = dict(
 # Boar Meadow (H7, 2026-11-23 overnight, FLOOR1_REVIEW.md F1-30): the narrow meadow stacks three levels. The surface is
 # a ring of oak glades round the foot of Oak Ridge; the Ridge (z 6) runs up the middle, climbed by a ramp at its south
 # end; the Wallows (z 8) are mud tunnels underneath, reached by holes in the two southern glades, with Old Tusk's wallow
-# a dead-end chamber in the middle of them. Boars are loners (DESIGN.md 9.4): always one to a glade, far apart.
+# a dead-end chamber in the middle of them. Boars come in ones and twos (QA14, Q73: Claude's call, 2026-11-27; they were
+# loners): one in the calm glades by the gate, two deeper in. Old Bristleback stays alone.
 _BB = (("Bristle Boar", 1),)
+_BB2 = (("Bristle Boar", 2),)
 BOARS = dict(
     gate=(19, 0), crowd_group=[("Bristle Boar", 1)],
     routes={"a": "a1", "b": "b1", "c": "kl", "d": "wm"},
@@ -469,7 +471,7 @@ BOARS = dict(
             # H14 (challenge, not calm): boars are loners, never doubled, so the meadow gets more of them, each on its own
             ("a1", 3, 20, 3, "calm", "a", [_BB]), ("qa", 4, 31, 3, "calm", "a", "rest"), ("a2", 4, 42, 3, "middle", "a", [_BB]),
             ("b1", 35, 20, 3, "calm", "b", [_BB]), ("qb", 34, 31, 3, "calm", "b", "rest"), ("b2", 34, 42, 3, "middle", "b", [_BB]),
-            ("sw", 8, 52, 3, "middle", "a", [_BB]), ("se", 30, 52, 3, "middle", "b", [_BB]), ("sf", 19, 53, 3, "middle", None, [_BB]),
+            ("sw", 8, 52, 3, "middle", "a", [_BB2]), ("se", 30, 52, 3, "middle", "b", [_BB2]), ("sf", 19, 53, 3, "middle", None, [_BB]),
             ("mw", 12, 30, 2, "middle", None, "rest"), ("me", 26, 30, 2, "middle", None, "rest"),
             # 10.4 (N2 rerun: the meadow fed under 100 kills an hour each to four hunters): two more boars, each alone (more broke the rest-spot rule)
             ("wb", 12, 43, 2, "middle", None, [_BB]), ("eb", 26, 43, 2, "middle", None, [_BB]),
@@ -486,7 +488,7 @@ BOARS = dict(
         8: ring_level("The Wallows", (-6, 2, 45, 62), (-2, 8, 35, 58),
                       [("wm", 19, 52, 5), ("wl", 8, 52, 4), ("wr", 30, 52, 4), ("tusk", 19, 31, 4, "nest")],
                       [("wm", "wl", 3), ("wm", "wr", 3), ("wl", "q1", 3), ("wr", "q0", 3), ("wl", "tusk", 2)],
-                      "Bristle Boar", 1, gap=20, mid_band="deep", mid=[[_BB]], deep=[[_BB]]),
+                      "Bristle Boar", 1, gap=20, mid_band="deep", mid=[[_BB2]], deep=[[_BB2]]),
     },
     links=[("ramp", 19, 46, 7, "n"), ("stairs", 8, 52, 8), ("stairs", 30, 52, 8)],
 )
@@ -806,7 +808,7 @@ DESIGNS.update(DESIGNS_NEW)
 # thin spawns, so speed of return was no longer the limit; spread was. Each ground's clearings now repeat their groups as
 # often as its danger limits allow (found ground by ground with tools/hunt_check.py --strict; loners still stand alone).
 N2_DENSITY = {
-    "BOARS": dict(calm=2, middle=3, deep=3, nest=3), "WOLVES": dict(deep=3),
+    "BOARS": dict(calm=1, middle=1, deep=1, nest=1), "WOLVES": dict(deep=3),   # QA14: boars are pairs now (two to a glade, not repeats)
     "THORNS": dict(middle=3, deep=3, nest=3), "SHARDS": dict(calm=2, middle=2, deep=2),
     "BANDITS": dict(middle=2, deep=3, nest=3), "QUARRY": dict(middle=3, deep=3, nest=3),
     "SMUGGLERS": dict(middle=2, deep=3, nest=3), "BASTION": dict(calm=2, middle=2, deep=2),

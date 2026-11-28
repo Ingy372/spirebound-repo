@@ -197,12 +197,39 @@ function SpireGear.state(item)
 		scale = d.scale } -- adventure layer: a rare weapon's own picture may be a stronger base item, scaled back
 end
 
+-- Level needed to wield a piece at its tier (Jay, Q86; SpireGearData.TIER_LEVEL from tools/gen_gear.py). 0: none.
+function SpireGear.levelFor(floor, tier)
+	local steps = (SpireGearData.TIER_LEVEL or {})[floor] or {}
+	local need = 0
+	for t = 1, tier or 0 do
+		need = math.max(need, steps[t] or 0)
+	end
+	return need
+end
+
+-- Pure-ish: may this player wield this item? true, or false + the level needed. Items that aren't tiered gear: true.
+function SpireGear.canWield(item, level)
+	local s = SpireGear.state(item)
+	if not s or s.shop then
+		return true
+	end
+	local need = SpireGear.levelFor(s.floor, s.tier)
+	if level < need then
+		return false, need
+	end
+	return true
+end
+
 local function describe(item, d, s)
 	if d.shop then
 		return "Climber's starter gear (shop). It cannot be upgraded."
 	end
 	local name = d.kind == "weapon" and "weapon" or "armour"
 	local text = string.format("Spirebound %s, Floor %d. Tier %d/%d", name, d.floor, s.tier, SpireGearData.MAX_TIER)
+	local need = SpireGear.levelFor(d.floor, s.tier)
+	if need > 0 then
+		text = text .. string.format(" (needs level %d to wear)", need)
+	end
 	if d.kind == "weapon" then
 		text = text .. string.format(", familiarity %d/10: %+d%% damage", s.fam, math.floor((SpireGear.power(s) - 1) * 100 + 0.5))
 		local pct = SpireGear.famProgress(s.famPoints, d.floor)
@@ -350,6 +377,7 @@ function SpireGear.playerWallet(player)
 		remove = function(id, n) return player:removeItem(id, n) end,
 		money = function() return player:getMoney() + player:getBankBalance() end,
 		pay = function(n) return player:removeMoneyBank(n) end,
+		level = function() return player:getLevel() end,
 		refund = function(n) player:setBankBalance(player:getBankBalance() + n) end,
 	}
 end
@@ -370,6 +398,10 @@ function SpireGear.upgradeCheck(item, wallet)
 	end
 	if s.tier >= SpireGearData.MAX_TIER then
 		return false, item:getName() .. " is already at its best: tier " .. SpireGearData.MAX_TIER .. "."
+	end
+	local need = SpireGear.levelFor(d.floor, s.tier + 1)
+	if wallet.level and wallet.level() < need then
+		return false, string.format("Tier %d needs level %d to wear, and you are level %d. Come back when you can carry it.", s.tier + 1, need, wallet.level())
 	end
 	local tokens = SpireGearData.tokens[d.floor]
 	local cost = SpireGearData.TIER_COST[s.tier + 1]

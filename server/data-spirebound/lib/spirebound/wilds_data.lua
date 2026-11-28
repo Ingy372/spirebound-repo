@@ -59,7 +59,7 @@ SpireWilds = { grounds = {
 		{ n = 11, loop = "d", x = 1201, y = 1182, z = 8, group = { { "Meadow Wasp", 1 } } },
 		{ n = 12, loop = "d", x = 1226, y = 1203, z = 8, group = { { "Meadow Wasp", 1 } } },
 	} },
-	{ id = "boar_meadow", title = "Boar Meadow", type = "class", want = 16, guarded = false, respawn = 40, lo = 9, hi = 15, x1 = 1134, y1 = 1338, x2 = 1178, y2 = 1401, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
+	{ id = "boar_meadow", title = "Boar Meadow", type = "class", want = 24, guarded = false, respawn = 40, lo = 9, hi = 15, x1 = 1134, y1 = 1338, x2 = 1178, y2 = 1401, z = 7, zs = { [6] = true, [7] = true, [8] = true }, starts = { a = "calm", b = "calm", c = "middle", d = "deep" }, spots = {
 		{ n = 1, loop = "a", x = 1145, y = 1363, z = 7, group = { { "Bristle Boar", 1 } } },
 		{ n = 2, loop = "a", x = 1142, y = 1385, z = 7, group = { { "Bristle Boar", 1 } } },
 		{ n = 3, loop = "a", x = 1145, y = 1374, z = 7, group = { { "Bristle Boar", 1 } } },
