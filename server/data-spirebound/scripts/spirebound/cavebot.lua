@@ -37,16 +37,20 @@ login:register()
 -- Review session 2026-11-26: this called item:isStackable(), which Canary 3.6.1 items don't have, so it raised an
 -- error on every kill and botting characters kept their full loot. The cut itself is SpireCavebot.cutLoot (tested on
 -- a real corpse container); it runs after every loot roll has filled the corpse and before autoloot and "coins to the bank" empty it.
-function SpireCavebot.cutLoot(corpse, roll)
+function SpireCavebot.cutLoot(corpse, roll, share)
+	share = share or SpireCavebot.LOOT
 	local removed = 0
 	for i = corpse:getSize() - 1, 0, -1 do
 		local item = corpse:getItem(i)
 		if item then
-			if ItemType(item:getId()):isStackable() and item:getCount() > 1 then
-				local keep = math.max(1, math.floor(item:getCount() * SpireCavebot.LOOT))
+			if share <= 0 then -- QA16: where the cavebot is banned, nothing is left
+				removed = removed + item:getCount()
+				item:remove()
+			elseif ItemType(item:getId()):isStackable() and item:getCount() > 1 then
+				local keep = math.max(1, math.floor(item:getCount() * share))
 				removed = removed + item:getCount() - keep
 				item:transform(item:getId(), keep)
-			elseif (roll or math.random)() > SpireCavebot.LOOT then
+			elseif (roll or math.random)() > share then
 				item:remove()
 				removed = removed + 1
 			end
@@ -58,10 +62,13 @@ end
 local loot = EventCallback("SpireCavebotLoot")
 function loot.monsterPostDropLoot(monster, corpse)
 	local player = Player(corpse:getCorpseOwner())
-	if not player or not corpse:isContainer() or not SpireCavebot.botting(player) then
+	if not player or not corpse:isContainer() then
 		return
 	end
-	SpireCavebot.cutLoot(corpse)
+	local f = SpireCavebot.rewardFactor(player) -- a botter, or a player following one (QA16)
+	if f < 1 then
+		SpireCavebot.cutLoot(corpse, nil, f <= 0 and 0 or SpireCavebot.LOOT)
+	end
 end
 loot:register()
 
@@ -112,6 +119,14 @@ function tick.onThink(interval)
 			local t = p:getTown()
 			p:teleportTo(t:getTemplePosition())
 			p:sendCancelMessage("The tower's guardians won't face a cavebot. Switch it off and wait 10 minutes.")
+		elseif SpireCavebot.botting(p) and SpireCavebot.banReason(p) then
+			-- QA16: the starter grounds always, Floor 1 in launch week: say so once a minute while it runs here
+			local rec2 = SpireCavebot.track[p:getGuid()] or {}
+			SpireCavebot.track[p:getGuid()] = rec2
+			if not rec2.banTold or now - rec2.banTold >= 60 then
+				rec2.banTold = now
+				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, SpireCavebot.BAN_TEXT[SpireCavebot.banReason(p)])
+			end
 		elseif SpireCavebot.active(p) and SpireCrowd.caveAt(p:getPosition()) then
 			-- the party caves are for teams at the keyboard (Q32): back up the stairs
 			p:teleportTo(SpireCrowd.caveAt(p:getPosition()).exit)

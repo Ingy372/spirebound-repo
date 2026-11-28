@@ -47,6 +47,7 @@ Written from `tools/player_rules.py` (`python tools/player_rules.py --write-md`)
 ## Bots and helpers
 - Our own client is the only allowed client; its helpers are built in so nobody needs anything else.
 - Secrets, rare chests and the Twin Fang trial never trigger while the cavebot is on. Boss rooms do not let a cavebot character in.
+- The cavebot earns nothing in the four starter grounds, nor anywhere on Floor 1 during a season's first week. A character following a botting party member gets the same cut.
 - In fights with players the helpers only heal: no automatic haste, attacks or counters, and the cavebot stops walking.
 - Suspicious patterns are logged for staff to look at. Nobody is banned automatically.
 - Third-party bots or a hidden cavebot: first time, a 7-day ban and the gains removed; second time, a permanent ban.
@@ -72,5 +73,5 @@ Written from `tools/player_rules.py` (`python tools/player_rules.py --write-md`)
 
 ## For gamemasters
 - `/reports` lists open reports (`/reports clear` when done). `/mute <name>, <minutes>` and `/unmute <name>`.
-- `/gmlog` shows the last GM actions. Every mute, restore, calendar and scope change is written there and in the server log.
+- `/gmlog` shows the last GM actions. Every mute, restore, launch and scope change is written there and in the server log.
 - Unfair Death Game deaths (a server crash or server lag): `/restore <name>`.

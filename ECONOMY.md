@@ -143,7 +143,9 @@ Each class kills at its measured speed (against a Vanguard: Ranger 1.3x, Arcanis
 | The Old Quarry | solo | mixed | 20,626 | 10,846 | 0.84 |  |
 | The Old Quarry: The Lower Works | party | group | 32,335 | 5,991 | 0.85 | 1.57 |
 | Smugglers' Ridge | solo | mixed | 17,286 | 9,849 | 1.13 |  |
+| Smugglers' Ridge: The Ridge Tunnels | party | group | 29,170 | 5,364 | 1.16 | 1.69 |
 | The Fallen Bastion | solo | mixed | 21,110 | 11,753 | 0.89 |  |
+| The Fallen Bastion: The Bastion Cellars | party | group | 32,148 | 5,993 | 0.85 | 1.52 |
 | The Old Watchtower (a party of six) | party | large | 105,376 | 6,157 | 1.04 | 1.84 |
 
 Hours of hunting by hand to reach each level, by the model (real play is about 40% slower, the cavebot a little over twice as slow). "Plan" counts our stages only; the engine also adds 1.5x more while stamina is above 39 hours (Tibia's rested bonus). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: "Yes, 11-15 hours").
@@ -161,27 +163,27 @@ Hours of hunting by hand to reach each level, by the model (real play is about 4
 | 35 | 9.4 | 6.3 | 9.4 |
 | 40 | 13.4 | 9.0 | 13.4 |
 
-Loot: the engine multiplies every drop chance by 2 (capped at 100%; review E-1, measured 42 coins a Road Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: Floor 1 in 11-15 hours by hand): by the model level 35 takes 6.3 hours fully rested and 9.4 on low stamina; real play is about 40% slower, so most players land in 11-15 hours (Q83). Loot waits on Q84.
+Loot: the engine multiplies every drop chance by 1 (capped at 100%; review E-1, measured 42 coins a Road Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: Floor 1 in 11-15 hours by hand): by the model level 35 takes 6.3 hours fully rested and 9.4 on low stamina; real play is about 40% slower, so most players land in 11-15 hours (Q83). Loot is normal (1x) since Jay's Q84 answer of 2026-11-27, so the plain tables are the real game.
 
 Coins and NPC loot an hour for a Vanguard, plain tables against the real game (loot rate counted). The checks above and the hunting tasks' pay still use the plain column.
 
 | Ground | Gold/h (plan) | Gold/h (real) | NPC loot/h (plan) | NPC loot/h (real) |
 |---|---|---|---|---|
-| The Ratwarren | 525 | 750 | 540 | 1,080 |
-| Toad Pond | 682 | 975 | 405 | 810 |
-| Sproutling Glade | 859 | 1,162 | 495 | 990 |
-| Waspgrass Fields | 945 | 1,350 | 818 | 1,635 |
-| Boar Meadow | 1,797 | 2,114 | 793 | 1,585 |
-| Burrow Hills | 2,750 | 3,061 | 617 | 1,234 |
-| Wolf Copse | 1,324 | 1,756 | 702 | 1,405 |
-| Reedmarsh | 3,948 | 4,297 | 799 | 1,598 |
-| The Bramble Run | 1,855 | 2,268 | 731 | 1,463 |
-| Thornsnap Hollow | 2,341 | 2,754 | 454 | 908 |
-| Shard Fields | 2,472 | 2,908 | 3,323 | 6,646 |
-| The Bandit Road | 8,596 | 10,921 | 1,115 | 2,231 |
-| The Old Quarry | 8,807 | 9,973 | 1,193 | 2,387 |
-| Smugglers' Ridge | 8,083 | 10,264 | 1,018 | 2,035 |
-| The Fallen Bastion | 10,082 | 11,393 | 693 | 1,385 |
+| The Ratwarren | 525 | 525 | 540 | 540 |
+| Toad Pond | 682 | 682 | 405 | 405 |
+| Sproutling Glade | 859 | 859 | 495 | 495 |
+| Waspgrass Fields | 945 | 945 | 818 | 818 |
+| Boar Meadow | 1,797 | 1,797 | 793 | 793 |
+| Burrow Hills | 2,750 | 2,750 | 617 | 617 |
+| Wolf Copse | 1,324 | 1,324 | 702 | 702 |
+| Reedmarsh | 3,948 | 3,948 | 799 | 799 |
+| The Bramble Run | 1,855 | 1,855 | 731 | 731 |
+| Thornsnap Hollow | 2,341 | 2,341 | 454 | 454 |
+| Shard Fields | 2,472 | 2,472 | 3,323 | 3,323 |
+| The Bandit Road | 8,596 | 8,596 | 1,115 | 1,115 |
+| The Old Quarry | 8,807 | 8,807 | 1,193 | 1,193 |
+| Smugglers' Ridge | 8,083 | 8,083 | 1,018 | 1,018 |
+| The Fallen Bastion | 10,082 | 10,082 | 693 | 693 |
 
 ## Checks
 All checks pass.

@@ -13,6 +13,27 @@ function SpireSeason.current()
 	return seasonKv():get("number") or 1
 end
 
+-- When this season's launch began (the owner's /launch start), or nil. Since Jay's answer of 2026-11-27 (Q13: "no set
+-- day when the boss doors open. its upon players being ready.") it no longer gates boss doors; it only tells the launch
+-- week apart: the crowd boost (QA15) and the cavebot's first-week ban on Floor 1 (QA16).
+SpireSeason.LAUNCH_WEEK = 7 * 86400
+function SpireSeason.startedAt()
+	return seasonKv():get("startedAt")
+end
+
+-- Pure: is `now` inside the first 7 days after `start`?
+function SpireSeason.launchWeekAt(start, now)
+	return start ~= nil and now >= start and now < start + SpireSeason.LAUNCH_WEEK
+end
+
+-- tests may force it with SpireSeason.forceLaunchWeek = true / false
+function SpireSeason.inLaunchWeek(now)
+	if SpireSeason.forceLaunchWeek ~= nil then
+		return SpireSeason.forceLaunchWeek
+	end
+	return SpireSeason.launchWeekAt(SpireSeason.startedAt(), now or os.time())
+end
+
 local function playerKv(guid)
 	return kv.scoped("player"):scoped(tostring(guid))
 end

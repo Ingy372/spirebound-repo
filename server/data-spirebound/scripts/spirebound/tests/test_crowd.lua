@@ -140,3 +140,27 @@ SpireTest.add("crowd: the !hunt line and the cave rule", function()
 	SpireTest.eq(floor1, 8, "eight caves on Floor 1 (10.4 pass 3: the Ridge Tunnels and the Bastion Cellars)")
 	SpireTest.eq(#SpireWilds.caves >= 6, true, "and the higher floors' caves are listed too")
 end)
+
+SpireTest.add("crowd QA15: in launch week a full harder ground puts out every crowd group twice (Q72)", function()
+	SpireTest.eq(SpireCrowd.copies("packed", false, true), 2, "launch week, packed, harder ground: twice")
+	SpireTest.eq(SpireCrowd.copies("packed", false, false), 1, "after launch week: once (1.5x)")
+	SpireTest.eq(SpireCrowd.copies("busy", false, true), 1, "only when full")
+	SpireTest.eq(SpireCrowd.copies("rush", true, true), 1, "starter grounds have their own rush")
+	local g = SpireCrowd.ground("boar_meadow")
+	reset(g)
+	SpireSeason.forceLaunchWeek = true
+	local ok, err = pcall(function()
+		local state = SpireCrowd.update(g, 5000000, 8, far)
+		SpireTest.eq(state, "packed", "8 players: packed")
+		local per = 0
+		for _, e in ipairs(g.spots[1].group) do
+			per = per + e[2]
+		end
+		SpireTest.eq(aliveAt(g), #g.spots * per * 2, "twice the crowd monsters are really on the map")
+	end)
+	SpireSeason.forceLaunchWeek = nil
+	reset(g)
+	if not ok then
+		error(err)
+	end
+end)

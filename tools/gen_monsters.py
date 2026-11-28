@@ -588,13 +588,13 @@ TWISTS = {
 
 def adventure_drops():
     """AD5 (tools/gen_adventure.py): Tattered maps from bandits and ruin guards, Vault Keys from Bandit Captains.
-    The engine doubles every drop chance (rateLoot 2), so the rows hold half the chance the design names."""
+    The rows hold the chance the design names (loot rate 1 since QA20, Jay's Q84; it was 2, and the rows held half)."""
     import gen_adventure as ga
     for drops, item in ((ga.MAP_DROPS, ga.MAP_ITEM[0]), (ga.VAULT_KEY_DROP, ga.VAULT_KEY[0])):
         for name, chance in drops.items():
             loot = MONSTERS[name]["loot"]
             if not any(row[0] == item for row in loot):
-                loot.append((item, int(round(chance * 100000 / 2)), 1))
+                loot.append((item, int(round(chance * 100000)), 1))
 
 
 def main():

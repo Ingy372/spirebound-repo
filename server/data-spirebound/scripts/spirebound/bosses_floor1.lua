@@ -168,19 +168,7 @@ function think.onThink(creature, interval)
 		players = Game.getSpectators(c, false, true, def.room.radius, def.room.radius, def.room.radius, def.room.radius)
 	end
 	local out = WorldPoints.lab3_up and Position(WorldPoints.lab3_up.x + 1, WorldPoints.lab3_up.y, WorldPoints.lab3_up.z)
-	-- Q13: a floor boss room stays sealed until its day this season
-	if def.kind == "floor" and not state.private then
-		local open, at = SpireBoss.calendarOpen(def.floor, now)
-		if not open and out then
-			for _, p in ipairs(players) do
-				if not p:getGroup():getAccess() then
-					p:teleportTo(out)
-					p:sendCancelMessage("This hall is sealed until " .. os.date("%A %d %B, %H:%M", at) .. ". The whole tower waits for it.")
-				end
-			end
-			return true
-		end
-	end
+	-- (Q13, 2026-11-27: no calendar gate; the hall opens once the Stair Key is earned)
 	-- 20 players at most: the latest to arrive are sent back out
 	state.arrived = state.arrived or {}
 	for _, p in ipairs(players) do

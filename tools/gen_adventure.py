@@ -62,7 +62,7 @@ KEEPSAKE_CHANCE = 0.04               # 4%, with the shards' pity rule (sure at t
 MAP_ITEM = (5706, "Tattered map", "Tattered maps",
             "A torn treasure map. Use it to read where it leads; use it again inside that ground to know if you are close.")
 SHOVEL = 3457
-# map drops (chance per kill before the engine's loot rate 2): 1% from these, 10% from Bandit Captains
+# map drops (chance per kill; the engine's loot rate is 1 since QA20): 1% from these, 10% from Bandit Captains
 MAP_DROPS = {"Road Bandit": 0.01, "Bandit Crossbowman": 0.01, "Hedge Hexer": 0.01, "Ruin Sentinel": 0.01,
              "Ruin Archer": 0.01, "Bandit Captain": 0.10}
 # dig grounds (levels 12-30) and how many dig spots each: 24 in all, more in the level 20-28 grounds

@@ -102,6 +102,69 @@ function SpireCavebot.followingBot(player)
 	return false
 end
 
+-- Where the cavebot doesn't work at all (QA16; Q60, Claude's call, with Jay's change of 2026-11-27: "cavebot needs to
+-- but turned on after the end of the first week. two weeks is two long."): never in the four starter grounds (the
+-- Guarded ones: the Ratwarren, Toad Pond, Sproutling Glade, Waspgrass Fields), and nowhere on Floor 1 in the first 7
+-- days of a season. There a botting character (and anyone following one) earns no experience and no loot.
+-- Returns "starter", "launch" or nil.
+function SpireCavebot.banReasonAt(pos, now, launchWeek)
+	for _, g in ipairs(SpireWilds and SpireWilds.grounds or {}) do
+		if g.guarded and SpireCrowd.inside(g, pos) then
+			return "starter"
+		end
+	end
+	if launchWeek and Floors.at(pos) == 1 then
+		return "launch"
+	end
+	return nil
+end
+
+function SpireCavebot.banReason(player)
+	return SpireCavebot.banReasonAt(player:getPosition(), os.time(), SpireSeason.inLaunchWeek())
+end
+
+SpireCavebot.BAN_TEXT = {
+	starter = "The cavebot doesn't work in the starter grounds: no experience or loot while it runs here.",
+	launch = "The cavebot doesn't work on Floor 1 during a season's first week: no experience or loot while it runs.",
+}
+
+-- Pure: the reward factor of a botting character: 0 where the cavebot is banned, else the usual cut
+function SpireCavebot.factorFor(botting, banned)
+	if not botting then
+		return 1
+	end
+	return banned and 0 or SpireCavebot.XP
+end
+
+-- the botting party member this player follows (within 7 tiles), or nil
+function SpireCavebot.followedBot(player)
+	local party = player:getParty()
+	if not party then
+		return nil
+	end
+	local members = party:getMembers()
+	table.insert(members, party:getLeader())
+	for _, m in ipairs(members) do
+		if m ~= player and m:getPosition():getDistance(player:getPosition()) <= 7 and SpireCavebot.botting(m) then
+			return m
+		end
+	end
+	return nil
+end
+
+-- Experience and loot share for this player: a botter's own cut; a follower gets the same cut as the bot it follows
+-- (Q16: "a character following a botting one gets the same experience cut"; QA16 adds the loot).
+function SpireCavebot.rewardFactor(player)
+	if SpireCavebot.botting(player) then
+		return SpireCavebot.factorFor(true, SpireCavebot.banReason(player) ~= nil)
+	end
+	local bot = SpireCavebot.followedBot(player)
+	if bot then
+		return SpireCavebot.factorFor(true, SpireCavebot.banReason(bot) ~= nil or SpireCavebot.banReason(player) ~= nil)
+	end
+	return 1
+end
+
 function SpireCavebot.xpFactor(player)
-	return (SpireCavebot.botting(player) or SpireCavebot.followingBot(player)) and SpireCavebot.XP or 1
+	return SpireCavebot.rewardFactor(player)
 end

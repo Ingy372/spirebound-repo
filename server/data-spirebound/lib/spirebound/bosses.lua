@@ -19,7 +19,6 @@ SpireBoss = {
 	WARN_LETHAL_MS = 1000,
 	LOCKOUT = 20 * 3600, -- private repeat kill: once per character every 20 hours
 	PRIVATE_MAX = 5,
-	CALENDAR_FIRST_DAY = 2, CALENDAR_STEP_DAYS = 6, -- Q13: Floor 1's boss unseals on day 3, then one floor every 6 days
 	defs = {}, -- boss name -> definition (registered in scripts/spirebound/bosses_floor1.lua)
 	fights = {}, -- monster id -> live fight state
 }
@@ -57,19 +56,9 @@ function SpireBoss.warningMs(maxDamage)
 	return math.abs(maxDamage or 0) >= SpireBoss.LETHAL_HIT and SpireBoss.WARN_LETHAL_MS or SpireBoss.TELEGRAPH_MS
 end
 
--- Pure-ish: when floor n's boss room unseals this season (Q13). nil = no season start set (no calendar gate).
-function SpireBoss.calendarOpensAt(n)
-	local start = kv.scoped("spirebound-season"):get("startedAt")
-	if not start then
-		return nil
-	end
-	return start + (SpireBoss.CALENDAR_FIRST_DAY + (n - 1) * SpireBoss.CALENDAR_STEP_DAYS) * 86400
-end
-
-function SpireBoss.calendarOpen(n, now)
-	local at = SpireBoss.calendarOpensAt(n)
-	return at == nil or now >= at, at
-end
+-- No calendar on boss doors (Jay, 2026-11-27, Q13: "no set day when the boss doors open. its upon players being
+-- ready."): a floor boss's hall opens as soon as its requirements (the Stair Key on Floor 1) are met. The old calendar
+-- gate (day 3, then a floor every 6 days) is gone.
 
 -- Pure: may this party start a private repeat kill? members = { { name, lockedAt } }, all = within reach of the leader
 function SpireBoss.privateCheck(members, allNear, floorCleared, roomBusy, now)

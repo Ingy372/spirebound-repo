@@ -312,7 +312,7 @@ def rows_and_problems(monsters, floors, prices, houses, tasks):
         kph = kills_per_hour(hp, mid)
         hours = band_hours(xp, hp, lo, hi)
         real_hours = band_hours(xp, hp, lo, hi, real_stage)          # with the engine's bonuses (review A3-1)
-        real_gold = sum(coin_value(m["loot"], rate_loot()) for m in camp) / len(camp)   # with loot rate 2 (review E-1)
+        real_gold = sum(coin_value(m["loot"], rate_loot()) for m in camp) / len(camp)   # with the engine's loot rate (review E-1; 1 since QA20)
         melee = sum(max((-a[2] for a in m["attacks"] if a[0] == "melee"), default=0) for m in camp) / len(camp)
         taken = melee / 2 * 0.6 * 0.8 * (hp / dps(mid)) / 2 * kph
         heal, price = potion_for(mid, prices)

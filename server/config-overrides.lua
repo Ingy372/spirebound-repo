@@ -32,7 +32,8 @@ pushWhenAttacking = false
 
 -- Rates (DESIGN.md 5.5): stages live in server/core-overrides/stages.lua
 rateUseStages = true
-rateLoot = 2
+-- Normal loot (Jay, 2026-11-27, Q84: "why would we keep every drop at a doubled rate...?"); was 2. Roadmap QA20.
+rateLoot = 1
 -- Autoloot and rare drops first (DESIGN.md 15)
 autoLoot = true
 -- Looted coins stay in the backpack until the player deposits them (Jay, 2026-11-27, Q76: "they should stay in the bag

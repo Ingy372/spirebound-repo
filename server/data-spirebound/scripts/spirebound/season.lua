@@ -52,6 +52,7 @@ function cmd.onSay(player, words, param)
 		Result.free(q)
 	end
 	kv.scoped("spirebound-season"):set("number", current + 1)
+	kv.scoped("spirebound-season"):remove("startedAt") -- the next season's launch week starts with its own /launch start
 	-- 8.3: the wipe itself runs offline (windows\Season-Reset.bat), so nothing the server holds in memory can be
 	-- saved back over it. Save now, then shut down.
 	logger.info("[Spirebound] season {} ended by {}: {} characters archived; the server shuts down for the wipe", current, player:getName(), count)
@@ -73,32 +74,37 @@ function login.onLogin(player)
 end
 login:register()
 
--- Q13: /calendar start | stop | show (owner). The floor boss halls unseal on their day once a season has started.
-local calendar = TalkAction("/calendar")
-function calendar.onSay(player, words, param)
+-- /launch start | stop | show (owner): when this season's launch began. The first 7 days are the launch week: the
+-- harder grounds may grow to twice their size when full (QA15) and the cavebot is off on Floor 1 (QA16). Boss doors no
+-- longer wait for a day (Q13, 2026-11-27).
+local launch = TalkAction("/launch")
+function launch.onSay(player, words, param)
 	if not player:getGroup():getAccess() then
 		return true
 	end
 	local s = kv.scoped("spirebound-season")
 	if param == "start" or param == "stop" then
-		SpireMod.log(player:getName(), "calendar", param)
+		SpireMod.log(player:getName(), "launch", param)
 	end
 	if param == "start" then
 		s:set("startedAt", os.time())
 	elseif param == "stop" then
 		s:remove("startedAt")
 	end
-	local lines = {}
-	for n = 1, 10 do
-		local at = SpireBoss.calendarOpensAt(n)
-		table.insert(lines, "Floor " .. n .. ": " .. (at and os.date("%d %b %H:%M", at) or "no gate"))
+	local at = SpireSeason.startedAt()
+	local text
+	if not at then
+		text = "No launch started. Say /launch start when the season opens."
+	else
+		text = string.format("Launch started %s. Launch week %s (until %s).", os.date("%d %b %H:%M", at),
+			SpireSeason.inLaunchWeek() and "is ON" or "is over", os.date("%d %b %H:%M", at + SpireSeason.LAUNCH_WEEK))
 	end
-	player:showTextDialog(2821, "Boss hall calendar\n" .. table.concat(lines, "\n"))
+	player:showTextDialog(2821, "Season " .. SpireSeason.current() .. "\n" .. text)
 	return false
 end
-calendar:separator(" ")
-calendar:groupType("god")
-calendar:register()
+launch:separator(" ")
+launch:groupType("god")
+launch:register()
 
 -- R13: /scope test | launch | show (owner). "test" = the friends test (Floors 1-2, no arena, siege, shop or Season Path).
 local scope = TalkAction("/scope")

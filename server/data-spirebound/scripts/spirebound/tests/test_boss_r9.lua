@@ -43,20 +43,12 @@ SpireTest.add("boss: rewards wait for players who were offline at the kill", fun
 	kv.scoped("spirebound-boss-pending"):remove("Nobody Online Here")
 end)
 
-SpireTest.add("boss: the season calendar seals each floor's hall until its day (Q13)", function()
-	local s = kv.scoped("spirebound-season")
-	local old = s:get("startedAt")
-	s:remove("startedAt")
-	SpireTest.eq((SpireBoss.calendarOpen(1, 12345)), true, "no season started: no gate")
-	s:set("startedAt", 1000000)
-	SpireTest.eq((SpireBoss.calendarOpen(1, 1000000 + 86400)), false, "day 2: Floor 1's hall is still sealed")
-	SpireTest.eq((SpireBoss.calendarOpen(1, 1000000 + 2 * 86400)), true, "day 3: open")
-	SpireTest.eq(SpireBoss.calendarOpensAt(2), 1000000 + 8 * 86400, "Floor 2's hall six days later")
-	if old then
-		s:set("startedAt", old)
-	else
-		s:remove("startedAt")
-	end
+SpireTest.add("season: no calendar on boss doors (Q13, 2026-11-27); the launch week is the first 7 days", function()
+	SpireTest.eq(SpireBoss.calendarOpen, nil, "the calendar gate is gone")
+	SpireTest.eq(SpireSeason.launchWeekAt(nil, 12345), false, "no launch started: no launch week")
+	SpireTest.eq(SpireSeason.launchWeekAt(1000000, 1000000 + 86400), true, "day 2: launch week")
+	SpireTest.eq(SpireSeason.launchWeekAt(1000000, 1000000 + 7 * 86400 - 1), true, "the last second of day 7")
+	SpireTest.eq(SpireSeason.launchWeekAt(1000000, 1000000 + 7 * 86400), false, "day 8: over")
 end)
 
 SpireTest.add("boss: the private hall takes a party of 1-5 once a day, after the floor is cleared", function()

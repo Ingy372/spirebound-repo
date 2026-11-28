@@ -77,7 +77,7 @@ Level bands are hunting targets, not doors. No level cap. Floors 2–5 use the O
 
 ### 3.2 How a floor unlocks
 1. The **field boss** at the pass must die once (anyone, any time). After that the labyrinth door is open forever for everyone.
-2. The **floor boss** room is at the end of the labyrinth. Up to 20 players inside. PvP is on inside boss rooms.
+2. The **floor boss** room is at the end of the labyrinth. Up to 20 players inside. PvP is on inside boss rooms for players of level 50 and above (Jay, 2026-11-27, Q82). **No calendar** (Jay, 2026-11-27, Q13: "no set day when the boss doors open. its upon players being ready."): the room opens as soon as its requirements are met (on Floor 1, the Stair Key). The season's start date (`/launch start`) only marks the launch week (the first 7 days: the crowd boost and the cavebot's Floor 1 ban).
 3. **First kill of a floor boss:**
    - opens the stair and the teleport gate to the next floor for everyone;
    - plays a server-wide gold announcement + bell: *"Floor 3 has been cleared by <names>! The way to Floor 4 is open."*;
@@ -556,6 +556,9 @@ Jay's rules (2026-11-08): *"Cave bot will be built in, but when it's enabled xp 
 - Stamina still drains as usual.
 - Secrets, rare chests and the Twin Fang trial never trigger while the cavebot is on, or within 10 minutes of using it.
 - Boss rooms (field and floor bosses) refuse to let a cavebot character in.
+- **Where it doesn't work at all (QA16; Q60, Claude's call; Jay, 2026-11-27: "cavebot needs to but turned on after the end of the first week. two weeks is two long."):** never in the four starter grounds (the Ratwarren, Toad Pond, Sproutling Glade, Waspgrass Fields), and nowhere on Floor 1 in the first 7 days of a season (the launch week, from the owner's `/launch start`). There a botting character earns no experience and no loot.
+- **Followers:** a character in a party within 7 tiles of a botting member gets the same experience and loot cut (Q16).
+- **No automatic sword-skill or spell rotation** in the client: the bot's attack helper and combo module are taken out by the installer (Q16).
 - **Auto-targeting on its own (no cavebot) costs nothing.** It's a convenience for players at the keyboard **(Claude's call)**.
 
 **In fights with players, the helpers only heal (Jay, 2026-11-25):** *"i think the bot should work for pvp strictly for healing. no auto hasting or auto counters to any pvp elements, strictly healing."*

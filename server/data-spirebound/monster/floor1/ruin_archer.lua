@@ -38,7 +38,7 @@ monster.loot = {
 	{ id = 3447, chance = 30000, maxCount = 15 },
 	{ id = 3350, chance = 3000, maxCount = 1 },
 	{ id = 11492, chance = 8000, maxCount = 1 },
-	{ id = 5706, chance = 500, maxCount = 1 },
+	{ id = 5706, chance = 1000, maxCount = 1 },
 }
 
 monster.attacks = {

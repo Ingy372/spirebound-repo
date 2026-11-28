@@ -6,6 +6,8 @@
 --   Packed : 8 or more             -> every crowd spot
 --   Rush   : 12 or more, Guarded (starter) grounds only -> every spot, and crowd monsters return 3x as fast
 -- A ground steps up at once and steps down only after 5 minutes below the line. After a restart every ground is Quiet.
+-- Launch week (QA15, Q72: Claude's call, 2026-11-27): in the first 7 days of a season a Packed harder ground (not a
+-- Guarded starter ground) puts out every crowd group twice, so it grows to about 2x instead of 1.5x.
 -- Rules here are pure (tested); the 30-second tick is scripts/spirebound/crowd.lua. Ground data: wilds_data.lua.
 
 SpireCrowd = SpireCrowd or {
@@ -54,6 +56,14 @@ function SpireCrowd.spotOn(state, n)
 		return true
 	end
 	return state == "busy" and n % 2 == 1
+end
+
+-- Pure: how many copies of its group a switched-on crowd spot puts out (2 in launch week on a full harder ground)
+function SpireCrowd.copies(state, guarded, launchWeek)
+	if launchWeek and not guarded and state == "packed" then
+		return 2
+	end
+	return 1
 end
 
 -- Pure: how long a crowd group takes to come back (real seconds)
@@ -117,6 +127,7 @@ function SpireCrowd.update(g, now, count, near)
 	-- filled a ground for a player who was alone)
 	local rapid = SpireCrowd.rapidRespawn()
 	local isNear = near or SpireCrowd.playerNear
+	local copies = SpireCrowd.copies(state, g.guarded, SpireSeason and SpireSeason.inLaunchWeek(now))
 	local spawned = 0
 	for _, s in ipairs(g.spots) do
 		local key = g.id .. ":" .. s.n
@@ -130,7 +141,7 @@ function SpireCrowd.update(g, now, count, near)
 		local pos = Position(s.x, s.y, s.z)
 		if alive == 0 and SpireCrowd.spotOn(state, s.n) and now >= sr.ready and not isNear(pos) then
 			for _, m in ipairs(s.group) do
-				for _ = 1, m[2] do
+				for _ = 1, m[2] * copies do
 					local mon = Game.createMonster(m[1], pos, true, false)
 					if mon then
 						table.insert(sr.alive, mon:getId())
@@ -170,7 +181,7 @@ function SpireCrowd.statusLine(id)
 	local extra = ({
 		quiet = "no extra monsters",
 		busy = "extra monsters are out",
-		packed = "every extra group is out",
+		packed = (SpireSeason and SpireSeason.inLaunchWeek() and not g.guarded) and "every extra group is out, twice over for launch week" or "every extra group is out",
 		rush = "every extra group is out, coming back fast",
 	})[rec.state or "quiet"]
 	return string.format("%s: %s (%s, %s)", g.title, rec.state or "quiet", who, extra)

@@ -20,15 +20,15 @@ For a hunter at the middle level of each floor, hunting by hand. Floor 1 in deta
 Climbing all ten floors by hand: about 261 hours by the model (real play is slower).
 
 ## What the real game changes (review A3-1 and E-1, 2026-11-26)
-The engine adds 1.5x more experience while stamina is above 39 hours (Tibia's rested bonus, the first 3 hours of a day) and multiplies every drop chance by 2 (capped at 100%). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: Floor 1 should take 11-15 hours). The table above uses the plain numbers; this column is what a fully rested character gets. Loot waits on Q84.
+The engine adds 1.5x more experience while stamina is above 39 hours (Tibia's rested bonus, the first 3 hours of a day) and multiplies every drop chance by 1 (capped at 100%). Its hidden 1.5x below level 50 is taken back out on every kill (Q83, Jay 2026-11-27: Floor 1 should take 11-15 hours). The table above uses the plain numbers; this column is what a fully rested character gets. Loot waits on Q84.
 
 | Floor | Hours to climb (plan) | With the engine's bonuses | Gold/h (plan) | With loot rate |
 |---|---|---|---|---|
-| 1 | 15.3 | 10.2 | 2,236 | 2,688 |
-| 2 | 14.0 | 9.3 | 11,000 | 11,071 |
-| 3 | 16.0 | 10.7 | 14,000 | 18,039 |
-| 4 | 18.0 | 12.0 | 18,000 | 26,653 |
-| 5 | 22.0 | 14.7 | 22,000 | 26,944 |
+| 1 | 15.3 | 10.2 | 2,236 | 2,236 |
+| 2 | 14.0 | 9.3 | 11,000 | 11,000 |
+| 3 | 16.0 | 10.7 | 14,000 | 14,000 |
+| 4 | 18.0 | 12.0 | 18,000 | 18,000 |
+| 5 | 22.0 | 14.7 | 22,000 | 22,000 |
 | 6 | 26.0 | 17.3 | 26,487 | 26,487 |
 | 7 | 30.0 | 20.0 | 35,015 | 35,015 |
 | 8 | 35.0 | 23.3 | 34,954 | 34,954 |

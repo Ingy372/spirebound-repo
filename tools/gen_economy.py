@@ -369,7 +369,7 @@ L += ["", f"Loot: the engine multiplies every drop chance by {RATE_LOOT:g} (capp
       "Bandit against the 33 the plain tables give); the table at the end of this page shows what that adds. The plan's own targets (Q30: "
       f"Floor 1 in 11-15 hours by hand): by the model level 35 takes {real_timeline[35]:.1f} hours fully rested and "
       f"{tired_timeline[35]:.1f} on low stamina; real play is about 40% slower, so most players land in 11-15 hours "
-      "(Q83). Loot waits on Q84.", "",
+      "(Q83). Loot is normal (1x) since Jay's Q84 answer of 2026-11-27, so the plain tables are the real game.", "",
       "Coins and NPC loot an hour for a Vanguard, plain tables against the real game (loot rate counted). The checks above and "
       "the hunting tasks' pay still use the plain column.", "",
       "| Ground | Gold/h (plan) | Gold/h (real) | NPC loot/h (plan) | NPC loot/h (real) |", "|---|---|---|---|---|"]
