@@ -1,6 +1,6 @@
 # Style trees, second version (design, 2026-11-27)
 
-**Jay reviewed this on 2026-11-27; section 7 at the end holds his changes and overrides anything above it.**
+**Jay reviewed this on 2026-11-27; sections 7 and 8 at the end hold his changes and override anything above them.**
 
 Replaces the path and final-style table in `2026-11-23-gear-progression-design.md` 4.2. Everything else in 4.2 stays the same: 3 stages of 10 levels, 2 permanent choices, the stance from Mastery 5 (P11), pacing (stage ends around levels 37 / 110 / 275), the shop respec. This file only changes **what the choices are**.
 
@@ -222,3 +222,38 @@ Jay: "careful, this can be a hard concept to balance when it comes to pvm. does 
 - **A held monster still casts and shoots**, so kiting is never free.
 - Control time at full Snareweaver drops from +40% to **+25%**.
 - Frostwarden (the Mystic controller) follows the same rules.
+
+## 8. Jay's second review (2026-11-28)
+
+Jay: "i love pretty much everything thats been created for styles ... all of the balances look good to me." Section 7 is approved except where this section changes it.
+
+### 8.1 When the choices come
+
+Jay: "the 1st style choice should come upon players arriving to floor 2. the second can happen at mastery level 10 as planned."
+
+- **First choice (the path): when a player first arrives on Floor 2.** The summons letter arrives as they step into Floor 2's town, and the trainer's choice window opens from there. Mastery 10 lands around level 37, about when players reach Floor 2 anyway, so the two line up. A player who reaches Floor 2 early still chooses on arrival; the path's bonus then fills as their Mastery climbs.
+- **The free try-out (stance) at Mastery 5 stays on Floor 1**, so players feel the choice coming.
+- **Second choice (the final style): Mastery 20, around level 110**, as planned. (Claude's reading: Jay's "mastery level 10" means "the second choice as planned". Checked in Q46.)
+
+### 8.2 Briars stay with the Mystic
+
+Jay: "originally briars were going to the mystics property ... thats unexpected for the tibia community. they are use to druids (mystics) being the ones who control wild growth."
+
+- **The briar wall goes to the Mystic** (Frostwarden, the controller), like Tibia's druid wild growth. Its PvP version (vine walls that fire burns, DESIGN 6.7) was already the Mystic's.
+- **Snareweaver becomes the Ranger's trapper with Ranger tools:** set traps on the ground that snap shut on the first monster to step in, nets fired from the bow, and slowing shots. Signature **Web of Briars** is renamed **Hunter's Snare**: a ring of traps around the Ranger.
+
+### 8.3 Holding monsters: an emergency button, not a way to win (approved)
+
+Jay: "i am in favor for the monsters building snare or slow immunity and it only working for so long ... it provides a timing aspect to boss fights and harder monsters. they cant just be stun kited the whole fight. but its there as an emergency button to save the party, or used to get the monster into certain positions."
+
+- Every monster builds resistance: a second hold within 10 seconds lasts half as long, a third does nothing for 10 seconds.
+- **Bosses and hard monsters are no longer simply immune** (Claude's change, from Jay's "timing aspect to boss fights"): they can be held once, then are immune for a long time (30 seconds on bosses). So a hold is a button the party saves for the right moment.
+- A held monster still casts and shoots.
+
+### 8.4 A summoner (Jay: "one of the style choices could be a summoner? ... this is a mechanic that already exists in tibia and we could have a lot of fun with it")
+
+Claude's view: a good fit, if its known problems are handled from the start. Open in Q113.
+
+### 8.5 Twin Fang and the hero weapons
+
+Jay likes a "hero" in each class: one special weapon per class, held by one player per season, with power that "helps to create FOMO" but is "nothing crazy or game breaking", and either no PvP use or a PvP nerf. Open in Q114.

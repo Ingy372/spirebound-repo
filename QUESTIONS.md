@@ -8,6 +8,26 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
+### Q113. A summoner style? (2026-11-28)
+You asked: "one of the style choices could be a summoner? thoughts on this? this is a mechanic that already exists in tibia and we could have a lot of fun with it."
+- **My view: yes, it fits.** Tibia players know summons, and a pet that fights beside you is fun.
+- **Where:** the Mystic's Wildcaller path. Its "kill it" final (Blightcaller) becomes the summoner: you call one or two wild beasts that fight for you, and your own spells hit weaker. Blightcaller's poison thorns become one of its spells. Frostwarden stays the controller. Tibia's druids are the nature callers, so it feels natural.
+- **Problems summons caused in Tibia, solved from the start:** at most 2 beasts; they never block other players' paths and can't be used to trap a player; their kills count for their owner (no stealing kills); they vanish if the owner logs out or goes too far; they don't work with the cavebot (no AFK army).
+- **Other options:** make the summoner an Arcanist style instead (fire spirits); or give every class one small summon at a high level, the way newer Tibia gives every vocation a familiar.
+- Assumed until you answer: the Mystic summoner in place of Blightcaller.
+- Jay's answer:
+
+### Q114. Twin Fang and a hero weapon for each class: how do they work? (2026-11-28)
+You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for each other class, one holder per season, power that creates FOMO but "nothing crazy or game breaking", and a PvP limit. My suggestion, combining your two ideas:
+- **Four hero weapons:** Twin Fang (the Vanguard's paired blades), plus one each for the Ranger, Arcanist and Mystic (I name and draw them).
+- **One holder each per season.** Each has a hidden trial (a secret, found through riddles like the others) on a middle floor. The first to beat it owns the weapon for the season.
+- **Power, but not crazy:** about 10% stronger than the best normal weapon on the floor the holder is on (it grows with them, so it never goes out of date and never runs away), plus 2 or 3 special moves of its own, plus a **rally** in boss fights: the holder's party gets a small boost while the hero is alive ("lead the way").
+- **PvP:** in fights against players it drops to the strength of the best normal weapon on that floor (your nerf idea).
+- **Can't be traded** (one per season would make it the target of real-money trading). If the holder doesn't log in for 7 days, the weapon returns to its trial for someone else.
+- **Twin Fang still gives the Reaver its strongest off-hand:** every Reaver dual-wields, but the Twin Fang holder's off-hand strike is the best in the game.
+- Assumed until you answer: as above.
+- Jay's answer:
+
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
 You asked for torches in some dungeons and others completely dark. I chose by level: the deeper caves are dark (Shard
 Grotto, the Lower Works, the Bastion Cellars, and the secret Sealed Cut); the starter and early caves (Ratwarren,
@@ -31,6 +51,7 @@ Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief
 - Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
 - **Jay's answer (2026-11-27):** "i need to talk about this in more depth" Nothing is built (ST1 waits) until we talk.
 - **First talk (2026-11-27):** Jay likes the trees but wants them easy to take in, Reaver rebuilt around an off-hand weapon, and a closer look at Dawnmender, Spellbreaker, Pathfinder and Snareweaver. Changes written in the design's section 7 (also: how choices are shown, via the class trainer's summons). Still open: Jay's reactions to section 7, Twin Fang's place (section 7.3), and Q46.
+- **Second talk (2026-11-28):** "i love pretty much everything thats been created for styles ... all of the balances look good to me." Approved with changes (design section 8): first choice on arriving at Floor 2, briars stay with the Mystic, monsters build resistance to being held (bosses can be held once, then not for a while). Still open: Q113 (summoner) and Q114 (hero weapons).
 
 ### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
 You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
@@ -99,6 +120,7 @@ The design says 10 floors at launch. But floors unlock about 6 days apart (the c
 - **Fortune Hall** (gambling with gold) is a legal risk once gold can be bought indirectly through shop items sold on the market. **Recommendation:** leave it out of season 1 and decide after talking to a professional (roadmap 7.5).
 - Assumed until you answer: both stay as designed; neither gets more work.
 - Jay's answer:
+- **Twin Fang part moved to Q114 (2026-11-28).** The Fortune Hall part is still open here.
 
 ### Q57. Shrink crafting to arrows and potions? (2026-11-25)
 You said on 23 Nov you're "not a fan of crafting", and the gear path has replaced it for weapons and armour. What's left is four crafters (Fletcher, Alchemist, Runewright, Tailor) and a material from every monster.
@@ -125,6 +147,7 @@ Each class splits into two paths (for example Ranger: Marksman or Trapper). Toda
 - **(b)** Move the real choice earlier, to about level 30 (around the Axe-Lord).
 - **My recommendation:** settle it when we talk about the new style trees (Q103), since it's part of the same system. Until then: (a).
 - **Jay's answer (2026-11-27):** "like you said, ill cover it in our convo about it"
+- **Jay (2026-11-28):** "the 1st style choice should come upon players arriving to floor 2. the second can happen at mastery level 10 as planned." Built into the design (section 8.1): the path is chosen on first arriving on Floor 2, the final style at Mastery 20 (around level 110) as planned; the free try-out stays at Mastery 5 on Floor 1. Check: by "mastery level 10" did you mean the second choice stays where it was planned (Mastery 20)? Assumed yes.
 
 ### Q20. Houses: many more, or rentable rooms? [3.7]
 There are 63 houses on the whole server, and most house features need one.
