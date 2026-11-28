@@ -1,0 +1,94 @@
+{
+ "character": "Pilot Vanguard",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1210,
+    1268,
+    8
+   ],
+   "note": "MR2: column hall (jumped in)"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1196,
+    1268,
+    8
+   ],
+   "note": "MR2: corridor to the flooded hall"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1190,
+    1268,
+    8
+   ],
+   "note": "MR2: flooded hall, east half"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2: flooded hall, east half"
+  },
+  {
+   "do": "shot",
+   "name": "mr2_flooded_east"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1182,
+    1270,
+    8
+   ],
+   "note": "MR2: flooded hall, west half (over a crossing)"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2: flooded hall, west half"
+  },
+  {
+   "do": "shot",
+   "name": "mr2_flooded_west"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}
