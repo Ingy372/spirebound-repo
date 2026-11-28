@@ -1,7 +1,7 @@
 -- Roadmap 2.14 - 2.17: Hardcore extras, autoloot, tasks, catch-up.
 SpireTest.add("death: catch-up and Hardcore blessing cap", function()
-	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 5000, 40, 100000), 0, "normal below 50 loses nothing")
-	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 5000, 60, 100000), 5000, "normal from 50 loses as usual")
+	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 5000, 29, 100000), 0, "normal below 30 loses nothing")
+	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, 5000, 31, 100000), 5000, "normal from 30 loses as usual (Q77)")
 	-- level 40: Tibia's unblessed loss is 63,360 experience
 	SpireTest.eq(Difficulty.baseDeathLoss(40, 917800), 63360, "base loss at level 40")
 	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.HARDCORE, 1000, 40, 917800), 31680, "hardcore: blessings can't remove more than half")

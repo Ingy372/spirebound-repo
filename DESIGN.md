@@ -298,7 +298,7 @@ The current zone is shown in the corner of the client (icon + color).
 
 ### 6.4 Protections against farming weaker players **(Claude's call on all numbers, Jay can veto any of them)**
 
-1. **Newbie protection:** below **level 50** you can't attack players and players can't attack you, everywhere except inside boss rooms, Contested and Deadzone ground included: you may hunt there, but only players of 50 and above fight each other on it *(Claude's call, 2026-11-25: the old border kept everyone under 50 out, and Floors 1-4's apex grounds are hunted below 50)*. A new character also has 2 hours of play time protection regardless of level.
+1. **Newbie protection:** below **level 50** you can't attack players and players can't attack you, everywhere, boss rooms (Jay, 2026-11-27, Q82: "yes"), Contested and Deadzone ground included: you may hunt there, but only players of 50 and above fight each other on it *(Claude's call, 2026-11-25: the old border kept everyone under 50 out, and Floors 1-4's apex grounds are hunted below 50)*. A new character also has 2 hours of play time protection regardless of level.
 2. **Level-range protection:** outside Contested/Deadzone and boss rooms, you can't start a fight with a player below **70% of your level** (a level 200 can't attack a level 139). They can still defend themselves, and once they hit you, you can hit back. Skulled players (orange/red/black) are never protected by this.
 3. **Outnumbered shield:** if 3 or more different players have hit you in the last 10 seconds, you take 10% less player damage per attacker beyond 2 (max 40% less). Fights stay winnable for small teams with good play (Jay's "fair PvP" memory) and masses of 4–10 lose their steamroll.
 4. **Guild-farming shield:** if members of the same guild kill you twice within 6 hours outside a war, you get a 30-minute **Sanctuary**: that guild can't attack you and you can't attack them. Repeated triggers are logged for staff review.
@@ -625,7 +625,7 @@ Jay asked (2026-11-08) not to reinvent the wheel: look at what top servers share
 **Lessons from why players quit, and our answer:**
 - Pay-to-win → never (DESIGN 11).
 - Short life / fear of resets → seasons are announced months ahead, account-wide rewards carry over (DESIGN 4).
-- Bad first 2 hours → the guided Arrival Yard, no-loss deaths below 50, test the first 2 hours in every playtest.
+- Bad first 2 hours → the guided Arrival Yard, no-loss deaths below 30 (Q77), test the first 2 hours in every playtest.
 - Early XP too strong, then nothing to do → stages taper and floors unlock content over the season.
 - Real-money traders, launch rushers → no character bazaar; RMT bans in the rules.
 - Level gaps → seasons + catch-up + level-range PvP protection.

@@ -105,8 +105,8 @@ local function giveReward(player, secret, first)
 	else
 		SpireSecrets.markGoldPaid(player:getAccountId(), secret.id)
 		local gold = SpireSecrets.purse(secret.floor)
-		player:setBankBalance(player:getBankBalance() + gold) -- into the bank: a full backpack never loses it
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold goes to your bank account.", gold))
+		local bag, bank = SpireGive.gold(player, gold) -- the backpack; the bank only if it is full (Q76)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold, %s.", gold, SpireGive.goldWhere(bag, bank)))
 	end
 	SpireSecrets.giveKeeps(player, secret, false)
 end

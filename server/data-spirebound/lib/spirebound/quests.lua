@@ -228,11 +228,11 @@ for _, q in ipairs({
 	table.insert(SpireQuests.list, q)
 end
 
--- Party playtest 2026-11-26 (hand-off P1-1): quest gold goes to the bank, so a full or overloaded backpack never drops
--- the coins on the floor (and coins don't fill the backpack, P2-7).
+-- Quest gold goes into the backpack (Jay, 2026-11-27, Q76), weight ignored; only with no free slot does it go to the
+-- bank, so a full backpack never drops the coins on the floor (party playtest hand-off P1-1).
 function SpireQuests.payGold(player, gold)
-	player:setBankBalance(player:getBankBalance() + gold)
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold was paid into your bank account.", gold))
+	local bag, bank = SpireGive.gold(player, gold)
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%d gold, %s.", gold, SpireGive.goldWhere(bag, bank)))
 end
 
 -- Pure: does this giver have outfit-addon quests for this class?

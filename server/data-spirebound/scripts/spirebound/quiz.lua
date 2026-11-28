@@ -93,9 +93,9 @@ function answer.onSay(player, words, param)
 	end
 	SpireQuiz.open = nil
 	local gold = SpireQuiz.prize(player:getLevel())
-	player:setBankBalance(player:getBankBalance() + gold)
+	SpireGive.gold(player, gold) -- Q76: coins go in the backpack
 	player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW)
-	Game.broadcastMessage(string.format("Tower Quiz: %s answered first (%s)! %d gold to their bank.", player:getName(), row.a[1], gold), MESSAGE_EVENT_ADVANCE)
+	Game.broadcastMessage(string.format("Tower Quiz: %s answered first (%s)! %d gold for them.", player:getName(), row.a[1], gold), MESSAGE_EVENT_ADVANCE)
 	return false
 end
 answer:separator(" ")

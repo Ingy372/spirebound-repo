@@ -128,9 +128,9 @@ SpireTest.add("party fixes P1-2: no shop passes the 'ignore capacity' tick on", 
 	SpireTest.eq(table.concat(bad, ", "), "", "shops that still pass the tick on")
 end)
 
-SpireTest.add("party fixes P2-6/P2-7: inns buy meat, coins go to the bank", function()
+SpireTest.add("party fixes P2-6: inns buy meat; QA4: looted coins stay in the backpack", function()
 	SpireTest.eq(configKeys.AUTOBANK ~= nil, true, "this engine knows autoBank")
-	SpireTest.eq(configManager.getBoolean(configKeys.AUTOBANK), true, "looted coins go to the bank")
+	SpireTest.eq(configManager.getBoolean(configKeys.AUTOBANK), false, "looted coins stay in the backpack (Jay, Q76)")
 	local f = io.open("data-spirebound/npc/hearthgate_innkeeper.lua", "r")
 	local text = f:read("*a")
 	f:close()
@@ -176,6 +176,8 @@ local function deathPlayer(tag, mode, level, exp)
 	function p:getLevel() return self.level end
 	function p:hasBlessing(b) return self.bless[b] == true end
 	function p:addBlessing(b) self.bless[b] = true end
+	function p:removeBlessing(b) self.bless[b] = nil end
+	function p:sendTextMessage(_, t) self.told = t end
 	store("spirebound"):set("difficulty", mode)
 	return p, store
 end
@@ -196,17 +198,25 @@ SpireTest.add("party fixes P1-5b: experience the engine took from a young Normal
 	SpireTest.eq(p:getExperience(), 200000, "down to the target")
 end)
 
-SpireTest.add("party fixes P1-5c: Normal climbers below 50 get their blessings back at login; others don't", function()
+SpireTest.add("party fixes P1-5c: Normal climbers below 30 get their blessings back at login; others don't", function()
 	local tag = "bless" .. os.time()
-	local p = deathPlayer(tag .. "n", Difficulty.NORMAL, 30, 0)
+	local p = deathPlayer(tag .. "n", Difficulty.NORMAL, 29, 0)
 	p.bless[1] = true -- what the playtest characters had left after a death
 	SpireTest.eq(SpireDifficulty.youngBlessings(p), SpireDifficulty.BLESSINGS - 1, "the missing ones are given")
 	SpireTest.eq(p:hasBlessing(5), true, "fully blessed")
 	SpireTest.eq(SpireDifficulty.youngBlessings(p), 0, "nothing more next time")
-	local h = deathPlayer(tag .. "h", Difficulty.HARDCORE, 30, 0)
+	local h = deathPlayer(tag .. "h", Difficulty.HARDCORE, 29, 0)
 	SpireTest.eq(SpireDifficulty.youngBlessings(h), 0, "Hardcore keeps its item risk")
-	local old = deathPlayer(tag .. "o", Difficulty.NORMAL, 50, 0)
-	SpireTest.eq(SpireDifficulty.youngBlessings(old), 0, "from level 50 the priest sells them")
+	local old = deathPlayer(tag .. "o", Difficulty.NORMAL, 30, 0)
+	SpireTest.eq(SpireDifficulty.youngBlessings(old), 0, "from level 30 the priest sells them (Q77)")
+	-- QA3: reaching 30 takes the free blessings back, so the first death there is a standard one
+	SpireTest.eq(SpireDifficulty.endFreeBlessings(p), 0, "still 29: kept")
+	p.level = 30
+	SpireTest.eq(SpireDifficulty.endFreeBlessings(p), SpireDifficulty.BLESSINGS, "at 30 the gifts are taken back")
+	SpireTest.eq(p:hasBlessing(1), false, "no blessing left")
+	SpireTest.eq(SpireDifficulty.endFreeBlessings(p), 0, "only once")
+	old.bless[2] = true -- bought from the priest, never gifted
+	SpireTest.eq(SpireDifficulty.endFreeBlessings(old), 0, "bought blessings are kept")
 end)
 
 SpireTest.add("party fixes: fighting with no weapon in hand is noticed", function()

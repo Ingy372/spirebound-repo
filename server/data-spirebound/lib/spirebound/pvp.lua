@@ -2,7 +2,7 @@
 -- Pure rules first (tested in-game), game helpers after.
 
 SpirePvP = {
-	NEWBIE_LEVEL = 50, -- below this you can't attack or be attacked (except in boss rooms)
+	NEWBIE_LEVEL = 50, -- below this you can't attack or be attacked, boss rooms included (Jay, 2026-11-27, Q82: "yes")
 	NEW_PLAY_TIME = 2 * 3600, -- DESIGN 6.4: a new character's first 2 hours of play are protected at any level, everywhere
 	LEVEL_RANGE = 0.70, -- can't start a fight with someone below 70% of your level (outside Contested/Deadzone/boss rooms)
 	BULLY_GAP = 30, -- unjust kill on someone 30+ levels lower counts double
@@ -152,7 +152,7 @@ function SpirePvP.canAttack(a, v, zone)
 	if zone == "town" then
 		return false, "You can't fight in town."
 	end
-	if zone ~= "bossroom" and not v.aidedSkull and (a.level < SpirePvP.NEWBIE_LEVEL or v.level < SpirePvP.NEWBIE_LEVEL) then
+	if not v.aidedSkull and (a.level < SpirePvP.NEWBIE_LEVEL or v.level < SpirePvP.NEWBIE_LEVEL) then
 		return false, "Players below level " .. SpirePvP.NEWBIE_LEVEL .. " are protected."
 	end
 	-- RV6 (DESIGN 6.4): the first 2 hours of play protect a new character "regardless of level", boss rooms included.

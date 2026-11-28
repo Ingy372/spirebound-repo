@@ -185,8 +185,8 @@ function SpireBoss.payCredited(credit, amount, bossName)
 	for _, name in ipairs(credit) do
 		local p = Player(name)
 		if p then
-			p:setBankBalance(p:getBankBalance() + amount)
-			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your share of the %s's hoard: %d gold, paid into your bank.", bossName, amount))
+			local bag, bank = SpireGive.gold(p, amount) -- Q76: coins go in the backpack (offline: the bank, below)
+			p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("Your share of the %s's hoard: %d gold, %s.", bossName, amount, SpireGive.goldWhere(bag, bank)))
 		else
 			db.query("UPDATE `players` SET `balance` = `balance` + " .. amount .. " WHERE `name` = " .. db.escapeString(name))
 		end

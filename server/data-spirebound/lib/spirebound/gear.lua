@@ -607,8 +607,8 @@ function SpireGear.giveBossReward(p, boss)
 end
 
 -- ---------------------------------------------------------------- secret gear (adventure layer 4.1)
--- A ring, an amulet or boots that only a secret gives (SpireGearData.secretGear, tools/gen_gear.py). Bound to its
--- finder: it can't be traded, dropped, stored or sold (scripts/spirebound/secret_gear.lua). Bonuses work while worn.
+-- A ring, an amulet or boots that only a secret gives (SpireGearData.secretGear, tools/gen_gear.py). Given to its
+-- finder at first, then trades, drops, stores and sells like other gear (Jay, Q100). Bonuses work while worn.
 local A_SECRET = "sb_secret"
 SpireGear.SECRET_SLOTS = { feet = CONST_SLOT_FEET, necklace = CONST_SLOT_NECKLACE, ring = CONST_SLOT_RING }
 
@@ -650,8 +650,13 @@ function SpireGear.makeSecret(g)
 	end
 	item:setCustomAttribute(A_SECRET, g.id)
 	item:setAttribute(ITEM_ATTRIBUTE_NAME, g.name)
-	item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, "Secret: " .. g.text .. " while worn. Bound to its finder: it can't be traded, dropped or sold.")
+	item:setAttribute(ITEM_ATTRIBUTE_DESCRIPTION, SpireGear.secretText(g))
 	return item
+end
+
+-- Jay, 2026-11-27 (Q100): "secret gear can be traded." Only a secret makes one, but once found it is ordinary gear.
+function SpireGear.secretText(g)
+	return "Secret: " .. g.text .. " while worn. Only a hidden secret gives this."
 end
 
 -- Once per character. Returns true when given (or already owned).
@@ -680,7 +685,7 @@ function SpireGear.giveSecretGear(player, id)
 		return false
 	end
 	k:set(id, os.time())
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s! %s while worn. It is yours alone: it can't be traded or sold.", g.name, g.text))
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s! %s while worn. Only a secret gives this; keep it, trade it or sell it.", g.name, g.text))
 	player:getPosition():sendMagicEffect(CONST_ME_FIREWORK_YELLOW or CONST_ME_GIFT_WRAPS)
 	SpireGear.applySecret(player)
 	return true

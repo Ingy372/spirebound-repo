@@ -55,7 +55,7 @@ function open.onUse(player, item)
 	end
 	if kind == "first" then
 		local r = SpireChests.reward(g.lo, g.hi)
-		player:setBankBalance(player:getBankBalance() + r.gold) -- into the bank: a full backpack never loses it
+		local bag, bank = SpireGive.gold(player, r.gold) -- the backpack; the bank only if it is full (Q76)
 		acc:set(g.id, now)
 		SpireGive.reward(player, r.potions[1], r.potions[2])
 		if SpireDiscoveries then -- the chest's row on the Discoveries page fills once the record below is saved
@@ -64,12 +64,12 @@ function open.onUse(player, item)
 		end
 		SpireGive.reward(player, SpireGearData.tokens[1].rough, 1)
 		rec.first = now
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold (to your bank), %d %s and a rough Hearth Shard. It fills again every 20 hours.",
-			g.title, r.gold, r.potions[2], ItemType(r.potions[1]):getPluralName()))
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("You found %s's chest: %d gold (%s), %d %s and a rough Hearth Shard. It fills again every 20 hours.",
+			g.title, r.gold, SpireGive.goldWhere(bag, bank), r.potions[2], ItemType(r.potions[1]):getPluralName()))
 	else
 		local r = SpireChests.daily(g.lo, g.hi)
-		player:setBankBalance(player:getBankBalance() + r.gold)
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The chest has filled again: %d gold to your bank. Come back in 20 hours.", r.gold))
+		local bag, bank = SpireGive.gold(player, r.gold)
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("The chest has filled again: %d gold, %s. Come back in 20 hours.", r.gold, SpireGive.goldWhere(bag, bank)))
 	end
 	rec.last = now
 	store:set(g.id, rec)

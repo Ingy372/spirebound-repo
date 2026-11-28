@@ -21,7 +21,7 @@ npcConfig.voices = {
 
 local TIPS = {
 	"Your depot lockers are shared: whatever you leave here is waiting at every depot in the tower.",
-	"Coins you loot go straight to the bank. Banker Tolliver at the west counter will tell you your balance.",
+	"Coins you loot stay in your backpack. Banker Tolliver at the west counter keeps them safe: say deposit all.",
 	"Sell your loot to Trader Osric at the west counter, or put it on the market from any locker.",
 }
 

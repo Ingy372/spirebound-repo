@@ -74,8 +74,8 @@ function T.dig(player, s, rolls)
 	local out = { gold = T.gold(s.gid, r("gold")), shards = 0, guards = 0 }
 	local pos = s.pos
 	pos:sendMagicEffect(CONST_ME_POFF)
-	player:setBankBalance(player:getBankBalance() + out.gold)
-	local parts = { string.format("%d gold (paid into your bank)", out.gold) }
+	local bag, bank = SpireGive.gold(player, out.gold) -- Q76: coins go in the backpack
+	local parts = { string.format("%d gold (%s)", out.gold, SpireGive.goldWhere(bag, bank)) }
 	if r("shard") < D.digShardChance then
 		out.shards = r("shards") < 0.5 and 1 or 2
 		SpireGive.reward(player, D.cut, out.shards)

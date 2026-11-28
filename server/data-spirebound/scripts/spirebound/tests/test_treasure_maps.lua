@@ -70,7 +70,8 @@ SpireTest.add("treasure maps: a dig pays gold, counts toward the title and can r
 	function p:getName() return "Digtest" end
 	function p:kv() return store end
 	local out = T.dig(p, s, { gold = 0, shard = 0, shards = 0, ember = 0, keepsake = 0, guards = 0, count = 0 })
-	SpireTest.eq(p.money, D.digs.bandit_road.gold[1], "the gold went to the bank")
+	SpireTest.eq(SpireTest.coinValue(bp), D.digs.bandit_road.gold[1], "the gold went into the backpack (Q76)")
+	SpireTest.eq(p.money, 0, "not the bank")
 	SpireTest.eq(out.shards, 1, "a cut shard")
 	SpireTest.eq(out.ember, true, "an ember")
 	SpireTest.eq(out.keepsake ~= nil, true, "a keepsake")

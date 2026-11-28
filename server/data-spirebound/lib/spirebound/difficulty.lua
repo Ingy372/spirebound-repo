@@ -12,6 +12,9 @@ Difficulty.names = { [1] = "Normal", [2] = "Hardcore", [3] = "Death Game" }
 Difficulty.xpBonus = { [0] = 0, [1] = 0, [2] = 0.25, [3] = 0.50 }
 Difficulty.lootBonus = { [0] = 0, [1] = 0, [2] = 0.15, [3] = 0.30 }
 Difficulty.deathXpLossMultiplier = { [0] = 1, [1] = 1, [2] = 1.5, [3] = 1.5 }
+-- Normal characters below this level lose nothing on death (Jay, 2026-11-27, Q77: "i think it should be normal
+-- characters below level 30"; was 50). From it on, the standard Tibia penalty applies.
+Difficulty.FREE_DEATH_LEVEL = 30
 Difficulty.PVP_SAVE_WINDOW = 60 -- seconds: outside-player damage this recent makes a Death Game death a PvP death
 
 -- You may pick any mode once, then only ever move down (3 -> 2 -> 1).
@@ -42,9 +45,9 @@ function Difficulty.baseDeathLoss(level, totalExp)
 end
 
 -- Final death loss. Hardcore: x1.5, and blessings can only remove half of the unblessed loss.
--- Catch-up (DESIGN.md 15): Normal characters below level 50 lose nothing.
+-- Catch-up (DESIGN.md 15): Normal characters below level 30 lose nothing.
 function Difficulty.finalDeathLoss(mode, engineLoss, level, totalExp)
-	if mode <= Difficulty.NORMAL and level < 50 then
+	if mode <= Difficulty.NORMAL and level < Difficulty.FREE_DEATH_LEVEL then
 		return 0
 	end
 	local lost = Difficulty.applyDeathLoss(mode, engineLoss)
@@ -57,8 +60,8 @@ end
 -- Pure (G12): what a young Normal climber is told after a death that cost nothing
 function Difficulty.youngGraceText(kept)
 	local amount = (kept and kept > 1) and string.format(" (you would have lost %d)", kept) or ""
-	return "Your death cost you no experience" .. amount .. " and none of your items: climbers below level 50 on the Normal "
-		.. "rules are spared. From level 50 on, a death costs experience and can cost items; the temple priest sells "
+	return "Your death cost you no experience" .. amount .. " and none of your items: climbers below level 30 on the Normal "
+		.. "rules are spared. From level 30 on, a death costs experience and can cost items; the temple priest sells "
 		.. "blessings that soften it."
 end
 

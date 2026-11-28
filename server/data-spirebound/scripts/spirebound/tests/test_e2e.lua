@@ -15,7 +15,8 @@ end)
 SpireTest.add("e2e: dying on each difficulty costs what DESIGN.md 5.4 says", function()
 	local level, total = 60, 2000000
 	local engine = 100000
-	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, engine, 30, 50000), 0, "Normal below level 50: nothing")
+	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, engine, 29, 50000), 0, "Normal below level 30: nothing")
+	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, engine, 30, 50000), engine, "Normal from level 30: the engine's loss (Q77)")
 	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.NORMAL, engine, level, total), engine, "Normal: the engine's loss")
 	SpireTest.eq(Difficulty.finalDeathLoss(Difficulty.HARDCORE, engine, level, total) >= engine * 1.5, true, "Hardcore: half again")
 	SpireTest.eq((SpireDeathGame.judge(9999, 1000, { monsterId = 1 }, 1000, function() return false end)), "retire",

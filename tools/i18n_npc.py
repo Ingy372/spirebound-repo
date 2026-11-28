@@ -19,9 +19,9 @@ VOC = {
 }
 
 MODE = {
-    "Normal: the tower's usual rules. Below level 50 a death costs you nothing; from level 50 on it costs experience, as it always has.": (
-        "Normal: as regras comuns da torre. Abaixo do nível 50 a morte não custa nada; a partir do nível 50 custa experiência, como sempre.",
-        "Normal: las reglas habituales de la torre. Por debajo del nivel 50 la muerte no cuesta nada; desde el nivel 50 cuesta experiencia, como siempre."),
+    "Normal: the tower's usual rules. Below level 30 a death costs you nothing; from level 30 on it costs experience and can cost items, as it always has.": (
+        "Normal: as regras comuns da torre. Abaixo do nível 30 a morte não custa nada; a partir do nível 30 custa experiência e pode custar itens, como sempre.",
+        "Normal: las reglas habituales de la torre. Por debajo del nivel 30 la muerte no cuesta nada; desde el nivel 30 cuesta experiencia y puede costar objetos, como siempre."),
     "Hardcore: deaths cost half again as much, but you earn 25% more experience and 15% more loot.": (
         "Hardcore: as mortes custam 50% a mais, mas você ganha 25% mais experiência e 15% mais saque.",
         "Hardcore: las muertes cuestan un 50% más, pero ganas un 25% más de experiencia y un 15% más de botín."),

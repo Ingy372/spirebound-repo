@@ -22,11 +22,11 @@ function login.onLogin(player)
 	k:set("daily_last", today)
 	k:set("daily_streak", day)
 	local r = SpireDaily.reward(day)
-	player:setBankBalance(player:getBankBalance() + r.gold)
+	local bag, bank = SpireGive.gold(player, r.gold) -- Q76: coins go in the backpack
 	if r.potions > 0 then
 		SpireGive.reward(player, 266, r.potions)
 	end
-	local text = string.format("Daily reward, day %d of 7: %d gold to your bank%s. Come back tomorrow for day %d.", day, r.gold,
+	local text = string.format("Daily reward, day %d of 7: %d gold %s%s. Come back tomorrow for day %d.", day, r.gold, SpireGive.goldWhere(bag, bank),
 		r.potions > 0 and (" and " .. r.potions .. " health potions") or "", day % 7 + 1)
 	addEvent(function(pid)
 		local p = Player(pid)

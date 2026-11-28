@@ -15,7 +15,9 @@ SpireTest.add("pvp: newbie and level-range protection", function()
 	end
 	SpireTest.eq(can(200, 40, "open"), false, "level 40 is protected")
 	SpireTest.eq(can(40, 200, "open"), false, "a level 40 can't attack either")
-	SpireTest.eq(can(200, 40, "bossroom"), true, "no newbie protection in boss rooms")
+	SpireTest.eq(can(60, 40, "bossroom"), false, "QA7 (Q82): a level 40 is protected in boss rooms too")
+	SpireTest.eq(can(40, 60, "bossroom"), false, "and can't attack there either")
+	SpireTest.eq(can(55, 55, "bossroom"), true, "two level 55s can fight in a boss room")
 	-- RV6: the first 2 hours of play protect at any level, boss rooms included
 	SpireTest.eq(can(200, 190, "bossroom", { playSeconds = 3600 }), false, "a new climber (1 hour played) is protected even in a boss room")
 	SpireTest.eq(can(200, 190, "contested", { playSeconds = 7199 }), false, "and on Contested ground")

@@ -7,7 +7,8 @@ local function fakePlayer(pos, tag)
 	local p = { bp = bp, money = 0, msgs = {} }
 	function p:addItem(id, n) return bp:addItem(id, n) end
 	function p:addMoney(n) self.money = self.money + n return true end
-	function p:getBankBalance() return self.money end      -- task gold now goes to the bank
+	function p:getBankBalance() return self.money end
+	function p:addItemEx(it) return bp:addItemEx(it) end -- task gold goes in the backpack (Q76)
 	function p:setBankBalance(n) self.money = n return true end
 	function p:sendCancelMessage(m) table.insert(self.msgs, m) end
 	function p:sendTextMessage(_, m) table.insert(self.msgs, m) end
@@ -90,7 +91,8 @@ SpireTest.add("tasks: take, hunt, report through Taskmaster Rhen's menu", functi
 	m = SpireTasks.menu(p, 1)
 	SpireTest.eq(m.active.kills, t.count, "menu shows the hunt done")
 	SpireTest.eq((SpireTasks.report(p)), true, "report it")
-	SpireTest.eq(p.money, t.gold, "paid the task's gold")
+	SpireTest.eq(SpireTest.coinValue(p.bp), t.gold, "paid the task's gold into the backpack (Q76)")
+	SpireTest.eq(p.money, 0, "not into the bank")
 	SpireTest.eq(s:get("points"), t.points, "task points added")
 	for _, row in ipairs(SpireTasks.menu(p, 1).list) do
 		if row.id == "t1_meadowwolf" then SpireTest.eq(row.status, "wait", "done today: waits until tomorrow") end

@@ -122,7 +122,7 @@ TIER_ARMOR = {1: 1, 2: 2}     # armour points per tier
 # shop starter set (spec 4.9): (vocation, weapon base, weapon name, armour base, armour name, armour bonus)
 # Secret gear (adventure layer 4.1; Jay, 2026-11-27: "1-3 exclusive items total that can only be obtained through
 # secrets per floor"). Claude's calls: ring, amulet or boots only (never a weapon or armour, so it never beats the quest
-# weapon path), can't be traded, dropped or sold, once per character. Bonuses stay at or under the hidden beasts'
+# weapon path), once per character; tradeable like other gear (Jay, Q100: "secret gear can be traded."). Bonuses stay at or under the hidden beasts'
 # trophies (SECRET_CAPS), checked below. (id, name, floor, slot, placeholder item, bonus, text)
 SECRET_GEAR = [
     ("millrace_boots", "Millrace Boots", 1, "feet", 3552, {"speed": 5}, "+5 movement speed"),

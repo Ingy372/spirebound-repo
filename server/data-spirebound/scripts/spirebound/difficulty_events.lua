@@ -98,12 +98,12 @@ function hits.onHealthChange(creature, attacker, primaryDamage, primaryType, sec
 end
 hits:register()
 
--- G12: a Normal climber below level 50 who dies is told after the respawn that it cost no experience. Up to level 21
+-- G12: a Normal climber below level 30 who dies is told after the respawn that it cost no experience. Up to level 21
 -- the engine's own adventurer's blessing takes no experience before our loss hook ever runs, so the death itself is
 -- noted here (the loss hook adds how much was kept when it does run).
 local young = CreatureEvent("SpireYoungDeath")
 function young.onDeath(player)
-	if Difficulty.get(player) <= Difficulty.NORMAL and player:getLevel() < 50 then
+	if Difficulty.get(player) <= Difficulty.NORMAL and player:getLevel() < Difficulty.FREE_DEATH_LEVEL then
 		local s = player:kv():scoped("spirebound")
 		if (tonumber(s:get("youngGrace")) or 0) == 0 then
 			s:set("youngGrace", 1)
@@ -155,6 +155,9 @@ death:register()
 -- The Deathbound title (account-wide): a Death Game character that reaches level 50 alive
 local bound = CreatureEvent("SpireDeathbound")
 function bound.onAdvance(player, skill, oldLevel, newLevel)
+	if skill == SKILL_LEVEL and oldLevel < Difficulty.FREE_DEATH_LEVEL and newLevel >= Difficulty.FREE_DEATH_LEVEL then
+		SpireDifficulty.endFreeBlessings(player)
+	end
 	if skill == SKILL_LEVEL and SpireDeathGame.earnsDeathbound(Difficulty.get(player), newLevel, Difficulty.isRetired(player)) then
 		local acc = SpireSeason.accountKv(player:getAccountId())
 		local titles = acc:get("titles") or {}
@@ -206,6 +209,7 @@ function login.onLogin(player)
 		sk:set("bonusXp", 0)
 	end
 	SpireDifficulty.settleExperience(player)
+	SpireDifficulty.endFreeBlessings(player)
 	SpireDifficulty.youngBlessings(player)
 	local s = player:kv():scoped("spirebound")
 	local kept = tonumber(s:get("youngGrace"))
@@ -245,12 +249,13 @@ function SpireDifficulty.settleExperience(player)
 end
 
 -- The engine's free "adventurer's blessing" ends at level 21; after that a death without blessings drops the whole
--- backpack and some gear, while the game promises Normal climbers below level 50 that they are spared. Keep the
--- promise: a Normal (or Casual) climber below 50 gets every blessing back at each login, so also after each respawn.
--- Hardcore and Death Game keep their item risk; from level 50 on, blessings are bought from the priest.
+-- backpack and some gear, while the game promises Normal climbers below level 30 that they are spared. Keep the
+-- promise: a Normal (or Casual) climber below 30 gets every blessing back at each login, so also after each respawn.
+-- Hardcore and Death Game keep their item risk; from level 30 on, blessings are bought from the priest
+-- (the free ones are taken back on reaching 30, so the first death there is the standard one).
 SpireDifficulty.BLESSINGS = 8
 function SpireDifficulty.youngBlessings(player)
-	if Difficulty.get(player) > Difficulty.NORMAL or player:getLevel() >= 50 then
+	if Difficulty.get(player) > Difficulty.NORMAL or player:getLevel() >= Difficulty.FREE_DEATH_LEVEL then
 		return 0
 	end
 	local given = 0
@@ -260,7 +265,29 @@ function SpireDifficulty.youngBlessings(player)
 			given = given + 1
 		end
 	end
+	if given > 0 then
+		player:kv():scoped("spirebound"):set("freeBless", true)
+	end
 	return given
+end
+
+-- Reaching level 30: the free blessings end. Ones the character never paid for are taken back, so a Normal climber's
+-- first death from 30 on costs what Tibia's usual death costs (bought blessings are kept: we only take back gifts).
+function SpireDifficulty.endFreeBlessings(player)
+	local s = player:kv():scoped("spirebound")
+	if not s:get("freeBless") or player:getLevel() < Difficulty.FREE_DEATH_LEVEL then
+		return 0
+	end
+	s:remove("freeBless")
+	local taken = 0
+	for b = 1, SpireDifficulty.BLESSINGS do
+		if player:hasBlessing(b) then
+			player:removeBlessing(b, 1)
+			taken = taken + 1
+		end
+	end
+	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Level 30: from now on a death costs experience and can cost items, as anywhere in the tower. Priest Odran in the Climbers' Temple sells blessings that soften it.")
+	return taken
 end
 
 -- Hardcore: skill debt and extra item drops (roadmap 2.14b) --------------
