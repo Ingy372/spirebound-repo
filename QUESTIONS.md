@@ -8,32 +8,6 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
-### Q110. Keep Hardcore mode after all? (2026-11-27)
-You asked "why did we remove that all together?" It came from Q55, which you answered "yes" in the long list. My reason then: three modes split a small player base three ways, and Hardcore sits in the middle (Normal is the game, Death Game is the headline), so fewer people talk about it. Nothing is removed yet; QA11 is on hold.
-- **(a)** Keep all three modes, as built.
-- **(b)** Two modes (Normal and Death Game).
-- **My recommendation:** (a). It is already built and working, and it gives players who want risk without permanent death somewhere to go.
-- Assumed until you answer: (a), all three stay.
-- Jay's answer:
-
-### Q111. What is cooking for? (2026-11-27)
-You asked whether cooking levels up, and what it is for, since Tibia lets you eat raw fish. As designed it is a small hobby, not a skill with levels: about twelve dishes on Floor 1, each giving one slow comfort outside fights (health regeneration, carrying a bit more, a longer light, faster walking in town); a Cookbook of dishes you've discovered, two titles, and feasts a party shares at a camp fire. No fighting power. Raw fish stays edible as in Tibia. The theft-proof cooking task (QA1) is on hold until you choose.
-- **(a)** Keep it as a small hobby (collect dishes, titles, party feasts).
-- **(b)** Make it a real skill that levels up, with better dishes at higher levels.
-- **(c)** Cut it; food is just food, as in Tibia.
-- **My recommendation:** (a) if you like collecting things; otherwise (c). A levelled skill (b) is one more system to explain, which you said you want to avoid (Q105).
-- Assumed until you answer: (a), but nothing more is built on it.
-- Jay's answer:
-
-### Q112. Ascended weapons: what is worth the hard grind? (2026-11-27)
-You said "thats not enough of a benefit". The grind: carry your awakened Floor 1 weapon through all of Floor 2 (about 20% weaker than switching) and beat the Floor 2 boss with it. Options:
-- **(a)** It becomes as strong as the **best**-quality Floor 3 weapon: the grind skips Floor 3's weapon hunt.
-- **(b)** One step below the best quality on Floor 3, **plus a perk only Ascended weapons have** (for example one sword skill that hits a second target, or a combo that stays open longer).
-- **(c)** It keeps ascending: beat each new floor boss with it and it climbs again, so a dedicated player can keep one weapon for the whole season.
-- **My recommendation:** (b) now, and (c) later as the long-term goal. The perk makes it feel special without making every Floor 3 weapon pointless.
-- Assumed until you answer: (b). Roadmap WA6 waits for your answer.
-- Jay's answer:
-
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
 You asked for torches in some dungeons and others completely dark. I chose by level: the deeper caves are dark (Shard
 Grotto, the Lower Works, the Bastion Cellars, and the secret Sealed Cut); the starter and early caves (Ratwarren,
@@ -193,7 +167,7 @@ The engine comes with Tibia's newer systems: Prey, Imbuements, the Forge, the Wh
 - Jay's answer:
 
 ### Q8. Death Game bonus (rewritten 2026-11-27)
-Death Game characters are deleted when they die, so they earn more: +50% experience and +30% loot. (Hardcore is gone, Q55.)
+Death Game characters are deleted when they die, so they earn more: +50% experience and +30% loot. (Hardcore, which stays (Q110), gets +25% experience and +15% loot.)
 - **My recommendation:** keep these numbers.
 - Jay's answer:
 
@@ -206,8 +180,39 @@ Outside the PvP zones and boss rooms: nobody can attack a player below level 50;
 
 ---
 
+---
+
 ## Answered
 
+
+### Q110. Keep Hardcore mode after all? (2026-11-27)
+You asked "why did we remove that all together?" It came from Q55, which you answered "yes" in the long list. My reason then: three modes split a small player base three ways, and Hardcore sits in the middle (Normal is the game, Death Game is the headline), so fewer people talk about it. Nothing is removed yet; QA11 is on hold.
+- **(a)** Keep all three modes, as built.
+- **(b)** Two modes (Normal and Death Game).
+- **My recommendation:** (a). It is already built and working, and it gives players who want risk without permanent death somewhere to go.
+- Assumed until you answer: (a), all three stay.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes keep hardcore, i see no reason to remove it." All three modes stay. QA11 now only does Q80 (free blessings only below level 8 for Hardcore and Death Game).
+
+### Q111. What is cooking for? (2026-11-27)
+You asked whether cooking levels up, and what it is for, since Tibia lets you eat raw fish. As designed it is a small hobby, not a skill with levels: about twelve dishes on Floor 1, each giving one slow comfort outside fights (health regeneration, carrying a bit more, a longer light, faster walking in town); a Cookbook of dishes you've discovered, two titles, and feasts a party shares at a camp fire. No fighting power. Raw fish stays edible as in Tibia. The theft-proof cooking task (QA1) is on hold until you choose.
+- **(a)** Keep it as a small hobby (collect dishes, titles, party feasts).
+- **(b)** Make it a real skill that levels up, with better dishes at higher levels.
+- **(c)** Cut it; food is just food, as in Tibia.
+- **My recommendation:** (a) if you like collecting things; otherwise (c). A levelled skill (b) is one more system to explain, which you said you want to avoid (Q105).
+- Assumed until you answer: (a), but nothing more is built on it.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "cooking should have fighting boosts behind it. i love the idea of different effects from different meals. that will also give unoffical roles to people outside of combat. if it is possible to add it as a skill that can be leveled i think i would prefer it. that would also preserve better boosts for players who have grinded the skill. see if its do-able please" **Doable:** Tibia's own skill list is fixed, but our Mastery already works as a levelled skill the server saves and our client shows; cooking can work the same way (a Cooking level that rises with each dish, better dishes and stronger boosts at higher levels). Design first, then build: roadmap QA1.
+
+### Q112. Ascended weapons: what is worth the hard grind? (2026-11-27)
+You said "thats not enough of a benefit". The grind: carry your awakened Floor 1 weapon through all of Floor 2 (about 20% weaker than switching) and beat the Floor 2 boss with it. Options:
+- **(a)** It becomes as strong as the **best**-quality Floor 3 weapon: the grind skips Floor 3's weapon hunt.
+- **(b)** One step below the best quality on Floor 3, **plus a perk only Ascended weapons have** (for example one sword skill that hits a second target, or a combo that stays open longer).
+- **(c)** It keeps ascending: beat each new floor boss with it and it climbs again, so a dedicated player can keep one weapon for the whole season.
+- **My recommendation:** (b) now, and (c) later as the long-term goal. The perk makes it feel special without making every Floor 3 weapon pointless.
+- Assumed until you answer: (b). Roadmap WA6 waits for your answer.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "i agree. for now im leaning b and C maybe as long term goal." So: one step below the best quality on Floor 3 plus a perk only Ascended weapons have; ascending again at each floor boss (c) is the long-term goal, decided when Floor 3 is real. Roadmap WA6.
 
 ### Q84. Double loot: keep it? (rewritten 2026-11-27)
 A server setting doubles the chance of every monster drop. Our gold plan was written for normal drops, so right now players get about a quarter more gold than planned, and a few items (gems, cheese) drop twice as often as intended.
