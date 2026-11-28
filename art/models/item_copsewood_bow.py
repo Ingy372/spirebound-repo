@@ -16,6 +16,7 @@ from item_kit import place, set_tube_pts, BANDS, LIGHT
 
 NAME = "item_copsewood_bow"
 PALETTE = NAME
+SIZE = 1.1
 PARTS = ["none", "limb", "knot", "burl", "string", "leaf", "twig"]
 PIXEL_RULES = {
     "weight": {"string": 3.0, "knot": 3.0, "leaf": 2.5, "twig": 2.5, "burl": 1.5},

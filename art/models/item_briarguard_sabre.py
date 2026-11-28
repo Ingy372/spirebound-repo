@@ -17,7 +17,7 @@ from item_kit import curve_outline, place, slab, set_tube_pts, BANDS, LIGHT
 
 NAME = "item_briarguard_sabre"
 PALETTE = NAME
-SIZE = 1.0
+SIZE = 0.98
 PARTS = ["none", "blade", "edge", "grip", "coil", "leaf", "quillon", "hip", "hiptip"]
 PIXEL_RULES = {
     "weight": {"edge": 2.5, "coil": 2.5, "quillon": 3.0, "hip": 3.0, "hiptip": 5.0, "leaf": 2.0},
@@ -33,8 +33,8 @@ PIXEL_RULES = {
 A = math.radians(45)
 U = (math.cos(A), math.sin(A))
 N = (-math.sin(A), math.cos(A))
-HILT = -0.14
-BLADE = 0.60
+HILT = -0.24
+BLADE = 0.86            # a long blade: at 0.60 against the grip it read as a dagger (Jay, 2026-11-27)
 K = 14
 
 
@@ -48,9 +48,9 @@ def thorn():
     pts, widths = [], []
     for i in range(K + 1):
         t = i / K
-        hook = 0.17 * t ** 2.4                 # the point hooks back towards the top-left, like a rose thorn
+        hook = 0.11 * t ** 3.0                 # the point hooks back towards the top-left, like a rose thorn
         pts.append(at(HILT + BLADE * t, hook))
-        w = 0.10 * (1 - t) ** 0.8
+        w = 0.115 * (1 - t) ** 0.75
         widths.append(max(w, 0.0) if i < K else 0.0)
     return pts, widths
 

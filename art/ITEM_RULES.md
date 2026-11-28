@@ -51,7 +51,9 @@ python tools/make_item_icons.py                # icon.png per item + ART_FOR_JAY
   of their shafts (balls, then pipes). Build them standing, then lay them down under a `Lay` empty rotated -90
   degrees about x (see `item_millrace_boots.py`): the flat-item camera then sees the side profile straight on.
 - **I6 Size by kind, like Tibia.** Rings and amulets are small in the middle of the tile (about 14-20 px), bottles
-  and mugs medium, weapons and maps reach across the tile. `SIZE` in the model; `make_item_icons.py` warns over
+  and mugs medium, weapons and maps reach across the tile. Weapons fill about 30 x 30 px like Tibia's (measure:
+  `make_item_icons.py` sheet); a sword's blade is at least three times its grip, or it reads as a dagger (Jay,
+  2026-11-27: "the weapons look a touch to small. the sword especially. it is resembling more of a dirk"). `SIZE` in the model; `make_item_icons.py` warns over
   32x32 and centres every item on its tile (1 px low-right).
 - **I7 One eye-catcher, big enough.** The accent that names the item (a flame, a flower, a gem, a lit door) must be
   several pixels across at 1x. Tibia's fire wand is mostly flame; our first flame and bud were too small to read.

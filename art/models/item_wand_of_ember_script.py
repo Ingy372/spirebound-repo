@@ -17,6 +17,7 @@ from item_kit import lathe, place, set_tube_pts, BANDS, LIGHT
 
 NAME = "item_wand_of_ember_script"
 PALETTE = NAME
+SIZE = 1.3
 PARTS = ["none", "paper", "script", "band", "curl", "burn", "spark"]
 PIXEL_RULES = {
     "weight": {"script": 3.0, "band": 2.5, "burn": 3.5, "spark": 5.0, "curl": 1.5},

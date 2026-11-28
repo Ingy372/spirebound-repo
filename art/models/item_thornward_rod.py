@@ -16,6 +16,7 @@ from item_kit import place, set_tube_pts, BANDS, LIGHT
 
 NAME = "item_thornward_rod"
 PALETTE = NAME
+SIZE = 1.25
 PARTS = ["none", "shaft", "vine", "leaf", "pod", "rib", "tendril", "thorn"]
 PIXEL_RULES = {
     "weight": {"vine": 2.5, "thorn": 3.0, "leaf": 2.0, "pod": 2.5, "rib": 3.0, "tendril": 3.0},
