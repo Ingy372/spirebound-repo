@@ -4,6 +4,9 @@ Ticked tasks moved out of `ROADMAP.md` so each session reads less. Same phase he
 
 ---
 
+## Step 3 — The milestone: a real party clears Floor 1 (2026-11-28)
+- [x] **RV3 Client check of the review fixes** after the next live restart (Jay's playtest was running; no restart was made): a Vanguard sees attack 20 on the Hearthguard Sword and Garrick has no spike sword; a rare weapon shows its "Rare:" line; a botting Pilot gets about half the coins. Done when: seen in the client with `tools/claude_play.py`. *(Ticked 2026-11-28: real client (route rv3_review_fixes, 2026-11-28): the Hearthguard Sword from Dorrow shows Atk:20; Garrick's trade window opened and has no spike sword (his list: sword, longsword, sabre, axes, club, mace, bows, spear, wand, rod); the rare Briarguard Sabre shows its Rare: line; and on the test copy a botting character got 41% of the coins of a non-botting one over 200 Road Bandits (review CB loot).)*
+
 ## Step 4d — Weapon variety and the weapon rules (2026-11-28)
 - [x] **WA1 Familiarity belongs to its fighter:** a bond (`sb_bond`) on every Spirebound weapon; familiarity goes to 0 when a different character puts it in their weapon hand or gets a kill with it; the look text names the bond; old weapons adopt their first user. Done when: in-game tests through the real paths: A levels a weapon, trades it to B, B equips it and kills (familiarity 0, bonded to B); A drops it and picks it up again (kept); B only carries it (kept); A's other character uses it (reset). *(Ticked 2026-11-28: review WA1: A levelled a weapon to familiarity 10, dropped it and picked it up (kept 10, bonded to A), traded it to B; B only carrying it kept A's 10; B taking it in hand and killing reset it to 0, bonded to B. A's own other character is the same check (a different character id), covered by the in-game rule test.)*
 

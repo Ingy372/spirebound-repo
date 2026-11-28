@@ -404,10 +404,10 @@ def _check_xp_ratio(want, what):
 
 
 def _check_loot(lines, all_lines=None):
-    off = _rv(all_lines["CB loot, bot off"], "loot")[0]
-    on = _rv(lines, "loot")[0]
-    a, b = off["coins"], on["coins"]
-    return (on["botting"] == 1 and a > 0 and 0.3 * a <= b <= 0.7 * a,
+    off = _s0(all_lines["CB loot, bot off"], "loot")[0]
+    on = _s0(lines, "loot")[0]
+    a, b = off["bag"] + off["bank"] + off["left"], on["bag"] + on["bank"] + on["left"]
+    return (a > 0 and 0.3 * a <= b <= 0.7 * a,
             f"{on['kills']} Road Bandits: {b} coins with the cavebot on against {a} with it off")
 
 
@@ -496,17 +496,20 @@ REVIEW_CASES = [
     dict(name="XP Hardcore gives +25%", voc=4, level=30,
          logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv xp " + XP_MONSTER)]],
          check=_check_xp_ratio(1.25, "+25%")),
-    dict(name="XP the cavebot gives 45%", voc=4, level=30,
+    dict(name="XP the cavebot gives 45%", voc=4, level=30, ground="wolf_copse",  # (the starter grounds ban the cavebot: QA16)
+        
          logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv bot on"), (1, "say", "/rv xp " + XP_MONSTER)]],
          check=_check_xp_ratio(0.45, "45%")),
     dict(name="SK old", voc=4, level=55, logins=[[(3, "say", "/rv skill")]],
          check=lambda lines: (_rv(lines, "skill")[0]["tries"] > 0, f"{_rv(lines, 'skill')[0]['tries']} tries at level 55")),
     dict(name="SK skills train twice as fast below level 50", voc=4, level=30, logins=[[(3, "say", "/rv skill")]],
          check=_check_skill),
-    dict(name="CB loot, bot off", voc=4, level=30, logins=[[(3, "say", "/rv loot Road Bandit 60")]], stay=14,
-         check=lambda lines: (_rv(lines, "loot")[0]["coins"] > 0, f"{_rv(lines, 'loot')[0]['coins']} coins from 60 Road Bandits")),
-    dict(name="CB loot, bot on: about half the coins", voc=4, level=30,
-         logins=[[(3, "say", "/rv bot on"), (1, "say", "/rv loot Road Bandit 60")]], stay=14, check=_check_loot),
+    dict(name="CB loot, bot off", voc=4, level=30, ground="wolf_copse",  # (the starter grounds ban the cavebot: QA16)
+         logins=[[(3, "say", "/s0 offer"), (1, "say", "/s0 loot Road Bandit 200")]], stay=40,
+         check=lambda lines: ((lambda r: (r["bag"] + r["bank"] + r["left"] > 0, "%d coins from 200 Road Bandits" % (r["bag"] + r["bank"] + r["left"])))(_s0(lines, "loot")[0]))),
+    dict(name="CB loot, bot on: about half the coins", voc=4, level=30, ground="wolf_copse",  # (the starter grounds ban the cavebot: QA16)
+        
+         logins=[[(3, "say", "/s0 offer"), (1, "say", "/rv bot on"), (1, "say", "/s0 loot Road Bandit 200")]], stay=40, check=_check_loot),
 
     dict(name="A8-1 a level-15 Hardcore death costs experience", voc=4, level=15, ground="starter_east",
          logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_hardcore),

@@ -577,6 +577,20 @@ function handlers.react(player)
     if now() - stepT >= (step.seconds or 30) then nextStep() end
 end
 
+-- look at the item in a slot ("slot": "left", "right", "head", ...), as a player's Look does; the server's
+-- "You see ..." line arrives as a message and is logged
+function handlers.lookitem(player)
+    if not stepData.sent then
+        local slots = { head = InventorySlotHead, neck = InventorySlotNeck, body = InventorySlotBody, right = InventorySlotRight,
+            left = InventorySlotLeft, legs = InventorySlotLeg, feet = InventorySlotFeet, finger = InventorySlotFinger }
+        local it = player:getInventoryItem(slots[step.slot or 'left'] or InventorySlotLeft)
+        if it then g_game.look(it) else log('lookitem: nothing in ' .. tostring(step.slot)) end
+        stepData.sent = now()
+    elseif now() - stepData.sent > 1.5 then
+        nextStep()
+    end
+end
+
 -- open the spellbook window, log what it lists, screenshot it, close it
 function handlers.spellbook()
     local m = modules.game_spelllist

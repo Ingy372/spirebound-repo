@@ -1,0 +1,95 @@
+{
+ "character": "Spell Vanguard",
+ "noSpells": true,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gearreset"
+  },
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Dorrow"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "weapon"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "sword"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "lookitem",
+   "slot": "left",
+   "note": "the Hearthguard Sword"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1212,
+    1278,
+    7
+   ],
+   "note": "Garrick"
+  },
+  {
+   "do": "trade",
+   "buy": [
+    [
+     "spike sword",
+     1
+    ]
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot rare"
+  },
+  {
+   "do": "wait",
+   "seconds": 1
+  },
+  {
+   "do": "lookitem",
+   "slot": "left",
+   "note": "the rare weapon"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gearreset"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}

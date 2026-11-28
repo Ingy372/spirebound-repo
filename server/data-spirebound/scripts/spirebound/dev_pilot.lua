@@ -8,6 +8,7 @@
 --   /pilot level n         (gear tests) set your level
 --   /pilot mode m          (RV2 pace tests) normal, hardcore or deathgame
 --   /pilot cavebot on|off  (RV2 pace tests) the server counts the cavebot as on
+--   /pilot rare            (RV3) wear your class's Floor 1 rare weapon
 --   /pilot gearreset       (gear tests) forget the barracks weapon, style and trophies; drop Spirebound gear
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
@@ -84,6 +85,11 @@ function pilot.onSay(player, words, param)
 	elseif cmd == "cavebot" then -- (RV2 pace tests) "/pilot cavebot on|off": the server counts the cavebot as on, as the client reports it
 		SpireCavebot.setState(player:getGuid(), rest == "on", os.time())
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: cavebot " .. (rest == "on" and "on" or "off"))
+	elseif cmd == "rare" then -- (RV3) wear the class's Floor 1 rare weapon (the 0.5% drop) in the weapon hand
+		local voc = player:getVocation():getBaseId()
+		local id = ({ [4] = "f1_vanguard_drop", [3] = "f1_ranger_drop", [1] = "f1_arcanist_drop", [2] = "f1_mystic_drop" })[voc]
+		local item = id and SpireGear.equip(player, id)
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: rare " .. (item and item:getName() or "none"))
 	elseif cmd == "gearreset" then -- (gear tests) forget the barracks' weapon, style and trophies; drop Spirebound gear
 		local k = player:kv():scoped("spirebound")
 		for _, key in ipairs({ "gear_main_1", "style_points", "style_path", "style_final", "style_respec_at", "style_stance" }) do
