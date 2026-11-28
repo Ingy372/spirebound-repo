@@ -214,7 +214,7 @@ Second pass (2026-11-17, Jay's brief to "spice up the spells"): area spells play
 Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and group cooldowns (attack 2 s, healing 1 s, support 2 s; attack spells share the attack group with sword skills).
 
 ### 5.4 Difficulty modes
-**Two modes only from now (Jay, 2026-11-27, Q55: "yes"): Normal and Death Game.** Hardcore is being removed (roadmap QA11); existing Hardcore characters become Normal. Death Game keeps the free blessings only below level 8 (Q80), and stepping down from Death Game removes the extra experience its bonus gave (Q14). The Hardcore lines below stay until QA11 is built.
+**Hardcore under review (Jay, 2026-11-27):** Jay first agreed to drop it (Q55), then asked "why did we remove that all together?"; Q110 asks again and all three modes stay until he answers. Death Game keeps the free blessings only below level 8 (Q80), and stepping down from Death Game removes the extra experience its bonus gave (Q14).
 
 Chosen at creation. You can move **down** a difficulty at the Registrar (Death Game → Hardcore → Normal), **never up**.
 

@@ -8,6 +8,32 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
+### Q110. Keep Hardcore mode after all? (2026-11-27)
+You asked "why did we remove that all together?" It came from Q55, which you answered "yes" in the long list. My reason then: three modes split a small player base three ways, and Hardcore sits in the middle (Normal is the game, Death Game is the headline), so fewer people talk about it. Nothing is removed yet; QA11 is on hold.
+- **(a)** Keep all three modes, as built.
+- **(b)** Two modes (Normal and Death Game).
+- **My recommendation:** (a). It is already built and working, and it gives players who want risk without permanent death somewhere to go.
+- Assumed until you answer: (a), all three stay.
+- Jay's answer:
+
+### Q111. What is cooking for? (2026-11-27)
+You asked whether cooking levels up, and what it is for, since Tibia lets you eat raw fish. As designed it is a small hobby, not a skill with levels: about twelve dishes on Floor 1, each giving one slow comfort outside fights (health regeneration, carrying a bit more, a longer light, faster walking in town); a Cookbook of dishes you've discovered, two titles, and feasts a party shares at a camp fire. No fighting power. Raw fish stays edible as in Tibia. The theft-proof cooking task (QA1) is on hold until you choose.
+- **(a)** Keep it as a small hobby (collect dishes, titles, party feasts).
+- **(b)** Make it a real skill that levels up, with better dishes at higher levels.
+- **(c)** Cut it; food is just food, as in Tibia.
+- **My recommendation:** (a) if you like collecting things; otherwise (c). A levelled skill (b) is one more system to explain, which you said you want to avoid (Q105).
+- Assumed until you answer: (a), but nothing more is built on it.
+- Jay's answer:
+
+### Q112. Ascended weapons: what is worth the hard grind? (2026-11-27)
+You said "thats not enough of a benefit". The grind: carry your awakened Floor 1 weapon through all of Floor 2 (about 20% weaker than switching) and beat the Floor 2 boss with it. Options:
+- **(a)** It becomes as strong as the **best**-quality Floor 3 weapon: the grind skips Floor 3's weapon hunt.
+- **(b)** One step below the best quality on Floor 3, **plus a perk only Ascended weapons have** (for example one sword skill that hits a second target, or a combo that stays open longer).
+- **(c)** It keeps ascending: beat each new floor boss with it and it climbs again, so a dedicated player can keep one weapon for the whole season.
+- **My recommendation:** (b) now, and (c) later as the long-term goal. The perk makes it feel special without making every Floor 3 weapon pointless.
+- Assumed until you answer: (b). Roadmap WA6 waits for your answer.
+- Jay's answer:
+
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
 You asked for torches in some dungeons and others completely dark. I chose by level: the deeper caves are dark (Shard
 Grotto, the Lower Works, the Bastion Cellars, and the secret Sealed Cut); the starter and early caves (Ratwarren,
@@ -64,29 +90,6 @@ You asked for the manor to "feel premium" and have "features that players would 
 There is one Spire Manor and one owner, so it can be sold once per season (the last owner gets first refusal next season). That keeps it special, but it is one sale. Options: (a) keep it as the single trophy house; (b) auction it for Spire Coins at each season start; (c) add two or three smaller "estate" houses with a few of the manor's comforts (depot, steward) at a lower price.
 - **Recommendation:** (a) for the friends test, then (b) at public launch: an auction makes the one house worth far more than a fixed price, and losing bidders keep their coins for cosmetics.
 - Assumed until you answer: (a).
-- Jay's answer:
-
-### Q84. Double loot: keep it? (rewritten 2026-11-27)
-A server setting doubles the chance of every monster drop. Our gold plan was written for normal drops, so right now players get about a quarter more gold than planned, and a few items (gems, cheese) drop twice as often as intended.
-- **(a)** Keep double loot (it feels generous) and I lower the few items that matter, so the plan and the game match.
-- **(b)** Switch to normal loot.
-- **My recommendation:** (a).
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q91. Should one guild be able to take every spot at the first Axe-Lord kill? (rewritten 2026-11-27)
-The first party to kill the Axe-Lord each season gets their names on the Monument and the first-clear rewards, for up to 20 players. A big guild could fill all 20 spots, so nobody outside it ever gets that honour.
-- **My recommendation:** at most 10 of the 20 spots per guild; the rest go to other players in the fight.
-- Assumed until you answer: no limit (today's game).
-- Jay's answer:
-
-### Q79. Floor 1 swords: what feels right to you? (rewritten 2026-11-27)
-You said "no i dont think i like this" about the change where the Vanguard's reward swords (from Captain Dorrow) became the best swords on Floor 1 and the weaponsmith stopped selling the expensive spike sword. Which do you want?
-- **(a)** Shop swords and reward swords about equal; you pick by looks and price.
-- **(b)** The reward sword is a bit better than the shop, but rare drops and the higher weapon qualities (your Q105 idea) are the best.
-- **(c)** Put it back the way it was (shop swords, including the spike sword, beat the reward sword).
-- **My recommendation:** (b). It fits the new quality system: shop = "average", rare drops reach the top.
-- Assumed until you answer: (b), built together with the weapon qualities (QA5).
 - Jay's answer:
 
 ### Q70. Put the website on a public https:// address now, or wait? (2026-11-26, 7.1b)
@@ -146,12 +149,7 @@ Each class splits into two paths (for example Ranger: Marksman or Trapper). Toda
 - **(a)** A free try-out of both paths at about level 25, the real choice still at 37.
 - **(b)** Move the real choice earlier, to about level 30 (around the Axe-Lord).
 - **My recommendation:** settle it when we talk about the new style trees (Q103), since it's part of the same system. Until then: (a).
-- Jay's answer:
-
-### Q13. Should floor bosses open on a calendar? (rewritten 2026-11-27)
-Without a limit, a big guild could clear all 10 floors in the first week and the season's story would be over. So each floor's boss room opens on a set day: Floor 2's boss no earlier than day 3 of the season, then one more floor every 6 days. Each opening becomes an event everyone waits for. (It's built, and only runs once a real season starts, so your tests are never blocked.)
-- **My recommendation:** keep it.
-- Jay's answer:
+- **Jay's answer (2026-11-27):** "like you said, ill cover it in our convo about it"
 
 ### Q20. Houses: many more, or rentable rooms? [3.7]
 There are 63 houses on the whole server, and most house features need one.
@@ -162,11 +160,6 @@ There are 63 houses on the whole server, and most house features need one.
 A public launch needs every tile, wall, tree, item and effect replaced, not just the ~150 pieces in ART_REQUESTS.md: thousands of sprites.
 - **Recommendation:** start from an open-licence Tibia-style sprite pack for tiles and items; make monsters, bosses, outfits and the UI yourself with Grok. I'll first prove the pipeline with one sprite (R22) so we know the real cost.
 - *Updated 2026-11-25 (N4, full count in `ART_COUNT.md`): Floors 1-3 show about 900 borrowed looks (65 monster kinds, 47 NPCs, the outfits, 142 items, 79 wall pieces, 42 grounds, 186 map objects, about 100 effects); about 265 hours to make them all. New recommendation: mix. Keep making everything that moves (monsters, NPCs, outfits, mounts) with the Blender pipeline and effects with our effect maker (about 100 hours). For the still world (ground, walls, map objects: about 300 looks, about 100 hours) start from the OpenTibia Sprite Pack, the one open-licence Tibia-style pack (free with credit to the artists, Creative Commons Attribution 4.0). It is small and old, so first check which of our 300 map looks it covers, then make the gaps in a matching style. Items: Grok or Claude still renders, either works.*
-- Jay's answer:
-
-### Q22. The friends test: only Floors 1 and 2? (rewritten 2026-11-27)
-For the friends weekend, only Floors 1 and 2 would be open. The arena, the siege and the shop stay off; the daily and weekly goals (Season Path) stay on. Everything is wiped afterwards.
-- **My recommendation:** yes.
 - Jay's answer:
 
 ### Q23. Who moderates at launch, in which languages? [§4]
@@ -180,19 +173,6 @@ He's too close to the boss that inspired him (giant blue horned fiend with a hug
 
 ### Q25. Money: business, policies and tax before the shop opens? [6.5]
 - **Recommendation:** launch the first season **without a shop**. Open it only once you've registered what you need to, have refund/privacy policies, and have checked tax with a professional.
-- Jay's answer:
-
-### Q27. Canary's "Forge" (fuse items to upgrade them): switch it on later? (rewritten 2026-11-27)
-The engine has a Forge where players fuse two items into a stronger one, which uses up gold and items. We already have weapon tiers, and weapon qualities are coming (Q105).
-- **(a)** Keep it off for good; tiers and qualities are enough.
-- **(b)** Switch it on from Floor 3 as an extra way to spend gold.
-- **My recommendation:** (a) now that qualities are coming: one upgrade system is easier to understand than two (your "too complex" point in Q105).
-- Assumed until you answer: off.
-- Jay's answer:
-
-### Q28. One gold vault for all your characters? (rewritten 2026-11-27)
-You once asked for "a banker that can store gold between all accounts". What I built: every character on **your** account can reach one shared vault at any banker, so your characters can pass gold to each other. Sending gold to a **different** player still works as in Tibia ("transfer").
-- **My recommendation:** keep it like this. If you meant something else, say it in a sentence.
 - Jay's answer:
 
 ### Q2. A stray copy of old Spirebound work is in your Dojo-game repo
@@ -224,8 +204,63 @@ Outside the PvP zones and boss rooms: nobody can attack a player below level 50;
 
 ---
 
+---
+
 ## Answered
 
+
+### Q84. Double loot: keep it? (rewritten 2026-11-27)
+A server setting doubles the chance of every monster drop. Our gold plan was written for normal drops, so right now players get about a quarter more gold than planned, and a few items (gems, cheese) drop twice as often as intended.
+- **(a)** Keep double loot (it feels generous) and I lower the few items that matter, so the plan and the game match.
+- **(b)** Switch to normal loot.
+- **My recommendation:** (a).
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "why would we keep every drop at a doubled rate...?" Fair point: there is no good reason beyond "feels generous", and it breaks our gold plan. **Switching to normal loot (1x)** and checking the drop tables still give the planned gold. Roadmap QA20.
+
+### Q91. Should one guild be able to take every spot at the first Axe-Lord kill? (rewritten 2026-11-27)
+The first party to kill the Axe-Lord each season gets their names on the Monument and the first-clear rewards, for up to 20 players. A big guild could fill all 20 spots, so nobody outside it ever gets that honour.
+- **My recommendation:** at most 10 of the 20 spots per guild; the rest go to other players in the fight.
+- Assumed until you answer: no limit (today's game).
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "cap at 10. later boss fights the cap will be removed." Roadmap QA19.
+
+### Q79. Floor 1 swords: what feels right to you? (rewritten 2026-11-27)
+You said "no i dont think i like this" about the change where the Vanguard's reward swords (from Captain Dorrow) became the best swords on Floor 1 and the weaponsmith stopped selling the expensive spike sword. Which do you want?
+- **(a)** Shop swords and reward swords about equal; you pick by looks and price.
+- **(b)** The reward sword is a bit better than the shop, but rare drops and the higher weapon qualities (your Q105 idea) are the best.
+- **(c)** Put it back the way it was (shop swords, including the spike sword, beat the reward sword).
+- **My recommendation:** (b). It fits the new quality system: shop = "average", rare drops reach the top.
+- Assumed until you answer: (b), built together with the weapon qualities (QA5).
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "B" The reward sword is a bit better than the shop; rare drops and the top weapon qualities are the best. Folded into QA5.
+
+### Q13. Should floor bosses open on a calendar? (rewritten 2026-11-27)
+Without a limit, a big guild could clear all 10 floors in the first week and the season's story would be over. So each floor's boss room opens on a set day: Floor 2's boss no earlier than day 3 of the season, then one more floor every 6 days. Each opening becomes an event everyone waits for. (It's built, and only runs once a real season starts, so your tests are never blocked.)
+- **My recommendation:** keep it.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "no, if an hungry guild wants to wipe the game, i welcome them. thats also players who spend money. no set day when the boss doors open. its upon players being ready. this theory will be tested upon the 1st test season." Roadmap QA21 takes the calendar gate out.
+
+### Q22. The friends test: only Floors 1 and 2? (rewritten 2026-11-27)
+For the friends weekend, only Floors 1 and 2 would be open. The arena, the siege and the shop stay off; the daily and weekly goals (Season Path) stay on. Everything is wiped afterwards.
+- **My recommendation:** yes.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes"
+
+### Q27. Canary's "Forge" (fuse items to upgrade them): switch it on later? (rewritten 2026-11-27)
+The engine has a Forge where players fuse two items into a stronger one, which uses up gold and items. We already have weapon tiers, and weapon qualities are coming (Q105).
+- **(a)** Keep it off for good; tiers and qualities are enough.
+- **(b)** Switch it on from Floor 3 as an extra way to spend gold.
+- **My recommendation:** (a) now that qualities are coming: one upgrade system is easier to understand than two (your "too complex" point in Q105).
+- Assumed until you answer: off.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "off sounds good"
+
+### Q28. One gold vault for all your characters? (rewritten 2026-11-27)
+You once asked for "a banker that can store gold between all accounts". What I built: every character on **your** account can reach one shared vault at any banker, so your characters can pass gold to each other. Sending gold to a **different** player still works as in Tibia ("transfer").
+- **My recommendation:** keep it like this. If you meant something else, say it in a sentence.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes"
 
 ### Q108. Which of the 11 Batch 14 items get their own picture? (2026-11-27)
 You approved my art style but not the designs: they looked like items Tibia already has. New rule (I0): a new item
@@ -473,7 +508,7 @@ The calm hunting grounds you asked for each feed one or two players. With a buil
 - Other options: as designed everywhere; or off on Floor 1 for good.
 - Assumed until you answer: as designed (your decision); nothing changes.
 - Jay's answer:
-- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): the cavebot doesn't work on Floor 1 for the first two weeks of a season, and never in the four starter grounds. Roadmap QA16.
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): the cavebot doesn't work on Floor 1 for the first two weeks of a season **Changed by Jay (2026-11-27): "cavebot needs to but turned on after the end of the first week. two weeks is two long." So: first 7 days only.**, and never in the four starter grounds. Roadmap QA16.
 
 ### Q61. The new roadmap order (2026-11-25)
 ROADMAP.md is now one list: first-hour fixes, finish the last third of Floor 1, then a real party clears Floor 1 (you, with Grok's characters or friends), then make Floor 1 big enough for a launch evening, Floor 2's own map, Hearthgate polish, an art count, website accounts, friends test. **Nothing new gets built until the party run passes.** If you bring a new idea before then, I'll write it under "Later" and tell you so, unless you say it jumps the queue.
