@@ -110,3 +110,60 @@ SpireTest.add("QA16: three game windows per computer (Q53)", function()
 	SpireTest.eq(SpireWindows.allowed(2), true, "a third window may join")
 	SpireTest.eq(SpireWindows.allowed(3), false, "a fourth may not")
 end)
+
+SpireTest.add("QA17: Rangers can take a Trailwarden Spear from Dorrow (Q88)", function()
+	SpireTest.eq(SpireGear.familiesOf(3, 1):find("spear", 1, true) ~= nil, true, "Dorrow offers a spear: " .. SpireGear.familiesOf(3, 1))
+	local d = SpireGear.mainFor(3, 1, "spear")
+	SpireTest.eq(d and d.name, "Trailwarden Spear", "the spear")
+	local b = Game.createItem(2853, 1, WorldPoints.temple_hearthgate)
+	local item = SpireGear.make(b, d.id)
+	SpireTest.eq(item:getAttribute(ITEM_ATTRIBUTE_ATTACK), 25, "attack 25 at tier 0")
+	SpireGear.setState(item, { tier = 2 })
+	SpireTest.eq(item:getAttribute(ITEM_ATTRIBUTE_ATTACK), 27, "+1 per tier")
+	SpireTest.eq(ItemType(d.base):getWeaponType() == WEAPON_DISTANCE or ItemType(d.base):getWeaponType() == WEAPON_MISSILE, true, "a thrown-and-returning distance weapon")
+	b:remove()
+end)
+
+SpireTest.add("QA19: one guild takes at most 10 of the 20 first-kill places (Q91)", function()
+	local list, guilds = {}, {}
+	for i = 1, 12 do -- twelve of one guild did the most damage
+		table.insert(list, { name = "G" .. i, amount = 1000 - i })
+		guilds["G" .. i] = 7
+	end
+	for i = 1, 12 do -- twelve others
+		table.insert(list, { name = "O" .. i, amount = 500 - i })
+	end
+	local names = Floors.rankCreditCapped(list, function(n) return guilds[n] end, 10)
+	SpireTest.eq(#names, 20, "twenty places")
+	local g = 0
+	for _, n in ipairs(names) do
+		if guilds[n] then g = g + 1 end
+	end
+	SpireTest.eq(g, 10, "ten of them for the big guild")
+	SpireTest.eq(names[11], "O1", "the next place goes to the best fighter outside it")
+	SpireTest.eq(#Floors.rankCredit(list), 20, "uncapped ranking still gives 20 (later bosses)")
+	-- through the boss's own credit rule
+	local st = SpireBoss.newState()
+	for _, c in ipairs(list) do
+		SpireBoss.recordHit(st, c.name, c.amount, 100)
+	end
+	local credit = SpireBoss.credited(st, 100, 0, function(n) return guilds[n] end, 10)
+	SpireTest.eq(#credit, 20, "the boss credits 20")
+	SpireTest.eq(credit[11], "O1", "with the guild capped at 10")
+end)
+
+SpireTest.add("QA18: crowd events wait for players; world events and weekend bonuses don't (Q59)", function()
+	-- the boot test runs with nobody online: a world event still starts
+	local fishing
+	for _, k in ipairs(SpireEvents.KINDS) do
+		if k.id == "fishing" then fishing = k end
+	end
+	local before = SpireEvents.active
+	SpireEvents.start(fishing, 1)
+	SpireTest.eq(SpireEvents.active and SpireEvents.active.kind.id, "fishing", "a world event runs with nobody online")
+	SpireEvents.active = before
+	SpireTest.eq(SpireEvents.weekendBonus(7, 1) ~= nil, true, "the weekend bonus goes by the calendar alone")
+	-- the crowd ones wait
+	SpireTest.eq((SpireArena.start({ order = { 1 }, players = { [1] = {} }, kind = next(SpireArena.KINDS) }, os.time())), false, "an arena event needs 4 fighters")
+	SpireTest.eq(SpireSiege.MIN_GUILDS >= 2 and SpireSiege.MIN_MEMBERS >= 2, true, "the Siege needs two guilds of two")
+end)

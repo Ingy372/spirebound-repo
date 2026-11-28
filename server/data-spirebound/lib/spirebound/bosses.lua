@@ -38,7 +38,8 @@ end
 
 -- Pure: credited names at kill time: took part within the credit window and did at least MIN_SHARE of everything
 -- (damage to the boss, healing of the fighters, half the damage soaked), top 20 by total contribution.
-function SpireBoss.credited(state, now, minShare)
+-- guildOf + guildCap (optional): at most guildCap places per guild (QA19: the Axe-Lord's first kill).
+function SpireBoss.credited(state, now, minShare, guildOf, guildCap)
 	local list, total = {}, 0
 	for _, h in pairs(state.hits) do
 		total = total + h.total
@@ -48,7 +49,29 @@ function SpireBoss.credited(state, now, minShare)
 			table.insert(list, { name = name, amount = h.total })
 		end
 	end
+	if guildOf and guildCap then
+		return Floors.rankCreditCapped(list, guildOf, guildCap)
+	end
 	return Floors.rankCredit(list)
+end
+
+-- QA19 (Q91): one guild takes at most 10 of the 20 places at Floor 1's first Axe-Lord kill; later bosses have no cap.
+SpireBoss.FIRST_KILL_GUILD_CAP = 10
+
+-- a character's guild id (online or not), or nil
+function SpireBoss.guildOf(name)
+	local p = Player(name)
+	if p then
+		local g = p:getGuild()
+		return g and g:getId() or nil
+	end
+	local q = db.storeQuery("SELECT `m`.`guild_id` FROM `guild_membership` `m` JOIN `players` `p` ON `p`.`id` = `m`.`player_id` WHERE `p`.`name` = " .. db.escapeString(name))
+	if not q then
+		return nil
+	end
+	local id = Result.getNumber(q, "guild_id")
+	Result.free(q)
+	return id
 end
 
 -- Pure: how long a marked hit waits before it lands (Q19: longer for hits that can kill)

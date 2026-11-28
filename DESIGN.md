@@ -84,7 +84,7 @@ Level bands are hunting targets, not doors. No level cap. Floors 2–5 use the O
    - opens the next wing of the Floor 1 hidden dungeon (3.4);
    - starts the house head-start window for the new floor's town (7.4);
    - carves the credited names on the Monument in Hearthgate (and later on the website).
-4. **Credit:** anyone who damaged the boss, or healed someone who did, in the last 90 seconds. Top 20 by contribution if more qualify. Credited players get a floor title ("Gatebreaker", "Hornbreaker", …), a cosmetic weapon glow, and the first-kill loot. The **last hit** gets the title "Last Blow (Floor N)" and a bound Last Blow Shard (an upgrade material, not a weapon or stats). *(From the old pack.)*
+4. **Credit:** anyone who damaged the boss, or healed someone who did, in the last 90 seconds. Top 20 by contribution if more qualify; at Floor 1's first Axe-Lord kill one guild takes at most 10 of the 20 places, the rest go to the next fighters outside it (Jay, 2026-11-27, Q91: "cap at 10. later boss fights the cap will be removed."). Credited players get a floor title ("Gatebreaker", "Hornbreaker", …), a cosmetic weapon glow, and the first-kill loot. The **last hit** gets the title "Last Blow (Floor N)" and a bound Last Blow Shard (an upgrade material, not a weapon or stats). *(From the old pack.)*
 5. **Enrage scales with headcount** so a stuck server can still be unstuck by a small group: enrage timer = 8 min × 8 ÷ players (max 60 min). Solo = 60 min, 4 players = 16 min, 8+ = 8 min. *(From the old pack.)*
 6. **Repeat kills:** after the first kill the boss becomes repeatable from a portal beside the stair for parties of 1–5, once per character per 20 hours **(Claude's call)**.
 

@@ -105,6 +105,36 @@ function Floors.rankCredit(contributions)
 	return names
 end
 
+-- Credit ranking with a cap per guild (pure; QA19, Jay, 2026-11-27, Q91: "cap at 10. later boss fights the cap will be
+-- removed."): like rankCredit, but once a guild holds `cap` places its next members are passed over and the places go
+-- to the next fighters by contribution. guildOf(name) -> guild id or nil (no guild never counts).
+function Floors.rankCreditCapped(contributions, guildOf, cap)
+	local list = {}
+	for _, c in ipairs(contributions) do
+		table.insert(list, c)
+	end
+	table.sort(list, function(a, b)
+		if a.amount == b.amount then
+			return a.name < b.name
+		end
+		return a.amount > b.amount
+	end)
+	local names, perGuild = {}, {}
+	for _, c in ipairs(list) do
+		if #names >= Floors.MAX_CREDIT then
+			break
+		end
+		local g = guildOf(c.name)
+		if not g or (perGuild[g] or 0) < cap then
+			if g then
+				perGuild[g] = (perGuild[g] or 0) + 1
+			end
+			table.insert(names, c.name)
+		end
+	end
+	return names
+end
+
 -- Enrage timer in seconds (pure): 8 min x 8 / players (players counted up to 8), max 60 min (DESIGN.md 3.2).
 function Floors.enrageSeconds(players)
 	return math.min(60 * 60, math.floor(8 * 60 * 8 / math.min(math.max(players, 1), 8)))

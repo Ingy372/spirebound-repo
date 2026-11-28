@@ -123,6 +123,13 @@ def patch_core(build: Path) -> None:
     # Mystic would otherwise fist-fight up to level 6 (playtest 2026-11-11).
     for item_id in (3074, 3066):
         text = re.sub(r'(<item id="%d"[^>]*>.*?<attribute key="level" value=")\d+(")' % item_id, r"\g<1>1\g<2>", text, count=1, flags=re.S)
+    # QA17 (Q88): the Rangers' Trailwarden Spear is built on the hunting spear (3347, used nowhere else). Like every
+    # Tibia spear it returns to the hand after a throw unless it breaks; with no break chance it is never lost, and
+    # the barracks weapon is for level 10 (our tier levels, gear_level.lua, do the rest).
+    text, n = re.subn(r'(<item id="3347"[^>]*>.*?)\s*<attribute key="breakChance" value="\d+"/>(.*?</item>)', r"\g<1>\g<2>", text, count=1, flags=re.S)
+    text, n2 = re.subn(r'(<item id="3347"[^>]*>.*?<attribute key="level" value=")\d+(")', r"\g<1>1\g<2>", text, count=1, flags=re.S)
+    if n != 1 or n2 != 1:
+        raise SystemExit("the hunting spear (3347) is not as expected in items.xml")
     # Spirebound's own item names (tools/gen_gear.py -> data/item_renames.json): Hearth Shards and other tokens
     import json
     renames = json.loads((ROOT / "data" / "item_renames.json").read_text(encoding="utf-8"))

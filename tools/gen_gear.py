@@ -57,6 +57,9 @@ WEAPONS = [
     ("f1_vanguard_club", "Hearthguard Mace", 1, VANGUARD, "club", "main", 3286, "Stairlord's Maul"),
     ("f1_ranger_bow", "Trailwarden Bow", 1, RANGER, "bow", "main", 3350, "Stair-Iron Longbow"),
     ("f1_ranger_crossbow", "Trailwarden Crossbow", 1, RANGER, "crossbow", "main", 3349, "Stair-Iron Crossbow"),
+    # QA17 (Jay, 2026-11-27, Q88: "yes rangers should have spears they can use"): a spear that is never thrown away,
+    # so it can carry tiers. Built on the hunting spear, which tools/build_server.py makes unbreakable and level 1.
+    ("f1_ranger_spear", "Trailwarden Spear", 1, RANGER, "spear", "main", 3347, "Stair-Iron Spear"),
     ("f1_arcanist_wand", "Wand of Hearth Sparks", 1, ARCANIST, "wand", "main", 3074, "Wand of the Long Stair"),
     ("f1_mystic_rod", "Reedroot Rod", 1, MYSTIC, "rod", "main", 3066, "Rod of the Long Stair"),
     ("f1_vanguard_drop", "Briarguard Sabre", 1, VANGUARD, "sword", "drop", 3273, "Briarguard Sabre, Awakened"),
@@ -82,6 +85,8 @@ WEAPONS = [
 MELEE_FAMILIES = ("sword", "axe", "club")
 MELEE_STATS = {1: (20, 15)}
 MELEE_ATTACK_PER_TIER = 1
+# The Ranger's spear (QA17) carries its own attack the same way: a plain spear's 25 (an arrow's too), +1 per tier.
+SPEAR_STATS = {1: (25, 0)}
 SHOP_MELEE_STATS = (18, 14)    # the shop's Climber's Sword: above the smith's longsword (17), below the barracks' weapon
 # a rare drop starts like the main weapon, with a different small bonus (spec 4.5)
 # The perks are built in lib/spirebound/gear.lua (perkHit, perkHealFactor): life_leech and mana_leech give back that
@@ -347,6 +352,8 @@ def main():
         p = f', perk = "{perk[0]}", perkValue = {perk[1]}' if perk else ""
         if fam in MELEE_FAMILIES and fl in MELEE_STATS:
             p += f", attack = {MELEE_STATS[fl][0]}, defense = {MELEE_STATS[fl][1]}"
+        elif fam == "spear" and fl in SPEAR_STATS:
+            p += f", attack = {SPEAR_STATS[fl][0]}, defense = {SPEAR_STATS[fl][1]}"
         if base_scale(base):
             p += f", scale = {base_scale(base)}"
         L.append(f'\t{{ id = "{wid}", name = {lua_str(name)}, floor = {fl}, vocation = {voc}, family = "{fam}", source = "{src}", base = {base}, awakenedName = {lua_str(awake)}{p} }},')

@@ -18,6 +18,7 @@ SpireGearData.weapons = {
 	{ id = "f1_vanguard_club", name = "Hearthguard Mace", floor = 1, vocation = 4, family = "club", source = "main", base = 3286, awakenedName = "Stairlord's Maul", attack = 20, defense = 15 },
 	{ id = "f1_ranger_bow", name = "Trailwarden Bow", floor = 1, vocation = 3, family = "bow", source = "main", base = 3350, awakenedName = "Stair-Iron Longbow" },
 	{ id = "f1_ranger_crossbow", name = "Trailwarden Crossbow", floor = 1, vocation = 3, family = "crossbow", source = "main", base = 3349, awakenedName = "Stair-Iron Crossbow" },
+	{ id = "f1_ranger_spear", name = "Trailwarden Spear", floor = 1, vocation = 3, family = "spear", source = "main", base = 3347, awakenedName = "Stair-Iron Spear", attack = 25, defense = 0 },
 	{ id = "f1_arcanist_wand", name = "Wand of Hearth Sparks", floor = 1, vocation = 1, family = "wand", source = "main", base = 3074, awakenedName = "Wand of the Long Stair" },
 	{ id = "f1_mystic_rod", name = "Reedroot Rod", floor = 1, vocation = 2, family = "rod", source = "main", base = 3066, awakenedName = "Rod of the Long Stair" },
 	{ id = "f1_vanguard_drop", name = "Briarguard Sabre", floor = 1, vocation = 4, family = "sword", source = "drop", base = 3273, awakenedName = "Briarguard Sabre, Awakened", perk = "life_leech", perkValue = 0.02, attack = 20, defense = 15 },

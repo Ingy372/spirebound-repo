@@ -223,7 +223,10 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 		end, now)
 		logger.error("[Spirebound] {} died with no fight record (scripts reloaded?): credit rebuilt from the damage map", creature:getName())
 	end
-	local credit = SpireBoss.credited(state, now, SpireBoss.minShare(def.kind))
+	-- QA19: the first Axe-Lord kill caps each guild at 10 of the 20 places
+	local capped = def.kind == "floor" and def.floor == 1 and not state.private and not Floors.isOpen(2)
+	local credit = SpireBoss.credited(state, now, SpireBoss.minShare(def.kind), capped and SpireBoss.guildOf or nil,
+		capped and SpireBoss.FIRST_KILL_GUILD_CAP or nil)
 	SpireGear.grantBoss(creature:getName(), credit) -- gear progression: shards and the awakening for every credited fighter
 	if SpireFirstClimb and SpireFirstClimb.onBossKill then
 		SpireFirstClimb.onBossKill(creature:getName(), credit) -- FD1: the Last Page (chapter 8)
