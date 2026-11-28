@@ -1,5 +1,7 @@
 # Style trees, second version (design, 2026-11-27)
 
+**Jay reviewed this on 2026-11-27; section 7 at the end holds his changes and overrides anything above it.**
+
 Replaces the path and final-style table in `2026-11-23-gear-progression-design.md` 4.2. Everything else in 4.2 stays the same: 3 stages of 10 levels, 2 permanent choices, the stance from Mastery 5 (P11), pacing (stage ends around levels 37 / 110 / 275), the shop respec. This file only changes **what the choices are**.
 
 ## 1. Jay's brief (2026-11-27)
@@ -154,3 +156,69 @@ The Reaver path is left as it was. Jay didn't ask to change it, and it is alread
 - `tools/balance.py --check` should gain one check: no finished style deals more than about 25% extra damage, and every extreme final has a minus.
 - Names: all new names (Bladeward, Riposte Guard, Blightcaller, Briarmender, Verdant Lash, Huntwarden) pass `tools/check_names.py`.
 - Tests: the p1b/p1c autopilot routes cover each class's abilities. Update them for the new and renamed ones.
+
+## 7. Jay's review (2026-11-27) and the changes it made
+
+Jay: "i like it but it can be a lot to swallow at first." Everything in this section replaces the matching parts above.
+
+### 7.1 Showing it to players without overwhelming them
+
+- **Only ever show the next choice, never the whole tree.**
+- **Pre-framing at class pick:** the Registrar ends with one line, repeated in the Journal: "At Mastery 10 (around level 37) your class trainer will send for you. You will choose your path then, and your style later." Nothing else about styles is shown yet.
+- **The summons (Jay: "a message appears in there bag telling them they have been summoned by there vocation specialist for special training"):** at Mastery 5 a sealed letter appears in the backpack from the class trainer (Vanguard: Captain Dorrow; Ranger: Hunter Brannoch; Arcanist: Vesper; Mystic: Fisher Corwin). Visiting the trainer lets you try both paths for free (the stance). At Mastery 10 a second letter: "come and choose". Talking to the trainer opens **the choice window**: two cards side by side, each with the name, one line on the role ("the shield tank"), what you gain, what you give up, and the signature ability. Choose, then a confirm ("this is permanent"). The final style (Mastery 20) works the same way with a third letter.
+- The Journal's "Calling" page shows your current path and only the next choice.
+- Jay was fine with either a pop-up or the summons (Claude's call): the summons, because it makes the choice a moment and reuses the trainers players already know, and the window still gives the clear side-by-side.
+- When the first choice lands (level 37 or earlier) is still Q46, part of this conversation.
+
+### 7.2 Respec
+
+Jay: "i want class mastery to reset with in game donation only." The Mastery Respec Scroll stays shop-only, as built. (QA10's gold respec is cancelled; there is no separate weapon mastery to reset.)
+
+### 7.3 Reaver: the off-hand fighter (Jay: "reaver should be able to equip a second weapon to forgo defense in favor of damage")
+
+```
+Reaver: no shield, an off-hand blade instead (or a two-handed weapon)
+ ├─ Bloodedge: the berserker      (extreme: the hardest-hitting Vanguard, takes more damage)
+ └─ Stormbreaker: the cleaver     (balanced: hits everything around it)
+```
+
+- **Off-hand blades** are a new kind of item that goes in the shield hand: daggers, short swords, hatchets and cudgels with an attack value and no defence. Tibia's client can't hold two weapons, so the off-hand blade is a shield-hand item our scripts treat as a second weapon (the same trick Twin Fang uses). Ordinary ones keep a Tibia dagger look; rare ones get our own art.
+- **Reaver (path):** +0.8% damage per level while no shield is held, and after every melee hit the off-hand blade strikes for 20% of its damage, +1% per level (30% at Mastery 10). A Reaver holding a two-handed weapon gets the same share as extra two-hander damage instead, so two-handed axe and club users still fit. Signature: **Red Reckoning** (kept).
+- **Bloodedge (final, extreme):** +1.2% damage and +2% off-hand strike per level (50% at 10); off-hand strikes heal you for a little of the damage; below half health you hit 10% harder. **Minus: you take 1% more damage per level (+10%).** Signature: **Crimson Verdict** (kept).
+- **Stormbreaker (final, balanced):** +1% damage per level, and each melee hit also strikes monsters standing next to your target for 3% per level of its damage (30% at 10). No minus. Signature: **Thunder Cleave** (kept).
+- **Is it balanced? (Claude's honest check):** yes, if two rules hold: off-hand blades are clearly weaker than main weapons (about two thirds of a main weapon's attack on the same floor), and the off-hand strike is a share of that. A finished Bloodedge then deals roughly 35-40% more than an unstyled Vanguard and takes 10% more damage with no shield, which is a real trade against Ironwall's 18% less damage taken. `balance.py` gets a ceiling for it.
+- **Twin Fang (Q56 overlaps):** if every Reaver can dual-wield, Twin Fang's "only 3 per season get dual wielding" no longer makes sense. Recommendation: Twin Fang becomes the rare prize **on top of** the Reaver: the first 3 each season to beat the Floor 8 trial get the Twin Fang title, a glowing off-hand look and its three sword skills as looks-only versions. No extra power, so late joiners aren't weaker.
+
+### 7.4 Dawnmender: is +25% healing too much?
+
+Jay: "is 25% to extreme of a heal boost?" A heal of 400 would become 500. In monster hunting that is fine; the risk is player fights, where one healer could keep a friend alive against a whole team. **Change:** Lifebinder +10% and Dawnmender **+10%** (was +15%), so **+20% in total**. Dawnmender's real strength is its party buffs and Second Dawn, which stay. Briarmender stays at Lifebinder's +10% minus 5% (+5% in total).
+
+### 7.5 Spellbreaker, explained and fixed
+
+- **Monsters have no mana in Tibia**, so the mana drain only does anything against players. Against monsters, the Spellbreaker's job is the **mark**.
+- **The worry about the slog:** the Spellbreaker is the *final* style, chosen around level 110. Until then the player is a Stormbinder (+6% damage, longer slows and knock-backs), which hunts like any Arcanist.
+- **Rework so it is good solo, not only in groups:**
+  - **Sundering Bolt** marks one monster: it takes **20% more damage from everyone, the Spellbreaker included**, for 8 seconds, and is slowed.
+  - **The mark jumps:** when a marked monster dies, the mark moves to the nearest monster, so solo hunting flows from one to the next.
+  - **Hex Spread** (its area spell) puts a weaker 10% mark on up to 3 monsters.
+  - **Minus: 10% less damage against unmarked targets.**
+  - So solo, the Spellbreaker hits the marked monster about 25% harder than an unstyled Arcanist and the rest about 10% softer: strong on bosses and big single monsters, slower on large crowds. In a group the whole party gets the 20%. Against players the mark also drains mana.
+
+### 7.6 Pathfinder: support in its own way, not a backup Mystic
+
+Jay: "it should support the party in its own unique way." The Mystic **restores** health, the Ironwall **absorbs** hits, the Pathfinder **makes the party avoid them and move**.
+
+- **Pathfinder (final, extreme):** party members near you get **+0.5% chance per level to dodge an attack completely** (5% at 10), **+2 speed per level**, **0.3 seconds more warning before a boss's big hit**, and you see invisible monsters and hidden traps for the party. Its heals are gone. **Minus: 10% less damage.**
+- **Wayfarer's Stride (signature, reworked):** party haste plus 6 seconds of +15% dodge for everyone it touches.
+- The Huntwarden path keeps its small +10% healing (the Ranger's field dressing).
+
+### 7.7 Snareweaver: crowd control that can't be abused
+
+Jay: "careful, this can be a hard concept to balance when it comes to pvm. does tibia have any approach to this concept?" Tibia mostly avoids freezing monsters: bosses and many strong monsters are immune to being slowed or held, and its main control tool is the magic wall, which blocks where monsters can walk instead of stopping them. We follow that:
+
+- **Walls and slows over freezes.** Signature **Web of Briars** becomes a briar wall: a short line of thorns that blocks a path for 4 seconds (players know this from Tibia's magic wall) and slows anything that touches it.
+- **Roots stay short, and wear off:** holding the same monster again within 10 seconds gives half the time; a third time it is immune for 10 seconds.
+- **Bosses and elites can't be held at all**, only slowed a little.
+- **A held monster still casts and shoots**, so kiting is never free.
+- Control time at full Snareweaver drops from +40% to **+25%**.
+- Frostwarden (the Mystic controller) follows the same rules.

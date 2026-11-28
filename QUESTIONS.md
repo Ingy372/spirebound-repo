@@ -30,6 +30,7 @@ Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief
 - **Ranger:** Marksman → **Deadeye** (boss sniper) or **Volley Captain** (crowds). Trapper becomes **Huntwarden** (control and support) → **Snareweaver** (solo kiter) or **Pathfinder** (party speed and heals, low damage). **Recommendation: keep.**
 - Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
 - **Jay's answer (2026-11-27):** "i need to talk about this in more depth" Nothing is built (ST1 waits) until we talk.
+- **First talk (2026-11-27):** Jay likes the trees but wants them easy to take in, Reaver rebuilt around an off-hand weapon, and a closer look at Dawnmender, Spellbreaker, Pathfinder and Snareweaver. Changes written in the design's section 7 (also: how choices are shown, via the class trainer's summons). Still open: Jay's reactions to section 7, Twin Fang's place (section 7.3), and Q46.
 
 ### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
 You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
@@ -355,6 +356,7 @@ A tier-5 weapon can be traded to a level-8 character and wielded at once.
 - Assumed until you answer: no change.
 - Jay's answer:
 - **Jay's answer (2026-11-27):** "yes for weapon mastery" Roadmap QA10.
+- **Changed by Jay (2026-11-27):** "no i only want WEAPON masteries to be able to reset with gold. though thinking on it, im not sure why you would want to. i want class mastery to reset with in game donation only." So the class Mastery respec stays shop-only and no gold respec is built (QA10 cancelled; there is no separate weapon mastery to reset).
 
 ### Q88. Spear Rangers have no barracks weapon (2026-11-26, Floor 1 review B4-3)
 Rangers who use spears get nothing from the barracks the bow users get.
