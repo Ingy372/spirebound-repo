@@ -687,7 +687,11 @@ end
 -- Give every credited fighter its boss reward (public and private kills alike). A fighter who died during the fight
 -- (or logged out) is not in the game at the kill: the reward waits and arrives when they next log in (2026-11-26: two
 -- test characters who fell before the Axe-Lord died lost their awakening).
-local PENDING = "spirebound-boss-pending"
+-- (2026-11-28: was "spirebound-boss-pending", the same store SpireBoss keeps waiting titles in as a list; a fighter who
+-- fell before the boss then got a script error at every login and could not get back into the game. Own store now;
+-- collectPending also takes over the old text values.)
+local PENDING = "spirebound-gear-pending"
+local OLD_PENDING = "spirebound-boss-pending"
 
 function SpireGear.grantBoss(boss, creditNames)
 	if not SpireGear.BOSS_REWARDS[boss] then
@@ -706,6 +710,11 @@ end
 
 function SpireGear.collectPending(p)
 	local waiting = kv.scoped(PENDING):get(p:getName())
+	local old = kv.scoped(OLD_PENDING):get(p:getName())
+	if type(old) == "string" then -- a reward saved in the shared store before the fix
+		waiting = (waiting and (waiting .. ";") or "") .. old
+		kv.scoped(OLD_PENDING):remove(p:getName())
+	end
 	if not waiting then
 		return
 	end

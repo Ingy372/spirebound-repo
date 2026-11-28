@@ -126,8 +126,8 @@ end
 
 function SpireBoss.applyPending(player)
 	local list = pending():get(player:getName())
-	if not list then
-		return 0
+	if type(list) ~= "table" then
+		return 0 -- nothing waiting, or an old boss reward saved here as text (SpireGear.collectPending takes those)
 	end
 	for _, title in ipairs(list) do
 		player:kv():scoped("spirebound-titles"):set(title, os.time())
