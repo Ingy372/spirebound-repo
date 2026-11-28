@@ -141,6 +141,23 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 			SpireGearData.REFORGE_FEE * d.floor))
 		return true
 	end
+	if MsgContains(lower, "retune") then
+		local ok, plan = SpireGear.retuneCheck(player)
+		if not ok then
+			say(plan)
+			return true
+		end
+		pending[pid] = function()
+			local done, text = SpireGear.retuneWith(player, SpireGear.playerWallet(player))
+			if done then
+				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_GREEN)
+			end
+			return text
+		end
+		say(string.format("I can move the tiers of your %s (tier %d) into the %s in your hand: it becomes tier %d, and the %s goes back to tier 0. Familiarity stays where it is. %d gold. Shall I? Say {yes}.",
+			plan.source:getName(), SpireGear.state(plan.source).tier, plan.target:getName(), plan.newTier, plan.source:getName(), plan.fee))
+		return true
+	end
 	if MsgContains(lower, "replace") then
 		local id = SpireGear.earnedMain(player, 1)
 		if not id then

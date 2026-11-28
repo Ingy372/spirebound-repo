@@ -515,8 +515,8 @@ REVIEW_CASES = [
          logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_hardcore),
     dict(name="A8-1 a level-15 Normal death costs nothing", voc=4, level=15, ground="starter_east",
          logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_normal),
-    dict(name="A4-6 every Axe-Lord fighter gets 10 platinum in the bank", voc=4, level=60,
-         logins=[[(3, "say", "/rv axelord")]], stay=4,
+    dict(name="A4-6 every Axe-Lord fighter gets 10 platinum (in the backpack since QA4)", voc=4, level=60,
+         logins=[[(3, "say", "/s0 offer"), (1, "say", "/rv axelord")]], stay=4,
          check=lambda lines: (_rv(lines, "axelord")[0]["bank_gain"] >= 1000, "bank +%(bank_gain)s" % _rv(lines, "axelord")[0])),
     dict(name="I10 the Sealed Shrine's gold once per account", voc=4, level=60, logins=[[(3, "say", "/rv shrine")]], stay=4,
          check=lambda lines: (_rv(lines, "shrine")[0]["first"] == 1000 and _rv(lines, "shrine")[0]["second"] == 0,
@@ -791,6 +791,23 @@ STEP0_CASES = [
     dict(name="WA2 control: a plain sword can be listed", voc=4, level=30, ground="wolf_copse", stay=2,
          logins=[[(3, "say", "/s0 jump 1228 1279 6"), (1, "use", "1228 1278 6 3499 1"), (2, "say", "/s0 marketprep plain"), (2, "sell", "3264 0 1 1000"), (2, "say", "/s0 marketstate")]],
          check=lambda lines: ((lambda m: (m["offers"] == 1, "offers %(offers)s, inbox %(inbox)s" % m))(_s0(lines, "marketstate")[0]))),
+    # WA5: retune at Garrick, and the Axe-Lord awakens the weapon in hand (not the one in the bag)
+    dict(name="WA5r retune at Garrick moves tiers minus one", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/s0 goto Weaponsmith Garrick"), (1, "say", "/s0 retuneprep"), (1, "say", "/s0 tiers"), (1, "say", "hi"),
+                  (2, "npc", "retune"), (2, "npc", "yes"), (2, "say", "/s0 tiers")]],
+         check=lambda lines: ((lambda t: ("f1_vanguard_axe:t3:a0:hand" in t[1]["list"] and "f1_vanguard_sword:t0:a0:bag" in t[1]["list"]
+                                          and t[0]["bank"] - t[1]["bank"] == 1500, "before %s; after %s; paid %d" % (t[0]["list"], t[1]["list"], t[0]["bank"] - t[1]["bank"])))(_s0(lines, "tiers")))),
+    dict(name="WA5h the Axe-Lord awakens the weapon in hand", voc=4, level=60, stay=4,
+         logins=[[(3, "say", "/s0 retuneprep"), (1, "say", "/rv axelord"), (3, "say", "/s0 tiers")]],
+         check=lambda lines: ((lambda t: ("f1_vanguard_axe:t1:a1:hand" in t["list"] and "f1_vanguard_sword:t4:a0:bag" in t["list"],
+                                          "after the kill: %(list)s" % t))(_s0(lines, "tiers")[0]))),
+    dict(name="WA5x a fighter dead at the kill: the awakening goes to their most familiar weapon", voc=4, level=60, stay=1, gap=20,
+         logins=[[(3, "say", "/s0 retuneprep"), (1, "say", "/s0 famsword"), (1, "say", "/s0 bosshit"), (1, "say", "/s0 bless"), (1, "say", "/rv die")],
+                 [(5, "say", "/s0 tiers")]],
+         check=lambda lines: ((lambda t: ("f1_vanguard_sword:t4:a1:bag" in t["list"] and "f1_vanguard_axe:t1:a0" in t["list"],
+                                          "after logging back in: %(list)s" % t))(_s0(lines, "tiers")[0]))),
+    dict(name="WA5x a fighter's partner finishes the Axe-Lord", voc=4, level=60, stay=2, delay=12,
+         logins=[[(3, "say", "/s0 bosskill")]], check=lambda lines: (True, "finisher")),
     # QA19 (Q91): 12 of one guild and 12 others in the Axe-Lord's first kill: 10 of the guild are credited
     dict(name="QA19 the first Axe-Lord kill credits at most 10 of one guild", voc=4, level=60, stay=4,
          logins=[[(3, "say", "/rv floorsreset"), (1, "say", "/s0 guildfight"), (3, "say", "/s0 credit"), (1, "say", "/rv floorsreset")]],
@@ -845,7 +862,7 @@ async def review_test(only=None):
                 script = [(d, k, t.replace("{partner}", partner).replace("{partner_id}", str(ids.get(partner, 0))))
                           for d, k, t in script]
             await loadbot.Bot(c["char"], tokens[c["char"]], "127.0.0.1", port, stats, script).run(c.get("stay", 3))
-            await asyncio.sleep(3)
+            await asyncio.sleep(c.get("gap", 3))   # how long the character stays logged out between its logins
 
     try:
         tasks = []

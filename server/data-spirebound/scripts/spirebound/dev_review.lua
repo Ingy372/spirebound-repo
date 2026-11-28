@@ -200,7 +200,7 @@ function rv.onSay(player, words, param)
 			end
 		end
 		boss = boss or SpireBoss.spawn("Axe-Lord of the Stair")
-		local bank = player:getBankBalance()
+		local bank = player:getBankBalance() + player:getMoney() -- the hoard's share lands in the backpack since QA4
 		player:teleportTo(Position(spot.x, spot.y + 2, spot.z), true)
 		local hp = boss:getMaxHealth() * 3
 		doTargetCombatHealth(player, boss, COMBAT_PHYSICALDAMAGE, -hp, -hp, CONST_ME_NONE, ORIGIN_MELEE)
@@ -208,7 +208,7 @@ function rv.onSay(player, words, param)
 		addEvent(function()
 			local p = Player(pid)
 			if p then
-				logger.info("[LOADTEST] rv axelord {} bank_gain={}", p:getName(), p:getBankBalance() - bank)
+				logger.info("[LOADTEST] rv axelord {} bank_gain={}", p:getName(), p:getBankBalance() + p:getMoney() - bank)
 			end
 		end, 1000)
 	elseif cmd == "shrine" then

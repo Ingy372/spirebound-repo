@@ -170,6 +170,63 @@ function s0.onSay(player, words, param)
 			Result.free(q)
 		end
 		out("s0marketstate", player, { inbox = held, offers = n })
+	elseif cmd == "retuneprep" then -- an axe at tier 1 in hand, a sword at tier 4 in the backpack, gold
+		backpack(player)
+		local axe = SpireGear.equip(player, "f1_vanguard_axe")
+		if axe then
+			SpireGear.setState(axe, { tier = 1 })
+		end
+		local sword = SpireGear.make(player, "f1_vanguard_sword")
+		if sword then
+			SpireGear.setState(sword, { tier = 4 })
+		end
+		player:setBankBalance(player:getBankBalance() + 20000)
+		out("s0retuneprep", player, { axe = axe and 1 or 0, sword = sword and 1 or 0 })
+	elseif cmd == "famsword" then -- the sword in the bag at full familiarity, bonded to this character
+		for _, it in ipairs(SpireGear.carried(player)) do
+			local st = SpireGear.state(it)
+			if st and st.id == "f1_vanguard_sword" then
+				local T = SpireGearData.FAMILIARITY_POINTS[1]
+				SpireGear.setState(it, { famPoints = T[#T] })
+				SpireGear.claim(it, player)
+			end
+		end
+		out("s0famsword", player, { ok = 1 })
+	elseif cmd == "bosshit" or cmd == "bosskill" then -- a real hit on the Axe-Lord (bosskill: the last, small blow)
+		local spot = WorldPoints.axe_lord_spawn
+		local boss
+		for _, c in ipairs(Game.getSpectators(spot, false, false, 14, 14, 14, 14)) do
+			if c:getName() == "Axe-Lord of the Stair" then
+				boss = c
+			end
+		end
+		boss = boss or SpireBoss.spawn("Axe-Lord of the Stair")
+		player:teleportTo(Position(spot.x, spot.y + 2, spot.z), true)
+		if cmd == "bosshit" then
+			doTargetCombatHealth(player, boss, COMBAT_PHYSICALDAMAGE, -3000, -3000, CONST_ME_NONE, ORIGIN_MELEE)
+		else
+			boss:addHealth(-(boss:getHealth() - 20))
+			doTargetCombatHealth(player, boss, COMBAT_PHYSICALDAMAGE, -500, -500, CONST_ME_NONE, ORIGIN_MELEE)
+		end
+		out("s0" .. cmd, player, { boss = boss and 1 or 0 })
+	elseif cmd == "bless" then
+		for b = 1, 8 do
+			if not player:hasBlessing(b) then
+				player:addBlessing(b, 1)
+			end
+		end
+		out("s0bless", player, { bless = blessings(player) })
+	elseif cmd == "tiers" then -- every Spirebound weapon this character has: id, tier, awakened, where
+		local list = {}
+		local h = player:getSlotItem(CONST_SLOT_LEFT)
+		for _, it in ipairs(SpireGear.carried(player)) do
+			local st = SpireGear.state(it)
+			if st and SpireGear.defOf(it).kind == "weapon" then
+				table.insert(list, string.format("%s:t%d:a%d:%s", st.id, st.tier, st.awakened and 1 or 0, it == h and "hand" or "bag"))
+			end
+		end
+		table.sort(list)
+		out("s0tiers", player, { list = table.concat(list, ","), bank = player:getBankBalance() })
 	elseif cmd == "kit" then -- a backpack and a full leather set (helmet, armour, legs, boots)
 		backpack(player)
 		wear(player, CONST_SLOT_HEAD, 3355)

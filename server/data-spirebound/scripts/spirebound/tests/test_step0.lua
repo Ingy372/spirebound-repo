@@ -151,3 +151,21 @@ SpireTest.add("WA1: familiarity belongs to the character who earned it", functio
 	SpireTest.eq(SpireGear.bondChange(5, 5), "keep", "your own weapon keeps its familiarity")
 	SpireTest.eq(SpireGear.bondChange(5, 6), "reset", "another character's starts again")
 end)
+
+SpireTest.add("WA5: retune moves tiers minus one", function()
+	local t, s = SpireGear.retunePlan(4, 1)
+	SpireTest.eq(t .. "/" .. s, "3/0", "tier 4 into a tier 1: 3, and the source back to 0")
+	SpireTest.eq((SpireGear.retunePlan(2, 3)), 3, "never below the target's own")
+end)
+
+SpireTest.add("WA5: a fighter dead at the kill: the most familiar weapon of theirs is awakened", function()
+	local rows = {
+		{ id = "axe", floor = 1, awakened = false, bond = 7, fam = 100 },
+		{ id = "sword", floor = 1, awakened = false, bond = 7, fam = 9000 },
+		{ id = "bow", floor = 1, awakened = false, bond = 8, fam = 99999 },      -- someone else's familiarity
+		{ id = "old", floor = 1, awakened = true, bond = 7, fam = 50000 },       -- already awakened
+		{ id = "f2", floor = 2, awakened = false, bond = 7, fam = 70000 },       -- another floor's
+	}
+	SpireTest.eq(SpireGear.pickLate(rows, 1, 7).id, "sword", "the sword: most familiar, bonded to them")
+	SpireTest.eq(SpireGear.pickLate({}, 1, 7), nil, "no weapon: nothing")
+end)

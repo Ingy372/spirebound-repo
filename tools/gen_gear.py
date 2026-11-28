@@ -180,6 +180,7 @@ NO_SHARDS = {"Pen Rat"}       # the Arrival Yard's tutorial rats
 SHARD_RATE = {"Stonehorn Ram": {"flawless": 0.01}}
 REFORGE_FEE = 1000             # change family at the Weaponsmith (per floor of the weapon); tier kept, familiarity 0
 REISSUE_FEE = 2000             # a lost main weapon replaced by its quest giver (per floor), tier 0
+RETUNE_FEE = 1500              # WA5: move tiers from one of your Floor n weapons to another (per floor), minus one tier
 
 
 def shard_monsters():
@@ -413,6 +414,7 @@ def main():
     L.append("SpireGearData.STYLE_POINTS = { " + ", ".join(str(v) for v in style_thresholds()) + " }")
     L.append(f"SpireGearData.REFORGE_FEE = {REFORGE_FEE}")
     L.append(f"SpireGearData.REISSUE_FEE = {REISSUE_FEE}")
+    L.append(f"SpireGearData.RETUNE_FEE = {RETUNE_FEE}")
     L.append("SpireGearData.tokenNames = {")
     for fl, grades in TOKENS.items():
         for g, v in grades.items():

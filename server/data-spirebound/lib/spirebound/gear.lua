@@ -611,6 +611,54 @@ function SpireGear.bossReward(boss, hadShards)
 	return { shards = r.shards and (hadShards and 0 or r.shards) or 0, grade = r.grade, floor = r.floor, awaken = r.awaken }
 end
 
+-- WA5 (spec 2026-11-27-weapon-review.md 3.4, Claude's call): retune moves the tier of one of your Floor n weapons to
+-- another. Pure: the target gets the source's tier minus one (never below its own), the source drops to tier 0.
+function SpireGear.retunePlan(sourceTier, targetTier)
+	return math.max(targetTier, sourceTier - 1), 0
+end
+
+-- The weapon in hand is the target; the source is your other Floor n weapon with the highest tier.
+-- Returns ok, { source, target, newTier, fee } or false, message. Nothing is changed here.
+function SpireGear.retuneCheck(player)
+	local target, td = SpireGear.mainWeapon(player)
+	if not target or not td or td.shop or td.kind ~= "weapon" then
+		return false, "Hold the weapon that should take the tiers in your hand, and carry the one that gives them."
+	end
+	local ts = SpireGear.state(target)
+	local source, ss
+	for _, it in ipairs(SpireGear.carried(player)) do
+		local s, d = SpireGear.state(it), SpireGear.defOf(it)
+		if it ~= target and s and not s.shop and d.kind == "weapon" and d.floor == td.floor and (not ss or s.tier > ss.tier) then
+			source, ss = it, s
+		end
+	end
+	if not source then
+		return false, "Carry another of your Floor " .. td.floor .. " weapons: its tiers are what I move."
+	end
+	local newTier = SpireGear.retunePlan(ss.tier, ts.tier)
+	if newTier <= ts.tier then
+		return false, string.format("%s is tier %d and %s tier %d: retuning would gain nothing.", source:getName(), ss.tier, target:getName(), ts.tier)
+	end
+	local need = SpireGear.levelFor(td.floor, newTier)
+	if player:getLevel() < need then
+		return false, string.format("Tier %d needs level %d to wear, and you are level %d.", newTier, need, player:getLevel())
+	end
+	return true, { source = source, target = target, newTier = newTier, fee = SpireGearData.RETUNE_FEE * td.floor }
+end
+
+function SpireGear.retuneWith(player, wallet)
+	local ok, plan = SpireGear.retuneCheck(player)
+	if not ok then
+		return false, plan
+	end
+	if wallet.money() < plan.fee or not wallet.pay(plan.fee) then
+		return false, string.format("A retune costs %d gold.", plan.fee)
+	end
+	SpireGear.setState(plan.target, { tier = plan.newTier })
+	SpireGear.setState(plan.source, { tier = 0 })
+	return true, string.format("Done: %s is now tier %d, and %s is back to tier 0.", plan.target:getName(), plan.newTier, plan.source:getName())
+end
+
 -- A Floor n weapon the player holds or carries (the one in hand first)
 function SpireGear.floorWeapon(player, floor)
 	local item, d = SpireGear.mainWeapon(player)
@@ -664,11 +712,43 @@ function SpireGear.collectPending(p)
 	kv.scoped(PENDING):remove(p:getName())
 	for boss in tostring(waiting):gmatch("[^;]+") do
 		p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "You fell before the " .. boss .. " did, but your party finished the fight: your share is here.")
-		SpireGear.giveBossReward(p, boss)
+		SpireGear.giveBossReward(p, boss, true)
 	end
 end
 
-function SpireGear.giveBossReward(p, boss)
+-- WA5 (spec C6): the floor boss awakens the weapon in your hand. A fighter who was dead at the kill (late = true) gets
+-- it on their Floor n weapon with the most familiarity bonded to them.
+function SpireGear.awakenTarget(p, floor, late)
+	if not late then
+		local item, d = SpireGear.mainWeapon(p)
+		if item and d and d.floor == floor and not d.shop and d.kind == "weapon" then
+			return item
+		end
+		return nil
+	end
+	local rows = {}
+	for _, it in ipairs(SpireGear.carried(p)) do
+		local s, d = SpireGear.state(it), SpireGear.defOf(it)
+		if s and d.kind == "weapon" then
+			table.insert(rows, { item = it, floor = d.floor, shop = s.shop, awakened = s.awakened, bond = s.bond, fam = s.famPoints })
+		end
+	end
+	local pick = SpireGear.pickLate(rows, floor, p:getGuid())
+	return pick and pick.item or nil
+end
+
+-- Pure: of these weapon rows, the not yet awakened Floor n one with the most familiarity bonded to guid (or unbonded)
+function SpireGear.pickLate(rows, floor, guid)
+	local best
+	for _, r in ipairs(rows) do
+		if not r.shop and r.floor == floor and not r.awakened and (r.bond == nil or r.bond == guid) and (not best or r.fam > best.fam) then
+			best = r
+		end
+	end
+	return best
+end
+
+function SpireGear.giveBossReward(p, boss, late)
 	do
 		do
 			local k = p:kv():scoped("spirebound")
@@ -683,12 +763,14 @@ function SpireGear.giveBossReward(p, boss)
 				p:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s leaves you %d %s.", boss, plan.shards, SpireGearData.tokenNames[SpireGearData.tokens[plan.floor][plan.grade]][2]))
 			end
 			if plan.awaken then
-				local item = SpireGear.floorWeapon(p, 1)
+				local item = SpireGear.awakenTarget(p, 1, late)
 				if item and SpireGear.awaken(item) then
 					p:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
 					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Your weapon awakens: " .. item:getName() .. "!")
-				elseif not item then
-					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Carry a Floor 1 weapon when you defeat the " .. boss .. " to awaken it.")
+				elseif item then
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, item:getName() .. " is already awakened. To awaken another weapon, hold it at another kill.")
+				else
+					p:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Hold a Floor 1 weapon in your hand when you defeat the " .. boss .. " to awaken it.")
 				end
 			end
 		end
