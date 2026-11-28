@@ -5,10 +5,10 @@
   "shaft",
   "vine",
   "leaf",
-  "bud",
-  "petal",
-  "thorn",
-  "knob"
+  "pod",
+  "rib",
+  "tendril",
+  "thorn"
  ],
  "palette": "item_thornward_rod",
  "walk_frames": 1,
@@ -44,27 +44,29 @@
    "vine": 2.5,
    "thorn": 3.0,
    "leaf": 2.0,
-   "bud": 2.0,
-   "petal": 2.0,
-   "knob": 2.0
+   "pod": 2.5,
+   "rib": 3.0,
+   "tendril": 3.0
   },
   "thin": {
    "vine": 3,
-   "thorn": 2
+   "thorn": 2,
+   "tendril": 2,
+   "rib": 2
   },
   "soft": [
    [
-    "bud",
-    "petal"
+    "pod",
+    "rib"
    ]
   ],
   "no_outline": [
-   "thorn"
+   "thorn",
+   "rib"
   ],
   "selout": [
    "shaft",
-   "bud",
-   "petal"
+   "pod"
   ],
   "texture": {
    "shaft": [

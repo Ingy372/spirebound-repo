@@ -8,7 +8,10 @@
   "strap",
   "buckle",
   "toecap",
-  "inside"
+  "inside",
+  "rim",
+  "paddle",
+  "hub"
  ],
  "palette": "item_millrace_boots",
  "walk_frames": 1,
@@ -45,16 +48,25 @@
    "strap": 2.0,
    "cuff": 1.5,
    "toecap": 1.5,
-   "inside": 2.0
+   "inside": 2.0,
+   "rim": 2.5,
+   "paddle": 2.0,
+   "hub": 4.0
   },
   "thin": {
    "buckle": 2,
-   "strap": 3
+   "strap": 3,
+   "rim": 3,
+   "hub": 2
   },
   "soft": [
    [
     "leather",
     "toecap"
+   ],
+   [
+    "rim",
+    "paddle"
    ]
   ],
   "no_outline": [

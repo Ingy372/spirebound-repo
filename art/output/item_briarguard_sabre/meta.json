@@ -3,12 +3,13 @@
  "parts": [
   "none",
   "blade",
-  "guard",
-  "thorn",
+  "edge",
   "grip",
-  "wrap",
-  "pommel",
-  "leaf"
+  "coil",
+  "leaf",
+  "quillon",
+  "hip",
+  "hiptip"
  ],
  "palette": "item_briarguard_sabre",
  "walk_frames": 1,
@@ -41,33 +42,44 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "thorn": 3.0,
-   "pommel": 3.0,
-   "wrap": 2.0,
+   "edge": 2.5,
+   "coil": 2.5,
+   "quillon": 3.0,
+   "hip": 3.0,
+   "hiptip": 5.0,
    "leaf": 2.0
   },
   "thin": {
-   "thorn": 3,
-   "wrap": 3
+   "edge": 2,
+   "coil": 3,
+   "quillon": 3,
+   "hiptip": 2
   },
   "soft": [
    [
+    "blade",
+    "edge"
+   ],
+   [
     "grip",
-    "wrap"
+    "coil"
    ]
   ],
-  "no_outline": [],
+  "no_outline": [
+   "edge",
+   "hiptip"
+  ],
   "selout": [
    "blade"
   ],
   "texture": {
-   "guard": [
-    0.1,
-    0.05
+   "blade": [
+    0.06,
+    0.08
    ],
    "grip": [
-    0.06,
-    0.0
+    0.1,
+    0.04
    ]
   },
   "bands": [

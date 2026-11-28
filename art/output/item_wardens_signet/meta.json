@@ -3,7 +3,8 @@
  "parts": [
   "none",
   "band",
-  "bezel",
+  "key",
+  "bow",
   "stone",
   "glint"
  ],
@@ -38,17 +39,19 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
+   "key": 2.5,
+   "bow": 2.5,
    "stone": 3.0,
-   "glint": 5.0,
-   "bezel": 1.5
+   "glint": 5.0
   },
   "thin": {
+   "key": 3,
    "glint": 2
   },
   "soft": [
    [
-    "band",
-    "bezel"
+    "key",
+    "bow"
    ]
   ],
   "no_outline": [
@@ -56,7 +59,8 @@
   ],
   "selout": [
    "band",
-   "bezel"
+   "key",
+   "bow"
   ],
   "bands": [
    0.24,

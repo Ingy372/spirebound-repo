@@ -8,6 +8,9 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q107. Is the Oathroom hard enough? (2026-11-27)
+Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
+**My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.
 ### Q108. Which of the 11 Batch 14 items get their own picture? (2026-11-27)
 You approved my art style but not the designs: they looked like items Tibia already has. New rule (I0): a new item
 never looks like a Tibia item. Ordinary things don't need new art at all, the same as with corpses.
@@ -17,7 +20,7 @@ never looks like a Tibia item. Ordinary things don't need new art at all, the sa
   Boots, Shrinekeeper's Pendant, Warden's Signet).
 - **Keep the Tibia item, no new art**: Inn Tankard (mug), Plains Map (map), Message Bottle (message in a bottle),
   Brass Spyglass (telescope). They are ordinary things, and Tibia's versions already fit.
-- Jay's answer:
+- Jay's answer (2026-11-27): "Yes, redesign them"
 
 ### Q106. Should a weapon keep growing after its awakening? (2026-11-27)
 Your question: a Floor 1 weapon awakened at the Floor 1 boss, then taken all the way to a Floor 2 boss kill. Full answer in `docs/superpowers/specs/2026-11-27-weapon-review.md` section 5.
@@ -78,20 +81,6 @@ Built from your answers in Q99. These are mine; say if you want any changed.
 - **Recommendation:** keep all of it. Assumed until you answer.
 - Jay's answer:
 
-### Q99. Adventure and "someone has something I don't": build it now, before the full-party run? (2026-11-27)
-You asked whether Floor 1 keeps a player hooked the whole way and has enough FOMO. My audit: the first 30 minutes and levels 10 to 20 are good; levels 20 to 28 go flat (mostly "kill 30 or 40" in the money grounds, no new secret beast, the weapon already earned); and almost nothing on the floor is scarce or visible. Nine of the 13 secrets pay only coins, a rare weapon drop looks like the ordinary one and nobody is told, trophies can't be seen by other players, and every player of a class ends up with the same two addons. The fixes are roadmap Step 4b (AD1 to AD7).
-The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is built until a real party clears Floor 1. Step 4b is mostly new rewards and announcements on things that already exist, but AD4 (rare roaming monsters) and AD5 (treasure maps, two new hidden places) are new content.
-- **Recommendation:** yes, lift the rule for Step 4b only. Do AD1, AD2, AD3 and AD6 first (existing systems, no new art), then AD4 and AD5.
-- **Second choice inside it (AD3):** a few prizes each season that only the first finders can ever have (as Twin Fang already works: first 3). My recommendation: looks and titles only, never power, so late joiners are not weaker, only less decorated.
-- Jay's answer (2026-11-27): "yes lift the rule from the 25th. most things have been fleshes out. i havent run the play test yet but i dont feel like the servers quite ready. it needs a few more passes of detail work, like were doing now." And on secrets: "i feel like 1-3 secrets per floor should give gear, the rest can give special cosmetics or titles. players wont know what gives what so it will be up to them to decide if the secrets worth keeping, or rolling the dice to get an exclusive item. thoughts on this? im open to feedback"
-- **Built on your answer; my calls, veto any (design: `docs/superpowers/specs/2026-11-27-adventure-layer-design.md`):**
-  - Secret gear is a ring, an amulet or boots, never a weapon or armour, so it never beats the quest weapon path. Floor 1's three: Millrace Boots, Shrinekeeper's Pendant, Warden's Signet.
-  - Secret gear can't be traded: wearing it proves you found the place.
-  - Vesper never says what a secret pays, so keeping or selling stays a gamble.
-  - First-finder prizes each season are looks and titles only.
-  - **Your clarification (2026-11-27):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone ... (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras." Done that way. Two readings of mine to check: when a secret is sold, Vesper's list now shows its riddle instead of directions (before, a sold secret came with directions); and "medium gold" is 1,000 on Floor 1, once per account.
-  - The four rare roaming monsters: Goldback Toad, Frenzied Boar, Pale Stag, the Paymaster.
-
 ### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
 You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
 - **Recommendation:** keep it on the ground floor, next to the Monument, so everyone arriving walks into the busy hall and climbs the stairs to the lockers.
@@ -111,14 +100,7 @@ You asked for teleport crystals, one colour per floor. What I am building, my ca
 
 *Q82-Q94 come from the Floor 1 review and the map review (2026-11-26). Nothing is built for them until you answer.*
 
-### Q97. Hearthgate's new layout: build it as planned? (2026-11-26)
-You asked for a full redesign of the town unless I'd score it a solid A. I score it a B: tidy, but shops are 29 to 50 steps from where you appear (the Guild Hall 80), the middle is a building rather than a place to gather, and there are no districts. The plan (`docs/design/hearthgate_v4_plan.md`, picture `docs/HEARTHGATE_V4_PLAN.png`): the same size and gates, an eight-sided wall, a great round plaza in the middle where you appear on the Hearthstone in the open air (the Town of Beginnings nod), the Hearth as the great hall on its north side, every shop facing the plaza, the halls together in the north-east, Spire Manor in walled grounds in the south-east, and three neighbourhoods with different kinds of home. About a day of work.
-- **Recommendation:** build it, after the Underkeep rebuild has finished with the map.
-- Assumed until you answer: build it as planned.
-- Jay's answer: (2026-11-26) build it; hand the building to an Opus session.
-- **Built 2026-11-27.** Shops are now 19 to 25 steps from the Hearthstone (were 29 to 50) and the Crown Quarter 31 to 44 (was up to 80). Walked in the client on the live server. See FLOOR1.md, "Hearthgate v4".
-
-### Q95. Spire Manor: are these the right things to sell with it? (2026-11-26)
+### Q95b. Spire Manor: are these the right things to sell with it? (2026-11-26)
 You asked for the manor to "feel premium" and have "features that players would want to pay for, but not be totally game breaking". It is rebuilt (four furnished floors) and comes with: a private depot and mailbox, a steward who is your bank, a housekeeper who sells supplies and buys loot at the town's own prices, three training dummies, 10 mannequins, a free Fortune Hall license, longer Open House, a permanent title, and the Waystone on the roof (travel to any open floor's town; the owner can be called home from inside any town; every 30 minutes, never in a fight). Nothing gives experience, damage, defence or loot. Full list: DESIGN.md 7.6, or `!manor` in game.
 - **Recommendation:** keep all of it. The Waystone is the one to think about: it saves the owner (and guests) walking and, later, teleport crystals. I think that is exactly the kind of comfort worth paying for, and it can't be used to escape a fight. If you'd rather it not replace crystals at all, I'd make it owner-only or once an hour.
 - Assumed until you answer: as built.
@@ -135,12 +117,6 @@ Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall
 - **Recommendation:** in boss rooms, players can only attack each other from level 50.
 - Assumed until you answer: no change.
 - Jay's answer:
-
-### Q83. Floor 1's length now that the engine's own bonuses are counted (2026-11-26, Floor 1 review A3-1)
-The engine quietly adds 1.5x experience below level 50 and another 1.5x for fresh stamina, on top of our stages. Measured, a kill gives 22.5x at levels 1-8, 9x at 9-20 and 6.75x at 21-50. So Floor 1 is shorter than the 11-15 hours you chose in Q30.
-- **Recommendation:** keep the 11-15 hours: lower our stages so the totals match (I re-measure first; roadmap RV2).
-- Assumed until you answer: no change.
-- Jay's answer (2026-11-27): "Yes, 11-15 hours". Done the same night: the engine's hidden 1.5x below level 50 is taken back out on every kill; Tibia's rested bonus (1.5x for the first 3 hours of a day) stays. By the model a rested player reaches level 35 in about 6 hours of pure hunting and a tired one in about 9.4; real play is about 40% slower, so most players land in 11-15 hours. RV2 measures it in the game.
 
 ### Q84. Loot is doubled by the engine: keep the richer game or trim drops? (2026-11-26, Floor 1 review E-1)
 The server doubles every drop chance (loot rate 2). Measured, a Road Bandit gives 42 coins a kill against the 33 our economy plan expects, and some items drop twice as often as the tables say.
@@ -171,11 +147,6 @@ Rangers who use spears get nothing from the barracks the bow users get.
 - Assumed until you answer: no change.
 - Jay's answer:
 
-### Q89. The Underkeep: make it a real dungeon? (2026-11-26, Floor 1 review A2-1 and map review M2)
-The Underkeep under the city is six big bare halls; Wing 1 holds about 18 monsters in one 70 by 50 room. It reads as a warehouse, not a secret dungeon.
-- **Recommendation:** rebuild Wing 1 first as a real dungeon: corridors, guard rooms, cells, a collapsed and a flooded part, a loop and a dead end with a reward, about 50 monsters of three kinds, one mini-boss and the promised secret. The other wings follow with their floors. It is several days of work, so it waits for your yes (roadmap MR2).
-- Jay's answer (2026-11-26): "yes. being honest i dont know how many people im going to get to help me play test. i may end up just being my self or maybe myself and one other person." Being built (MR2). For all planning: Floor 1 must be testable alone or as a pair.
-
 ### Q90. Solo players and the Stair Key (2026-11-26, Floor 1 review A3-2 and A5-1; FYI)
 The review worried that the Stair Key step (30 Road Bandits) needs a group. Checked on the built map: the Bandit Road's surface already holds Road Bandits in ones and twos only (11 on the surface, the Captain alone at the camp); the packs of 3-4 are in the Smugglers' Cellar below, which is the party part.
 - **Recommendation:** keep it as it is: a solo player can finish the step on the surface.
@@ -192,16 +163,6 @@ After the first clear, any party can say !private at the top of the labyrinth an
 - **Recommendation:** keep it as a catch-up for late climbers, but each member needs the Stair Key.
 - Assumed until you answer: no change.
 - Jay's answer:
-
-### Q93. How hand-made should Floor 1 look before friends see it? (2026-11-26, map review M3, M4, M7, M8, M10-M15)
-The map is tidy and correct, but it looks generated: every hunting ground is a box, most roads are straight with square corners, all ~80 homes are the same empty square, and the public halls (Hunters' Hall, Registrar, the inns, Spire Manor) are big rooms with little in them.
-- **Recommendation:** two jobs before the friends test, each in the generator so Floors 2-10 inherit them: (1) wandering outlines and winding roads for every ground (roadmap MR3); (2) five or six house plans with beds and furniture, and furnished public halls (roadmap MR4). The smaller polish (MR5) is left for the Cowork finishing pass you planned.
-- Jay's answer (2026-11-26): "im not worried about the game feeling hand made, im worried about it being fun and functional. currently the housing options are boring and all the same. unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for. i wanted the town to have somewhat of a resemblance to sword art onlines town of beginnings. but at the same time dont want anything having restrictions on it to hold to that hope." So: the pure looks (box-shaped grounds, straight roads, the labyrinth and watchtower looks: MR3, MR5) wait in "Later"; housing and Spire Manor went to the review session at Jay's request; a nod to that kind of town only where it costs nothing (the central plaza), with original names and layout as always.
-
-### Q94. The empty land on Floor 1 (2026-11-26, map review M11)
-About a third of the 400 by 400 floor is open lawn with nothing to find (south-east, south-west, far west, north-west).
-- **Recommendation:** use it for the launch-size grounds of Step 4 (levels 17-30, helps launch-day crowding), and meanwhile scatter a few small landmarks (a shrine, a camp, a wreck) so wandering is rewarded.
-- Jay's answer (2026-11-26): "i would lean towards fill in the empty land with small game monsters to help it feel less empty. i had an idea to incorporate 'teleport crystals' to help players save time, to create a unique system, and to provide another area to burn player income. the teleport crystal can be set to instantly teleport you to town, or it can open a menu and teleport you to a training zone on that floor specifically. teleport crystals should come in 10 different colors for each floor and labeled accordingly." So: small harmless creatures over the empty lawns (roadmap MR6), and the crystals (roadmap TC1, DESIGN.md 3.7; the choices left to me are Q95).
 
 ### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
 The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
@@ -220,12 +181,6 @@ The review found that the Hearthguard Sword, Axe and Mace were weaker than sword
 - **Recommendation:** keep it. A Vanguard's reward weapon should be the best thing they can hold on the floor.
 - Assumed until you answer: yes.
 - Jay's answer:
-
-### Q78. How many players should it take to beat the Axe-Lord? (2026-11-26, party playtest)
-A level-30 party of three in upgraded Floor 1 gear killed the Gate Hound in a minute without a death, then wiped twice on the Axe-Lord: the best try did 19% of his health in 45 seconds. As he is now (12,000 health, hits up to 260 plus a 300 line attack), beating him needs about 8-10 level-30 players, or 5 well-geared level-34s. The room holds 20.
-- **Recommendation:** make him a party boss for 4-6 players around level 30-35 (lower his health and his biggest hits, keep his phases), so the first floor clear at launch is something a guild party can do on the first evening, and say "bring 4 or more" in the Journal. Keep him a raid only if you want Floor 1's first clear to need a whole guild.
-- Assumed until you answer: a party boss for 4-6 (tuning waits for your answer; task PT5).
-- Jay's answer (2026-11-27, asked again because you may test alone or as a pair): "Keep him a raid". So the Axe-Lord stays a fight for a large group (about 8-10 level-30s). RV1 re-measures him with the weapon bonuses working and keeps him at raid size; a solo or pair playtest stops at the Gate Hound or brings Pilot test characters.
 
 ### Q77. Normal climbers below level 50 keep their items when they die (2026-11-26, party playtest)
 The game has always told young Normal climbers "your death cost you nothing", but from level 22 (when Tibia's free starter blessing ends) a death without blessings dropped the whole backpack and some gear, and the engine still took experience. Both are fixed to match the promise: below level 50 on Normal you keep your experience and your items (the game hands out the blessings for free at each login). Hardcore and Death Game keep their risk. (My call; you can veto.)
@@ -304,25 +259,10 @@ Also: the walk test in the client found that Floor 2's ordinary monsters were fa
 - **Recommendation:** keep the twists. When you reach Floor 2 in a playtest, tell me whether Grazing Downs feels right for a fresh level 35.
 - Jay's answer:
 
-### Q67. Approve the Gate Hound's own corpse? (2026-11-26, art)
-You asked for it: Tibia's dead hellhound has three heads but is red, yellow and green, and our hound is slate-blue. Drawn the way Tibia does animal corpses: slumped with its three heads flopped on the ground, gashes and a blood pool, then rotting with the ribs showing, then its three-skulled skeleton. Sheet: `ART_FOR_JAY/gate_hound_corpse.png`.
-- **Recommendation:** approve. Until then it keeps the Tibia hellhound corpse.
-- Jay's answer (2026-11-26): "Approve it". Installed as N7b.
-
-### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
-Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
-- **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).
-- Jay's answer (2026-11-26): "Approve all three". Installing them is roadmap N7.
-
 ### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
 The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
 - **Recommendation:** keep +50%. If parties feel too strong in your playtest, +40% still beats solo (about 1.3 to 1.7 times).
 - Your answer: (keep / go back to +30% / other number)
-
-### Q64. The guild official's new look has a beard; the NPC is "Guildwarden Sela" (2026-11-25, art)
-You approved the redrawn Guild Warden (navy robe, banner staff, short beard). In the game that job belongs to Guildwarden Sela, who wore a woman's outfit until now.
-- **Recommendation (assumed):** Sela wears the approved look now, so no borrowed Tibia look is left on her. If you'd rather keep Sela as a woman, say so and I'll make a beardless version (one short art job); or rename the NPC to fit the art.
-- Jay's answer (2026-11-25): "I honestly don't care on the guildmaster". Sela keeps the approved look.
 
 ### Q63. Class outfits: only your own class, and for women too? (2026-11-25, art)
 Your four approved class outfits are going into the game (task 6.5). My calls:
@@ -332,7 +272,7 @@ Your four approved class outfits are going into the game (task 6.5). My calls:
 - **Recommendation:** yes to all three. Also: should every floor's priest and banker share the Hearthgate priest and banker looks, or wait for their own art? I recommend **wait** (each town feels different).
 - Jay's answer:
 
-### Q63. Rename the Bristle Boar? (2026-11-25)
+### Q63b. Rename the Bristle Boar? (2026-11-25)
 You called the red-crested boar the "fire boar" and said "it might be named frenzied boar or just regular boar". It is our Bristle Boar today (Boar Meadow), and it now walks across the website banner.
 - **Recommendation:** keep "Bristle Boar" for the common one, and save "Frenzied Boar" for a rarer, angrier red variant later (a money monster vets hunt for), so the name means something.
 - Other option: rename the common one to Frenzied Boar now.
@@ -441,16 +381,6 @@ Today the first permanent style choice (Marksman or Trapper, and so on) comes at
 - Assumed until you answer: the free stance at Mastery 5.
 - Jay's answer:
 
-### Q45. A spear for Rangers' barracks weapon? (2026-11-23)
-Captain Dorrow's level 10 weapon comes in bow or crossbow for Rangers, not spear: in this engine thrown spears are used up or drop on the target, so a tiered spear would be lost on the first throw. **My recommendation: keep bow and crossbow.** If you want spears, I can make a non-thrown spear later.
-Jay's answer:
-
-### Q44. Answered 2026-11-17: spells in PvP
-Jay chose the proven Tibia core for controlling players plus his counter system as terrain (vine walls that fire
-burns, a barrier rune, party haste, wall-breaking arrows), with full-chaos "Wild PvP" as a weekly arena event first.
-Written into `DESIGN.md` 6.7 and built the same day. Also assumed (Claude's recommendations, Jay picked "yes, build
-it"): Undying Oath works against players, Lifeseed only against monsters, the barrier rune is the Arcanist's only.
-
 ### Q43. The new spells: Elemental Clash, and spells that move monsters (2026-11-17)
 Every class now has 28 to 31 of its own spells (was 17 to 19), with new kinds: chains, knock-backs and pulls, roots,
 burning ground, meteors that are marked on the ground a second before they land, and a 15-second "form" at level 230.
@@ -469,7 +399,7 @@ You said the Reed Snapper "looks like a mix between a crab and a turtle". The or
 
 *Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
 
-### Q42. Which Floor 1 ground is for which class, and party size 8 (2026-11-16)
+### Q42b. Which Floor 1 ground is for which class, and party size 8 (2026-11-16)
 From the new spawn rules (`DESIGN.md` 9.4). My picks: the Ratwarren, Toad Pond and Sproutling Glade are the all-class training grounds; Boar Meadow suits the Vanguard, Reedmarsh the Ranger, Waspgrass Fields the Arcanist, Thornsnap Hollow the Mystic; Burrow Hills, Wolf Copse and Shard Fields are mixed; the party caves, the bandit Vault and the lower Quarry are for groups of 3 to 4; the Old Watchtower's inner room and cave is the one ground for 4 to 8. I also raised the party size from 6 to 8 so those 8 can share experience. Recommendation: go with these; tell me any you want swapped.
 
 ### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)
@@ -518,17 +448,6 @@ If shop items can be sold to players for gold, then money → gold → gear is t
 - **Recommendation:** auto sword-skill rotation is **not** allowed (remove the attack helper from the client; combos should be skill). Auto-target + auto-heal while standing still counts as botting after 10 minutes without manual movement. A character following a botting one gets the same 45% XP.
 - Jay's answer:
 
-### Q17. Fortune Hall: keep, cap or drop? [6.5]
-Gold has a real-money price once shop items can be sold for gold, which makes a gold casino risky with payment companies.
-- **Recommendation:** keep it, but with a low cap (10,000 gold per bet), hosts set their own limit, and the 5% truly destroyed. Revisit with a professional before the shop takes money.
-- Jay's answer:
-
-### Q18. Twin Fang: real power or style? [2.5]
-As built, it's +50% damage on every melee hit for three players: the strongest build in the game.
-- **Recommendation:** style with a small edge: off-hand hit at 20–25%, one-handed swords only, trial solo. Keep it rare and flashy.
-- *Built 2026-11-13 (R21) as recommended: 22%.*
-- Jay's answer:
-
 ### Q19. Boss warning time [3.9]
 Big hits land 0.6 s after the warning; players far from the server have about a third of a second.
 - **Recommendation:** 1.0 s for hits that can kill, 0.6 s for the rest. Decide after one boss fight.
@@ -565,11 +484,6 @@ He's too close to the boss that inspired him (giant blue horned fiend with a hug
 - **Recommendation:** launch the first season **without a shop**. Open it only once you've registered what you need to, have refund/privacy policies, and have checked tax with a professional.
 - Jay's answer:
 
-### Q26. Spire Manor: price, and can the owner sell it on? (2026-11-11)
-You said it should be "pay to obtain only". I built it as a shop-only house: !buyhouse refuses it, and the shop hands it over. It is cosmetic only, with no stat bonuses, and there is one per server. It is free of rent, and it is released when its owner leaves it or the season ends.
-- **Recommendation:** a placeholder price of 5,000 Spire Coins, set properly with the other shop prices (7.3). The owner **can't** sell or trade it to another player (that keeps "pay to obtain only" true). Add a second manor on a later floor if there is demand.
-- Jay's answer:
-
 ### Q27. Upgrade/forge system (from the second research pass)
 Almost every popular server has a way to upgrade gear (item +1 to +10, fusion, Canary's Forge). In Q7 I recommended keeping Canary's Forge off at launch.
 - **Recommendation:** keep it off for Floors 1-2, and switch the Forge on from Floor 3 as a loot and gold sink that players trade for. No forge materials in the shop, ever.
@@ -585,11 +499,6 @@ Trader Osric buys nearly every monster drop at close to the standard Tibia NPC p
 - **Recommendation:** keep these prices for the friends test, then adjust from what testers earn per hour (ECONOMY.md shows the model).
 - Jay's answer:
 
-### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
-Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
-- **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").
-- Jay's answer:
-
 ### Q2. A stray copy of old Spirebound work is in your Dojo-game repo
 Your PC's Spirebound folder was pointed at your **Dojo-game** GitHub repo, so an older session uploaded a branch called `phase-0-toolchain` there. Claude fixed the folder so it now points at `spirebound-repo`. Nothing in Dojo-game was changed besides that extra branch.
 - **Recommendation:** delete the `phase-0-toolchain` branch from the Dojo-game repo on GitHub (Branches page → trash icon). Everything in it is also in spirebound-repo.
@@ -603,15 +512,6 @@ Without it, someone can bot the boring parts, switch it off just before a boss o
 ### Q12. Features from the top-server research (DESIGN.md §15)
 Top servers all have: autoloot, scheduled events, weekend bonuses, guild castle wars, offline training, livestream, tasks/boss timers, and an Android client. I added all of these to the plan, plus a free "Season Path" (play goals → cosmetics) and catch-up rules for new players (no death XP loss on Normal below level 50).
 - **Recommendation:** keep the whole list. Two things to look at: (a) **hunting tasks** come back (you turned off Canary's version; ours is simpler, from NPCs, paying gold and cosmetic points); (b) **no character bazaar** (selling characters for shop coins), because it feeds real-money trading.
-- Jay's answer:
-
-### Q5. Your new brief changes several decisions from the October design pack (FYI)
-The new brief wins, and DESIGN.md follows it: Canary instead of TFS, 4 vocations instead of 5 paths, 10 launch floors instead of 5, Tibia gold instead of "col", standard Tibia death penalty on Normal, a donation shop that includes convenience items, dual wielding, fishing, difficulty modes. The old TFS server setup moves to a `legacy/` folder (task 1.2); the reusable tools and many design details (Floor 1 layout, bosses, PvP zones, Underkeep) are kept.
-- **Recommendation:** nothing to do. Tell Claude if you want anything from the old pack back.
-- Jay's answer:
-
-### Q6. How rare is Twin Fang (dual wielding)?
-- **Recommendation:** only the first **3** Vanguards per season who finish the hidden Floor 8 trial. Tell Claude a different number (1 is the most "SAO", but very harsh).
 - Jay's answer:
 
 ### Q7. Newer Tibia systems in Canary: on or off?
@@ -630,6 +530,116 @@ Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and th
 ---
 
 ## Answered
+
+### Q99. Adventure and "someone has something I don't": build it now, before the full-party run? (2026-11-27)
+You asked whether Floor 1 keeps a player hooked the whole way and has enough FOMO. My audit: the first 30 minutes and levels 10 to 20 are good; levels 20 to 28 go flat (mostly "kill 30 or 40" in the money grounds, no new secret beast, the weapon already earned); and almost nothing on the floor is scarce or visible. Nine of the 13 secrets pay only coins, a rare weapon drop looks like the ordinary one and nobody is told, trophies can't be seen by other players, and every player of a class ends up with the same two addons. The fixes are roadmap Step 4b (AD1 to AD7).
+The roadmap's one rule (your "Yes, rewrite it", 2026-11-25) says nothing new is built until a real party clears Floor 1. Step 4b is mostly new rewards and announcements on things that already exist, but AD4 (rare roaming monsters) and AD5 (treasure maps, two new hidden places) are new content.
+- **Recommendation:** yes, lift the rule for Step 4b only. Do AD1, AD2, AD3 and AD6 first (existing systems, no new art), then AD4 and AD5.
+- **Second choice inside it (AD3):** a few prizes each season that only the first finders can ever have (as Twin Fang already works: first 3). My recommendation: looks and titles only, never power, so late joiners are not weaker, only less decorated.
+- Jay's answer (2026-11-27): "yes lift the rule from the 25th. most things have been fleshes out. i havent run the play test yet but i dont feel like the servers quite ready. it needs a few more passes of detail work, like were doing now." And on secrets: "i feel like 1-3 secrets per floor should give gear, the rest can give special cosmetics or titles. players wont know what gives what so it will be up to them to decide if the secrets worth keeping, or rolling the dice to get an exclusive item. thoughts on this? im open to feedback"
+- **Built on your answer; my calls, veto any (design: `docs/superpowers/specs/2026-11-27-adventure-layer-design.md`):**
+  - Secret gear is a ring, an amulet or boots, never a weapon or armour, so it never beats the quest weapon path. Floor 1's three: Millrace Boots, Shrinekeeper's Pendant, Warden's Signet.
+  - Secret gear can't be traded: wearing it proves you found the place.
+  - Vesper never says what a secret pays, so keeping or selling stays a gamble.
+  - First-finder prizes each season are looks and titles only.
+  - **Your clarification (2026-11-27):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone ... (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras." Done that way. Two readings of mine to check: when a secret is sold, Vesper's list now shows its riddle instead of directions (before, a sold secret came with directions); and "medium gold" is 1,000 on Floor 1, once per account.
+  - The four rare roaming monsters: Goldback Toad, Frenzied Boar, Pale Stag, the Paymaster.
+
+### Q97. Hearthgate's new layout: build it as planned? (2026-11-26)
+You asked for a full redesign of the town unless I'd score it a solid A. I score it a B: tidy, but shops are 29 to 50 steps from where you appear (the Guild Hall 80), the middle is a building rather than a place to gather, and there are no districts. The plan (`docs/design/hearthgate_v4_plan.md`, picture `docs/HEARTHGATE_V4_PLAN.png`): the same size and gates, an eight-sided wall, a great round plaza in the middle where you appear on the Hearthstone in the open air (the Town of Beginnings nod), the Hearth as the great hall on its north side, every shop facing the plaza, the halls together in the north-east, Spire Manor in walled grounds in the south-east, and three neighbourhoods with different kinds of home. About a day of work.
+- **Recommendation:** build it, after the Underkeep rebuild has finished with the map.
+- Assumed until you answer: build it as planned.
+- Jay's answer: (2026-11-26) build it; hand the building to an Opus session.
+- **Built 2026-11-27.** Shops are now 19 to 25 steps from the Hearthstone (were 29 to 50) and the Crown Quarter 31 to 44 (was up to 80). Walked in the client on the live server. See FLOOR1.md, "Hearthgate v4".
+
+### Q83. Floor 1's length now that the engine's own bonuses are counted (2026-11-26, Floor 1 review A3-1)
+The engine quietly adds 1.5x experience below level 50 and another 1.5x for fresh stamina, on top of our stages. Measured, a kill gives 22.5x at levels 1-8, 9x at 9-20 and 6.75x at 21-50. So Floor 1 is shorter than the 11-15 hours you chose in Q30.
+- **Recommendation:** keep the 11-15 hours: lower our stages so the totals match (I re-measure first; roadmap RV2).
+- Assumed until you answer: no change.
+- Jay's answer (2026-11-27): "Yes, 11-15 hours". Done the same night: the engine's hidden 1.5x below level 50 is taken back out on every kill; Tibia's rested bonus (1.5x for the first 3 hours of a day) stays. By the model a rested player reaches level 35 in about 6 hours of pure hunting and a tired one in about 9.4; real play is about 40% slower, so most players land in 11-15 hours. RV2 measures it in the game.
+
+### Q89. The Underkeep: make it a real dungeon? (2026-11-26, Floor 1 review A2-1 and map review M2)
+The Underkeep under the city is six big bare halls; Wing 1 holds about 18 monsters in one 70 by 50 room. It reads as a warehouse, not a secret dungeon.
+- **Recommendation:** rebuild Wing 1 first as a real dungeon: corridors, guard rooms, cells, a collapsed and a flooded part, a loop and a dead end with a reward, about 50 monsters of three kinds, one mini-boss and the promised secret. The other wings follow with their floors. It is several days of work, so it waits for your yes (roadmap MR2).
+- Jay's answer (2026-11-26): "yes. being honest i dont know how many people im going to get to help me play test. i may end up just being my self or maybe myself and one other person." Being built (MR2). For all planning: Floor 1 must be testable alone or as a pair.
+
+### Q93. How hand-made should Floor 1 look before friends see it? (2026-11-26, map review M3, M4, M7, M8, M10-M15)
+The map is tidy and correct, but it looks generated: every hunting ground is a box, most roads are straight with square corners, all ~80 homes are the same empty square, and the public halls (Hunters' Hall, Registrar, the inns, Spire Manor) are big rooms with little in them.
+- **Recommendation:** two jobs before the friends test, each in the generator so Floors 2-10 inherit them: (1) wandering outlines and winding roads for every ground (roadmap MR3); (2) five or six house plans with beds and furniture, and furnished public halls (roadmap MR4). The smaller polish (MR5) is left for the Cowork finishing pass you planned.
+- Jay's answer (2026-11-26): "im not worried about the game feeling hand made, im worried about it being fun and functional. currently the housing options are boring and all the same. unique housing options with 1 grand mansion house that a player can buy for real money is what i was going for. i wanted the town to have somewhat of a resemblance to sword art onlines town of beginnings. but at the same time dont want anything having restrictions on it to hold to that hope." So: the pure looks (box-shaped grounds, straight roads, the labyrinth and watchtower looks: MR3, MR5) wait in "Later"; housing and Spire Manor went to the review session at Jay's request; a nod to that kind of town only where it costs nothing (the central plaza), with original names and layout as always.
+
+### Q94. The empty land on Floor 1 (2026-11-26, map review M11)
+About a third of the 400 by 400 floor is open lawn with nothing to find (south-east, south-west, far west, north-west).
+- **Recommendation:** use it for the launch-size grounds of Step 4 (levels 17-30, helps launch-day crowding), and meanwhile scatter a few small landmarks (a shrine, a camp, a wreck) so wandering is rewarded.
+- Jay's answer (2026-11-26): "i would lean towards fill in the empty land with small game monsters to help it feel less empty. i had an idea to incorporate 'teleport crystals' to help players save time, to create a unique system, and to provide another area to burn player income. the teleport crystal can be set to instantly teleport you to town, or it can open a menu and teleport you to a training zone on that floor specifically. teleport crystals should come in 10 different colors for each floor and labeled accordingly." So: small harmless creatures over the empty lawns (roadmap MR6), and the crystals (roadmap TC1, DESIGN.md 3.7; the choices left to me are Q95).
+
+### Q78. How many players should it take to beat the Axe-Lord? (2026-11-26, party playtest)
+A level-30 party of three in upgraded Floor 1 gear killed the Gate Hound in a minute without a death, then wiped twice on the Axe-Lord: the best try did 19% of his health in 45 seconds. As he is now (12,000 health, hits up to 260 plus a 300 line attack), beating him needs about 8-10 level-30 players, or 5 well-geared level-34s. The room holds 20.
+- **Recommendation:** make him a party boss for 4-6 players around level 30-35 (lower his health and his biggest hits, keep his phases), so the first floor clear at launch is something a guild party can do on the first evening, and say "bring 4 or more" in the Journal. Keep him a raid only if you want Floor 1's first clear to need a whole guild.
+- Assumed until you answer: a party boss for 4-6 (tuning waits for your answer; task PT5).
+- Jay's answer (2026-11-27, asked again because you may test alone or as a pair): "Keep him a raid". So the Axe-Lord stays a fight for a large group (about 8-10 level-30s). RV1 re-measures him with the weapon bonuses working and keeps him at raid size; a solo or pair playtest stops at the Gate Hound or brings Pilot test characters.
+
+### Q67. Approve the Gate Hound's own corpse? (2026-11-26, art)
+You asked for it: Tibia's dead hellhound has three heads but is red, yellow and green, and our hound is slate-blue. Drawn the way Tibia does animal corpses: slumped with its three heads flopped on the ground, gashes and a blood pool, then rotting with the ribs showing, then its three-skulled skeleton. Sheet: `ART_FOR_JAY/gate_hound_corpse.png`.
+- **Recommendation:** approve. Until then it keeps the Tibia hellhound corpse.
+- Jay's answer (2026-11-26): "Approve it". Installed as N7b.
+
+### Q66. Approve our own corpses for the golem, the Underkeeper and the Vault Wraith? (2026-11-26, art)
+Every monster now leaves a body that matches it, using Tibia's own corpses wherever one fits (as you said). Only three of our monsters have nothing in Tibia that works, so I drew theirs the way Tibia draws corpses, from what I learned looking at Tibia's own: the Ruin Sentinel / Granite Warden breaks into its own stone chunks (like a Tibia stone golem), the Underkeeper collapses into a heap of bones, chain and lantern, and the Vault Wraith leaves its robe crumpled beside its strongbox. Each has three steps (fresh, older, last remains). Sheet: `ART_FOR_JAY/corpses_sheet.png` (plain grey).
+- **Recommendation:** approve all three. Until you do, they keep the closest Tibia corpse (stone golem, skeleton, wraith).
+- Jay's answer (2026-11-26): "Approve all three". Installing them is roadmap N7.
+
+### Q64. The guild official's new look has a beard; the NPC is "Guildwarden Sela" (2026-11-25, art)
+You approved the redrawn Guild Warden (navy robe, banner staff, short beard). In the game that job belongs to Guildwarden Sela, who wore a woman's outfit until now.
+- **Recommendation (assumed):** Sela wears the approved look now, so no borrowed Tibia look is left on her. If you'd rather keep Sela as a woman, say so and I'll make a beardless version (one short art job); or rename the NPC to fit the art.
+- Jay's answer (2026-11-25): "I honestly don't care on the guildmaster". Sela keeps the approved look.
+
+### Q45. A spear for Rangers' barracks weapon? (2026-11-23)
+Captain Dorrow's level 10 weapon comes in bow or crossbow for Rangers, not spear: in this engine thrown spears are used up or drop on the target, so a tiered spear would be lost on the first throw. **My recommendation: keep bow and crossbow.** If you want spears, I can make a non-thrown spear later.
+Jay's answer:
+- **Closed 2026-11-27:** replaced by Q88 and Q105 (the Ranger gets a non-thrown spear).
+
+### Q44. Answered 2026-11-17: spells in PvP
+Jay chose the proven Tibia core for controlling players plus his counter system as terrain (vine walls that fire
+burns, a barrier rune, party haste, wall-breaking arrows), with full-chaos "Wild PvP" as a weekly arena event first.
+Written into `DESIGN.md` 6.7 and built the same day. Also assumed (Claude's recommendations, Jay picked "yes, build
+it"): Undying Oath works against players, Lifeseed only against monsters, the barrier rune is the Arcanist's only.
+
+### Q17. Fortune Hall: keep, cap or drop? [6.5]
+Gold has a real-money price once shop items can be sold for gold, which makes a gold casino risky with payment companies.
+- **Recommendation:** keep it, but with a low cap (10,000 gold per bet), hosts set their own limit, and the 5% truly destroyed. Revisit with a professional before the shop takes money.
+- Jay's answer:
+- **Closed 2026-11-27:** replaced by Q56 (Fortune Hall).
+
+### Q18. Twin Fang: real power or style? [2.5]
+As built, it's +50% damage on every melee hit for three players: the strongest build in the game.
+- **Recommendation:** style with a small edge: off-hand hit at 20–25%, one-handed swords only, trial solo. Keep it rare and flashy.
+- *Built 2026-11-13 (R21) as recommended: 22%.*
+- Jay's answer:
+- **Closed 2026-11-27:** replaced by Q56 (Twin Fang); built at 22%.
+
+### Q26. Spire Manor: price, and can the owner sell it on? (2026-11-11)
+You said it should be "pay to obtain only". I built it as a shop-only house: !buyhouse refuses it, and the shop hands it over. It is cosmetic only, with no stat bonuses, and there is one per server. It is free of rent, and it is released when its owner leaves it or the season ends.
+- **Recommendation:** a placeholder price of 5,000 Spire Coins, set properly with the other shop prices (7.3). The owner **can't** sell or trade it to another player (that keeps "pay to obtain only" true). Add a second manor on a later floor if there is demand.
+- Jay's answer:
+- **Closed 2026-11-27:** replaced by Q95b and Q96 (Spire Manor contents and how it is sold).
+
+### Q1. GitHub: Claude can't push to the repo from this session (needs you, 2 minutes)
+Claude can commit on your PC's copy but GitHub refuses the upload: the repo isn't in this session's allowed GitHub repos, and your PC's copy has no saved GitHub login for Claude to use. Work is safe on your PC, but not backed up to GitHub until this is fixed.
+- **Recommendation:** in the Claude app, add `Ingy372/spirebound-repo` to the GitHub repositories Claude can access. Until then, push from your PC whenever you like (GitHub Desktop: open the repo → "Push origin").
+- Jay's answer:
+- **Closed 2026-11-27:** pushing to GitHub works now (every session pushes to `Ingy372/spirebound-repo`).
+
+### Q5. Your new brief changes several decisions from the October design pack (FYI)
+The new brief wins, and DESIGN.md follows it: Canary instead of TFS, 4 vocations instead of 5 paths, 10 launch floors instead of 5, Tibia gold instead of "col", standard Tibia death penalty on Normal, a donation shop that includes convenience items, dual wielding, fishing, difficulty modes. The old TFS server setup moves to a `legacy/` folder (task 1.2); the reusable tools and many design details (Floor 1 layout, bosses, PvP zones, Underkeep) are kept.
+- **Recommendation:** nothing to do. Tell Claude if you want anything from the old pack back.
+- Jay's answer:
+- **Closed 2026-11-27:** FYI only, nothing to answer.
+
+### Q6. How rare is Twin Fang (dual wielding)?
+- **Recommendation:** only the first **3** Vanguards per season who finish the hidden Floor 8 trial. Tell Claude a different number (1 is the most "SAO", but very harsh).
+- Jay's answer:
+- **Closed 2026-11-27:** replaced by Q56 (Twin Fang).
 
 ### Q50. A first fight as your new class within minutes (2026-11-24)
 Grok spent an hour without one kill as a Mystic: after the Registrar there is no next step, just "go hunt".
@@ -694,6 +704,3 @@ Cyntara's written rules ban macros and outside programs. In practice its own cli
 - **Recommendation:** allow only helpers built into our client: auto-heal, auto-eat, ring/amulet refill, loot helper. Ban cavebots/walkers, auto-targeting, auto skill rotations, auto-fishing, and all outside programs. Details in DESIGN.md §12.
 - Jay's answer (2026-11-08): **cavebot and auto-targeting will be built into the client; with the cavebot on, XP is cut a lot so manual play is much better; botters risk being PKed.** DESIGN.md §12 rewritten to match (see Q10 for my numbers).
 
-### Q107 (Session C, 2026-11-27): Is the Oathroom hard enough?
-Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
-**My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.

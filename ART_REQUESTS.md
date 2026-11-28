@@ -265,7 +265,7 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 Approved 2026-11-26 (Jay: "Approve all"), own looks in tools/make_creature_sheets.py: vanguard_f, ranger_f, arcanist_m, mystic_m (with addons), watchguard, dorrow, smith, alchemist, runewright, bix, crossbowman, hexer, cutthroat, crawler, blightwasp, ridgecat, bull, stonebull, grazer, strider, old_tusk, hollowfang, briar_mother.
 
 ## Batch 14 (2026-11-27): adventure layer, rare weapons and secret keepsakes (Priority: medium; placeholders work)
-Claude draws these now (`art/ITEM_RULES.md`); the first try was approved in style but the designs looked like Tibia's own items, so they are being redesigned (Q108). Rare weapons need a picture of their own so others can tell them from the ordinary weapon (`tools/gen_gear.py`); secret gear and keepsakes are things players show off. Until drawn, the game borrows the base item shown in brackets.
+Claude draws these now (`art/ITEM_RULES.md`); the first try was approved in style but the designs looked like Tibia's own items, so the four rare weapons and three keepsakes were redesigned with shapes Tibia doesn't have (Q108, Jay: "Yes, redesign them"; waiting for his look); the tankard, map, bottle and spyglass keep their Tibia items. Rare weapons need a picture of their own so others can tell them from the ordinary weapon (`tools/gen_gear.py`); secret gear and keepsakes are things players show off. Until drawn, the game borrows the base item shown in brackets.
 
 | ✓ | File names | Size / frames | Grok prompt |
 |---|---|---|---|

@@ -4,10 +4,10 @@
   "none",
   "limb",
   "knot",
-  "grip",
+  "burl",
   "string",
   "leaf",
-  "nock"
+  "twig"
  ],
  "palette": "item_copsewood_bow",
  "walk_frames": 1,
@@ -43,35 +43,37 @@
    "string": 3.0,
    "knot": 3.0,
    "leaf": 2.5,
-   "nock": 3.0,
-   "grip": 1.5
+   "twig": 2.5,
+   "burl": 1.5
   },
   "thin": {
    "string": 2,
    "knot": 3,
-   "nock": 3,
-   "leaf": 3
+   "leaf": 3,
+   "twig": 2
   },
   "soft": [
    [
     "limb",
-    "knot"
+    "knot",
+    "twig"
    ]
   ],
   "no_outline": [
    "knot"
   ],
   "selout": [
-   "limb"
+   "limb",
+   "burl"
   ],
   "texture": {
    "limb": [
     0.08,
     0.06
    ],
-   "grip": [
-    0.05,
-    0.0
+   "burl": [
+    0.12,
+    0.08
    ]
   },
   "bands": [

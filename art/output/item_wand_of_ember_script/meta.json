@@ -2,12 +2,12 @@
  "name": "item_wand_of_ember_script",
  "parts": [
   "none",
-  "shaft",
-  "rune",
+  "paper",
+  "script",
   "band",
-  "flame",
-  "core",
-  "cap"
+  "curl",
+  "burn",
+  "spark"
  ],
  "palette": "item_wand_of_ember_script",
  "walk_frames": 1,
@@ -40,34 +40,40 @@
  "depth_range": 3.0,
  "rules": {
   "weight": {
-   "rune": 4.0,
-   "core": 4.0,
-   "flame": 2.0,
+   "script": 3.0,
    "band": 2.5,
-   "cap": 2.0
+   "burn": 3.5,
+   "spark": 5.0,
+   "curl": 1.5
   },
   "thin": {
-   "rune": 2,
-   "core": 3,
-   "band": 3
+   "script": 2,
+   "band": 3,
+   "spark": 2,
+   "burn": 2
   },
   "soft": [
    [
-    "flame",
-    "core"
+    "paper",
+    "script"
+   ],
+   [
+    "curl",
+    "burn"
    ]
   ],
   "no_outline": [
-   "rune",
-   "core"
+   "script",
+   "spark"
   ],
   "selout": [
-   "shaft"
+   "paper",
+   "curl"
   ],
   "texture": {
-   "shaft": [
-    0.1,
-    0.04
+   "paper": [
+    0.05,
+    0.06
    ]
   },
   "bands": [

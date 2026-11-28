@@ -40,22 +40,24 @@ flat = lambda c: [list(c)] * 8
 
 ITEMS = {
     "item_briarguard_sabre": {
-        "blade": r(((40, 56, 50), (250, 255, 248), (150, 182, 156))),     # steel with a green-bronze cast
-        "guard": r(((34, 22, 10), (200, 150, 90), (112, 72, 34))), "thorn": r(((44, 30, 18), (230, 210, 170), (140, 110, 74))),
-        "grip": r(((20, 16, 14), (120, 100, 90), (56, 44, 38))), "wrap": r(((40, 26, 12), (236, 200, 140), (150, 108, 60))), "pommel": r(RED_GEM), "leaf": r(LEAF),
+        "blade": r(((34, 10, 6), (214, 120, 84), (104, 34, 22))),         # a deep red-brown thorn
+        "edge": r(((90, 110, 80), (250, 255, 230), (190, 214, 170))),     # its pale honed edge
+        "grip": r(((22, 14, 8), (150, 112, 74), (70, 46, 26))), "coil": r(((20, 50, 18), (170, 220, 110), (70, 130, 46))),
+        "leaf": r(LEAF), "quillon": r(((60, 30, 18), (240, 200, 160), (150, 90, 60))), "hip": r(RED_GEM),
+        "hiptip": flat((40, 16, 10)),
     },
     "item_copsewood_bow": {
-        "limb": r(BIRCH), "knot": r(((30, 24, 20), (110, 96, 80), (60, 50, 40))), "grip": r(DARK_LEATHER),
-        "string": r(((20, 70, 20), (200, 250, 150), (90, 170, 60))), "leaf": r(LEAF), "nock": r(GOLD),
+        "limb": r(BIRCH), "knot": r(((30, 24, 20), (110, 96, 80), (60, 50, 40))), "burl": r(BARK),
+        "string": r(((20, 70, 20), (200, 250, 150), (90, 170, 60))), "leaf": r(LEAF), "twig": r(BIRCH),
     },
     "item_wand_of_ember_script": {
-        "shaft": r(((14, 10, 10), (120, 96, 84), (52, 40, 36))), "rune": r(EMBER), "band": r(BRASS),
-        "flame": r(((150, 30, 0), (255, 236, 120), (255, 120, 20))), "core": r(((255, 200, 90), (255, 255, 235), (255, 240, 180))),
-        "cap": r(BRASS),
+        "paper": r(PAPER), "script": r(EMBER), "band": r(BRASS), "curl": r(PAPER),
+        "burn": r(((150, 30, 0), (255, 236, 120), (255, 120, 20))), "spark": r(((255, 140, 30), (255, 255, 220), (255, 220, 120))),
     },
     "item_thornward_rod": {
-        "shaft": r(WOOD), "vine": r(LEAF), "leaf": r(LEAF), "bud": r(GLOW_WHITE), "petal": r(((90, 130, 80), (250, 255, 240), (200, 230, 180))),
-        "thorn": r(((60, 50, 30), (230, 220, 180), (150, 130, 90))), "knob": r(BARK),
+        "shaft": r(WOOD), "vine": r(LEAF), "leaf": r(LEAF), "pod": r(GLOW_GOLD),
+        "rib": r(((140, 80, 10), (255, 230, 150), (220, 160, 50))), "tendril": r(LEAF),
+        "thorn": r(((60, 50, 30), (230, 220, 180), (150, 130, 90))),
     },
     "item_brass_spyglass": {
         "tube": r(BRASS), "ring": r(((80, 46, 10), (255, 250, 200), (224, 176, 70))), "leather": r(DARK_LEATHER),
@@ -63,17 +65,18 @@ ITEMS = {
         "glint": flat((255, 255, 255)), "eyecup": r(((14, 12, 10), (110, 90, 70), (48, 38, 30))),
     },
     "item_millrace_boots": {
-        "leather": r(((50, 24, 10), (232, 170, 104), (140, 82, 40))), "cuff": r(((70, 38, 16), (252, 214, 160), (190, 128, 72))),
+        "leather": r(((50, 24, 10), (232, 170, 104), (140, 82, 40))), "cuff": r(((14, 40, 80), (170, 220, 255), (50, 120, 200))),
         "sole": r(((18, 12, 10), (110, 84, 64), (50, 36, 28))), "strap": r(DARK_LEATHER), "buckle": r(BRASS),
         "toecap": r(((46, 22, 8), (220, 156, 94), (128, 74, 36))), "inside": flat((30, 16, 8)),
+        "rim": r(((22, 14, 8), (130, 92, 56), (60, 40, 22))), "paddle": r(((40, 70, 90), (220, 240, 250), (120, 160, 186))), "hub": r(BRASS),
     },
     "item_shrinekeepers_pendant": {
-        "stone": r(STONE), "rim": r(GOLD), "door": r(((20, 18, 20), (90, 84, 80), (44, 40, 40))), "glow": r(GLOW_GOLD),
-        "chain": r(GOLD),
+        "wall": r(((60, 58, 56), (250, 246, 236), (176, 170, 160))), "roof": r(((20, 24, 34), (150, 160, 180), (60, 68, 86))),
+        "ridge": r(GOLD), "door": r(((20, 18, 20), (90, 84, 80), (44, 40, 40))), "glow": r(GLOW_GOLD),
+        "cord": r(((70, 0, 6), (250, 150, 130), (190, 30, 30))), "bead": r(GOLD), "step": r(STONE),
     },
     "item_wardens_signet": {
-        "band": r(GOLD), "bezel": r(((80, 44, 8), (255, 248, 190), (226, 168, 44))), "stone": r(BLUE_GEM),
-        "glint": flat((255, 255, 255)),
+        "band": r(((28, 30, 38), (226, 232, 242), (112, 118, 134))), "key": r(GOLD), "bow": r(GOLD), "stone": r(BLUE_GEM), "glint": flat((255, 255, 255)),
     },
     "item_inn_tankard": {
         "body": r(PEWTER), "bandring": r(((30, 34, 40), (200, 206, 214), (100, 108, 118))), "handle": r(PEWTER),

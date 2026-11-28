@@ -15,7 +15,10 @@ that are natively in tibia. if we are to create a new item, i feel like it shoul
   Tibia item (`LOOKALIKES` in `tools/make_item_icons.py`) and change the **silhouette**, not just the colours: a
   player who knows Tibia must not mistake it for a Tibia item at a glance. If the thing is ordinary (a mug, a
   map, a bottle), do not draw it at all: use the Tibia item, as with corpses (`CORPSE_RULES.md` Part 1).
-  The first 11 stay in `art/models/item_*.py` as worked examples of the technique, not as game art.
+  Q108 (Jay: "Yes, redesign them"): the four rare weapons and three keepsakes were redesigned the same day with
+  shapes Tibia has none of (a thorn blade, a forking branch bow, a rolled-script wand, a vine crook with a hanging
+  seed lantern, boots with heel water-wheels, a tiny shrine on a cord, a ring with a key across it). The tankard,
+  map, bottle and spyglass keep their Tibia items; their models stay only as worked examples of the technique.
 
 ## Make and check
 

@@ -1,14 +1,12 @@
-"""Millrace Boots (Floor 1 armour): item icon, art/ITEM_RULES.md.
+"""Millrace Boots (Floor 1 keepsake, +5 movement speed): item icon, art/ITEM_RULES.md.
 
-  Silhouette: a pair of ankle boots, one behind the other, toes to the right: each shows its L-shaped side
-              (shaft, foot, toe), like Tibia's boots, which come as a pair.
-  Colours:    light tan leather (dark boots vanished into their outline in Grok's batch), dark soles, a dark opening
-              at the top of each shaft, one accent: a brass buckle on each strap (the mill's brass fittings).
-  Details:    folded-over lighter cuff, a strap across the instep, thick heel, a rounded toe cap.
-Look-alike: Tibia's leather boots (3552): ours are lighter tan with cuffs and brass buckles.
-Tries (2026-11-27): standing boots seen from the tilted camera showed the lit round tops of their shafts (a row
-of balls, then a row of pipes). Now each boot is built standing and then laid on its side under the flat-item
-camera (`LAY`), so we see its side profile straight on, which is how Tibia draws boots.
+  Silhouette: a pair of boots seen side-on, each with a little WATER-WHEEL turning on its heel like a spur (the
+              millrace: fast water that drives a mill). Boots with wheels are a shape no Tibia boots have (rule I0).
+  Colours:    tan leather, dark soles, a river-blue cuff, wooden paddle wheels with brass hubs (the accent).
+  Details:    six paddles on each wheel, a rim, a brass hub, a strap and buckle across the instep.
+Look-alike checked: Tibia's leather boots (3552) and its other boots are plain pairs; none carries a wheel.
+Camera (rule I5): each boot is built standing and laid on its side under the flat-item camera (`Lay`), so we see
+its side profile straight on; standing boots under the tilted camera read as balls, then pipes (2026-11-27).
 """
 from __future__ import annotations
 
@@ -20,11 +18,11 @@ from item_kit import place, BANDS, LIGHT
 NAME = "item_millrace_boots"
 PALETTE = NAME
 SIZE = 1.12
-PARTS = ["none", "leather", "cuff", "sole", "strap", "buckle", "toecap", "inside"]
+PARTS = ["none", "leather", "cuff", "sole", "strap", "buckle", "toecap", "inside", "rim", "paddle", "hub"]
 PIXEL_RULES = {
-    "weight": {"buckle": 4.0, "strap": 2.0, "cuff": 1.5, "toecap": 1.5, "inside": 2.0},
-    "thin": {"buckle": 2, "strap": 3},
-    "soft": [["leather", "toecap"]],
+    "weight": {"buckle": 4.0, "strap": 2.0, "cuff": 1.5, "toecap": 1.5, "inside": 2.0, "rim": 2.5, "paddle": 2.0, "hub": 4.0},
+    "thin": {"buckle": 2, "strap": 3, "rim": 3, "hub": 2},
+    "soft": [["leather", "toecap"], ["rim", "paddle"]],
     "no_outline": ["inside"],
     "selout": ["leather", "cuff", "toecap"],
     "texture": {"leather": [0.06, 0.05], "cuff": [0.05, 0.0]},
@@ -54,6 +52,11 @@ def build(model_cls, facing):
         m.box(f"heel_{b}", "sole", size=(0.09, 0.14, 0.05))
         m.frustum(f"strap_{b}", "strap", top_ratio=1.0, segments=16)
         m.box(f"buckle_{b}", "buckle", size=(0.03, 0.02, 0.045))
+        from item_kit import torus
+        torus(m, f"rim_{b}", "rim", major=0.085, minor=0.013, segments=24, rings=6)
+        for k in range(6):
+            m.box(f"paddle_{b}{k}", "paddle", size=(0.028, 0.03, 0.05))
+        m.ellipsoid(f"hub_{b}", "hub", radii=(0.022, 0.02, 0.022), segments=10, rings=6)
     return m
 
 
@@ -74,3 +77,10 @@ def pose(m, t):
         place(o[f"open_{b}"], p(-0.04, 0, 0.377), (0, 0, yaw))
         place(o[f"strap_{b}"], p(0.04, 0, 0.11), (0, -50, yaw), scale=(0.066, 0.08, 0.03))
         place(o[f"buckle_{b}"], p(0.05, -0.08, 0.13), (0, 0, yaw))
+        hx, hz = -0.19, 0.11                       # the wheel turns on the heel, on the viewer's side
+        place(o[f"rim_{b}"], p(hx, -0.085, hz), (90, 0, yaw))
+        for k in range(6):
+            ang = 360 * k / 6 + 15
+            r = math.radians(ang)
+            place(o[f"paddle_{b}{k}"], p(hx + 0.075 * math.cos(r), -0.085, hz + 0.075 * math.sin(r)), (0, -ang, yaw))
+        place(o[f"hub_{b}"], p(hx, -0.10, hz), (0, 0, yaw))
