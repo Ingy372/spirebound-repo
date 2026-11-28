@@ -524,6 +524,35 @@ function s0.onSay(player, words, param)
 		local st = found and SpireGear.state(found)
 		out("s0fam", player, { where = where or "none", fam = st and st.fam or -1, bond = st and (SpireGear.bondName(st.bond) or "none") or "none",
 			mine = st and st.bond == player:getGuid() and 1 or 0 })
+	elseif cmd == "trialfast" then -- the Path Trial lasts a few seconds on this test server
+		SpireCalling.TRIAL_SECONDS = tonumber(rest) or 8
+		out("s0trialfast", player, { secs = SpireCalling.TRIAL_SECONDS })
+	elseif cmd == "styleprep" then -- style points at Mastery n of the first stage, no choices, no trials, no letters
+		local k = player:kv():scoped("spirebound")
+		for _, key in ipairs({ "style_path", "style_final", "style_arrived2", "calling_letter_1", "calling_letter_2" }) do
+			k:remove(key)
+		end
+		for _, key in ipairs({ "bulwark", "reaver", "ironwall", "bladeward", "bloodedge", "stormbreaker" }) do
+			k:remove("style_trial_" .. key)
+		end
+		k:set("style_points", SpireGearData.STYLE_POINTS[tonumber(rest) or 10])
+		if not Floors.isOpen(2) then
+			Floors.recordClear(1, { "Loadbot" }, nil, 0) -- Floor 2 open on this test copy
+		end
+		out("s0styleprep", player, { open2 = Floors.isOpen(2) and 1 or 0 })
+	elseif cmd == "stylestate" then
+		local k = player:kv():scoped("spirebound")
+		local letters = 0
+		for _, it in ipairs(SpireGear.carried(player)) do
+			if it:getId() == SpireCalling.LETTER then
+				letters = letters + 1
+			end
+		end
+		local v = SpireStyle.get(player)
+		out("s0stylestate", player, { path = k:get("style_path") or "none", final = k:get("style_final") or "none",
+			trialB = k:get("style_trial_bulwark") and 1 or 0, trialR = k:get("style_trial_reaver") and 1 or 0,
+			arrived = k:get("style_arrived2") and 1 or 0, letters = letters, intrial = SpireCalling.inTrial(player) and 1 or 0,
+			ready = v.choiceReady and 1 or 0, pit = SpireProving.pitAt(player:getPosition()) or 0 })
 	elseif cmd == "key" then
 		player:kv():scoped("spirebound"):set("stair_key_pilot", 1)
 		out("s0key", player, { key = SpireStairKey.has(player) and 1 or 0 })

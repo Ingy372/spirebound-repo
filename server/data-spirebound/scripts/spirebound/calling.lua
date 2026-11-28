@@ -337,11 +337,17 @@ function SpireCalling.talk(npc, handler, player, msg, npcName)
 		return false
 	end
 	local lower = msg:lower()
-	if not (MsgContains(lower, "calling") or MsgContains(lower, "trial") or MsgContains(lower, "choose") or MsgContains(lower, "style")) then
+	local v = realGet(player)
+	local named = false
+	for _, o in ipairs(v.options or {}) do
+		if MsgContains(lower, o.name:lower()) or MsgContains(lower, o.key) then
+			named = true
+		end
+	end
+	if not (named or MsgContains(lower, "calling") or MsgContains(lower, "trial") or MsgContains(lower, "choose") or MsgContains(lower, "style")) then
 		return false
 	end
 	local say = function(text) handler:say(text, npc, player) end
-	local v = realGet(player)
 	if not v.choiceReady then
 		if v.final then
 			say("Your style is complete. There is nothing left for me to teach you, only to watch.")

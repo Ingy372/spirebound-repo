@@ -808,6 +808,18 @@ STEP0_CASES = [
                                           "after logging back in: %(list)s" % t))(_s0(lines, "tiers")[0]))),
     dict(name="WA5x a fighter's partner finishes the Axe-Lord", voc=4, level=60, stay=2, delay=12,
          logins=[[(3, "say", "/s0 bosskill")]], check=lambda lines: (True, "finisher")),
+    # ST1: the calling, through the real game: reach Floor 2 (the letter), Dorrow's talk, both Path Trials (a few seconds
+    # each on the test server), the choice window and its confirm
+    dict(name="ST1 the calling: Floor 2, both trials, the choice window", voc=4, level=40, stay=3,
+         logins=[[(3, "say", "/s0 trialfast 8"), (1, "say", "/s0 styleprep 12"), (1, "say", "/s0 jump 2150 1241 7"), (7, "say", "/s0 stylestate"),
+                  (1, "say", "/s0 goto Captain Dorrow"), (1, "say", "hi"), (2, "npc", "calling"), (2, "npc", "bulwark"), (2, "say", "/s0 stylestate"),
+                  (10, "say", "/s0 stylestate"), (1, "say", "hi"), (2, "npc", "reaver"), (11, "say", "/s0 stylestate"),
+                  (1, "say", "hi"), (2, "npc", "calling"), (2, "modal", "7401 1 1"), (2, "modal", "7402 1 0"), (2, "say", "/s0 stylestate"),
+                  (1, "say", "/rv floorsreset")]],
+         check=lambda lines: ((lambda s: (s[0]["arrived"] == 1 and s[0]["letters"] == 1 and s[1]["intrial"] == 1 and s[1]["pit"] > 0
+                                          and s[2]["trialB"] == 1 and s[2]["intrial"] == 0 and s[3]["trialR"] == 1 and s[4]["path"] == "bulwark",
+                                          "on Floor 2: %s; in the first trial: %s; after it: %s; after the second: %s; after the window: %s" % tuple(
+                                              "letter %(letters)s arrived %(arrived)s trial %(intrial)s pit %(pit)s B %(trialB)s R %(trialR)s path %(path)s" % x for x in s)))(_s0(lines, "stylestate")))),
     # QA19 (Q91): 12 of one guild and 12 others in the Axe-Lord's first kill: 10 of the guild are credited
     dict(name="QA19 the first Axe-Lord kill credits at most 10 of one guild", voc=4, level=60, stay=4,
          logins=[[(3, "say", "/rv floorsreset"), (1, "say", "/s0 guildfight"), (3, "say", "/s0 credit"), (1, "say", "/rv floorsreset")]],
