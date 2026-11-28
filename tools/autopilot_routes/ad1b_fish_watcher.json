@@ -1,0 +1,28 @@
+{
+ "character": "Pilot Mystic",
+ "noSpells": true,
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1120,
+    1215,
+    7
+   ],
+   "note": "watching the river"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}

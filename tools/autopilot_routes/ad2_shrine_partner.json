@@ -1,0 +1,51 @@
+{
+ "character": "Pilot Ranger",
+ "noPotions": false,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/adv forget s7"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1351,
+    1187,
+    7
+   ],
+   "note": "beside the shrine"
+  },
+  {
+   "do": "wait",
+   "seconds": 8
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 6
+  },
+  {
+   "do": "inventory"
+  }
+ ]
+}

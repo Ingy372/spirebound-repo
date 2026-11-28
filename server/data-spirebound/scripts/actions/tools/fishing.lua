@@ -20,6 +20,15 @@ local function land(player, pos)
 	local night = SpireSecrets.isNight(SpireSecrets.gameHour()) -- review A7-2: the game's hour, as the secrets use
 	local luck = (SpireEvents and SpireEvents.fishingLuck(floor) or 1) * (SpireFeatures and SpireFeatures.fishingLuck and SpireFeatures.fishingLuck(pos) or 1) -- FD2: Toad Pond's night spot
 	local f = SpireFishing.roll(floor, night, math.random(), luck)
+	local forced = SpireFishing.forceNext and SpireFishing.forceNext[player:getId()] -- test servers only (/pilot fishlegend)
+	if forced then
+		SpireFishing.forceNext[player:getId()] = nil
+		for _, row in ipairs(SpireFishing.tables[floor] or {}) do
+			if row.id == forced then
+				f = row
+			end
+		end
+	end
 	if f.bottle and SpireRumours then -- adventure layer 4.7: the note is read at once; the riddle goes to the Journal
 		pos:sendMagicEffect(CONST_ME_WATERSPLASH)
 		player:addSkillTries(SKILL_FISHING, 2, true)

@@ -1,0 +1,463 @@
+{
+ "character": "Pilot Ranger",
+ "noSpells": true,
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3483, 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 3492, 30"
+  },
+  {
+   "do": "say",
+   "text": "/pilot fishlegend"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1122,
+    1213,
+    7
+   ],
+   "note": "river bank"
+  },
+  {
+   "do": "inventory"
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "usewith",
+   "id": 3483,
+   "at": [
+    1125,
+    1213,
+    7
+   ],
+   "gap": 1
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}

@@ -1,0 +1,735 @@
+{
+ "character": "Pilot Mystic",
+ "noSpells": true,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 30"
+  },
+  {
+   "do": "say",
+   "text": "/adv forget s6"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1077,
+    1197,
+    7
+   ],
+   "note": "near Firefly Hollow"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_01"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_02"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_03"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_04"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_05"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_06"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_07"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_08"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_09"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_10"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_11"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_12"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_13"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_14"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_15"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_16"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_17"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_18"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_19"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_20"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_21"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "walk",
+   "to": [
+    1079,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "ff_22"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1077,
+    1197,
+    7
+   ]
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "wait",
+   "seconds": 110
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}

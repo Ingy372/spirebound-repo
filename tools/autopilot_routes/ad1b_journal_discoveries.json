@@ -1,0 +1,19 @@
+{
+ "character": "Pilot Ranger",
+ "noSpells": true,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  },
+  {
+   "do": "journaltab",
+   "tab": "Discoveries",
+   "name": "ad1b_discoveries"
+  }
+ ]
+}

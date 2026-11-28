@@ -1,0 +1,64 @@
+{
+ "character": "Pilot Vanguard",
+ "noPotions": false,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "say",
+   "text": "/adv forget s7"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1350,
+    1186,
+    7
+   ],
+   "note": "by the shrine"
+  },
+  {
+   "do": "say",
+   "text": "/pilot clear"
+  },
+  {
+   "do": "wait",
+   "seconds": 8
+  },
+  {
+   "do": "walk",
+   "to": [
+    1352,
+    1186,
+    7
+   ],
+   "note": "onto the shrine"
+  },
+  {
+   "do": "hunt",
+   "seconds": 90,
+   "radius": 6
+  },
+  {
+   "do": "inventory"
+  }
+ ]
+}

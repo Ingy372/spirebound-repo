@@ -591,6 +591,38 @@ function handlers.lookitem(player)
     end
 end
 
+-- open the Journal, press one of its tab buttons ("tab": the button's text, e.g. "Discoveries") as a click does,
+-- log what the tab shows, screenshot it, close the Journal
+function handlers.journaltab(player)
+    local ui = SpireJournalUi
+    if not stepData.opened then
+        if ui and ui.toggle then ui.toggle() end
+        stepData.opened = now()
+        return
+    end
+    local win = g_ui.getRootWidget():recursiveGetChildById('tabs')
+    win = win and win:getParent()
+    if not stepData.clicked and now() - stepData.opened > 1 then
+        local tabs = win and win:getChildById('tabs')
+        for _, b in ipairs(tabs and tabs:getChildren() or {}) do
+            if b:getText() == (step.tab or 'Discoveries') and b.onClick then b.onClick(b) end
+        end
+        stepData.clicked = now()
+        log('journaltab: pressed ' .. tostring(step.tab or 'Discoveries') .. (win and '' or ' (no Journal window)'))
+    elseif stepData.clicked and not stepData.shot and now() - stepData.clicked > 2 then
+        log('journaltab: title ' .. tostring(win and win:getText()))
+        local body = win and win:getChildById('body')
+        for i, l in ipairs(body and body:getChildren() or {}) do
+            if i <= 12 then log('journaltab: ' .. tostring(l:getText())) end
+        end
+        g_app.doScreenshot('autopilot_' .. (step.name or 'journal') .. '.png')
+        stepData.shot = now()
+    elseif stepData.shot and now() - stepData.shot > 1 then
+        if ui and ui.hide then ui.hide() end
+        nextStep()
+    end
+end
+
 -- open the spellbook window, log what it lists, screenshot it, close it
 function handlers.spellbook()
     local m = modules.game_spelllist

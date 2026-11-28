@@ -9,6 +9,7 @@
 --   /pilot mode m          (RV2 pace tests) normal, hardcore or deathgame
 --   /pilot cavebot on|off  (RV2 pace tests) the server counts the cavebot as on
 --   /pilot rare            (RV3) wear your class's Floor 1 rare weapon
+--   /pilot fishlegend      (AD1b) your next catch is the floor's legendary fish
 --   /pilot wearaddons      (6.5c) wear the addons you own for your outfit
 --   /pilot gearreset       (gear tests) forget the barracks weapon, style and trophies; drop Spirebound gear
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
@@ -91,6 +92,10 @@ function pilot.onSay(player, words, param)
 		local id = ({ [4] = "f1_vanguard_drop", [3] = "f1_ranger_drop", [1] = "f1_arcanist_drop", [2] = "f1_mystic_drop" })[voc]
 		local item = id and SpireGear.equip(player, id)
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: rare " .. (item and item:getName() or "none"))
+	elseif cmd == "fishlegend" then -- (AD1b) your next catch is the floor's legendary fish
+		SpireFishing.forceNext = SpireFishing.forceNext or {}
+		SpireFishing.forceNext[player:getId()] = "old_whiskers"
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: the next catch is Old Whiskers")
 	elseif cmd == "wearaddons" then -- (6.5c) put on the addons this character owns for the outfit it wears (the outfit window's job)
 		local o = player:getOutfit()
 		local addons = 0
