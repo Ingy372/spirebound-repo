@@ -273,6 +273,7 @@ Jay: "the only way i see that working is the player being put into a 'quest' whe
 - **The free stance at Mastery 5 is removed.**
 - **The Path Trial (Claude's design from Jay's idea):** when the trainer's summons brings a player to choose (first choice on Floor 2, final style at Mastery 20), the trainer offers a trial for each option. The player steps into a sealed training yard alone, holding that option's full Mastery 10 power and its signature ability, with training dummies and a few monster waves for about 5 minutes. No exits, no Waycrystals, no logging out to escape (logging out ends the trial). When it ends they are back at the trainer. Each option can be tried once per choice.
 - **Why it is worth building, not just a test tool:** the class Mastery respec is shop-only (Jay's rule), so a wrong pick costs real money. The trial is what lets a free player choose with confidence. It reuses the private-room system the Proving and the boss rooms already use, so it is one small yard, not a new system.
+- **Required (Jay, 2026-11-28: "LOVE the advice about the path trail. thanks, lets make that a required quest ... the only way to revert that choice is spend real dollars, so its worth feeling confident."):** the choice window only unlocks after the player has done the trial for **both** options (about 10 minutes in all). It is a quest in the Journal ("The Path Trial"), at both choices.
 
 ### 9.3 Control bonus
 
@@ -291,3 +292,13 @@ Jay: "im loving the hero weapon idea ... but i dont want to see a good handful o
 3. **One hero weapon per guild and per account each season,** so four different groups can be heroes and one guild can't sweep them.
 
 With those, Claude thinks the benefits clearly outweigh the risks.
+
+### 9.6 Hero weapons: parked (Jay, 2026-11-28: "record what we have discussed about the hero weapons. ill come back to this idea at a later time and continue to refine it.")
+
+Where the idea stands, to pick up later (also Q114):
+- Jay's idea: a "hero" in each class: Twin Fang for the Reaver (the strongest off-hand), and one hero weapon for each other class; one holder per season; real power that creates a race and FOMO, "nothing crazy or game breaking"; unusable in PvP or nerfed there to the best weapon of the current floor.
+- Claude's plan so far: four hero weapons, each behind a hidden riddle trial on a middle floor; about 10% above the best normal weapon on the holder's floor (it grows with them); 2-3 special moves; a rally that strengthens the holder's party in boss fights; normal strength against players; can't be traded; returns to its trial if the holder is away 7 days.
+- Jay's worry: players who miss out quitting in a huff.
+- Claude's guards: echo weapons for everyone who beats a trial after the first (same look and moves, no extra power or rally); one hero weapon per guild and per account each season.
+- Nothing is built until Jay comes back to it. Twin Fang stays as it is meanwhile.
+

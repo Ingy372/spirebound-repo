@@ -8,7 +8,7 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
-### Q114. Twin Fang and a hero weapon for each class: how do they work? (2026-11-28)
+### Q114. Twin Fang and a hero weapon for each class: how do they work? (2026-11-28; parked, Jay will come back to it)
 You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for each other class, one holder per season, power that creates FOMO but "nothing crazy or game breaking", and a PvP limit. My suggestion, combining your two ideas:
 - **Four hero weapons:** Twin Fang (the Vanguard's paired blades), plus one each for the Ranger, Arcanist and Mystic (I name and draw them).
 - **One holder each per season.** Each has a hidden trial (a secret, found through riddles like the others) on a middle floor. The first to beat it owns the weapon for the season.
@@ -18,6 +18,7 @@ You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for ea
 - **Twin Fang still gives the Reaver its strongest off-hand:** every Reaver dual-wields, but the Twin Fang holder's off-hand strike is the best in the game.
 - Assumed until you answer: as above.
 - **Jay (2026-11-28):** "im loving the hero weapon idea ... but i dont want to see a good handful of players throw a fit and quit because they didnt get the hero weapon. im weighing whether the benefits of weapons outweigh the risks." **My input (style design 9.5):** add two guards to the plan above: (1) everyone who beats a trial after the first gets an **echo** (same look and special moves, no extra power, no rally), so nobody is locked out, only the first is the hero; (2) at most one hero weapon per guild and per account each season, so one guild can't sweep all four. With those, I think the benefits clearly win.
+- **Parked (2026-11-28):** "record what we have discussed about the hero weapons. ill come back to this idea at a later time and continue to refine it." Everything so far is in style design 9.6. Nothing is built meanwhile.
 - Jay's answer:
 
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
