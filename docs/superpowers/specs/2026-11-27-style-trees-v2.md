@@ -1,6 +1,6 @@
 # Style trees, second version (design, 2026-11-27)
 
-**Jay reviewed this on 2026-11-27; sections 7 and 8 at the end hold his changes and override anything above them.**
+**Jay reviewed this on 2026-11-27; sections 7, 8 and 9 at the end hold his changes and override anything above them (the later section wins).**
 
 Replaces the path and final-style table in `2026-11-23-gear-progression-design.md` 4.2. Everything else in 4.2 stays the same: 3 stages of 10 levels, 2 permanent choices, the stance from Mastery 5 (P11), pacing (stage ends around levels 37 / 110 / 275), the shop respec. This file only changes **what the choices are**.
 
@@ -257,3 +257,37 @@ Claude's view: a good fit, if its known problems are handled from the start. Ope
 ### 8.5 Twin Fang and the hero weapons
 
 Jay likes a "hero" in each class: one special weapon per class, held by one player per season, with power that "helps to create FOMO" but is "nothing crazy or game breaking", and either no PvP use or a PvP nerf. Open in Q114.
+
+## 9. Jay's third review (2026-11-28)
+
+### 9.1 The second choice comes sooner
+
+Jay: "the time gap between first choice and second choice is a little too big. maybe mastery level 15? im shooting for the second choice to be around level 80-90 ... less burn out before arriving to their final class."
+
+- **Claude's call on how:** keep three stages of 10 Mastery levels (the passives and the choice window stay simple), and speed up stage 2 so **Mastery 20 lands around level 85** instead of 110. Stage 3's end (around level 275) stays. The Mastery experience curve in `tools/gen_gear.py` changes; `balance.py` checks level 80-90 for Mastery 20.
+
+### 9.2 The try-out becomes a sealed trial at the trainer
+
+Jay: "the only way i see that working is the player being put into a 'quest' where they are given the power for a short period. the quest would need to be blocked off so there is no exited or teleporting."
+
+- **The free stance at Mastery 5 is removed.**
+- **The Path Trial (Claude's design from Jay's idea):** when the trainer's summons brings a player to choose (first choice on Floor 2, final style at Mastery 20), the trainer offers a trial for each option. The player steps into a sealed training yard alone, holding that option's full Mastery 10 power and its signature ability, with training dummies and a few monster waves for about 5 minutes. No exits, no Waycrystals, no logging out to escape (logging out ends the trial). When it ends they are back at the trainer. Each option can be tried once per choice.
+- **Why it is worth building, not just a test tool:** the class Mastery respec is shop-only (Jay's rule), so a wrong pick costs real money. The trial is what lets a free player choose with confidence. It reuses the private-room system the Proving and the boss rooms already use, so it is one small yard, not a new system.
+
+### 9.3 Control bonus
+
+Jay: "thats game logic. you decide on it." **Claude's call:** the paths with control (Wildcaller, Stormbinder) make holds and slows last up to 20% longer; the control finals (Frostwarden, Snareweaver) up to 25%. Monster resistance (section 8.3) applies on top, so it never adds up to a frozen fight.
+
+### 9.4 No summoner
+
+Jay: "if its already been tested and tibia caused trouble in tibia, maybes its a system we should just exclude and avoid then." **Excluded.** Blightcaller stays as designed.
+
+### 9.5 Hero weapons: Claude's input (Q114)
+
+Jay: "im loving the hero weapon idea ... but i dont want to see a good handful of players throw a fit and quit because they didnt get the hero weapon." Benefits: the race, stories, something for streams, a goal that lasts the season. Risks: four winners out of hundreds; one big guild taking all four every season; everyone else feeling locked out. Recommended guards, all three together:
+
+1. **Small power, monsters only** (as in Q114): about 10% above the floor's best weapon, the rally in boss fights, normal strength against players.
+2. **Echo weapons for everyone after the first:** the first to beat a trial gets the true hero weapon (the power, the rally, the server announcement, their name on it). Everyone who beats the same trial later that season gets an **echo**: the same look and special moves, but without the extra power or the rally. Nobody is locked out of the trial; only the first is the hero.
+3. **One hero weapon per guild and per account each season,** so four different groups can be heroes and one guild can't sweep them.
+
+With those, Claude thinks the benefits clearly outweigh the risks.

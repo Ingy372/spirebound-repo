@@ -8,15 +8,6 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
-### Q113. A summoner style? (2026-11-28)
-You asked: "one of the style choices could be a summoner? thoughts on this? this is a mechanic that already exists in tibia and we could have a lot of fun with it."
-- **My view: yes, it fits.** Tibia players know summons, and a pet that fights beside you is fun.
-- **Where:** the Mystic's Wildcaller path. Its "kill it" final (Blightcaller) becomes the summoner: you call one or two wild beasts that fight for you, and your own spells hit weaker. Blightcaller's poison thorns become one of its spells. Frostwarden stays the controller. Tibia's druids are the nature callers, so it feels natural.
-- **Problems summons caused in Tibia, solved from the start:** at most 2 beasts; they never block other players' paths and can't be used to trap a player; their kills count for their owner (no stealing kills); they vanish if the owner logs out or goes too far; they don't work with the cavebot (no AFK army).
-- **Other options:** make the summoner an Arcanist style instead (fire spirits); or give every class one small summon at a high level, the way newer Tibia gives every vocation a familiar.
-- Assumed until you answer: the Mystic summoner in place of Blightcaller.
-- Jay's answer:
-
 ### Q114. Twin Fang and a hero weapon for each class: how do they work? (2026-11-28)
 You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for each other class, one holder per season, power that creates FOMO but "nothing crazy or game breaking", and a PvP limit. My suggestion, combining your two ideas:
 - **Four hero weapons:** Twin Fang (the Vanguard's paired blades), plus one each for the Ranger, Arcanist and Mystic (I name and draw them).
@@ -26,6 +17,7 @@ You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for ea
 - **Can't be traded** (one per season would make it the target of real-money trading). If the holder doesn't log in for 7 days, the weapon returns to its trial for someone else.
 - **Twin Fang still gives the Reaver its strongest off-hand:** every Reaver dual-wields, but the Twin Fang holder's off-hand strike is the best in the game.
 - Assumed until you answer: as above.
+- **Jay (2026-11-28):** "im loving the hero weapon idea ... but i dont want to see a good handful of players throw a fit and quit because they didnt get the hero weapon. im weighing whether the benefits of weapons outweigh the risks." **My input (style design 9.5):** add two guards to the plan above: (1) everyone who beats a trial after the first gets an **echo** (same look and special moves, no extra power, no rally), so nobody is locked out, only the first is the hero; (2) at most one hero weapon per guild and per account each season, so one guild can't sweep all four. With those, I think the benefits clearly win.
 - Jay's answer:
 
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
@@ -40,18 +32,6 @@ Also: the Millcross road stretch with the Town Works' Road Lanterns stays dark u
 Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
 **My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.
 - **Jay's answer (2026-11-27):** "i will test it"
-
-### Q103. The new style trees: my calls (2026-11-27)
-Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief. Not built yet (roadmap ST1). Every class now forks into two jobs, then into an "extreme" version that pays with a minus or a "balanced" one with no minus.
-- **Vanguard:** Bulwark (shield tank) → **Ironwall** (-20% damage, much tougher, taunts) or **Bladeward** (tough and still hits, counter-strikes). Reaver is unchanged. **Recommendation: keep.**
-- **Bulwark needs a shield, not a sword:** any one-handed weapon plus a shield counts, so axe and club players can tank too. **Recommendation: keep.** (Say "sword only" if you want it strict.)
-- **Mystic:** Wildcaller → **Blightcaller** (big damage, little control) or **Frostwarden** (holds groups in place). Lifebinder → **Dawnmender** (heavy heals and buffs, -15% damage) or **Briarmender** (5% less healing than a Lifebinder, damage that heals allies). **Recommendation: keep.**
-- **Arcanist:** Emberwright (destruction) → **Cinderheart** (boss-breaker) or **Ashwalker** (burning ground). Stormbinder (control) → **Tempest** (skirmisher) or **Spellbreaker** (makes the whole party hit harder). **Recommendation: keep.**
-- **Ranger:** Marksman → **Deadeye** (boss sniper) or **Volley Captain** (crowds). Trapper becomes **Huntwarden** (control and support) → **Snareweaver** (solo kiter) or **Pathfinder** (party speed and heals, low damage). **Recommendation: keep.**
-- Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
-- **Jay's answer (2026-11-27):** "i need to talk about this in more depth" Nothing is built (ST1 waits) until we talk.
-- **First talk (2026-11-27):** Jay likes the trees but wants them easy to take in, Reaver rebuilt around an off-hand weapon, and a closer look at Dawnmender, Spellbreaker, Pathfinder and Snareweaver. Changes written in the design's section 7 (also: how choices are shown, via the class trainer's summons). Still open: Jay's reactions to section 7, Twin Fang's place (section 7.3), and Q46.
-- **Second talk (2026-11-28):** "i love pretty much everything thats been created for styles ... all of the balances look good to me." Approved with changes (design section 8): first choice on arriving at Floor 2, briars stay with the Mystic, monsters build resistance to being held (bosses can be held once, then not for a while). Still open: Q113 (summoner) and Q114 (hero weapons).
 
 ### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
 You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
@@ -141,14 +121,6 @@ From the overnight Floor 1 review (`FLOOR1_REVIEW.md` sections 2 and 7): the Arr
 - Assumed until you answer: yes, do it before the alpha.
 - Jay's answer:
 
-### Q46. When do players pick their class path? (rewritten 2026-11-27)
-Each class splits into two paths (for example Ranger: Marksman or Trapper). Today that choice comes at about level 37, just after Floor 1 ends, so someone who only plays Floor 1 never gets to choose.
-- **(a)** A free try-out of both paths at about level 25, the real choice still at 37.
-- **(b)** Move the real choice earlier, to about level 30 (around the Axe-Lord).
-- **My recommendation:** settle it when we talk about the new style trees (Q103), since it's part of the same system. Until then: (a).
-- **Jay's answer (2026-11-27):** "like you said, ill cover it in our convo about it"
-- **Jay (2026-11-28):** "the 1st style choice should come upon players arriving to floor 2. the second can happen at mastery level 10 as planned." Built into the design (section 8.1): the path is chosen on first arriving on Floor 2, the final style at Mastery 20 (around level 110) as planned; the free try-out stays at Mastery 5 on Floor 1. Check: by "mastery level 10" did you mean the second choice stays where it was planned (Mastery 20)? Assumed yes.
-
 ### Q20. Houses: many more, or rentable rooms? [3.7]
 There are 63 houses on the whole server, and most house features need one.
 - **Recommendation:** both: about 3× more houses on the real maps, plus cheap rentable rooms in each town's inn that give access to the portal, workshop and Fortune Hall table.
@@ -208,6 +180,38 @@ Outside the PvP zones and boss rooms: nobody can attack a player below level 50;
 
 ## Answered
 
+
+### Q113. A summoner style? (2026-11-28)
+You asked: "one of the style choices could be a summoner? thoughts on this? this is a mechanic that already exists in tibia and we could have a lot of fun with it."
+- **My view: yes, it fits.** Tibia players know summons, and a pet that fights beside you is fun.
+- **Where:** the Mystic's Wildcaller path. Its "kill it" final (Blightcaller) becomes the summoner: you call one or two wild beasts that fight for you, and your own spells hit weaker. Blightcaller's poison thorns become one of its spells. Frostwarden stays the controller. Tibia's druids are the nature callers, so it feels natural.
+- **Problems summons caused in Tibia, solved from the start:** at most 2 beasts; they never block other players' paths and can't be used to trap a player; their kills count for their owner (no stealing kills); they vanish if the owner logs out or goes too far; they don't work with the cavebot (no AFK army).
+- **Other options:** make the summoner an Arcanist style instead (fire spirits); or give every class one small summon at a high level, the way newer Tibia gives every vocation a familiar.
+- Assumed until you answer: the Mystic summoner in place of Blightcaller.
+- Jay's answer:
+- **Jay's answer (2026-11-28):** "if its already been tested and tibia caused trouble in tibia, maybes its a system we should just exclude and avoid then." Excluded; Blightcaller stays.
+
+### Q46. When do players pick their class path? (rewritten 2026-11-27)
+Each class splits into two paths (for example Ranger: Marksman or Trapper). Today that choice comes at about level 37, just after Floor 1 ends, so someone who only plays Floor 1 never gets to choose.
+- **(a)** A free try-out of both paths at about level 25, the real choice still at 37.
+- **(b)** Move the real choice earlier, to about level 30 (around the Axe-Lord).
+- **My recommendation:** settle it when we talk about the new style trees (Q103), since it's part of the same system. Until then: (a).
+- **Jay's answer (2026-11-27):** "like you said, ill cover it in our convo about it"
+- **Jay (2026-11-28):** "the 1st style choice should come upon players arriving to floor 2. the second can happen at mastery level 10 as planned." Built into the design (section 8.1): the path is chosen on first arriving on Floor 2, the final style at Mastery 20 (around level 110) as planned; the free try-out stays at Mastery 5 on Floor 1. Check: by "mastery level 10" did you mean the second choice stays where it was planned (Mastery 20)? Assumed yes.
+- **Jay (2026-11-28):** "the time gap between first choice and second choice is a little too big. maybe mastery level 15? im shooting for the second choice to be around level 80-90." Settled: first choice on arriving at Floor 2; second at Mastery 20, sped up to land around level 85 (style design 9.1). The free stance is replaced by a sealed Path Trial at the trainer (9.2).
+
+### Q103. The new style trees: my calls (2026-11-27)
+Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief. Not built yet (roadmap ST1). Every class now forks into two jobs, then into an "extreme" version that pays with a minus or a "balanced" one with no minus.
+- **Vanguard:** Bulwark (shield tank) → **Ironwall** (-20% damage, much tougher, taunts) or **Bladeward** (tough and still hits, counter-strikes). Reaver is unchanged. **Recommendation: keep.**
+- **Bulwark needs a shield, not a sword:** any one-handed weapon plus a shield counts, so axe and club players can tank too. **Recommendation: keep.** (Say "sword only" if you want it strict.)
+- **Mystic:** Wildcaller → **Blightcaller** (big damage, little control) or **Frostwarden** (holds groups in place). Lifebinder → **Dawnmender** (heavy heals and buffs, -15% damage) or **Briarmender** (5% less healing than a Lifebinder, damage that heals allies). **Recommendation: keep.**
+- **Arcanist:** Emberwright (destruction) → **Cinderheart** (boss-breaker) or **Ashwalker** (burning ground). Stormbinder (control) → **Tempest** (skirmisher) or **Spellbreaker** (makes the whole party hit harder). **Recommendation: keep.**
+- **Ranger:** Marksman → **Deadeye** (boss sniper) or **Volley Captain** (crowds). Trapper becomes **Huntwarden** (control and support) → **Snareweaver** (solo kiter) or **Pathfinder** (party speed and heals, low damage). **Recommendation: keep.**
+- Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
+- **Jay's answer (2026-11-27):** "i need to talk about this in more depth" Nothing is built (ST1 waits) until we talk.
+- **First talk (2026-11-27):** Jay likes the trees but wants them easy to take in, Reaver rebuilt around an off-hand weapon, and a closer look at Dawnmender, Spellbreaker, Pathfinder and Snareweaver. Changes written in the design's section 7 (also: how choices are shown, via the class trainer's summons). Still open: Jay's reactions to section 7, Twin Fang's place (section 7.3), and Q46.
+- **Second talk (2026-11-28):** "i love pretty much everything thats been created for styles ... all of the balances look good to me." Approved with changes (design section 8): first choice on arriving at Floor 2, briars stay with the Mystic, monsters build resistance to being held (bosses can be held once, then not for a while). Still open: Q113 (summoner) and Q114 (hero weapons).
+- **Settled (2026-11-28):** approved, with the changes in style design sections 7-9. Only the hero weapons remain (Q114).
 
 ### Q110. Keep Hardcore mode after all? (2026-11-27)
 You asked "why did we remove that all together?" It came from Q55, which you answered "yes" in the long list. My reason then: three modes split a small player base three ways, and Hardcore sits in the middle (Normal is the game, Death Game is the headline), so fewer people talk about it. Nothing is removed yet; QA11 is on hold.
