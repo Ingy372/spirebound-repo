@@ -96,7 +96,7 @@
   },
   {
    "do": "cast",
-   "text": "web of briars",
+   "text": "hunters snare",
    "target": true,
    "shots": [
     0.4,
@@ -104,7 +104,7 @@
    ],
    "gap": 2.5,
    "name": "snareweaver",
-   "note": "web of briars"
+   "note": "hunters snare"
   },
   {
    "do": "say",

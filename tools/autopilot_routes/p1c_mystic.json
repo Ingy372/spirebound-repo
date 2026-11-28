@@ -50,7 +50,7 @@
   },
   {
    "do": "say",
-   "text": "/pilot final lifebinder wardkeeper"
+   "text": "/pilot final lifebinder briarmender"
   },
   {
    "do": "say",
@@ -65,19 +65,19 @@
   },
   {
    "do": "cast",
-   "text": "grove ward",
+   "text": "verdant lash",
    "target": true,
    "shots": [
     0.4,
     1.2
    ],
    "gap": 2.5,
-   "name": "wardkeeper",
-   "note": "grove ward"
+   "name": "briarmender",
+   "note": "verdant lash"
   },
   {
    "do": "say",
-   "text": "/pilot final wildcaller rootcaller"
+   "text": "/pilot final wildcaller blightcaller"
   },
   {
    "do": "say",
@@ -99,7 +99,7 @@
     1.2
    ],
    "gap": 2.5,
-   "name": "rootcaller",
+   "name": "blightcaller",
    "note": "worldvine grasp"
   },
   {

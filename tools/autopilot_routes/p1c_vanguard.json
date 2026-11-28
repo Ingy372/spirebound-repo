@@ -23,7 +23,7 @@
   },
   {
    "do": "say",
-   "text": "/pilot final bulwark aegis_warden"
+   "text": "/pilot final bulwark bladeward"
   },
   {
    "do": "say",
@@ -38,15 +38,15 @@
   },
   {
    "do": "cast",
-   "text": "wardens oath",
+   "text": "riposte guard",
    "target": true,
    "shots": [
     0.4,
     1.2
    ],
    "gap": 2.5,
-   "name": "aegis_warden",
-   "note": "wardens oath"
+   "name": "bladeward",
+   "note": "riposte guard"
   },
   {
    "do": "say",

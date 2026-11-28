@@ -1,0 +1,135 @@
+{
+ "character": "Pilot Warden",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mode normal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot cavebot off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 15"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 30"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": "gate_wolf_copse",
+   "note": "start at the gate"
+  },
+  {
+   "do": "walk",
+   "to": "camp_wolf_copse",
+   "note": "camp"
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_a",
+   "note": "loop a"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_b",
+   "note": "loop b"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_c",
+   "note": "loop c"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_d",
+   "note": "loop d"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_a",
+   "note": "loop a"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_b",
+   "note": "loop b"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_c",
+   "note": "loop c"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "walk",
+   "to": "loop_wolf_copse_d",
+   "note": "loop d"
+  },
+  {
+   "do": "hunt",
+   "seconds": 110,
+   "radius": 8
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}
