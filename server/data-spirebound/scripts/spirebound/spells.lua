@@ -94,6 +94,23 @@ end
 local KINDS = {}
 SpireSpells.KINDS = KINDS -- tests drive kinds directly
 
+-- ST1 buff tables (stance, dodge, might, mark jumps)
+SpireBuffs.riposte = SpireBuffs.riposte or {}
+SpireBuffs.dodge = SpireBuffs.dodge or {}
+SpireBuffs.might = SpireBuffs.might or {}
+SpireBuffs.markJump = SpireBuffs.markJump or {}
+
+-- An estimate of one melee hit with the weapon in hand (Riposte Guard strikes back with a share of it)
+function SpireSpells.weaponHit(player)
+	local w = player:getSlotItem(CONST_SLOT_LEFT)
+	local atk = w and (w:getAttribute(ITEM_ATTRIBUTE_ATTACK) or 0) or 0
+	if w and atk <= 0 then
+		atk = ItemType(w:getId()):getAttack()
+	end
+	local skill = math.max(player:getEffectiveSkillLevel(SKILL_SWORD), player:getEffectiveSkillLevel(SKILL_AXE), player:getEffectiveSkillLevel(SKILL_CLUB))
+	return math.floor(0.085 * math.max(atk, 7) * skill + player:getLevel() / 5)
+end
+
 KINDS.light = function(row, player)
 	local c = Condition(CONDITION_LIGHT)
 	c:setParameter(CONDITION_PARAM_LIGHT_LEVEL, row.lightLevel)
@@ -153,6 +170,9 @@ KINDS.heal_party = function(row, player)
 		m:addHealth(math.random(mn, mx))
 		if row.ward then
 			SpireBuffs.addReduction(m:getId(), buffed(player, row.ward.pct), row.ward.duration)
+		end
+		if row.might then -- ST1 Second Dawn: everyone near you hits harder for a while
+			SpireBuffs.might[m:getId()] = { untilTime = os.time() + row.might.duration, pct = buffed(player, row.might.pct) }
 		end
 		if row.purify then
 			for _, c in ipairs(BAD_CONDITIONS) do
@@ -266,6 +286,9 @@ KINDS.party_haste = function(row, player)
 		SpireSpells.setSpeed(c, row.speed)
 		m:addCondition(c)
 		fx(m:getPosition(), row.effect)
+		if row.dodge then -- ST1 Wayfarer's Stride: a few seconds of dodging for everyone it touches
+			SpireBuffs.dodge[m:getId()] = { untilTime = os.time() + row.dodge.duration, pct = row.dodge.pct }
+		end
 	end
 	return true
 end
@@ -363,6 +386,54 @@ end
 KINDS.dr_self = function(row, player)
 	SpireBuffs.addReduction(player:getId(), row.pct, row.duration)
 	fx(player:getPosition(), row.effect)
+	if row.taunt then -- ST1 Iron Bastion: every monster close by turns on you
+		for _, c in ipairs(Game.getSpectators(player:getPosition(), false, false, row.taunt, row.taunt, row.taunt, row.taunt)) do
+			if c:isMonster() and not c:getMaster() then
+				c:setTarget(player)
+				fx(c:getPosition(), CONST_ME_ANGRY_NOTES or CONST_ME_MAGIC_RED)
+			end
+		end
+	end
+	return true
+end
+
+-- ST1 Riposte Guard (Bladeward): a stance; melee hits taken strike back (the damage event below)
+KINDS.riposte = function(row, player)
+	SpireBuffs.riposte[player:getId()] = { untilTime = os.time() + row.duration, pct = row.pct }
+	fx(player:getPosition(), row.effect)
+	return true
+end
+
+-- ST1 Hunter's Snare (Snareweaver): traps on the ring around you; the first monster to step on one is held
+KINDS.snare_ring = function(row, player)
+	local centre, pid = player:getPosition(), player:getId()
+	local traps = {}
+	for _, t in ipairs(SpireSpells.areaOffsets("ring" .. (row.radius or 2), 0)) do
+		local pos = Position(centre.x + t.dx, centre.y + t.dy, centre.z)
+		if walkable(pos) then
+			traps[#traps + 1] = { pos = pos, live = true }
+			fx(pos, row.effect)
+		end
+	end
+	for tick = 1, row.duration * 2 do
+		SpireSpells.later(tick * 500, pid, function(caster)
+			for _, tr in ipairs(traps) do
+				if tr.live then
+					local tile = Tile(tr.pos)
+					for _, c in ipairs(tile and tile:getCreatures() or {}) do
+						if tr.live and SpireSpells.affects(c, caster) then
+							tr.live = false
+							SpireSpells.pin(c, row.hold, 0.9, caster)
+							fx(tr.pos, CONST_ME_ROOTS)
+						end
+					end
+					if tr.live and tick % 4 == 0 then
+						fx(tr.pos, CONST_ME_GROUNDSHAKER)
+					end
+				end
+			end
+		end)
+	end
 	return true
 end
 
@@ -729,6 +800,35 @@ local function riders(player, row, target, dealt, from)
 	applyDot(row, player, target)
 	if row.vuln and target:isMonster() then
 		SpireBuffs.addMark(target:getId(), row.vuln.pct, row.vuln.duration)
+		if row.vuln.jumps then -- ST1 Spellbreaker: when the marked monster dies, the mark moves on (scripts below)
+			SpireBuffs.markJump[target:getId()] = { pct = row.vuln.pct, duration = row.vuln.duration, owner = player:getId() }
+		end
+		if row.vuln.spread then -- and a weaker mark on a couple of monsters nearby (Hex Spread, folded in)
+			local n = 0
+			for _, c in ipairs(Game.getSpectators(target:getPosition(), false, false, row.vuln.spread.range, row.vuln.spread.range, row.vuln.spread.range, row.vuln.spread.range)) do
+				if n < row.vuln.spread.count and c ~= target and wild(c) and c:getHealth() > 0 then
+					SpireBuffs.addMark(c:getId(), row.vuln.spread.pct, row.vuln.duration)
+					fx(c:getPosition(), CONST_ME_MAGIC_RED)
+					n = n + 1
+				end
+			end
+		end
+	end
+	if row.drainMana and target:isPlayer() and dealt > 0 then -- Sundering Bolt drains a player's mana (PvP only: monsters have none)
+		target:addMana(-math.floor(dealt * row.drainMana))
+	end
+	if row.healAlly and dealt > 0 then -- Verdant Lash: a share of the damage heals the most hurt party member near you
+		local best, worst = nil, 2
+		for _, m in ipairs(partyAround(player, 7)) do
+			local share = m:getHealth() / math.max(1, m:getMaxHealth())
+			if share < worst then
+				best, worst = m, share
+			end
+		end
+		if best then
+			best:addHealth(math.floor(dealt * row.healAlly))
+			fx(best:getPosition(), CONST_ME_MAGIC_GREEN)
+		end
 	end
 	if row.push and from then
 		local dx, dy = stepToward(from, target:getPosition())
@@ -832,6 +932,7 @@ local function later(ms, pid, fn)
 		end
 	end, ms)
 end
+SpireSpells.later = later
 
 -- Area attacks play out in stages (SpireSpells.stages): rings outward, rows away from you, a spiral, or a rain.
 local function castArea(player, row, combat, var)
@@ -865,6 +966,31 @@ local function castArea(player, row, combat, var)
 		end
 	end
 	local pid = player:getId()
+	if row.poisonGround then -- ST1 Worldvine Grasp: the thorns stay in the ground and poison anything inside
+		local mn, mx = formula(row, player)
+		local per = math.max(1, math.floor((mn + mx) / 2 * row.poisonGround.share))
+		local tiles = {}
+		for _, stage in ipairs(stages) do
+			for _, t in ipairs(stage) do
+				tiles[#tiles + 1] = Position(centre.x + t.dx, centre.y + t.dy, centre.z)
+			end
+		end
+		for tick = 1, row.poisonGround.duration do
+			later(delay + #stages * step + tick * 1000, pid, function(caster)
+				for _, pos in ipairs(tiles) do
+					local tile = Tile(pos)
+					if tile then
+						fx(pos, CONST_ME_SMALLPLANTS)
+						for _, c in ipairs(tile:getCreatures() or {}) do
+							if c ~= caster and SpireSpells.affects(c, caster) and mayHurt(caster, c) then
+								doTargetCombatHealth(caster, c, COMBAT_EARTHDAMAGE, -per, -per, CONST_ME_NONE, ORIGIN_SPELL)
+							end
+						end
+					end
+				end
+			end)
+		end
+	end
 	for i, stage in ipairs(stages) do
 		later(delay + (i - 1) * step, pid, function(caster)
 			for _, t in ipairs(stage) do
@@ -934,6 +1060,17 @@ local function castTarget(player, row, combat, var)
 		end
 	end
 	local lastPos = target:getPosition()
+	if row.charge then -- ST1 Heart of Cinders: a warning sigil, then the hit lands
+		fx(target:getPosition(), row.warn or CONST_ME_FIREAREA)
+		later(row.charge, pid, function(caster)
+			local t = Creature(tid)
+			if t and t:getHealth() > 0 and t:getPosition().z == caster:getPosition().z and caster:getPosition():getDistance(t:getPosition()) <= (row.range or 7) + 2 then
+				shootFx(caster:getPosition(), t:getPosition(), vis.shoot)
+				hitCreature(caster, row, combat, t, mult, vis)
+			end
+		end)
+		return true
+	end
 	hitCreature(player, row, combat, target, mult, vis)
 	for h = 2, row.hits or 1 do
 		later((h - 1) * (row.hitGap or 150), pid, function(caster)
@@ -1525,6 +1662,28 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 			SpireClash.state[cid] = { el = newMark, untilTime = now + SpireClash.SECONDS }
 		end
 	end
+	-- ST1: Wayfarer's Stride dodge, Riposte Guard, Second Dawn's might
+	local dg = SpireBuffs.dodge[cid]
+	if dg and dg.untilTime >= now and attacker and attacker:isMonster() and primaryDamage < 0 and math.random(100) <= dg.pct then
+		creature:getPosition():sendMagicEffect(CONST_ME_BLOCKHIT)
+		return 0, primaryType, 0, secondaryType
+	end
+	local rp2 = SpireBuffs.riposte[cid]
+	if rp2 and rp2.untilTime >= now and attacker and attacker:isMonster() and origin == ORIGIN_MELEE and creature:isPlayer() then
+		local back = SpireSpells.weaponHit(creature) * rp2.pct / 100
+		if back >= 1 then
+			addEvent(function(pid, aid, dmg)
+				local p, a = Player(pid), Creature(aid)
+				if p and a then
+					doTargetCombatHealth(p, a, COMBAT_PHYSICALDAMAGE, -dmg, -dmg, CONST_ME_BLOCKHIT, ORIGIN_NONE)
+				end
+			end, 50, cid, attacker:getId(), math.floor(back))
+		end
+	end
+	local mt = attacker and SpireBuffs.might[attacker:getId()]
+	if mt and mt.untilTime >= now and primaryDamage < 0 and creature ~= attacker then
+		primaryDamage = math.floor(primaryDamage * (1 + mt.pct / 100))
+	end
 	local r = SpireBuffs.reduce[cid]
 	local m = SpireBuffs.mark[cid]
 	local rp = (r and r.untilTime >= now) and r.pct or 0
@@ -1621,4 +1780,29 @@ SpireCleanup.add(function(cid)
 	SpireBuffs.reduce[cid], SpireBuffs.mark[cid], SpireBuffs.undying[cid] = nil, nil, nil
 	SpireBuffs.reflect[cid], SpireBuffs.seed[cid], SpireClash.state[cid] = nil, nil, nil
 	SpireBuffs.held[cid] = nil
+end)
+
+-- ST1 Spellbreaker: when a monster marked by Sundering Bolt dies, the mark jumps to the nearest monster (style spec 7.5)
+SpireKills.on("SpireMarkJump", function(player, target)
+	local j = target and SpireBuffs.markJump[target:getId()]
+	if not j then
+		return true
+	end
+	SpireBuffs.markJump[target:getId()] = nil
+	local pos, best, bestDist = target:getPosition(), nil, nil
+	for _, c in ipairs(Game.getSpectators(pos, false, false, 5, 5, 5, 5)) do
+		if c ~= target and c:isMonster() and not c:getMaster() and c:getHealth() > 0 then
+			local d = pos:getDistance(c:getPosition())
+			if not best or d < bestDist then
+				best, bestDist = c, d
+			end
+		end
+	end
+	if best then
+		SpireBuffs.addMark(best:getId(), j.pct, j.duration)
+		SpireBuffs.markJump[best:getId()] = j
+		pos:sendDistanceEffect(best:getPosition(), CONST_ANI_ENERGY)
+		best:getPosition():sendMagicEffect(CONST_ME_MAGIC_RED)
+	end
+	return true
 end)

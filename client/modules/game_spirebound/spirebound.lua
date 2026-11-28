@@ -288,7 +288,7 @@ end
 -- Tell the server which client build this is (Grok session 3 played on a weeks-old copy and reported long-fixed bugs).
 -- Raise it together with SpireClient.CLIENT_VERSION (server lib/spirebound/client_link.lua) whenever a client module
 -- changes in a way players must have.
-local CLIENT_VERSION = 2
+local CLIENT_VERSION = 3
 
 -- Party playtest 2026-11-26 (P2-14): the Skills panel's "XP Gain Rate" showed 7290% from level 1 (our 10x stage rate
 -- plus the engine's low-level bonus, added up). It told players nothing useful, so the row is hidden.
