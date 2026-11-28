@@ -135,7 +135,7 @@ local function creatureSayCallback(npc, player, type, msg)
 			ClassOutfits.give(player, true) -- the class's own outfit (scripts/spirebound/class_outfits.lua)
 			giveKit(player, c.voc)
 			player:getPosition():sendMagicEffect(CONST_ME_HOLYAREA)
-			npcHandler:say(string.format("It is written: %s, %s. One last step before Hearthgate: the Proving, below us. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
+			npcHandler:say(string.format("It is written: %s, %s. One last step before Hearthgate: the Proving, below us. When you reach the tower's second floor, your class trainer will send for you: you choose your path then, and your style later. Climb well.", player:getVocation():getName(), Difficulty.names[c.mode]), npc, player)
 			-- Confirm in the Server Log too: the speech bubble is easy to miss (Grok playtest, 2026-11-24)
 			local first = FIRST_SPELLS[c.voc]
 			SpireClient.seedSpellBar(player, true)

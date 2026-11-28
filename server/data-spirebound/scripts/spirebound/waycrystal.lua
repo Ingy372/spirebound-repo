@@ -15,7 +15,7 @@ local function state(player, def)
 	local recent = (lastHit[player:getId()] or 0) > os.time() - SpireCrystalData.FIGHT_LOCK
 	local fight = not inPz and (player:isPzLocked() or player:getCondition(CONDITION_INFIGHT, CONDITIONID_DEFAULT) ~= nil or recent)
 	return {
-		zone = SpirePvP and SpirePvP.zoneAt(pos) or "open",
+		zone = (SpireCalling and SpireCalling.inTrial(player)) and "bossroom" or (SpirePvP and SpirePvP.zoneAt(pos) or "open"), -- (a sealed Path Trial too)
 		tutorial = player:getVocation():getId() == 0,
 		cave = SpireCrystals.inCave(pos),
 		fight = fight,

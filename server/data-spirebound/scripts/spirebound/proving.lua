@@ -301,7 +301,8 @@ function tick.onThink(interval)
 	local now = os.time()
 	for i, pit in pairs(SpireProving.pits) do
 		local p = Player(pit.pid)
-		if not p or SpireProving.pitAt(p:getPosition()) ~= i then
+		if pit.trial then -- a Path Trial uses this pit (scripts/spirebound/calling.lua runs it)
+		elseif not p or SpireProving.pitAt(p:getPosition()) ~= i then
 			if pit.boss or not p then
 				SpireProving.close(i)
 			end
@@ -320,6 +321,9 @@ local login = CreatureEvent("SpireProvingLogin")
 function login.onLogin(player)
 	if SpireProving.pitAt(player:getPosition()) and not pitOf("pid", player:getId()) then
 		local to = point("proving_arrival")
+		if SpireProving.done(player) then -- (a Path Trial's pit: back to town, not the Proving's hall)
+			to = player:getTown() and player:getTown():getTemplePosition() or to
+		end
 		if to then
 			player:teleportTo(to)
 		end

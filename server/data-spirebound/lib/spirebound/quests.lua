@@ -423,6 +423,9 @@ function SpireQuests.talk(npc, npcHandler, player, msg, giver)
 	if msg:sub(1, 1) == "!" then
 		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
 	end
+	if SpireCalling and SpireCalling.talk(npc, npcHandler, player, msg, giver) then
+		return true -- ST1: the class trainer's calling (the Path Trial and the style choice)
+	end
 	if SpireGear.dorrowTalk and giver == "Captain Dorrow" and SpireGear.dorrowTalk(npc, npcHandler, player, msg) then
 		return true
 	end

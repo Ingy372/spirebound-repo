@@ -23,22 +23,19 @@ local function describeTree(player)
 		return { "Choose your path with Registrar Maelis first: your style tree comes with it." }
 	end
 	local v = SpireStyle.get(player)
+	-- ST1 (spec 7.1): only the next choice is ever shown, never the whole tree
 	local L = { string.format("Your style: %s %d/10.", SpireStyle.stageName(v), v.level) }
-	for _, p in ipairs(tree.paths) do
-		local mark = (v.path == p.key) and " (yours)" or ""
-		table.insert(L, string.format("%s%s: %s. Then %s or %s.", p.name, mark, p.role, p.finals[1].name, p.finals[2].name))
-	end
+	local trainer = SpireCalling and SpireCalling.trainerOf(player) or "your class trainer"
 	if v.choiceReady then
-		local names = {}
-		for _, o in ipairs(v.options) do
-			table.insert(names, o.name:lower())
-		end
-		table.insert(L, "Your choice is ready. Say !style " .. table.concat(names, " or !style ") .. ". It is permanent.")
-	elseif not v.path and SpireStyle.canStance(voc, v.points, nil, tree.paths[1].key) then
-		table.insert(L, string.format("Stance: %s. Try a path before you choose: say !style %s or !style %s (free to swap until Mastery 10).",
-			v.stance and SpireStyle.name(voc, v.stance) or "none", tree.paths[1].name:lower(), tree.paths[2].name:lower()))
+		local o = v.options
+		table.insert(L, string.format("Your choice is ready: %s (%s) or %s (%s). %s runs the Path Trial for each; then you choose there (say calling).",
+			o[1].name, o[1].role, o[2].name, o[2].role, trainer))
+	elseif v.final then
+		table.insert(L, "Your style is complete.")
+	elseif v.path then
+		table.insert(L, string.format("Your final style comes when %s reaches Mastery 10: %s will send for you.", SpireStyle.name(voc, v.path), trainer))
 	else
-		table.insert(L, "Your next choice comes when this stage reaches level 10.")
+		table.insert(L, string.format("Your path is chosen when you reach the tower's second floor: %s will send for you.", trainer))
 	end
 	return L
 end

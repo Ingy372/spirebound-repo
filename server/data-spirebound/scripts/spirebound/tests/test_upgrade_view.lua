@@ -36,7 +36,7 @@ end)
 
 SpireTest.add("upgrade: a waiting style choice is the next step", function()
 	local v = base({ weapon = weapon(3), style = { stageName = "Ranger Mastery", level = 10, choiceReady = true, options = { "Marksman", "Trapper" } } })
-	SpireTest.eq(SpireUpgrade.nextLine(v), "Next: choose Marksman or Trapper. Say !style to read both.", "the choice")
+	SpireTest.eq(SpireUpgrade.nextLine(v), "Next: choose Marksman or Trapper. Your class trainer runs the Path Trial for each, then you choose (say calling to them).", "the choice")
 end)
 
 SpireTest.add("upgrade: everything done points at Floor 2", function()

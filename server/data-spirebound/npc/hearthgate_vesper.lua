@@ -25,6 +25,9 @@ local function creatureSayCallback(npc, player, type, msg)
 	if not npcHandler:checkInteraction(npc, player) then
 		return false
 	end
+	if SpireCalling and SpireCalling.talk(npc, npcHandler, player, msg, npcConfig.name) then
+		return true -- ST1: Vesper is the Arcanists' trainer (the Path Trial and the style choice)
+	end
 	local lower = msg:lower()
 	if lower == "hi" or lower == "hello" or lower == "hey" then -- G11: a second greeting while already talking
 		local text = VesperGreeting(SpireQuests.state(player, SpireQuests.get("l1_stones")), SpireQuests.collected(player, "builders"))

@@ -35,7 +35,7 @@ function SpireUpgrade.nextLine(view)
 		end
 	end
 	if view.style and view.style.choiceReady and view.style.options then
-		return "Next: choose " .. table.concat(view.style.options, " or ") .. ". Say !style to read both."
+		return "Next: choose " .. table.concat(view.style.options, " or ") .. ". Your class trainer runs the Path Trial for each, then you choose (say calling to them)."
 	end
 	local step = firstUndone(view, true)
 	if step then
@@ -109,7 +109,7 @@ function SpireUpgrade.lines(view)
 			table.insert(L, "      Mastery only grows while you hold your class's barracks weapon")
 		end
 		if st.choiceReady and st.options then
-			table.insert(L, "      choice ready: " .. table.concat(st.options, " or ") .. " (say !style)")
+			table.insert(L, "      choice ready: " .. table.concat(st.options, " or ") .. " (your class trainer: say calling)")
 		elseif st.stanceOpen then
 			table.insert(L, "      stance: " .. (st.stance or "none") .. " (try a path free until Mastery 10: say !style)")
 		end

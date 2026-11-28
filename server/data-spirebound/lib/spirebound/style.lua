@@ -354,8 +354,8 @@ function SpireStyle.addPoints(player, n)
 		end
 		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s is complete! Your class trainer will send for you: %s or %s.",
 			SpireStyle.stageName(after), names[1] or "?", names[2] or "?"))
-		if SpireCalling and SpireCalling.summon then
-			SpireCalling.summon(player)
+		if SpireCalling and SpireCalling.summon and after.path then
+			SpireCalling.summon(player, true) -- the final style: the trainer's second letter (the path's comes on Floor 2)
 		end
 	end
 end
