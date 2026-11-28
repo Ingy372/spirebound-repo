@@ -8,6 +8,12 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
+### Q115. Three more Arrival Yard gates: what should they teach? (2026-11-28, roadmap P7)
+The yard's gates already teach: beat a rat, loot it, read your spells (!spells), drink a potion. P7 also lists gates for "cursors, the Journal and skills", but not what each should ask.
+- **My recommendation:** one more gate, "open your Journal" (press its button once; the server sees it), and no cursor or skill gate: weapon skills need a class, which you only choose at the Registrar at the end of the yard, and the cursors explain themselves on the first hover. The Registrar's first line can then point at the weapon-skill bar.
+- Assumed until you answer: nothing is built yet (it needs a gate on the yard map).
+- Jay's answer:
+
 ### Q114. Twin Fang and a hero weapon for each class: how do they work? (2026-11-28; parked, Jay will come back to it)
 You liked a "hero" in each class: Twin Fang for the Reaver, a hero weapon for each other class, one holder per season, power that creates FOMO but "nothing crazy or game breaking", and a PvP limit. My suggestion, combining your two ideas:
 - **Four hero weapons:** Twin Fang (the Vanguard's paired blades), plus one each for the Ranger, Arcanist and Mystic (I name and draw them).
