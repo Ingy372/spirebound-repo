@@ -141,12 +141,18 @@ KINDS.heal_target = function(row, player, var)
 	return true
 end
 
+-- ST1: Dawnmender's party buffs are stronger (SpireStyle.buffFactor); every party-buff kind scales through this
+local function buffed(player, value)
+	return math.floor(value * SpireStyle.buffFactor(SpireStyle.get(player)) + 0.5)
+end
+SpireSpells.buffed = buffed
+
 KINDS.heal_party = function(row, player)
 	local mn, mx = formula(row, player)
 	for _, m in ipairs(partyAround(player, row.radius)) do
 		m:addHealth(math.random(mn, mx))
 		if row.ward then
-			SpireBuffs.addReduction(m:getId(), row.ward.pct, row.ward.duration)
+			SpireBuffs.addReduction(m:getId(), buffed(player, row.ward.pct), row.ward.duration)
 		end
 		if row.purify then
 			for _, c in ipairs(BAD_CONDITIONS) do
@@ -175,7 +181,7 @@ KINDS.hot_target = function(row, player, var)
 end
 
 KINDS.mana_party = function(row, player)
-	local gain = math.floor(player:getLevel() / 4 + player:getMagicLevel() * 0.8 + 10)
+	local gain = buffed(player, math.floor(player:getLevel() / 4 + player:getMagicLevel() * 0.8 + 10))
 	for _, m in ipairs(partyAround(player, row.radius)) do
 		local c = Condition(CONDITION_REGENERATION)
 		c:setParameter(CONDITION_PARAM_SUBID, 79)
@@ -365,7 +371,7 @@ KINDS.dr_target = function(row, player, var)
 	if not target then
 		return false
 	end
-	SpireBuffs.addReduction(target:getId(), row.pct, row.duration)
+	SpireBuffs.addReduction(target:getId(), buffed(player, row.pct), row.duration)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
 	return true
@@ -373,7 +379,7 @@ end
 
 KINDS.dr_party = function(row, player)
 	for _, m in ipairs(partyAround(player, row.radius)) do
-		SpireBuffs.addReduction(m:getId(), row.pct, row.duration)
+		SpireBuffs.addReduction(m:getId(), buffed(player, row.pct), row.duration)
 		fx(m:getPosition(), row.effect)
 	end
 	return true
@@ -397,18 +403,19 @@ KINDS.undying = function(row, player)
 end
 
 KINDS.party_buff = function(row, player)
+	local amount = buffed(player, row.amount)
 	for _, m in ipairs(partyAround(player, row.radius or 5)) do
 		local c = Condition(CONDITION_ATTRIBUTES)
 		c:setParameter(CONDITION_PARAM_SUBID, 88)
 		c:setParameter(CONDITION_PARAM_TICKS, row.duration * 1000)
 		if row.buff == "melee" then
-			c:setParameter(CONDITION_PARAM_SKILL_MELEEPERCENT, 100 + row.amount)
+			c:setParameter(CONDITION_PARAM_SKILL_MELEEPERCENT, 100 + amount)
 		elseif row.buff == "distance" then
-			c:setParameter(CONDITION_PARAM_SKILL_DISTANCEPERCENT, 100 + row.amount)
+			c:setParameter(CONDITION_PARAM_SKILL_DISTANCEPERCENT, 100 + amount)
 		elseif row.buff == "crit" then
-			c:setParameter(CONDITION_PARAM_SKILL_CRITICAL_HIT_CHANCE, row.amount * 100)
+			c:setParameter(CONDITION_PARAM_SKILL_CRITICAL_HIT_CHANCE, amount * 100)
 		elseif row.buff == "magic" then
-			c:setParameter(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT, 100 + row.amount)
+			c:setParameter(CONDITION_PARAM_STAT_MAGICPOINTSPERCENT, 100 + amount)
 		end
 		c:setParameter(CONDITION_PARAM_BUFF_SPELL, true)
 		m:addCondition(c)
@@ -420,7 +427,7 @@ end
 KINDS.slow_area = function(row, player)
 	local pos = player:getPosition()
 	for _, c in ipairs(Game.getSpectators(pos, false, false, row.radius, row.radius, row.radius, row.radius)) do
-		if SpireSpells.affects(c, player) and SpireSpells.pin(c, row.duration, 0.45) then
+		if SpireSpells.affects(c, player) and SpireSpells.pin(c, row.duration, 0.45, player) then
 			fx(c:getPosition(), row.effect)
 		end
 	end
@@ -433,7 +440,7 @@ KINDS.root = function(row, player)
 		player:sendCancelMessage("You need a target.")
 		return false
 	end
-	SpireSpells.pin(target, row.duration, 0.9)
+	SpireSpells.pin(target, row.duration, 0.9, player)
 	shootFx(player:getPosition(), target:getPosition(), row.shoot)
 	fx(target:getPosition(), row.effect)
 	return true
@@ -653,9 +660,31 @@ local function pullNextTo(player, target)
 	return false
 end
 
-local function pin(c, seconds, strength)
+SpireBuffs.monsterHolds = SpireBuffs.monsterHolds or {}
+local function pin(c, seconds, strength, caster)
 	-- players: half as long, then a few seconds when they can't be held again (DESIGN 6.7); full in Wild PvP
 	local now = os.time()
+	if c:isMonster() then -- ST1: the caster's control bonus, then the monster's resistance (style spec 8.3, 9.3)
+		local owner = caster and SpireProgress and SpireProgress.owner(caster)
+		if owner then
+			seconds = seconds * SpireStyle.ccFactor(SpireStyle.get(owner))
+		end
+		if next(SpireBuffs.monsterHolds) ~= nil and math.random(200) == 1 then -- now and then, forget long-gone monsters
+			for id in pairs(SpireBuffs.monsterHolds) do
+				if not Creature(id) then
+					SpireBuffs.monsterHolds[id] = nil
+				end
+			end
+		end
+		local rec = SpireBuffs.monsterHolds[c:getId()] or {}
+		SpireBuffs.monsterHolds[c:getId()] = rec
+		local share = SpireSpells.monsterHold(rec, now, c:getMaxHealth() >= SpireSpells.HARD_HEALTH)
+		if share <= 0 then
+			fx(c:getPosition(), CONST_ME_BLOCKHIT)
+			return false
+		end
+		seconds = math.max(1, math.floor(seconds * share + 0.5))
+	end
 	local secs, heldUntil = SpireSpells.holdSeconds(c:isPlayer(), seconds, SpireBuffs.held[c:getId()], now, SpireSpells.wildAt(c:getPosition()))
 	if secs <= 0 then
 		return false
@@ -711,11 +740,11 @@ local function riders(player, row, target, dealt, from)
 			target:setTarget(player)
 		end
 	end
-	if row.root and pin(target, row.root, 0.9) then
+	if row.root and pin(target, row.root, 0.9, player) then
 		fx(target:getPosition(), CONST_ME_ROOTS)
 	end
 	if row.slow and SpireSpells.affects(target, player) then
-		pin(target, 2, 0.3)
+		pin(target, 2, 0.3, player)
 	end
 end
 
@@ -953,7 +982,7 @@ local function runZone(player, row, combat, tiles)
 					local tile = Tile(pos)
 					for _, c in ipairs(tile and tile:getCreatures() or {}) do
 						if SpireSpells.affects(c, caster) then
-							pin(c, 2, 0.5)
+							pin(c, 2, 0.5, caster)
 						end
 					end
 				end
@@ -1099,7 +1128,7 @@ KINDS.gravity = function(row, player, var)
 					break
 				end
 			end
-			pin(c, row.duration, 0.5)
+			pin(c, row.duration, 0.5, player)
 			fx(c:getPosition(), CONST_ME_PURPLEENERGY)
 		end
 	end
@@ -1508,7 +1537,7 @@ function buffs.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 		primaryDamage = SpirePerks.onDealt(attacker, creature, primaryDamage)
 	end
 	if SpireProgress and creature:isMonster() then -- weapon power, style and trophies (gear progression)
-		primaryDamage = SpireProgress.onDealt(attacker, creature, primaryDamage)
+		primaryDamage = SpireProgress.onDealt(attacker, creature, primaryDamage, origin)
 	end
 	if SpireGear and SpireGear.onDealtPerk and creature:isMonster() then -- rare-drop weapon perks (review B4-2)
 		primaryDamage = SpireGear.onDealtPerk(attacker, creature, primaryDamage)

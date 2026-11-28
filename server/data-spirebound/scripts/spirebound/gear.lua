@@ -141,6 +141,25 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 			SpireGearData.REFORGE_FEE * d.floor))
 		return true
 	end
+	if MsgContains(lower, "dirk") or MsgContains(lower, "off-hand") or MsgContains(lower, "offhand") then -- ST1: off-hand blades
+		local b = SpireOffhand.def("climbers_dirk")
+		pending[pid] = function()
+			if not SpireGear.playerWallet(player).pay(b.price) then
+				return string.format("A %s costs %d gold.", b.name, b.price)
+			end
+			local item = SpireOffhand.create(b.id)
+			if not item or player:addItemEx(item, false, INDEX_WHEREEVER, FLAG_NOLIMIT) ~= RETURNVALUE_NOERROR then
+				if item then
+					item:remove()
+				end
+				player:setBankBalance(player:getBankBalance() + b.price)
+				return "You have no room for it. Your gold is in your bank."
+			end
+			return string.format("Here: a %s. Hold it in your shield hand: a Reaver's off-hand strikes after every hit.", b.name)
+		end
+		say(string.format("An off-hand blade for the shield hand: the %s, attack %d, for %d gold. Only a Reaver knows how to strike with it. Say {yes}.", b.name, b.attack, b.price))
+		return true
+	end
 	if MsgContains(lower, "retune") then
 		local ok, plan = SpireGear.retuneCheck(player)
 		if not ok then

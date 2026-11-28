@@ -130,6 +130,12 @@ def patch_core(build: Path) -> None:
     text, n2 = re.subn(r'(<item id="3347"[^>]*>.*?<attribute key="level" value=")\d+(")', r"\g<1>1\g<2>", text, count=1, flags=re.S)
     if n != 1 or n2 != 1:
         raise SystemExit("the hunting spear (3347) is not as expected in items.xml")
+    # ST1: off-hand blades are built on the silver dagger (3290, used nowhere else). As a weapon the engine would refuse
+    # it next to the main weapon; as a plain item it sits in the shield hand and our scripts give it its attack
+    # (lib/spirebound/offhand.lua).
+    text, n3 = re.subn(r'(<item id="3290"[^>]*>)(.*?)(</item>)', lambda m: m.group(1) + re.sub(r'\s*<attribute key="(weaponType|attack|defense|script)"[^>]*?/>', "", re.sub(r'\s*<attribute key="script"[^>]*>.*?</attribute>', "", m.group(2), flags=re.S)) + m.group(3), text, count=1, flags=re.S)
+    if n3 != 1:
+        raise SystemExit("the silver dagger (3290) is missing from items.xml")
     # Spirebound's own item names (tools/gen_gear.py -> data/item_renames.json): Hearth Shards and other tokens
     import json
     renames = json.loads((ROOT / "data" / "item_renames.json").read_text(encoding="utf-8"))

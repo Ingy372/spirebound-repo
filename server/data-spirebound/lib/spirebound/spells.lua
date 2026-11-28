@@ -478,6 +478,35 @@ function SpireSpells.holdSeconds(isPlayer, seconds, heldUntil, now, wild)
 	return secs, now + secs + SpireSpells.PVP.ROOT_IMMUNE
 end
 
+-- ST1 (style spec 8.3, Jay 2026-11-28: "an emergency button, not a way to win"): every monster builds resistance to
+-- holds. A second hold within 10 s lasts half as long; a third does nothing and the monster is immune for 10 s. Bosses
+-- and other hard monsters can be held once, then are immune for 30 s. rec = { count, lastAt, immuneUntil } (changed in
+-- place). Returns the share of the hold that lands (1, 0.5 or 0).
+SpireSpells.HOLD_WINDOW, SpireSpells.HOLD_IMMUNE, SpireSpells.HOLD_IMMUNE_HARD = 10, 10, 30
+function SpireSpells.monsterHold(rec, now, hard)
+	if rec.immuneUntil and now < rec.immuneUntil then
+		return 0
+	end
+	if hard then
+		rec.immuneUntil = now + SpireSpells.HOLD_IMMUNE_HARD
+		return 1
+	end
+	if rec.lastAt and now - rec.lastAt < SpireSpells.HOLD_WINDOW then
+		rec.count = (rec.count or 0) + 1
+	else
+		rec.count = 1
+	end
+	rec.lastAt = now
+	if rec.count == 1 then
+		return 1
+	elseif rec.count == 2 then
+		return 0.5
+	end
+	rec.count, rec.immuneUntil = 0, now + SpireSpells.HOLD_IMMUNE
+	return 0
+end
+SpireSpells.HARD_HEALTH = 1500 -- monsters with this much health or more (bosses, elites) count as hard
+
 -- Pure: a finisher or opener bonus, weaker against players
 function SpireSpells.pvpBonus(bonus, targetIsPlayer)
 	return targetIsPlayer and bonus * SpireSpells.PVP.RIDER_SHARE or bonus

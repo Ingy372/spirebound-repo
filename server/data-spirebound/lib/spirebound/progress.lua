@@ -80,7 +80,7 @@ end
 -- Floor 1 review B4-0 (2026-11-26, measured on a real character): the engine hands every hit over as a NEGATIVE
 -- number, and this function returned early on "amount <= 0", so weapon tiers, familiarity, the awakening, style
 -- passives and trophies added no damage at all in real play. Work on the size of the hit and keep its sign.
-function SpireProgress.onDealt(attacker, target, amount)
+function SpireProgress.onDealt(attacker, target, amount, origin)
 	local player = SpireProgress.owner(attacker)
 	if player and amount ~= 0 and attacker:getId() == player:getId() then -- the player's own hits, not a summon's
 		SpireProgress.warnUnarmed(player)
@@ -105,7 +105,59 @@ function SpireProgress.onDealt(attacker, target, amount)
 		out = math.floor(out * (1 + (SpireGearData.CRIT_BONUS or 0.5)) + 0.5)
 		target:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE or CONST_ME_EXPLOSIONHIT)
 	end
+	-- Bloodedge (ST1): below half health you hit 10% harder
+	if view.final == "bloodedge" and view.stage >= 3 and player:getHealth() * 2 < player:getMaxHealth() then
+		out = math.floor(out * (1 + SpireProgress.BLOODEDGE_LOW) + 0.5)
+	end
+	if origin == ORIGIN_MELEE and attacker:getId() == player:getId() then
+		SpireProgress.afterMelee(player, target, view, out)
+	end
 	return sign * out
+end
+
+SpireProgress.BLOODEDGE_LOW, SpireProgress.BLOODEDGE_LEECH = 0.10, 0.10
+
+-- ST1: what a melee hit sets off. The Reaver's off-hand blade strikes (Bloodedge heals from it), Stormbreaker's hit
+-- also lands on the monsters beside the target. They come a moment later as their own hits (ORIGIN_NONE, so they never
+-- set anything off again).
+function SpireProgress.afterMelee(player, target, view, dealt)
+	local share = SpireStyle.offhandShare(view)
+	local strike = 0
+	if share > 0 and not SpireProgress.holdsShield(player) then
+		local main = player:getSlotItem(CONST_SLOT_LEFT)
+		local it = main and ItemType(main:getId())
+		local two = it ~= nil and bit.band(it:getSlotPosition(), SLOTP_TWO_HAND) ~= 0
+		local mainAtk = main and (main:getAttribute(ITEM_ATTRIBUTE_ATTACK) or 0) or 0
+		if mainAtk <= 0 and it then
+			mainAtk = it:getAttack()
+		end
+		strike = SpireOffhand.strike(dealt, mainAtk, SpireOffhand.attackOf(player:getSlotItem(CONST_SLOT_RIGHT)), share, two)
+	end
+	local cleave = SpireStyle.cleaveShare(view)
+	if strike <= 0 and cleave <= 0 then
+		return
+	end
+	local pid, tid, heal = player:getId(), target:getId(), view.final == "bloodedge" and view.stage >= 3
+	addEvent(function()
+		local p, t = Player(pid), Creature(tid)
+		if not p or not t then
+			return
+		end
+		if strike > 0 and t:getHealth() > 0 then
+			doTargetCombatHealth(p, t, COMBAT_PHYSICALDAMAGE, -strike, -strike, CONST_ME_HITAREA, ORIGIN_NONE)
+			if heal then
+				p:addHealth(math.max(1, math.floor(strike * SpireProgress.BLOODEDGE_LEECH)))
+			end
+		end
+		if cleave > 0 then
+			local hit = math.max(1, math.floor(dealt * cleave + 0.5))
+			for _, c in ipairs(Game.getSpectators(t:getPosition(), false, false, 1, 1, 1, 1)) do
+				if c ~= t and c:isMonster() and not c:getMaster() and c:getHealth() > 0 then
+					doTargetCombatHealth(p, c, COMBAT_PHYSICALDAMAGE, -hit, -hit, CONST_ME_BLOCKHIT, ORIGIN_NONE)
+				end
+			end
+		end
+	end, 200)
 end
 
 -- Is a shield (not a quiver, not an off-hand blade) in the shield hand? (Bulwark's passive needs one, ST1)

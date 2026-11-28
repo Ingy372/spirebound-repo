@@ -64,7 +64,7 @@ end
 
 keywordHandler:addKeyword({ "job" }, StdModule.say, { npcHandler = npcHandler, text = "The weaponsmith. Ask me for a {trade}." })
 
-npcHandler:setMessage(MESSAGE_GREET, "Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, {retune} its tiers into another of your weapons, or {replace} one you lost.")
+npcHandler:setMessage(MESSAGE_GREET, "Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, {retune} its tiers into another of your weapons, or {replace} one you lost. Reavers ask me for a {dirk}.")
 npcHandler:setMessage(MESSAGE_FAREWELL, "Good climbing, |PLAYERNAME|.")
 npcHandler:setMessage(MESSAGE_WALKAWAY, "Good climbing.")
 npcHandler:setCallback(CALLBACK_GREET, refuseMurderers)

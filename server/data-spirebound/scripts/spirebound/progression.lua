@@ -49,6 +49,14 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 		end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
+	-- Pathfinder (ST1): party members near a Pathfinder sometimes dodge a monster's attack completely
+	if attacker and attacker:isMonster() and primaryDamage < 0 then
+		local dodge = SpireStyle.partyDodgeAround(player)
+		if dodge > 0 and math.random() < dodge then
+			player:getPosition():sendMagicEffect(CONST_ME_BLOCKHIT)
+			return 0, primaryType, 0, secondaryType
+		end
+	end
 	local f = SpireStyle.takenFactor(SpireStyle.get(player), { shield = SpireProgress.holdsShield(player) })
 	if f ~= 1 then -- (damage arrives negative: round the size, keep the sign; Bloodedge's minus makes f above 1)
 		primaryDamage = (primaryDamage < 0 and -1 or 1) * math.floor(math.abs(primaryDamage) * f + 0.5)
@@ -57,6 +65,24 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 	return primaryDamage, primaryType, secondaryDamage, secondaryType
 end
 guard:register()
+
+-- The best dodge chance a Pathfinder in this player's party (within 7 tiles, the player too) gives
+SpireStyle.PATHFINDER_RANGE = 7
+function SpireStyle.partyDodgeAround(player)
+	local party = player:getParty()
+	local members = { player }
+	if party then
+		members = party:getMembers()
+		table.insert(members, party:getLeader())
+	end
+	local best = 0
+	for _, m in ipairs(members) do
+		if m:getPosition():getDistance(player:getPosition()) <= SpireStyle.PATHFINDER_RANGE then
+			best = math.max(best, SpireStyle.partyDodge(SpireStyle.get(m)))
+		end
+	end
+	return best
+end
 
 -- Ironwall's extra health (ST1): a lasting condition, refreshed with the speed
 local BODY_SUBID = 4611
