@@ -95,8 +95,23 @@ function SpireProgress.onDealt(attacker, target, amount)
 	if item and d.vocation == player:getVocation():getBaseId() then
 		w = SpireGear.state(item)
 	end
-	local ctx = { distance = player:getPosition():getDistance(target:getPosition()) }
-	return sign * SpireProgress.dealtPure(amount, w, SpireStyle.get(player), ctx, SpireProgress.trophyBonus(player, ctx))
+	local mark = SpireBuffs and SpireBuffs.mark and SpireBuffs.mark[target:getId()]
+	local ctx = { distance = player:getPosition():getDistance(target:getPosition()), shield = SpireProgress.holdsShield(player),
+		area = SpireSpells and SpireSpells.areaNow == true, unmarked = not (mark and mark.untilTime >= os.time()) }
+	local view = SpireStyle.get(player)
+	local out = SpireProgress.dealtPure(amount, w, view, ctx, SpireProgress.trophyBonus(player, ctx))
+	local crit = SpireStyle.critChance(view) -- Deadeye (ST1)
+	if crit > 0 and math.random() < crit then
+		out = math.floor(out * (1 + (SpireGearData.CRIT_BONUS or 0.5)) + 0.5)
+		target:getPosition():sendMagicEffect(CONST_ME_CRITICAL_DAMAGE or CONST_ME_EXPLOSIONHIT)
+	end
+	return sign * out
+end
+
+-- Is a shield (not a quiver, not an off-hand blade) in the shield hand? (Bulwark's passive needs one, ST1)
+function SpireProgress.holdsShield(player)
+	local it = player:getSlotItem(CONST_SLOT_RIGHT)
+	return it ~= nil and ItemType(it:getId()):getWeaponType() == WEAPON_SHIELD and not (SpireOffhand and SpireOffhand.is(it))
 end
 
 -- Members who share a kill: the killer's party on the same floor within range, or the killer alone

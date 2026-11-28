@@ -33,38 +33,25 @@ local function findPath(voc, key)
 	end
 end
 
--- P11 (FLOOR1_REVIEW.md F1-40, Q46): from Mastery 5 a climber may take a stance, a free-to-swap taste of one of
--- the two paths (its passive as if at level STANCE_TASTE), until the permanent choice at Mastery 10.
-SpireStyle.STANCE_LEVEL = 5
-SpireStyle.STANCE_TASTE = 3
-
--- Pure: may a stance be taken now? -> ok, message or path name
-function SpireStyle.canStance(voc, points, path, key)
-	if path then
-		return false, "You have chosen your path: stances are only for climbers still deciding."
-	end
-	local s, l = SpireStyle.levelOf(points)
-	if s == 1 and l < SpireStyle.STANCE_LEVEL then
-		return false, string.format("Stances open at Mastery %d.", SpireStyle.STANCE_LEVEL)
-	end
-	local p = findPath(voc, key)
-	if not p then
-		return false, "That is not one of your paths. Say !style to see them."
-	end
-	return true, p.name
+-- ST1 (style trees v2, Jay 2026-11-28, spec 9.2): the free stance at Mastery 5 is gone. Each option is tried in a sealed
+-- Path Trial at the class trainer instead, and the choice window opens only after both have been tried.
+SpireStyle.STANCE_LEVEL = 5 -- (kept for older readers; no stance is offered any more)
+function SpireStyle.canStance()
+	return false, "The free stance is gone: your class trainer's Path Trial lets you try each path before you choose."
 end
 
+-- ctx (optional): { arrived = the character has reached Floor 2 (the path choice comes then, spec 8.1),
+--   trials = { [key] = true } options whose Path Trial is done }
 -- Pure: what the character's style looks like with its choices
-function SpireStyle.view(voc, points, path, final, stance)
+function SpireStyle.view(voc, points, path, final, _stance, ctx)
+	ctx = ctx or {}
 	local s, l = SpireStyle.levelOf(points)
 	local v = { voc = voc, points = points or 0, path = path, final = final, choiceReady = false }
-	if not path and stance and findPath(voc, stance) and (s > 1 or l >= SpireStyle.STANCE_LEVEL) then
-		v.stance = stance
-	end
 	if not path then
-		if s > 1 or l == 10 then
-			s, l, v.choiceReady = 1, 10, true
+		if s > 1 then
+			s, l = 1, 10
 		end
+		v.choiceReady = ctx.arrived == true -- the first choice comes on arrival on Floor 2, whatever the Mastery
 	elseif not final then
 		if s == 3 then
 			s, l, v.choiceReady = 2, 10, true
@@ -78,27 +65,44 @@ function SpireStyle.view(voc, points, path, final, stance)
 		if not path then
 			v.options = t.paths
 		else
-			v.options = findPath(voc, path).finals
+			local fp = findPath(voc, path)
+			v.options = fp and fp.finals or nil
+			v.choiceReady = v.options ~= nil
 		end
 	end
+	v.trials = ctx.trials or {}
 	return v
 end
 
 -- Pure: may this choice be made now? -> ok, message
-function SpireStyle.canChoose(voc, points, path, final, key)
-	local v = SpireStyle.view(voc, points, path, final)
+function SpireStyle.canChoose(voc, points, path, final, key, ctx)
+	local v = SpireStyle.view(voc, points, path, final, nil, ctx)
 	if final then
 		return false, "Your style is complete: there is nothing left to choose."
 	end
 	if not v.choiceReady then
+		if not path then
+			return false, "Your path is chosen when you reach Floor 2: your class trainer will send for you."
+		end
 		return false, "Your next choice comes when this stage reaches level 10."
 	end
+	local found
 	for _, o in ipairs(v.options or {}) do
 		if o.key == key then
-			return true, o.name
+			found = o
 		end
 	end
-	return false, "That is not one of your choices. Say !style to see them."
+	if not found then
+		return false, "That is not one of your choices. Say !style to see them."
+	end
+	if ctx then -- (pure tests pass no ctx: the trial rule is checked by the game path)
+		for _, o in ipairs(v.options) do
+			if not v.trials[o.key] then
+				return false, string.format("Take the Path Trial for %s first: your class trainer runs it. Both trials come before the choice.", o.name)
+			end
+		end
+	end
+	return true, found.name
 end
 
 -- Pure: levels earned in each stage key, e.g. { ranger = 10, marksman = 5 }
@@ -109,9 +113,6 @@ function SpireStyle.levels(v)
 		return out
 	end
 	out[t.key] = v.stage > 1 and 10 or v.level
-	if v.stance and not v.path then
-		out[v.stance] = SpireStyle.STANCE_TASTE
-	end
 	if v.path and v.stage >= 2 then
 		out[v.path] = v.stage > 2 and 10 or v.level
 	end
@@ -121,25 +122,48 @@ function SpireStyle.levels(v)
 	return out
 end
 
+-- Does a passive part apply in this situation? ctx = { distance, shield (holding a shield), area (an area attack),
+-- unmarked (the target carries no mark) }
+local function applies(kind, ctx)
+	ctx = ctx or {}
+	if kind == "far_damage" then
+		return (ctx.distance or 0) >= 4
+	elseif kind == "taken_shield" then
+		return ctx.shield == true
+	elseif kind == "damage_noshield" then
+		return ctx.shield ~= true
+	elseif kind == "single_damage" then
+		return ctx.area ~= true
+	elseif kind == "area_damage" then
+		return ctx.area == true
+	elseif kind == "unmarked_damage" then
+		return ctx.unmarked == true
+	end
+	return true
+end
+
 local function sum(v, kinds, ctx)
 	local total = 0
 	for key, lvl in pairs(SpireStyle.levels(v)) do
-		local p = SpireGearData.PASSIVES[key]
-		if p and kinds[p.kind] and (p.kind ~= "far_damage" or (ctx and (ctx.distance or 0) >= 4)) then
-			total = total + lvl * p.per
+		for _, part in ipairs(SpireGearData.PASSIVES[key] or {}) do
+			if kinds[part.kind] and applies(part.kind, ctx) then
+				total = total + lvl * part.per
+			end
 		end
 	end
 	return total
 end
+SpireStyle.sum = sum
 
--- Pure: extra damage share (0.05 = +5%). ctx = { distance }
+-- Pure: extra damage share (0.05 = +5%; negative for the extreme finals' minus). ctx as in applies()
 function SpireStyle.damageBonus(v, ctx)
-	return sum(v, { damage = true, far_damage = true }, ctx)
+	return sum(v, { damage = true, far_damage = true, damage_noshield = true, single_damage = true, area_damage = true,
+		unmarked_damage = true }, ctx)
 end
 
--- Pure: multiplier on damage taken (below 1 = less)
-function SpireStyle.takenFactor(v)
-	return 1 - sum(v, { taken = true })
+-- Pure: multiplier on damage taken (below 1 = less; Bloodedge's minus makes it above 1)
+function SpireStyle.takenFactor(v, ctx)
+	return 1 - sum(v, { taken = true, taken_shield = true }, ctx)
 end
 
 -- Pure: multiplier on healing done
@@ -150,6 +174,49 @@ end
 -- Pure: extra movement speed
 function SpireStyle.speedBonus(v)
 	return sum(v, { speed = true })
+end
+
+-- Pure: extra maximum health share (Ironwall)
+function SpireStyle.maxHealthBonus(v)
+	return sum(v, { max_health = true })
+end
+
+-- Pure: chance of a critical hit (Deadeye), as a share
+function SpireStyle.critChance(v)
+	return sum(v, { crit = true })
+end
+
+-- Pure: how much longer holds, roots, slows and knock-backs last on monsters (spec 9.3: up to 20% on the paths,
+-- 25% on the control finals). 1 = unchanged.
+function SpireStyle.ccFactor(v)
+	local raw = sum(v, { cc = true })
+	local cap = (v.final and v.stage >= 3) and SpireGearData.CC_CAP.final or SpireGearData.CC_CAP.path
+	return 1 + math.min(raw, cap)
+end
+
+-- Pure: how much stronger the party buffs this character casts are (Dawnmender)
+function SpireStyle.buffFactor(v)
+	return 1 + sum(v, { buff = true })
+end
+
+-- Pure: the Reaver's off-hand strike, as a share of the off-hand blade's damage (20% plus 1% a level; 0 if not Reaver)
+SpireStyle.OFFHAND_BASE = 0.20
+function SpireStyle.offhandShare(v)
+	local extra = sum(v, { offhand = true })
+	if extra <= 0 then
+		return 0
+	end
+	return SpireStyle.OFFHAND_BASE + extra
+end
+
+-- Pure: Stormbreaker's cleave, as a share of the hit that also lands on monsters beside the target
+function SpireStyle.cleaveShare(v)
+	return sum(v, { cleave = true })
+end
+
+-- Pure: the dodge chance a Pathfinder gives party members near them
+function SpireStyle.partyDodge(v)
+	return sum(v, { party_dodge = true })
 end
 
 -- Pure: does this style view have the signature ability of `stage` (that stage complete)?
@@ -175,23 +242,56 @@ local function kv(player)
 	return player:kv():scoped("spirebound")
 end
 
+-- the gates a character has passed: Floor 2 reached, the Path Trials done (kv "spirebound": style_arrived2,
+-- style_trial_<key>)
+function SpireStyle.ctxOf(player)
+	local k = kv(player)
+	local trials = {}
+	local t = tree(player:getVocation():getBaseId())
+	for _, p in ipairs(t and t.paths or {}) do
+		trials[p.key] = k:get("style_trial_" .. p.key) ~= nil
+		for _, f in ipairs(p.finals) do
+			trials[f.key] = k:get("style_trial_" .. f.key) ~= nil
+		end
+	end
+	local arrived = k:get("style_arrived2") ~= nil or (Floors and Floors.at and Floors.at(player:getPosition()) >= 2)
+	return { arrived = arrived, trials = trials }
+end
+
 function SpireStyle.get(player)
 	local k = kv(player)
 	return SpireStyle.view(player:getVocation():getBaseId(), k:get("style_points") or 0, k:get("style_path"), k:get("style_final"),
-		k:get("style_stance"))
+		nil, SpireStyle.ctxOf(player))
 end
 
-function SpireStyle.setStance(player, key)
-	local v = SpireStyle.get(player)
-	local ok, msg = SpireStyle.canStance(v.voc, v.points, v.path, key)
-	if not ok then
-		return false, msg
+function SpireStyle.markTrial(player, key)
+	kv(player):set("style_trial_" .. key, os.time())
+end
+
+function SpireStyle.markArrived(player)
+	local k = kv(player)
+	if k:get("style_arrived2") then
+		return false
 	end
-	kv(player):set("style_stance", key)
-	if SpireStyle.applySpeed then
-		SpireStyle.applySpeed(player)
+	k:set("style_arrived2", os.time())
+	return true
+end
+
+-- Second version of the trees: a final that changed meaning is cleared and chosen again for free (not a respec)
+function SpireStyle.migrate(player)
+	local k = kv(player)
+	local final = k:get("style_final")
+	if final and SpireGearData.RETIRED_STYLE[final] then
+		k:remove("style_final")
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "The style trees have changed: your final style is free to choose again. Your class trainer will help you (free, no respec needed).")
+		return true
 	end
-	return true, string.format("You take the %s stance: a taste of that path. Swap any time with !style and the other path's name. At Mastery 10 your choice becomes permanent.", msg)
+	k:remove("style_stance")
+	return false
+end
+
+function SpireStyle.setStance()
+	return SpireStyle.canStance()
 end
 
 function SpireStyle.hasAbility(player, stage)
@@ -243,14 +343,20 @@ function SpireStyle.addPoints(player, n)
 		if SpireStyle.applySpeed then
 			SpireStyle.applySpeed(player)
 		end
+		if SpireStyle.applyBody then
+			SpireStyle.applyBody(player)
+		end
 	end
 	if after.choiceReady and not before.choiceReady then
 		local names = {}
 		for _, o in ipairs(after.options) do
 			table.insert(names, o.name)
 		end
-		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s is complete! Choose %s: say !style to read both.",
-			SpireStyle.stageName(after), table.concat(names, " or ")))
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, string.format("%s is complete! Your class trainer will send for you: %s or %s.",
+			SpireStyle.stageName(after), names[1] or "?", names[2] or "?"))
+		if SpireCalling and SpireCalling.summon then
+			SpireCalling.summon(player)
+		end
 	end
 end
 
@@ -259,7 +365,7 @@ function SpireStyle.choose(player, key)
 	local k = kv(player)
 	local voc = player:getVocation():getBaseId()
 	local path, final = k:get("style_path"), k:get("style_final")
-	local ok, msg = SpireStyle.canChoose(voc, k:get("style_points") or 0, path, final, key)
+	local ok, msg = SpireStyle.canChoose(voc, k:get("style_points") or 0, path, final, key, SpireStyle.ctxOf(player))
 	if not ok then
 		return false, msg
 	end

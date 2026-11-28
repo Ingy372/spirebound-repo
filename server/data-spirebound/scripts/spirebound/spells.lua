@@ -843,7 +843,9 @@ local function castArea(player, row, combat, var)
 				if delay > 0 and row.shoot then -- delayed strikes fall from the sky
 					shootFx(Position(pos.x - 3, pos.y - 5, pos.z), pos, row.shoot)
 				end
+				SpireSpells.areaNow = true -- ST1: area spells count as "area" for the style passives (Cinderheart, Deadeye)
 				hitTile(caster, row, combat, pos, 1, vis, from)
+				SpireSpells.areaNow = false
 			end
 		end)
 	end

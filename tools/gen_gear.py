@@ -206,34 +206,82 @@ def shard_monsters():
         out[name] = grades
     return out
 
-# ---------------------------------------------------------------- style trees (spec 4.2; names are Claude's call)
+# ---------------------------------------------------------------- style trees (ST1: docs/superpowers/specs/2026-11-27-style-trees-v2.md,
+# Jay approved sections 7-9 on 2026-11-28; numbers are Claude's call, tuned after playtests)
+# Each class: two paths (jobs), each with an extreme final (it has a minus) and a balanced one.
+# (key, name, role, what you gain, what you give up) for the choice window's cards; paths also carry their finals.
 STYLE = {
     VANGUARD: ("vanguard", "Vanguard Mastery", [
-        ("bulwark", "Bulwark", "tank, protects the party", [("aegis_warden", "Aegis Warden"), ("ironwall", "Ironwall")]),
-        ("reaver", "Reaver", "melee damage", [("bloodedge", "Bloodedge"), ("stormbreaker", "Stormbreaker")])]),
+        ("bulwark", "Bulwark", "the shield tank", "less damage taken while a shield is in hand; Shieldwall Vow guards the party", "nothing while you hold a shield", [
+            ("ironwall", "Ironwall", "the fortress", "much less damage taken and more health; Iron Bastion taunts every monster near you", "you deal 20% less damage"),
+            ("bladeward", "Bladeward", "the knight", "less damage taken and a little more damage; Riposte Guard strikes back when you block", "nothing")]),
+        ("reaver", "Reaver", "the off-hand fighter", "more damage with no shield; an off-hand blade strikes after every hit", "no shield, so no shield defence", [
+            ("bloodedge", "Bloodedge", "the berserker", "the hardest-hitting Vanguard; off-hand strikes heal you; harder hits below half health", "you take 10% more damage"),
+            ("stormbreaker", "Stormbreaker", "the cleaver", "more damage, and each hit also strikes the monsters beside your target", "nothing")])]),
     RANGER: ("ranger", "Ranger Mastery", [
-        ("marksman", "Marksman", "long-range single target", [("deadeye", "Deadeye"), ("volley_captain", "Volley Captain")]),
-        ("trapper", "Trapper", "slows and ground control", [("snareweaver", "Snareweaver"), ("pathfinder", "Pathfinder")])]),
+        ("marksman", "Marksman", "the sharpshooter", "more damage from 4 tiles or further", "nothing", [
+            ("deadeye", "Deadeye", "the boss sniper", "much more damage at range and critical hits", "10% less damage with area attacks"),
+            ("volley_captain", "Volley Captain", "the hunter", "more damage with everything", "nothing")]),
+        ("trapper", "Huntwarden", "control and support", "a little more damage and healing", "nothing", [
+            ("snareweaver", "Snareweaver", "the trapper", "more damage, traps and slows that hold up to 25% longer", "nothing"),
+            ("pathfinder", "Pathfinder", "the scout", "your party dodges more and moves faster; you see hidden things for them", "10% less damage, and your heals are gone")])]),
     ARCANIST: ("arcanist", "Arcanist Mastery", [
-        ("emberwright", "Emberwright", "fire, burst", [("cinderheart", "Cinderheart"), ("ashwalker", "Ashwalker")]),
-        ("stormbinder", "Stormbinder", "lightning, chains", [("tempest", "Tempest"), ("spellbreaker", "Spellbreaker")])]),
+        ("emberwright", "Emberwright", "raw destruction", "more damage", "nothing", [
+            ("cinderheart", "Cinderheart", "the boss-breaker", "much more damage against a single target", "10% less damage with area spells"),
+            ("ashwalker", "Ashwalker", "the wildfire", "more damage, burning ground", "nothing")]),
+        ("stormbinder", "Stormbinder", "control and tempo", "more damage; slows and knock-backs last up to 20% longer", "nothing", [
+            ("tempest", "Tempest", "the skirmisher", "more damage and speed", "nothing"),
+            ("spellbreaker", "Spellbreaker", "the hexer", "your marks make a monster take 20% more damage from everyone, and jump on when it dies", "10% less damage against unmarked targets")])]),
     MYSTIC: ("mystic", "Mystic Mastery", [
-        ("lifebinder", "Lifebinder", "healing", [("dawnmender", "Dawnmender"), ("wardkeeper", "Wardkeeper")]),
-        ("wildcaller", "Wildcaller", "nature damage", [("rootcaller", "Rootcaller"), ("frostwarden", "Frostwarden")])]),
+        ("wildcaller", "Wildcaller", "damage with crowd control", "more damage; roots and slows last up to 20% longer", "nothing", [
+            ("blightcaller", "Blightcaller", "the damage dealer", "much more damage; thorns that poison the ground", "little crowd control"),
+            ("frostwarden", "Frostwarden", "the controller", "roots and slows up to 25% longer, the briar wall, a freezing field", "a little less damage than Blightcaller")]),
+        ("lifebinder", "Lifebinder", "support and healing", "more healing; Sanctuary Bloom", "nothing", [
+            ("dawnmender", "Dawnmender", "the lifeline", "more healing and stronger party buffs; Second Dawn", "you deal 15% less damage"),
+            ("briarmender", "Briarmender", "the battle healer", "more damage; Verdant Lash heals while it hurts", "a little less healing than a Lifebinder")])]),
 }
-# passive per style level: (kind, value per level). kinds are read by lib/spirebound/style.lua
+# Keys that changed meaning in the second version: a character holding one picks again for free (style.lua)
+RETIRED_KEYS = {"aegis_warden": "bladeward", "rootcaller": "blightcaller", "wardkeeper": "briarmender"}
+# Passives per style level: [(kind, value per level), ...]; negative values are the extreme finals' minuses.
+# Kinds (read by lib/spirebound/style.lua): damage, taken (less damage taken), taken_shield (only with a shield),
+# damage_noshield (only without one), far_damage (4+ tiles), single_damage / area_damage (by attack shape), heal,
+# speed, max_health, cc (longer holds and slows on monsters), buff (stronger party buffs), crit, unmarked_damage
+# (Spellbreaker: against unmarked targets), offhand (Reaver: the off-hand strike's share), cleave (Stormbreaker),
+# party_dodge (Pathfinder: party members near you dodge).
 PASSIVES = {
-    "vanguard": ("damage", 0.005), "ranger": ("damage", 0.005), "arcanist": ("damage", 0.005), "mystic": ("damage", 0.005),
-    "bulwark": ("taken", 0.006), "reaver": ("damage", 0.008),
-    "marksman": ("far_damage", 0.01), "trapper": ("damage", 0.006),
-    "emberwright": ("damage", 0.008), "stormbinder": ("damage", 0.007),
-    "lifebinder": ("heal", 0.01), "wildcaller": ("damage", 0.008),
-    "aegis_warden": ("taken", 0.008), "ironwall": ("taken", 0.01), "bloodedge": ("damage", 0.01), "stormbreaker": ("damage", 0.01),
-    "deadeye": ("far_damage", 0.012), "volley_captain": ("damage", 0.01), "snareweaver": ("damage", 0.008), "pathfinder": ("speed", 2),
-    "cinderheart": ("damage", 0.012), "ashwalker": ("damage", 0.01), "tempest": ("damage", 0.01), "spellbreaker": ("damage", 0.008),
-    "dawnmender": ("heal", 0.012), "wardkeeper": ("taken", 0.008), "rootcaller": ("damage", 0.01), "frostwarden": ("damage", 0.009),
+    "vanguard": [("damage", 0.005)], "ranger": [("damage", 0.005)], "arcanist": [("damage", 0.005)], "mystic": [("damage", 0.005)],
+    # Vanguard
+    "bulwark": [("taken_shield", 0.006)],
+    "ironwall": [("taken", 0.012), ("max_health", 0.015), ("damage", -0.02)],
+    "bladeward": [("taken", 0.005), ("damage", 0.006)],
+    "reaver": [("damage_noshield", 0.008), ("offhand", 0.01)],
+    "bloodedge": [("damage", 0.012), ("offhand", 0.02), ("taken", -0.01)],
+    "stormbreaker": [("damage", 0.01), ("cleave", 0.03)],
+    # Ranger
+    "marksman": [("far_damage", 0.01)],
+    "deadeye": [("far_damage", 0.012), ("crit", 0.005), ("area_damage", -0.01)],
+    "volley_captain": [("damage", 0.01)],
+    "trapper": [("damage", 0.005), ("heal", 0.01)],
+    "snareweaver": [("damage", 0.006), ("cc", 0.025)],
+    "pathfinder": [("party_dodge", 0.005), ("speed", 2), ("damage", -0.01)],
+    # Arcanist
+    "emberwright": [("damage", 0.008)],
+    "cinderheart": [("single_damage", 0.014), ("area_damage", -0.01)],   # +27% single in all, like Deadeye (the 25% ceiling)
+    "ashwalker": [("damage", 0.01)],
+    "stormbinder": [("damage", 0.006), ("cc", 0.02)],
+    "tempest": [("damage", 0.01), ("speed", 1)],
+    "spellbreaker": [("damage", 0.004), ("unmarked_damage", -0.01)],
+    # Mystic
+    "wildcaller": [("damage", 0.008), ("cc", 0.02)],
+    "blightcaller": [("damage", 0.012)],
+    "frostwarden": [("damage", 0.005), ("cc", 0.025)],
+    "lifebinder": [("heal", 0.01)],
+    "dawnmender": [("heal", 0.01), ("buff", 0.03), ("damage", -0.015)],
+    "briarmender": [("heal", -0.005), ("damage", 0.01)],
 }
-STAGE_END_LEVEL = {1: 37, 2: 110, 3: 275}   # character level at which each style stage finishes (spec pacing)
+EXTREME_FINALS = ("ironwall", "bloodedge", "deadeye", "pathfinder", "cinderheart", "spellbreaker", "dawnmender", "blightcaller")
+CC_CAP = {"path": 0.20, "final": 0.25}       # 9.3: control bonus up to 20% on the paths, 25% on the control finals
+STAGE_END_LEVEL = {1: 37, 2: 85, 3: 275}   # 9.1 (Jay, 2026-11-28): Mastery 20 around level 85 (was 110)   # character level at which each style stage finishes (spec pacing)
 
 
 # ---------------------------------------------------------------- the hunting model (shared with tools/balance.py)
@@ -402,15 +450,18 @@ def main():
     L.append("SpireGearData.style = {")
     for voc, (key, name, paths) in STYLE.items():
         ps = []
-        for pk, pn, role, finals in paths:
-            fs = ", ".join(f'{{ key = "{fk}", name = {lua_str(fn)} }}' for fk, fn in finals)
-            ps.append(f'{{ key = "{pk}", name = {lua_str(pn)}, role = {lua_str(role)}, finals = {{ {fs} }} }}')
+        for pk, pn, role, gain, cost, finals in paths:
+            fs = ", ".join(f'{{ key = "{fk}", name = {lua_str(fn)}, role = {lua_str(fr)}, gain = {lua_str(fg)}, cost = {lua_str(fc)} }}'
+                           for fk, fn, fr, fg, fc in finals)
+            ps.append(f'{{ key = "{pk}", name = {lua_str(pn)}, role = {lua_str(role)}, gain = {lua_str(gain)}, cost = {lua_str(cost)}, finals = {{ {fs} }} }}')
         L.append(f'\t[{voc}] = {{ key = "{key}", name = {lua_str(name)}, paths = {{ {", ".join(ps)} }} }},')
     L.append("}")
     L.append("SpireGearData.PASSIVES = {")
-    for k, (kind, v) in PASSIVES.items():
-        L.append(f'\t{k} = {{ kind = "{kind}", per = {v} }},')
+    for k, parts in PASSIVES.items():
+        L.append(f'\t{k} = {{ ' + ", ".join(f'{{ kind = "{kind}", per = {v} }}' for kind, v in parts) + " },")
     L.append("}")
+    L.append("SpireGearData.RETIRED_STYLE = { " + ", ".join(f'{k} = "{v}"' for k, v in RETIRED_KEYS.items()) + " }")
+    L.append(f"SpireGearData.CC_CAP = {{ path = {CC_CAP['path']}, final = {CC_CAP['final']} }}")
     L.append("SpireGearData.STYLE_POINTS = { " + ", ".join(str(v) for v in style_thresholds()) + " }")
     L.append(f"SpireGearData.REFORGE_FEE = {REFORGE_FEE}")
     L.append(f"SpireGearData.REISSUE_FEE = {REISSUE_FEE}")

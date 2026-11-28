@@ -49,8 +49,8 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 		end
 		return primaryDamage, primaryType, secondaryDamage, secondaryType
 	end
-	local f = SpireStyle.takenFactor(SpireStyle.get(player))
-	if f < 1 then -- (damage arrives negative: round the size, keep the sign)
+	local f = SpireStyle.takenFactor(SpireStyle.get(player), { shield = SpireProgress.holdsShield(player) })
+	if f ~= 1 then -- (damage arrives negative: round the size, keep the sign; Bloodedge's minus makes f above 1)
 		primaryDamage = (primaryDamage < 0 and -1 or 1) * math.floor(math.abs(primaryDamage) * f + 0.5)
 		secondaryDamage = (secondaryDamage < 0 and -1 or 1) * math.floor(math.abs(secondaryDamage) * f + 0.5)
 	end
@@ -58,10 +58,26 @@ function guard.onHealthChange(creature, attacker, primaryDamage, primaryType, se
 end
 guard:register()
 
+-- Ironwall's extra health (ST1): a lasting condition, refreshed with the speed
+local BODY_SUBID = 4611
+function SpireStyle.applyBody(player)
+	local bonus = SpireStyle.maxHealthBonus(SpireStyle.get(player))
+	player:removeCondition(CONDITION_ATTRIBUTES, CONDITIONID_DEFAULT, BODY_SUBID)
+	if bonus > 0 then
+		local c = Condition(CONDITION_ATTRIBUTES)
+		c:setParameter(CONDITION_PARAM_SUBID, BODY_SUBID)
+		c:setParameter(CONDITION_PARAM_TICKS, -1)
+		c:setParameter(CONDITION_PARAM_STAT_MAXHITPOINTSPERCENT, 100 + math.floor(bonus * 100 + 0.5))
+		player:addCondition(c)
+	end
+end
+
 local login = CreatureEvent("SpireProgressLogin")
 function login.onLogin(player)
 	player:registerEvent("SpireStyleGuard")
+	SpireStyle.migrate(player)
 	SpireStyle.applySpeed(player)
+	SpireStyle.applyBody(player)
 	return true
 end
 login:register()

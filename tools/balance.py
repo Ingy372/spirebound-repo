@@ -537,7 +537,23 @@ def gear_problems():
         out.append("gear: shop starter weapon is not beaten by the Floor 1 main weapon at tier 2")
     if not g.shop_power() > 1.0:
         out.append("gear: shop starter weapon is no better than shop gear")
-    for stage, (lo, hi) in {1: (35, 40), 2: (90, 160), 3: (250, 300)}.items():
+    # ST1 (style trees v2): no finished style deals more than about 25% extra damage (Reaver's off-hand strike and
+    # Stormbreaker's cleave are counted at their full share), and every extreme final pays with a minus
+    for voc, (key, _n, paths) in g.STYLE.items():
+        for pk, *_rest, finals in paths:
+            for fk, *_f in finals:
+                dmg = 0.0
+                for k in (key, pk, fk):
+                    for kind, v in g.PASSIVES[k]:
+                        if kind in ("damage", "damage_noshield", "far_damage", "single_damage"):
+                            dmg += 10 * v
+                        if kind == "offhand":
+                            dmg += 10 * v * 0.66 / 2          # an off-hand blade is about two thirds of a main weapon
+                if dmg > 0.40 or (pk != "reaver" and dmg > 0.27):
+                    out.append(f"style: {fk} finishes at +{dmg:.0%} damage (want at most about 25%; Reaver about 35-40%)")
+                if fk in g.EXTREME_FINALS and fk != "blightcaller" and not any(v < 0 for _k, v in g.PASSIVES[fk]):
+                    out.append(f"style: {fk} is an extreme final with no minus")
+    for stage, (lo, hi) in {1: (35, 40), 2: (80, 90), 3: (250, 300)}.items():
         lvl = g.style_stage_level(stage)
         if not lo <= lvl <= hi:
             out.append(f"gear: style stage {stage} finishes at level {lvl} (want {lo}-{hi})")
