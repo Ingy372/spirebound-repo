@@ -6,7 +6,7 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 ## Open
 
-*Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
+*Questions still waiting for Jay. A word or two each is enough. Answered ones move to the bottom.*
 
 ### Q109. Which caves are pitch dark at night and day? (2026-11-27)
 You asked for torches in some dungeons and others completely dark. I chose by level: the deeper caves are dark (Shard
@@ -15,39 +15,11 @@ Molework, Alpha's Den, Rootcellar, Ridge Tunnels, Smugglers' Cellar), boss halls
 their torches. Each dark cave's hub sign says "Below is pitch dark: no torches. Bring a light."
 Also: the Millcross road stretch with the Town Works' Road Lanterns stays dark until players light them (the deed).
 **My recommendation (assumed until you answer):** keep it this way. Tell me any cave you want flipped.
+
 ### Q107. Is the Oathroom hard enough? (2026-11-27)
 Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
 **My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.
-### Q108. Which of the 11 Batch 14 items get their own picture? (2026-11-27)
-You approved my art style but not the designs: they looked like items Tibia already has. New rule (I0): a new item
-never looks like a Tibia item. Ordinary things don't need new art at all, the same as with corpses.
-**My recommendation (assumed until you answer):**
-- **Redesign with shapes Tibia doesn't have** (these are rare drops and keepsakes players show off): the four rare
-  weapons (Briarguard Sabre, Copsewood Bow, Wand of Ember Script, Thornward Rod) and the three keepsakes (Millrace
-  Boots, Shrinekeeper's Pendant, Warden's Signet).
-- **Keep the Tibia item, no new art**: Inn Tankard (mug), Plains Map (map), Message Bottle (message in a bottle),
-  Brass Spyglass (telescope). They are ordinary things, and Tibia's versions already fit.
-- Jay's answer (2026-11-27): "Yes, redesign them"
-
-### Q106. Should a weapon keep growing after its awakening? (2026-11-27)
-Your question: a Floor 1 weapon awakened at the Floor 1 boss, then taken all the way to a Floor 2 boss kill. Full answer in `docs/superpowers/specs/2026-11-27-weapon-review.md` section 5.
-- **Recommendation: yes, once, as "Ascended".** Beat the Floor 2 boss holding your awakened Floor 1 weapon at familiarity 10 (earned by you) and having done at least 10% of the damage yourself. It gets a new name, your name carved in it for good, combos that stay open 1 second longer, a sparkle, the title Unbroken and a server announcement. Later you can lay it to rest as a house trophy and your current weapon jumps 2 familiarity levels.
-- **My push-back: no extra power.** Power given at the Floor 2 boss only matters on Floor 3, where a small boost does nothing and a big one would make switching weapons pointless. So the reward is pride and story. It's a challenge run (about 20% less damage on Floor 2), not the best path.
-- **It stops after one floor.** Two floors up the old weapon does about half the damage; I'd revisit a "Legend" mark when Floor 3 is real.
-- Jay's answer:
-
-### Q105. How many weapons per class? (2026-11-27)
-- **Recommendation: six kinds per class on every floor**, each from a different place: Steady (Captain Dorrow, as now), Swift (the Weaponsmith sells it: softer hits, faster sword skills), Heavy (the Gate Hound drops it: bigger hits, slower skills), Elemental (a side quest: fire, ice, earth or energy), Rare (elites, as now) and Relic (a hidden beast; secret). All roughly equal in strength, so none is "the right one". The Ranger also gets the missing spear.
-- **Vanguard two-handed weapons hit 10% harder** to pay for losing the shield. **Recommendation: keep.**
-- **Retune:** the Weaponsmith can move your tiers from one Floor 1 weapon to another, losing one tier, so trying a new weapon doesn't throw away your shards. **Recommendation: keep.**
-- Jay's answer:
-
-### Q104. Familiarity resets when a weapon changes hands: the details (2026-11-27)
-Your rule: tier stays on the weapon, familiarity resets when it changes owner.
-- **Recommendation: it resets the first time a different character holds it in their weapon hand or fights with it**, not at the moment of the trade. Same result for every real trade, market buy or corpse loot, and much more reliable to build. A friend who only carries it in a bag doesn't reset it.
-- **Your own other characters count as a new owner.** Otherwise a high-level alt could level familiarity for a new character. **Recommendation: keep.**
-- Lending a weapon for one hunt resets it twice (for the friend, then for you when you take it back). A weapon remembers one fighter. Its look text says who: "familiarity 6/10 with Aldra".
-- Jay's answer:
+- **Jay's answer (2026-11-27):** "i will test it"
 
 ### Q103. The new style trees: my calls (2026-11-27)
 Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief. Not built yet (roadmap ST1). Every class now forks into two jobs, then into an "extreme" version that pays with a minus or a "balanced" one with no minus.
@@ -57,16 +29,7 @@ Written in `docs/superpowers/specs/2026-11-27-style-trees-v2.md` from your brief
 - **Arcanist:** Emberwright (destruction) → **Cinderheart** (boss-breaker) or **Ashwalker** (burning ground). Stormbinder (control) → **Tempest** (skirmisher) or **Spellbreaker** (makes the whole party hit harder). **Recommendation: keep.**
 - **Ranger:** Marksman → **Deadeye** (boss sniper) or **Volley Captain** (crowds). Trapper becomes **Huntwarden** (control and support) → **Snareweaver** (solo kiter) or **Pathfinder** (party speed and heals, low damage). **Recommendation: keep.**
 - Aegis Warden and Wardkeeper are retired (their party shields fold into Shieldwall Vow and Second Dawn). Test characters who picked them get a free re-pick.
-- Jay's answer:
-
-### Q102. Ground features, cooking and Town Works: my smaller calls (2026-11-27)
-Built (roadmap FD2, FD4, FD5). I assumed each of these; tell me if you want one changed.
-- **Cooking is "drop it on the fire".** The game client cannot "use" food on something, so you drag raw food onto a campfire and it cooks right there; drop a second ingredient on the dish to combine. **Recommendation: keep.**
-- **The three grounds the design left open:** Bramble Run gets berry bushes (berries for cooking, now and then a thornsnap wakes), Smugglers' Ridge gets hidden stashes under loose stones (gold, and two bandits come running), the Fallen Bastion gets an old ballista you can fire at the ruins. **Recommendation: keep.**
-- **Works project 4:** the Old Watchtower has no tower to climb yet, so "repair the collapsed stair" became "clear the keep's fallen north gate" (a second way into the keep). When the tower gets real floors (MR5) it can become the stair again. **Recommendation: keep for now.**
-- **The Stair Camp's healer and seller are objects, not people:** a healer's shrine (full health and mana out of a fight) and a supply crate (health potions at the shop price). **Recommendation: keep; real NPCs later if you want them.**
-- **The Bandit Lieutenant and the signal fire are group-sized:** a lone level 28 dies to either (they sit in the deep loop and the apex). **Recommendation: keep; they are meant to be done with friends.**
-- **NPCs do not buy dishes yet** (the design says "for little"); players can still sell them to each other. Open task FD4b.
+- **Jay's answer (2026-11-27):** "i need to talk about this in more depth" Nothing is built (ST1 waits) until we talk.
 
 ### Q101. The story I wrote for the tower, and my calls on Floor 1 depth (2026-11-27)
 You said: "i would lean in the direction of a place to conquer with a grand prize waiting at the top of the tower kinda thing. does that sound good, not the best story teller." This is what I built on it. Change anything.
@@ -76,23 +39,7 @@ You said: "i would lean in the direction of a place to conquer with a grand priz
 - **Cooking:** no bench and no recipe window. You use food on a fire. Dishes never help in a fight.
 - **Town Works:** gold given is destroyed; the top giver of each project gets a title for the season, nothing else.
 - **Recommendation:** keep all of it. Assumed until you answer. Full design: `docs/superpowers/specs/2026-11-27-floor1-depth-design.md`.
-- Jay's answer:
-
-### Q100. Adventure layer, my smaller calls (2026-11-27)
-Built from your answers in Q99. These are mine; say if you want any changed.
-- **Riddles:** I rewrote all 13 Floor 1 hints as riddles with no place names, directions or NPC names. A riddle shows only on Vesper's list once that secret is sold, or in your Journal if a message bottle gave it to you. Nobody sees all the riddles by default any more (before, the Journal showed every hint to everyone).
-- **The purse:** 1,000 gold for every secret, into the bank, once per account. The three gear secrets also pay Vesper's top price if sold, without saying why.
-- **Where secret gear sits:** the Millrace Boots under the mill and the Warden's Signet in the walled-up cell. The Shrinekeeper's Pendant goes to everyone who fights the shrine's two guardians. They can't be traded, dropped, stored or sold. Next season they move with the season remix.
-- **Rare weapon pictures:** until Grok's icons arrive, the rare wand and rod borrow stronger base items, scaled back so they never out-damage the quest weapon. Side effect: they need level 13 to wield.
-- **On the Monument and board:** a first find of a secret reads "A secret of Floor 1 (no. 3): Name". It never says where or which one. Hidden beasts and elites are named.
-- **Recommendation:** keep all of it. Assumed until you answer.
-- Jay's answer:
-
-### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
-You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
-- **Recommendation:** keep it on the ground floor, next to the Monument, so everyone arriving walks into the busy hall and climbs the stairs to the lockers.
-- Assumed until you answer: ground floor, on the Hearthstone.
-- Jay's answer:
+- **Jay's answer (2026-11-27):** "ill check it out"
 
 ### Q95. Waycrystals: the name and the rules I chose (2026-11-26, from your idea in Q94)
 You asked for teleport crystals, one colour per floor. What I am building, my call until you say otherwise:
@@ -111,7 +58,7 @@ You asked for teleport crystals, one colour per floor. What I am building, my ca
 You asked for the manor to "feel premium" and have "features that players would want to pay for, but not be totally game breaking". It is rebuilt (four furnished floors) and comes with: a private depot and mailbox, a steward who is your bank, a housekeeper who sells supplies and buys loot at the town's own prices, three training dummies, 10 mannequins, a free Fortune Hall license, longer Open House, a permanent title, and the Waystone on the roof (travel to any open floor's town; the owner can be called home from inside any town; every 30 minutes, never in a fight). Nothing gives experience, damage, defence or loot. Full list: DESIGN.md 7.6, or `!manor` in game.
 - **Recommendation:** keep all of it. The Waystone is the one to think about: it saves the owner (and guests) walking and, later, teleport crystals. I think that is exactly the kind of comfort worth paying for, and it can't be used to escape a fight. If you'd rather it not replace crystals at all, I'd make it owner-only or once an hour.
 - Assumed until you answer: as built.
-- Jay's answer:
+- **Jay's answer (2026-11-27):** "need to talk about this one more" Stays as built until we talk.
 
 ### Q96. One manor, one buyer: sell it once a season, or let more people pay? (2026-11-26)
 There is one Spire Manor and one owner, so it can be sold once per season (the last owner gets first refusal next season). That keeps it special, but it is one sale. Options: (a) keep it as the single trophy house; (b) auction it for Spire Coins at each season start; (c) add two or three smaller "estate" houses with a few of the manor's comforts (depot, steward) at a lower price.
@@ -119,136 +66,33 @@ There is one Spire Manor and one owner, so it can be sold once per season (the l
 - Assumed until you answer: (a).
 - Jay's answer:
 
-### Q82. Can players attack each other in the boss rooms below level 50? (2026-11-26, Floor 1 review A4-2)
-Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall, whatever their level. A level-60 could wait in the hall and kill a level-30 party mid-fight.
-- **Recommendation:** in boss rooms, players can only attack each other from level 50.
+### Q84. Double loot: keep it? (rewritten 2026-11-27)
+A server setting doubles the chance of every monster drop. Our gold plan was written for normal drops, so right now players get about a quarter more gold than planned, and a few items (gems, cheese) drop twice as often as intended.
+- **(a)** Keep double loot (it feels generous) and I lower the few items that matter, so the plan and the game match.
+- **(b)** Switch to normal loot.
+- **My recommendation:** (a).
 - Assumed until you answer: no change.
 - Jay's answer:
 
-### Q84. Loot is doubled by the engine: keep the richer game or trim drops? (2026-11-26, Floor 1 review E-1)
-The server doubles every drop chance (loot rate 2). Measured, a Road Bandit gives 42 coins a kill against the 33 our economy plan expects, and some items drop twice as often as the tables say.
-- **Recommendation:** keep loot rate 2 and lower the few drops that matter (gems, cheese) in the tables, so the plan and the game agree.
-- Assumed until you answer: no change.
+### Q91. Should one guild be able to take every spot at the first Axe-Lord kill? (rewritten 2026-11-27)
+The first party to kill the Axe-Lord each season gets their names on the Monument and the first-clear rewards, for up to 20 players. A big guild could fill all 20 spots, so nobody outside it ever gets that honour.
+- **My recommendation:** at most 10 of the 20 spots per guild; the rest go to other players in the fight.
+- Assumed until you answer: no limit (today's game).
 - Jay's answer:
 
-### Q85. Do Tibia's item names count as "CipSoft names"? (2026-11-26, Floor 1 review)
-Many items keep their Tibia names ("magic plate armor", "wand of vortex"). Our name rule covers monsters, NPCs and places.
-- **Recommendation:** rename the items players see most (weapons, armour, wands and rods sold or dropped on Floor 1) before the friends test; leave the rest for later.
-- Assumed until you answer: no change.
+### Q79. Floor 1 swords: what feels right to you? (rewritten 2026-11-27)
+You said "no i dont think i like this" about the change where the Vanguard's reward swords (from Captain Dorrow) became the best swords on Floor 1 and the weaponsmith stopped selling the expensive spike sword. Which do you want?
+- **(a)** Shop swords and reward swords about equal; you pick by looks and price.
+- **(b)** The reward sword is a bit better than the shop, but rare drops and the higher weapon qualities (your Q105 idea) are the best.
+- **(c)** Put it back the way it was (shop swords, including the spike sword, beat the reward sword).
+- **My recommendation:** (b). It fits the new quality system: shop = "average", rare drops reach the top.
+- Assumed until you answer: (b), built together with the weapon qualities (QA5).
 - Jay's answer:
 
-### Q86. Should upgraded gear need a level to wear? (2026-11-26, Floor 1 review B4-9)
-A tier-5 weapon can be traded to a level-8 character and wielded at once.
-- **Recommendation:** a level requirement by tier (tier 3: level 20, tier 5: level 30).
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q87. Mastery respecs only from the donation shop? (2026-11-26, Floor 1 review)
-- **Recommendation:** also a steep in-game route (gold that grows with each respec), so the shop sells convenience, not the only way.
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q88. Spear Rangers have no barracks weapon (2026-11-26, Floor 1 review B4-3)
-Rangers who use spears get nothing from the barracks the bow users get.
-- **Recommendation:** add a Trailwarden Spear on the same tiers as the barracks bow.
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q90. Solo players and the Stair Key (2026-11-26, Floor 1 review A3-2 and A5-1; FYI)
-The review worried that the Stair Key step (30 Road Bandits) needs a group. Checked on the built map: the Bandit Road's surface already holds Road Bandits in ones and twos only (11 on the surface, the Captain alone at the camp); the packs of 3-4 are in the Smugglers' Cellar below, which is the party part.
-- **Recommendation:** keep it as it is: a solo player can finish the step on the surface.
-- Assumed until you answer: keep.
-- Jay's answer:
-
-### Q91. A guild can fill the 20-player boss hall (2026-11-26, Floor 1 review A4-4)
-- **Recommendation:** at most 10 of the 20 credited places per guild, so a big guild cannot lock others out of the first kill.
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q92. The private boss hall without the Stair Key (2026-11-26, Floor 1 review A4-7)
-After the first clear, any party can say !private at the top of the labyrinth and fight the Axe-Lord alone, Stair Key or not.
-- **Recommendation:** keep it as a catch-up for late climbers, but each member needs the Stair Key.
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
-The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
-- **Recommendation:** keep all of it (it is what DESIGN.md always said), and I re-measure the Axe-Lord and the hunting pace with the bonuses working (roadmap RV1, RV2) before anything is retuned. If the doubled skill training below 50 feels too fast once you play it, say so and I'll halve it.
-- Assumed until you answer: keep.
-- Jay's answer:
-
-### Q80. Should a Hardcore death risk your items before level 22? (2026-11-26, Floor 1 review)
-A Hardcore death already costs experience at any level (tested: a level-15 Hardcore character lost 7.5%, a Normal one nothing). But the game hands every character its blessings back at each login up to level 21 (the engine's "starter blessing"), so a young Hardcore character never drops an item, while it earns 25% more experience and 15% more loot from the first minute.
-- **Recommendation:** Hardcore and Death Game characters keep the free blessings only below level 8 (the first minutes). From level 8 a Hardcore death costs the full 15% and can drop gear, unless the player buys blessings from the priest. I built and tested this tonight and then took it out again, because it is your rule to change: it is a 20-minute job to put back.
-- Assumed until you answer: no change (today's behaviour stays).
-- Jay's answer:
-
-### Q79. The Vanguard's barracks weapons now hit harder than any Floor 1 shop sword (2026-11-26, Floor 1 review)
-The review found that the Hearthguard Sword, Axe and Mace were weaker than swords Garrick sells in the same room (a 160-gold longsword beat the reward sword until tier 3, and the 8,000-gold spike sword beat it for ever), and that the Axe was 25% behind the Mace for the same price. Fixed: all three now have attack 20 and defence 15 of their own, +1 attack per tier (25 at tier 5); the rare Briarguard Sabre starts the same; the donation shop's Climber's Sword is 18; Garrick no longer sells the spike sword on Floor 1 (his best is the longsword, 17). (My call; you can veto.)
-- **Recommendation:** keep it. A Vanguard's reward weapon should be the best thing they can hold on the floor.
-- Assumed until you answer: yes.
-- Jay's answer:
-
-### Q77. Normal climbers below level 50 keep their items when they die (2026-11-26, party playtest)
-The game has always told young Normal climbers "your death cost you nothing", but from level 22 (when Tibia's free starter blessing ends) a death without blessings dropped the whole backpack and some gear, and the engine still took experience. Both are fixed to match the promise: below level 50 on Normal you keep your experience and your items (the game hands out the blessings for free at each login). Hardcore and Death Game keep their risk. (My call; you can veto.)
-- **Recommendation:** keep it. Floor 1 deaths then cost only the walk back; if you want a sting before 50 (your "challenge" goal), say so and I'll make the message and the Registrar say clearly what a death costs instead.
-- Assumed until you answer: yes, keep items and experience below 50 on Normal.
-- Jay's answer:
-
-### Q76. Looted coins go straight to the bank (2026-11-26, party playtest)
-In the party playtest a level-15 tank's backpack was half full of coin stacks and the next purchase failed. I switched on the engine's "coins to the bank" option: gold from monsters goes into your bank account, quest gold too, and shops already take the price from the bank. (My call; you can veto.)
-- **Recommendation:** keep it. Less clutter, and nobody loses coins on the floor.
-- Assumed until you answer: yes (it is on after the next restart).
-- Jay's answer:
-
-### Q75. Should the solo grounds stay this safe for a party, and dying cost nothing below level 50? (2026-11-26, party playtest)
-Three test characters went from level 3 to 21 as a party without one death; the first deaths came at the Bandit Road (a group ground), which matches the design. On Normal, dying below level 50 costs no experience ("young climber"), so on Floor 1 a death only costs the walk back.
-- **Recommendation:** keep both for now. The solo grounds are meant for one player; a party there is supposed to be comfortable. Your "challenge" lives in the group grounds, caves and bosses. Revisit after your solo playthrough.
-- Assumed until you answer: no change.
-- Jay's answer:
-
-### Q74. A "share the gold" option for parties? (2026-11-26, party playtest)
-Loot goes to whoever gets the kill credit, so the tank ended with 1,250 gold and the healer with 56 (not enough for mana potions). The bank's "transfer 200 to Fern" works, and the Journal now teaches it.
-- **Recommendation:** later (after Step 3, per the "nothing new" rule), add a party switch that splits looted gold evenly between nearby members, straight into their banks.
-- Assumed until you answer: only the Journal tip for now.
-- Jay's answer:
-
-### Q73. Let Bristle Boars come in twos? (2026-11-26, 10.4)
-Boar Meadow (levels 9-15) is the one ground that still can't feed a crowd: the measurement gave four hunters only 57-89 kills an hour each (200 is the aim). Boars are "loners" (my call when the spawn habits were set): always alone, never doubled, so the meadow can only grow by adding more single boars, and the danger and rest-spot rules allowed just two more.
-- **Recommendation:** make boars a "pair" (ones and twos). The meadow would roughly double without changing its layout, and the Vanguard ground keeps hard hitters that walk up to you. The elite (Old Bristleback) stays alone.
-- Other option: keep them loners and add a second small boar ground for levels 9-15.
-- Assumed until you answer: no change (boars stay loners).
-- Jay's answer:
-
-### Q72. A launch-week crowd boost for the harder hunting grounds? (2026-11-26, N2)
-The measurement (docs/N2_capacity.md) says Floor 1 feeds about 30 hunters at once at a good pace, about 9 of them in the
-level 9-30 grounds; the launch target is 150. The lead session will make the grounds bigger (10.4). Separately: you
-decided the crowd system lets harder grounds grow only to 1.5 times "so good spots stay worth competing for" (Q31). In
-the test it added 20-60% when a ground filled up.
-- **Recommendation:** keep your rule, and let the bigger map (10.4) do the work. Optionally, for the first week of a
-  season only, let the harder grounds grow to 2-3 times, when everyone is on Floor 1 at once.
-- Assumed until you answer: no change (your rule stays).
-- Jay's answer:
-
-### Q71. Outfit addons: who gives them and what they ask (2026-11-26, 6.5c)
-You approved all sixteen addon drawings. Now each one is a quest reward (my calls, you can veto any of them):
-- **Who:** Vanguards ask Captain Dorrow, Rangers Hunter Brannoch, Arcanists Vesper, Mystics Fisher Corwin. Say "outfit" to them. A class only gets its own two quests; the second needs the first. At level 14 the game tells each player who to ask.
-- **Addon 1** (from level 14 to 17): beat one of Floor 1's six elites, the rare lone leaders (Vanguard: Moonhowl; Ranger: Blackthorn; Arcanist: the Prism Shardling; Mystic: the Mossback Snapper).
-- **Addon 2** (from level 19 to 24): a harder job (Vanguard: the Granite Warden; Ranger: 40 bandit crossbowmen; Arcanist: 30 hedge hexers; Mystic: 40 field shardlings).
-- Each pays some experience too, and unlocks the addon on both the man's and the woman's outfit.
-- **Recommendation:** keep it like this. Elites are rare, so addon 1 is a small hunt of its own, and an addon shows you did it.
-- Assumed until you answer: yes.
-- **Changed 2026-11-27 (adventure layer, roadmap AD5, my call):** three of the addon 2 jobs were plain kill counts, so they are now a hunt for a named target that comes out after you drop 15 of its kind in its ground (the Journal says so): Ranger: outshoot **Deadeye Sorrel** on Smugglers' Ridge (was 40 crossbowmen); Arcanist: take the book from **the Page-Thief** on the Bandit Road (was 30 hexers); Mystic: calm **Glasswing**, the oldest shardling, in the Shard Fields (was 40 shardlings). If it gets away (10 minutes), 5 more kills call it back. Vanguard's Granite Warden is unchanged. Veto any of them and I put the kill count back.
 ### Q70. Put the website on a public https:// address now, or wait? (2026-11-26, 7.1b)
 The scripts are ready (`windows\Open-Public-Website.bat`, steps in `windows\README.md`): free, through Tailscale Funnel, an address ending in `.ts.net` with a real certificate, no domain to buy. Only the website (sign-up and account pages) goes public; the game itself still needs Tailscale. Anyone on the internet could then make accounts on your PC.
 - **Recommendation:** wait until the friends test (9.3) is close; switch it on that day, and off again after. A proper domain name comes with picking a host (10.1).
 - Assumed until you answer: wait; nothing is public.
-- Jay's answer:
-
-### Q69. Hearthgate's buildings: reshape them, or leave that to the final polish? (2026-11-26, N3)
-I dressed Hearthgate (market parasols, goods and a cart by the stalls, flower pots round the Hearth, a well, a covered wagon, braziers at the gates, two campfires, and a notice board in the square with live news: the floor race, the beacon, the weekend bonus, the biggest bounties). What's left of N3 is "varied building shapes": today every house is the same square box. The houses are saved in the database (the game restores their doors on boot), so reshaping them can break owned houses.
-- **Recommendation:** leave the houses' shapes to the Cowork polish near the end, as planned; I reshape only the shops and public buildings (an L-shaped inn, a tower over the gate) if you say the town still looks generated after you walk it.
-- Assumed until you answer: leave it to the polish.
 - Jay's answer:
 
 ### Q68. More tutorial gates in the Arrival Yard (cursors, the Journal, skills)? (2026-11-26, P7)
@@ -256,20 +100,6 @@ The roadmap asks for three more gates in the yard (learn the cursors, open the J
 - **Recommendation:** don't add them until you've played the first hour yourself (R0). If you find yourself not knowing the Journal or the skill keys, I add those two as signs plus one gate.
 - Assumed until you answer: no new gates for now.
 - Jay's answer:
-
-### Q67. Floors 2-4 are real places now; each has its own twist (2026-11-26, R13b / S6)
-Floors 2, 3 and 4 each have eight walled hunting grounds, built like Floor 1's: one training ground beside town, one ground for each class, two mixed, one party ground and party caves, with the apex as the big-group ground. The easiest grounds are next to town, the hardest far north. Each floor has one behaviour the floors below don't (my call):
-  - Floor 2: the herd animals (grazers, striders) run when badly hurt and come back once they've recovered.
-  - Floor 3: the plant creatures (moss crawlers, husks) regrow if you leave them.
-  - Floor 4: Reed Witches mend the monsters around them; kill the witch first.
-Also: the walk test in the client found that Floor 2's ordinary monsters were far too strong once a whole loop woke at once (a level 60 test Vanguard died in the level 35-41 ground). Ordinary monsters on Floors 2-10 now hit at 60% of the old numbers; bosses are unchanged.
-- **Recommendation:** keep the twists. When you reach Floor 2 in a playtest, tell me whether Grazing Downs feels right for a fresh level 35.
-- Jay's answer:
-
-### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
-The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
-- **Recommendation:** keep +50%. If parties feel too strong in your playtest, +40% still beats solo (about 1.3 to 1.7 times).
-- Your answer: (keep / go back to +30% / other number)
 
 ### Q63. Class outfits: only your own class, and for women too? (2026-11-25, art)
 Your four approved class outfits are going into the game (task 6.5). My calls:
@@ -279,36 +109,11 @@ Your four approved class outfits are going into the game (task 6.5). My calls:
 - **Recommendation:** yes to all three. Also: should every floor's priest and banker share the Hearthgate priest and banker looks, or wait for their own art? I recommend **wait** (each town feels different).
 - Jay's answer:
 
-### Q63b. Rename the Bristle Boar? (2026-11-25)
-You called the red-crested boar the "fire boar" and said "it might be named frenzied boar or just regular boar". It is our Bristle Boar today (Boar Meadow), and it now walks across the website banner.
-- **Recommendation:** keep "Bristle Boar" for the common one, and save "Frenzied Boar" for a rarer, angrier red variant later (a money monster vets hunt for), so the name means something.
-- Other option: rename the common one to Frenzied Boar now.
-- Assumed until you answer: keep Bristle Boar.
-- Jay's answer:
-
-### Q62. New rules on the website and sign-up page (2026-11-25)
-You asked for the rules and a "not allowed" list on the website. The full rulebook is now on the Rules page, on the sign-up page (players must tick "I agree" before an account is made) and in `docs/RULES.md`, all written from one file. Most of it was already decided; these lines are new, my call:
-- no sharing anyone's personal details, no sexual harassment, no advertising other servers or things for sale;
-- no pretending to be staff or one of the tower's NPCs; no names of real, well-known people;
-- no getting into other people's accounts and no attacking the server;
-- no killing your own characters or a friend's to farm bounties, rewards or leaderboard places.
-The sign-up page now refuses rude names, names from other games, staff titles (GM, Admin...) and the names of our own NPCs and monsters. Names it can't judge (a famous person, a clever insult) stay a gamemaster's job.
-- **Recommendation:** keep them all.
-- Assumed until you answer: yes.
-- Jay's answer:
-
 ### Q54. Launch with 3 finished floors instead of 10? (2026-11-25)
 The design says 10 floors at launch. But floors unlock about 6 days apart (the calendar gate), so Floor 4 isn't needed until about week 3 and Floor 10 until about week 8. Ten floors of our own maps and art before launch is most of a year's work; three is a few months.
 - **Recommendation:** launch with Floors 1-3 finished to the standard Floor 1 is getting, and add a floor every week or two during the season. Say "new floors every week" instead of "10 floors".
 - Other option: keep 10 at launch and accept a much later launch date.
 - Assumed until you answer: the design stays at 10, but I work on Floors 1-3 first either way.
-- Jay's answer:
-
-### Q55. Drop Hardcore mode? (2026-11-25)
-Three difficulty modes split a small population three ways, and Hardcore is the one nobody will talk about: Normal is the game, Death Game is the headline.
-- **Recommendation:** two modes, Normal and Death Game. A Death Game character who steps down becomes Normal.
-- Other option: keep all three.
-- Assumed until you answer: all three stay.
 - Jay's answer:
 
 ### Q56. Twin Fang and the Fortune Hall (2026-11-25; also Q17 and Q18)
@@ -330,135 +135,22 @@ A player now has nine things handing out small rewards: hunting tasks, the Seaso
 - Assumed until you answer: fold as recommended, after the friends test.
 - Jay's answer:
 
-### Q59. Switch off big-group events until there are players for them (2026-11-25)
-Spire Siege, the arena events and Spire Pressure need dozens of players online. With a handful of testers an event that starts and gets nobody looks worse than no event.
-- **Recommendation:** each event starts only when enough people are online (Claude's numbers: arena 8, siege 20). Below that it doesn't announce at all. Nothing is deleted.
-- Assumed until you answer: yes.
-- Jay's answer:
-
-### Q60. The case against the cavebot on Floor 1 (2026-11-25; you asked for the reasons behind Grok's R5)
-The calm hunting grounds you asked for each feed one or two players. With a built-in cavebot and three windows per computer, a few players can hold every spawn on Floor 1 around the clock, and at a season launch everyone needs those spawns the same evening. New players would find every ground taken by characters nobody is playing. That is the strongest version of Grok's argument, and it only bites where grounds are small and everyone is the same level: Floor 1 at launch.
-- **Recommendation:** keep the cavebot as you designed it, but it does not work on Floor 1 for the first two weeks of a season, and never in the four starter grounds. Decide again once roadmap N2 has measured how many players Floor 1 really feeds.
-- Other options: as designed everywhere; or off on Floor 1 for good.
-- Assumed until you answer: as designed (your decision); nothing changes.
-- Jay's answer:
-
-### Q61. The new roadmap order (2026-11-25)
-ROADMAP.md is now one list: first-hour fixes, finish the last third of Floor 1, then a real party clears Floor 1 (you, with Grok's characters or friends), then make Floor 1 big enough for a launch evening, Floor 2's own map, Hearthgate polish, an art count, website accounts, friends test. **Nothing new gets built until the party run passes.** If you bring a new idea before then, I'll write it under "Later" and tell you so, unless you say it jumps the queue.
-- Assumed until you answer: yes.
-- Jay's answer:
-
-### Q53. How many game windows can one person run at once? (2026-11-25)
-You said multi-clienting is welcome (extra characters, trainers, playing two at once). Today's rule is 2 game windows per computer. With the built-in cavebot, a much higher limit lets one person run a small bot army that floods the market with gold and items.
-- **Recommendation:** raise it to **3 per computer**: enough for a main, a helper and a trainer, still not a bot farm. The website count shows real people separately, so nobody is fooled by the numbers.
-- Other options: keep 2; or no limit.
-- Assumed until you answer: 3.
-- Jay's answer:
-
-### Q52. The Arrival Yard levels you too fast (2026-11-25)
-Grok: three rats in the pen took a fresh character from level 1 to 4 (Pen Rats give 135 experience at the early 10x rate, plus Pell's 300), so "levels feel meaningless" and a level 3 tip fired in the yard (the tip is fixed).
-- **Recommendation:** lower the yard's rewards so a new character leaves the yard at level 2-3 and reaches level 4 (first heal) in the first hunting ground. Floor 1's overall length stays the same.
-- Other option: keep it; fast early levels feel good.
-- Built 2026-11-25 as recommended: a new character now leaves the yard at level 2 and the Proving at level 3 (checked in the client). Say if you want the old fast start back.
-- Jay's answer:
-
-### Q51. The bot panel on a new player's screen (2026-11-24)
-Grok (and the playtest task) asked to hide the vBot panel for new players; it looks unfinished. But the design builds bot helpers into our client on purpose (DESIGN.md 11: cavebot at 45% experience), so I left it.
-- **Recommendation:** keep it, but start it collapsed for new characters, and later replace it with our own simpler cavebot window. Not urgent.
-- Other option: hide it completely until our own cavebot window exists.
-- Built 2026-11-25 (the recommendation): the bot panel starts folded once per install; players can unfold it.
-
-### Q48. The Gate Hound now comes back after it dies (2026-11-24)
-It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.
-- **Recommendation (built):** it returns 30 minutes after each kill, like the Axe-Lord. The first kill still opens the labyrinth for everyone, once, with the server-wide announcement.
-- Other option: keep it one-time and move the "3 cut shards" step to something repeatable.
-- Assumed until you answer: it comes back.
-- Jay's answer:
-
 ### Q47. Floor 1's first impression: rebuild the Arrival Yard and Hearthgate before the alpha? (2026-11-23)
 From the overnight Floor 1 review (`FLOOR1_REVIEW.md` sections 2 and 7): the Arrival Yard is a plain rectangle with four wall-gates, and Hearthgate is a strict grid of same-sized buildings. These are the first screenshots any tester or streamer sees.
 - **Recommendation:** yes. Rebuild the yard as an arrival at the foot of the tower (sealed Floor 2 gate in view, a plaque of first clears) and give Hearthgate a market square, varied buildings, walking townsfolk and ambient effects, before inviting alpha testers (roadmap P3 and P7).
 - Assumed until you answer: yes, do it before the alpha.
 - Jay's answer:
 
-### Q46. When should a player make their first style choice? (2026-11-23)
-Today the first permanent style choice (Marksman or Trapper, and so on) comes at Mastery 10, around level 37, which is just after Floor 1 ends. An alpha tester who plays only Floor 1 never makes it, and that choice is the most exciting part of the new system.
-- **Recommendation:** add a small, free-to-swap "stance" at Mastery 5 (around the Gate Hound) that previews the two paths, so Floor 1 players feel the choice coming. Keep the permanent choice at Mastery 10.
-- Other option: move the permanent choice earlier, to about level 30, so it lands on the Axe-Lord.
-- Assumed until you answer: the free stance at Mastery 5.
+### Q46. When do players pick their class path? (rewritten 2026-11-27)
+Each class splits into two paths (for example Ranger: Marksman or Trapper). Today that choice comes at about level 37, just after Floor 1 ends, so someone who only plays Floor 1 never gets to choose.
+- **(a)** A free try-out of both paths at about level 25, the real choice still at 37.
+- **(b)** Move the real choice earlier, to about level 30 (around the Axe-Lord).
+- **My recommendation:** settle it when we talk about the new style trees (Q103), since it's part of the same system. Until then: (a).
 - Jay's answer:
 
-### Q43. The new spells: Elemental Clash, and spells that move monsters (2026-11-17)
-Every class now has 28 to 31 of its own spells (was 17 to 19), with new kinds: chains, knock-backs and pulls, roots,
-burning ground, meteors that are marked on the ground a second before they land, and a 15-second "form" at level 230.
-Two things to judge while playing:
-1. **Elemental Clash**: hitting a monster with two different elements in a row (say fire, then lightning) does 25% more
-   and the monster shouts the clash's name ("Flashfire!"). Recommendation: keep; it makes mixed groups stronger.
-2. **Pushing and pulling monsters** (Shield Bash, Iron Reach, Repulse, Gravity Well, Recoil Shot...). Bosses can't be
-   moved. Recommendation: keep; if it makes hunting too easy, the first fix is longer cooldowns.
-- Assumed until you answer: keep both.
-- Jay's answer:
-
-### Q42. Reed Snapper: a snapping turtle, not a turtle-crab? (2026-11-15)
-You said the Reed Snapper "looks like a mix between a crab and a turtle". The original request asked for a "turtle-crab", which is why it had crab pincers. I rebuilt it as one animal: a spiked snapping turtle with a reed-covered shell and a hooked beak, no pincers. It keeps a low, wide, sideways scuttle as its only crab trait.
-- **Recommendation:** keep it as a snapping turtle. If you want a crab instead, I would make it a full crab with a mossy shell rather than mixing the two again.
-- Assumed until you answer: snapping turtle.
-
-*Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
-
-### Q42b. Which Floor 1 ground is for which class, and party size 8 (2026-11-16)
-From the new spawn rules (`DESIGN.md` 9.4). My picks: the Ratwarren, Toad Pond and Sproutling Glade are the all-class training grounds; Boar Meadow suits the Vanguard, Reedmarsh the Ranger, Waspgrass Fields the Arcanist, Thornsnap Hollow the Mystic; Burrow Hills, Wolf Copse and Shard Fields are mixed; the party caves, the bandit Vault and the lower Quarry are for groups of 3 to 4; the Old Watchtower's inner room and cave is the one ground for 4 to 8. I also raised the party size from 6 to 8 so those 8 can share experience. Recommendation: go with these; tell me any you want swapped.
-
-### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)
-To meet the calm rules (at most 3 monsters able to reach you near the gate, 4 further in), the open-air part of Toad Pond, Sproutling Glade and Waspgrass Fields now holds about 12 monsters each, spread out with quiet stretches between. The other ~36 of each ground are in the cave (or on the hill) below, where they come in pairs and threes. The Ratwarren already works this way. Recommendation: keep it. The surface is the gentle, safe part for new players, and you choose to go down when you want more. If the surface feels too empty when you try it, I can add a few more singles there.
-
-### Q33. Do the walled hunting grounds look the way you want? (2026-11-13)
-Every ground is now a walled place with ring trails (see the playtest list in WEEKLY_REPORT.md). Up close they read like a wood or a rocky field; from far away they look a little like a hedge maze, because the loops are regular.
-- Recommendation: keep the skeleton (it is what makes botting and sharing work) and let the end-of-project Cowork polish break up the outlines by hand.
-- Jay's answer:
-
-### Q34. Taskmaster names, and how the coins change (2026-11-13)
-Floors 2-10 needed taskmaster names: Doral, Ilsa, Varn, Kesh, Brenna, Otho, Sigra, Marlo, Quillan (Floor 2 to 10). Using a coin stack changes every full 100 up and leaves the rest; using a crystal coin breaks it into 100 platinum. A small platinum stack no longer breaks into gold (shops give change anyway).
-- Recommendation: keep both as built. Rename any taskmaster you like; it is a one-line change.
-- Jay's answer:
-
-### Q35. How many hunting tasks at once? (2026-11-13)
-The new task window lists every monster on the floor (25 on Floor 1, 8 on the others), but you can hold one task at a time, and each task comes back 20 hours after you finish it.
-- Recommendation: keep one at a time for now; if it feels slow in playtests, allow three.
-- Jay's answer:
-
-### Q36. Spell overhaul: balance to check in playtests (2026-11-13)
-All four vocations have a new spell list (docs/design/spells.md). Things to judge while playing:
-1. Vanguard has no area spell until level 33 (Whirlwind, weak on purpose, like Tibia's knight). Recommendation: keep; if levelling feels too slow, move Whirlwind to 25 before raising its damage.
-2. The Ranger's Scatter Shot is the strongest early area spell (the Ranger is meant to be the easiest class to level alone). Recommendation: keep.
-3. Making runes now uses up a blank rune (10 gold), as the economy model always assumed. Recommendation: keep.
-4. The runes themselves still carry the engine's item names (for example "great fireball rune"). Recommendation: rename them to Spirebound names in a later task.
-- Jay's answer:
-
-### Q13. Calendar gate on floor bosses? [1.4]
-Nothing stops a big guild finishing all 10 floors in the first week or two, and then the season's story is over.
-- **Recommendation:** yes. Each floor boss room unseals on a date (Floor 2 no earlier than day 3, then one floor every 5–7 days). Every unlock becomes an event. Also drop the "25 floors per season" promise; say "10 floors, more if the season goes well".
-- *Built 2026-11-13 (R9) as recommended, with 6 days between floors. It only runs after you start a season with `/calendar start`, so test boss runs on your PC are never blocked.*
-- Jay's answer:
-
-### Q14. Death Game: what does stepping down cost, and what happens on a lag/crash death? [2.7, 3.4]
-Today a Death Game character earns +50% XP and can step down to Normal any time, keeping every level, so it's the *safest* way to level.
-- **Recommendation:** stepping down removes the extra XP the bonus gave (you keep what a Normal character would have earned). Deaths caused by a server crash or server lag are restored by a GM; your own internet dropping is not ("the tower is cruel"), and that rule is written on the website.
-- Jay's answer:
-
-### Q15. Pay-to-win line: can shop items be traded for gold? [6.3]
-If shop items can be sold to players for gold, then money → gold → gear is two steps away, so "never pay-to-win" isn't quite true.
-- **Recommendation:** (b) shop items stay tradeable (lets non-payers earn cosmetics), but each floor's best gear is bound to the character that earned it. Shop items can never be bet (already true).
-- Jay's answer:
-
-### Q16. Bot rules in detail [3.8]
-- **Recommendation:** auto sword-skill rotation is **not** allowed (remove the attack helper from the client; combos should be skill). Auto-target + auto-heal while standing still counts as botting after 10 minutes without manual movement. A character following a botting one gets the same 45% XP.
-- Jay's answer:
-
-### Q19. Boss warning time [3.9]
-Big hits land 0.6 s after the warning; players far from the server have about a third of a second.
-- **Recommendation:** 1.0 s for hits that can kill, 0.6 s for the rest. Decide after one boss fight.
-- *Built 2026-11-13 (R9) as recommended: marked hits of 250 or more get 1.0 s.*
+### Q13. Should floor bosses open on a calendar? (rewritten 2026-11-27)
+Without a limit, a big guild could clear all 10 floors in the first week and the season's story would be over. So each floor's boss room opens on a set day: Floor 2's boss no earlier than day 3 of the season, then one more floor every 6 days. Each opening becomes an event everyone waits for. (It's built, and only runs once a real season starts, so your tests are never blocked.)
+- **My recommendation:** keep it.
 - Jay's answer:
 
 ### Q20. Houses: many more, or rentable rooms? [3.7]
@@ -472,10 +164,9 @@ A public launch needs every tile, wall, tree, item and effect replaced, not just
 - *Updated 2026-11-25 (N4, full count in `ART_COUNT.md`): Floors 1-3 show about 900 borrowed looks (65 monster kinds, 47 NPCs, the outfits, 142 items, 79 wall pieces, 42 grounds, 186 map objects, about 100 effects); about 265 hours to make them all. New recommendation: mix. Keep making everything that moves (monsters, NPCs, outfits, mounts) with the Blender pipeline and effects with our effect maker (about 100 hours). For the still world (ground, walls, map objects: about 300 looks, about 100 hours) start from the OpenTibia Sprite Pack, the one open-licence Tibia-style pack (free with credit to the artists, Creative Commons Attribution 4.0). It is small and old, so first check which of our 300 map looks it covers, then make the gaps in a matching style. Items: Grok or Claude still renders, either works.*
 - Jay's answer:
 
-### Q22. Friends test: Floors 1–2 only? [9.2 of review]
-- **Recommendation:** yes. Seal Floors 3–10, switch off arena, siege, shop and Season Path for the test. Wipe after.
-- *Built 2026-11-13 (R13) as recommended. You can switch it in game: `/scope test` or `/scope launch`.*
-- *Changed 2026-11-23 (Claude, from the Floor 1 review): the Season Path is now ON for the test. Its daily and weekly goals are the "what do I do today" loop testers should try.*
+### Q22. The friends test: only Floors 1 and 2? (rewritten 2026-11-27)
+For the friends weekend, only Floors 1 and 2 would be open. The arena, the siege and the shop stay off; the daily and weekly goals (Season Path) stay on. Everything is wiped afterwards.
+- **My recommendation:** yes.
 - Jay's answer:
 
 ### Q23. Who moderates at launch, in which languages? [§4]
@@ -491,19 +182,17 @@ He's too close to the boss that inspired him (giant blue horned fiend with a hug
 - **Recommendation:** launch the first season **without a shop**. Open it only once you've registered what you need to, have refund/privacy policies, and have checked tax with a professional.
 - Jay's answer:
 
-### Q27. Upgrade/forge system (from the second research pass)
-Almost every popular server has a way to upgrade gear (item +1 to +10, fusion, Canary's Forge). In Q7 I recommended keeping Canary's Forge off at launch.
-- **Recommendation:** keep it off for Floors 1-2, and switch the Forge on from Floor 3 as a loot and gold sink that players trade for. No forge materials in the shop, ever.
+### Q27. Canary's "Forge" (fuse items to upgrade them): switch it on later? (rewritten 2026-11-27)
+The engine has a Forge where players fuse two items into a stronger one, which uses up gold and items. We already have weapon tiers, and weapon qualities are coming (Q105).
+- **(a)** Keep it off for good; tiers and qualities are enough.
+- **(b)** Switch it on from Floor 3 as an extra way to spend gold.
+- **My recommendation:** (a) now that qualities are coming: one upgrade system is easier to understand than two (your "too complex" point in Q105).
+- Assumed until you answer: off.
 - Jay's answer:
 
-### Q28. "A banker that can store gold between all accounts": did I read that right? (2026-11-12)
-I built an **account vault**: gold that every character on the same account can reach at any banker ("vault deposit 500", "vault withdraw 500"). Each character still has its own bank balance, and gold can still be sent to another player's character with "transfer", as in Tibia.
-- **Recommendation:** keep it like this. Sharing gold between different people's accounts is already covered by "transfer" and the market. If you meant something else, describe it in a sentence.
-- Jay's answer:
-
-### Q29. Is the junk buyer too generous? (2026-11-12)
-Trader Osric buys nearly every monster drop at close to the standard Tibia NPC prices. Materials sell to him for 8–25 gold each, still well under what they're worth to crafters, so trading between players stays worthwhile.
-- **Recommendation:** keep these prices for the friends test, then adjust from what testers earn per hour (ECONOMY.md shows the model).
+### Q28. One gold vault for all your characters? (rewritten 2026-11-27)
+You once asked for "a banker that can store gold between all accounts". What I built: every character on **your** account can reach one shared vault at any banker, so your characters can pass gold to each other. Sending gold to a **different** player still works as in Tibia ("transfer").
+- **My recommendation:** keep it like this. If you meant something else, say it in a sentence.
 - Jay's answer:
 
 ### Q2. A stray copy of old Spirebound work is in your Dojo-game repo
@@ -511,32 +200,408 @@ Your PC's Spirebound folder was pointed at your **Dojo-game** GitHub repo, so an
 - **Recommendation:** delete the `phase-0-toolchain` branch from the Dojo-game repo on GitHub (Branches page → trash icon). Everything in it is also in spirebound-repo.
 - Jay's answer:
 
-### Q11. Should the cavebot XP cut linger 10 minutes after switching it off?
-Without it, someone can bot the boring parts, switch it off just before a boss or rare monster for full XP, then switch it back on.
-- **Recommendation:** keep the 10 minutes. If you'd rather have full XP the moment it's off, write "no linger".
+### Q12. Features from the research on top servers (rewritten 2026-11-27)
+The big servers all have these, so they're in our plan: auto-loot, scheduled events, weekend experience bonuses, guild castle wars, offline training, livestreaming, boss timers, an Android client, and a free "Season Path" (daily goals that pay cosmetics). Two to think about:
+- hunting tasks from NPCs (kill X monsters for gold and cosmetic points) are back in, in a simpler form than Canary's;
+- players can **not** sell whole characters for shop coins (that feeds real-money trading).
+- **My recommendation:** keep the whole list and both points.
 - Jay's answer:
 
-### Q12. Features from the top-server research (DESIGN.md §15)
-Top servers all have: autoloot, scheduled events, weekend bonuses, guild castle wars, offline training, livestream, tasks/boss timers, and an Android client. I added all of these to the plan, plus a free "Season Path" (play goals → cosmetics) and catch-up rules for new players (no death XP loss on Normal below level 50).
-- **Recommendation:** keep the whole list. Two things to look at: (a) **hunting tasks** come back (you turned off Canary's version; ours is simpler, from NPCs, paying gold and cosmetic points); (b) **no character bazaar** (selling characters for shop coins), because it feeds real-money trading.
+### Q7. Modern Tibia systems: off at launch? (rewritten 2026-11-27)
+The engine comes with Tibia's newer systems: Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and Tibia's own coin store. They add complexity and some are pay-to-win paths.
+- **My recommendation:** all off at launch (weapon proficiency stays, our sword skills use it). Any can be switched on later.
 - Jay's answer:
 
-### Q7. Newer Tibia systems in Canary: on or off?
-Canary includes Prey, Imbuements, the Forge, the Wheel of Destiny, Charms and the official coin store.
-- **Recommendation:** all **off** at launch to keep Spirebound focused and avoid pay-to-win paths. Weapon proficiency stays on (sword skills use it). Any can be switched on later.
+### Q8. Death Game bonus (rewritten 2026-11-27)
+Death Game characters are deleted when they die, so they earn more: +50% experience and +30% loot. (Hardcore is gone, Q55.)
+- **My recommendation:** keep these numbers.
 - Jay's answer:
 
-### Q8. Difficulty bonuses
-- **Recommendation:** Hardcore +25% XP / +15% loot; Death Game +50% XP / +30% loot.
-- Jay's answer:
-
-### Q9. PvP protection numbers
-- **Recommendation:** newbie protection below level 50; can't start a fight with anyone below 70% of your level (outside Contested zones and boss rooms); "outnumbered" damage reduction when 3+ players attack you. Details in DESIGN.md §6.4.
+### Q9. Protection from stronger players (rewritten 2026-11-27)
+Outside the PvP zones and boss rooms: nobody can attack a player below level 50; you can't start a fight with anyone below 70% of your level; and you take less damage when three or more players attack you at once.
+- **My recommendation:** keep. (This is separate from your Q77 answer: free deaths now stop at 30, but other players still can't attack you until 50.)
 - Jay's answer:
 
 ---
 
 ## Answered
+
+
+### Q108. Which of the 11 Batch 14 items get their own picture? (2026-11-27)
+You approved my art style but not the designs: they looked like items Tibia already has. New rule (I0): a new item
+never looks like a Tibia item. Ordinary things don't need new art at all, the same as with corpses.
+**My recommendation (assumed until you answer):**
+- **Redesign with shapes Tibia doesn't have** (these are rare drops and keepsakes players show off): the four rare
+  weapons (Briarguard Sabre, Copsewood Bow, Wand of Ember Script, Thornward Rod) and the three keepsakes (Millrace
+  Boots, Shrinekeeper's Pendant, Warden's Signet).
+- **Keep the Tibia item, no new art**: Inn Tankard (mug), Plains Map (map), Message Bottle (message in a bottle),
+  Brass Spyglass (telescope). They are ordinary things, and Tibia's versions already fit.
+- Jay's answer (2026-11-27): "Yes, redesign them"
+
+### Q106. Should a weapon keep growing after its awakening? (2026-11-27)
+Your question: a Floor 1 weapon awakened at the Floor 1 boss, then taken all the way to a Floor 2 boss kill. Full answer in `docs/superpowers/specs/2026-11-27-weapon-review.md` section 5.
+- **Recommendation: yes, once, as "Ascended".** Beat the Floor 2 boss holding your awakened Floor 1 weapon at familiarity 10 (earned by you) and having done at least 10% of the damage yourself. It gets a new name, your name carved in it for good, combos that stay open 1 second longer, a sparkle, the title Unbroken and a server announcement. Later you can lay it to rest as a house trophy and your current weapon jumps 2 familiarity levels.
+- **My push-back: no extra power.** Power given at the Floor 2 boss only matters on Floor 3, where a small boost does nothing and a big one would make switching weapons pointless. So the reward is pride and story. It's a challenge run (about 20% less damage on Floor 2), not the best path.
+- **It stops after one floor.** Two floors up the old weapon does about half the damage; I'd revisit a "Legend" mark when Floor 3 is real.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "you want the weapon to have a sense of purpose and accomplishment behind it. it wont be an easy feat to do. so it should be worth it. but not so powerful it nullfies all floor 3 weapons. i need help balancing it." **Claude's balance:** ascending raises the weapon to the strength of an average-quality Floor 3 weapon, never above. So it carries you into Floor 3 and stays useful there for a while, but good Floor 3 gear still beats it. The pride rewards stay (new name, your name carved in, the title, the announcement). It does not grow again after that. Roadmap WA6.
+
+### Q105. How many weapons per class? (2026-11-27)
+- **Recommendation: six kinds per class on every floor**, each from a different place: Steady (Captain Dorrow, as now), Swift (the Weaponsmith sells it: softer hits, faster sword skills), Heavy (the Gate Hound drops it: bigger hits, slower skills), Elemental (a side quest: fire, ice, earth or energy), Rare (elites, as now) and Relic (a hidden beast; secret). All roughly equal in strength, so none is "the right one". The Ranger also gets the missing spear.
+- **Vanguard two-handed weapons hit 10% harder** to pay for losing the shield. **Recommendation: keep.**
+- **Retune:** the Weaponsmith can move your tiers from one Floor 1 weapon to another, losing one tier, so trying a new weapon doesn't throw away your shards. **Recommendation: keep.**
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "i dont like this idea. its getting into to many systems and to complex for an average person. you can change it to different qualities of weapon, poor, average, etc, to the highest quality. that will help to extend certain grinds if thats the goal of this system." The six kinds are dropped. A design for weapon qualities comes first (roadmap QA5); the Ranger spear stays (Q88).
+
+### Q104. Familiarity resets when a weapon changes hands: the details (2026-11-27)
+Your rule: tier stays on the weapon, familiarity resets when it changes owner.
+- **Recommendation: it resets the first time a different character holds it in their weapon hand or fights with it**, not at the moment of the trade. Same result for every real trade, market buy or corpse loot, and much more reliable to build. A friend who only carries it in a bag doesn't reset it.
+- **Your own other characters count as a new owner.** Otherwise a high-level alt could level familiarity for a new character. **Recommendation: keep.**
+- Lending a weapon for one hunt resets it twice (for the friend, then for you when you take it back). A weapon remembers one fighter. Its look text says who: "familiarity 6/10 with Aldra".
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes"
+
+### Q102. Ground features, cooking and Town Works: my smaller calls (2026-11-27)
+Built (roadmap FD2, FD4, FD5). I assumed each of these; tell me if you want one changed.
+- **Cooking is "drop it on the fire".** The game client cannot "use" food on something, so you drag raw food onto a campfire and it cooks right there; drop a second ingredient on the dish to combine. **Recommendation: keep.**
+- **The three grounds the design left open:** Bramble Run gets berry bushes (berries for cooking, now and then a thornsnap wakes), Smugglers' Ridge gets hidden stashes under loose stones (gold, and two bandits come running), the Fallen Bastion gets an old ballista you can fire at the ruins. **Recommendation: keep.**
+- **Works project 4:** the Old Watchtower has no tower to climb yet, so "repair the collapsed stair" became "clear the keep's fallen north gate" (a second way into the keep). When the tower gets real floors (MR5) it can become the stair again. **Recommendation: keep for now.**
+- **The Stair Camp's healer and seller are objects, not people:** a healer's shrine (full health and mana out of a fight) and a supply crate (health potions at the shop price). **Recommendation: keep; real NPCs later if you want them.**
+- **The Bandit Lieutenant and the signal fire are group-sized:** a lone level 28 dies to either (they sit in the deep loop and the apex). **Recommendation: keep; they are meant to be done with friends.**
+- **NPCs do not buy dishes yet** (the design says "for little"); players can still sell them to each other. Open task FD4b.
+- **Jay's answer (2026-11-27):** "no this system wont work. players will steal from each other. make it so that fish are used with crosshairs and then from there used on a fire to cook. that or a special fire needs to be created with stations so that players cooking wont have there stuff stolen" Roadmap QA1.
+
+### Q100. Adventure layer, my smaller calls (2026-11-27)
+Built from your answers in Q99. These are mine; say if you want any changed.
+- **Riddles:** I rewrote all 13 Floor 1 hints as riddles with no place names, directions or NPC names. A riddle shows only on Vesper's list once that secret is sold, or in your Journal if a message bottle gave it to you. Nobody sees all the riddles by default any more (before, the Journal showed every hint to everyone).
+- **The purse:** 1,000 gold for every secret, into the bank, once per account. The three gear secrets also pay Vesper's top price if sold, without saying why.
+- **Where secret gear sits:** the Millrace Boots under the mill and the Warden's Signet in the walled-up cell. The Shrinekeeper's Pendant goes to everyone who fights the shrine's two guardians. They can't be traded, dropped, stored or sold. Next season they move with the season remix.
+- **Rare weapon pictures:** until Grok's icons arrive, the rare wand and rod borrow stronger base items, scaled back so they never out-damage the quest weapon. Side effect: they need level 13 to wield.
+- **On the Monument and board:** a first find of a secret reads "A secret of Floor 1 (no. 3): Name". It never says where or which one. Hidden beasts and elites are named.
+- **Recommendation:** keep all of it. Assumed until you answer.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "secret gear can be traded." The rest stays as built. Roadmap QA2.
+
+### Q98. Hearthgate v4.1: where should Waycrystals land? (2026-11-27)
+You first said the Hearth's top floor would be the Waycrystal landing, together with the Monument; then you asked to flip the floors so the lockers and bank are upstairs. I moved the Monument down with the rest, so crystals now land on the Hearthstone on the ground floor (the same spot as respawning).
+- **Recommendation:** keep it on the ground floor, next to the Monument, so everyone arriving walks into the busy hall and climbs the stairs to the lockers.
+- Assumed until you answer: ground floor, on the Hearthstone.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "good" Waycrystals land on the Hearthstone on the ground floor.
+
+### Q82. Can players attack each other in the boss rooms below level 50? (2026-11-26, Floor 1 review A4-2)
+Today anyone can attack anyone in the Gate Hound's arena and the Axe-Lord's hall, whatever their level. A level-60 could wait in the hall and kill a level-30 party mid-fight.
+- **Recommendation:** in boss rooms, players can only attack each other from level 50.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Roadmap QA7.
+
+### Q85. Do Tibia's item names count as "CipSoft names"? (2026-11-26, Floor 1 review)
+Many items keep their Tibia names ("magic plate armor", "wand of vortex"). Our name rule covers monsters, NPCs and places.
+- **Recommendation:** rename the items players see most (weapons, armour, wands and rods sold or dropped on Floor 1) before the friends test; leave the rest for later.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "no, tibia items should keep tibia names. the only thing with unique names are custom items we have built" Written into DESIGN.md and CLAUDE.md (the naming rule).
+
+### Q86. Should upgraded gear need a level to wear? (2026-11-26, Floor 1 review B4-9)
+A tier-5 weapon can be traded to a level-8 character and wielded at once.
+- **Recommendation:** a level requirement by tier (tier 3: level 20, tier 5: level 30).
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Roadmap QA9.
+
+### Q87. Mastery respecs only from the donation shop? (2026-11-26, Floor 1 review)
+- **Recommendation:** also a steep in-game route (gold that grows with each respec), so the shop sells convenience, not the only way.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes for weapon mastery" Roadmap QA10.
+
+### Q88. Spear Rangers have no barracks weapon (2026-11-26, Floor 1 review B4-3)
+Rangers who use spears get nothing from the barracks the bow users get.
+- **Recommendation:** add a Trailwarden Spear on the same tiers as the barracks bow.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes rangers should have spears they can use" Roadmap QA17.
+
+### Q90. Solo players and the Stair Key (2026-11-26, Floor 1 review A3-2 and A5-1; FYI)
+The review worried that the Stair Key step (30 Road Bandits) needs a group. Checked on the built map: the Bandit Road's surface already holds Road Bandits in ones and twos only (11 on the surface, the Captain alone at the camp); the packs of 3-4 are in the Smugglers' Cellar below, which is the party part.
+- **Recommendation:** keep it as it is: a solo player can finish the step on the surface.
+- Assumed until you answer: keep.
+- Jay's answer:
+- **Closed (2026-11-27) as FYI.** Jay wasn't sure what the Stair Key step is, so in plain words: the Axe-Lord's hall is locked behind the Stair Key, made from three pieces: one from the Gate Hound, one from the Stonehorn Ram, and "Iron for the Stair" (kill 30 Road Bandits for the guard captain). The bandits on the road come in ones and twos, so one player alone can do that piece. Nothing to decide; the story behind it is part of Q101.
+
+### Q92. The private boss hall without the Stair Key (2026-11-26, Floor 1 review A4-7)
+After the first clear, any party can say !private at the top of the labyrinth and fight the Axe-Lord alone, Stair Key or not.
+- **Recommendation:** keep it as a catch-up for late climbers, but each member needs the Stair Key.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Roadmap QA8.
+
+### Q81. Three hidden bugs fixed tonight change how strong and how fast everyone is (2026-11-26, Floor 1 review; FYI and one choice)
+The review tested with a real character and found three things that had never worked, although 281 automatic tests passed: (1) the damage bonus of weapon tiers, familiarity, the awakening, Mastery and trophies was never applied; (2) no experience bonus or cut was ever applied (Hardcore +25%, Death Game +50%, the cavebot's 45%, Beacons, weekend events, the boosted creature), nor the double skill training below level 50; (3) the cavebot's loot cut crashed on every kill, so botting gave full loot. All three are fixed and checked on real test characters. What you will notice: a character with an upgraded weapon now hits up to 61% harder (a tier-3 weapon about 30%), Hardcore and Death Game level faster, botting really is slower, and melee and magic skills below level 50 train twice as fast as they did yesterday.
+- **Recommendation:** keep all of it (it is what DESIGN.md always said), and I re-measure the Axe-Lord and the hunting pace with the bonuses working (roadmap RV1, RV2) before anything is retuned. If the doubled skill training below 50 feels too fast once you play it, say so and I'll halve it.
+- Assumed until you answer: keep.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "good"
+
+### Q80. Should a Hardcore death risk your items before level 22? (2026-11-26, Floor 1 review)
+A Hardcore death already costs experience at any level (tested: a level-15 Hardcore character lost 7.5%, a Normal one nothing). But the game hands every character its blessings back at each login up to level 21 (the engine's "starter blessing"), so a young Hardcore character never drops an item, while it earns 25% more experience and 15% more loot from the first minute.
+- **Recommendation:** Hardcore and Death Game characters keep the free blessings only below level 8 (the first minutes). From level 8 a Hardcore death costs the full 15% and can drop gear, unless the player buys blessings from the priest. I built and tested this tonight and then took it out again, because it is your rule to change: it is a 20-minute job to put back.
+- Assumed until you answer: no change (today's behaviour stays).
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Hardcore is dropped (Q55), so this now applies to Death Game: free blessings only below level 8. Roadmap QA11.
+
+### Q77. Normal climbers below level 50 keep their items when they die (2026-11-26, party playtest)
+The game has always told young Normal climbers "your death cost you nothing", but from level 22 (when Tibia's free starter blessing ends) a death without blessings dropped the whole backpack and some gear, and the engine still took experience. Both are fixed to match the promise: below level 50 on Normal you keep your experience and your items (the game hands out the blessings for free at each login). Hardcore and Death Game keep their risk. (My call; you can veto.)
+- **Recommendation:** keep it. Floor 1 deaths then cost only the walk back; if you want a sting before 50 (your "challenge" goal), say so and I'll make the message and the Registrar say clearly what a death costs instead.
+- Assumed until you answer: yes, keep items and experience below 50 on Normal.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "i think it should be normal characters below level 30" So Normal characters keep their items and experience on death below level 30 (was 50). Roadmap QA3.
+
+### Q76. Looted coins go straight to the bank (2026-11-26, party playtest)
+In the party playtest a level-15 tank's backpack was half full of coin stacks and the next purchase failed. I switched on the engine's "coins to the bank" option: gold from monsters goes into your bank account, quest gold too, and shops already take the price from the bank. (My call; you can veto.)
+- **Recommendation:** keep it. Less clutter, and nobody loses coins on the floor.
+- Assumed until you answer: yes (it is on after the next restart).
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "no, they should stay in the bag until the player deposits them in the bank." Roadmap QA4.
+
+### Q75. Should the solo grounds stay this safe for a party, and dying cost nothing below level 50? (2026-11-26, party playtest)
+Three test characters went from level 3 to 21 as a party without one death; the first deaths came at the Bandit Road (a group ground), which matches the design. On Normal, dying below level 50 costs no experience ("young climber"), so on Floor 1 a death only costs the walk back.
+- **Recommendation:** keep both for now. The solo grounds are meant for one player; a party there is supposed to be comfortable. Your "challenge" lives in the group grounds, caves and bosses. Revisit after your solo playthrough.
+- Assumed until you answer: no change.
+- Jay's answer:
+- **Settled by Jay's Q77 answer (2026-11-27):** free deaths for Normal characters stop at level 30, not 50. The solo grounds stay as they are.
+
+### Q74. A "share the gold" option for parties? (2026-11-26, party playtest)
+Loot goes to whoever gets the kill credit, so the tank ended with 1,250 gold and the healer with 56 (not enough for mana potions). The bank's "transfer 200 to Fern" works, and the Journal now teaches it.
+- **Recommendation:** later (after Step 3, per the "nothing new" rule), add a party switch that splits looted gold evenly between nearby members, straight into their banks.
+- Assumed until you answer: only the Journal tip for now.
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): later, after the full Floor 1 run; the Journal tip stays meanwhile.
+
+### Q73. Let Bristle Boars come in twos? (2026-11-26, 10.4)
+Boar Meadow (levels 9-15) is the one ground that still can't feed a crowd: the measurement gave four hunters only 57-89 kills an hour each (200 is the aim). Boars are "loners" (my call when the spawn habits were set): always alone, never doubled, so the meadow can only grow by adding more single boars, and the danger and rest-spot rules allowed just two more.
+- **Recommendation:** make boars a "pair" (ones and twos). The meadow would roughly double without changing its layout, and the Vanguard ground keeps hard hitters that walk up to you. The elite (Old Bristleback) stays alone.
+- Other option: keep them loners and add a second small boar ground for levels 9-15.
+- Assumed until you answer: no change (boars stay loners).
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): boars come in ones and twos; Old Bristleback stays alone. Roadmap QA14.
+
+### Q72. A launch-week crowd boost for the harder hunting grounds? (2026-11-26, N2)
+The measurement (docs/N2_capacity.md) says Floor 1 feeds about 30 hunters at once at a good pace, about 9 of them in the
+level 9-30 grounds; the launch target is 150. The lead session will make the grounds bigger (10.4). Separately: you
+decided the crowd system lets harder grounds grow only to 1.5 times "so good spots stay worth competing for" (Q31). In
+the test it added 20-60% when a ground filled up.
+- **Recommendation:** keep your rule, and let the bigger map (10.4) do the work. Optionally, for the first week of a
+  season only, let the harder grounds grow to 2-3 times, when everyone is on Floor 1 at once.
+- Assumed until you answer: no change (your rule stays).
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): yes, for the first week of a season only, the harder grounds may grow to 2x when full. Roadmap QA15.
+
+### Q71. Outfit addons: who gives them and what they ask (2026-11-26, 6.5c)
+You approved all sixteen addon drawings. Now each one is a quest reward (my calls, you can veto any of them):
+- **Who:** Vanguards ask Captain Dorrow, Rangers Hunter Brannoch, Arcanists Vesper, Mystics Fisher Corwin. Say "outfit" to them. A class only gets its own two quests; the second needs the first. At level 14 the game tells each player who to ask.
+- **Addon 1** (from level 14 to 17): beat one of Floor 1's six elites, the rare lone leaders (Vanguard: Moonhowl; Ranger: Blackthorn; Arcanist: the Prism Shardling; Mystic: the Mossback Snapper).
+- **Addon 2** (from level 19 to 24): a harder job (Vanguard: the Granite Warden; Ranger: 40 bandit crossbowmen; Arcanist: 30 hedge hexers; Mystic: 40 field shardlings).
+- Each pays some experience too, and unlocks the addon on both the man's and the woman's outfit.
+- **Recommendation:** keep it like this. Elites are rare, so addon 1 is a small hunt of its own, and an addon shows you did it.
+- Assumed until you answer: yes.
+- **Changed 2026-11-27 (adventure layer, roadmap AD5, my call):** three of the addon 2 jobs were plain kill counts, so they are now a hunt for a named target that comes out after you drop 15 of its kind in its ground (the Journal says so): Ranger: outshoot **Deadeye Sorrel** on Smugglers' Ridge (was 40 crossbowmen); Arcanist: take the book from **the Page-Thief** on the Bandit Road (was 30 hexers); Mystic: calm **Glasswing**, the oldest shardling, in the Shard Fields (was 40 shardlings). If it gets away (10 minutes), 5 more kills call it back. Vanguard's Granite Warden is unchanged. Veto any of them and I put the kill count back.
+- **Jay's answer (2026-11-27):** "you decide." Kept as built, including the three named-target hunts.
+
+### Q69. Hearthgate's buildings: reshape them, or leave that to the final polish? (2026-11-26, N3)
+I dressed Hearthgate (market parasols, goods and a cart by the stalls, flower pots round the Hearth, a well, a covered wagon, braziers at the gates, two campfires, and a notice board in the square with live news: the floor race, the beacon, the weekend bonus, the biggest bounties). What's left of N3 is "varied building shapes": today every house is the same square box. The houses are saved in the database (the game restores their doors on boot), so reshaping them can break owned houses.
+- **Recommendation:** leave the houses' shapes to the Cowork polish near the end, as planned; I reshape only the shops and public buildings (an L-shaped inn, a tower over the gate) if you say the town still looks generated after you walk it.
+- Assumed until you answer: leave it to the polish.
+- Jay's answer:
+- **Settled (2026-11-27):** Hearthgate v4 (Q97) replaced the identical houses with three neighbourhoods; the rest waits for the final polish.
+
+### Q67. Floors 2-4 are real places now; each has its own twist (2026-11-26, R13b / S6)
+Floors 2, 3 and 4 each have eight walled hunting grounds, built like Floor 1's: one training ground beside town, one ground for each class, two mixed, one party ground and party caves, with the apex as the big-group ground. The easiest grounds are next to town, the hardest far north. Each floor has one behaviour the floors below don't (my call):
+  - Floor 2: the herd animals (grazers, striders) run when badly hurt and come back once they've recovered.
+  - Floor 3: the plant creatures (moss crawlers, husks) regrow if you leave them.
+  - Floor 4: Reed Witches mend the monsters around them; kill the witch first.
+Also: the walk test in the client found that Floor 2's ordinary monsters were far too strong once a whole loop woke at once (a level 60 test Vanguard died in the level 35-41 ground). Ordinary monsters on Floors 2-10 now hit at 60% of the old numbers; bosses are unchanged.
+- **Recommendation:** keep the twists. When you reach Floor 2 in a playtest, tell me whether Grazing Downs feels right for a fresh level 35.
+- Jay's answer:
+- **Closed (2026-11-27) as FYI** (Jay: "not sure what this question means"). In plain words: Floors 2-4 each have one special monster behaviour, and their ordinary monsters were made weaker after a test. Floor 2+ work is paused until Floor 1 is finished, so there is nothing to decide now.
+
+### Q65. I raised the party experience bonus from +30% to +50% per extra member (2026-11-26, S1b)
+The new economy model, checked against a real five-character party run, showed that hunting in a party cave paid each member only about 1.25 times what the same player earns hunting that ground alone. DESIGN.md says team hunting must beat solo, and the target for group grounds is 1.5 times. So I changed the bonus (it is marked as my call): a party of four, one of each class, now gets 70% of every kill's experience each (it was 55%). In the party caves that works out to about 1.5 to 1.9 times what a solo hunter earns there (it was about 1.15 to 1.5). Gold is not affected; loot is still split as before.
+- **Recommendation:** keep +50%. If parties feel too strong in your playtest, +40% still beats solo (about 1.3 to 1.7 times).
+- Your answer: (keep / go back to +30% / other number)
+- **Claude's call (2026-11-27)** (Jay: "if it makes sense to do that and thats what tibia or other servers typically do"): keep +50%. Tibia itself gives a mixed party of all four vocations a 100% bonus before splitting, so a four-class party earning more each than a solo hunter is normal for Tibia, and DESIGN.md says team hunting must beat solo.
+
+### Q63b. Rename the Bristle Boar? (2026-11-25)
+You called the red-crested boar the "fire boar" and said "it might be named frenzied boar or just regular boar". It is our Bristle Boar today (Boar Meadow), and it now walks across the website banner.
+- **Recommendation:** keep "Bristle Boar" for the common one, and save "Frenzied Boar" for a rarer, angrier red variant later (a money monster vets hunt for), so the name means something.
+- Other option: rename the common one to Frenzied Boar now.
+- Assumed until you answer: keep Bristle Boar.
+- Jay's answer:
+- **Settled (2026-11-27):** the common one stays Bristle Boar; "Frenzied Boar" became the rare roaming boar (adventure layer).
+
+### Q62. New rules on the website and sign-up page (2026-11-25)
+You asked for the rules and a "not allowed" list on the website. The full rulebook is now on the Rules page, on the sign-up page (players must tick "I agree" before an account is made) and in `docs/RULES.md`, all written from one file. Most of it was already decided; these lines are new, my call:
+- no sharing anyone's personal details, no sexual harassment, no advertising other servers or things for sale;
+- no pretending to be staff or one of the tower's NPCs; no names of real, well-known people;
+- no getting into other people's accounts and no attacking the server;
+- no killing your own characters or a friend's to farm bounties, rewards or leaderboard places.
+The sign-up page now refuses rude names, names from other games, staff titles (GM, Admin...) and the names of our own NPCs and monsters. Names it can't judge (a famous person, a clever insult) stay a gamemaster's job.
+- **Recommendation:** keep them all.
+- Assumed until you answer: yes.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "basic website/tibia rules." The rules already match the usual Tibia rules (no harassment, no pretending to be staff, no hacking, no cheating the rewards). Kept short like that.
+
+### Q55. Drop Hardcore mode? (2026-11-25)
+Three difficulty modes split a small population three ways, and Hardcore is the one nobody will talk about: Normal is the game, Death Game is the headline.
+- **Recommendation:** two modes, Normal and Death Game. A Death Game character who steps down becomes Normal.
+- Other option: keep all three.
+- Assumed until you answer: all three stay.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Two modes: Normal and Death Game. Roadmap QA11.
+
+### Q59. Switch off big-group events until there are players for them (2026-11-25)
+Spire Siege, the arena events and Spire Pressure need dozens of players online. With a handful of testers an event that starts and gets nobody looks worse than no event.
+- **Recommendation:** each event starts only when enough people are online (Claude's numbers: arena 8, siege 20). Below that it doesn't announce at all. Nothing is deleted.
+- Assumed until you answer: yes.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "no, certain events should be dependent on player count, other events should happen regardless. that way the server is always feeling active and busy." So only the big-crowd events (Spire Siege, the arena events, Spire Pressure) wait for enough players; everything else (world events, weekend bonuses, rare roaming monsters, Beacons, the notice board news) always runs. Roadmap QA18 checks the game does exactly that.
+
+### Q60. The case against the cavebot on Floor 1 (2026-11-25; you asked for the reasons behind Grok's R5)
+The calm hunting grounds you asked for each feed one or two players. With a built-in cavebot and three windows per computer, a few players can hold every spawn on Floor 1 around the clock, and at a season launch everyone needs those spawns the same evening. New players would find every ground taken by characters nobody is playing. That is the strongest version of Grok's argument, and it only bites where grounds are small and everyone is the same level: Floor 1 at launch.
+- **Recommendation:** keep the cavebot as you designed it, but it does not work on Floor 1 for the first two weeks of a season, and never in the four starter grounds. Decide again once roadmap N2 has measured how many players Floor 1 really feeds.
+- Other options: as designed everywhere; or off on Floor 1 for good.
+- Assumed until you answer: as designed (your decision); nothing changes.
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): the cavebot doesn't work on Floor 1 for the first two weeks of a season, and never in the four starter grounds. Roadmap QA16.
+
+### Q61. The new roadmap order (2026-11-25)
+ROADMAP.md is now one list: first-hour fixes, finish the last third of Floor 1, then a real party clears Floor 1 (you, with Grok's characters or friends), then make Floor 1 big enough for a launch evening, Floor 2's own map, Hearthgate polish, an art count, website accounts, friends test. **Nothing new gets built until the party run passes.** If you bring a new idea before then, I'll write it under "Later" and tell you so, unless you say it jumps the queue.
+- Assumed until you answer: yes.
+- Jay's answer:
+- **Settled by Jay's Q99 answer (2026-11-27):** "yes lift the rule from the 25th". The roadmap order stays; the "nothing new" rule is lifted.
+
+### Q53. How many game windows can one person run at once? (2026-11-25)
+You said multi-clienting is welcome (extra characters, trainers, playing two at once). Today's rule is 2 game windows per computer. With the built-in cavebot, a much higher limit lets one person run a small bot army that floods the market with gold and items.
+- **Recommendation:** raise it to **3 per computer**: enough for a main, a helper and a trainer, still not a bot farm. The website count shows real people separately, so nobody is fooled by the numbers.
+- Other options: keep 2; or no limit.
+- Assumed until you answer: 3.
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): 3 game windows per computer. Roadmap QA16.
+
+### Q52. The Arrival Yard levels you too fast (2026-11-25)
+Grok: three rats in the pen took a fresh character from level 1 to 4 (Pen Rats give 135 experience at the early 10x rate, plus Pell's 300), so "levels feel meaningless" and a level 3 tip fired in the yard (the tip is fixed).
+- **Recommendation:** lower the yard's rewards so a new character leaves the yard at level 2-3 and reaches level 4 (first heal) in the first hunting ground. Floor 1's overall length stays the same.
+- Other option: keep it; fast early levels feel good.
+- Built 2026-11-25 as recommended: a new character now leaves the yard at level 2 and the Proving at level 3 (checked in the client). Say if you want the old fast start back.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "good."
+
+### Q51. The bot panel on a new player's screen (2026-11-24)
+Grok (and the playtest task) asked to hide the vBot panel for new players; it looks unfinished. But the design builds bot helpers into our client on purpose (DESIGN.md 11: cavebot at 45% experience), so I left it.
+- **Recommendation:** keep it, but start it collapsed for new characters, and later replace it with our own simpler cavebot window. Not urgent.
+- Other option: hide it completely until our own cavebot window exists.
+- Built 2026-11-25 (the recommendation): the bot panel starts folded once per install; players can unfold it.
+- **Jay's answer (2026-11-27):** "ok"
+
+### Q48. The Gate Hound now comes back after it dies (2026-11-24)
+It used to appear only until the first party killed it, then never again. But the Floor 1 checklist (the gear system you approved) asks every climber to defeat it, and it pays 3 cut Hearth Shards to everyone who helped, so after launch day nobody else could finish that step.
+- **Recommendation (built):** it returns 30 minutes after each kill, like the Axe-Lord. The first kill still opens the labyrinth for everyone, once, with the server-wide announcement.
+- Other option: keep it one-time and move the "3 cut shards" step to something repeatable.
+- Assumed until you answer: it comes back.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "ok"
+
+### Q43. The new spells: Elemental Clash, and spells that move monsters (2026-11-17)
+Every class now has 28 to 31 of its own spells (was 17 to 19), with new kinds: chains, knock-backs and pulls, roots,
+burning ground, meteors that are marked on the ground a second before they land, and a 15-second "form" at level 230.
+Two things to judge while playing:
+1. **Elemental Clash**: hitting a monster with two different elements in a row (say fire, then lightning) does 25% more
+   and the monster shouts the clash's name ("Flashfire!"). Recommendation: keep; it makes mixed groups stronger.
+2. **Pushing and pulling monsters** (Shield Bash, Iron Reach, Repulse, Gravity Well, Recoil Shot...). Bosses can't be
+   moved. Recommendation: keep; if it makes hunting too easy, the first fix is longer cooldowns.
+- Assumed until you answer: keep both.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "i dont know if pulling monster will go over well. but we can try it in game to test and see." Kept; it goes on the playtest list. If pulls feel bad, they come out.
+
+### Q42. Reed Snapper: a snapping turtle, not a turtle-crab? (2026-11-15)
+You said the Reed Snapper "looks like a mix between a crab and a turtle". The original request asked for a "turtle-crab", which is why it had crab pincers. I rebuilt it as one animal: a spiked snapping turtle with a reed-covered shell and a hooked beak, no pincers. It keeps a low, wide, sideways scuttle as its only crab trait.
+- **Recommendation:** keep it as a snapping turtle. If you want a crab instead, I would make it a full crab with a mossy shell rather than mixing the two again.
+- Assumed until you answer: snapping turtle.
+
+*Q13–Q25 come from the full review (`REVIEW.md` section B). Section numbers point into that file.*
+- **Claude's call (2026-11-27)** (Jay: "sounds like a game logic question"): keep it a snapping turtle.
+
+### Q42b. Which Floor 1 ground is for which class, and party size 8 (2026-11-16)
+From the new spawn rules (`DESIGN.md` 9.4). My picks: the Ratwarren, Toad Pond and Sproutling Glade are the all-class training grounds; Boar Meadow suits the Vanguard, Reedmarsh the Ranger, Waspgrass Fields the Arcanist, Thornsnap Hollow the Mystic; Burrow Hills, Wolf Copse and Shard Fields are mixed; the party caves, the bandit Vault and the lower Quarry are for groups of 3 to 4; the Old Watchtower's inner room and cave is the one ground for 4 to 8. I also raised the party size from 6 to 8 so those 8 can share experience. Recommendation: go with these; tell me any you want swapped.
+- **Claude's call (2026-11-27)** (Jay: "sounds like a game logic question"): keep the class grounds and party size 8.
+
+### Q41. The starter grounds keep most of their monsters on the level below (2026-11-14)
+To meet the calm rules (at most 3 monsters able to reach you near the gate, 4 further in), the open-air part of Toad Pond, Sproutling Glade and Waspgrass Fields now holds about 12 monsters each, spread out with quiet stretches between. The other ~36 of each ground are in the cave (or on the hill) below, where they come in pairs and threes. The Ratwarren already works this way. Recommendation: keep it. The surface is the gentle, safe part for new players, and you choose to go down when you want more. If the surface feels too empty when you try it, I can add a few more singles there.
+- **Claude's call (2026-11-27)** (game logic): keep.
+
+### Q33. Do the walled hunting grounds look the way you want? (2026-11-13)
+Every ground is now a walled place with ring trails (see the playtest list in WEEKLY_REPORT.md). Up close they read like a wood or a rocky field; from far away they look a little like a hedge maze, because the loops are regular.
+- Recommendation: keep the skeleton (it is what makes botting and sharing work) and let the end-of-project Cowork polish break up the outlines by hand.
+- Jay's answer:
+- **Closed (2026-11-27)** (Jay: "i dont see how the rest is a question"): kept as built.
+
+### Q34. Taskmaster names, and how the coins change (2026-11-13)
+Floors 2-10 needed taskmaster names: Doral, Ilsa, Varn, Kesh, Brenna, Otho, Sigra, Marlo, Quillan (Floor 2 to 10). Using a coin stack changes every full 100 up and leaves the rest; using a crystal coin breaks it into 100 platinum. A small platinum stack no longer breaks into gold (shops give change anyway).
+- Recommendation: keep both as built. Rename any taskmaster you like; it is a one-line change.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "you create taskmaster names." Kept: Doral, Ilsa, Varn, Kesh, Brenna, Otho, Sigra, Marlo, Quillan.
+
+### Q35. How many hunting tasks at once? (2026-11-13)
+The new task window lists every monster on the floor (25 on Floor 1, 8 on the others), but you can hold one task at a time, and each task comes back 20 hours after you finish it.
+- Recommendation: keep one at a time for now; if it feels slow in playtests, allow three.
+- Jay's answer:
+- **Closed (2026-11-27):** one task at a time, revisit after playtests.
+
+### Q36. Spell overhaul: balance to check in playtests (2026-11-13)
+All four vocations have a new spell list (docs/design/spells.md). Things to judge while playing:
+1. Vanguard has no area spell until level 33 (Whirlwind, weak on purpose, like Tibia's knight). Recommendation: keep; if levelling feels too slow, move Whirlwind to 25 before raising its damage.
+2. The Ranger's Scatter Shot is the strongest early area spell (the Ranger is meant to be the easiest class to level alone). Recommendation: keep.
+3. Making runes now uses up a blank rune (10 gold), as the economy model always assumed. Recommendation: keep.
+4. The runes themselves still carry the engine's item names (for example "great fireball rune"). Recommendation: rename them to Spirebound names in a later task.
+- Jay's answer:
+- **Closed (2026-11-27):** kept as built. Point 4 changed by Jay's Q85 answer: runes keep their Tibia names.
+
+### Q14. Death Game: what does stepping down cost, and what happens on a lag/crash death? [2.7, 3.4]
+Today a Death Game character earns +50% XP and can step down to Normal any time, keeping every level, so it's the *safest* way to level.
+- **Recommendation:** stepping down removes the extra XP the bonus gave (you keep what a Normal character would have earned). Deaths caused by a server crash or server lag are restored by a GM; your own internet dropping is not ("the tower is cruel"), and that rule is written on the website.
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "yes" Roadmap QA12.
+
+### Q15. Pay-to-win line: can shop items be traded for gold? [6.3]
+If shop items can be sold to players for gold, then money → gold → gear is two steps away, so "never pay-to-win" isn't quite true.
+- **Recommendation:** (b) shop items stay tradeable (lets non-payers earn cosmetics), but each floor's best gear is bound to the character that earned it. Shop items can never be bet (already true).
+- Jay's answer:
+- **Jay's answer (2026-11-27):** "no, you can trade the best gear. that makes an economy and market." Nothing is bound to a character. Shop items still can never be bet.
+
+### Q16. Bot rules in detail [3.8]
+- **Recommendation:** auto sword-skill rotation is **not** allowed (remove the attack helper from the client; combos should be skill). Auto-target + auto-heal while standing still counts as botting after 10 minutes without manual movement. A character following a botting one gets the same 45% XP.
+- Jay's answer:
+- **Claude's call (2026-11-27)** (Jay: "this is primarily game logic. you decide"): cavebot and auto-target stay built in (your Q4 answer). Auto sword-skill rotation is not allowed, and a character following a botting one gets the same experience cut. Roadmap QA16.
+
+### Q19. Boss warning time [3.9]
+Big hits land 0.6 s after the warning; players far from the server have about a third of a second.
+- **Recommendation:** 1.0 s for hits that can kill, 0.6 s for the rest. Decide after one boss fight.
+- *Built 2026-11-13 (R9) as recommended: marked hits of 250 or more get 1.0 s.*
+- Jay's answer:
+- **Claude's call (2026-11-27)** (game logic): keep 1 second of warning for boss hits that can kill, 0.6 for the rest.
+
+### Q29. Is the junk buyer too generous? (2026-11-12)
+Trader Osric buys nearly every monster drop at close to the standard Tibia NPC prices. Materials sell to him for 8–25 gold each, still well under what they're worth to crafters, so trading between players stays worthwhile.
+- **Recommendation:** keep these prices for the friends test, then adjust from what testers earn per hour (ECONOMY.md shows the model).
+- Jay's answer:
+- **Claude's call (2026-11-27)** (game logic): keep the prices for the friends test, adjust from what testers earn.
+
+### Q11. Should the cavebot XP cut linger 10 minutes after switching it off?
+Without it, someone can bot the boring parts, switch it off just before a boss or rare monster for full XP, then switch it back on.
+- **Recommendation:** keep the 10 minutes. If you'd rather have full XP the moment it's off, write "no linger".
+- Jay's answer:
+- **Claude's call (2026-11-27)** (game logic): keep the 10 minutes, so nobody bots the boring part and switches it off for the boss.
 
 ### Q99. Adventure and "someone has something I don't": build it now, before the full-party run? (2026-11-27)
 You asked whether Floor 1 keeps a player hooked the whole way and has enough FOMO. My audit: the first 30 minutes and levels 10 to 20 are good; levels 20 to 28 go flat (mostly "kill 30 or 40" in the money grounds, no new secret beast, the weapon already earned); and almost nothing on the floor is scarce or visible. Nine of the 13 secrets pay only coins, a rare weapon drop looks like the ordinary one and nobody is told, trophies can't be seen by other players, and every player of a class ends up with the same two addons. The fixes are roadmap Step 4b (AD1 to AD7).

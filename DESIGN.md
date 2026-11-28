@@ -27,7 +27,7 @@ Jay: "i would lean in the direction of a place to conquer with a grand prize wai
 6. **Plain to learn.** Every quest says what to do next. No hour-long puzzles you can't figure out (Jay's own pain point).
 
 ### Naming rule
-Original names inspired by SAO. No SAO character, place, item, or skill names anywhere a player can see. `tools/banned_names.txt` + `tools/check_names.py` enforce this on every build. Same for CipSoft monster/NPC/city names.
+Original names inspired by SAO. No SAO character, place, item, or skill names anywhere a player can see. `tools/banned_names.txt` + `tools/check_names.py` enforce this on every build. Same for CipSoft monster/NPC/city names. **Tibia's item names stay** (Jay, 2026-11-27, Q85: "tibia items should keep tibia names. the only thing with unique names are custom items we have built"): ordinary Tibia items keep their Tibia names; only items we made ourselves get our own names.
 
 ---
 
@@ -214,6 +214,8 @@ Second pass (2026-11-17, Jay's brief to "spice up the spells"): area spells play
 Rules: party buffs from the same spell don't stack; summons count as their owner for PvP (DESIGN 6.6 already does this); spells keep Tibia-style mana costs and group cooldowns (attack 2 s, healing 1 s, support 2 s; attack spells share the attack group with sword skills).
 
 ### 5.4 Difficulty modes
+**Two modes only from now (Jay, 2026-11-27, Q55: "yes"): Normal and Death Game.** Hardcore is being removed (roadmap QA11); existing Hardcore characters become Normal. Death Game keeps the free blessings only below level 8 (Q80), and stepping down from Death Game removes the extra experience its bonus gave (Q14). The Hardcore lines below stay until QA11 is built.
+
 Chosen at creation. You can move **down** a difficulty at the Registrar (Death Game → Hardcore → Normal), **never up**.
 
 | | Normal | Hardcore | Death Game |
@@ -225,6 +227,8 @@ Chosen at creation. You can move **down** a difficulty at the Registrar (Death G
 | Exclusive | — | Hardcore title | Death Game title, exclusive outfit, own leaderboard |
 
 Bonus percentages are **(Claude's call, Jay can veto)**.
+
+**Free deaths below level 30 (Jay, 2026-11-27, Q77: "normal characters below level 30"; was 50):** a Normal character below level 30 keeps its items and experience when it dies (roadmap QA3).
 
 **Normal = standard Tibia:** you lose a share of your experience and skill progress on death, reduced by blessings bought from the temple priest; with no blessings and no amulet you can drop items. Red/black skulls lose more (6.4).
 
@@ -252,7 +256,7 @@ Bonus percentages are **(Claude's call, Jay can veto)**.
 | 401+ | 2× |
 
 - Skill rate 10×, magic level 5×, loot rate 2×, fishing 5× **(Claude's call)**.
-- **Currency:** Tibia's gold, platinum and crystal coins (100 gold = 1 platinum, 100 platinum = 1 crystal). Bank in every town.
+- **Currency:** Tibia's gold, platinum and crystal coins (100 gold = 1 platinum, 100 platinum = 1 crystal). Bank in every town. Looted coins stay in your backpack until you deposit them (Jay, 2026-11-27, Q76; roadmap QA4). **All gear can be traded, including each floor's best** (Jay, Q15: "you can trade the best gear. that makes an economy and market.").
 - **Stamina:** standard Tibia stamina (full XP for the first hours of a day's play, reduced after) **(Claude's call, it also limits botting; Cyntara uses a similar system)**.
 
 ### 5.6 Dual wielding: the rare unique skill "Twin Fang"
@@ -426,7 +430,7 @@ Hidden shops, dungeons, quests, bosses, fishing spots, NPCs, chests and Easter e
 5. **Keeping it private never locks anyone out.** Anyone else can find it the normal way. It's simply their secret until someone sells it.
 6. Once public, nobody else can sell it. Players who found it earlier keep their discovery record (it still counts for explorer titles).
 
-**What secrets pay (Jay, 2026-11-27):** "i feel like 1-3 secrets per floor should give gear, the rest can give special cosmetics or titles. players wont know what gives what so it will be up to them to decide if the secrets worth keeping, or rolling the dice to get an exclusive item." **Jay's clarification, same day (this is the rule):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone. this will encourage heavy wondering and exploring of the server. rewards from secrets: (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras." So: every hint is a riddle with no place names or directions; nothing else in the game points at a secret; Vesper's public list shows the riddle, not directions (Claude's reading; this replaces "with directions" in step 4 above; Q99). **(Claude's calls, Jay can veto:)** secret gear is a ring, amulet or boots, never a weapon or armour, and can't be traded; rare finds are announced and visible; each season's first finders get looks and titles only; rare roaming monsters, treasure maps, a Discoveries page and rumours. Full design: `docs/superpowers/specs/2026-11-27-adventure-layer-design.md`.
+**What secrets pay (Jay, 2026-11-27):** "i feel like 1-3 secrets per floor should give gear, the rest can give special cosmetics or titles. players wont know what gives what so it will be up to them to decide if the secrets worth keeping, or rolling the dice to get an exclusive item." **Jay's clarification, same day (this is the rule):** "i do not want the location of the secret announced. the only hints i want for the secrets need to be coded in thick riddles. it should be incredibly difficult to find a secret through the hints alone. this will encourage heavy wondering and exploring of the server. rewards from secrets: (always) a medium gold reward. 1-3 exclusive items total that can only be obtained through secrets per floor. the rest of the rewards can be titles, cosmetics, pets, or auras." So: every hint is a riddle with no place names or directions; nothing else in the game points at a secret; Vesper's public list shows the riddle, not directions (Claude's reading; this replaces "with directions" in step 4 above; Q99). **(Claude's calls, Jay can veto:)** secret gear is a ring, amulet or boots, never a weapon or armour, and **can be traded** (Jay, 2026-11-27, Q100: "secret gear can be traded."); rare finds are announced and visible; each season's first finders get looks and titles only; rare roaming monsters, treasure maps, a Discoveries page and rumours. Full design: `docs/superpowers/specs/2026-11-27-adventure-layer-design.md`.
 
 **Claude's calls:** sale payout = floor base × tier (small ×1, medium ×2, large ×4). Account-wide **explorer titles** carry across seasons (10, 50, 100 discoveries; "Cartographer" for finding every secret on a floor). A secret's interior is never required for the main path (floors, labyrinths, story quests).
 
@@ -615,7 +619,7 @@ Jay asked (2026-11-08) not to reinvent the wheel: look at what top servers share
 | Tasks, bestiary, bosstiary, boss timers | RubinOT, Gunzodus, Cyleria | **Hunting tasks** from each floor's Taskmaster, picked from a task window listing that floor's monsters (kill X, earn gold + task points for cosmetics/titles); bestiary/bosstiary tracker on; boss cooldowns shown in the client and on the website |
 | Daily rewards / season pass | Cyleria (daily points), RubinOT (battle pass) | **Season Path**: a free track every player earns by playing (daily/weekly goals) with cosmetics, titles and house items. No paid track at launch; if one is ever added it is cosmetic only (DESIGN 11) |
 | Market, gold pouch, analyzers | expected on 15.x | Canary market, gold pouch, XP/loot/damage analyzers in the client (already part of 15.x) |
-| Catch-up for new players | Gunzodus (0% loss to lvl 100) | Normal-mode characters lose no XP on death below level 50; newcomers get faster skill training until level 50; mid-season XP boost for characters far below the server's median level |
+| Catch-up for new players | Gunzodus (0% loss to lvl 100) | Normal-mode characters lose nothing on death below level 30 (Jay, Q77); newcomers get faster skill training until level 50; mid-season XP boost for characters far below the server's median level |
 | Wiki + Discord | Cyleria, RubinOT | Auto-generated wiki pages from our data files (monsters, items, spells) on the website; Discord announcements for floor clears and events |
 
 **Lessons from why players quit, and our answer:**
