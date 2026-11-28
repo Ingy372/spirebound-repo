@@ -110,6 +110,66 @@ function s0.onSay(player, words, param)
 	elseif cmd == "deathinfo" then
 		out("s0deathinfo", player, { blesslist = #player:getBlessings(), noloot = player:hasFlag(PlayerFlag_NotGenerateLoot) and 1 or 0,
 			group = player:getGroup():getId(), adv = configManager.getNumber(configKeys.ADVENTURERSBLESSING_LEVEL) })
+	elseif cmd == "marketprep" then -- a tier 3, familiarity 5 Spirebound sword in the Store Inbox, and the market open
+		local inbox = player:getInbox() -- the depot's inbox: one of the places the market sells from
+		local item
+		if rest == "plain" then
+			item = Game.createItem(3264, 1)
+		else
+			item = SpireGear.create("f1_vanguard_sword")
+			local T = SpireGearData.FAMILIARITY_POINTS[1]
+			SpireGear.setState(item, { tier = 3, famPoints = T[5] })
+		end
+		local ok = inbox and inbox:addItemEx(item, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR
+		player:setBankBalance(player:getBankBalance() + 10000)
+		local moved = SpireMarket.openFor(player) -- what the depot's market item does (market_guard.lua)
+		out("s0marketprep", player, { inbox = ok and 1 or 0, moved = moved })
+	elseif cmd == "depotfind" then
+		local c = WorldPoints.depot_hearthgate
+		local found = {}
+		for dx = -15, 15 do
+			for dy = -15, 15 do
+				local t = Tile(Position(c.x + dx, c.y + dy, c.z))
+				for _, id in ipairs({ 3497, 3498, 3499, 3500 }) do
+					if t and t:getItemById(id) then
+						table.insert(found, string.format("%d,%d,%d:%d", c.x + dx, c.y + dy, c.z, id))
+					end
+				end
+			end
+		end
+		out("s0depotfind", player, { lockers = table.concat(found, ";", 1, math.min(#found, 6)) })
+	elseif cmd == "marketstate" then
+		local inbox = player:getInbox()
+		local held = "none"
+		for _, it in ipairs(inbox and inbox:getItems(true) or {}) do
+			local st = SpireGear.state(it)
+			if st then
+				held = st.id .. ":t" .. st.tier .. ":f" .. st.fam
+			elseif it:getId() == 3264 then
+				held = "plain_sword"
+			end
+		end
+		for _, it in ipairs(SpireGear.carried(player)) do
+			local st = SpireGear.state(it)
+			if st then
+				held = held .. "+carried:" .. st.id .. ":t" .. st.tier .. ":f" .. st.fam
+			elseif it:getId() == 3264 then
+				held = held .. "+carried:plain_sword"
+			end
+		end
+		local store = player:getStoreInbox()
+		for _, it in ipairs(store and store:getItems(true) or {}) do
+			local st = SpireGear.state(it)
+			if st then
+				held = held .. "+storeinbox:" .. st.id .. ":t" .. st.tier .. ":f" .. st.fam
+			end
+		end
+		local q = db.storeQuery("SELECT COUNT(*) AS `n` FROM `market_offers` WHERE `player_id` = " .. player:getGuid())
+		local n = q and Result.getNumber(q, "n") or -1
+		if q then
+			Result.free(q)
+		end
+		out("s0marketstate", player, { inbox = held, offers = n })
 	elseif cmd == "kit" then -- a backpack and a full leather set (helmet, armour, legs, boots)
 		backpack(player)
 		wear(player, CONST_SLOT_HEAD, 3355)

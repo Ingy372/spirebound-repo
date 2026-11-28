@@ -256,7 +256,7 @@ Bonus percentages are **(Claude's call, Jay can veto)**.
 | 401+ | 2× |
 
 - Skill rate 10×, magic level 5×, loot rate 2×, fishing 5× **(Claude's call)**.
-- **Currency:** Tibia's gold, platinum and crystal coins (100 gold = 1 platinum, 100 platinum = 1 crystal). Bank in every town. Looted coins stay in your backpack until you deposit them (Jay, 2026-11-27, Q76; roadmap QA4). **All gear can be traded, including each floor's best** (Jay, Q15: "you can trade the best gear. that makes an economy and market.").
+- **Currency:** Tibia's gold, platinum and crystal coins (100 gold = 1 platinum, 100 platinum = 1 crystal). Bank in every town. Looted coins stay in your backpack until you deposit them (Jay, 2026-11-27, Q76; roadmap QA4). **All gear can be traded, including each floor's best** (Jay, Q15: "you can trade the best gear. that makes an economy and market."). **Spirebound gear trades hand to hand, not on the engine's market (Claude's call, 2026-11-28, roadmap WA2):** the market keeps only an item's type, so a weapon's tier, familiarity and name would be lost; opening the market moves such items from the depot to the Store Inbox and says why.
 - **Stamina:** standard Tibia stamina (full XP for the first hours of a day's play, reduced after) **(Claude's call, it also limits botting; Cyntara uses a similar system)**.
 
 ### 5.6 Dual wielding: the rare unique skill "Twin Fang"

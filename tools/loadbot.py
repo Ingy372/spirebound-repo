@@ -170,6 +170,10 @@ class Bot:
                     elif kind == "trade":             # offer an item to a player: "x y z itemid stackpos playerid"
                         x, y, z, iid, stack, pid = (int(v) for v in text.split())
                         self.send(bytes([0x7D]) + struct.pack("<HHBHBI", x, y, z, iid, stack, pid))
+                    elif kind == "sell":              # a market sell offer: "itemid tier amount price" (tier only for classified items, -1 = none)
+                        iid, tier, amount, price = (int(v) for v in text.split())
+                        self.send(bytes([0xF6, 1]) + struct.pack("<H", iid) + (bytes([tier]) if tier >= 0 else b"")
+                                  + struct.pack("<HQB", amount, price, 0))
                     elif kind == "accept":            # accept the open trade
                         self.send(b"\x7f")
                     elif kind == "invite":            # invite a player into your party: "playerid"

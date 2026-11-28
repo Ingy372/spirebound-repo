@@ -165,6 +165,8 @@ def patch_core(build: Path) -> None:
             f.write_text(rename_vocations(f.read_text(encoding="utf-8"), r"vocation\([^)]*\)"), encoding="utf-8")
     # Tibia's spells (and their incantations) are replaced by Spirebound's own (data-spirebound/scripts/spirebound/spells)
     shutil.rmtree(build / "data" / "scripts" / "spells", ignore_errors=True)
+    # WA2: the market item is Spirebound's own (scripts/spirebound/market_guard.lua keeps our gear off the market)
+    (build / "data" / "scripts" / "actions" / "objects" / "market.lua").unlink(missing_ok=True)
     # The barrier (magic wall) rune is the Arcanist's PvP tool (DESIGN 6.7, Jay 2026-11-17): only Arcanists may use it
     mw = build / "data" / "scripts" / "runes" / "magic_wall.lua"
     text = mw.read_text(encoding="utf-8")

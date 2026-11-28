@@ -783,6 +783,14 @@ STEP0_CASES = [
          check=lambda lines: ((lambda f: (f[0]["where"] == "carried" and f[0]["fam"] == 10 and f[0]["mine"] == 0
                                           and f[1]["where"] == "hand" and f[1]["fam"] == 0 and f[1]["mine"] == 1 and f[2]["fam"] == 0,
                                           "carried: %s; in hand: %s; after a kill: %s" % (f[0], f[1], f[2])))(_s0(lines, "fam")))),
+    # WA2: a tier 3, familiarity 5 Spirebound sword offered on the real market
+    dict(name="WA2 a Spirebound weapon can't be listed and stays whole", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/s0 jump 1224 1279 6"), (1, "use", "1224 1278 6 3499 1"), (2, "say", "/s0 marketprep"), (2, "sell", "3264 0 1 1000"), (2, "say", "/s0 marketstate")]],
+         check=lambda lines: ((lambda m: (m["offers"] == 0 and "storeinbox:f1_vanguard_sword:t3:f5" in m["inbox"],
+                                          "moved %s; offers %s, the sword: %s" % (_s0(lines, "marketprep")[0]["moved"], m["offers"], m["inbox"])))(_s0(lines, "marketstate")[0]))),
+    dict(name="WA2 control: a plain sword can be listed", voc=4, level=30, ground="wolf_copse", stay=2,
+         logins=[[(3, "say", "/s0 jump 1228 1279 6"), (1, "use", "1228 1278 6 3499 1"), (2, "say", "/s0 marketprep plain"), (2, "sell", "3264 0 1 1000"), (2, "say", "/s0 marketstate")]],
+         check=lambda lines: ((lambda m: (m["offers"] == 1, "offers %(offers)s, inbox %(inbox)s" % m))(_s0(lines, "marketstate")[0]))),
     # QA19 (Q91): 12 of one guild and 12 others in the Axe-Lord's first kill: 10 of the guild are credited
     dict(name="QA19 the first Axe-Lord kill credits at most 10 of one guild", voc=4, level=60, stay=4,
          logins=[[(3, "say", "/rv floorsreset"), (1, "say", "/s0 guildfight"), (3, "say", "/s0 credit"), (1, "say", "/rv floorsreset")]],
