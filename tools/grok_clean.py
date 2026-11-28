@@ -5,11 +5,12 @@ Jay (2026-11-27): Grok's first item batch came back thin, pale and flat next to 
 at big pictures and bad at tiny pixel art, so Grok draws big (512x512, one object on plain grey) and this script
 does the pixel work the same way the creature pipeline does:
 
-  1. cut the plain background away (flood fill from the edges; a transparent PNG is used as it is);
+  1. cut the plain background and Grok's soft drop shadow away (flood fill from the edges; a transparent PNG is used as it is);
   2. split a picture with several objects into one sprite each (--split; small bits such as text labels are dropped);
   3. crop, then shrink to the sprite size with no blur (the object fills --fill pixels, default 28 of 32);
   4. boost colour and contrast, and light it from the top-left like every creature (art/pipeline/palette.json);
-  5. recolour with only colours taken from the approved sprites and spell effects (art/pipeline/item_palette.json,
+  4b. reduce each item to 12 flat colours and remove lone speckles (a shrunk painting is noisy);
+  5. only with --palette: recolour with only colours taken from the approved sprites and spell effects (art/pipeline/item_palette.json,
      rebuilt with --rebuild-palette), so items match the monsters;
   6. a 1-px dark outline (the creatures' outline colour; dark brown on the lit top-left edge);
   7. a comparison sheet: Grok's original, the sprite at 4x, and the sprite at real size.
@@ -18,7 +19,7 @@ Usage:
     python tools/grok_clean.py                                  ART_FOR_JAY/grok_in  -> ART_FOR_JAY/grok_out
     python tools/grok_clean.py picture.png --split              a sheet with several items
     python tools/grok_clean.py IN_DIR OUT_DIR --size 64         a big (2x2 tile) object
-    python tools/grok_clean.py ... --no-palette                 keep Grok's own colours (still shrunk and outlined)
+    python tools/grok_clean.py ... --palette                    force the approved sprites' colours (Grok's own looked better in batch 14)
 Outputs: <name>.png (the sprite), <name>_4x.png (a preview) and compare.png.
 """
 from __future__ import annotations
@@ -110,7 +111,13 @@ def foreground(img: Image.Image, tol: float) -> np.ndarray:
     rgb = a[..., :3].astype(np.float64)
     border = np.concatenate([rgb[0], rgb[-1], rgb[:, 0], rgb[:, -1]])
     bg = np.median(border, 0)
-    close = np.abs(to_lab(rgb) - to_lab(bg)).sum(-1) < tol
+    lab, blab = to_lab(rgb), to_lab(bg)
+    close = np.abs(lab - blab).sum(-1) < tol
+    # Grok paints a soft grey drop shadow under each object (batch 14). It is colourless and lighter than Grok's
+    # near-black outline, so colourless pixels down to L 30 also count as background when they touch it; the
+    # outline stops the fill, so grey metal inside the object is kept.
+    chroma = np.abs(lab[..., 1] - blab[1]) + np.abs(lab[..., 2] - blab[2])
+    close |= (chroma < 9) & (lab[..., 0] > 30) & (lab[..., 0] < blab[0] + 8)
     lbl, _ = ndimage.label(close)
     edge = np.unique(np.concatenate([lbl[0], lbl[-1], lbl[:, 0], lbl[:, -1]]))
     bgmask = np.isin(lbl, edge[edge > 0])
@@ -187,6 +194,39 @@ def punch(sprite: np.ndarray, sat: float, contrast: float) -> np.ndarray:
     return out
 
 
+def simplify(sprite: np.ndarray, k: int) -> np.ndarray:
+    """A shrunk painting is speckled (every pixel a slightly different colour). Hand-made pixel art uses a few flat
+    colours, so: reduce the object to its k main colours (k-means in Lab), then replace lone pixels that match none
+    of their four neighbours with the most common neighbour colour."""
+    on = sprite[..., 3] > 0
+    px = sprite[..., :3][on].astype(np.float64)
+    if len(px) <= k:
+        return sprite
+    lab = to_lab(px)
+    rng = np.random.default_rng(2)
+    cent = lab[rng.choice(len(lab), k, replace=False)]
+    for _ in range(15):
+        lbl = ((lab[:, None] - cent[None]) ** 2).sum(-1).argmin(1)
+        for i in range(k):
+            if (lbl == i).any():
+                cent[i] = lab[lbl == i].mean(0)
+    means = np.array([px[lbl == i].mean(0) if (lbl == i).any() else [0, 0, 0] for i in range(k)])
+    idx = np.full(on.shape, -1)
+    idx[on] = lbl
+    h, w = on.shape
+    for y in range(h):
+        for x in range(w):
+            if idx[y, x] < 0:
+                continue
+            nb = [idx[y + dy, x + dx] for dy, dx in ((0, 1), (1, 0), (0, -1), (-1, 0))
+                  if 0 <= y + dy < h and 0 <= x + dx < w and idx[y + dy, x + dx] >= 0]
+            if len(nb) >= 3 and idx[y, x] not in nb:
+                idx[y, x] = max(set(nb), key=nb.count)
+    out = sprite.copy()
+    out[..., :3][on] = np.clip(means[idx[on]], 0, 255).astype(np.uint8)
+    return out
+
+
 def recolour(sprite: np.ndarray, pal: np.ndarray) -> np.ndarray:
     on = sprite[..., 3] > 0
     lab = to_lab(sprite[..., :3][on])
@@ -254,11 +294,13 @@ def main():
     ap.add_argument("--tol", type=float, default=22, help="how far from the background colour still counts as background")
     ap.add_argument("--sat", type=float, default=1.35)
     ap.add_argument("--contrast", type=float, default=1.2)
-    ap.add_argument("--no-palette", action="store_true")
+    ap.add_argument("--colours", type=int, default=12, help="flat colours per item before recolouring")
+    ap.add_argument("--palette", action="store_true", help="force the approved sprites' colours (off by default: batch 14 looked better in Grok's own)")
+    ap.add_argument("--no-palette", action="store_true", help=argparse.SUPPRESS)
     ap.add_argument("--rebuild-palette", action="store_true")
     a = ap.parse_args()
 
-    pal = build_palette() if a.rebuild_palette else (None if a.no_palette else load_palette())
+    pal = build_palette() if a.rebuild_palette else (load_palette() if a.palette and not a.no_palette else None)
     src, out = Path(a.src), Path(a.out)
     files = [src] if src.is_file() else sorted(p for p in src.glob("*") if p.suffix.lower() in EXTS) if src.exists() else []
     if not files:
@@ -275,6 +317,7 @@ def main():
         for n, box in enumerate(boxes, 1):
             name = f.stem if len(boxes) == 1 else f"{f.stem}_{n:02d}"
             spr = shrink(img, fg, box, a.size, fill)
+            spr = simplify(spr, a.colours)
             spr = punch(spr, a.sat, a.contrast)
             if pal is not None:
                 spr = recolour(spr, pal)

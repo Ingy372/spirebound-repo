@@ -43,8 +43,8 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 
 ## How to use this file (still images only)
 New way (Jay, 2026-11-27): Grok's tiny 32x32 pixel art came back thin, pale and flat, so Grok now draws **big** and
-`tools/grok_clean.py` does the pixel work (shrinks to 32x32, recolours with the approved monsters' colours, lights it
-from the top-left, adds the dark outline).
+`tools/grok_clean.py` does the pixel work (cuts out the drop shadow, shrinks to 32x32, flattens to a few colours,
+lights it from the top-left, adds the dark outline).
 1. Paste the **big-picture template** below into Grok, with the item description from the tables on the first line.
    One item per picture.
 2. Save each picture with the item's file name (e.g. `wardens_signet.png`) in `ART_FOR_JAY\grok_in\`.
