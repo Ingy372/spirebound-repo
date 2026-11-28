@@ -1,0 +1,27 @@
+{
+ "character": "Spell Vanguard",
+ "noSpells": true,
+ "steps": [
+  {
+   "do": "jump",
+   "to": [
+    1236,
+    1252,
+    7
+   ],
+   "note": "in the open"
+  },
+  {
+   "do": "say",
+   "text": "/pilot wearaddons"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "shot",
+   "name": "addon_vanguard_worn"
+  }
+ ]
+}

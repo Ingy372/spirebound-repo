@@ -1,0 +1,94 @@
+{
+ "character": "Spell Vanguard",
+ "noSpells": false,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 40"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 3"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Dorrow"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "outfit"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "yes"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": [
+    1250,
+    1060,
+    7
+   ],
+   "note": "open meadow"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Moonhowl, 1, 400"
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "Dorrow again"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "report"
+  },
+  {
+   "do": "wait",
+   "seconds": 3
+  },
+  {
+   "do": "shot",
+   "name": "addon_vanguard"
+  }
+ ]
+}
