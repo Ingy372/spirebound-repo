@@ -4,6 +4,9 @@
 SpireGear = SpireGear or {}
 
 local A_ID, A_TIER, A_FAM, A_AWAKE = "sb_gear", "sb_tier", "sb_fam", "sb_awake"
+-- WA1 (Jay, 2026-11-27: familiarity "reset upon trade"; spec 2026-11-27-weapon-review.md 4): the character a weapon's
+-- familiarity belongs to (its database id). Tier and awakening stay with the weapon; familiarity stays with the fighter.
+local A_BOND = "sb_bond"
 
 local defs = {}
 for _, w in ipairs(SpireGearData.weapons) do
@@ -194,6 +197,7 @@ function SpireGear.state(item)
 		tier = tonumber(item:getCustomAttribute(A_TIER)) or 0, famPoints = points,
 		fam = d.kind == "weapon" and not d.shop and SpireGear.famLevel(points, d.floor) or 0,
 		awakened = (tonumber(item:getCustomAttribute(A_AWAKE)) or 0) == 1,
+		bond = tonumber(item:getCustomAttribute(A_BOND)),
 		scale = d.scale } -- adventure layer: a rare weapon's own picture may be a stronger base item, scaled back
 end
 
@@ -220,6 +224,53 @@ function SpireGear.canWield(item, level)
 	return true
 end
 
+-- a character's name by database id (for the look text), remembered
+local bondNames = {}
+function SpireGear.bondName(guid)
+	if not guid then
+		return nil
+	end
+	if bondNames[guid] == nil then
+		local q = db.storeQuery("SELECT `name` FROM `players` WHERE `id` = " .. math.floor(guid))
+		bondNames[guid] = q and Result.getString(q, "name") or false
+		if q then
+			Result.free(q)
+		end
+	end
+	return bondNames[guid] or nil
+end
+
+-- Pure: what happens to a weapon's familiarity when character `guid` takes it up. bond = the weapon's bond (or nil).
+-- "keep" (it is theirs), "adopt" (no bond yet: from before WA1, or brand new; nothing is reset), "reset" (another's)
+function SpireGear.bondChange(bond, guid)
+	if bond == nil then
+		return "adopt"
+	end
+	return bond == guid and "keep" or "reset"
+end
+
+-- The character takes up the weapon (holds it in hand or fights with it). Familiarity goes to 0 if it was another
+-- character's. Returns what happened. Shop gear and armour have no familiarity.
+function SpireGear.claim(item, player)
+	local s, d = SpireGear.state(item), SpireGear.defOf(item)
+	local guid = player.getGuid and player:getGuid() -- (test stand-ins have no database id)
+	if not s or s.shop or d.kind ~= "weapon" or not guid then
+		return "none"
+	end
+	local what = SpireGear.bondChange(s.bond, guid)
+	if what == "keep" then
+		return what
+	end
+	item:setCustomAttribute(A_BOND, guid)
+	if what == "reset" then
+		SpireGear.setState(item, { famPoints = 0 })
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, item:getName() .. " doesn't know you yet: its familiarity starts again with you.")
+	else
+		SpireGear.setState(item, {})
+	end
+	return what
+end
+
 local function describe(item, d, s)
 	if d.shop then
 		return "Climber's starter gear (shop). It cannot be upgraded."
@@ -231,7 +282,9 @@ local function describe(item, d, s)
 		text = text .. string.format(" (needs level %d to wear)", need)
 	end
 	if d.kind == "weapon" then
-		text = text .. string.format(", familiarity %d/10: %+d%% damage", s.fam, math.floor((SpireGear.power(s) - 1) * 100 + 0.5))
+		local who = SpireGear.bondName(s.bond)
+		text = text .. string.format(", familiarity %d/10%s: %+d%% damage", s.fam, who and (" with " .. who) or "",
+			math.floor((SpireGear.power(s) - 1) * 100 + 0.5))
 		local pct = SpireGear.famProgress(s.famPoints, d.floor)
 		if pct then
 			text = text .. string.format(" (%d%% to the next)", pct)
@@ -305,6 +358,10 @@ function SpireGear.make(into, id)
 		local item = SpireGear.create(id)
 		if not item then
 			return nil
+		end
+		if d.kind == "weapon" and not d.shop and into.getGuid then
+			item:setCustomAttribute(A_BOND, into:getGuid()) -- given to this character: bonded to them (WA1)
+			SpireGear.setState(item, {})
 		end
 		if into:addItemEx(item, false, INDEX_WHEREEVER, FLAG_NOLIMIT) == RETURNVALUE_NOERROR then
 			return item, "bag"

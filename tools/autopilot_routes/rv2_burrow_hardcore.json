@@ -1,0 +1,434 @@
+{
+ "name": "burrow_solo14",
+ "about": "PT3 (2026-11-26): a level-14 Vanguard alone round Burrow Hills, to compare its experience per hour with the party playtest (138-143k each) and the balance target. Burrow Hills (FLOOR1_HUNTING_PLAN.md H5): quiet gate, the North Hollow, the east junction, up a ramp onto the Crown and round it, down the other ramp, the South Hollow, down a hole into the Molework's north tunnel and up at the east hole.",
+ "character": "Pilot Warden",
+ "timeout": 2100,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot mode hardcore"
+  },
+  {
+   "do": "say",
+   "text": "/pilot cavebot off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 14"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 1"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 30"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "jump",
+   "to": "gate_burrow_hills",
+   "note": "start at the gate"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "walk",
+   "to": "camp_burrow_hills",
+   "note": "gate meadow: should be quiet"
+  },
+  {
+   "do": "wait",
+   "seconds": 6
+  },
+  {
+   "do": "shot",
+   "name": "bh_meadow"
+  },
+  {
+   "do": "walk",
+   "to": "loop_burrow_hills_a",
+   "note": "North Hollow, calm"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1264,
+    1175,
+    7
+   ],
+   "note": "North Hollow, calm"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1276,
+    1176,
+    7
+   ],
+   "note": "North Hollow, quiet stretch"
+  },
+  {
+   "do": "wait",
+   "seconds": 5
+  },
+  {
+   "do": "walk",
+   "to": [
+    1288,
+    1175,
+    7
+   ],
+   "note": "North Hollow, middle"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1297,
+    1177,
+    7
+   ],
+   "note": "North Hollow, middle"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "shot",
+   "name": "bh_north"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1308,
+    1175,
+    7
+   ],
+   "note": "North Hollow, quiet stretch"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1320,
+    1177,
+    7
+   ],
+   "note": "North Hollow, deep"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "walk",
+   "to": [
+    1318,
+    1186,
+    7
+   ],
+   "note": "North Hollow, deep"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "walk",
+   "to": [
+    1316,
+    1199,
+    7
+   ],
+   "note": "east junction: quiet"
+  },
+  {
+   "do": "wait",
+   "seconds": 5
+  },
+  {
+   "do": "walk",
+   "to": [
+    1308,
+    1223,
+    7
+   ],
+   "note": "South Hollow, east quiet stretch"
+  },
+  {
+   "do": "up",
+   "at": "ramp_burrow_hills_67_46_7_n",
+   "note": "up the east ramp onto the Crown"
+  },
+  {
+   "do": "shot",
+   "name": "bh_crown_east"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1307,
+    1197,
+    6
+   ],
+   "note": "the Crown, deep"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "walk",
+   "to": [
+    1300,
+    1185,
+    6
+   ],
+   "note": "the Crown, deep"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "walk",
+   "to": [
+    1285,
+    1185,
+    6
+   ],
+   "note": "the Crown, quiet top"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1271,
+    1188,
+    6
+   ],
+   "note": "the Crown, middle"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1270,
+    1196,
+    6
+   ],
+   "note": "the Crown, middle"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "shot",
+   "name": "bh_crown_west"
+  },
+  {
+   "do": "walk",
+   "to": "loop_burrow_hills_c",
+   "note": "the Crown, west landing"
+  },
+  {
+   "do": "down",
+   "at": "ramp_burrow_hills_33_46_7_n",
+   "note": "down the west ramp"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1264,
+    1223,
+    7
+   ],
+   "note": "South Hollow, calm"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": "loop_burrow_hills_b",
+   "note": "South Hollow, calm"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": "camp_burrow_hills",
+   "note": "gate meadow: should be quiet"
+  },
+  {
+   "do": "down",
+   "at": "stairs_burrow_hills_18_28_8",
+   "note": "hole down into the Molework"
+  },
+  {
+   "do": "shot",
+   "name": "bh_molework_west"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1242,
+    1186,
+    8
+   ],
+   "note": "Molework, north-west (middle)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1244,
+    1172,
+    8
+   ],
+   "note": "Molework, north-west (middle)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1257,
+    1168,
+    8
+   ],
+   "note": "Molework, quiet stretch"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1270,
+    1168,
+    8
+   ],
+   "note": "Molework, north (middle)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1276,
+    1173,
+    8
+   ],
+   "note": "Molework, north (middle)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 25
+  },
+  {
+   "do": "walk",
+   "to": [
+    1289,
+    1169,
+    8
+   ],
+   "note": "Molework, quiet stretch"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1303,
+    1168,
+    8
+   ],
+   "note": "Molework, north-east (deep)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "walk",
+   "to": [
+    1313,
+    1173,
+    8
+   ],
+   "note": "Molework, north-east (deep)"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30
+  },
+  {
+   "do": "shot",
+   "name": "bh_molework_deep"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1316,
+    1201,
+    8
+   ],
+   "note": "Molework, east hall: quiet"
+  },
+  {
+   "do": "up",
+   "at": "stairs_burrow_hills_76_28_8",
+   "note": "up the east hole"
+  },
+  {
+   "do": "walk",
+   "to": "camp_burrow_hills",
+   "note": "back to the gate meadow"
+  },
+  {
+   "do": "shot",
+   "name": "bh_end"
+  },
+  {
+   "do": "say",
+   "text": "/pilot cavebot off"
+  },
+  {
+   "do": "say",
+   "text": "/pilot mode normal"
+  }
+ ]
+}

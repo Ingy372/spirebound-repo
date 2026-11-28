@@ -1,0 +1,89 @@
+{
+ "character": "Pilot Ranger",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 12"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gearreset"
+  },
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1235,
+    1246,
+    7
+   ],
+   "note": "by Captain Dorrow"
+  },
+  {
+   "do": "say",
+   "text": "hi"
+  },
+  {
+   "do": "npc",
+   "text": "weapon"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "npc",
+   "text": "spear"
+  },
+  {
+   "do": "wait",
+   "seconds": 2
+  },
+  {
+   "do": "inventory",
+   "note": "spear given"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1250,
+    1060,
+    7
+   ],
+   "note": "open meadow"
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Field Rat, 4, 60"
+  },
+  {
+   "do": "hunt",
+   "seconds": 30,
+   "radius": 7
+  },
+  {
+   "do": "say",
+   "text": "/pilot spawn Hopper Toad, 3, 120"
+  },
+  {
+   "do": "hunt",
+   "seconds": 40,
+   "radius": 7
+  },
+  {
+   "do": "inventory",
+   "note": "after the hunt"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1285,
+    7
+   ]
+  }
+ ]
+}

@@ -164,6 +164,22 @@ class Bot:
                     elif kind == "modal":             # answer a menu window: "windowid button choice"
                         wid, button, choice = (int(v) for v in text.split())
                         self.send(bytes([0xF9]) + struct.pack("<IBB", wid, button, choice))
+                    elif kind == "move":              # move an item (as a drag does): "fx fy fz itemid stackpos tx ty tz count"
+                        fx, fy, fz, iid, fs, tx, ty, tz, n = (int(v) for v in text.split())   # a worn slot is 65535 slot 0
+                        self.send(bytes([0x78]) + struct.pack("<HHBHB", fx, fy, fz, iid, fs) + struct.pack("<HHBB", tx, ty, tz, n))
+                    elif kind == "trade":             # offer an item to a player: "x y z itemid stackpos playerid"
+                        x, y, z, iid, stack, pid = (int(v) for v in text.split())
+                        self.send(bytes([0x7D]) + struct.pack("<HHBHBI", x, y, z, iid, stack, pid))
+                    elif kind == "accept":            # accept the open trade
+                        self.send(b"\x7f")
+                    elif kind == "invite":            # invite a player into your party: "playerid"
+                        self.send(bytes([0xA3]) + struct.pack("<I", int(text)))
+                    elif kind == "join":              # join the party of the player who invited you: "leaderid"
+                        self.send(bytes([0xA4]) + struct.pack("<I", int(text)))
+                    elif kind == "attack":            # attack a creature by its id: "creatureid"
+                        self.send(bytes([0xA1]) + struct.pack("<II", int(text), int(text)))
+                    elif kind == "redfist":           # offensive, stand, secure mode off, PvP mode red fist (attacks anyone)
+                        self.send(bytes([0xA0, 1, 0, 0, 3]))
                     elif kind == "unsecure":            # fight modes: offensive, stand, secure mode OFF (may attack
                         self.send(bytes([0xA0, 1, 0, 0, 0]))   # unmarked players), pvp mode dove
                     else:

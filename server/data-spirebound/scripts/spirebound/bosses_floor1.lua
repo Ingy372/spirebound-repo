@@ -227,6 +227,7 @@ function death.onDeath(creature, corpse, killer, mostDamageKiller, unjustified, 
 	local capped = def.kind == "floor" and def.floor == 1 and not state.private and not Floors.isOpen(2)
 	local credit = SpireBoss.credited(state, now, SpireBoss.minShare(def.kind), capped and SpireBoss.guildOf or nil,
 		capped and SpireBoss.FIRST_KILL_GUILD_CAP or nil)
+	SpireBoss.lastCredit = { boss = creature:getName(), names = credit, capped = capped } -- read by the GM log and tests
 	SpireGear.grantBoss(creature:getName(), credit) -- gear progression: shards and the awakening for every credited fighter
 	if SpireFirstClimb and SpireFirstClimb.onBossKill then
 		SpireFirstClimb.onBossKill(creature:getName(), credit) -- FD1: the Last Page (chapter 8)

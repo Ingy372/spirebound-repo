@@ -80,36 +80,6 @@ function SpireGear.carriesMain(player, floor)
 	return false
 end
 
--- A Mastery respec for gold at the Weaponsmith (Jay, 2026-11-27, Q87: "yes for weapon mastery"), beside the shop's
--- scroll: steep, and dearer each time (10,000 gold, then 20,000, 40,000...). The 7-day wait between respecs still holds.
-SpireGear.RESPEC_GOLD = 10000
-function SpireGear.respecPrice(done)
-	return SpireGear.RESPEC_GOLD * 2 ^ math.min(done or 0, 10)
-end
-
-function SpireGear.respecsBought(player)
-	return tonumber(player:kv():scoped("spirebound"):get("style_gold_respecs")) or 0
-end
-
-function SpireGear.respecForGold(player, wallet, now)
-	local k = player:kv():scoped("spirebound")
-	local ok, why = SpireStyle.respecCheck(k:get("style_path"), k:get("style_respec_at"), now)
-	if not ok then
-		return false, why
-	end
-	local price = SpireGear.respecPrice(SpireGear.respecsBought(player))
-	if wallet.money() < price or not wallet.pay(price) then
-		return false, string.format("A respec costs %d gold.", price)
-	end
-	local done, text = SpireStyle.respec(player, now)
-	if not done then
-		wallet.refund(price)
-		return false, text
-	end
-	k:set("style_gold_respecs", SpireGear.respecsBought(player) + 1)
-	return true, string.format("%d gold. %s The next one will cost %d.", price, text, SpireGear.respecPrice(SpireGear.respecsBought(player)))
-end
-
 function SpireGear.talk(npc, handler, player, msg, npcName)
 	if msg:sub(1, 1) == "!" then
 		return false -- a player command said near an NPC (e.g. !upgrade) is not talk
@@ -169,24 +139,6 @@ function SpireGear.talk(npc, handler, player, msg, npcName)
 		end
 		say(string.format("Reforge %s into a %s for %d gold? Its familiarity starts again. Say {yes}.", item:getName(), family,
 			SpireGearData.REFORGE_FEE * d.floor))
-		return true
-	end
-	if MsgContains(lower, "respec") then
-		local k = player:kv():scoped("spirebound")
-		local ok, why = SpireStyle.respecCheck(k:get("style_path"), k:get("style_respec_at"), os.time())
-		if not ok then
-			say(why)
-			return true
-		end
-		local price = SpireGear.respecPrice(SpireGear.respecsBought(player))
-		pending[pid] = function()
-			local done, text = SpireGear.respecForGold(player, SpireGear.playerWallet(player), os.time())
-			if done then
-				player:getPosition():sendMagicEffect(CONST_ME_MAGIC_BLUE)
-			end
-			return text
-		end
-		say(string.format("I can loosen a fighter's habits: your Mastery style undone, every point kept, for %d gold. Each time costs double the last. Shall I? Say {yes}.", price))
 		return true
 	end
 	if MsgContains(lower, "replace") then
@@ -260,6 +212,7 @@ function SpireGear.equip(player, id)
 			player:setCapacity(cap)
 		end
 		if ret == RETURNVALUE_NOERROR then
+			SpireGear.claim(item, player) -- bonded to the character it is given to (WA1)
 			return item, "hand"
 		end
 		if item then

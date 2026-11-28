@@ -6,6 +6,8 @@
 --   /pilot jump x, y, z    go there
 --   /pilot heal            full health and mana
 --   /pilot level n         (gear tests) set your level
+--   /pilot mode m          (RV2 pace tests) normal, hardcore or deathgame
+--   /pilot cavebot on|off  (RV2 pace tests) the server counts the cavebot as on
 --   /pilot gearreset       (gear tests) forget the barracks weapon, style and trophies; drop Spirebound gear
 --   /pilot spawn name, n, hp   (spell tests) top up to n monsters of that name around you, each with hp health
 --   /pilot clear           remove every monster within 9 tiles
@@ -72,6 +74,16 @@ function pilot.onSay(player, words, param)
 			player:removeExperience(player:getExperience() - need, false)
 		end
 		player:sendTextMessage(MESSAGE_STATUS, "pilot: level " .. player:getLevel())
+	elseif cmd == "mode" then -- (RV2 pace tests) "/pilot mode normal|hardcore|deathgame": the difficulty, as the Registrar sets it
+		local m = ({ normal = Difficulty.NORMAL, hardcore = Difficulty.HARDCORE, deathgame = Difficulty.DEATHGAME })[rest]
+		if m then
+			player:kv():scoped("spirebound"):remove("difficulty")
+			Difficulty.set(player, m)
+		end
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: mode " .. tostring(Difficulty.names[Difficulty.get(player)]))
+	elseif cmd == "cavebot" then -- (RV2 pace tests) "/pilot cavebot on|off": the server counts the cavebot as on, as the client reports it
+		SpireCavebot.setState(player:getGuid(), rest == "on", os.time())
+		player:sendTextMessage(MESSAGE_STATUS, "pilot: cavebot " .. (rest == "on" and "on" or "off"))
 	elseif cmd == "gearreset" then -- (gear tests) forget the barracks' weapon, style and trophies; drop Spirebound gear
 		local k = player:kv():scoped("spirebound")
 		for _, key in ipairs({ "gear_main_1", "style_points", "style_path", "style_final", "style_respec_at", "style_stance" }) do

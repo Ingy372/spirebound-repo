@@ -39,6 +39,10 @@ autoLoot = true
 -- Looted coins stay in the backpack until the player deposits them (Jay, 2026-11-27, Q76: "they should stay in the bag
 -- until the player deposits them in the bank"). Was on since the party playtest of 2026-11-26 (hand-off P2-7).
 autoBank = false
+-- Free blessings only below level 8 for Hardcore and Death Game (Jay, 2026-11-27, Q80: "yes"; roadmap QA11). The engine's
+-- "adventurer's blessing" protected every character up to level 21; now it ends after level 7. Normal characters below
+-- level 30 still get every blessing from our own script (scripts/spirebound/difficulty_events.lua, QA3).
+adventurersBlessingLevel = 7
 sortLootByChance = true
 
 -- Accounts: up to 2 characters online per account (DESIGN.md 12)

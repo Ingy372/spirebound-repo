@@ -41,6 +41,8 @@ function moved.playerOnItemMoved(player, item, count, fromPosition, toPosition, 
 		local ok, need = SpireGear.canWield(item, player:getLevel())
 		if not ok then
 			unwear(player, item, need)
+		elseif toPosition.y == CONST_SLOT_LEFT or toPosition.y == CONST_SLOT_RIGHT then
+			SpireGear.claim(item, player) -- WA1: taken up in hand; says so at once if it was another's
 		end
 	end
 end

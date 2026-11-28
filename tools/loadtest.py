@@ -602,6 +602,189 @@ REVIEW_CASES = [
 ]
 
 
+# ---------------------------------------------------------------- roadmap Step 0 (Jay's answers of 2026-11-27)
+# Real characters through the game's own packets (trades, moves, attacks, party invites, NPC talk); setup and readings
+# through /s0 (scripts/spirebound/dev_step0.lua). "{partner_id}" is the partner character's creature id. Run them a
+# group at a time (--only "QA2", --only "QA7"...): some groups change the test world (Floor 2 open, a launch week).
+def _s0(lines, what):
+    return [kv for w, kv in lines if w == "s0" + what]
+
+
+def _plan_coins(monster):
+    """Coins a kill of this monster gives by the plain drop tables (tools/balance.py, the economy plan)."""
+    import balance as b
+    monsters, *_ = b.load_game()
+    return b.coin_value(monsters[monster]["loot"], 1)
+
+
+def _check_qa20(lines):
+    r = _s0(lines, "loot")[0]
+    coins = r["bag"] + r["bank"] + r["left"]
+    plan = _plan_coins("Road Bandit") * r["kills"]
+    return (0.75 * plan <= coins <= 1.25 * plan and r["bank"] == 0,
+            f"{r['kills']} Road Bandits dropped {coins} coins ({r['bag']} into the backpack, {r['bank']} into the bank, "
+            f"{r['left']} left in full bodies); the plan says {plan:.0f}")
+
+
+def _check_followers(lines):
+    xp = [x["gained"] for x in _s0(lines, "xp")]
+    return len(xp) == 2 and xp[0] > 0 and abs(xp[1] / xp[0] - 0.45) < 0.03, f"alone {xp[0]}, following a botter {xp[1]}"
+
+
+STEP0_CASES = [
+    # QA2 (Q100): each secret piece goes from one character to another through the trade window
+    dict(name="QA2 trade: the giver hands over all three secret pieces", voc=4, level=30, partner="QA2 trade: the taker", stay=6,
+         logins=[[(3, "say", "/s0 secrets"), (6, "trade", "65535 2 0 3014 0 {partner_id}"), (4, "accept", ""),
+                  (4, "trade", "65535 8 0 3552 0 {partner_id}"), (4, "accept", ""),
+                  (4, "trade", "65535 9 0 3063 0 {partner_id}"), (4, "accept", ""), (3, "say", "/s0 hold")]],
+         check=lambda lines: (_s0(lines, "hold")[0]["held"] == "none", "the giver now holds: %(held)s" % _s0(lines, "hold")[0])),
+    dict(name="QA2 trade: the taker", voc=4, level=30, partner="QA2 trade: the giver hands over all three secret pieces", stay=4,
+         logins=[[(3, "say", "/s0 offer"), (8, "trade", "65535 1 0 3355 0 {partner_id}"), (3, "accept", ""),
+                  (1, "say", "/s0 offer"), (3, "trade", "65535 1 0 3355 0 {partner_id}"), (4, "accept", ""),
+                  (1, "say", "/s0 offer"), (3, "trade", "65535 1 0 3355 0 {partner_id}"), (4, "accept", ""),
+                  (3, "say", "/s0 hold")]],
+         check=lambda lines: (_s0(lines, "hold")[0]["held"] == "millrace_boots,shrinekeepers_pendant,wardens_signet",
+                              "the taker now holds: %(held)s" % _s0(lines, "hold")[0])),
+    # QA3 (Q77): a Normal death below 30 costs nothing, from 30 the standard loss
+    dict(name="QA3 a level-29 Normal death costs nothing", voc=4, level=29, ground="starter_east",
+         logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]], check=_check_normal),
+    dict(name="QA3 a level-31 Normal death costs the standard loss", voc=4, level=31, ground="starter_east",
+         logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]],
+         check=lambda lines: (_rv(lines, "before_death")[0]["bless"] == 0 and _check_hardcore(lines)[0],
+                              "blessings %s; " % _rv(lines, "before_death")[0]["bless"] + _check_hardcore(lines)[1])),
+    # QA11 (Q80): Hardcore keeps the free blessings only below level 8: a level 10 death drops the backpack, a level 5 one doesn't
+    dict(name="QA11 a level-10 Hardcore death can lose the backpack", voc=4, level=10, ground="starter_east",
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 offer"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
+         check=lambda lines: ((lambda b: (b[0]["bp"] == 1 and b[0]["bless"] == 0 and b[1]["bp"] == 0,
+                                          "blessings %s; backpack before %s, after %s" % (b[0]["bless"], b[0]["bp"], b[1]["bp"])))(_s0(lines, "bag")))),
+    dict(name="QA11 a level-5 Hardcore death keeps it", voc=4, level=5, ground="starter_east",
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 offer"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
+         check=lambda lines: ((lambda b: (b[0]["bp"] == 1 and b[1]["bp"] == 1,
+                                          "blessings %s; backpack before %s, after %s" % (b[0]["bless"], b[0]["bp"], b[1]["bp"])))(_s0(lines, "bag")))),
+    # QA4 (Q76) and QA20 (Q84): looted coins land in the bag, not the bank, at the planned amount
+    dict(name="QA4/QA20 coins from 300 Road Bandits stay in the backpack, at the planned amount", voc=4, level=30, stay=60,
+         logins=[[(3, "say", "/s0 offer"), (1, "say", "/s0 loot Road Bandit 300")]],
+         check=lambda lines: (_s0(lines, "loot")[0]["bag"] > 0 and _check_qa20(lines)[0], _check_qa20(lines)[1])),
+    # QA7 (Q82): no PvP below 50 in boss rooms; two 55s may fight
+    dict(name="QA7 a level 60 can't hurt a level 40 in the Axe-Lord's hall", voc=4, level=60, partner="QA7 victim 40 (hall)", stay=3,
+         logins=[[(3, "say", "/s0 bossroom axe 1"), (1, "say", "/s0 arm"), (1, "redfist", ""), (1, "attack", "{partner_id}"), (2, "say", "/s0 target"), (1, "say", "/s0 canhit {partner}")]],
+         check=lambda lines: (True, "attacker: target %s, rule %s" % ((_s0(lines, "target") or [{"name": "?"}])[0]["name"], (_s0(lines, "canhit") or [{"ok": "?"}])[0]["ok"]))),
+    dict(name="QA7 victim 40 (hall)", voc=4, level=40, partner="QA7 a level 60 can't hurt a level 40 in the Axe-Lord's hall", stay=2,
+         logins=[[(3, "say", "/s0 bossroom axe"), (16, "say", "/s0 hp")]],
+         check=lambda lines: (_s0(lines, "bossroom")[0]["zone"] == "bossroom" and _s0(lines, "hp")[0]["hp"] == _s0(lines, "hp")[0]["max"],
+                              "zone %s, health %s of %s" % (_s0(lines, "bossroom")[0]["zone"], _s0(lines, "hp")[0]["hp"], _s0(lines, "hp")[0]["max"]))),
+    dict(name="QA7 a level 60 can't hurt a level 40 in the Gate Hound's arena", voc=4, level=60, partner="QA7 victim 40 (arena)", stay=3,
+         logins=[[(3, "say", "/s0 bossroom hound 1"), (1, "say", "/s0 arm"), (1, "redfist", ""), (1, "attack", "{partner_id}"), (2, "say", "/s0 target"), (1, "say", "/s0 canhit {partner}")]],
+         check=lambda lines: (True, "attacker: target %s, rule %s" % ((_s0(lines, "target") or [{"name": "?"}])[0]["name"], (_s0(lines, "canhit") or [{"ok": "?"}])[0]["ok"]))),
+    dict(name="QA7 victim 40 (arena)", voc=4, level=40, partner="QA7 a level 60 can't hurt a level 40 in the Gate Hound's arena", stay=2,
+         logins=[[(3, "say", "/s0 bossroom hound"), (16, "say", "/s0 hp")]],
+         check=lambda lines: (_s0(lines, "hp")[0]["hp"] == _s0(lines, "hp")[0]["max"],
+                              "zone %s, health %s of %s" % (_s0(lines, "bossroom")[0]["zone"], _s0(lines, "hp")[0]["hp"], _s0(lines, "hp")[0]["max"]))),
+    dict(name="QA7 two level 55s can fight in the hall", voc=4, level=55, partner="QA7 victim 55 (hall)", stay=3,
+         logins=[[(3, "say", "/s0 bossroom axe 1"), (1, "say", "/s0 arm"), (1, "redfist", ""), (1, "attack", "{partner_id}"), (2, "say", "/s0 target"), (1, "say", "/s0 canhit {partner}")]],
+         check=lambda lines: (True, "attacker: target %s, rule %s" % ((_s0(lines, "target") or [{"name": "?"}])[0]["name"], (_s0(lines, "canhit") or [{"ok": "?"}])[0]["ok"]))),
+    dict(name="QA7 victim 55 (hall)", voc=4, level=55, partner="QA7 two level 55s can fight in the hall", stay=2,
+         logins=[[(3, "say", "/s0 bossroom axe"), (16, "say", "/s0 hp")]],
+         check=lambda lines: (_s0(lines, "hp")[0]["hp"] < _s0(lines, "hp")[0]["max"],
+                              "health %s of %s; tile %s" % (_s0(lines, "hp")[0]["hp"], _s0(lines, "hp")[0]["max"], _s0(lines, "bossroom")[0]))),
+    dict(name="QA7 control: two level 55s in the open", voc=4, level=55, partner="QA7 control victim", stay=3,
+         logins=[[(3, "say", "/s0 jump 1251 1056 7"), (1, "say", "/s0 arm"), (1, "redfist", ""), (1, "attack", "{partner_id}"), (2, "say", "/s0 target"), (1, "say", "/s0 canhit {partner}")]],
+         check=lambda lines: (True, "attacker: target %s, rule %s" % ((_s0(lines, "target") or [{"name": "?"}])[0]["name"], (_s0(lines, "canhit") or [{"ok": "?"}])[0]["ok"]))),
+    dict(name="QA7 control victim", voc=4, level=55, partner="QA7 control: two level 55s in the open", stay=2,
+         logins=[[(3, "say", "/s0 jump 1250 1056 7"), (16, "say", "/s0 hp")]],
+         check=lambda lines: (_s0(lines, "hp")[0]["hp"] < _s0(lines, "hp")[0]["max"], "health %(hp)s of %(max)s" % _s0(lines, "hp")[0])),
+    # QA8 (Q92): !private refused while one party member lacks the Stair Key, works once all have it
+    dict(name="QA8 the leader's !private: refused, then works", voc=4, level=60, partner="QA8 member", stay=3,
+         logins=[[(14, "say", "/rv privprep key"), (2, "invite", "{partner_id}"), (5, "say", "!private"), (2, "say", "/s0 where"),
+                  (5, "say", "!private"), (3, "say", "/s0 where"), (1, "say", "/rv floorsreset")]],
+         check=lambda lines: (_s0(lines, "where")[0]["z"] == 5 and _s0(lines, "where")[1]["z"] == 4,
+                              "after the first !private on level %s, after the second on level %s" % (_s0(lines, "where")[0]["z"], _s0(lines, "where")[1]["z"]))),
+    dict(name="QA8 member", voc=4, level=60, partner="QA8 the leader's !private: refused, then works", stay=3,
+         logins=[[(15, "say", "/rv privprep"), (3, "join", "{partner_id}"), (6, "say", "/s0 key"), (8, "say", "/s0 where")]],
+         check=lambda lines: (_s0(lines, "where")[-1]["z"] == 4, "the member ended on level %s" % _s0(lines, "where")[-1]["z"])),
+    # QA9 (Q86): a level 8 can't wield a tier 5 weapon (picked up from the ground into the hand); a level 30 can
+    dict(name="QA9 a level 8 can't wield a tier 5 sword", voc=4, level=8, stay=2,
+         logins=[[(3, "say", "/s0 jump %d %d %d" % MEADOW[0]), (1, "say", "/s0 ground f1_vanguard_sword 5"),
+                  (1, "move", "%d %d %d 3264 1 65535 6 0 1" % (MEADOW[0][0] + 1, MEADOW[0][1], MEADOW[0][2])), (2, "say", "/s0 hand")]],
+         check=lambda lines: (_s0(lines, "hand")[0]["gear"] == "none", "in hand: %(gear)s (level %(level)s)" % _s0(lines, "hand")[0])),
+    dict(name="QA9 a level 30 can", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/s0 jump %d %d %d" % MEADOW[1]), (1, "say", "/s0 ground f1_vanguard_sword 5"),
+                  (1, "move", "%d %d %d 3264 1 65535 6 0 1" % (MEADOW[1][0] + 1, MEADOW[1][1], MEADOW[1][2])), (2, "say", "/s0 hand")]],
+         check=lambda lines: (_s0(lines, "hand")[0]["gear"] == "f1_vanguard_sword" and _s0(lines, "hand")[0]["tier"] == 5,
+                              "in hand: %(gear)s tier %(tier)s (level %(level)s)" % _s0(lines, "hand")[0])),
+    # QA12 (Q14): stepping down from Death Game takes back the bonus experience
+    dict(name="QA12 stepping down at the Registrar takes back the bonus", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/rv mode deathgame"), (1, "say", "/s0 bonus 5000"), (1, "say", "/s0 goto Registrar Maelis"),
+                  (1, "say", "/s0 state"), (1, "say", "hi"), (2, "npc", "step down"), (2, "npc", "normal"), (2, "npc", "yes"),
+                  (2, "say", "/s0 state")]],
+         check=lambda lines: ((lambda s: (s[0]["exp"] - s[1]["exp"] == 5000 and s[1]["mode"] == 1,
+                                          "experience %d -> %d, mode %d -> %d" % (s[0]["exp"], s[1]["exp"], s[0]["mode"], s[1]["mode"])))(_s0(lines, "state")))),
+    # QA15 (Q72): a season started: a full Boar Meadow puts out every crowd group twice
+    dict(name="QA15 launch week: a full harder ground puts out twice the crowd", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/s0 launch on"), (1, "say", "/s0 crowd boar_meadow 8"), (1, "say", "/s0 launch off")]],
+         check=lambda lines: ((lambda c: (c["week"] == 1 and c["monsters"] == 2 * c["spots"],
+                                          "%(state)s, %(spots)s crowd spots, %(monsters)s boars out" % c))(_s0(lines, "crowd")[0]))),
+    # QA16 (Q60, Q16, Q53): where the cavebot earns nothing; followers; 3 windows
+    dict(name="QA16 the cavebot earns nothing in a starter ground", voc=4, level=8, ground="starter_west", stay=2,
+         logins=[[(3, "say", "/s0 bot on"), (1, "say", "/s0 xp Field Rat")]],
+         check=lambda lines: (_s0(lines, "xp")[0]["gained"] == 0 and _s0(lines, "xp")[0]["ban"] == "starter",
+                              "gained %(gained)s (%(ban)s)" % _s0(lines, "xp")[0])),
+    dict(name="QA16 the cavebot earns nothing on Floor 1 in launch week", voc=4, level=12, ground="boar_meadow", stay=2,
+         logins=[[(3, "say", "/s0 launch on"), (1, "say", "/s0 bot on"), (1, "say", "/s0 xp Bristle Boar"), (1, "say", "/s0 launch off")]],
+         check=lambda lines: (_s0(lines, "xp")[0]["gained"] == 0 and _s0(lines, "xp")[0]["ban"] == "launch",
+                              "gained %(gained)s (%(ban)s)" % _s0(lines, "xp")[0])),
+    dict(name="QA16 follower: the botting leader", voc=4, level=12, ground="boar_meadow", partner="QA16 follower: same cut as the bot", stay=10,
+         logins=[[(3, "say", "/s0 bot on"), (4, "invite", "{partner_id}")]], check=lambda lines: (True, "leader")),
+    dict(name="QA16 follower: same cut as the bot", voc=4, level=12, ground="boar_meadow", partner="QA16 follower: the botting leader", stay=2,
+         logins=[[(3, "say", "/s0 xp Bristle Boar"), (7, "join", "{partner_id}"), (2, "say", "/s0 xp Bristle Boar")]],
+         check=_check_followers),
+    dict(name="QA16W windows 1", voc=4, level=8, stay=14, logins=[[(1, "say", "/s0 windows on"), (1, "say", "/s0 where")]],
+         check=lambda lines: (len(_s0(lines, "where")) == 1, "in")),
+    dict(name="QA16W windows 2", voc=4, level=8, stay=12, delay=3, logins=[[(1, "say", "/s0 where")]],
+         check=lambda lines: (len(_s0(lines, "where")) == 1, "in")),
+    dict(name="QA16W windows 3", voc=4, level=8, stay=10, delay=4, logins=[[(1, "say", "/s0 where")]],
+         check=lambda lines: (len(_s0(lines, "where")) == 1, "in")),
+    dict(name="QA16W windows: the 4th is sent away", voc=4, level=8, stay=4, delay=7, logins=[[(3, "say", "/s0 where")]],
+         check=lambda lines: (len(_s0(lines, "where")) == 0, "the 4th window was %s" % ("sent away" if not _s0(lines, "where") else "let in"))),
+    # QA17 (Q88): a Ranger gets the spear from Dorrow, fights with it and still holds it
+    dict(name="QA17 a Ranger's Trailwarden Spear from Dorrow stays in hand after a fight", voc=3, level=12, stay=2,
+         logins=[[(3, "say", "/s0 goto Captain Dorrow"), (1, "say", "hi"), (2, "npc", "weapon"), (2, "npc", "spear"),
+                  (2, "say", "/s0 hand"), (1, "say", "/s0 spar Field Rat"), (12, "say", "/s0 spar end"), (1, "say", "/s0 hand")]],
+         check=lambda lines: ((lambda h, s: (h[0]["gear"] == "f1_ranger_spear" and h[1]["gear"] == "f1_ranger_spear" and s["dealt"] > 0,
+                                             "given %s, dealt %s damage, still in hand: %s" % (h[0]["gear"], s["dealt"], h[1]["gear"])))(
+             _s0(lines, "hand"), _s0(lines, "sparend")[0]))),
+    # QA18 (Q59): with one player online, world events and the weekend rule still run; an arena event waits
+    dict(name="QA18 one player online: world events run, the arena waits", voc=4, level=30, stay=2,
+         logins=[[(3, "say", "/s0 events")]],
+         check=lambda lines: ((lambda e: (e["online"] == 1 and e["event"] != "none" and e["arena"] == 0 and e["weekend"] == 1,
+                                          "%(online)s online: world event %(event)s, arena started %(arena)s, weekend bonus %(weekend)s" % e))(_s0(lines, "events")[0]))),
+    # WA1: familiarity belongs to its fighter (A levels it, drops it and picks it up, trades it; B carries, then holds it)
+    dict(name="WA1 owner: kept through drop and pick-up", voc=4, level=30, partner="WA1 new owner: carried kept, held reset", stay=6,
+         logins=[[(3, "say", "/s0 jump 1250 1060 7"), (1, "say", "/s0 offer"), (1, "say", "/rv weapon f1_vanguard_sword 3 0"), (1, "say", "/s0 fam"),
+                  (1, "move", "65535 6 0 3264 0 1251 1060 7 1"), (2, "move", "1251 1060 7 3264 1 65535 6 0 1"), (2, "say", "/s0 fam"),
+                  (2, "trade", "65535 6 0 3264 0 {partner_id}"), (4, "accept", "")]],
+         check=lambda lines: ((lambda f: (f[0]["fam"] == 10 and f[0]["mine"] == 1 and f[1]["fam"] == 10 and f[1]["where"] == "hand",
+                                          "levelled: %s; after dropping and picking it up: %s" % (f[0], f[1])))(_s0(lines, "fam")))),
+    dict(name="WA1 new owner: carried kept, held reset", voc=4, level=30, partner="WA1 owner: kept through drop and pick-up", stay=3,
+         logins=[[(3, "say", "/s0 jump 1250 1061 7"), (1, "say", "/s0 offer"), (10, "trade", "65535 1 0 3355 0 {partner_id}"), (3, "accept", ""),
+                  (3, "say", "/s0 fam"), (1, "use", "65535 3 0 2854 0"), (2, "move", "65535 64 0 3264 0 65535 6 0 1"), (2, "say", "/s0 fam"),
+                  (1, "say", "/s0 xp Field Rat"), (2, "say", "/s0 fam")]],
+         check=lambda lines: ((lambda f: (f[0]["where"] == "carried" and f[0]["fam"] == 10 and f[0]["mine"] == 0
+                                          and f[1]["where"] == "hand" and f[1]["fam"] == 0 and f[1]["mine"] == 1 and f[2]["fam"] == 0,
+                                          "carried: %s; in hand: %s; after a kill: %s" % (f[0], f[1], f[2])))(_s0(lines, "fam")))),
+    # QA19 (Q91): 12 of one guild and 12 others in the Axe-Lord's first kill: 10 of the guild are credited
+    dict(name="QA19 the first Axe-Lord kill credits at most 10 of one guild", voc=4, level=60, stay=4,
+         logins=[[(3, "say", "/rv floorsreset"), (1, "say", "/s0 guildfight"), (3, "say", "/s0 credit"), (1, "say", "/rv floorsreset")]],
+         check=lambda lines: ((lambda c: (c["total"] == 20 and c["guild"] == 10, "%(total)s credited, %(guild)s of them from the guild" % c
+                                          + "; fight %s" % _s0(lines, "guildfight")))(_s0(lines, "credit")[0]))),
+    # QA21 (Q13): a started season, day 1: the Axe-Lord's hall lets you in
+    dict(name="QA21 day 1 of a season: the boss hall is open", voc=4, level=60, stay=2,
+         logins=[[(3, "say", "/s0 bosshall"), (6, "say", "/s0 where"), (1, "say", "/s0 launch off")]],
+         check=lambda lines: (_s0(lines, "where")[0]["zone"] == "bossroom", "after 6 s still in the hall: %s" % _s0(lines, "where")[0]["zone"])),
+]
+REVIEW_CASES += STEP0_CASES
+
+
 async def review_test(only=None):
     e = env()
     db = config_value("mysqlDatabase")
@@ -628,11 +811,20 @@ async def review_test(only=None):
     stats = {"online": 0, "failed": 0, "bytes": 0, "errors": []}
 
     by_name = {x["name"]: x["char"] for x in cases}
+    # a character's creature id is 0x10000000 + its database id (Canary's Player::setID): what trades, attacks and party
+    # invites address
+    ids = {}
+    for row in sql(e, db, "SELECT name, id FROM players WHERE name IN (%s);" % ", ".join("'%s'" % n for n in names)).splitlines():
+        n, guid = row.rsplit("\t", 1)
+        ids[n] = 0x10000000 + int(guid)
 
     async def play(c):
+        await asyncio.sleep(c.get("delay", 0))
         for script in c["logins"]:
             if c.get("partner"):
-                script = [(d, k, t.replace("{partner}", by_name.get(c["partner"], "nobody"))) for d, k, t in script]
+                partner = by_name.get(c["partner"], "nobody")
+                script = [(d, k, t.replace("{partner}", partner).replace("{partner_id}", str(ids.get(partner, 0))))
+                          for d, k, t in script]
             await loadbot.Bot(c["char"], tokens[c["char"]], "127.0.0.1", port, stats, script).run(c.get("stay", 3))
             await asyncio.sleep(3)
 

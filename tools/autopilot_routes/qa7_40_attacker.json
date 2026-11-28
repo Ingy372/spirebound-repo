@@ -1,0 +1,46 @@
+{
+ "character": "Spell Vanguard",
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot playtime 99999"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1232,
+    1056,
+    4
+   ],
+   "note": "attacker"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "cast",
+   "text": "heavy strike",
+   "target": "player",
+   "face": null,
+   "shots": [
+    0.0
+   ],
+   "gap": 3.0,
+   "name": "qa7_40_strike"
+  },
+  {
+   "do": "wait",
+   "seconds": 20
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  }
+ ]
+}

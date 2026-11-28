@@ -1,0 +1,39 @@
+{
+ "character": "Spell Ranger",
+ "noPotions": true,
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot level 40"
+  },
+  {
+   "do": "say",
+   "text": "/pilot playtime 99999"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1231,
+    1056,
+    4
+   ],
+   "note": "target in the private hall"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot pardon"
+  },
+  {
+   "do": "wait",
+   "seconds": 40
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  }
+ ]
+}

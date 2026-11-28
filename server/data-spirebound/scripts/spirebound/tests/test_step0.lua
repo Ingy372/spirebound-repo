@@ -63,32 +63,6 @@ SpireTest.add("QA9: upgraded gear needs a level to wear (Q86)", function()
 	b:remove()
 end)
 
-SpireTest.add("QA10: a gold respec at the Weaponsmith, dearer each time (Q87)", function()
-	local tag = "respec" .. os.time()
-	local store = function(name) return kv.scoped("spiretest-" .. tag .. "-" .. name) end
-	local p = {}
-	function p:kv() return { scoped = function(_, name) return store(name) end } end
-	local w = { gold = 100000, paid = 0 }
-	w.money = function() return w.gold end
-	w.pay = function(n) w.gold = w.gold - n; w.paid = w.paid + n; return true end
-	w.refund = function(n) w.gold = w.gold + n end
-	local ok = SpireGear.respecForGold(p, w, 1000)
-	SpireTest.eq(ok, false, "no style chosen: nothing to undo")
-	SpireTest.eq(w.paid, 0, "and nothing paid")
-	store("spirebound"):set("style_path", "reaver")
-	local msg
-	ok, msg = SpireGear.respecForGold(p, w, 1000)
-	SpireTest.eq(ok, true, "first respec: " .. tostring(msg))
-	SpireTest.eq(w.paid, 10000, "10,000 gold")
-	SpireTest.eq(store("spirebound"):get("style_path"), nil, "the style is undone")
-	store("spirebound"):set("style_path", "bulwark")
-	SpireTest.eq((SpireGear.respecForGold(p, w, 2000)), false, "the 7-day wait still holds")
-	ok = SpireGear.respecForGold(p, w, 1000 + SpireStyle.RESPEC_WAIT)
-	SpireTest.eq(ok, true, "a week later")
-	SpireTest.eq(w.paid, 30000, "the second costs 20,000")
-	SpireTest.eq(SpireGear.respecPrice(2), 40000, "the third 40,000")
-end)
-
 SpireTest.add("QA16: the cavebot doesn't work in the starter grounds, or on Floor 1 in launch week (Q60)", function()
 	SpireTest.eq(SpireCavebot.banReasonAt(WorldPoints.camp_starter_west, 0, false), "starter", "the Ratwarren: never")
 	SpireTest.eq(SpireCavebot.banReasonAt(Position(1156, 1370, 7), 0, false), nil, "Boar Meadow after launch week: allowed")
@@ -166,4 +140,14 @@ SpireTest.add("QA18: crowd events wait for players; world events and weekend bon
 	-- the crowd ones wait
 	SpireTest.eq((SpireArena.start({ order = { 1 }, players = { [1] = {} }, kind = next(SpireArena.KINDS) }, os.time())), false, "an arena event needs 4 fighters")
 	SpireTest.eq(SpireSiege.MIN_GUILDS >= 2 and SpireSiege.MIN_MEMBERS >= 2, true, "the Siege needs two guilds of two")
+end)
+
+SpireTest.add("QA11: the engine's free blessing ends after level 7 (Q80)", function()
+	SpireTest.eq(configManager.getNumber(configKeys.ADVENTURERSBLESSING_LEVEL), 7, "adventurer's blessing up to level 7")
+end)
+
+SpireTest.add("WA1: familiarity belongs to the character who earned it", function()
+	SpireTest.eq(SpireGear.bondChange(nil, 5), "adopt", "an old weapon with no bond is adopted, nothing reset")
+	SpireTest.eq(SpireGear.bondChange(5, 5), "keep", "your own weapon keeps its familiarity")
+	SpireTest.eq(SpireGear.bondChange(5, 6), "reset", "another character's starts again")
 end)

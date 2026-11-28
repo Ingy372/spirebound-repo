@@ -44,7 +44,7 @@ NPCS = {
               ("arrow", 3447, 1, None), ("bolt", 3446, 2, None), ("spear", 3277, 10, 3)]),
     "hearthgate_weaponsmith": dict(
         name="Weaponsmith Garrick", desc="the weaponsmith", look=(2025, 0, 0, 0, 0, 0),
-        greet="Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost. For gold I can also {respec} your Mastery style.",
+        greet="Steel for the climb, |PLAYERNAME|. Ask for a {trade}. Bring Hearth Shards and I'll {upgrade} your Spirebound weapon or armour, {reforge} it into another kind, or {replace} one you lost.",
         voices=["Sharp steel! Fair prices!"],
         shop=[("sword", 3264, 85, 25), ("longsword", 3285, 160, 51), ("sabre", 3273, 35, 12),
               ("hand axe", 3268, 8, 4), ("axe", 3274, 20, 7),

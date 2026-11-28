@@ -1,7 +1,7 @@
 -- Up to 3 game windows per computer (QA16; Q53, Claude's call, 2026-11-27; DESIGN.md 12). The engine only limits
 -- characters per account (2), so a 4th character logging in from the same address is sent away with a message.
--- Staff never count, and neither do the test characters ("Pilot ..." on the autopilot accounts), so Claude's party
--- tests on Jay's PC keep working.
+-- Staff never count, and neither do the test accounts (the autopilot's Pilots and the load-test bots, told apart by
+-- their @localhost e-mail like everywhere else, Floors.onlyTesters), so Claude's tests on Jay's PC keep working.
 SpireWindows = SpireWindows or { MAX = 3 }
 
 -- Pure: may a character join when `others` (characters already online from the same address, already filtered) exist?
@@ -10,7 +10,15 @@ function SpireWindows.allowed(others)
 end
 
 function SpireWindows.exempt(player)
-	return player:getGroup():getAccess() or player:getName():sub(1, 6) == "Pilot "
+	if player:getGroup():getAccess() then
+		return true
+	end
+	SpireWindows.testers = SpireWindows.testers or {}
+	local guid = player:getGuid()
+	if SpireWindows.testers[guid] == nil then -- one database look-up per character and server run
+		SpireWindows.testers[guid] = Floors.onlyTesters({ player:getName() }) and true or false
+	end
+	return SpireWindows.testers[guid]
 end
 
 function SpireWindows.othersFrom(player)

@@ -150,6 +150,7 @@ function SpireProgress.credit(player, target, share)
 		return
 	end
 	SpireStyle.addPoints(player, share)
+	SpireGear.claim(item, player) -- WA1: another character's weapon starts again at familiarity 0 for this one
 	local s = SpireGear.state(item)
 	if not s.shop then
 		local before = s.fam
