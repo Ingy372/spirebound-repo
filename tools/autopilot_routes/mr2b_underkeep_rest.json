@@ -1,0 +1,157 @@
+{
+ "name": "mr2b_underkeep_rest",
+ "character": "Pilot Vanguard",
+ "timeout": 1200,
+ "about": "MR2: the rest of Wing 1 after the collapsed hall (where a level 60 died): east, south-east, vault, den, south-west; then the column hall to the flooded hall.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 60"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 5"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1237,
+    1272,
+    8
+   ],
+   "note": "MR2b: east (jumped in)"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: east"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1235,
+    1286,
+    8
+   ],
+   "note": "MR2b: southeast"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: southeast"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1220,
+    1289,
+    8
+   ],
+   "note": "MR2b: vault"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: vault"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1204,
+    1288,
+    8
+   ],
+   "note": "MR2b: den"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: den"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1184,
+    1287,
+    8
+   ],
+   "note": "MR2b: southwest"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: southwest"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1210,
+    1269,
+    8
+   ],
+   "note": "MR2b: columns (jumped in)"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: columns"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1186,
+    1268,
+    8
+   ],
+   "note": "MR2b: flooded"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "MR2b: flooded"
+  },
+  {
+   "do": "say",
+   "text": "/pilot heal"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

@@ -1,0 +1,82 @@
+{
+ "name": "caves_104b",
+ "character": "Pilot Vanguard",
+ "timeout": 1200,
+ "about": "10.4 pass 3: down the stairs into the Ridge Tunnels and the Bastion Cellars and to two packs in each.",
+ "steps": [
+  {
+   "do": "say",
+   "text": "/pilot emptybag"
+  },
+  {
+   "do": "say",
+   "text": "/pilot level 40"
+  },
+  {
+   "do": "say",
+   "text": "/pilot gear 4"
+  },
+  {
+   "do": "say",
+   "text": "/pilot give 266, 60"
+  },
+  {
+   "do": "heal"
+  },
+  {
+   "do": "jump",
+   "to": [
+    1344,
+    1117,
+    7
+   ],
+   "note": "Bastion Cellars: at the stair"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1344,
+    1115,
+    7
+   ],
+   "note": "Bastion Cellars: down the stair"
+  },
+  {
+   "do": "watch",
+   "seconds": 3,
+   "note": "Bastion Cellars: down the stair"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1340,
+    1143,
+    8
+   ],
+   "note": "Bastion Cellars: pack 1"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "Bastion Cellars: pack 1"
+  },
+  {
+   "do": "walk",
+   "to": [
+    1381,
+    1143,
+    8
+   ],
+   "note": "Bastion Cellars: pack 2"
+  },
+  {
+   "do": "watch",
+   "seconds": 5,
+   "note": "Bastion Cellars: pack 2"
+  },
+  {
+   "do": "say",
+   "text": "/pilot logout"
+  }
+ ]
+}

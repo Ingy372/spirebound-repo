@@ -39,7 +39,8 @@ Tibia looks. What's left before Floor 1 is complete is still the real thing: you
   vine walls; Burrow Hills has its fourth mole mound (down in the Molework); the Road Lanterns now line the road from
   Millcross to the bridge; the Underkeep's drain grate warns that only seasoned climbers come back up.
 - **Still to be seen in the game client** (the test clients were busy all evening with the Oathroom tests): selling a
-  dish to Osric, a fire rune on a vine wall, the rest of the Underkeep walk, the two new caves, and the pace measurements.
+  the Underkeep's flooded hall and the full pace measurements. (Osric's dishes, the fire rune on the vines, the two
+  new caves and the Stairwarden were all seen in the client in the end.)
 
 ## Playtest checklist (under an hour)
 1. (10 min) Make a new character and walk out of the Arrival Yard. Does the first thing Guide Pell says make you want to
@@ -56,8 +57,10 @@ Tibia looks. What's left before Floor 1 is complete is still the real thing: you
 - **Q101 / Q100** (the story and the secrets): still open from yesterday. Recommendation: keep.
 - **Floor 1 for launch night:** about 117 players can hunt at once; 150 needs more land. Recommendation: wait until after
   your playtest; if the friends test shows crowding, I add a second open area to Floor 1 (a few hours of map work).
-- **The Underkeep's first wing** is tuned for Floor 2 levels (35-60): a level-40 test character died there alone.
-  Recommendation: keep it as the floor's hidden harder dungeon, and add a warning at its entrance.
+- **The Underkeep's first wing is too crowded in two halls:** even a level-60 test character in top gear died alone in
+  the collapsed hall and the column hall (8-9 monsters come at once). Recommendation: thin the column hall from three
+  packs to two, so a strong solo player or a pair can get through. (The drain grate already warns that only the
+  seasoned come back up.)
 - **The Axe-Lord as a raid** means you can't test him alone or as a pair. A solo or pair playtest stops at the Gate Hound,
   unless you bring my five test characters.
 
