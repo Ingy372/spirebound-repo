@@ -1,0 +1,97 @@
+{
+ "name": "item_shrinekeepers_pendant",
+ "parts": [
+  "none",
+  "stone",
+  "rim",
+  "door",
+  "glow",
+  "chain"
+ ],
+ "palette": "item_shrinekeepers_pendant",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.0,
+   0.3
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "glow": 4.0,
+   "door": 2.5,
+   "rim": 2.0,
+   "chain": 2.5
+  },
+  "thin": {
+   "glow": 3,
+   "chain": 3,
+   "rim": 3
+  },
+  "soft": [
+   [
+    "door",
+    "glow"
+   ]
+  ],
+  "no_outline": [],
+  "selout": [
+   "stone",
+   "rim"
+  ],
+  "texture": {
+   "stone": [
+    0.1,
+    0.1
+   ]
+  },
+  "bands": [
+   0.24,
+   0.36,
+   0.47,
+   0.57,
+   0.67,
+   0.77,
+   0.87
+  ],
+  "light": [
+   -0.6,
+   0.5,
+   0.75
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

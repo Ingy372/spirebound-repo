@@ -1,0 +1,98 @@
+{
+ "name": "item_inn_tankard",
+ "parts": [
+  "none",
+  "body",
+  "bandring",
+  "handle",
+  "foam",
+  "beer",
+  "mark"
+ ],
+ "palette": "item_inn_tankard",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.15
+  ],
+  [
+   0.0,
+   1.3106601717798212,
+   0.0
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "mark": 3.0,
+   "bandring": 2.0,
+   "beer": 2.5
+  },
+  "thin": {
+   "mark": 3,
+   "bandring": 3,
+   "beer": 3
+  },
+  "soft": [
+   [
+    "foam",
+    "beer"
+   ]
+  ],
+  "no_outline": [
+   "mark"
+  ],
+  "selout": [
+   "body",
+   "foam"
+  ],
+  "texture": {
+   "body": [
+    0.05,
+    0.06
+   ],
+   "foam": [
+    0.1,
+    0.04
+   ]
+  },
+  "bands": [
+   0.24,
+   0.36,
+   0.47,
+   0.57,
+   0.67,
+   0.77,
+   0.87
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

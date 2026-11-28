@@ -1,0 +1,94 @@
+{
+ "name": "item_message_bottle",
+ "parts": [
+  "none",
+  "glass",
+  "letter",
+  "shine",
+  "cork",
+  "seal",
+  "twine"
+ ],
+ "palette": "item_message_bottle",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.0,
+   0.3
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "shine": 4.0,
+   "seal": 3.0,
+   "twine": 2.5,
+   "letter": 1.5
+  },
+  "thin": {
+   "shine": 2,
+   "twine": 2
+  },
+  "soft": [
+   [
+    "glass",
+    "letter",
+    "shine"
+   ]
+  ],
+  "no_outline": [
+   "letter",
+   "shine"
+  ],
+  "selout": [
+   "glass"
+  ],
+  "bands": [
+   0.24,
+   0.36,
+   0.47,
+   0.57,
+   0.67,
+   0.77,
+   0.87
+  ],
+  "light": [
+   -0.6,
+   0.5,
+   0.75
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

@@ -64,6 +64,9 @@ and are built on `art/models/humanoid.py` (colours in `art/pipeline/outfit_palet
 Dead bodies follow `art/CORPSE_RULES.md`: `art/models/corpse_<name>.py` lays the approved model down
 (`art/pipeline/corpse_kit.py`), `tools/make_corpse_sheets.py` makes the decay steps and the review sheet.
 `AUTO_PLACE = (1, 1)` in a model file places each direction against the tile's right and bottom edges.
+Item icons (weapons, jewellery, tools; Jay 2026-11-27: Claude makes them instead of Grok) follow `art/ITEM_RULES.md`:
+`art/models/item_<name>.py` on `art/models/item_kit.py`, colours in `art/pipeline/item_palettes.py`,
+`tools/make_item_icons.py` makes the 32x32 icons and the review sheet.
 
 ## Client sprite rules (Canary 3.6.1 + OTClient Redemption 4.2, client 15.11)
 
@@ -103,8 +106,8 @@ many NPCs share one borrowed look, so reskinning it would change them all. Each 
 ## Rig numbers (why they are what they are)
 
 - **palette.json is generated** by `outfit_palettes.py`, `creature_palettes.py` (wrong-animal cleanup) and
-  `boss_palettes.py` (bosses and variants), and `object_palettes.py` (our own map objects). Never hand-edit it: on a
-  merge conflict take main's copy and rerun all four.
+  `boss_palettes.py` (bosses and variants), `object_palettes.py` (our own map objects) and `item_palettes.py` (item icons).
+  Never hand-edit it: on a merge conflict take main's copy and rerun all five.
 - **Map objects** (2026-11-27, the Climbers' Monument) use the same pipeline: a model file with `WALK_FRAMES = 1` and
   `AUTO_PLACE = (1, 1)`, one view chosen in `OBJECT_ITEMS` (`tools/make_creature_sheets.py`), drawn over a spare
   Tibia item. Prefer the east view for anything with a face to read: Tibia draws east faces upright, south faces

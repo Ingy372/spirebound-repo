@@ -47,7 +47,7 @@ DEPTH_LINE = 0.045                            # tiles; a bigger step between nei
 #            snapped to the ramp (fur, stone, bark); it sticks to the part, so it does not crawl while walking
 #   bands    light thresholds for this creature (more thresholds = more tones; ramps need one colour more)
 RULE_DEFAULTS = {"weight": {}, "thin": {}, "soft": [], "no_outline": [], "fur": [], "selout": [], "texture": {},
-                 "bands": None}
+                 "bands": None, "light": None}
 
 
 def srgb_to_lin(a):
@@ -70,6 +70,7 @@ class Creature:
         self.no_outline, self.fur_parts, self.selout = set(r["no_outline"]), set(r["fur"]), set(r["selout"])
         self.texture = r["texture"]
         self.bands = np.array(r["bands"] or PALETTE["light"]["bands"])
+        self.light_dir = r["light"]
 
     def is_soft(self, a, b):
         return any(a in g and b in g for g in self.soft)
@@ -89,7 +90,9 @@ class Creature:
         n /= np.maximum(np.linalg.norm(n, axis=-1, keepdims=True), 1e-6)
         depth = srgb_to_lin(dep[..., 0]) * self.meta["depth_range"]
         light = PALETTE["light"]
-        L = np.array(light["direction"], float); L /= np.linalg.norm(L)
+        # items lying flat (art/ITEM_RULES.md) may set PIXEL_RULES["light"]: the shared light hits both halves of a
+        # flat blade lying diagonally almost equally, so items light from the screen's top-left instead
+        L = np.array(self.light_dir or light["direction"], float); L /= np.linalg.norm(L)
         lam = np.clip(n @ L, 0, 1)
         tb = light["top_bias"]
         value = (1 - tb) * lam + tb * (0.5 + 0.5 * n[..., 2])

@@ -1,0 +1,102 @@
+{
+ "name": "item_brass_spyglass",
+ "parts": [
+  "none",
+  "tube",
+  "ring",
+  "leather",
+  "stitch",
+  "lens",
+  "glint",
+  "eyecup"
+ ],
+ "palette": "item_brass_spyglass",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.0,
+   0.3
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "ring": 2.5,
+   "lens": 2.5,
+   "glint": 5.0,
+   "stitch": 3.0,
+   "eyecup": 2.0
+  },
+  "thin": {
+   "ring": 3,
+   "glint": 2,
+   "stitch": 2
+  },
+  "soft": [
+   [
+    "lens",
+    "glint"
+   ]
+  ],
+  "no_outline": [
+   "glint",
+   "stitch"
+  ],
+  "selout": [
+   "tube"
+  ],
+  "texture": {
+   "leather": [
+    0.06,
+    0.03
+   ]
+  },
+  "bands": [
+   0.24,
+   0.36,
+   0.47,
+   0.57,
+   0.67,
+   0.77,
+   0.87
+  ],
+  "light": [
+   -0.6,
+   0.5,
+   0.75
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}

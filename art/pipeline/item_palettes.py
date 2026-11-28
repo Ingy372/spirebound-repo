@@ -1,0 +1,104 @@
+"""Colours for item icons rendered with the creature pipeline (2026-11-27, art/ITEM_RULES.md).
+
+Writes into palette.json like outfit_palettes.py, creature_palettes.py, boss_palettes.py and object_palettes.py
+(never hand-edit palette.json; on a merge conflict take main's copy and rerun all five).
+Each ramp is 8 tones, dark -> light (item_kit.BANDS picks the tone from the light).
+"""
+from __future__ import annotations
+
+import json
+from pathlib import Path
+
+from outfit_palette import ramp
+
+# shared materials: (dark, light, mid)
+STEEL = ((34, 40, 52), (246, 250, 255), (128, 140, 158))
+BRONZE = ((52, 30, 10), (255, 226, 150), (176, 120, 48))
+GOLD = ((70, 38, 6), (255, 246, 170), (214, 156, 34))
+BRASS = ((60, 36, 8), (255, 240, 170), (196, 146, 46))
+PEWTER = ((36, 40, 46), (236, 240, 244), (130, 138, 148))
+IRON = ((22, 24, 30), (180, 186, 196), (82, 88, 100))
+LEATHER = ((40, 20, 10), (222, 160, 104), (128, 74, 40))
+DARK_LEATHER = ((26, 14, 8), (176, 116, 70), (92, 52, 28))
+WOOD = ((40, 22, 10), (214, 160, 102), (120, 76, 40))
+BARK = ((30, 20, 12), (168, 128, 90), (90, 62, 38))
+BIRCH = ((70, 66, 60), (255, 252, 240), (200, 196, 184))
+LEAF = ((14, 42, 14), (190, 240, 120), (70, 150, 50))
+PAPER = ((90, 62, 30), (255, 244, 206), (210, 180, 120))
+STONE = ((40, 40, 46), (214, 214, 220), (120, 120, 128))
+RED_GEM = ((60, 0, 6), (255, 190, 170), (210, 30, 30))
+BLUE_GEM = ((6, 20, 80), (210, 240, 255), (40, 110, 230))
+GREEN_GLASS = ((6, 40, 16), (200, 255, 190), (40, 150, 60))
+EMBER = ((90, 16, 0), (255, 250, 190), (255, 130, 20))
+CORK = ((60, 36, 16), (226, 186, 132), (150, 104, 60))
+FOAM = ((150, 146, 136), (255, 255, 252), (230, 228, 220))
+GLOW_WHITE = ((120, 150, 110), (255, 255, 250), (220, 245, 210))
+GLOW_GOLD = ((140, 70, 0), (255, 255, 220), (255, 200, 70))
+
+r = lambda t: ramp(*t)
+flat = lambda c: [list(c)] * 8
+
+ITEMS = {
+    "item_briarguard_sabre": {
+        "blade": r(((40, 56, 50), (250, 255, 248), (150, 182, 156))),     # steel with a green-bronze cast
+        "guard": r(((34, 22, 10), (200, 150, 90), (112, 72, 34))), "thorn": r(((44, 30, 18), (230, 210, 170), (140, 110, 74))),
+        "grip": r(((20, 16, 14), (120, 100, 90), (56, 44, 38))), "wrap": r(((40, 26, 12), (236, 200, 140), (150, 108, 60))), "pommel": r(RED_GEM), "leaf": r(LEAF),
+    },
+    "item_copsewood_bow": {
+        "limb": r(BIRCH), "knot": r(((30, 24, 20), (110, 96, 80), (60, 50, 40))), "grip": r(DARK_LEATHER),
+        "string": r(((20, 70, 20), (200, 250, 150), (90, 170, 60))), "leaf": r(LEAF), "nock": r(GOLD),
+    },
+    "item_wand_of_ember_script": {
+        "shaft": r(((14, 10, 10), (120, 96, 84), (52, 40, 36))), "rune": r(EMBER), "band": r(BRASS),
+        "flame": r(((150, 30, 0), (255, 236, 120), (255, 120, 20))), "core": r(((255, 200, 90), (255, 255, 235), (255, 240, 180))),
+        "cap": r(BRASS),
+    },
+    "item_thornward_rod": {
+        "shaft": r(WOOD), "vine": r(LEAF), "leaf": r(LEAF), "bud": r(GLOW_WHITE), "petal": r(((90, 130, 80), (250, 255, 240), (200, 230, 180))),
+        "thorn": r(((60, 50, 30), (230, 220, 180), (150, 130, 90))), "knob": r(BARK),
+    },
+    "item_brass_spyglass": {
+        "tube": r(BRASS), "ring": r(((80, 46, 10), (255, 250, 200), (224, 176, 70))), "leather": r(DARK_LEATHER),
+        "stitch": r(((120, 90, 50), (240, 220, 170), (200, 170, 120))), "lens": r(((40, 80, 120), (230, 250, 255), (130, 190, 230))),
+        "glint": flat((255, 255, 255)), "eyecup": r(((14, 12, 10), (110, 90, 70), (48, 38, 30))),
+    },
+    "item_millrace_boots": {
+        "leather": r(((50, 24, 10), (232, 170, 104), (140, 82, 40))), "cuff": r(((70, 38, 16), (252, 214, 160), (190, 128, 72))),
+        "sole": r(((18, 12, 10), (110, 84, 64), (50, 36, 28))), "strap": r(DARK_LEATHER), "buckle": r(BRASS),
+        "toecap": r(((46, 22, 8), (220, 156, 94), (128, 74, 36))), "inside": flat((30, 16, 8)),
+    },
+    "item_shrinekeepers_pendant": {
+        "stone": r(STONE), "rim": r(GOLD), "door": r(((20, 18, 20), (90, 84, 80), (44, 40, 40))), "glow": r(GLOW_GOLD),
+        "chain": r(GOLD),
+    },
+    "item_wardens_signet": {
+        "band": r(GOLD), "bezel": r(((80, 44, 8), (255, 248, 190), (226, 168, 44))), "stone": r(BLUE_GEM),
+        "glint": flat((255, 255, 255)),
+    },
+    "item_inn_tankard": {
+        "body": r(PEWTER), "bandring": r(((30, 34, 40), (200, 206, 214), (100, 108, 118))), "handle": r(PEWTER),
+        "foam": r(FOAM), "beer": r(((90, 40, 4), (255, 210, 110), (210, 130, 30))),
+        "mark": r(((24, 26, 30), (90, 96, 104), (50, 54, 60))),
+    },
+    "item_plains_map": {
+        "paper": r(PAPER), "roll": r(((100, 70, 34), (255, 240, 200), (214, 182, 124))),
+        "plains": r(((40, 90, 30), (190, 230, 120), (110, 170, 70))), "road": r(((80, 50, 20), (160, 110, 60), (120, 80, 40))),
+        "tower": r(((50, 50, 56), (200, 200, 206), (120, 120, 128))), "ribbon": r(RED_GEM), "mark": r(((120, 0, 0), (255, 80, 60), (200, 20, 20))),
+    },
+    "item_message_bottle": {
+        "glass": r(GREEN_GLASS), "letter": r(((70, 110, 60), (240, 255, 220), (170, 210, 150))), "shine": flat((236, 255, 230)),
+        "cork": r(CORK), "seal": r(RED_GEM), "twine": r(((90, 70, 40), (230, 210, 160), (170, 140, 90))),
+    },
+}
+
+
+def main():
+    path = Path(__file__).resolve().parent / "palette.json"
+    data = json.loads(path.read_text(encoding="utf-8"))
+    data["ramps"].update(ITEMS)
+    path.write_text(json.dumps(data, indent=1) + "\n", encoding="utf-8")
+    print("wrote", ", ".join(ITEMS), "into", path.name)
+
+
+if __name__ == "__main__":
+    main()

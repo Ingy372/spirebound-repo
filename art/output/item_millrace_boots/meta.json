@@ -1,0 +1,106 @@
+{
+ "name": "item_millrace_boots",
+ "parts": [
+  "none",
+  "leather",
+  "cuff",
+  "sole",
+  "strap",
+  "buckle",
+  "toecap",
+  "inside"
+ ],
+ "palette": "item_millrace_boots",
+ "walk_frames": 1,
+ "order": [
+  "N",
+  "E",
+  "S",
+  "W"
+ ],
+ "supersample": 4,
+ "view_tiles": 4.0,
+ "y_stretch": 1.3106601717798212,
+ "world_linear": [
+  [
+   1.0,
+   0.0,
+   -0.3
+  ],
+  [
+   0.0,
+   1.0,
+   0.3
+  ],
+  [
+   0.0,
+   0.0,
+   1.0
+  ]
+ ],
+ "depth_range": 3.0,
+ "rules": {
+  "weight": {
+   "buckle": 4.0,
+   "strap": 2.0,
+   "cuff": 1.5,
+   "toecap": 1.5,
+   "inside": 2.0
+  },
+  "thin": {
+   "buckle": 2,
+   "strap": 3
+  },
+  "soft": [
+   [
+    "leather",
+    "toecap"
+   ]
+  ],
+  "no_outline": [
+   "inside"
+  ],
+  "selout": [
+   "leather",
+   "cuff",
+   "toecap"
+  ],
+  "texture": {
+   "leather": [
+    0.06,
+    0.05
+   ],
+   "cuff": [
+    0.05,
+    0.0
+   ]
+  },
+  "bands": [
+   0.24,
+   0.36,
+   0.47,
+   0.57,
+   0.67,
+   0.77,
+   0.87
+  ],
+  "light": [
+   -0.6,
+   0.5,
+   0.75
+  ]
+ },
+ "ref": null,
+ "canvas_offset": [
+  0,
+  0
+ ],
+ "placed": [
+  0,
+  0
+ ],
+ "auto_place": [
+  1,
+  1
+ ]
+}
