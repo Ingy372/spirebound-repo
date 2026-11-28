@@ -8,6 +8,17 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q108. Which of the 11 Batch 14 items get their own picture? (2026-11-27)
+You approved my art style but not the designs: they looked like items Tibia already has. New rule (I0): a new item
+never looks like a Tibia item. Ordinary things don't need new art at all, the same as with corpses.
+**My recommendation (assumed until you answer):**
+- **Redesign with shapes Tibia doesn't have** (these are rare drops and keepsakes players show off): the four rare
+  weapons (Briarguard Sabre, Copsewood Bow, Wand of Ember Script, Thornward Rod) and the three keepsakes (Millrace
+  Boots, Shrinekeeper's Pendant, Warden's Signet).
+- **Keep the Tibia item, no new art**: Inn Tankard (mug), Plains Map (map), Message Bottle (message in a bottle),
+  Brass Spyglass (telescope). They are ordinary things, and Tibia's versions already fit.
+- Jay's answer:
+
 ### Q106. Should a weapon keep growing after its awakening? (2026-11-27)
 Your question: a Floor 1 weapon awakened at the Floor 1 boss, then taken all the way to a Floor 2 boss kill. Full answer in `docs/superpowers/specs/2026-11-27-weapon-review.md` section 5.
 - **Recommendation: yes, once, as "Ascended".** Beat the Floor 2 boss holding your awakened Floor 1 weapon at familiarity 10 (earned by you) and having done at least 10% of the damage yourself. It gets a new name, your name carved in it for good, combos that stay open 1 second longer, a sparkle, the title Unbroken and a server announcement. Later you can lay it to rest as a house trophy and your current weapon jumps 2 familiarity levels.

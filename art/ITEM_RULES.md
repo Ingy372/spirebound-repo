@@ -5,6 +5,18 @@ towards just having you build everything and cutting grok out", then "Do it plea
 them look detailed." Items are built like the monsters (a small 3D model, rendered, then pixelized with the same
 palette rules and outline), so they look like they belong to the same game.
 
+## Approved style, and the first rule (Jay, 2026-11-27)
+
+Jay: "your art is approved. it looks MUCH better than grok. i dont like those items though, they resemble things
+that are natively in tibia. if we are to create a new item, i feel like it shouldnt be a look-alike."
+
+- **I0 A new item never looks like a Tibia item.** The style is approved; the first 11 designs are not (a sabre,
+  a bow, leather boots, a mug, a map, a bottle... Tibia already has every one). Before modelling, find the closest
+  Tibia item (`LOOKALIKES` in `tools/make_item_icons.py`) and change the **silhouette**, not just the colours: a
+  player who knows Tibia must not mistake it for a Tibia item at a glance. If the thing is ordinary (a mug, a
+  map, a bottle), do not draw it at all: use the Tibia item, as with corpses (`CORPSE_RULES.md` Part 1).
+  The first 11 stay in `art/models/item_*.py` as worked examples of the technique, not as game art.
+
 ## Make and check
 
 ```bash
@@ -22,7 +34,7 @@ python tools/make_item_icons.py                # icon.png per item + ART_FOR_JAY
 ## Rules (learned on the first 11, 2026-11-27)
 
 - **I1 Write the brief first.** Each model's docstring says: silhouette (what makes it readable from the outline
-  alone), colours (base materials plus ONE bright accent), details, and the Tibia look-alike and how ours differs.
+  alone, and how it differs in shape from the closest Tibia item, I0), colours (base materials plus ONE bright accent), details, and the Tibia look-alike and how ours differs.
 - **I2 Tibia's weapon pose.** Long things (swords, bows, wands, rods, spyglasses) lie diagonally, handle or butt
   bottom-left, tip top-right. Build along `at(s, n)` (s along the diagonal, n across it).
 - **I3 Flat things use the flat-item camera** (the kit default): `HEIGHT_SHEAR = 0.3` and `"light": LIGHT`

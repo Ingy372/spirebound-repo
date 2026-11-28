@@ -4,7 +4,7 @@ Base Tibia sprites stand in for all of these until the real art arrives, so noth
 
 ## Who makes what (new workflow, Jay 2026-11-14)
 - **Anything that moves or turns** (creatures, NPCs, outfits, mounts): **Claude makes it** with the Blender pipeline (`art/`), then sends Jay the sheet and walk loops to approve. Jay does not need to generate these; their Grok prompts below are kept only as design descriptions. Made so far: 26 approved (see `art/APPROVED.txt`); 13 monsters are already in the game (below).
-- **Single still images** (item and spell icons, UI, cursors, concept sketches, shop/website art): **Jay makes them with Grok** using the prompts below.
+- **Single still images**: item and spell icons are now **made by Claude** with the same pipeline (Jay, 2026-11-27: "your art is approved. it looks MUCH better than grok"; rules `art/ITEM_RULES.md`). A new item must never look like a Tibia item (rule I0); ordinary things keep a Tibia item. Grok is left for website art and concept sketches; the Grok prompts below are design descriptions only.
 
 ## In the game now, and the size of the rest (roadmap R22, 2026-11-24)
 - **Working end to end:** Jay's approved monster sprites now show in the real client in place of the borrowed Tibia
@@ -265,7 +265,7 @@ Shown at true size, never blown up (Jay: "the monsters look a bit bad blown up l
 Approved 2026-11-26 (Jay: "Approve all"), own looks in tools/make_creature_sheets.py: vanguard_f, ranger_f, arcanist_m, mystic_m (with addons), watchguard, dorrow, smith, alchemist, runewright, bix, crossbowman, hexer, cutthroat, crawler, blightwasp, ridgecat, bull, stonebull, grazer, strider, old_tusk, hollowfang, briar_mother.
 
 ## Batch 14 (2026-11-27): adventure layer, rare weapons and secret keepsakes (Priority: medium; placeholders work)
-Still icons only (Grok). Rare weapons need a picture of their own so others can tell them from the ordinary weapon (`tools/gen_gear.py`); secret gear and keepsakes are things players show off. Until drawn, the game borrows the base item shown in brackets.
+Claude draws these now (`art/ITEM_RULES.md`); the first try was approved in style but the designs looked like Tibia's own items, so they are being redesigned (Q108). Rare weapons need a picture of their own so others can tell them from the ordinary weapon (`tools/gen_gear.py`); secret gear and keepsakes are things players show off. Until drawn, the game borrows the base item shown in brackets.
 
 | ✓ | File names | Size / frames | Grok prompt |
 |---|---|---|---|
