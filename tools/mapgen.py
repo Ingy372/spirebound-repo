@@ -831,6 +831,9 @@ def main(argv):
     import layout_floor
     m = Map()
     layout_floor1.build(m)
+    import lighting                         # Floor 1 lit at night: streets, roads; some caves dark (maps/lighting.py)
+    lighting.build(m, (layout_floor1.X0, layout_floor1.Y0, layout_floor1.SIZE, layout_floor1.SIZE),
+                   (layout_floor1.X0 + layout_floor1.TOWN["x"], layout_floor1.Y0 + layout_floor1.TOWN["y"]))
     for n in BUILT_FLOORS:
         layout_floor.build(m, n)
     link_floors(m)

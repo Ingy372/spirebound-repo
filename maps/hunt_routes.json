@@ -390,7 +390,7 @@
    [
     [
      1232,
-     1202,
+     1201,
      7
     ],
     "east"
@@ -413,13 +413,13 @@
     true
    ]
   ],
-  "steps": 91,
+  "steps": 92,
   "text": "leave Hearthgate by the north gate, follow the road north about 35 steps, then follow the road east about 10 steps to its west entrance",
   "title": "Burrow Hills",
   "turns": [
    [
     1232,
-    1202,
+    1201,
     7
    ]
   ],

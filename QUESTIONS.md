@@ -8,6 +8,13 @@ How this works: each question has Claude's recommendation. Claude assumes the re
 
 *Q54-Q61 are the cuts from the 2026-11-25 project review. A word or two each is enough ("yes", "no", "later"). Where the thing is your own decision, nothing in the game changes until you answer.*
 
+### Q109. Which caves are pitch dark at night and day? (2026-11-27)
+You asked for torches in some dungeons and others completely dark. I chose by level: the deeper caves are dark (Shard
+Grotto, the Lower Works, the Bastion Cellars, and the secret Sealed Cut); the starter and early caves (Ratwarren,
+Molework, Alpha's Den, Rootcellar, Ridge Tunnels, Smugglers' Cellar), boss halls, story rooms and the Underkeep keep
+their torches. Each dark cave's hub sign says "Below is pitch dark: no torches. Bring a light."
+Also: the Millcross road stretch with the Town Works' Road Lanterns stays dark until players light them (the deed).
+**My recommendation (assumed until you answer):** keep it this way. Tell me any cave you want flipped.
 ### Q107. Is the Oathroom hard enough? (2026-11-27)
 Four level-30 test characters in a party cleared it on the second tuning in about 12 minutes with no deaths; the first tuning was impossible for them. Test characters fight in a scripted way (two of them always put the braziers out), so real players may find it harder or easier.
 **My recommendation (assumed until you answer):** keep these numbers until a real group of four tries it; if they clear it on the first try, give the Oathkeeper about 25% more health.

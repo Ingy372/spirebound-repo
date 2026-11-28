@@ -185,7 +185,7 @@ def build_cut(m):
                 S.prop(m, px, py, Z, DG.RUBBLE[(px // 3) % 2])
     DG.scatter(m, ox + hx + 2, oy + hy + 2, hw - 4, hh - 4, Z, DG.STALAGMITES, 4, solid=True, avoid=out)
     DG.scatter(m, ox, oy, CW, CH, Z, DG.DEBRIS + DG.BONES, 10, avoid=out)
-    DG.hang(m, ox, oy, CW, CH, Z, every=5)
+    # no lamps: the Sealed Cut is pitch dark, a secret for climbers who bring a light (Jay, 2026-11-27, maps/lighting.py)
     return mouth
 
 
