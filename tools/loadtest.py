@@ -631,6 +631,14 @@ def _check_followers(lines):
     return len(xp) == 2 and xp[0] > 0 and abs(xp[1] / xp[0] - 0.45) < 0.03, f"alone {xp[0]}, following a botter {xp[1]}"
 
 
+def _check_qa11(lines, want_loss):
+    b0, b1 = _s0(lines, "bag")[0], _s0(lines, "bag")[-1]
+    lost = (b0["bp"] - b1["bp"]) + (b0["head"] - b1["head"])
+    good = (lost > 0) if want_loss else (lost == 0)
+    return good and b0["mode"] == 2, "Hardcore level %s with %s blessings: backpack %s -> %s, worn pieces %s -> %s" % (
+        b0["level"], b0["bless"], b0["bp"], b1["bp"], b0["head"], b1["head"])
+
+
 STEP0_CASES = [
     # QA2 (Q100): each secret piece goes from one character to another through the trade window
     dict(name="QA2 trade: the giver hands over all three secret pieces", voc=4, level=30, partner="QA2 trade: the taker", stay=6,
@@ -652,15 +660,15 @@ STEP0_CASES = [
          logins=[[(3, "say", "/rv mode normal"), (1, "say", "/rv die")], [(3, "say", "/rv state")]],
          check=lambda lines: (_rv(lines, "before_death")[0]["bless"] == 0 and _check_hardcore(lines)[0],
                               "blessings %s; " % _rv(lines, "before_death")[0]["bless"] + _check_hardcore(lines)[1])),
-    # QA11 (Q80): Hardcore keeps the free blessings only below level 8: a level 10 death drops the backpack, a level 5 one doesn't
-    dict(name="QA11 a level-10 Hardcore death can lose the backpack", voc=4, level=10, ground="starter_east",
-         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 offer"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
-         check=lambda lines: ((lambda b: (b[0]["bp"] == 1 and b[0]["bless"] == 0 and b[1]["bp"] == 0,
-                                          "blessings %s; backpack before %s, after %s" % (b[0]["bless"], b[0]["bp"], b[1]["bp"])))(_s0(lines, "bag")))),
-    dict(name="QA11 a level-5 Hardcore death keeps it", voc=4, level=5, ground="starter_east",
-         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 offer"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
-         check=lambda lines: ((lambda b: (b[0]["bp"] == 1 and b[1]["bp"] == 1,
-                                          "blessings %s; backpack before %s, after %s" % (b[0]["bless"], b[0]["bp"], b[1]["bp"])))(_s0(lines, "bag")))),
+    # QA11 (Q80): Hardcore keeps the free blessings only below level 8: a level-10 death drops gear (the backpack for
+    # sure, with no blessings), a level-5 death drops nothing. One real death each, on separate grounds (a second scripted
+    # death would happen in the temple, where nobody can be hurt; two test characters on one tile spoil a death).
+    dict(name="QA11 a level-10 Hardcore death loses gear", voc=4, level=10, ground="starter_east", stay=1,
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 kit"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
+         check=lambda lines: _check_qa11(lines, True)),
+    dict(name="QA11 a level-5 Hardcore death keeps it", voc=4, level=5, ground="starter_south", stay=1,
+         logins=[[(3, "say", "/rv mode hardcore"), (1, "say", "/s0 kit"), (1, "say", "/s0 bag"), (1, "say", "/rv die")], [(3, "say", "/s0 bag")]],
+         check=lambda lines: _check_qa11(lines, False)),
     # QA4 (Q76) and QA20 (Q84): looted coins land in the bag, not the bank, at the planned amount
     dict(name="QA4/QA20 coins from 300 Road Bandits stay in the backpack, at the planned amount", voc=4, level=30, stay=60,
          logins=[[(3, "say", "/s0 offer"), (1, "say", "/s0 loot Road Bandit 300")]],

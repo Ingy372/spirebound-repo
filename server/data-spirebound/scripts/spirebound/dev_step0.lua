@@ -107,6 +107,16 @@ function s0.onSay(player, words, param)
 			player:addItemEx(SpireGear.makeSecret(g), false, slot, FLAG_NOLIMIT)
 		end
 		out("s0secrets", player, { held = secretsHeld(player) })
+	elseif cmd == "deathinfo" then
+		out("s0deathinfo", player, { blesslist = #player:getBlessings(), noloot = player:hasFlag(PlayerFlag_NotGenerateLoot) and 1 or 0,
+			group = player:getGroup():getId(), adv = configManager.getNumber(configKeys.ADVENTURERSBLESSING_LEVEL) })
+	elseif cmd == "kit" then -- a backpack and a full leather set (helmet, armour, legs, boots)
+		backpack(player)
+		wear(player, CONST_SLOT_HEAD, 3355)
+		wear(player, CONST_SLOT_ARMOR, 3361)
+		wear(player, CONST_SLOT_LEGS, 3559)
+		wear(player, CONST_SLOT_FEET, 3552)
+		out("s0kit", player, { ok = 1 })
 	elseif cmd == "offer" then
 		backpack(player)
 		wear(player, CONST_SLOT_HEAD, 3355)
@@ -378,7 +388,9 @@ function s0.onSay(player, words, param)
 		out("s0events", player, { online = #Game.getPlayers(), event = SpireEvents.active and SpireEvents.active.kind.id or "none",
 			arena = arenaOk and 1 or 0, weekend = SpireEvents.weekendBonus(7, 1) and 1 or 0 })
 	elseif cmd == "bag" then
-		out("s0bag", player, { bp = player:getSlotItem(CONST_SLOT_BACKPACK) and 1 or 0, bless = blessings(player), level = player:getLevel() })
+		out("s0bag", player, { bp = (player:getSlotItem(CONST_SLOT_BACKPACK) and player:getSlotItem(CONST_SLOT_BACKPACK):getId() == 2854) and 1 or 0, head = (player:getSlotItem(CONST_SLOT_HEAD) and 1 or 0) + (player:getSlotItem(CONST_SLOT_ARMOR) and 1 or 0)
+				+ (player:getSlotItem(CONST_SLOT_LEGS) and 1 or 0) + (player:getSlotItem(CONST_SLOT_FEET) and 1 or 0),
+			bless = blessings(player), level = player:getLevel(), mode = Difficulty.get(player) })
 	elseif cmd == "fam" then -- the first Spirebound weapon this character has: familiarity, bond, where it is
 		local found, where
 		local h = player:getSlotItem(CONST_SLOT_LEFT)

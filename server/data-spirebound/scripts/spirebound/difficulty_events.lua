@@ -273,9 +273,10 @@ end
 
 -- Reaching level 30: the free blessings end. Ones the character never paid for are taken back, so a Normal climber's
 -- first death from 30 on costs what Tibia's usual death costs (bought blessings are kept: we only take back gifts).
-function SpireDifficulty.endFreeBlessings(player)
+-- Takes back the blessings the game gave for free (never bought). Returns how many.
+function SpireDifficulty.takeBackFreeBlessings(player)
 	local s = player:kv():scoped("spirebound")
-	if not s:get("freeBless") or player:getLevel() < Difficulty.FREE_DEATH_LEVEL then
+	if not s:get("freeBless") then
 		return 0
 	end
 	s:remove("freeBless")
@@ -286,7 +287,17 @@ function SpireDifficulty.endFreeBlessings(player)
 			taken = taken + 1
 		end
 	end
-	player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Level 30: from now on a death costs experience and can cost items, as anywhere in the tower. Priest Odran in the Climbers' Temple sells blessings that soften it.")
+	return taken
+end
+
+function SpireDifficulty.endFreeBlessings(player)
+	if player:getLevel() < Difficulty.FREE_DEATH_LEVEL or Difficulty.get(player) > Difficulty.NORMAL then
+		return 0
+	end
+	local taken = SpireDifficulty.takeBackFreeBlessings(player)
+	if taken > 0 or player:getLevel() == Difficulty.FREE_DEATH_LEVEL then
+		player:sendTextMessage(MESSAGE_EVENT_ADVANCE, "Level 30: from now on a death costs experience and can cost items, as anywhere in the tower. Priest Odran in the Climbers' Temple sells blessings that soften it.")
+	end
 	return taken
 end
 

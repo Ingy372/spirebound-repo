@@ -104,6 +104,11 @@ function Difficulty.set(player, mode)
 		return false
 	end
 	scope(player):set("difficulty", mode)
+	-- QA11 (Q80): Hardcore and Death Game keep free blessings only below level 8 (the engine's own, up to level 7), so the
+	-- blessings the Arrival Yard gave for free (as to every Normal character) are taken back when one is chosen
+	if mode >= Difficulty.HARDCORE and SpireDifficulty and SpireDifficulty.takeBackFreeBlessings then
+		SpireDifficulty.takeBackFreeBlessings(player)
+	end
 	if current == Difficulty.DEATHGAME then
 		scope(player):set("steppedDownAtLevel", player:getLevel())
 	end
